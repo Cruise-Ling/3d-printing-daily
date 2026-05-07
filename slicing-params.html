@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creality Print 切片参数全解 v2.2</title>
+<style>
+:root {
+  --primary: #1a73e8;
+  --primary-dark: #1558b3;
+  --deep-blue: #0d47a1;
+  --accent-yellow: #ffd54f;
+  --warning-orange: #ffa000;
+  --warning-red: #e65100;
+  --info-bg: #e8f0fe;
+  --info-bg-light: #e3f2fd;
+  --warning-bg: #fff8e1;
+  --sidebar-bg: linear-gradient(180deg, #0d3c7a 0%, #1558b3 100%);
+  --code-bg: #1e1e2e;
+  --text-dark: #333;
+  --text-light: #666;
+  --border-color: #e0e0e0;
+  --table-hover: #e8f0fe;
+  --sidebar-width: 290px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 14px; line-height: 1.7; color: var(--text-dark); background: #fafafa; }
+.sidebar { position: fixed; top: 0; left: 0; width: var(--sidebar-width); height: 100vh; background: var(--sidebar-bg); overflow-y: auto; z-index: 1000; transition: transform 0.3s ease; }
+.sidebar::-webkit-scrollbar { width: 6px; }
+.sidebar::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 3px; }
+.sidebar-header { padding: 20px 16px; background: rgba(0,0,0,0.2); border-bottom: 1px solid rgba(255,255,255,0.1); }
+.sidebar-header h1 { font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 8px; }
+.version-badge { display: inline-block; background: var(--accent-yellow); color: #333; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+.nav-section { border-bottom: 1px solid rgba(255,255,255,0.1); }
+.nav-toggle { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; color: #fff; font-weight: 600; font-size: 14px; cursor: pointer; transition: background 0.2s; }
+.nav-toggle:hover { background: rgba(255,255,255,0.1); }
+.nav-toggle .arrow { transition: transform 0.2s; font-size: 10px; }
+.nav-toggle.collapsed .arrow { transform: rotate(-90deg); }
+.nav-toggle.collapsed + .nav-chapters { display: none; }
+.nav-chapters { padding: 4px 0; }
+.nav-chapter { border-bottom: 1px solid rgba(255,255,255,0.05); }
+.nav-chapter-toggle { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px 10px 24px; color: rgba(255,255,255,0.9); font-size: 13px; cursor: pointer; transition: background 0.2s; }
+.nav-chapter-toggle:hover { background: rgba(255,255,255,0.1); }
+.nav-chapter-toggle .arrow { transition: transform 0.2s; font-size: 9px; }
+.nav-chapter-toggle.collapsed .arrow { transform: rotate(-90deg); }
+.nav-chapter-toggle.collapsed + .nav-items { display: none; }
+.nav-items { padding: 4px 0 8px 0; }
+.nav-item { display: block; padding: 6px 16px 6px 36px; color: rgba(255,255,255,0.75); font-size: 12px; text-decoration: none; transition: all 0.2s; border-left: 2px solid transparent; }
+.nav-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+.nav-item.active { background: rgba(255,255,255,0.15); color: var(--accent-yellow); border-left-color: var(--accent-yellow); }
+.sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; }
+.hamburger { display: none; position: fixed; top: 16px; left: 16px; z-index: 1001; width: 40px; height: 40px; background: var(--primary); border-radius: 8px; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+.hamburger span { display: block; width: 20px; height: 2px; background: #fff; margin: 3px 0; transition: all 0.3s; }
+.main-content { margin-left: var(--sidebar-width); padding: 40px; max-width: 960px; }
+.doc-meta { background: var(--info-bg-light); border: 1px solid #b3d7fc; border-radius: 8px; padding: 20px 24px; margin-bottom: 32px; }
+.doc-meta h1 { font-size: 28px; color: var(--deep-blue); margin-bottom: 12px; }
+.meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.meta-item { display: flex; gap: 8px; }
+.meta-label { font-weight: 600; color: var(--primary-dark); }
+.meta-value { color: var(--text-light); }
+.section-divider { border: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--primary), transparent); margin: 48px 0; }
+h2.section-title { font-size: 20px; color: var(--primary); border-left: 4px solid var(--primary); padding-left: 16px; margin: 48px 0 24px; scroll-margin-top: 80px; }
+h3.sub-title { font-size: 17px; color: var(--primary-dark); border-bottom: 2px solid var(--info-bg); padding-bottom: 8px; margin: 32px 0 16px; scroll-margin-top: 80px; }
+h4 { font-size: 15px; color: var(--text-dark); margin: 24px 0 12px; }
+table { width: 100%; border-collapse: collapse; margin: 16px 0; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+thead { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: #fff; }
+th { padding: 12px 16px; text-align: left; font-weight: 600; font-size: 13px; }
+td { padding: 12px 16px; border-bottom: 1px solid var(--border-color); vertical-align: top; }
+tbody tr:nth-child(even) { background: #f9f9f9; }
+tbody tr:hover { background: var(--table-hover); }
+tbody tr:last-child td { border-bottom: none; }
+blockquote { background: var(--info-bg); border-left: 4px solid var(--primary); padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; color: var(--text-dark); }
+blockquote p { margin: 0; }
+.design-note { background: var(--warning-bg); border-left: 4px solid var(--warning-orange); padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+.design-note::before { content: "设计要点"; display: block; font-weight: 700; color: var(--warning-red); margin-bottom: 8px; }
+pre { background: var(--code-bg); color: #e0e0e0; padding: 16px 20px; border-radius: 8px; overflow-x: auto; margin: 16px 0; font-family: 'Consolas', 'Monaco', monospace; font-size: 13px; line-height: 1.6; }
+code { font-family: 'Consolas', 'Monaco', monospace; background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+pre code { background: none; padding: 0; }
+.info-note { background: var(--info-bg); border-left: 4px solid var(--primary); padding: 12px 16px; margin: 12px 0; border-radius: 0 6px 6px 0; font-size: 13px; color: var(--text-light); }
+.appendix-section { margin-top: 48px; padding-top: 24px; border-top: 2px dashed var(--border-color); }
+.footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border-color); color: var(--text-light); font-size: 13px; text-align: center; }
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay.open { display: block; }
+  .hamburger { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .main-content { margin-left: 0; padding: 24px 20px; padding-top: 80px; }
+  table { font-size: 12px; }
+  th, td { padding: 8px 10px; }
+}
+@media (max-width: 600px) {
+  .doc-meta { padding: 16px; }
+  .doc-meta h1 { font-size: 22px; }
+  h2.section-title { font-size: 18px; }
+  h3.sub-title { font-size: 15px; }
+  .meta-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span></div>
+<div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+<aside class="sidebar">
+  <div class="sidebar-header"><h1>Creality Print 切片参数全解</h1><span class="version-badge">v2.2</span>
+    <div style="margin-top:10px"><a href="index.html" style="color:rgba(255,255,255,.7);font-size:12px;text-decoration:none;display:flex;align-items:center;gap:4px" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.7)'">← 返回首页</a></div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-toggle" onclick="toggleNavSection(this)"><span>工艺（Process）</span><span class="arrow">▼</span></div>
+    <div class="nav-chapters">
+      <div class="nav-chapter">
+        <div class="nav-chapter-toggle" onclick="toggleChapter(this)"><span>第一章 质量</span><span class="arrow">▼</span></div>
+        <div class="nav-items">
+          <a href="#11-layer-height" class="nav-item">1.1 层高</a>
+          <a href="#12-line-width" class="nav-item">1.2 线宽</a>
+          <a href="#13-z-seam" class="nav-item">1.3 接缝</a>
+          <a href="#14-precision" class="nav-item">1.4 精度</a>
+          <a href="#15-ironing" class="nav-item">1.5 熨烫</a>
+          <a href="#16-infill-generator" class="nav-item">1.6 填充生成器</a>
+          <a href="#17-walls-surface" class="nav-item">1.7 墙壁和表面</a>
+          <a href="#18-bridging" class="nav-item">1.8 桥接</a>
+          <a href="#19-overhang" class="nav-item">1.9 悬垂</a>
+        </div>
+      </div>
+      <div class="nav-chapter">
+        <div class="nav-chapter-toggle" onclick="toggleChapter(this)"><span>第二章 强度</span><span class="arrow">▼</span></div>
+        <div class="nav-items">
+          <a href="#21-walls" class="nav-item">2.1 墙</a>
+          <a href="#22-top-bottom-shell" class="nav-item">2.2 顶部/底部外壳</a>
+          <a href="#23-infill" class="nav-item">2.3 填充</a>
+          <a href="#24-advanced" class="nav-item">2.4 高级</a>
+        </div>
+      </div>
+      <div class="nav-chapter">
+        <div class="nav-chapter-toggle" onclick="toggleChapter(this)"><span>第三章 速度</span><span class="arrow">▼</span></div>
+        <div class="nav-items">
+          <a href="#31-print-speed" class="nav-item">3.1 打印速度</a>
+          <a href="#32-sub-speed" class="nav-item">3.2 分项速度</a>
+          <a href="#33-acceleration" class="nav-item">3.3 加速度进阶</a>
+          <a href="#34-jerk-junction" class="nav-item">3.4 抖动与平滑</a>
+          <a href="#35-cooling-link" class="nav-item">3.5 冷却与速度联动</a>
+        </div>
+      </div>
+      <div class="nav-chapter">
+        <div class="nav-chapter-toggle" onclick="toggleChapter(this)"><span>第四章 支撑</span><span class="arrow">▼</span></div>
+        <div class="nav-items">
+          <a href="#41-support-type" class="nav-item">4.1 支撑类型与触发</a>
+          <a href="#42-support-density" class="nav-item">4.2 支撑密度与间距</a>
+          <a href="#43-support-interface" class="nav-item">4.3 支撑接口层</a>
+          <a href="#44-tree-support" class="nav-item">4.4 树形支撑进阶</a>
+          <a href="#45-support-adhesion" class="nav-item">4.5 支撑附着与拆除</a>
+        </div>
+      </div>
+      <div class="nav-chapter">
+        <div class="nav-chapter-toggle" onclick="toggleChapter(this)"><span>第五章 材料</span><span class="arrow">▼</span></div>
+        <div class="nav-items">
+          <a href="#51-prime-tower" class="nav-item">5.1 擦拭塔</a>
+          <a href="#52-purge-options" class="nav-item">5.2 换料冲刷选项</a>
+          <a href="#53-material-advanced" class="nav-item">5.3 高级</a>
+        </div>
+      </div>
+      <div class="nav-chapter">
+        <div class="nav-chapter-toggle" onclick="toggleChapter(this)"><span>第六章 其他</span><span class="arrow">▼</span></div>
+        <div class="nav-items">
+          <a href="#61-skirt" class="nav-item">6.1 裙边</a>
+          <a href="#62-brim" class="nav-item">6.2 Brim</a>
+          <a href="#63-special-modes" class="nav-item">6.3 特殊模式</a>
+          <a href="#64-gcode-output" class="nav-item">6.4 G-code 输出</a>
+          <a href="#65-post-processing" class="nav-item">6.5 后处理脚本</a>
+          <a href="#66-notes" class="nav-item">6.6 注释</a>
+        </div>
+      </div>
+      <div class="nav-chapter">
+        <div class="nav-chapter-toggle" onclick="toggleChapter(this)"><span>附录</span><span class="arrow">▼</span></div>
+        <div class="nav-items">
+          <a href="#附录a-参数联动关系总览" class="nav-item">附录A 参数联动关系</a>
+          <a href="#附录b-典型打印场景参数推荐" class="nav-item">附录B 典型场景推荐</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-toggle" onclick="toggleNavSection(this)"><span>耗材丝（Filament）</span><span class="arrow">▼</span></div>
+    <div class="nav-chapters">
+      <div class="nav-chapter">
+        <div class="nav-chapter-toggle" onclick="toggleChapter(this)"><span>第七章 基础信息</span><span class="arrow">▼</span></div>
+        <div class="nav-items">
+          <a href="#71-基础信息basic-info" class="nav-item">7.1 基础信息</a>
+          <a href="#72-print-chamber-temp" class="nav-item">7.2 打印仓温度</a>
+          <a href="#73-print-temperature" class="nav-item">7.3 打印温度</a>
+          <a href="#74-bed-temperature" class="nav-item">7.4 床温</a>
+          <a href="#75-volumetric-speed-limit" class="nav-item">7.5 体积速度限制</a>
+        </div>
+      </div>
+      <div class="nav-chapter">
+        <div class="nav-chapter-toggle" onclick="toggleChapter(this)"><span>第八章 冷却</span><span class="arrow">▼</span></div>
+        <div class="nav-items">
+          <a href="#81-specific-cooling" class="nav-item">8.1 特定层冷却</a>
+          <a href="#82-model-fan" class="nav-item">8.2 模型风扇</a>
+          <a href="#83-auxiliary-fan" class="nav-item">8.3 辅助风扇</a>
+          <a href="#84-chamber-fan" class="nav-item">8.4 机箱风扇</a>
+        </div>
+      </div>
+      <div class="nav-chapter">
+        <div class="nav-chapter-toggle" onclick="toggleChapter(this)"><span>第九章 参数覆盖</span><span class="arrow">▼</span></div>
+        <div class="nav-items"><a href="#91-retraction-overrides" class="nav-item">9.1 回抽覆盖</a></div>
+      </div>
+      <div class="nav-chapter">
+        <div class="nav-chapter-toggle" onclick="toggleChapter(this)"><span>第十章 高级</span><span class="arrow">▼</span></div>
+        <div class="nav-items"><a href="#101-filament-gcode" class="nav-item">10.1 耗材丝 G-code</a></div>
+      </div>
+      <div class="nav-chapter">
+        <div class="nav-chapter-toggle" onclick="toggleChapter(this)"><span>第十一章 材料</span><span class="arrow">▼</span></div>
+        <div class="nav-items"><a href="#111-multi-material-color-change" class="nav-item">11.1 多材料换色参数</a></div>
+      </div>
+    </div>
+  </div>
+</aside>
+<main class="main-content">
+  <div class="doc-meta">
+    <h1>Creality Print 切片参数全解</h1>
+    <div class="meta-grid">
+      <div class="meta-item"><span class="meta-label">文档版本：</span><span class="meta-value">v2.2</span></div>
+      <div class="meta-item"><span class="meta-label">适用产品：</span><span class="meta-value">Creality Print</span></div>
+      <div class="meta-item"><span class="meta-label">编写日期：</span><span class="meta-value">2026-04-30</span></div>
+      <div class="meta-item"><span class="meta-label">适用对象：</span><span class="meta-value">产品、固件、UI 及相关研发人员</span></div>
+    </div>
+  </div>
+  <blockquote><p>本文档对 Creality Print 切片软件各标签页下的所有参数进行系统梳理，涵盖每个参数的<strong>定义</strong>、<strong>典型取值</strong>及<strong>实际影响场景</strong>，旨在为产品团队提供统一的技术参考，支撑参数设计、用户引导及问题排查工作。</p><p style="margin-top:8px;">本文档采用模块化结构，各参数标签页对应独立章节，便于持续补充和维护。</p></blockquote>
+  <hr class="section-divider">
+  <h1 style="font-size:28px;color:var(--deep-blue);margin-bottom:16px;">工艺（Process）</h1>
+  <blockquote><p>本章为 Creality Print 切片工艺参数的顶层模块，涵盖从模型切片到 G-code 输出的完整工艺链路。以下各章节按功能域划分，包含质量、强度、速度、支撑、材料及其他辅助参数，以及参数联动关系和典型场景推荐。</p></blockquote>
+  <hr class="section-divider">
+  <h2 class="section-title" id="第一章-质量quality">第一章 质量（Quality）</h2>
+  <h3 class="sub-title" id="11-layer-height">1.1 层高（Layer Height）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>1.1.1</td><td>层高</td><td>Layer Height</td><td>每一层挤出丝材的垂直厚度</td><td>0.1–0.4 mm</td><td>0.1mm=高精度细腻表面；0.2mm=日常打印平衡；0.3–0.4mm=快速打印但层纹明显</td></tr>
+  <tr><td>1.1.2</td><td>首层层高</td><td>First Layer Height</td><td>第一层的打印厚度</td><td>0.2–0.3 mm</td><td>通常≥普通层高，增加首层与热床接触面积，提升附着力、防翘边</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>层高不宜超过喷嘴直径的 80%，否则挤出不稳定。</p></div>
+  <h3 class="sub-title" id="12-line-width">1.2 线宽（Line Width）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>1.2.1</td><td>缺省</td><td>Default</td><td>默认线宽（喷嘴直径的百分比或绝对值）</td><td>100%–120%</td><td>100%–120%=标准强度；150%+=可加速但表面略粗糙</td></tr>
+  <tr><td>1.2.2</td><td>首层</td><td>First Layer</td><td>第一层线宽</td><td>120%–150%</td><td>加宽线宽增加热床接触面积，显著提升首层附着力</td></tr>
+  <tr><td>1.2.3</td><td>外墙</td><td>Outer Wall</td><td>最外层轮廓线宽</td><td>100%–110%</td><td>决定外观精细度，通常保持不变或略收窄以保证表面质量</td></tr>
+  <tr><td>1.2.4</td><td>内墙</td><td>Inner Wall</td><td>内部壁面线宽</td><td>110%–120%</td><td>略宽于外墙可提升强度和打印速度，不影响外观</td></tr>
+  <tr><td>1.2.5</td><td>顶面</td><td>Top Surface</td><td>顶部实心填充线宽</td><td>同外墙</td><td>影响顶面光滑度，通常与外墙保持一致</td></tr>
+  <tr><td>1.2.6</td><td>稀疏填充</td><td>Sparse Infill</td><td>内部低密度填充线宽</td><td>120%–150%</td><td>较宽线宽可加速打印，对模型外观无影响</td></tr>
+  <tr><td>1.2.7</td><td>内部实心填充</td><td>Internal Solid Infill</td><td>100% 密度填充区域的线宽</td><td>100%–120%</td><td>影响实心区域强度和表面质量</td></tr>
+  <tr><td>1.2.8</td><td>支撑</td><td>Support</td><td>支撑结构线宽</td><td>120%–150%</td><td>较宽线宽节省支撑材料和时间，且更易拆除</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>线宽与层高共同决定单层截面积，直接影响层间结合强度。</p></div>
+  <h3 class="sub-title" id="13-z-seam">1.3 接缝（Z Seam）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>1.3.1</td><td>接缝位置</td><td>Z Seam Position</td><td>层与层之间接缝的对齐方式</td><td>对齐/随机/最短路径</td><td><strong>对齐</strong>=接缝成一条线，适合隐藏在后侧；<strong>随机</strong>=分散但表面斑驳；<strong>最短路径</strong>=最快但接缝位置不定</td></tr>
+  <tr><td>1.3.2</td><td>交错的内墙接缝</td><td>Alternate Extra Wall</td><td>内层壁接缝错开排列</td><td>开启/关闭</td><td>开启后内墙接缝不堆叠，提升整体强度，减少应力集中</td></tr>
+  <tr><td>1.3.3</td><td>接缝间隔</td><td>Seam Gap</td><td>相邻层接缝的圆周距离百分比</td><td>0%–50%</td><td>15%=接缝轻微分散，平衡外观和强度；0%=完全对齐成线</td></tr>
+  <tr><td>1.3.4</td><td>斜接缝（试验）</td><td>Diagonal Seam (Exp)</td><td>接缝沿斜线分布</td><td>无/开启</td><td>无=传统垂直接缝；开启后接缝更隐蔽但切片计算量增加</td></tr>
+  <tr><td>1.3.5</td><td>自动擦拭速度</td><td>Automatic Wipe Speed</td><td>换层时自动降低速度擦拭喷嘴</td><td>开启/关闭</td><td>开启可减少喷嘴拉丝和渗料，提升接缝处表面质量</td></tr>
+  <tr><td>1.3.6</td><td>擦拭速度</td><td>Wipe Speed</td><td>接缝处喷嘴移动速度百分比</td><td>50%–100%</td><td>80%=接缝处减速，减少堆料和凸起</td></tr>
+  <tr><td>1.3.7</td><td>闭环擦拭</td><td>Closed Polygons Wipe</td><td>接缝处做闭环运动擦拭</td><td>开启/关闭</td><td>开启进一步清理喷嘴，但略微增加打印时间</td></tr>
+  <tr><td>1.3.8</td><td>额外的外墙打印前擦拭</td><td>Extra Wipe Before Outer Wall</td><td>打印最外层前额外擦拭</td><td>开启/关闭</td><td>开启确保外墙开始前喷嘴干净，显著提升外观质量</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>接缝是 FDM 打印无法完全避免的固有缺陷，合理设置可将瑕疵隐藏在非可视面。</p></div>
+  <h3 class="sub-title" id="14-precision">1.4 精度（Precision）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>1.4.1</td><td>切片间隙闭合半径</td><td>Slicing Gap Close Radius</td><td>切片时合并微小间隙的阈值半径</td><td>0.01–0.1 mm</td><td>小于此值的缝隙被合并，避免切片产生碎面和无效路径</td></tr>
+  <tr><td>1.4.2</td><td>分辨率</td><td>Resolution</td><td>模型表面三角面简化精度</td><td>0.01–0.05 mm</td><td>值越小模型越精细但 G-code 文件越大；值大则曲面被过度简化</td></tr>
+  <tr><td>1.4.3</td><td>圆弧拟合</td><td>Arc Fitting</td><td>将短直线段拟合为圆弧 G-code</td><td>开启/关闭</td><td>开启可减少 G-code 体积，打印更平滑，减少振纹</td></tr>
+  <tr><td>1.4.4</td><td>X-Y 孔洞尺寸补偿</td><td>Hole Horizontal Expansion</td><td>水平方向孔洞的尺寸修正</td><td>-0.2–+0.2 mm</td><td>正值=孔变大，负值=孔变小；用于补偿材料收缩，确保轴/销配合精度</td></tr>
+  <tr><td>1.4.5</td><td>X-Y 外轮廓尺寸补偿</td><td>Outer Wall Horizontal Expansion</td><td>水平方向外轮廓尺寸修正</td><td>-0.2–+0.2 mm</td><td>正值=整体放大，负值=整体缩小；用于精密配合件尺寸微调</td></tr>
+  <tr><td>1.4.6</td><td>象脚补偿</td><td>Elephant Foot Compensation</td><td>首层向外膨胀（象脚现象）的修正</td><td>0–0.3 mm</td><td>负值内收首层边缘，解决首层过挤导致的底部外扩；典型值 0.1–0.2mm</td></tr>
+  <tr><td>1.4.7</td><td>象脚补偿层数</td><td>Elephant Foot Compensation Layers</td><td>应用象脚补偿的层数范围</td><td>1–5 层</td><td>1层=仅首层；增加可处理更严重的过挤导致的多层外扩</td></tr>
+  <tr><td>1.4.8</td><td>精准外插尺寸</td><td>Precise Outer Contour</td><td>精确控制外轮廓插值计算</td><td>开启/关闭</td><td>开启提升尺寸精度，但增加切片时间</td></tr>
+  <tr><td>1.4.9</td><td>将圆孔转换为多边形孔</td><td>Convert Round Holes to Polygons</td><td>圆孔用多边形近似</td><td>开启/关闭</td><td>开启后圆孔变多边形，某些场景可减少切片错误和打印缺陷</td></tr>
+  <tr><td>1.4.10</td><td>精准Z高度</td><td>Precise Z Height</td><td>Z轴高度精确控制</td><td>开启/关闭</td><td>开启确保层高精确，避免长期打印的 Z 轴累积误差</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>X-Y 补偿参数对功能性零件尤为重要，是用户最常咨询的参数之一。</p></div>
+  <h3 class="sub-title" id="15-ironing">1.5 熨烫（Ironing）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>1.5.1</td><td>熨烫类型</td><td>Ironing Type</td><td>顶面二次熨烫处理方式</td><td>不熨烫/平滑/平滑+挤出</td><td><strong>不熨烫</strong>=标准打印；<strong>平滑</strong>=喷嘴无挤出熨烫顶面，消除纹理；<strong>平滑+挤出</strong>=微挤出填充顶面微小间隙，效果最佳</td></tr>
+  </tbody></table>
+  <div class="info-note">熨烫会使打印时间增加约 10%–20%，仅建议在展示面或接触面使用时开启。</div>
+  <h3 class="sub-title" id="16-infill-generator">1.6 填充生成器（Infill Generator）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>1.6.1</td><td>填充生成器</td><td>Infill Generator</td><td>内部填充算法类型</td><td>经典/其他算法</td><td><strong>经典</strong>=标准引擎算法；其他选项提供不同填充路径优化（Grid / Triangle / Cubic 等）</td></tr>
+  </tbody></table>
+  <h3 class="sub-title" id="17-walls-surface">1.7 墙壁和表面（Walls & Surface）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>1.7.1</td><td>墙顺序</td><td>Wall Ordering</td><td>内外墙的打印先后顺序</td><td>内→外 / 外→内</td><td><strong>内→外</strong>=外墙后打，表面更好；<strong>外→内</strong>=外墙先打，尺寸更精准</td></tr>
+  <tr><td>1.7.2</td><td>首先打印填充</td><td>Print Infill First</td><td>先打填充再打墙壁</td><td>开启/关闭</td><td>开启提升层间结合，但外墙可能有填充纹理透出</td></tr>
+  <tr><td>1.7.3</td><td>围墙打印方向</td><td>Outer Wall Direction</td><td>外墙打印方向控制</td><td>自动/顺时针/逆时针</td><td>自动=软件决定；强制方向可影响表面纹理和外观一致性</td></tr>
+  <tr><td>1.7.4</td><td>流量比例</td><td>Flow Ratio</td><td>整体挤出流量倍率</td><td>0.9–1.1</td><td>1.0=100%；>1过挤，<1欠挤；微调不同材料的流动性差异</td></tr>
+  <tr><td>1.7.5</td><td>顶部表面流量比例</td><td>Top Surface Flow Ratio</td><td>顶面单独流量控制</td><td>0.9–1.1</td><td>可微调解决顶面过挤（鼓包）或欠挤（缝隙）问题</td></tr>
+  <tr><td>1.7.6</td><td>底部表面流量比例</td><td>Bottom Surface Flow Ratio</td><td>底面单独流量控制</td><td>0.9–1.1</td><td>1.05=底面略过挤，提升首层附着和密封性</td></tr>
+  <tr><td>1.7.7</td><td>顶面单层墙</td><td>Top Surface Single Wall</td><td>顶面只打一层外墙</td><td>开启/关闭</td><td>开启减少顶面重量，适合轻薄顶盖设计</td></tr>
+  <tr><td>1.7.8</td><td>单层墙阈值</td><td>Single Wall Min Width</td><td>触发单层墙的最小宽度</td><td>200%–500% 线宽</td><td>小于此宽度的区域用单层墙，减少实心区域浪费</td></tr>
+  <tr><td>1.7.9</td><td>首层仅单层墙</td><td>First Layer Single Wall</td><td>首层强制单层墙</td><td>开启/关闭</td><td>开启简化首层路径，提升附着力</td></tr>
+  <tr><td>1.7.10</td><td>避免跨越外墙</td><td>Avoid Crossing Walls</td><td>喷嘴不横穿已打印外墙</td><td>开启/关闭</td><td>开启减少外墙划痕和渗料，显著提升外观质量</td></tr>
+  <tr><td>1.7.11</td><td>小区域填充流量补偿（试验）</td><td>Small Area Flow Compensation (Exp)</td><td>小面积填充的额外流量</td><td>开启/关闭</td><td>试验功能，解决小区域填充不足导致的强度问题</td></tr>
+  <tr><td>1.7.12</td><td>平滑Z方向外墙速度（试验）</td><td>Smooth Z Wall Speed (Exp)</td><td>Z轴方向外墙速度平滑</td><td>开启/关闭</td><td>试验功能，减少层间速度突变导致的表面瑕疵</td></tr>
+  </tbody></table>
+  <h3 class="sub-title" id="18-bridging">1.8 桥接（Bridging）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>1.8.1</td><td>桥接流量</td><td>Bridging Flow</td><td>悬空桥接时的挤出流量</td><td>0.8–1.0</td><td>桥接时通常略降（0.8–0.9）防止材料因重力下垂</td></tr>
+  <tr><td>1.8.2</td><td>桥接悬空流比例</td><td>Bridging Unanchored Flow</td><td>桥接悬空区域的流量</td><td>0.8–1.0</td><td>控制桥接起始点（无锚定点）的材料量，防止起点堆料</td></tr>
+  <tr><td>1.8.3</td><td>桥接速度</td><td>Bridging Speed</td><td>桥接时的打印速度</td><td>100%–200% 正常速度</td><td>加速（150%–200%）可利用熔融材料的张力，减少下垂</td></tr>
+  <tr><td>1.8.4</td><td>悬垂</td><td>Overhang</td><td>桥接角度阈值控制</td><td>开启/关闭</td><td>开启后软件自动识别需要桥接处理的悬空区域</td></tr>
+  <tr><td>1.8.5</td><td>内部搭桥用厚桥</td><td>Use Thick Bridges for Internal</td><td>内部悬空使用加厚桥接</td><td>开启/关闭</td><td>开启提升内部桥接强度，对外观无影响</td></tr>
+  <tr><td>1.8.6</td><td>保留细微内部桥接（试验）</td><td>Keep Minor Internal Bridges (Exp)</td><td>保留微小内部桥接结构</td><td>开启/关闭</td><td>禁用=忽略小桥接（节省时间）；开启=保留所有桥接（提升质量）</td></tr>
+  <tr><td>1.8.7</td><td>沉孔搭桥</td><td>Countersink Bridging</td><td>沉头孔的桥接处理方式</td><td>无/启用</td><td>优化螺丝沉孔等特征的桥接路径，减少支撑需求</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>桥接质量是体现打印机运动控制能力的重要指标，K2 Pro 等高速机型需特别关注此参数组。</p></div>
+  <h3 class="sub-title" id="19-overhang">1.9 悬垂（Overhang）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>1.9.1</td><td>识别悬空外墙</td><td>Detect Overhanging Walls</td><td>自动检测悬空的外墙区域</td><td>开启/关闭</td><td>开启后软件识别需要支撑或特殊处理的悬空外墙</td></tr>
+  <tr><td>1.9.2</td><td>悬垂可打印化</td><td>Make Overhangs Printable</td><td>优化悬垂使其可打印</td><td>开启/关闭</td><td>开启调整悬垂路径，尝试无支撑打印小角度（<45°）悬垂</td></tr>
+  <tr><td>1.9.3</td><td>悬垂上的额外周长</td><td>Extra Wall on Overhang</td><td>悬垂区域增加额外圈数</td><td>开启/关闭</td><td>开启增加悬垂处材料，显著提升无支撑悬垂打印成功率</td></tr>
+  <tr><td>1.9.4</td><td>反转奇数层悬垂方向</td><td>Alternate Odd Layer Overhang</td><td>奇数层悬垂打印方向反转</td><td>开启/关闭</td><td>开启交错悬垂方向，提升层间结合和悬垂表面质量</td></tr>
+  <tr><td>1.9.5</td><td>悬垂优化（试验）</td><td>Overhang Optimization (Exp)</td><td>试验性悬垂路径优化</td><td>开启/关闭</td><td>开启尝试更智能的悬垂处理算法，效果因模型而异</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>悬垂处理是决定用户是否需要使用支撑的关键，直接影响打印成功率和后处理工作量。</p></div>
+  <h2 class="section-title" id="第二章-强度strength">第二章 强度（Strength）</h2>
+  <h3 class="sub-title" id="21-walls">2.1 墙（Walls）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>2.1.1</td><td>墙层数</td><td>Wall Layers</td><td>外壳的圈数（内外墙合计）</td><td>2–5 层</td><td>层数越多模型越坚固，一般 2-3 层；功能件建议 4+ 层</td></tr>
+  <tr><td>2.1.2</td><td>将墙体嵌入填充中</td><td>Infill Wipe Distance</td><td>墙体与填充重叠距离</td><td>0.1–0.5 mm</td><td>正值增加墙与填充的结合，防止分层</td></tr>
+  <tr><td>2.1.3</td><td>交替添加额外内墙</td><td>Alternate Extra Wall</td><td>内层壁接缝错开排列</td><td>开启/关闭</td><td>开启后内墙接缝不堆叠，提升整体强度</td></tr>
+  <tr><td>2.1.4</td><td>检查薄壁</td><td>Check Thin Walls</td><td>自动检测并填充薄壁区域</td><td>开启/关闭</td><td>开启可修复模型中厚度不足的壁面，提升打印成功率</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>墙层数是决定零件强度的首要参数，比填充密度影响更直接。</p></div>
+  <h3 class="sub-title" id="22-top-bottom-shell">2.2 顶部/底部外壳（Top/Bottom Shell）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>2.2.1</td><td>顶面图案</td><td>Top Surface Pattern</td><td>顶部实心层的打印图案</td><td>同心圆/直线/锯齿</td><td>同心圆=表面更平滑；直线=更快但可能有纹理</td></tr>
+  <tr><td>2.2.2</td><td>顶部壳体层数</td><td>Top Layers</td><td>顶面的实心层数</td><td>4–10 层</td><td>层数越多顶面越密实不透光，一般 4-8 层</td></tr>
+  <tr><td>2.2.3</td><td>顶部壳体厚度</td><td>Top Thickness</td><td>顶面的实心总厚度（层数×层高）</td><td>0.8–2.0 mm</td><td>与层数和层高联动，可独立于层数设置</td></tr>
+  <tr><td>2.2.4</td><td>底面图案</td><td>Bottom Surface Pattern</td><td>底部实心层的打印图案</td><td>同心圆/直线/锯齿</td><td>同心圆=附着力更好；直线=更快</td></tr>
+  <tr><td>2.2.5</td><td>底部壳体层数</td><td>Bottom Layers</td><td>底面的实心层数</td><td>3–8 层</td><td>层数越多底面越密封，一般 3-5 层</td></tr>
+  <tr><td>2.2.6</td><td>底部壳体厚度</td><td>Bottom Thickness</td><td>底面的实心总厚度</td><td>0.6–1.6 mm</td><td>与层数和层高联动</td></tr>
+  <tr><td>2.2.7</td><td>顶/底部实心填充/墙重叠率</td><td>Top/Bottom Overlap Ratio</td><td>实心层与墙壁的重叠比例</td><td>15%–50%</td><td>提高可防止顶面与墙壁之间出现缝隙</td></tr>
+  </tbody></table>
+  <h3 class="sub-title" id="23-infill">2.3 填充（Infill）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>2.3.1</td><td>稀疏填充密度</td><td>Infill Density</td><td>模型内部填充比例</td><td>0%–100%</td><td>0%=空心，100%=实心；日常 15%–30%，受力件 50%+</td></tr>
+  <tr><td>2.3.2</td><td>智能填充</td><td>Smart Infill</td><td>根据应力分布优化填充</td><td>开启/关闭</td><td>开启后在受力区域自动加密填充，节省材料</td></tr>
+  <tr><td>2.3.3</td><td>稀疏填充图案</td><td>Infill Pattern</td><td>内部填充的几何形状</td><td>蜂巢/网格/立方体/陀螺体等</td><td>蜂巢=强度/效率均衡；立方体=Z轴强度最高</td></tr>
+  <tr><td>2.3.4</td><td>稀疏填充锚线长度</td><td>Infill Anchor Line Length</td><td>填充与墙壁的锚定线长度</td><td>0–10 mm</td><td>增加可提升填充与墙壁的结合力，防止分层</td></tr>
+  <tr><td>2.3.5</td><td>填充锚线的最大长度</td><td>Max Infill Anchor Length</td><td>锚定线的最大长度限制</td><td>0–20 mm</td><td>防止锚定线过长导致打印时间大幅增加</td></tr>
+  <tr><td>2.3.6</td><td>内部实心填充图案</td><td>Internal Solid Pattern</td><td>100% 密度区域的填充图案</td><td>同心圆/直线/锯齿</td><td>同心圆=表面更平滑；直线=打印更快</td></tr>
+  <tr><td>2.3.7</td><td>启用间隙填充</td><td>Enable Gap Filling</td><td>自动填充墙壁间的微小间隙</td><td>开启/关闭</td><td>开启可防止墙壁间出现未填充的缝隙</td></tr>
+  <tr><td>2.3.8</td><td>忽略微小间隙</td><td>Ignore Small Gaps</td><td>忽略小于阈值的微小间隙</td><td>开启/关闭</td><td>开启可减少因模型瑕疵导致的无效填充</td></tr>
+  <tr><td>2.3.9</td><td>填充/墙重叠</td><td>Infill/Wall Overlap</td><td>填充与墙壁的重叠比例</td><td>15%–50%</td><td>提高可防止填充与墙壁之间出现缝隙</td></tr>
+  <tr><td>2.3.10</td><td>顶部实心填充</td><td>Top Solid Infill</td><td>顶部实心填充的打印方式</td><td>开启/关闭</td><td>控制顶部是否打印实心层</td></tr>
+  <tr><td>2.3.11</td><td>填充多线</td><td>Infill Multi-Line</td><td>填充使用多线打印</td><td>开启/关闭</td><td>开启可提升填充打印速度和质量</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>填充密度 20% 是大多数场景的甜点；超过 50% 后强度提升边际递减。</p></div>
+  <h3 class="sub-title" id="24-advanced">2.4 高级（Advanced）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>2.4.1</td><td>稀疏填充方向</td><td>Infill Direction</td><td>填充路径的方向角度</td><td>0°–180°</td><td>0°=X轴方向；45°=对角线；影响各向异性强度</td></tr>
+  <tr><td>2.4.2</td><td>实心填充方向</td><td>Solid Infill Direction</td><td>实心层填充路径的方向角度</td><td>0°–180°</td><td>可独立于稀疏填充设置，优化顶面质量</td></tr>
+  <tr><td>2.4.3</td><td>旋转实心填充方向</td><td>Rotate Solid Infill Direction</td><td>每层实心填充方向旋转角度</td><td>开启/关闭</td><td>开启后每层旋转 90°，提升各向强度</td></tr>
+  <tr><td>2.4.4</td><td>拉桥填充方向</td><td>Bridging Infill Direction</td><td>桥接区域填充方向</td><td>0°–180°</td><td>控制桥接下方填充方向，影响桥接质量</td></tr>
+  <tr><td>2.4.5</td><td>稀疏填充最小阈值</td><td>Min Infill Area Threshold</td><td>小于此面积的区域不填充</td><td>0–100 mm²</td><td>减少微小空腔的无效填充，节省时间</td></tr>
+  <tr><td>2.4.6</td><td>合并填充</td><td>Merge Infill</td><td>合并相邻的填充区域</td><td>开启/关闭</td><td>开启可减少填充路径的断续，提升强度</td></tr>
+  <tr><td>2.4.7</td><td>识别狭窄内部实心填充</td><td>Detect Thin Internal Solid</td><td>自动检测狭窄实心区域</td><td>开启/关闭</td><td>开启可防止狭窄区域因无法填充而弱化</td></tr>
+  <tr><td>2.4.8</td><td>确保垂直外壳厚度</td><td>Ensure Vertical Shell Thickness</td><td>保证垂直方向外壳厚度一致</td><td>开启/关闭</td><td>开启可防止斜坡处外壳厚度不均</td></tr>
+  </tbody></table>
+  <h2 class="section-title" id="第三章-速度speed">第三章 速度（Speed）</h2>
+  <h3 class="sub-title" id="31-print-speed">3.1 打印速度（Print Speed）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>3.1.1</td><td>打印速度</td><td>Print Speed</td><td>整体打印移动速度（mm/s）</td><td>40–300 mm/s</td><td>K2 Pro 可达 300–600mm/s；Ender 系一般 50–80mm/s；速度越快总时间越短但质量可能下降</td></tr>
+  <tr><td>3.1.2</td><td>打印加速度</td><td>Print Acceleration</td><td>打印过程中的加速度（mm/s²）</td><td>500–5000 mm/s²</td><td>高加速度可缩短打印时间但增加震动；高速机型建议 3000+</td></tr>
+  <tr><td>3.1.3</td><td>打印减速度</td><td>Print Deceleration</td><td>打印过程中的减速度（mm/s²）</td><td>500–5000 mm/s²</td><td>独立控制减速可防止拐角处过冲和拉丝</td></tr>
+  <tr><td>3.1.4</td><td>首层速度</td><td>Initial Layer Speed</td><td>第一层的打印速度</td><td>15–30 mm/s</td><td>首层必须减速以确保热床粘附，防止翘边</td></tr>
+  <tr><td>3.1.5</td><td>首层加速度</td><td>Initial Layer Acceleration</td><td>第一层的加速度</td><td>200–500 mm/s²</td><td>首层加速度也要降低，防止挤出不稳定</td></tr>
+  <tr><td>3.1.6</td><td>拐角速度</td><td>Corner Speed</td><td>拐角处的最大移动速度</td><td>10–50 mm/s</td><td>拐角处降速可减少圆角和震颤，提升尺寸精度</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>K2 Pro 等高速机型的核心竞争力体现在加速度参数，而非单纯的最高速度。</p></div>
+  <h3 class="sub-title" id="32-sub-speed">3.2 分项速度（Sub-Speed）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>3.2.1</td><td>外墙速度</td><td>Outer Wall Speed</td><td>最外层壁面的打印速度</td><td>30–80 mm/s</td><td>外墙最慢以保证表面质量，一般比内墙慢 30%–50%</td></tr>
+  <tr><td>3.2.2</td><td>内墙速度</td><td>Inner Wall Speed</td><td>内部壁面的打印速度</td><td>50–120 mm/s</td><td>可稍快于外墙，不影响外观</td></tr>
+  <tr><td>3.2.3</td><td>顶面速度</td><td>Top Surface Speed</td><td>顶部实心层的打印速度</td><td>30–80 mm/s</td><td>顶面降速可减少纹理，提升光滑度</td></tr>
+  <tr><td>3.2.4</td><td>底面速度</td><td>Bottom Surface Speed</td><td>底部实心层的打印速度</td><td>30–80 mm/s</td><td>底面降速可提升首层附着和密封性</td></tr>
+  <tr><td>3.2.5</td><td>稀疏填充速度</td><td>Sparse Infill Speed</td><td>内部低密度填充的打印速度</td><td>80–200 mm/s</td><td>填充最快，因不影响外观；高速打印时此处收益最大</td></tr>
+  <tr><td>3.2.6</td><td>内部实心填充速度</td><td>Internal Solid Infill Speed</td><td>100% 密度填充区域的打印速度</td><td>50–100 mm/s</td><td>介于填充和墙壁之间</td></tr>
+  <tr><td>3.2.7</td><td>支撑速度</td><td>Support Speed</td><td>支撑结构的打印速度</td><td>60–150 mm/s</td><td>支撑不需要高质量，可快速打印</td></tr>
+  <tr><td>3.2.8</td><td>空驶速度</td><td>Travel Speed</td><td>非打印状态下的移动速度</td><td>150–500 mm/s</td><td>越快总时间越短，但不能太快导致震动丢步；K2 Pro 可达 500mm/s+</td></tr>
+  <tr><td>3.2.9</td><td>首层空驶速度</td><td>Initial Layer Travel Speed</td><td>第一层空驶移动速度</td><td>50–100 mm/s</td><td>首层空驶也要减速，防止碰撞未固化的首层</td></tr>
+  </tbody></table>
+  <h3 class="sub-title" id="33-acceleration">3.3 加速度进阶（Acceleration Advanced）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>3.3.1</td><td>外墙加速度</td><td>Outer Wall Acceleration</td><td>外墙打印加速度</td><td>500–2000 mm/s²</td><td>外墙低加速度保证表面质量</td></tr>
+  <tr><td>3.3.2</td><td>内墙加速度</td><td>Inner Wall Acceleration</td><td>内墙打印加速度</td><td>1000–3000 mm/s²</td><td>可高于外墙，提升效率</td></tr>
+  <tr><td>3.3.3</td><td>填充加速度</td><td>Infill Acceleration</td><td>填充打印加速度</td><td>2000–5000 mm/s²</td><td>填充高加速度不影响质量，最大化时间收益</td></tr>
+  <tr><td>3.3.4</td><td>支撑加速度</td><td>Support Acceleration</td><td>支撑打印加速度</td><td>2000–5000 mm/s²</td><td>支撑可承受高加速度</td></tr>
+  <tr><td>3.3.5</td><td>空驶加速度</td><td>Travel Acceleration</td><td>空驶移动加速度</td><td>2000–10000 mm/s²</td><td>空驶高加速度可显著缩短总打印时间</td></tr>
+  <tr><td>3.3.6</td><td>拐角加速度</td><td>Corner Acceleration</td><td>拐角处减速度</td><td>500–2000 mm/s²</td><td>拐角处减速防止圆角和拉丝</td></tr>
+  </tbody></table>
+  <div class="="design-note"><p>分项加速度是高速打印的核心调优参数，Creality Print 支持对每类路径独立设置。</p></div>
+  <h3 class="sub-title" id="34-jerk-junction">3.4 抖动与平滑（Jerk/Junction）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>3.4.1</td><td>抖动（Jerk）</td><td>Jerk</td><td>速度突变的容忍阈值（mm/s）</td><td>5–30 mm/s</td><td>值越高拐角越锐利但震动越大；值越低越平滑但拐角变圆</td></tr>
+  <tr><td>3.4.2</td><td>外墙抖动</td><td>Outer Wall Jerk</td><td>外墙专用抖动值</td><td>5–15 mm/s</td><td>外墙低抖动保证表面锐利度</td></tr>
+  <tr><td>3.4.3</td><td>连接阈值（Junction Deviation）</td><td>Junction Deviation</td><td>拐角处速度平滑的阈值（mm）</td><td>0.05–0.5 mm</td><td>Marlin 固件参数，值越高拐角越平滑但越圆；需与 Jerk 配合使用</td></tr>
+  <tr><td>3.4.4</td><td>最小分段时间</td><td>Minimum Segment Time</td><td>短线段的最小停留时间（ms）</td><td>5–50 ms</td><td>防止大量短线段导致瞬时速度过高，保护电机</td></tr>
+  </tbody></table>
+  <div class="info-note">Jerk 和 Junction Deviation 是用户最难理解的参数组，建议提供预设档位（低/中/高）而非完全开放。</div>
+  <h3 class="sub-title" id="35-cooling-link">3.5 冷却与速度联动（Speed/Cooling Link）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>3.5.1</td><td>最小分层时间</td><td>Minimum Layer Time</td><td>每一层的最短打印时间（秒）</td><td>5–30 s</td><td>防止层未冷却就打下一层导致塌陷；PLA 建议 ≥10s</td></tr>
+  <tr><td>3.5.2</td><td>最小分层速度</td><td>Minimum Speed</td><td>达到最小分层时间时的最低速度（mm/s）</td><td>10–30 mm/s</td><td>当单层打印过快时强制降速，保证冷却</td></tr>
+  <tr><td>3.5.3</td><td>分层时间策略</td><td>Layer Time Strategy</td><td>分层时间控制方式</td><td>无/最小时间/风扇全开</td><td><strong>无</strong>=不限制；<strong>最小时间</strong>=降速；<strong>风扇全开</strong>=保持速度但最大风扇</td></tr>
+  <tr><td>3.5.4</td><td>冷却风扇最低层时间</td><td>Fan Full Speed Layer Time</td><td>低于此时间时风扇全开（秒）</td><td>5–20 s</td><td>小零件打印时自动提高风扇转速，防止过热变形</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>最小分层时间是防止小零件打印失败的关键参数，Creality Print 默认开启此保护。</p></div>
+  <h2 class="section-title" id="第四章-支撑support">第四章 支撑（Support）</h2>
+  <h3 class="sub-title" id="41-support-type">4.1 支撑类型与触发（Support Type & Trigger）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>4.1.1</td><td>支撑类型</td><td>Support Structure</td><td>支撑结构的几何类型</td><td>树形/线性/增强</td><td><strong>树形</strong>=易拆除省材料，适合有机形状；<strong>线性</strong>=适合大面积悬空；<strong>增强</strong>=支撑更牢固但难拆</td></tr>
+  <tr><td>4.1.2</td><td>支撑放置位置</td><td>Support Placement</td><td>支撑生成的区域范围</td><td>接触打印床/ everywhere/ 仅接触模型</td><td><strong>打印床</strong>=只从热床起支撑；<strong>everywhere</strong>=可从模型表面起支撑；<strong>仅接触模型</strong>=只在悬空下方生成</td></tr>
+  <tr><td>4.1.3</td><td>悬垂角度阈值</td><td>Support Overhang Angle</td><td>超过此角度自动生成支撑</td><td>30°–60°</td><td>30°=最保守，几乎无悬空打印；45°=常用平衡值；60°=挑战极限减少支撑</td></tr>
+  <tr><td>4.1.4</td><td>支撑优先级</td><td>Support Priority</td><td>多个模型共存时的支撑优先级</td><td>0–10</td><td>值越高越优先生成支撑；多模型打印时用于控制支撑分配</td></tr>
+  <tr><td>4.1.5</td><td>仅在不可打印区域生成</td><td>Only Support Unprintable</td><td>只在无支撑无法打印的区域生成支撑</td><td>开启/关闭</td><td>开启可减少不必要的支撑，节省材料和时间</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>树形支撑是 Creality Print 的特色功能，相比传统线性支撑可节省 30%–50% 材料。</p></div>
+  <h3 class="sub-title" id="42-support-density">4.2 支撑密度与间距（Support Density & Distance）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>4.2.1</td><td>支撑密度</td><td>Support Density</td><td>支撑结构的填充比例</td><td>5%–30%</td><td>8%–15%=常用值；密度越高越牢固但越难拆除</td></tr>
+  <tr><td>4.2.2</td><td>支撑 X/Y 距离</td><td>Support X/Y Distance</td><td>支撑与模型表面的水平间隙</td><td>0.2–2.0 mm</td><td>值小=支撑更贴合但难拆；值大=易拆但可能塌陷</td></tr>
+  <tr><td>4.2.3</td><td>支撑 Z 距离</td><td>Support Z Distance</td><td>支撑与模型表面的垂直间隙</td><td>0.1–0.3 mm</td><td>0.1–0.15mm=易拆除且不伤表面；值大=更易拆但悬空面质量差</td></tr>
+  <tr><td>4.2.4</td><td>支撑顶层距离</td><td>Support Top Distance</td><td>支撑顶部与模型悬空面的距离</td><td>0.1–0.3 mm</td><td>可独立于 Z 距离设置，控制悬空面质量</td></tr>
+  <tr><td>4.2.5</td><td>支撑底层距离</td><td>Support Bottom Distance</td><td>支撑底部与模型（或热床）的距离</td><td>0.1–0.3 mm</td><td>可独立于 Z 距离设置，控制支撑起点的附着力</td></tr>
+  <tr><td>4.2.6</td><td>支撑线宽</td><td>Support Line Width</td><td>支撑结构的线宽</td><td>0.3–0.6 mm</td><td>通常比模型线宽更宽（0.5–0.6mm），节省材料且易拆</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>Z 距离是最影响支撑拆除难度的参数，是用户咨询最高频的问题之一。</p></div>
+  <h3 class="sub-title" id="43-support-interface">4.3 支撑接口层（Support Interface）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>4.3.1</td><td>启用支撑接口层</td><td>Enable Support Interface</td><td>在支撑与模型接触面增加致密层</td><td>开启/关闭</td><td>开启可显著改善悬空面质量，但增加拆除难度</td></tr>
+  <tr><td>4.3.2</td><td>支撑接口层密度</td><td>Support Interface Density</td><td>接口层的填充密度</td><td>30%–100%</td><td>100%=最致密，悬空面最光滑；50%=平衡值</td></tr>
+  <tr><td>4.3.3</td><td>支撑接口层厚度</td><td>Support Interface Thickness</td><td>接口层的层数</td><td>2–10 层</td><td>层数越多悬空面越光滑，但拆除工作量越大</td></tr>
+  <tr><td>4.3.4</td><td>支撑接口层 X/Y 距离</td><td>Support Interface X/Y Distance</td><td>接口层与模型的距离</td><td>0–0.2 mm</td><td>0=接口层紧贴模型，悬空面最光滑；值大=更易拆除</td></tr>
+  <tr><td>4.3.5</td><td>上部支撑接口层</td><td>Top Support Interface</td><td>悬空面下方的接口层</td><td>开启/关闭</td><td>开启改善悬空面质量；关闭可加速打印</td></tr>
+  <tr><td>4.3.6</td><td>下部支撑接口层</td><td>Bottom Support Interface</td><td>支撑顶部的接口层（模型悬空下方）</td><td>开启/关闭</td><td>开启改善支撑顶面质量，便于拆除</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>支撑接口层是"质量 vs 可打印性"的典型权衡，展示件建议开启，功能件可关闭。</p></div>
+  <h3 class="sub-title" id="44-tree-support">4.4 树形支撑进阶（Tree Support Advanced）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>4.4.1</td><td>树形支撑分支角度</td><td>Tree Support branch Angle</td><td>树形支撑分支的最大倾斜角度</td><td>30°–60°</td><td>角度小=支撑更垂直占地大；角度大=支撑更省空间但可能不稳</td></tr>
+  <tr><td>4.4.2</td><td>树形支撑顶端直径</td><td>Tree Support Tip Diameter</td><td>树形支撑接触模型顶端的直径</td><td>0.5–2.0 mm</td><td>直径小=接触面小易拆；直径大=接触更稳但留痕明显</td></tr>
+  <tr><td>4.4.3</td><td>树形支撑根部直径</td><td>Tree Support Root Diameter</td><td>树形支撑与热床接触的根部直径</td><td>2.0–8.0 mm</td><td>直径大=附着力强但用料多；直径小=省材料但可能脱落</td></tr>
+  <tr><td>4.4.4</td><td>树形支撑碰撞回避</td><td>Tree Support Collision Avoidance</td><td>防止支撑与模型发生碰撞</td><td>开启/关闭</td><td>开启避免支撑穿透模型，但可能增加支撑体积</td></tr>
+  <tr><td>4.4.5</td><td>树形支撑优先朝向</td><td>Tree Support Preferred Direction</td><td>树形支撑优先生长方向</td><td>无/向中心/向外</td><td>向中心=支撑更紧凑；向外=更易拆除</td></tr>
+  <tr><td>4.4.6</td><td>树形支撑最大悬空长度</td><td>Tree Support Max Overhang</td><td>树形支撑分支的最大无锚定长度</td><td>5–20 mm</td><td>限制分支长度防止倒塌；值小=更稳但支撑更多</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>树形支撑是 Creality Print（基于 Cura 引擎）的亮点功能，参数调优可显著减少支撑用量。</p></div>
+  <h3 class="sub-title" id="45-support-adhesion">4.5 支撑附着与拆除优化（Support Adhesion & Removal）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>4.5.1</td><td>支撑底筏</td><td>Support Brim</td><td>在支撑底部增加附着边缘</td><td>开启/关闭</td><td>开启提升支撑附着力，防止打印中支撑脱落</td></tr>
+  <tr><td>4.5.2</td><td>支撑底筏圈数</td><td>Support Brim Lines</td><td>支撑底筏的圈数</td><td>1–5 圈</td><td>圈数越多附着力越强，但拆除工作量增加</td></tr>
+  <tr><td>4.5.3</td><td>支撑逐步收窄</td><td>Taper Support</td><td>支撑向上逐渐收窄</td><td>开启/关闭</td><td>开启节省材料，但可能降低顶部支撑稳定性</td></tr>
+  <tr><td>4.5.4</td><td>支撑逐步收窄角度</td><td>Taper Support Angle</td><td>支撑收窄的倾斜角度</td><td>10°–45°</td><td>角度小=收窄慢用料多；角度大=收窄快但顶部可能不稳</td></tr>
+  <tr><td>4.5.5</td><td>支撑连接距离</td><td>Support Join Distance</td><td>多根支撑合并连接的距离阈值</td><td>2.0–10.0 mm</td><td>值小=支撑各自独立；值大=近距离支撑合并，提升整体稳定性</td></tr>
+  </tbody></table>
+  <div class="info-note">支撑拆除体验是用户满意度的关键影响因素，参数设计应优先考虑"易拆除"。</div>
+  <h2 class="section-title" id="第五章-材料material">第五章 材料（Material）</h2>
+  <div class="info-note">Creality Print 的"材料"模块实际包含 CFS 多色系统的擦拭塔、换料冲刷等参数。</div>
+  <h3 class="sub-title" id="51-prime-tower">5.1 擦拭塔（Prime Tower / Purge Tower）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>5.1.1</td><td>开启</td><td>Enable Prime Tower</td><td>启用多色换料时的擦拭塔</td><td>开启/关闭</td><td>多色打印必须开启，用于清理喷嘴残留耗材</td></tr>
+  <tr><td>5.1.2</td><td>宽度</td><td>Prime Tower Width</td><td>擦拭塔的宽度尺寸</td><td>30–60 mm</td><td>宽度越大清理能力越强，但占用打印空间越多</td></tr>
+  <tr><td>5.1.3</td><td>方形擦拭塔</td><td>Square Prime Tower</td><td>使用方形而非圆形擦拭塔</td><td>开启/关闭</td><td>方形更易打印且稳定，圆形更省材料</td></tr>
+  <tr><td>5.1.4</td><td>外墙缺口</td><td>Prime Tower Wall Gap</td><td>擦拭塔外墙预留缺口</td><td>开启/关闭</td><td>开启便于观察内部填充状态，便于拆除</td></tr>
+  <tr><td>5.1.5</td><td>内支撑肋</td><td>Prime Tower Internal Ribs</td><td>擦拭塔内部增加支撑肋</td><td>开启/关闭</td><td>开启提升擦拭塔结构稳定性，防止倾倒</td></tr>
+  <tr><td>5.1.6</td><td>清理量</td><td>Purge Volume</td><td>每次换料时清理的耗材体积</td><td>30–80 mm³</td><td>颜色差异大时需增加（如黑→白需 60+）；相似色可减少</td></tr>
+  <tr><td>5.1.7</td><td>Brim宽度</td><td>Prime Tower Brim Width</td><td>擦拭塔底部的附着边缘宽度</td><td>2–8 mm</td><td>增加 Brim 可防止高擦拭塔倾倒，但占用更多空间</td></tr>
+  <tr><td>5.1.8</td><td>擦拭塔旋转角度</td><td>Prime Tower Rotation</td><td>擦拭塔相对于模型的旋转角度</td><td>0°–360°</td><td>调整位置避免与模型冲突，优化打印布局</td></tr>
+  <tr><td>5.1.9</td><td>擦拭塔增强类型</td><td>Prime Tower Reinforcement</td><td>擦拭塔结构增强方式</td><td>无/斜角/螺旋</td><td>斜角/螺旋增强高擦拭塔的稳定性，防止倾倒</td></tr>
+  <tr><td>5.1.10</td><td>额外流量用于擦拭</td><td>Extra Prime Flow</td><td>换料时额外挤出的流量比例</td><td>80%–120%</td><td>100%=标准；>100% 确保彻底清理；<100% 节省材料</td></tr>
+  <tr><td>5.1.11</td><td>无稀疏层（beta）</td><td>No Sparse Layers (Beta)</td><td>擦拭塔不使用稀疏填充层</td><td>开启/关闭</td><td>试验功能，开启后擦拭塔全实心，更稳定但用料多</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>擦拭塔是多色打印成功的关键，清理量不足会导致颜色串染，是 CFS 用户最常调优的参数。</p></div>
+  <h3 class="sub-title" id="52-purge-options">5.2 换料冲刷选项（Purge Options）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>5.2.1</td><td>冲刷到对象的填充</td><td>Purge into Infill</td><td>将换料冲刷的耗材用于模型内部填充</td><td>开启/关闭</td><td>开启可节省材料，但内部填充会有杂色；适合不透明的模型</td></tr>
+  <tr><td>5.2.2</td><td>冲刷到对象的支撑</td><td>Purge into Support</td><td>将换料冲刷的耗材用于支撑结构</td><td>开启/关闭</td><td>开启可节省材料，支撑会有杂色但不影响外观；推荐开启</td></tr>
+  </tbody></table>
+  <div class="info-note">冲刷到支撑是推荐的省料策略，支撑本身需要拆除，杂色不影响最终模型。</div>
+  <h3 class="sub-title" id="53-material-advanced">5.3 高级（Advanced）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>5.3.1</td><td>使用联锁梁</td><td>Use Interlocking Beams</td><td>使用联锁梁结构增强擦拭塔</td><td>开启/关闭</td><td>开启后擦拭塔内部使用交叉梁结构，大幅提升稳定性</td></tr>
+  <tr><td>5.3.2</td><td>分段区域的最大宽度</td><td>Max Interlock Width</td><td>联锁梁分段的最大宽度</td><td>0–10 mm</td><td>0=不限制；限制宽度可防止过宽的联锁梁导致打印问题</td></tr>
+  <tr><td>5.3.3</td><td>分割区域的交错深度</td><td>Interlock Depth</td><td>联锁梁交错的深度尺寸</td><td>0–5 mm</td><td>控制联锁梁的咬合深度，影响结构强度</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>联锁梁是高擦拭塔（>50mm）防止倾倒的有效方案，但会增加切片复杂度。</p></div>
+  <h2 class="section-title" id="第六章-其他other">第六章 其他（Other）</h2>
+  <div class="info-note">本章涵盖 Creality Print 工艺流程中归入"其他"标签页的参数，包括裙边、Brim、特殊模式、G-code 输出、后处理脚本等，通常影响打印前准备、辅助功能和输出格式。</div>
+  <h3 class="sub-title" id="61-skirt">6.1 裙边（Skirt）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>6.1.1</td><td>Skirt 类型</td><td>Skirt Type</td><td>裙边的绘制类型</td><td>普通/混合</td><td><strong>普通</strong>=标准单圈裙边；<strong>混合</strong>=首层和多圈组合，兼顾挤出验证和密封</td></tr>
+  <tr><td>6.1.2</td><td>Skirt 圈数</td><td>Skirt Loops</td><td>裙边打印的圈数</td><td>1–5 圈</td><td>1-2 圈=标准，用于验证喷嘴挤出；更多圈数可预加热喷嘴</td></tr>
+  <tr><td>6.1.3</td><td>Skirt 最小挤出长度</td><td>Skirt Minimum Extrusion Length</td><td>裙边期间最少挤出的耗材长度</td><td>0–50 mm</td><td>确保喷嘴内残留空气被排出，挤出稳定后再开始打印模型</td></tr>
+  <tr><td>6.1.4</td><td>Skirt 距离</td><td>Skirt Distance</td><td>裙边与模型外轮廓的水平距离</td><td>2–6 mm</td><td>距离过小=可能与模型粘连；距离过大=浪费时间和材料</td></tr>
+  <tr><td>6.1.5</td><td>Skirt 高度</td><td>Skirt Height</td><td>裙边打印的层数（总高度）</td><td>1–10 层</td><td>1 层=标准；多层可用于检查首几层的附着力</td></tr>
+  <tr><td>6.1.6</td><td>Skirt 速度</td><td>Skirt Speed</td><td>裙边打印速度</td><td>30–80 mm/s</td><td>通常与首层速度一致或略快，确保裙边均匀</td></tr>
+  <tr><td>6.1.7</td><td>风挡</td><td>Skirt Flow Ratio</td><td>裙边的挤出流量比例</td><td>0.8–1.2</td><td>控制裙边的挤出量，一般保持默认</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>裙边是最常用的首层验证手段，几乎所有场景都建议开启。与 Brim 不同，裙边不与模型接触，打印后自动废弃。</p></div>
+  <h3 class="sub-title" id="62-brim">6.2 Brim（底边）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>6.2.1</td><td>Brim 类型</td><td>Brim Type</td><td>底边的生成类型</td><td>仅外部/仅内部/内外均有</td><td><strong>仅外部</strong>=最常用，增加首层附着力；<strong>内外均有</strong>=密封底面，适合密封容器</td></tr>
+  <tr><td>6.2.2</td><td>Brim 宽度</td><td>Brim Width</td><td>底边向外延伸的宽度</td><td>0–20 mm</td><td>宽度越大附着力越强，但后处理需手动切除；典型值 3-8mm</td></tr>
+  <tr><td>6.2.3</td><td>Brim 与模型的间隙</td><td>Brim Gap</td><td>Brim 与模型之间的间隙</td><td>0–0.5 mm</td><td>0=紧贴模型，附着力最强；正值=便于切除但附着力稍弱</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>Brim 是解决翘边问题的首选方案，尤其适合 ABS/ASA 等收缩率高的材料。与 Raft 相比，Brim 用料更少且更容易拆除。</p></div>
+  <h3 class="sub-title" id="63-special-modes">6.3 特殊模式（Special Modes）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>6.3.1</td><td>切片模式</td><td>Slicing Mode</td><td>模型切片处理模式</td><td>标准/切割</td><td><strong>标准</strong>=常规切片；<strong>切割</strong>=将模型切割为不同区域分别处理</td></tr>
+  <tr><td>6.3.2</td><td>打印顺序</td><td>Print Sequence</td><td>多个模型的打印顺序</td><td>默认/逐个打印/同时打印</td><td><strong>默认</strong>=按平台布局打印；<strong>逐个打印</strong>=一个完成再打下一个；<strong>同时打印</strong>=所有模型交替打印</td></tr>
+  <tr><td>6.3.3</td><td>层内打印顺序</td><td>Layer Print Order</td><td>同一层内多个对象的打印顺序</td><td>默认/从左到右/从后到前等</td><td>控制同层多模型的打印方向，影响空驶路径和时间</td></tr>
+  <tr><td>6.3.4</td><td>旋转花瓶</td><td>Spiral Vase Mode</td><td>连续螺旋上升打印，无层间停顿</td><td>开启/关闭</td><td>开启后生成花瓶状无接缝单壁模型，仅限单壁模型，打印时间大幅缩短</td></tr>
+  <tr><td>6.3.5</td><td>忽略内部颜色</td><td>Ignore Internal Colors</td><td>多色打印时忽略内部颜色</td><td>开启/关闭</td><td>开启后内部填充使用当前颜色不换料，减少换料次数，节省时间</td></tr>
+  <tr><td>6.3.6</td><td>延时摄影</td><td>Timelapse Type</td><td>延时摄影拍摄方式</td><td>无/传统/逐层</td><td><strong>传统</strong>=固定间隔拍照；<strong>逐层</strong>=每层拍照后抬升 Z 轴拍摄，效果更好</td></tr>
+  <tr><td>6.3.7</td><td>绒毛表面</td><td>Fuzzy Skin Type</td><td>表面生成绒毛纹理效果</td><td>无/外部/全部</td><td><strong>外部</strong>=仅外墙绒毛；<strong>全部</strong>=所有面绒毛；用于消除层纹，提升手感</td></tr>
+  <tr><td>6.3.8</td><td>绒毛表面生成器模式</td><td>Fuzzy Skin Generator Mode</td><td>绒毛纹理的生成算法模式</td><td>标准/高级</td><td>标准模式=简单随机偏移；高级模式=更精细的纹理控制</td></tr>
+  <tr><td>6.3.9</td><td>绒毛噪声类型</td><td>Fuzzy Noise Type</td><td>绒毛纹理的噪声算法</td><td>随机/正弦/自定义</td><td>不同噪声算法产生不同的绒毛分布效果</td></tr>
+  <tr><td>6.3.10</td><td>绒毛表面点间距</td><td>Fuzzy Skin Point Distance</td><td>绒毛纹理点的间距</td><td>0.1–1.0 mm</td><td>间距越小绒毛越密集；典型值 0.2-0.5mm</td></tr>
+  <tr><td>6.3.11</td><td>绒毛表面厚度</td><td>Fuzzy Skin Thickness</td><td>绒毛纹理的凸起厚度</td><td>0.1–0.5 mm</td><td>控制绒毛的凸出程度，值越大表面越粗糙</td></tr>
+  <tr><td>6.3.12</td><td>绒毛表面应用至首层</td><td>Fuzzy Skin Apply to First Layer</td><td>绒毛纹理是否应用到首层</td><td>开启/关闭</td><td>关闭=首层保持光滑以保证附着力；推荐关闭</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>旋转花瓶模式只能用于顶部封闭的模型，无法打印有平顶的物体。绒毛表面是消除层纹的有效方案，但会增加表面粗糙度。</p></div>
+  <h3 class="sub-title" id="64-gcode-output">6.4 G-code 输出（G-code Output）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>6.4.1</td><td>减小填充回抽</td><td>Reduce Infill Retraction</td><td>填充区域内减少回抽次数</td><td>开启/关闭</td><td>开启可减少填充打印时的回抽动作，缩短打印时间并减少拉丝</td></tr>
+  <tr><td>6.4.2</td><td>注释 G-code</td><td>Comment G-code</td><td>在 G-code 中添加注释说明</td><td>开启/关闭</td><td>开启后生成的 G-code 包含可读注释，便于调试和手动编辑</td></tr>
+  <tr><td>6.4.3</td><td>标注模型</td><td>Label Object</td><td>在 G-code 中标记各对象名称</td><td>开启/关闭</td><td>开启后可在 G-code 中识别每个模型的起止位置，便于调试多模型打印</td></tr>
+  <tr><td>6.4.4</td><td>对象排除</td><td>Exclude Object</td><td>允许在打印时排除特定对象</td><td>开启/关闭</td><td>开启后可在打印过程中通过 G-code 跳过特定模型，用于选择性打印</td></tr>
+  <tr><td>6.4.5</td><td>文件名格式</td><td>File Name Format</td><td>输出 G-code 文件的命名规则</td><td>自定义字符串</td><td>可包含变量如 {printer_model}、{material}、{print_time} 等，便于文件管理</td></tr>
+  </tbody></table>
+  <div class="info-note">G-code 输出参数不影响打印质量，主要影响文件的可读性和后期处理便利性。</div>
+  <h3 class="sub-title" id="65-post-processing">6.5 后处理脚本（Post-Processing Scripts）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>6.5.1</td><td>后处理脚本</td><td>Post Processing Scripts</td><td>切片完成后自动执行的脚本命令</td><td>自定义命令</td><td>可用于自动上传 G-code 到打印机、转换文件格式、添加自定义 G-code 头尾等</td></tr>
+  </tbody></table>
+  <div class="info-note">后处理脚本为高级功能，通常由经验用户使用。常用场景包括：自动通过 FTP 上传到 K2 Pro、添加自定义 M-code 指令等。</div>
+  <h3 class="sub-title" id="66-notes">6.6 注释（Notes）</h3>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>6.6.1</td><td>注释</td><td>Print Notes</td><td>附加到 G-code 文件头部的自定义备注文本</td><td>自定义文本</td><td>记录打印意图、材料批次、修改记录等信息，方便日后追溯</td></tr>
+  </tbody></table>
+  <!-- ��¼A -->
+  <div class="appendix-section" id="��¼a-����������ϵ����">
+    <h2 class="section-title">��¼A ����������ϵ����</h2>
+    <h3 class="sub-title">A.1 ����ģ���ڲ�����</h3>
+    <pre><code>��� (1.1) + �߿� (1.2)
+    �� �����ֱ��ʺ͵���ǿ�Ȼ���
+�ӷ����� (1.3)
+    �� �������覴�λ�úͿɼ���
+���Ȳ��� (1.4.4�C1.4.7)
+    �� �����ߴ����׶�/������/��ţ�
+ǽ˳�� + ���� (1.7.1��1.7.4)
+    �� ���Ʊ��������Ͳ����
+�Ž� (1.8) + ���� (1.9)
+    �� ������֧�Ŵ�ӡ��������������
+���� (1.5)
+    �� ���ն���⻬��</code></pre>
+    <h3 class="sub-title">A.2 ǿ��ģ���ڲ�����</h3>
+    <pre><code>ǽ���� (2.1.1) + ��/�ײ��� (2.2.2/2.2.5)
+    �� �����������ǿ�ȹǼ�
+����ܶ� + ͼ�� (2.3.1/2.3.3)
+    �� �����ڲ���ѧ���ܺͲ�������
+���/ǽ�ص� (2.3.9) + Ƕ����� (2.1.2)
+    �� ����ǽ�����Ľ��������ֹ�ֲ�
+��䷽�� (2.4.1) + ʵ����䷽�� (2.4.2)
+    �� �����������Ժ�Z��ǿ��</code></pre>
+    <h3 class="sub-title">A.3 ��ģ������������ ? ǿ�ȣ�</h3>
+    <pre><code>��� (1.1) + ǽ���� (2.1) �� ��ͬ�������ǿ��
+�߿� (1.2) + ����ܶ� (2.3.1) �� ��ͬ�����������ĺʹ�ӡʱ��
+�ӷ�λ�� (1.3.1) + ǽ˳�� (1.7.1) �� ��ͬӰ���������</code></pre>
+    <h3 class="sub-title">A.4 �ٶ�ģ���ڲ�����</h3>
+    <pre><code>��ӡ�ٶ� (3.1.1) + ���ٶ� (3.1.2) �� ��ͬ����ʵ�ʴ�ӡʱ��
+�����ٶ� (3.2) �� �ڱ�֤������ǰ�������Ч��
+����/������ֵ (3.4) �� �����ս������Ⱥͻ�����
+��С�ֲ�ʱ�� (3.5.1) �� �ٶ���������ȴ������Լ</code></pre>
+    <h3 class="sub-title">A.5 ��ģ������������/ǿ�� ? �ٶȣ�</h3>
+    <pre><code>��ǽ�ٶ� (3.2.1) + �ӷ����� (1.3) �� ��ͬ�����������
+����ٶ� (3.2.5) + ����ܶ� (2.3.1) �� ����ٶȿ����ܶȽ��Ͷ����
+���ٶ� (3.1.2) + ǽ���� (2.1.1) �� ǽ��ʱ�轵�ͼ��ٶȷ�ֹ��</code></pre>
+    <h3 class="sub-title">A.6 ֧��ģ���ڲ�����</h3>
+    <pre><code>֧������ (4.1.1) + �����Ƕ� (4.1.3) �� ��ͬ����֧��������
+֧��Z���� (4.2.3) + �ӿڲ� (4.3.1) �� ��ͬ��������ѶȺ�����������
+���η�֧�Ƕ� (4.4.1) + ����ֱ�� (4.4.2) �� ��ͬ��������֧�ŵ��ȶ��Ժ�����</code></pre>
+    <h3 class="sub-title">A.7 ��ģ������������ ? ֧�ţ�</h3>
+    <pre><code>�������� (1.9) + ֧�ŽǶ� (4.1.3) �� �����Ż�����������֧�ŽǶ���ֵ
+�Ž� (1.8) + ֧������ (4.1.1) �� �Ž�����ǿʱ�ɼ���֧������</code></pre>
+    <h3 class="sub-title">A.8 ����/CFS ģ���ڲ�����</h3>
+    <pre><code>���������� (5.1.1) + ������ (5.1.6) �� ��ͬ������ɫ�����Ƿ񳹵�
+��ˢ����� (5.2.1) + ��ˢ��֧�� (5.2.2) �� ��ͬ����ʡ�ϲ���
+������ (5.3.1) + ��������ǿ���� (5.1.9) �� ��ͬ�����߲������ȶ���</code></pre>
+    <h3 class="sub-title">A.9 ��ģ������������ ? ������</h3>
+    <pre><code>������ (5.1.6) + ��ӡ�ٶ� (3.1.1) �� �ٶ�Խ������������Ӧ����
+������ (5.1) + ֧�� (������) �� ��ɫ��ӡʱ��������֧�Ź��棬��ע��ռ䲼��</code></pre>
+  </div>
+  <!-- ��¼B -->
+  <div class="appendix-section" id="��¼b-���ʹ�ӡ���������Ƽ�">
+    <h2 class="section-title">��¼B ���ʹ�ӡ���������Ƽ�</h2>
+    <table>
+      <thead><tr><th>����</th><th>�Ƽ���������</th></tr></thead>
+      <tbody>
+        <tr><td><strong>�߾���չʾ��</strong></td><td>��� 0.1mm��1.1.1�����ӷ�������أ�1.3.1�����������̣�1.5.1������ǽ�ٶȽ���</td></tr>
+        <tr><td><strong>���ܽṹ��</strong></td><td>��� 0.2mm��1.1.1����ǽȦ�� 3-4 �㣨2.1.1��������ܶ� 30%+��2.3.1�������� X-Y �׶�������1.4.4��</td></tr>
+        <tr><td><strong>���ٴ�ӡ</strong></td><td>��� 0.28�C0.32mm��1.1.1�������ϡ���߿��ӿ���1.2.6�����Ž��ٶ�������1.8.3��</td></tr>
+        <tr><td><strong>��֧�Ŵ�ӡ</strong></td><td>�����ɴ�ӡ��������1.9.2�������������ܳ�������1.9.3����֧�ŽǶ���ֵ���� 50��</td></tr>
+        <tr><td><strong>���̱�/�߸���</strong></td><td>Brim ���� 5-8mm��6.2.2�����ײ��ٶȽ��ͣ�3.1.4�����ײ��߿��ӿ���1.2.2��</td></tr>
+        <tr><td><strong>��ƿ/װ�μ�</strong></td><td>��ת��ƿģʽ������6.3.4������� 0.1-0.15mm���ر�֧��</td></tr>
+        <tr><td><strong>�������Ʊ���</strong></td><td>��ë���濪����6.3.7������ë��� 0.2-0.3mm��6.3.11�����ر�����</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <hr class="section-divider">
+  <!-- �Ĳ�˿ģ�� -->
+  <h1 style="font-size:28px;color:var(--deep-blue);margin-bottom:16px;margin-top:48px;">�Ĳ�˿��Filament��</h1>
+  <blockquote><p>����Ϊ Creality Print ��Ƭ������<strong>�Ĳ�˿����ģ��</strong>���롾���ա�ģ�鲢�С����ǺĲĲ������ԡ��¶����ã���ӡ��/����/�ȴ������������Ƽ��ٶ����ƵȲ�������Ӧ�Ĳ�˿��������еĸ��ӱ�ǩҳ��</p><p style="margin-top:8px;"><strong>��ǰ����</strong>�������£��Ĳ�˿������Ϣ�����ڰ��£���ȴ�����ھ��£��������ǡ��س飩����ʮ�£��߼�������ʮһ�£����ϣ�����ɣ�ע�͵��ӱ�ǩ���������䡣</p></blockquote>
+  <hr class="section-divider">
+  <!-- ������ ������Ϣ -->
+  <h2 class="section-title" id="������-�Ĳ�˿������Ϣfilament-basics">������ �Ĳ�˿������Ϣ��Filament Basics��</h2>
+  <h3 class="sub-title" id="71-������Ϣbasic-info">7.1 ������Ϣ��Basic Info��</h3>
+  <blockquote><p>���ں��ǺĲĵĺ������Զ��壬�������Ϸ��ࡢ�����ߴ硢������Ϊ�����óɱ����¶ȷ�Χ�Ȼ�����������Щ��������Ƭ�������м������㡢�¶��Ƽ��ͳɱ���������ݻ�����</p></blockquote>
+  <h4 id="711-material-properties">7.1.1 �������ԣ�Material Properties��</h4>
+  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
+  <tr><td>7.1.1.1</td><td>����</td><td>Filament Type</td><td>�ĲĵĲ������ͷ���</td><td>PLA / PETG / ABS / TPU / ASA / PA / PC ��</td><td><strong>�������߲���</strong>����ѡ�����ͺ��Զ�����Ƽ����¶ȡ���ȴ���ٶȵ�Ĭ��ֵ��PLA=190-220�棻ABS=230-260�棻TPU����ٶ�</td></tr>
+  <tr><td>7.1.1.2</td><td>��Ӧ��</td><td>Vendor / Brand</td><td>�Ĳĵ�Ʒ�ƹ�Ӧ��</td><td>Creality / eSun / Bambu / Polymaker ��</td><td>����Ʒ��ʶ��RFID �����Լ��Ĳ����ݿ��������ͬ��Ӧ�̵�ͬ���ͺĲĿ�����΢������</td></tr>
+  <tr><td>7.1.1.3</td><td>�����Բ���</td><td>Soluble Material</td><td>��ǸúĲ��Ƿ�Ϊ������֧�Ų��ϣ��� PVA��</td><td>���� / �ر�</td><td>��������Ƭ������ʶ��Ϊˮ����֧�ţ�Ӱ��֧�����ɲ��Ժͺ���������ʾ</td></tr>
+  <tr><td>7.1.1.4</td><td>֧�Ų���</td><td>Support Material</td><td>��ǸúĲ��Ƿ�ר���ڴ�ӡ֧�Žṹ</td><td>���� / �ر�</td><td>������Բ������ʹ�ã�����ģ�ͱ�����Ϻ�֧��ר�ò��ϣ��� BVOH��PVA��</td></tr>
+  <tr><td>7.1.1.5</td><td>����Ӳ��Ҫ��</td><td>Nozzle Hardness Requirement</td><td>������Ӳ�ȵ����Ҫ����ֵ</td><td>�Q0����Ҫ��/ �R�ض�ֵ</td><td>̼��ά��CF����������ά��GF����ĥʴ�ԺĲ���ҪӲ���������챦ʯ���죻��ͨ PLA/PETG ������Ҫ��</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>�����͡��ǺĲĲ����ĸ��ڵ㣬�л�����ʱӦ���������������Ĭ��ֵ����Ӧ���ֶ�Ϊ�Ĳ� RFID ʶ����Ԥ���ӿڡ�</p></div>
+  <h4 id="712-flow-extrusion">7.1.2 �����뼷����Flow & Extrusion��</h4>
+  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
+  <tr><td>7.1.2.1</td><td>ȱʡ��ɫ</td><td>Default Color</td><td>�Ĳĵ�Ĭ����ʾ��ɫ��������ƬԤ����Ⱦ��</td><td>ɫֵѡ���� / Ԥ��ɫ��</td><td>Ӱ����ƬԤ����ģ�͵���ɫ��ʾ����ɫ��ӡʱ�������ֲ�ͬ�ĲĲ�λ</td></tr>
+  <tr><td>7.1.2.2</td><td>ֱ��</td><td>Diameter</td><td>�Ĳ�˿��ʵ�ʱ��ֱ��</td><td>1.75 mm / 2.85 mm / 3.00 mm</td><td><strong>ֱ�Ӳ��뼷��������</strong>����ֱ����� ��0.03mm �ɵ��� ��3.4% ����������������Ƿ���������ÿ���ʵ��У׼</td></tr>
+  <tr><td>7.1.2.3</td><td>ճ�������</td><td>Adhesion Class</td><td>���϶��ȴ������ճ�����Եȼ�</td><td>�R100����ֵԽ��ճ����Խ�ã�</td><td>Ӱ���ײ㸽�Ų����Ƽ��� Brim/Skirt Ĭ�����ã���ճ�����ϣ��� ABS+���ɽ����ȴ��¶�</td></tr>
+  <tr><td>7.1.2.4</td><td>��������</td><td>Flow Ratio</td><td>����������ȫ�ֱ���ϵ��</td><td>0.90�C1.10������ 0.95��</td><td><strong>����ֱ��ƫ��Ĺؼ�����</strong>����ʵ��ֱ��ƫСʱ�� >1.0��ƫ��ʱ�� <1.0����ͬƷ��/���κĲĵĿ���У׼�ֶ�</td></tr>
+  <tr><td>7.1.2.5</td><td>����ѹ����ǰ</td><td>Enable Pressure Advance</td><td>���ü���ѹ����ǰ�����㷨������ Marlin Linear Advance/Klipper PA��</td><td>���� / �ر�</td><td>���������ѹ����ǰֵ�ڼ���/���ٽ׶�Ԥ���������������򼷳�ϵͳ���Ե��µı���ȱ�ݣ�����/�ն���</td></tr>
+  <tr><td>7.1.2.6</td><td>ѹ����ǰֵ</td><td>Pressure Advance Value</td><td>ѹ����ǰ����ϵ������λ���룩</td><td>0.010�C0.050 s������ 0.032��</td><td><strong>���еϵͳǿ���</strong>���� Bowden ������ͨ�� 0.03�C0.05s��ֱ�������� 0.01�C0.02s��ֵ����ᵼ�¹��岨��</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>����������7.1.2.4�����û���ֶ������ĺĲĲ�����Ӧ�ṩ"��ӡ���Լ����������Զ��Ƽ�"���������̡�ѹ����ǰ�Ը��ٴ�ӡ��K2 Pro ������Ϊ��Ҫ��</p></div>
+  <h4 id="713-dimensional-physical">7.1.3 �ߴ����������ԣ�Dimensional & Physical��</h4>
+  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
+  <tr><td>7.1.3.1</td><td>�ܶ�</td><td>Density</td><td>���ϵ��ܶ�</td><td>1.20�C1.30 g/cm3��PLA����1.25�C1.35 g/cm3��PETG����1.04 g/cm3��TPU��</td><td>���ڹ����ӡ���������Ĳ��������㣨���ȡ�����ת�����ͳɱ�����</td></tr>
+  <tr><td>7.1.3.2</td><td>�����ʣ�XY��</td><td>Shrinkage (XY)</td><td>X-Y ƽ�淽��������ʣ��԰ٷֱȱ�ʾ��</td><td>100%������������ABS Լ 98%�C99%</td><td>���������ϣ�ABS/ASA/PA������ϸ���� X-Y �ߴ粹���������½� 1.4.5��������������ʧЧ</td></tr>
+  <tr><td>7.1.3.3</td><td>�����ʣ�Z��</td><td>Shrinkage (Z)</td><td>Z �ᣨ��ֱ�������������</td><td>100%�����������������������Ե��� XY</td><td>Z ��������ҪӰ���ܸ߶Ⱦ��ȣ�ͨ��С�� XY ��������</td></tr>
+  </tbody></table>
+  <div class="info-note">�����ʲ�����Ҫ���ڸ߼��ߴ粹�����㣬�����û�ͨ�������½ڵ� X-Y ������������1.4.5��ֱ�������������ڴ˴��������á�</div>
+  <h4 id="714-economic-temperature">7.1.4 �������¶����ԣ�Economic & Temperature��</h4>
+  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
+  <tr><td>7.1.4.1</td><td>�۸�</td><td>Price</td><td>�Ĳĵĵ���</td><td>15�C80 money/kg</td><td>���� G-code ��Ƭ�����е�<strong>��ӡ�ɱ�����</strong>������ �� ���ۣ���PLA ͨ�� 20-40 Ԫ/kg�����̲��� 80-200+ Ԫ/kg</td></tr>
+  <tr><td>7.1.4.2</td><td>�����¶�</td><td>Softening Temperature</td><td>���Ͽ�ʼ�����Ļ����¶�����</td><td>�Q40�棨����ֵ��</td><td>��Ϊ���»����洢������ֵ��PLA Լ 50-55�棻ABS Լ 90-105�档�������¶ȿ��ܱ���</td></tr>
+  <tr><td>7.1.4.3</td><td>������ת���¶�</td><td>Glass Transition Temperature (Tg)</td><td>���ϴӲ���̬ת��Ϊ��̬���¶ȵ�</td><td>�Q0�棨δ����ʱĬ�ϣ�</td><td>Ӱ���ȴ��¶����ý����ɢ�Ȳ��ԣ�PLA Tg��60�棬��ӡʱ����Ӧ < Tg �Ա�֤����ϣ��� Tg ���ϣ�PC Tg��150�棩����ߴ���</td></tr>
+  <tr><td>7.1.4.4</td><td>���������¶ȣ���С��</td><td>Recommended Nozzle Temp (Min)</td><td>�Ƽ������¶ȷ�Χ������</td><td>190�棨PLA����220�棨PETG����240�棨ABS��</td><td>�¶����ޱ�������ֹ�û����ù��͵��¶�ͷ�������</td></tr>
+  <tr><td>7.1.4.5</td><td>���������¶ȣ����</td><td>Recommended Nozzle Temp (Max)</td><td>�Ƽ������¶ȷ�Χ������</td><td>240�棨PLA����250�棨PETG����270�棨ABS��</td><td>�¶����ޱ����Ͱ�ȫ��ʾ����ֹ�����¶ȵ��ºĲķֽ⣨�� PLA > 250�� �к�������գ�</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>�۸� + �ܶȿ�ʵ�־�ȷ�ĳɱ����㹦�ܣ��� Creality Print �����ھ�Ʒ����Ҫ��ֵ�㡣���������¶ȷ�ΧΪ�û��ṩ�˰�ȫ���¶ȵ��ڲο����䡣</p></div>
+  <h3 class="sub-title" id="72-print-chamber-temp">7.2 ��ӡ���¶ȣ�Print Chamber Temperature��</h3>
+  <blockquote><p>���ڿ��Ʒ��ʽ��ӡ���ڵĻ����¶ȡ����� ASA��ABS��PA �ȸ�����/�͸��²��ϣ����´�ӡ���Ƿ�ֹ�̱ߺͷֲ�Ĺؼ�������</p></blockquote>
+  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
+  <tr><td>7.2.1</td><td>��Ͳ���</td><td>Minimum Chamber Temperature</td><td>������ʼ��ӡ����Ͳ�����ֵ</td><td>0�C80��</td><td>���ڴ��¶�ʱ��ͣ��ӡ�򱨾���ABS ͨ��Ҫ�� �R45�� �Է�ֹ�̱�</td></tr>
+  <tr><td>7.2.2</td><td>���Ȳ�</td><td>Heated Chamber</td><td>�Ƿ����ô�ӡ����������</td><td>���� / �ر�</td><td>��������Ƭ������ G-code �����Ӽ��Ȳ�ָ����ֻ��ͣ��� K2 Pro ��հ棩֧�ִ˹���</td></tr>
+  <tr><td>7.2.3</td><td>Ŀ�����</td><td>Target Chamber Temperature</td><td>��ӡ�ֵ�Ŀ������¶�</td><td>30�C60��</td><td>ABS �Ƽ� 45-55�棻ASA �Ƽ� 50-60�棻�����¶ȿ���Ӱ�����Ԫ������</td></tr>
+  </tbody></table>
+  <div class="info-note">���Ȳֹ�����ҪӲ��֧�֣��ܷ���� + ����Ԫ�� + �¿ش����������������� Ender/K ϵ�л��;�֧�֡�</div>
+  <h3 class="sub-title" id="73-print-temperature">7.3 ��ӡ�¶ȣ�Print Temperature��</h3>
+  <blockquote><p>���ڿ������죨�ȶˣ��¶ȣ��� FDM ��ӡ����ĵĺĲĲ�����ֱ��Ӱ�����ϡ����������������ȶ��ԺͲ�����ѧ���ܡ�</p></blockquote>
+  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
+  <tr><td>7.3.1</td><td>��ӡ�¶�</td><td>Printing Temperature</td><td>������ӡ��������¶�</td><td>180�C300�棨���������ͣ�</td><td><strong>����ĺĲĲ���</strong>����PLA 190-210�棻PETG 230-250�棻ABS 250-270�棻�¶�Ӱ��ճ�ȡ������ԡ�����Ϻ���˿�̶�</td></tr>
+  <tr><td>7.3.2</td><td>��ӡ�¶ȣ��ײ㣩</td><td>Printing Temperature Initial Layer</td><td>��һ���ӡ��ר���¶�</td><td>�����¶� -5�� �� +10��</td><td>�ײ��Ը߿������������������߻ᵼ���ײ���Σ�����������¶ȸ� 5��</td></tr>
+  <tr><td>7.3.3</td><td>��ӡ�¶ȣ����棩</td><td>Printing Temperature Bottom</td><td>�ײ������ר���¶�</td><td>�����¶� -5�� �� +5��</td><td>�ɶ������������ã����Ƶײ�����ļ�������</td></tr>
+  <tr><td>7.3.4</td><td>��ӡ�¶ȣ���㣩</td><td>Printing Temperature Layer</td><td>����ÿ�㵥�����ò�ͬ�Ĵ�ӡ�¶�</td><td>���� / �ر�</td><td>����������Ӷ���¶ȱ仯�� G-code�����ڸ߼����տ��ƣ���Ԥ�Ȳ㡢���²㣩</td></tr>
+  <tr><td>7.3.5</td><td>��ʼ�¶ȵȴ�</td><td>Initial Temperature Waiting</td><td>��ӡǰ�ȴ�����ﵽĿ���¶�</td><td>���� / �ر�</td><td>����ȷ��������ȫԤ�Ⱥ��ٿ�ʼ��������ֹ��������ͷ</td></tr>
+  <tr><td>7.3.6</td><td>ǻ��Ԥ���¶�</td><td>Chamber Temperature</td><td>�ڴ�ӡ��ʼǰԤ�Ȳ��ҵ�Ŀ���¶�</td><td>0�C60��</td><td>���� ASA/ABS����ǰԤ�ȴ�ӡ�ֿɼ����������̱߷���</td></tr>
+  <tr><td>7.3.7</td><td>����ʱ��</td><td>Dwell Time</td><td>������ɺ�ʼ��ӡǰ��ͣ��ʱ��</td><td>0�C30 ����</td><td>0=������ʼ���ӳ�����ʱ���ʹ�ȴ��Ͳ����¶ȸ����ȣ����������������µ�Ӧ��</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>��ӡ�¶�����Ӱ���ӡ������������ܵĺĲĲ����������״�ʹ��ʱ�Ӳ��Ϲ�Ӧ���Ƽ���Χ����ֵ��ʼ������ʵ��Ч������˿�������롢�������ݣ�����΢�� 5-10�档</p></div>
+  <h3 class="sub-title" id="74-bed-temperature">7.4 ���£�Bed Temperature��</h3>
+  <blockquote><p>�ȴ��¶ȿ��ƴ�ӡ����ƽ̨�ĸ��ţ�Ӱ���ײ�ճ�����̱߷��պ͵ײ�������������ͬ���϶��ȴ��¶ȵ��������������</p></blockquote>
+  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
+  <tr><td>7.4.1</td><td>�ȴ��¶�</td><td>Bed Temperature</td><td>������ӡ�׶ε��ȴ�Ŀ���¶�</td><td>30�C110�棨���������ͣ�</td><td><strong>�����ײ㸽�����ĺ��Ĳ���</strong>����PLA 50-60�棻PETG 70-80�棻ABS/ASA 90-110�棻�¶ȹ���=�ײ㲻ճ���¶ȹ���=������˿/����</td></tr>
+  <tr><td>7.4.2</td><td>�ȴ��¶ȣ��ײ㣩</td><td>Bed Temperature Initial Layer</td><td>��һ���ӡ���ȴ��¶�</td><td>�����¶� ��0�C20��</td><td>�ײ��Ը߿���ǿ��������ABS ����������� 5-10��</td></tr>
+  <tr><td>7.4.3</td><td>�ȴ��¶ȣ����棩</td><td>Bed Temperature Bottom</td><td>�ײ�������ȴ��¶�</td><td>�����¶� ��0�C10��</td><td>�ɶ������������ã����Ƶײ��������ճ������</td></tr>
+  <tr><td>7.4.4</td><td>�ȴ��¶ȣ���㣩</td><td>Bed Temperature Layer</td><td>����ÿ�㵥�����ò�ͬ���ȴ��¶�</td><td>���� / �ر�</td><td>������������ȴ��¶Ƚ��� G-code�����ڸ߼����տ���</td></tr>
+  <tr><td>7.4.5</td><td>��ʼ�ȴ��¶ȵȴ�</td><td>Initial Bed Temperature Waiting</td><td>��ӡǰ�ȴ��ȴ��ﵽĿ���¶�</td><td>���� / �ر�</td><td>����ȷ���ȴ���ȫԤ�Ⱥ��ٿ�ʼ��ӡ����ֹ�ײ����¶Ȳ������Ų���</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>�ȴ��¶��������¶ȹ�ͬ������ FDM ��ӡ��"�Ȼ���"������ ABS/ASA �ȸ��������ϣ������ȴ��¶���Ϊ���ϲ�����ת���¶ȣ�7.1.4.3���������Լ��ٲ��Ӧ����</p></div>
+  <h3 class="sub-title" id="75-volumetric-speed-limit">7.5 ����ٶ����ƣ�Volumetric Speed Limit��</h3>
+  <blockquote><p>����ٶȣ�Volumetric Speed��= �߿� �� ��� �� ��ӡ�ٶȣ������˵�λʱ���ڼ����ĺĲ�������˲��������˴�ӡ���ڸ����Ĳ������µ����ȫ����������ֹ���������������µĴ�ӡȱ�ݡ�</p></blockquote>
+  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
+  <tr><td>7.5.1</td><td>�������ٶ�</td><td>Maximum Volumetric Speed</td><td>���������Ĳļ�������ٶȣ�mm3/s��</td><td>3�C30 mm3/s�������Ϻͼ��������ͣ�</td><td><strong>��������ϵͳ�Ĺؼ�����</strong>����ֱ���������ɴ� 15-20mm3/s��Bowden ͨ�� 8-12mm3/s��������ֵ�ᵼ�¼������㡢���ơ�ȱ��</td></tr>
+  <tr><td>7.5.2</td><td>�¶��ײ����ʱ�����ٶ�</td><td>Slow Down if Temperature Too Low</td><td>�������¶ȵ���Ŀ��ʱ�Զ����ʹ�ӡ�ٶ�</td><td>���� / �ر�</td><td>�����ɷ�ֹ�¶Ȳ������µļ������ȶ����ڼ��Ȳ���ʱ����ȱ��</td></tr>
+  <tr><td>7.5.3</td><td>�¶ȹ���ʱ���ٶ�ϵ��</td><td>Slow Down Factor if Temperature Too Low</td><td>�¶Ȳ���ʱ�ٶȽ��͵ı���</td><td>50%�C100%</td><td>ֵԽ��=�¶Ȳ���ʱ����Խ�࣬��ֹ��������</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>�������ٶ��Ǹ��ٴ�ӡ�ĺ������Ʋ�����K2 Pro �ȸ��ٻ�����Ҫ��ϸ������ȶ���Ʋ��ܷ������ơ��û��ڵ��ߴ�ӡ�ٶ�ʱ��Ӧͬ�����˲����Ƿ��Ϊƿ����</p></div>
+  <h2 class="section-title" id="�ڰ���-��ȴcooling">�ڰ��� ��ȴ��Cooling��</h2>
+  <h3 class="sub-title" id="81-specific-cooling">8.1 �ض�����ȴ��Specific Cooling��</h3>
+  <blockquote><p>���ڿ����ض��㣨���ײ㡢�ض��߶Ȳ㣩����ȴ���Ȳ��ԣ������Ż���ͬ��ӡ�׶ε�ɢ������</p></blockquote>
+  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
+  <tr><td>8.1.1</td><td>�����ض������</td><td>Enable Specific Layer Cooling</td><td>�������ض��㵥�����÷��Ȳ���</td><td>���� / �ر�</td><td>����������Ӷ�㲻ͬ�ķ��Ȳ��ԣ����ھ�ϸ������ȴ</td></tr>
+  <tr><td>8.1.2</td><td>�ض�����ȴ��</td><td>Specific Layer Cooling Table</td><td>�����ض����Ӧ�ķ���ת���б�</td><td>���� + ����ת�� (%)</td><td>�������ײ� 0%���� 5 �� 30%���� 10 �� 100% ��������</td></tr>
+  </tbody></table>
+  <div class="info-note">�ض�����ȴͨ�����ڶ����ϴ�ӡ����Ҫ�ڴ�ӡ��;�л����Ȳ��Եĸ߼�������</div>
+  <h3 class="sub-title" id="82-model-fan">8.2 ģ�ͷ��ȣ�Model Cooling Fan��</h3>
+  <blockquote><p>ģ�ͷ��ȣ�part cooling fan���ǿ��Ƽ�����Ĳ���ȴ�ٶȵĺ����豸���ʵ�����ȴ�ɷ�ֹ PLA �Ȳ��Ϲ��ȱ��Ρ�����ϸ�ھ��ȣ���Ӱ����ճ����</p></blockquote>
+  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
+  <tr><td>8.2.1</td><td>ģ�ͷ���</td><td>Model Cooling Fan</td><td>ģ����ȴ���ȵ����ÿ���</td><td>���� / �ر�</td><td><strong>Ӱ������ɢ�Ȳ���</strong>�����رպ�ȫ����ģ����ȴ����ʹ�û������ɢ�ȣ����� ABS ����Ҫ������ȴ�Ĳ���</td></tr>
+  <tr><td>8.2.2</td><td>�������ٶ�</td><td>Maximum Fan Speed</td><td>ģ�ͷ��ȵ����ת������</td><td>50%�C100%</td><td>100%=ȫ�٣����Ϳɷ�ֹ PLA �ײ�����������̱ߣ���ϸ�ڴ�ӡ���������� 80%</td></tr>
+  <tr><td>8.2.3</td><td>��С�����ٶ�</td><td>Minimum Fan Speed</td><td>ģ�ͷ��ȵ����ת������</td><td>0%�C50%</td><td>����ֵ��֤����ɢ�ȣ�PLA ���� �R30%����������ӡ�����������ٶ��Է�����</td></tr>
+  <tr><td>8.2.4</td><td>���������ٶ�</td><td>Throttled Fan Speed</td><td>�� CPU/�����¶ȹ���ʱ�Զ����ͷ���ת��</td><td>0%�C100%</td><td>��������Ԫ������ֹ����ȵ��¹̼���Ƶ���������������� 50-70%</td></tr>
+  <tr><td>8.2.5</td><td>����������ײ�����</td><td>Fan Always On from Layer Zero</td><td>���ײ㿪ʼ������ģ�ͷ���</td><td>���� / �ر�</td><td>�ر�=�ײ���ȹر���ȷ�����ţ�����=�ײ㼴��ʼɢ�ȣ��������ض��ĸ��ٴ�ӡ����</td></tr>
+  <tr><td>8.2.6</td><td>�ײ�����ٶ�</td><td>Initial Layer Fan Speed</td><td>��һ���ӡʱ�ķ����ٶ�</td><td>0%�C100%</td><td>ͨ����Ϊ 0% ���ת���Ա�֤�ײ㸽�ţ����ٴ�ӡʱ������Ҫ�Ը�ת��</td></tr>
+  <tr><td>8.2.7</td><td>�ײ���ȴ����߶�</td><td>First Layer Cooling Activation Height</td><td>�ײ��ʼ���ӷ��ȵĸ߶���ֵ</td><td>0.1�C5 mm</td><td>ȷ���ײ�̻����ٿ�ʼ���磻ͨ����Ϊ 0.5-1mm</td></tr>
+  <tr><td>8.2.8</td><td>��ȴ�㿪ʼ�ٶ�</td><td>Layer Start Fan Speed</td><td>ÿ�㿪ʼ��ӡʱ�ĳ�ʼ����ת��</td><td>0%�C100%</td><td>����ÿ������ʱ�ķ�����Ӧ��Ϊ</td></tr>
+  <tr><td>8.2.9</td><td>��ȴ�ٶ�</td><td>Cooling Fan Speed</td><td>������ӡ��ķ���ת�٣���� > ��ȴ����߶ȣ�</td><td>0%�C100%</td><td><strong>����ĵ���ȴ����</strong>����PLA �Ƽ� 50-100%��PETG �Ƽ� 20-50%��PETG �¹�����ȴ����ABS �Ƽ� 0-20%</td></tr>
+  <tr><td>8.2.10</td><td>��ȴ�ٶ����仯</td><td>Cooling Fan Speed by Layer</td><td>���������ٶ����߱仯</td><td>���� / �ر�</td><td>����������÷����ٶ���߶Ƚ�����������ײ��͡������ߣ�</td></tr>
+  <tr><td>8.2.11</td><td>��ȴ�ٶȱ�</td><td>Cooling Fan Speed Table</td><td>���岻ͬ��߶�Ӧ�ķ���ת�ٱ�</td><td>��� + ����ת��</td><td>��ϸ���Ʋ�ͬ�߶ȵ���ȴ����</td></tr>
+  <tr><td>8.2.12</td><td>�Žӷ����ٶ�</td><td>Bridging Fan Speed</td><td>�����Ž�ʱ�ķ���ת��</td><td>100%�����٣�</td><td>�Ž�ʱ������ȴ�ɼ����´��������Ž�����</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>��ȴ�����ǲ������Բ������Ĳ����顣PLA ��Ҫǿ��ȴ��50-100%����ABS ��Ҫ��������ȴ��0-20%����PETG ��������֮�䣨20-50%����Creality Print Ӧ���ݺĲ������Զ��Ƽ�Ĭ��ֵ��</p></div>
+  <h3 class="sub-title" id="83-auxiliary-fan">8.3 �������ȣ�Auxiliary Cooling Fan��</h3>
+  <blockquote><p>�����������ڲ���ģ�ͷ��ȵ���ȴ��������Ϊ��ӡ�����ض������ṩ������ȴ��</p></blockquote>
+  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
+  <tr><td>8.3.1</td><td>���ø�������</td><td>Enable Auxiliary Fan</td><td>���ø��������豸</td><td>���� / �ر�</td><td>����������õڶ�����ȴ���ȣ����ڴ��ʹ�ӡ������Ҫ������ȴ�ĳ���</td></tr>
+  <tr><td>8.3.2</td><td>���������ٶ�</td><td>Auxiliary Fan Speed</td><td>�������ȵ�Ŀ��ת��</td><td>0%�C100%</td><td>������ģ�ͷ��ȿ��ƣ������ڶ�׼�ض����򴵷�</td></tr>
+  <tr><td>8.3.3</td><td>��������ͬ��ģ�ͷ���</td><td>Sync Auxiliary with Model Fan</td><td>����������ģ�ͷ���ͬ��ת��</td><td>���� / �ر�</td><td>�������������ٶȸ���ģ�ͷ��ȱ仯���رպ��������</td></tr>
+  </tbody></table>
+  <div class="info-note">����������ҪӲ��֧�֣����� Creality �����ṩ AUX �ӿڣ���</div>
+  <h3 class="sub-title" id="84-chamber-fan">8.4 ������ȣ�Chamber Cooling Fan��</h3>
+  <blockquote><p>������ȿ��ƴ�ӡ��ǻ�壨���䣩�ڲ��Ŀ���ѭ��������ά���ȶ��Ĵ�ӡ�����¶ȣ���ģ����ȴ�����б�������</p></blockquote>
+  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
+  <tr><td>8.4.1</td><td>�������</td><td>Chamber Cooling Fan</td><td>������ȵ����ÿ���</td><td>���� / �ر�</td><td><strong>����ά�ֲ����ȶ�</strong>�������������ѭ�������ڿ�����ABS/ASA ��ӡʱ������Ҫ�ر��Ա��ָ��»���</td></tr>
+  <tr><td>8.4.2</td><td>��Сǻ���¶�</td><td>Minimum Chamber Temperature</td><td>����������ȿ�������Ͳ�����ֵ</td><td>0�C80��</td><td>�������¸��ڴ�ֵʱ����������ȣ����ڸ��²��ϴ�ӡʱ��ֹ����</td></tr>
+  <tr><td>8.4.3</td><td>ǻ���¶ȹ���ʱ���ʹ�ӡ�ٶ�</td><td>Slow Down if Chamber Temperature Too High</td><td>�����³�����ֵʱ���ʹ�ӡ�ٶ�</td><td>���� / �ر�</td><td>�����ɷ�ֹ���µ��µĴ�ӡ��������</td></tr>
+  <tr><td>8.4.4</td><td>�¶ȹ���ʱ���ٶ�ϵ��</td><td>Speed Factor if Chamber Temperature Too High</td><td>���¹���ʱ�ٶȽ��͵ı���</td><td>50%�C100%</td><td>ֵԽ��=���¹���ʱ����Խ��</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>���������ģ�ͷ��ȵĹ��ܶ�λ��ͬ��ģ�ͷ������ڿ�����ȴ����˿�ģ�Ӱ�����Ϻ�ϸ�ڣ�������������ڿ������廷���¶ȣ�Ӱ���̱ߺ���������������Ҫ���ʹ�á�</p></div>
+  <h2 class="section-title" id="�ھ���-��������overrides">�ھ��� �������ǣ�Overrides��</h2>
+  <h3 class="sub-title" id="91-retraction-overrides">9.1 �س鸲�ǣ�Retraction Overrides��</h3>
+  <blockquote><p>�����������ض��Ĳĵ������ǹ���ģ���еĻس����á���ͬһ��ӡ��ʹ�ö��ֺĲ�ʱ����ͬ���Ͽ�����Ҫ��ͬ�Ļس���ԣ��� TPU ��Ҫ���ٵĻس飩��</p></blockquote>
+  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
+  <tr><td>9.1.1</td><td>���ûس鸲��</td><td>Enable Retraction Overrides</td><td>���úĲļ���Ļس��������</td><td>���� / �ر�</td><td>�����������˺Ĳ�ʹ�ö����Ļس����ã����Ǽ̳й���ģ���ȫ������</td></tr>
+  <tr><td>9.1.2</td><td>�س����</td><td>Retraction Distance</td><td>�س�ʱ�Ĳı����صĳ��ȣ�mm��</td><td>0�C10 mm������ 2-6mm��</td><td><strong>������˿�ĺ��Ĳ���</strong>����PLA 3-5mm��PETG 4-6mm��TPU 0-1mm�����ļ������س飩��Bowden ��������Ҫ��������</td></tr>
+  <tr><td>9.1.3</td><td>�س��ٶ�</td><td>Retraction Speed</td><td>�س鶯����ִ���ٶȣ�mm/s��</td><td>15�C60 mm/s</td><td>�ٶ�Խ��س�Խ�ɾ�������ĥ��Ĳģ����Ľ������٣�15-25mm/s����Ӳ�Ŀɿ��٣�30-60mm/s��</td></tr>
+  <tr><td>9.1.4</td><td>����س����</td><td>Extra Retraction Distance</td><td>ÿ�������س�֮��Ķ���س鳤��</td><td>0�C5 mm</td><td>���ڼ��������̾����ƶ������˿</td></tr>
+  <tr><td>9.1.5</td><td>��С�س鼷��ͷ�¶�</td><td>Minimum Extrusion Temperature for Retraction</td><td>�����س����������¶�</td><td>180�C250��</td><td>����ʱ���ûس�ɷ�ֹ�����ճ�ȴ��µĻس�ʧ�ܺͶ�ͷ��PLA ͨ����Ϊ 190��</td></tr>
+  <tr><td>9.1.6</td><td>�س���С�г�</td><td>Retraction Minimum Travel</td><td>�ƶ����볬����ֵʱ�Ŵ����س�</td><td>0�C10 mm</td><td>���ô�ֵ�ɱ���̾����ʻҲ�����س飬���ٻس�������ӳ�����������</td></tr>
+  <tr><td>9.1.7</td><td>���س����</td><td>Maximum Retraction Count</td><td>ÿ�����г����������س����</td><td>0�C200 ��/mm</td><td>���ƹ���Ƶ�ʵĻس飬��������������0=������</td></tr>
+  <tr><td>9.1.8</td><td>�س�Ƶ����������</td><td>Retraction Frequency Limit</td><td>���ûس�Ƶ������</td><td>���� / �ر�</td><td>����������ÿ�����г̵Ļس��������ֹ���Ȼس�</td></tr>
+  <tr><td>9.1.9</td><td>���ٻس����</td><td>High Speed Retraction Distance</td><td>���ٴ�ӡʱ�Ļس����</td><td>0�C10 mm</td><td>���ٴ�ӡʱ������Ҫ�����Ļس�����Բ�������</td></tr>
+  <tr><td>9.1.10</td><td>���ٻس��ٶ�</td><td>High Speed Retraction Speed</td><td>���ٴ�ӡʱ�Ļس��ٶ�</td><td>30�C100 mm/s</td><td>���ټ���ʱ�س�Ҳ��Ҫ�����ٶ���ƥ������</td></tr>
+  <tr><td>9.1.11</td><td>���ٻس�������ֵ</td><td>High Speed Retraction Enable Threshold</td><td>�������ٻس���ԵĴ�ӡ�ٶ���ֵ</td><td>50�C200 mm/s</td><td>����ӡ�ٶȳ�����ֵʱ���ø��ٻس����</td></tr>
+  <tr><td>9.1.12</td><td>�س����</td><td>Retraction Lift</td><td>�س�ʱ Z ��̧��Ķ���߶�</td><td>0�C5 mm</td><td>�س�ʱ��΢̧����ɼ�����ײδ�̻����ϵķ��գ�����̧����0.1-0.2mm������Ч��ֹ��˿</td></tr>
+  <tr><td>9.1.13</td><td>���� Z hop �س�</td><td>Enable Retraction Z Hop</td><td>�س�ʱ���� Z hop��Z ��̧��</td><td>���� / �ر�</td><td>������س�ʱ������΢̧�𣬱��⻮��δ�̻��㣻�����ڴ�ӡ��ϸ��ģ��</td></tr>
+  <tr><td>9.1.14</td><td>�س� Z hop �߶�</td><td>Retraction Z Hop Height</td><td>�س�ʱ Z ��̧��ĸ߶�</td><td>0.1�C2.0 mm</td><td>һ�� 0.2-0.5mm �㹻�����߻��������Ӵ�ӡʱ��</td></tr>
+  <tr><td>9.1.15</td><td>�س���ӳ�</td><td>Retraction Retract Before Wipe</td><td>���ö���ǰ�Ļس��ӳ�</td><td>0�C200 ms</td><td>���ƻس�����ö���֮���ʱ��</td></tr>
+  <tr><td>9.1.16</td><td>��Ļس�</td><td>Multi Material Retraction</td><td>����ϴ�ӡʱ�Ļس����</td><td>���� / �ر�</td><td>�����������л�ʱʹ��ר�õĶ���ϻس����</td></tr>
+  <tr><td>9.1.17</td><td>����ϻس����</td><td>Multi Material Retraction Distance</td><td>������л�ʱ��ר�ûس����</td><td>0�C10 mm</td><td>ͨ������ͨ�س��������Ϊ�����ϵͳ�ĺ��ܸ���</td></tr>
+  <tr><td>9.1.18</td><td>����"���ֻس�"</td><td>Enable Partial Wipe</td><td>���ò��ֻس飨���ö�����ȫ�س飩</td><td>���� / �ر�</td><td>����������ò��ֻس������ȫ�س飬���ٻس������ʱ��</td></tr>
+  <tr><td>9.1.19</td><td>���ֻس����</td><td>Partial Wipe Distance</td><td>���ֻس飨���ã��ľ���</td><td>0�C10 mm</td><td>С����ȫ�س���룬�����Ĳ��������츽��������ȫ�س�</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>�س������ FDM ��ӡ����Ӱ����˿�����ϵĺĲļ�������TPU��PVA ������/�����Բ�����Ҫ���������������ûس顣�س����Ӧ��Ϊ�Ĳ�Ԥ���һ���֣�����ÿ�ε���������</p></div>
+  <h2 class="section-title" id="��ʮ��-�߼�advanced">��ʮ�� �߼���Advanced��</h2>
+  <h3 class="sub-title" id="101-filament-gcode">10.1 �Ĳ�˿ G-code��Filament G-code��</h3>
+  <blockquote><p>��������Ϊ�ض��Ĳ������Զ��� G-code ָ��ڴ�ӡ��ʼǰ����������ض���ִ�У����ڲ����ض��ĳ�ʼ�������������⹦�ܴ�����</p></blockquote>
+  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
+  <tr><td>10.1.1</td><td>���úĲ�˿ G-code</td><td>Enable Filament G-code</td><td>���ô˺Ĳĵ��Զ��� G-code</td><td>���� / �ر�</td><td>�������Ϊ�˺Ĳ�����ר�� G-code �ű��������ڷǱ�׼���ϻ������ӡ������</td></tr>
+  <tr><td>10.1.2</td><td>���� G-code</td><td>Filament Start G-code</td><td>�˺ĲĿ�ʼ��ӡʱִ�е� G-code</td><td>�Զ��� G-code</td><td>�����Ӳ����ض���Ԥ�ȡ���ɨ��̽��ָ��磺`M104 S{material_print_temperature} ;���������¶�`</td></tr>
+  <tr><td>10.1.3</td><td>���� G-code</td><td>Filament End G-code</td><td>�˺ĲĴ�ӡ����ʱִ�е� G-code</td><td>�Զ��� G-code</td><td>�����Ӳ����ض��Ľ��¡���������������ָ��</td></tr>
+  <tr><td>10.1.4</td><td>���� G-code</td><td>Filament Layer Change G-code</td><td>ÿ���л�ʱִ�е� G-code</td><td>�Զ��� G-code</td><td>�����ڴ��������ȴ������ͷ���ջ� LED ָʾ�Ʊ仯</td></tr>
+  <tr><td>10.1.5</td><td>��� G-code</td><td>Filament Tool Change G-code</td><td>�л�����/�Ĳ�ʱִ�е� G-code</td><td>�Զ��� G-code</td><td>���ڶ���ϴ�ӡ���л��Ĳ�ʱ����������</td></tr>
+  <tr><td>10.1.6</td><td>Ԥ�� G-code</td><td>Filament Preset G-code</td><td>����Ԥ��ʱִ�е� G-code</td><td>�Զ��� G-code</td><td>�ڼ��ش˺Ĳ�Ԥ��ʱ�������������Զ�������</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>�Ĳ� G-code �Ǹ߼����ƹ��ܣ�����֧��������ϣ���������Ԥ���PC ��߹��ʵ�˿�����Զ�����������Ӧ�ṩ���ò��ϵ�Ԥ��ģ�塣</p></div>
+  <h2 class="section-title" id="��ʮһ��-����materials">��ʮһ�� ���ϣ�Materials��</h2>
+  <h3 class="sub-title" id="111-multi-material-color-change">11.1 ����ϻ�ɫ������Multi Material Color Change��</h3>
+  <blockquote><p>���ڿ��ƶ���ϴ�ӡ����ɫ����Ĳģ�ʱ�Ļ�ɫ���Ժ���ɫ�л������������� CFS��Color Filament System���ȶ����ϵͳ��</p></blockquote>
+  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
+  <tr><td>11.1.1</td><td>��������</td><td>Number of Materials</td><td>��ǰ���õĺĲĲ�λ����</td><td>2�C8</td><td>�����ӡ����ͬʱʹ�õ����Ĳ�������K2 Pro CFS ֧����� 4 ɫ</td></tr>
+  <tr><td>11.1.2</td><td>ÿ�ֲ��ϵ���ɫ</td><td>Color</td><td>ÿ���ĲĲ�λ����ʾ��ɫ</td><td>ɫֵѡ����</td><td>������ƬԤ����ɫ�Ͷ�ɫ��������ɫӦ��ʵ�ʺĲ�ƥ��</td></tr>
+  <tr><td>11.1.3</td><td>���ٻ�ɫ</td><td>Fast Color Change</td><td>���ÿ��ٻ�ɫ�㷨���������������裩</td><td>���� / �ر�</td><td>������ʹ�ø��̵ĳ�ˢ·������ʡ���Ϻ�ʱ�䣻����������������ɫ�л�</td></tr>
+  <tr><td>11.1.4</td><td>��ɫ�仯ʱ��</td><td>Color Change Time</td><td>Ԥ��Ļ�ɫ��������ʱ��</td><td>0�C60 s</td><td>����׼ȷ�����ܴ�ӡʱ�䣻ʵ��ʱ����Ĳĺ���ɫ������ܲ�ͬ</td></tr>
+  <tr><td>11.1.5</td><td>��ȴ��ɫ����</td><td>Cool Down Color Change Area</td><td>��ɫǰ���콵�µ�����</td><td>���� / �ر�</td><td>������ɫǰ�����콵�£��������ϣ��������ӻ�ɫʱ��</td></tr>
+  <tr><td>11.1.6</td><td>��ȴ��ɫ�¶�</td><td>Cool Down Temperature for Color Change</td><td>��ɫǰ��Ŀ�꽵���¶�</td><td>150�C220��</td><td>PLA ����Լ 180�棻PETG ����Լ 200�棻���߻����ϣ����Ϳ��ܶ�ͷ</td></tr>
+  <tr><td>11.1.7</td><td>��ɫ��ָ��¶�</td><td>Temperature Restore After Color Change</td><td>��ɫ��ָ���Ŀ���¶�</td><td>180�C260��</td><td>��ɫ��Ѹ�ٻָ���������ӡ�¶ȣ���֤��������</td></tr>
+  <tr><td>11.1.8</td><td>�Զ��ָ��¶�</td><td>Auto Temperature Restore</td><td>�Զ��ָ���ӡ�¶�</td><td>���� / �ر�</td><td>�������Զ��ڱ�ɫ�����£��رպ����ֶ�����</td></tr>
+  <tr><td>11.1.9</td><td>��㻻ɫ</td><td>Color Change per Layer</td><td>ÿ��ɵ���������ɫ�л�</td><td>���� / �ر�</td><td>������ɶ���ÿ��Ļ�ɫ�㣻���ڸ��Ӷ�ɫģ��</td></tr>
+  <tr><td>11.1.10</td><td>��ɫ����</td><td>Color Change Layers</td><td>����ÿ��Ļ�ɫ���б�</td><td>��� + �Ĳ�����</td><td>������������л���������ɫ�ĺĲ�</td></tr>
+  <tr><td>11.1.11</td><td>��ɫ Z �߶�</td><td>Color Change Z Height</td><td>���ض� Z �߶ȴ�����ɫ</td><td>�Զ���߶��б�</td><td>���ھ��� Z �߶ȶ��ǲ������û�ɫ��</td></tr>
+  <tr><td>11.1.12</td><td>���һ�㲻��ɫ</td><td>No Color Change at Top</td><td>����������û�ɫ</td><td>���� / �ر�</td><td>������ɷ�ֹ������ֻ�ɫ���µı���覴�</td></tr>
+  <tr><td>11.1.13</td><td>���һ�㲻��ɫ�ĺ��</td><td>Top Distance for Color Change</td><td>�������򲻴�����ɫ�ĺ��</td><td>0�C5 mm</td><td>ȷ������������������⻻ɫ�ۼ�Ӱ��չʾ��</td></tr>
+  <tr><td>11.1.14</td><td>���һ�㲻��ɫ�����ȼ�</td><td>Top Color Change Priority</td><td>���㻻ɫ���Ƶ����ȼ�</td><td>0�C10</td><td>ֵԽ��=���㻻ɫ����Խ�ϸ�</td></tr>
+  </tbody></table>
+  <div class="design-note"><p>����ϻ�ɫ�Ƕ�ɫ��ӡ����ĺ��ģ�ֱ��Ӱ�컻ɫ�ۼ��Ŀɼ��Ժ���ɫ�����ȡ����ٻ�ɫ��11.1.3���������������ɫ�л�����������ɫ����ڡ��ף�Ӧʹ�ñ�׼��ɫ���Բ�������������</p></div>
+  <hr class="section-divider">
+  <div class="footer">
+    <p>Creality Print ��Ƭ����ȫ�� v2.2 | ������ Creality Print ��Ƭ���� | ����������</p>
+  </div>
+</main>
+<script>
+// Toggle sidebar for mobile
+function toggleSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.querySelector('.sidebar-overlay');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('open');
+}
+
+// Toggle nav section (L0) collapse
+function toggleNavSection(el) {
+  el.classList.toggle('collapsed');
+}
+
+// Toggle chapter (L1) collapse
+function toggleChapter(el) {
+  el.classList.toggle('collapsed');
+}
+
+// Intersection Observer for active nav highlighting
+const navItems = document.querySelectorAll('.nav-item');
+const sections = document.querySelectorAll('h2.section-title, h3.sub-title');
+
+const observerOptions = {
+  rootMargin: '-80px 0px -60% 0px',
+  threshold: 0
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.getAttribute('id');
+      navItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('href') === '#' + id) {
+          item.classList.add('active');
+        }
+      });
+    }
+  });
+}, observerOptions);
+
+sections.forEach(section => {
+  observer.observe(section);
+});
+
+// Close sidebar on nav item click (mobile)
+navItems.forEach(item => {
+  item.addEventListener('click', () => {
+    if (window.innerWidth <= 900) {
+      toggleSidebar();
+    }
+  });
+});
+</script>
+</body>
+</html>
