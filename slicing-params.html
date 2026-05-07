@@ -103,9 +103,7 @@ pre code { background: none; padding: 0; }
 <div class="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span></div>
 <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
 <aside class="sidebar">
-  <div class="sidebar-header"><h1>Creality Print 切片参数全解</h1><span class="version-badge">v2.2</span>
-    <div style="margin-top:10px"><a href="index.html" style="color:rgba(255,255,255,.7);font-size:12px;text-decoration:none;display:flex;align-items:center;gap:4px" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.7)'">← 返回首页</a></div>
-  </div>
+  <div class="sidebar-header"><h1>Creality Print 切片参数全解</h1><span class="version-badge">v2.2</span></div>
   <div class="nav-section">
     <div class="nav-toggle" onclick="toggleNavSection(this)"><span>工艺（Process）</span><span class="arrow">▼</span></div>
     <div class="nav-chapters">
@@ -548,259 +546,259 @@ pre code { background: none; padding: 0; }
   <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
   <tr><td>6.6.1</td><td>注释</td><td>Print Notes</td><td>附加到 G-code 文件头部的自定义备注文本</td><td>自定义文本</td><td>记录打印意图、材料批次、修改记录等信息，方便日后追溯</td></tr>
   </tbody></table>
-  <!-- ��¼A -->
-  <div class="appendix-section" id="��¼a-����������ϵ����">
-    <h2 class="section-title">��¼A ����������ϵ����</h2>
-    <h3 class="sub-title">A.1 ����ģ���ڲ�����</h3>
-    <pre><code>��� (1.1) + �߿� (1.2)
-    �� �����ֱ��ʺ͵���ǿ�Ȼ���
-�ӷ����� (1.3)
-    �� �������覴�λ�úͿɼ���
-���Ȳ��� (1.4.4�C1.4.7)
-    �� �����ߴ����׶�/������/��ţ�
-ǽ˳�� + ���� (1.7.1��1.7.4)
-    �� ���Ʊ��������Ͳ����
-�Ž� (1.8) + ���� (1.9)
-    �� ������֧�Ŵ�ӡ��������������
-���� (1.5)
-    �� ���ն���⻬��</code></pre>
-    <h3 class="sub-title">A.2 ǿ��ģ���ڲ�����</h3>
-    <pre><code>ǽ���� (2.1.1) + ��/�ײ��� (2.2.2/2.2.5)
-    �� �����������ǿ�ȹǼ�
-����ܶ� + ͼ�� (2.3.1/2.3.3)
-    �� �����ڲ���ѧ���ܺͲ�������
-���/ǽ�ص� (2.3.9) + Ƕ����� (2.1.2)
-    �� ����ǽ�����Ľ��������ֹ�ֲ�
-��䷽�� (2.4.1) + ʵ����䷽�� (2.4.2)
-    �� �����������Ժ�Z��ǿ��</code></pre>
-    <h3 class="sub-title">A.3 ��ģ������������ ? ǿ�ȣ�</h3>
-    <pre><code>��� (1.1) + ǽ���� (2.1) �� ��ͬ�������ǿ��
-�߿� (1.2) + ����ܶ� (2.3.1) �� ��ͬ�����������ĺʹ�ӡʱ��
-�ӷ�λ�� (1.3.1) + ǽ˳�� (1.7.1) �� ��ͬӰ���������</code></pre>
-    <h3 class="sub-title">A.4 �ٶ�ģ���ڲ�����</h3>
-    <pre><code>��ӡ�ٶ� (3.1.1) + ���ٶ� (3.1.2) �� ��ͬ����ʵ�ʴ�ӡʱ��
-�����ٶ� (3.2) �� �ڱ�֤������ǰ�������Ч��
-����/������ֵ (3.4) �� �����ս������Ⱥͻ�����
-��С�ֲ�ʱ�� (3.5.1) �� �ٶ���������ȴ������Լ</code></pre>
-    <h3 class="sub-title">A.5 ��ģ������������/ǿ�� ? �ٶȣ�</h3>
-    <pre><code>��ǽ�ٶ� (3.2.1) + �ӷ����� (1.3) �� ��ͬ�����������
-����ٶ� (3.2.5) + ����ܶ� (2.3.1) �� ����ٶȿ����ܶȽ��Ͷ����
-���ٶ� (3.1.2) + ǽ���� (2.1.1) �� ǽ��ʱ�轵�ͼ��ٶȷ�ֹ��</code></pre>
-    <h3 class="sub-title">A.6 ֧��ģ���ڲ�����</h3>
-    <pre><code>֧������ (4.1.1) + �����Ƕ� (4.1.3) �� ��ͬ����֧��������
-֧��Z���� (4.2.3) + �ӿڲ� (4.3.1) �� ��ͬ��������ѶȺ�����������
-���η�֧�Ƕ� (4.4.1) + ����ֱ�� (4.4.2) �� ��ͬ��������֧�ŵ��ȶ��Ժ�����</code></pre>
-    <h3 class="sub-title">A.7 ��ģ������������ ? ֧�ţ�</h3>
-    <pre><code>�������� (1.9) + ֧�ŽǶ� (4.1.3) �� �����Ż�����������֧�ŽǶ���ֵ
-�Ž� (1.8) + ֧������ (4.1.1) �� �Ž�����ǿʱ�ɼ���֧������</code></pre>
-    <h3 class="sub-title">A.8 ����/CFS ģ���ڲ�����</h3>
-    <pre><code>���������� (5.1.1) + ������ (5.1.6) �� ��ͬ������ɫ�����Ƿ񳹵�
-��ˢ����� (5.2.1) + ��ˢ��֧�� (5.2.2) �� ��ͬ����ʡ�ϲ���
-������ (5.3.1) + ��������ǿ���� (5.1.9) �� ��ͬ�����߲������ȶ���</code></pre>
-    <h3 class="sub-title">A.9 ��ģ������������ ? ������</h3>
-    <pre><code>������ (5.1.6) + ��ӡ�ٶ� (3.1.1) �� �ٶ�Խ������������Ӧ����
-������ (5.1) + ֧�� (������) �� ��ɫ��ӡʱ��������֧�Ź��棬��ע��ռ䲼��</code></pre>
+  <!-- 附录A -->
+  <div class="appendix-section" id="附录a-参数联动关系总览">
+    <h2 class="section-title">附录A 参数联动关系总览</h2>
+    <h3 class="sub-title">A.1 质量模块内部联动</h3>
+    <pre><code>层高 (1.1) + 线宽 (1.2)
+    ↓ 决定分辨率和单层强度基础
+接缝设置 (1.3)
+    ↓ 控制外观瑕疵位置和可见度
+精度补偿 (1.4.4–1.4.7)
+    ↓ 修正尺寸误差（孔洞/外轮廓/象脚）
+墙顺序 + 流量 (1.7.1、1.7.4)
+    ↓ 控制表面质量和层间结合
+桥接 (1.8) + 悬垂 (1.9)
+    ↓ 决定无支撑打印能力和悬空质量
+熨烫 (1.5)
+    ↓ 最终顶面光滑度</code></pre>
+    <h3 class="sub-title">A.2 强度模块内部联动</h3>
+    <pre><code>墙层数 (2.1.1) + 顶/底层数 (2.2.2/2.2.5)
+    ↓ 决定零件整体强度骨架
+填充密度 + 图案 (2.3.1/2.3.3)
+    ↓ 决定内部力学性能和材料消耗
+填充/墙重叠 (2.3.9) + 嵌入距离 (2.1.2)
+    ↓ 决定墙与填充的结合力，防止分层
+填充方向 (2.4.1) + 实心填充方向 (2.4.2)
+    ↓ 决定各向异性和Z轴强度</code></pre>
+    <h3 class="sub-title">A.3 跨模块联动（质量 ? 强度）</h3>
+    <pre><code>层高 (1.1) + 墙层数 (2.1) → 共同决定零件强度
+线宽 (1.2) + 填充密度 (2.3.1) → 共同决定材料消耗和打印时间
+接缝位置 (1.3.1) + 墙顺序 (1.7.1) → 共同影响外观质量</code></pre>
+    <h3 class="sub-title">A.4 速度模块内部联动</h3>
+    <pre><code>打印速度 (3.1.1) + 加速度 (3.1.2) → 共同决定实际打印时间
+分项速度 (3.2) → 在保证质量的前提下最大化效率
+抖动/连接阈值 (3.4) → 决定拐角锐利度和机器震动
+最小分层时间 (3.5.1) → 速度上限受冷却能力制约</code></pre>
+    <h3 class="sub-title">A.5 跨模块联动（质量/强度 ? 速度）</h3>
+    <pre><code>外墙速度 (3.2.1) + 接缝设置 (1.3) → 共同决定外观质量
+填充速度 (3.2.5) + 填充密度 (2.3.1) → 填充速度可随密度降低而提高
+加速度 (3.1.2) + 墙层数 (2.1.1) → 墙多时需降低加速度防止震动</code></pre>
+    <h3 class="sub-title">A.6 支撑模块内部联动</h3>
+    <pre><code>支撑类型 (4.1.1) + 悬垂角度 (4.1.3) → 共同决定支撑生成量
+支撑Z距离 (4.2.3) + 接口层 (4.3.1) → 共同决定拆除难度和悬空面质量
+树形分支角度 (4.4.1) + 顶端直径 (4.4.2) → 共同决定树形支撑的稳定性和用料</code></pre>
+    <h3 class="sub-title">A.7 跨模块联动（质量 ? 支撑）</h3>
+    <pre><code>悬垂处理 (1.9) + 支撑角度 (4.1.3) → 悬垂优化开启后可提高支撑角度阈值
+桥接 (1.8) + 支撑类型 (4.1.1) → 桥接能力强时可减少支撑需求</code></pre>
+    <h3 class="sub-title">A.8 材料/CFS 模块内部联动</h3>
+    <pre><code>擦拭塔开启 (5.1.1) + 清理量 (5.1.6) → 共同决定多色换料是否彻底
+冲刷到填充 (5.2.1) + 冲刷到支撑 (5.2.2) → 共同决定省料策略
+联锁梁 (5.3.1) + 擦拭塔增强类型 (5.1.9) → 共同决定高擦拭塔稳定性</code></pre>
+    <h3 class="sub-title">A.9 跨模块联动（材料 ? 其他）</h3>
+    <pre><code>清理量 (5.1.6) + 打印速度 (3.1.1) → 速度越快清理量需相应增加
+擦拭塔 (5.1) + 支撑 (第四章) → 多色打印时擦拭塔与支撑共存，需注意空间布局</code></pre>
   </div>
-  <!-- ��¼B -->
-  <div class="appendix-section" id="��¼b-���ʹ�ӡ���������Ƽ�">
-    <h2 class="section-title">��¼B ���ʹ�ӡ���������Ƽ�</h2>
+  <!-- 附录B -->
+  <div class="appendix-section" id="附录b-典型打印场景参数推荐">
+    <h2 class="section-title">附录B 典型打印场景参数推荐</h2>
     <table>
-      <thead><tr><th>����</th><th>�Ƽ���������</th></tr></thead>
+      <thead><tr><th>场景</th><th>推荐参数调整</th></tr></thead>
       <tbody>
-        <tr><td><strong>�߾���չʾ��</strong></td><td>��� 0.1mm��1.1.1�����ӷ�������أ�1.3.1�����������̣�1.5.1������ǽ�ٶȽ���</td></tr>
-        <tr><td><strong>���ܽṹ��</strong></td><td>��� 0.2mm��1.1.1����ǽȦ�� 3-4 �㣨2.1.1��������ܶ� 30%+��2.3.1�������� X-Y �׶�������1.4.4��</td></tr>
-        <tr><td><strong>���ٴ�ӡ</strong></td><td>��� 0.28�C0.32mm��1.1.1�������ϡ���߿��ӿ���1.2.6�����Ž��ٶ�������1.8.3��</td></tr>
-        <tr><td><strong>��֧�Ŵ�ӡ</strong></td><td>�����ɴ�ӡ��������1.9.2�������������ܳ�������1.9.3����֧�ŽǶ���ֵ���� 50��</td></tr>
-        <tr><td><strong>���̱�/�߸���</strong></td><td>Brim ���� 5-8mm��6.2.2�����ײ��ٶȽ��ͣ�3.1.4�����ײ��߿��ӿ���1.2.2��</td></tr>
-        <tr><td><strong>��ƿ/װ�μ�</strong></td><td>��ת��ƿģʽ������6.3.4������� 0.1-0.15mm���ر�֧��</td></tr>
-        <tr><td><strong>�������Ʊ���</strong></td><td>��ë���濪����6.3.7������ë��� 0.2-0.3mm��6.3.11�����ر�����</td></tr>
+        <tr><td><strong>高精度展示件</strong></td><td>层高 0.1mm（1.1.1）；接缝对齐隐藏（1.3.1）；开启熨烫（1.5.1）；外墙速度降低</td></tr>
+        <tr><td><strong>功能结构件</strong></td><td>层高 0.2mm（1.1.1）；墙圈数 3-4 层（2.1.1）；填充密度 30%+（2.3.1）；开启 X-Y 孔洞补偿（1.4.4）</td></tr>
+        <tr><td><strong>高速打印</strong></td><td>层高 0.28–0.32mm（1.1.1）；填充稀疏线宽加宽（1.2.6）；桥接速度提升（1.8.3）</td></tr>
+        <tr><td><strong>无支撑打印</strong></td><td>悬垂可打印化开启（1.9.2）；悬垂额外周长开启（1.9.3）；支撑角度阈值调至 50°</td></tr>
+        <tr><td><strong>防翘边/高附着</strong></td><td>Brim 宽度 5-8mm（6.2.2）；首层速度降低（3.1.4）；首层线宽加宽（1.2.2）</td></tr>
+        <tr><td><strong>花瓶/装饰件</strong></td><td>旋转花瓶模式开启（6.3.4）；层高 0.1-0.15mm；关闭支撑</td></tr>
+        <tr><td><strong>消除层纹表面</strong></td><td>绒毛表面开启（6.3.7）；绒毛厚度 0.2-0.3mm（6.3.11）；关闭熨烫</td></tr>
       </tbody>
     </table>
   </div>
   <hr class="section-divider">
-  <!-- �Ĳ�˿ģ�� -->
-  <h1 style="font-size:28px;color:var(--deep-blue);margin-bottom:16px;margin-top:48px;">�Ĳ�˿��Filament��</h1>
-  <blockquote><p>����Ϊ Creality Print ��Ƭ������<strong>�Ĳ�˿����ģ��</strong>���롾���ա�ģ�鲢�С����ǺĲĲ������ԡ��¶����ã���ӡ��/����/�ȴ������������Ƽ��ٶ����ƵȲ�������Ӧ�Ĳ�˿��������еĸ��ӱ�ǩҳ��</p><p style="margin-top:8px;"><strong>��ǰ����</strong>�������£��Ĳ�˿������Ϣ�����ڰ��£���ȴ�����ھ��£��������ǡ��س飩����ʮ�£��߼�������ʮһ�£����ϣ�����ɣ�ע�͵��ӱ�ǩ���������䡣</p></blockquote>
+  <!-- 耗材丝模块 -->
+  <h1 style="font-size:28px;color:var(--deep-blue);margin-bottom:16px;margin-top:48px;">耗材丝（Filament）</h1>
+  <blockquote><p>本章为 Creality Print 切片参数的<strong>耗材丝顶层模块</strong>，与【工艺】模块并列。涵盖耗材材料属性、温度设置（打印仓/喷嘴/热床）、流量控制及速度限制等参数，对应耗材丝设置面板中的各子标签页。</p><p style="margin-top:8px;"><strong>当前进度</strong>：第七章（耗材丝基础信息）、第八章（冷却）、第九章（参数覆盖·回抽）、第十章（高级）、第十一章（材料）已完成；注释等子标签待后续补充。</p></blockquote>
   <hr class="section-divider">
-  <!-- ������ ������Ϣ -->
-  <h2 class="section-title" id="������-�Ĳ�˿������Ϣfilament-basics">������ �Ĳ�˿������Ϣ��Filament Basics��</h2>
-  <h3 class="sub-title" id="71-������Ϣbasic-info">7.1 ������Ϣ��Basic Info��</h3>
-  <blockquote><p>���ں��ǺĲĵĺ������Զ��壬�������Ϸ��ࡢ�����ߴ硢������Ϊ�����óɱ����¶ȷ�Χ�Ȼ�����������Щ��������Ƭ�������м������㡢�¶��Ƽ��ͳɱ���������ݻ�����</p></blockquote>
-  <h4 id="711-material-properties">7.1.1 �������ԣ�Material Properties��</h4>
-  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
-  <tr><td>7.1.1.1</td><td>����</td><td>Filament Type</td><td>�ĲĵĲ������ͷ���</td><td>PLA / PETG / ABS / TPU / ASA / PA / PC ��</td><td><strong>�������߲���</strong>����ѡ�����ͺ��Զ�����Ƽ����¶ȡ���ȴ���ٶȵ�Ĭ��ֵ��PLA=190-220�棻ABS=230-260�棻TPU����ٶ�</td></tr>
-  <tr><td>7.1.1.2</td><td>��Ӧ��</td><td>Vendor / Brand</td><td>�Ĳĵ�Ʒ�ƹ�Ӧ��</td><td>Creality / eSun / Bambu / Polymaker ��</td><td>����Ʒ��ʶ��RFID �����Լ��Ĳ����ݿ��������ͬ��Ӧ�̵�ͬ���ͺĲĿ�����΢������</td></tr>
-  <tr><td>7.1.1.3</td><td>�����Բ���</td><td>Soluble Material</td><td>��ǸúĲ��Ƿ�Ϊ������֧�Ų��ϣ��� PVA��</td><td>���� / �ر�</td><td>��������Ƭ������ʶ��Ϊˮ����֧�ţ�Ӱ��֧�����ɲ��Ժͺ���������ʾ</td></tr>
-  <tr><td>7.1.1.4</td><td>֧�Ų���</td><td>Support Material</td><td>��ǸúĲ��Ƿ�ר���ڴ�ӡ֧�Žṹ</td><td>���� / �ر�</td><td>������Բ������ʹ�ã�����ģ�ͱ�����Ϻ�֧��ר�ò��ϣ��� BVOH��PVA��</td></tr>
-  <tr><td>7.1.1.5</td><td>����Ӳ��Ҫ��</td><td>Nozzle Hardness Requirement</td><td>������Ӳ�ȵ����Ҫ����ֵ</td><td>�Q0����Ҫ��/ �R�ض�ֵ</td><td>̼��ά��CF����������ά��GF����ĥʴ�ԺĲ���ҪӲ���������챦ʯ���죻��ͨ PLA/PETG ������Ҫ��</td></tr>
+  <!-- 第七章 基础信息 -->
+  <h2 class="section-title" id="第七章-耗材丝基础信息filament-basics">第七章 耗材丝基础信息（Filament Basics）</h2>
+  <h3 class="sub-title" id="71-基础信息basic-info">7.1 基础信息（Basic Info）</h3>
+  <blockquote><p>本节涵盖耗材的核心属性定义，包括材料分类、物理尺寸、挤出行为、经济成本和温度范围等基础参数。这些参数是切片软件进行挤出计算、温度推荐和成本估算的数据基础。</p></blockquote>
+  <h4 id="711-material-properties">7.1.1 材料属性（Material Properties）</h4>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>7.1.1.1</td><td>类型</td><td>Filament Type</td><td>耗材的材料类型分类</td><td>PLA / PETG / ABS / TPU / ASA / PA / PC 等</td><td><strong>决定基线参数</strong>——选择类型后自动填充推荐的温度、冷却、速度等默认值；PLA=190-220℃；ABS=230-260℃；TPU需低速度</td></tr>
+  <tr><td>7.1.1.2</td><td>供应商</td><td>Vendor / Brand</td><td>耗材的品牌供应商</td><td>Creality / eSun / Bambu / Polymaker 等</td><td>用于品牌识别、RFID 联动以及耗材数据库管理；不同供应商的同类型耗材可能有微调需求</td></tr>
+  <tr><td>7.1.1.3</td><td>可溶性材料</td><td>Soluble Material</td><td>标记该耗材是否为可溶性支撑材料（如 PVA）</td><td>开启 / 关闭</td><td>开启后切片器将其识别为水溶性支撑，影响支撑生成策略和后处理流程提示</td></tr>
+  <tr><td>7.1.1.4</td><td>支撑材料</td><td>Support Material</td><td>标记该耗材是否专用于打印支撑结构</td><td>开启 / 关闭</td><td>与可溶性材料配合使用，区分模型本体材料和支撑专用材料（如 BVOH、PVA）</td></tr>
+  <tr><td>7.1.1.5</td><td>喷嘴硬度要求</td><td>Nozzle Hardness Requirement</td><td>对喷嘴硬度的最低要求阈值</td><td>≦0（无要求）/ ≧特定值</td><td>碳纤维（CF）、玻璃纤维（GF）等磨蚀性耗材需要硬化钢喷嘴或红宝石喷嘴；普通 PLA/PETG 无特殊要求</td></tr>
   </tbody></table>
-  <div class="design-note"><p>�����͡��ǺĲĲ����ĸ��ڵ㣬�л�����ʱӦ���������������Ĭ��ֵ����Ӧ���ֶ�Ϊ�Ĳ� RFID ʶ����Ԥ���ӿڡ�</p></div>
-  <h4 id="712-flow-extrusion">7.1.2 �����뼷����Flow & Extrusion��</h4>
-  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
-  <tr><td>7.1.2.1</td><td>ȱʡ��ɫ</td><td>Default Color</td><td>�Ĳĵ�Ĭ����ʾ��ɫ��������ƬԤ����Ⱦ��</td><td>ɫֵѡ���� / Ԥ��ɫ��</td><td>Ӱ����ƬԤ����ģ�͵���ɫ��ʾ����ɫ��ӡʱ�������ֲ�ͬ�ĲĲ�λ</td></tr>
-  <tr><td>7.1.2.2</td><td>ֱ��</td><td>Diameter</td><td>�Ĳ�˿��ʵ�ʱ��ֱ��</td><td>1.75 mm / 2.85 mm / 3.00 mm</td><td><strong>ֱ�Ӳ��뼷��������</strong>����ֱ����� ��0.03mm �ɵ��� ��3.4% ����������������Ƿ���������ÿ���ʵ��У׼</td></tr>
-  <tr><td>7.1.2.3</td><td>ճ�������</td><td>Adhesion Class</td><td>���϶��ȴ������ճ�����Եȼ�</td><td>�R100����ֵԽ��ճ����Խ�ã�</td><td>Ӱ���ײ㸽�Ų����Ƽ��� Brim/Skirt Ĭ�����ã���ճ�����ϣ��� ABS+���ɽ����ȴ��¶�</td></tr>
-  <tr><td>7.1.2.4</td><td>��������</td><td>Flow Ratio</td><td>����������ȫ�ֱ���ϵ��</td><td>0.90�C1.10������ 0.95��</td><td><strong>����ֱ��ƫ��Ĺؼ�����</strong>����ʵ��ֱ��ƫСʱ�� >1.0��ƫ��ʱ�� <1.0����ͬƷ��/���κĲĵĿ���У׼�ֶ�</td></tr>
-  <tr><td>7.1.2.5</td><td>����ѹ����ǰ</td><td>Enable Pressure Advance</td><td>���ü���ѹ����ǰ�����㷨������ Marlin Linear Advance/Klipper PA��</td><td>���� / �ر�</td><td>���������ѹ����ǰֵ�ڼ���/���ٽ׶�Ԥ���������������򼷳�ϵͳ���Ե��µı���ȱ�ݣ�����/�ն���</td></tr>
-  <tr><td>7.1.2.6</td><td>ѹ����ǰֵ</td><td>Pressure Advance Value</td><td>ѹ����ǰ����ϵ������λ���룩</td><td>0.010�C0.050 s������ 0.032��</td><td><strong>���еϵͳǿ���</strong>���� Bowden ������ͨ�� 0.03�C0.05s��ֱ�������� 0.01�C0.02s��ֵ����ᵼ�¹��岨��</td></tr>
+  <div class="design-note"><p>「类型」是耗材参数的根节点，切换类型时应联动更新所有相关默认值。供应商字段为耗材 RFID 识别功能预留接口。</p></div>
+  <h4 id="712-flow-extrusion">7.1.2 流量与挤出（Flow & Extrusion）</h4>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>7.1.2.1</td><td>缺省颜色</td><td>Default Color</td><td>耗材的默认显示颜色（用于切片预览渲染）</td><td>色值选择器 / 预设色板</td><td>影响切片预览中模型的着色显示；多色打印时用于区分不同耗材槽位</td></tr>
+  <tr><td>7.1.2.2</td><td>直径</td><td>Diameter</td><td>耗材丝的实际标称直径</td><td>1.75 mm / 2.85 mm / 3.00 mm</td><td><strong>直接参与挤出量计算</strong>——直径误差 ±0.03mm 可导致 ±3.4% 的体积误差，引起过挤或欠挤；建议用卡尺实测校准</td></tr>
+  <tr><td>7.1.2.3</td><td>粘附性类别</td><td>Adhesion Class</td><td>材料对热床表面的粘附特性等级</td><td>≧100（数值越高粘附性越好）</td><td>影响首层附着策略推荐和 Brim/Skirt 默认设置；高粘附材料（如 ABS+）可降低热床温度</td></tr>
+  <tr><td>7.1.2.4</td><td>流量比例</td><td>Flow Ratio</td><td>挤出流量的全局倍率系数</td><td>0.90–1.10（典型 0.95）</td><td><strong>补偿直径偏差的关键参数</strong>——实际直径偏小时设 >1.0，偏大时设 <1.0；不同品牌/批次耗材的快速校准手段</td></tr>
+  <tr><td>7.1.2.5</td><td>启用压力提前</td><td>Enable Pressure Advance</td><td>启用挤出压力提前补偿算法（类似 Marlin Linear Advance/Klipper PA）</td><td>开启 / 关闭</td><td>开启后根据压力提前值在加速/减速阶段预调挤出量，减少因挤出系统弹性导致的表面缺陷（波纹/空洞）</td></tr>
+  <tr><td>7.1.2.6</td><td>压力提前值</td><td>Pressure Advance Value</td><td>压力提前补偿系数（单位：秒）</td><td>0.010–0.050 s（典型 0.032）</td><td><strong>与机械系统强相关</strong>—— Bowden 挤出机通常 0.03–0.05s；直驱挤出机 0.01–0.02s；值过大会导致过冲波纹</td></tr>
   </tbody></table>
-  <div class="design-note"><p>����������7.1.2.4�����û���ֶ������ĺĲĲ�����Ӧ�ṩ"��ӡ���Լ����������Զ��Ƽ�"���������̡�ѹ����ǰ�Ը��ٴ�ӡ��K2 Pro ������Ϊ��Ҫ��</p></div>
-  <h4 id="713-dimensional-physical">7.1.3 �ߴ����������ԣ�Dimensional & Physical��</h4>
-  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
-  <tr><td>7.1.3.1</td><td>�ܶ�</td><td>Density</td><td>���ϵ��ܶ�</td><td>1.20�C1.30 g/cm3��PLA����1.25�C1.35 g/cm3��PETG����1.04 g/cm3��TPU��</td><td>���ڹ����ӡ���������Ĳ��������㣨���ȡ�����ת�����ͳɱ�����</td></tr>
-  <tr><td>7.1.3.2</td><td>�����ʣ�XY��</td><td>Shrinkage (XY)</td><td>X-Y ƽ�淽��������ʣ��԰ٷֱȱ�ʾ��</td><td>100%������������ABS Լ 98%�C99%</td><td>���������ϣ�ABS/ASA/PA������ϸ���� X-Y �ߴ粹���������½� 1.4.5��������������ʧЧ</td></tr>
-  <tr><td>7.1.3.3</td><td>�����ʣ�Z��</td><td>Shrinkage (Z)</td><td>Z �ᣨ��ֱ�������������</td><td>100%�����������������������Ե��� XY</td><td>Z ��������ҪӰ���ܸ߶Ⱦ��ȣ�ͨ��С�� XY ��������</td></tr>
+  <div class="design-note"><p>流量比例（7.1.2.4）是用户最常手动调整的耗材参数，应提供"打印测试件→测量→自动推荐"的引导流程。压力提前对高速打印（K2 Pro 级别）尤为重要。</p></div>
+  <h4 id="713-dimensional-physical">7.1.3 尺寸与物理属性（Dimensional & Physical）</h4>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>7.1.3.1</td><td>密度</td><td>Density</td><td>材料的密度</td><td>1.20–1.30 g/cm3（PLA）；1.25–1.35 g/cm3（PETG）；1.04 g/cm3（TPU）</td><td>用于估算打印件重量、耗材用量计算（长度→重量转换）和成本核算</td></tr>
+  <tr><td>7.1.3.2</td><td>收缩率（XY）</td><td>Shrinkage (XY)</td><td>X-Y 平面方向的收缩率（以百分比表示）</td><td>100%（无收缩）；ABS 约 98%–99%</td><td>高收缩材料（ABS/ASA/PA）需配合更大的 X-Y 尺寸补偿（精度章节 1.4.5），否则孔轴配合失效</td></tr>
+  <tr><td>7.1.3.3</td><td>收缩率（Z）</td><td>Shrinkage (Z)</td><td>Z 轴（垂直）方向的收缩率</td><td>100%（无收缩）；高收缩材料略低于 XY</td><td>Z 向收缩主要影响总高度精度，通常小于 XY 方向收缩</td></tr>
   </tbody></table>
-  <div class="info-note">�����ʲ�����Ҫ���ڸ߼��ߴ粹�����㣬�����û�ͨ�������½ڵ� X-Y ������������1.4.5��ֱ�������������ڴ˴��������á�</div>
-  <h4 id="714-economic-temperature">7.1.4 �������¶����ԣ�Economic & Temperature��</h4>
-  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
-  <tr><td>7.1.4.1</td><td>�۸�</td><td>Price</td><td>�Ĳĵĵ���</td><td>15�C80 money/kg</td><td>���� G-code ��Ƭ�����е�<strong>��ӡ�ɱ�����</strong>������ �� ���ۣ���PLA ͨ�� 20-40 Ԫ/kg�����̲��� 80-200+ Ԫ/kg</td></tr>
-  <tr><td>7.1.4.2</td><td>�����¶�</td><td>Softening Temperature</td><td>���Ͽ�ʼ�����Ļ����¶�����</td><td>�Q40�棨����ֵ��</td><td>��Ϊ���»����洢������ֵ��PLA Լ 50-55�棻ABS Լ 90-105�档�������¶ȿ��ܱ���</td></tr>
-  <tr><td>7.1.4.3</td><td>������ת���¶�</td><td>Glass Transition Temperature (Tg)</td><td>���ϴӲ���̬ת��Ϊ��̬���¶ȵ�</td><td>�Q0�棨δ����ʱĬ�ϣ�</td><td>Ӱ���ȴ��¶����ý����ɢ�Ȳ��ԣ�PLA Tg��60�棬��ӡʱ����Ӧ < Tg �Ա�֤����ϣ��� Tg ���ϣ�PC Tg��150�棩����ߴ���</td></tr>
-  <tr><td>7.1.4.4</td><td>���������¶ȣ���С��</td><td>Recommended Nozzle Temp (Min)</td><td>�Ƽ������¶ȷ�Χ������</td><td>190�棨PLA����220�棨PETG����240�棨ABS��</td><td>�¶����ޱ�������ֹ�û����ù��͵��¶�ͷ�������</td></tr>
-  <tr><td>7.1.4.5</td><td>���������¶ȣ����</td><td>Recommended Nozzle Temp (Max)</td><td>�Ƽ������¶ȷ�Χ������</td><td>240�棨PLA����250�棨PETG����270�棨ABS��</td><td>�¶����ޱ����Ͱ�ȫ��ʾ����ֹ�����¶ȵ��ºĲķֽ⣨�� PLA > 250�� �к�������գ�</td></tr>
+  <div class="info-note">收缩率参数主要用于高级尺寸补偿计算，多数用户通过精度章节的 X-Y 外轮廓补偿（1.4.5）直接修正，无需在此处单独设置。</div>
+  <h4 id="714-economic-temperature">7.1.4 经济与温度属性（Economic & Temperature）</h4>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>7.1.4.1</td><td>价格</td><td>Price</td><td>耗材的单价</td><td>15–80 money/kg</td><td>用于 G-code 切片报告中的<strong>打印成本估算</strong>（重量 × 单价）；PLA 通常 20-40 元/kg；工程材料 80-200+ 元/kg</td></tr>
+  <tr><td>7.1.4.2</td><td>软化温度</td><td>Softening Temperature</td><td>材料开始软化的环境温度上限</td><td>≦40℃（典型值）</td><td>作为高温环境存储警告阈值；PLA 约 50-55℃；ABS 约 90-105℃。超过此温度可能变形</td></tr>
+  <tr><td>7.1.4.3</td><td>玻璃化转变温度</td><td>Glass Transition Temperature (Tg)</td><td>材料从玻璃态转变为橡胶态的温度点</td><td>≦0℃（未配置时默认）</td><td>影响热床温度设置建议和散热策略；PLA Tg≈60℃，打印时床温应 < Tg 以保证层间结合；高 Tg 材料（PC Tg≈150℃）需更高床温</td></tr>
+  <tr><td>7.1.4.4</td><td>建议喷嘴温度（最小）</td><td>Recommended Nozzle Temp (Min)</td><td>推荐喷嘴温度范围的下限</td><td>190℃（PLA）；220℃（PETG）；240℃（ABS）</td><td>温度下限保护，防止用户设置过低导致堵头或层间剥离</td></tr>
+  <tr><td>7.1.4.5</td><td>建议喷嘴温度（最大）</td><td>Recommended Nozzle Temp (Max)</td><td>推荐喷嘴温度范围的上限</td><td>240℃（PLA）；250℃（PETG）；270℃（ABS）</td><td>温度上限保护和安全提示，防止过高温度导致耗材分解（如 PLA > 250℃ 有害气体风险）</td></tr>
   </tbody></table>
-  <div class="design-note"><p>�۸� + �ܶȿ�ʵ�־�ȷ�ĳɱ����㹦�ܣ��� Creality Print �����ھ�Ʒ����Ҫ��ֵ�㡣���������¶ȷ�ΧΪ�û��ṩ�˰�ȫ���¶ȵ��ڲο����䡣</p></div>
-  <h3 class="sub-title" id="72-print-chamber-temp">7.2 ��ӡ���¶ȣ�Print Chamber Temperature��</h3>
-  <blockquote><p>���ڿ��Ʒ��ʽ��ӡ���ڵĻ����¶ȡ����� ASA��ABS��PA �ȸ�����/�͸��²��ϣ����´�ӡ���Ƿ�ֹ�̱ߺͷֲ�Ĺؼ�������</p></blockquote>
-  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
-  <tr><td>7.2.1</td><td>��Ͳ���</td><td>Minimum Chamber Temperature</td><td>������ʼ��ӡ����Ͳ�����ֵ</td><td>0�C80��</td><td>���ڴ��¶�ʱ��ͣ��ӡ�򱨾���ABS ͨ��Ҫ�� �R45�� �Է�ֹ�̱�</td></tr>
-  <tr><td>7.2.2</td><td>���Ȳ�</td><td>Heated Chamber</td><td>�Ƿ����ô�ӡ����������</td><td>���� / �ر�</td><td>��������Ƭ������ G-code �����Ӽ��Ȳ�ָ����ֻ��ͣ��� K2 Pro ��հ棩֧�ִ˹���</td></tr>
-  <tr><td>7.2.3</td><td>Ŀ�����</td><td>Target Chamber Temperature</td><td>��ӡ�ֵ�Ŀ������¶�</td><td>30�C60��</td><td>ABS �Ƽ� 45-55�棻ASA �Ƽ� 50-60�棻�����¶ȿ���Ӱ�����Ԫ������</td></tr>
+  <div class="design-note"><p>价格 + 密度可实现精确的成本估算功能，是 Creality Print 区别于竞品的重要增值点。建议喷嘴温度范围为用户提供了安全的温度调节参考区间。</p></div>
+  <h3 class="sub-title" id="72-print-chamber-temp">7.2 打印仓温度（Print Chamber Temperature）</h3>
+  <blockquote><p>本节控制封闭式打印仓内的环境温度。对于 ASA、ABS、PA 等高收缩/耐高温材料，恒温打印仓是防止翘边和分层的关键条件。</p></blockquote>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>7.2.1</td><td>最低仓温</td><td>Minimum Chamber Temperature</td><td>允许开始打印的最低仓温阈值</td><td>0–80℃</td><td>低于此温度时暂停打印或报警；ABS 通常要求 ≧45℃ 以防止翘边</td></tr>
+  <tr><td>7.2.2</td><td>加热仓</td><td>Heated Chamber</td><td>是否启用打印仓主动加热</td><td>开启 / 关闭</td><td>开启后切片软件在 G-code 中添加加热仓指令；部分机型（如 K2 Pro 封闭版）支持此功能</td></tr>
+  <tr><td>7.2.3</td><td>目标仓温</td><td>Target Chamber Temperature</td><td>打印仓的目标加热温度</td><td>30–60℃</td><td>ABS 推荐 45-55℃；ASA 推荐 50-60℃；过高温度可能影响电子元件寿命</td></tr>
   </tbody></table>
-  <div class="info-note">���Ȳֹ�����ҪӲ��֧�֣��ܷ���� + ����Ԫ�� + �¿ش����������������� Ender/K ϵ�л��;�֧�֡�</div>
-  <h3 class="sub-title" id="73-print-temperature">7.3 ��ӡ�¶ȣ�Print Temperature��</h3>
-  <blockquote><p>���ڿ������죨�ȶˣ��¶ȣ��� FDM ��ӡ����ĵĺĲĲ�����ֱ��Ӱ�����ϡ����������������ȶ��ԺͲ�����ѧ���ܡ�</p></blockquote>
-  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
-  <tr><td>7.3.1</td><td>��ӡ�¶�</td><td>Printing Temperature</td><td>������ӡ��������¶�</td><td>180�C300�棨���������ͣ�</td><td><strong>����ĺĲĲ���</strong>����PLA 190-210�棻PETG 230-250�棻ABS 250-270�棻�¶�Ӱ��ճ�ȡ������ԡ�����Ϻ���˿�̶�</td></tr>
-  <tr><td>7.3.2</td><td>��ӡ�¶ȣ��ײ㣩</td><td>Printing Temperature Initial Layer</td><td>��һ���ӡ��ר���¶�</td><td>�����¶� -5�� �� +10��</td><td>�ײ��Ը߿������������������߻ᵼ���ײ���Σ�����������¶ȸ� 5��</td></tr>
-  <tr><td>7.3.3</td><td>��ӡ�¶ȣ����棩</td><td>Printing Temperature Bottom</td><td>�ײ������ר���¶�</td><td>�����¶� -5�� �� +5��</td><td>�ɶ������������ã����Ƶײ�����ļ�������</td></tr>
-  <tr><td>7.3.4</td><td>��ӡ�¶ȣ���㣩</td><td>Printing Temperature Layer</td><td>����ÿ�㵥�����ò�ͬ�Ĵ�ӡ�¶�</td><td>���� / �ر�</td><td>����������Ӷ���¶ȱ仯�� G-code�����ڸ߼����տ��ƣ���Ԥ�Ȳ㡢���²㣩</td></tr>
-  <tr><td>7.3.5</td><td>��ʼ�¶ȵȴ�</td><td>Initial Temperature Waiting</td><td>��ӡǰ�ȴ�����ﵽĿ���¶�</td><td>���� / �ر�</td><td>����ȷ��������ȫԤ�Ⱥ��ٿ�ʼ��������ֹ��������ͷ</td></tr>
-  <tr><td>7.3.6</td><td>ǻ��Ԥ���¶�</td><td>Chamber Temperature</td><td>�ڴ�ӡ��ʼǰԤ�Ȳ��ҵ�Ŀ���¶�</td><td>0�C60��</td><td>���� ASA/ABS����ǰԤ�ȴ�ӡ�ֿɼ����������̱߷���</td></tr>
-  <tr><td>7.3.7</td><td>����ʱ��</td><td>Dwell Time</td><td>������ɺ�ʼ��ӡǰ��ͣ��ʱ��</td><td>0�C30 ����</td><td>0=������ʼ���ӳ�����ʱ���ʹ�ȴ��Ͳ����¶ȸ����ȣ����������������µ�Ӧ��</td></tr>
+  <div class="info-note">加热仓功能需要硬件支持（密封仓体 + 加热元件 + 温控传感器），并非所有 Ender/K 系列机型均支持。</div>
+  <h3 class="sub-title" id="73-print-temperature">7.3 打印温度（Print Temperature）</h3>
+  <blockquote><p>本节控制喷嘴（热端）温度，是 FDM 打印最核心的耗材参数，直接影响层间结合、表面质量、挤出稳定性和材料力学性能。</p></blockquote>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>7.3.1</td><td>打印温度</td><td>Printing Temperature</td><td>正常打印层的喷嘴温度</td><td>180–300℃（按材料类型）</td><td><strong>最核心耗材参数</strong>——PLA 190-210℃；PETG 230-250℃；ABS 250-270℃；温度影响粘度、流动性、层间结合和拉丝程度</td></tr>
+  <tr><td>7.3.2</td><td>打印温度（首层）</td><td>Printing Temperature Initial Layer</td><td>第一层打印的专用温度</td><td>正常温度 -5℃ 至 +10℃</td><td>首层略高可提升附着力，但过高会导致首层变形；建议比正常温度高 5℃</td></tr>
+  <tr><td>7.3.3</td><td>打印温度（底面）</td><td>Printing Temperature Bottom</td><td>底部几层的专用温度</td><td>正常温度 -5℃ 至 +5℃</td><td>可独立于主体设置，控制底部几层的挤出特性</td></tr>
+  <tr><td>7.3.4</td><td>打印温度（逐层）</td><td>Printing Temperature Layer</td><td>允许每层单独设置不同的打印温度</td><td>开启 / 关闭</td><td>开启后可添加多段温度变化的 G-code；用于高级工艺控制（如预热层、回温层）</td></tr>
+  <tr><td>7.3.5</td><td>初始温度等待</td><td>Initial Temperature Waiting</td><td>打印前等待喷嘴达到目标温度</td><td>开启 / 关闭</td><td>开启确保喷嘴完全预热后再开始挤出，防止冷启动堵头</td></tr>
+  <tr><td>7.3.6</td><td>腔室预热温度</td><td>Chamber Temperature</td><td>在打印开始前预热仓室的目标温度</td><td>0–60℃</td><td>对于 ASA/ABS，提前预热打印仓可减少收缩和翘边风险</td></tr>
+  <tr><td>7.3.7</td><td>保温时间</td><td>Dwell Time</td><td>加热完成后开始打印前的停留时间</td><td>0–30 分钟</td><td>0=立即开始；延长保温时间可使热床和仓室温度更均匀，减少热胀冷缩导致的应力</td></tr>
   </tbody></table>
-  <div class="design-note"><p>��ӡ�¶�����Ӱ���ӡ������������ܵĺĲĲ����������״�ʹ��ʱ�Ӳ��Ϲ�Ӧ���Ƽ���Χ����ֵ��ʼ������ʵ��Ч������˿�������롢�������ݣ�����΢�� 5-10�档</p></div>
-  <h3 class="sub-title" id="74-bed-temperature">7.4 ���£�Bed Temperature��</h3>
-  <blockquote><p>�ȴ��¶ȿ��ƴ�ӡ����ƽ̨�ĸ��ţ�Ӱ���ײ�ճ�����̱߷��պ͵ײ�������������ͬ���϶��ȴ��¶ȵ��������������</p></blockquote>
-  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
-  <tr><td>7.4.1</td><td>�ȴ��¶�</td><td>Bed Temperature</td><td>������ӡ�׶ε��ȴ�Ŀ���¶�</td><td>30�C110�棨���������ͣ�</td><td><strong>�����ײ㸽�����ĺ��Ĳ���</strong>����PLA 50-60�棻PETG 70-80�棻ABS/ASA 90-110�棻�¶ȹ���=�ײ㲻ճ���¶ȹ���=������˿/����</td></tr>
-  <tr><td>7.4.2</td><td>�ȴ��¶ȣ��ײ㣩</td><td>Bed Temperature Initial Layer</td><td>��һ���ӡ���ȴ��¶�</td><td>�����¶� ��0�C20��</td><td>�ײ��Ը߿���ǿ��������ABS ����������� 5-10��</td></tr>
-  <tr><td>7.4.3</td><td>�ȴ��¶ȣ����棩</td><td>Bed Temperature Bottom</td><td>�ײ�������ȴ��¶�</td><td>�����¶� ��0�C10��</td><td>�ɶ������������ã����Ƶײ��������ճ������</td></tr>
-  <tr><td>7.4.4</td><td>�ȴ��¶ȣ���㣩</td><td>Bed Temperature Layer</td><td>����ÿ�㵥�����ò�ͬ���ȴ��¶�</td><td>���� / �ر�</td><td>������������ȴ��¶Ƚ��� G-code�����ڸ߼����տ���</td></tr>
-  <tr><td>7.4.5</td><td>��ʼ�ȴ��¶ȵȴ�</td><td>Initial Bed Temperature Waiting</td><td>��ӡǰ�ȴ��ȴ��ﵽĿ���¶�</td><td>���� / �ر�</td><td>����ȷ���ȴ���ȫԤ�Ⱥ��ٿ�ʼ��ӡ����ֹ�ײ����¶Ȳ������Ų���</td></tr>
+  <div class="design-note"><p>打印温度是最影响打印质量与材料性能的耗材参数。建议首次使用时从材料供应商推荐范围的中值开始，根据实际效果（拉丝、层间分离、过热气泡）上下微调 5-10℃。</p></div>
+  <h3 class="sub-title" id="74-bed-temperature">7.4 床温（Bed Temperature）</h3>
+  <blockquote><p>热床温度控制打印件与平台的附着，影响首层粘附、翘边风险和底部表面质量。不同材料对热床温度的需求差异显著。</p></blockquote>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>7.4.1</td><td>热床温度</td><td>Bed Temperature</td><td>正常打印阶段的热床目标温度</td><td>30–110℃（按材料类型）</td><td><strong>决定首层附着力的核心参数</strong>——PLA 50-60℃；PETG 70-80℃；ABS/ASA 90-110℃；温度过低=首层不粘；温度过高=底面拉丝/变形</td></tr>
+  <tr><td>7.4.2</td><td>热床温度（首层）</td><td>Bed Temperature Initial Layer</td><td>第一层打印的热床温度</td><td>正常温度 ±0–20℃</td><td>首层略高可增强附着力；ABS 建议比正常高 5-10℃</td></tr>
+  <tr><td>7.4.3</td><td>热床温度（底面）</td><td>Bed Temperature Bottom</td><td>底部几层的热床温度</td><td>正常温度 ±0–10℃</td><td>可独立于主体设置，控制底部几层的热粘附特性</td></tr>
+  <tr><td>7.4.4</td><td>热床温度（逐层）</td><td>Bed Temperature Layer</td><td>允许每层单独设置不同的热床温度</td><td>开启 / 关闭</td><td>开启后可添加热床温度渐变 G-code；用于高级工艺控制</td></tr>
+  <tr><td>7.4.5</td><td>初始热床温度等待</td><td>Initial Bed Temperature Waiting</td><td>打印前等待热床达到目标温度</td><td>开启 / 关闭</td><td>开启确保热床完全预热后再开始打印，防止首层因温度不均附着不良</td></tr>
   </tbody></table>
-  <div class="design-note"><p>�ȴ��¶��������¶ȹ�ͬ������ FDM ��ӡ��"�Ȼ���"������ ABS/ASA �ȸ��������ϣ������ȴ��¶���Ϊ���ϲ�����ת���¶ȣ�7.1.4.3���������Լ��ٲ��Ӧ����</p></div>
-  <h3 class="sub-title" id="75-volumetric-speed-limit">7.5 ����ٶ����ƣ�Volumetric Speed Limit��</h3>
-  <blockquote><p>����ٶȣ�Volumetric Speed��= �߿� �� ��� �� ��ӡ�ٶȣ������˵�λʱ���ڼ����ĺĲ�������˲��������˴�ӡ���ڸ����Ĳ������µ����ȫ����������ֹ���������������µĴ�ӡȱ�ݡ�</p></blockquote>
-  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
-  <tr><td>7.5.1</td><td>�������ٶ�</td><td>Maximum Volumetric Speed</td><td>���������Ĳļ�������ٶȣ�mm3/s��</td><td>3�C30 mm3/s�������Ϻͼ��������ͣ�</td><td><strong>��������ϵͳ�Ĺؼ�����</strong>����ֱ���������ɴ� 15-20mm3/s��Bowden ͨ�� 8-12mm3/s��������ֵ�ᵼ�¼������㡢���ơ�ȱ��</td></tr>
-  <tr><td>7.5.2</td><td>�¶��ײ����ʱ�����ٶ�</td><td>Slow Down if Temperature Too Low</td><td>�������¶ȵ���Ŀ��ʱ�Զ����ʹ�ӡ�ٶ�</td><td>���� / �ر�</td><td>�����ɷ�ֹ�¶Ȳ������µļ������ȶ����ڼ��Ȳ���ʱ����ȱ��</td></tr>
-  <tr><td>7.5.3</td><td>�¶ȹ���ʱ���ٶ�ϵ��</td><td>Slow Down Factor if Temperature Too Low</td><td>�¶Ȳ���ʱ�ٶȽ��͵ı���</td><td>50%�C100%</td><td>ֵԽ��=�¶Ȳ���ʱ����Խ�࣬��ֹ��������</td></tr>
+  <div class="design-note"><p>热床温度与喷嘴温度共同决定了 FDM 打印的"热环境"。对于 ABS/ASA 等高收缩材料，建议热床温度设为材料玻璃化转变温度（7.1.4.3）附近，以减少层间应力。</p></div>
+  <h3 class="sub-title" id="75-volumetric-speed-limit">7.5 体积速度限制（Volumetric Speed Limit）</h3>
+  <blockquote><p>体积速度（Volumetric Speed）= 线宽 × 层高 × 打印速度，决定了单位时间内挤出的耗材体积。此参数限制了打印机在给定耗材类型下的最大安全挤出量，防止挤出不足或过挤导致的打印缺陷。</p></blockquote>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>7.5.1</td><td>最大体积速度</td><td>Maximum Volumetric Speed</td><td>允许的最大耗材挤出体积速度（mm3/s）</td><td>3–30 mm3/s（按材料和挤出机类型）</td><td><strong>保护挤出系统的关键参数</strong>——直驱挤出机可达 15-20mm3/s；Bowden 通常 8-12mm3/s；超过此值会导致挤出不足、层纹、缺料</td></tr>
+  <tr><td>7.5.2</td><td>温度首层过高时降低速度</td><td>Slow Down if Temperature Too Low</td><td>当喷嘴温度低于目标时自动降低打印速度</td><td>开启 / 关闭</td><td>开启可防止温度波动导致的挤出不稳定，在加热不足时减少缺陷</td></tr>
+  <tr><td>7.5.3</td><td>温度过低时的速度系数</td><td>Slow Down Factor if Temperature Too Low</td><td>温度不足时速度降低的比例</td><td>50%–100%</td><td>值越低=温度不足时降速越多，防止挤出不足</td></tr>
   </tbody></table>
-  <div class="design-note"><p>�������ٶ��Ǹ��ٴ�ӡ�ĺ������Ʋ�����K2 Pro �ȸ��ٻ�����Ҫ��ϸ������ȶ���Ʋ��ܷ������ơ��û��ڵ��ߴ�ӡ�ٶ�ʱ��Ӧͬ�����˲����Ƿ��Ϊƿ����</p></div>
-  <h2 class="section-title" id="�ڰ���-��ȴcooling">�ڰ��� ��ȴ��Cooling��</h2>
-  <h3 class="sub-title" id="81-specific-cooling">8.1 �ض�����ȴ��Specific Cooling��</h3>
-  <blockquote><p>���ڿ����ض��㣨���ײ㡢�ض��߶Ȳ㣩����ȴ���Ȳ��ԣ������Ż���ͬ��ӡ�׶ε�ɢ������</p></blockquote>
-  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
-  <tr><td>8.1.1</td><td>�����ض������</td><td>Enable Specific Layer Cooling</td><td>�������ض��㵥�����÷��Ȳ���</td><td>���� / �ر�</td><td>����������Ӷ�㲻ͬ�ķ��Ȳ��ԣ����ھ�ϸ������ȴ</td></tr>
-  <tr><td>8.1.2</td><td>�ض�����ȴ��</td><td>Specific Layer Cooling Table</td><td>�����ض����Ӧ�ķ���ת���б�</td><td>���� + ����ת�� (%)</td><td>�������ײ� 0%���� 5 �� 30%���� 10 �� 100% ��������</td></tr>
+  <div class="design-note"><p>最大体积速度是高速打印的核心限制参数。K2 Pro 等高速机型需要配合高流量热端设计才能发挥优势。用户在调高打印速度时，应同步检查此参数是否成为瓶颈。</p></div>
+  <h2 class="section-title" id="第八章-冷却cooling">第八章 冷却（Cooling）</h2>
+  <h3 class="sub-title" id="81-specific-cooling">8.1 特定层冷却（Specific Cooling）</h3>
+  <blockquote><p>本节控制特定层（如首层、特定高度层）的冷却风扇策略，用于优化不同打印阶段的散热需求。</p></blockquote>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>8.1.1</td><td>启用特定层风扇</td><td>Enable Specific Layer Cooling</td><td>允许对特定层单独设置风扇策略</td><td>开启 / 关闭</td><td>开启后可添加多层不同的风扇策略，用于精细控制冷却</td></tr>
+  <tr><td>8.1.2</td><td>特定层冷却表</td><td>Specific Layer Cooling Table</td><td>定义特定层对应的风扇转速列表</td><td>层数 + 风扇转速 (%)</td><td>可设置首层 0%、第 5 层 30%、第 10 层 100% 等逐层策略</td></tr>
   </tbody></table>
-  <div class="info-note">�ض�����ȴͨ�����ڶ����ϴ�ӡ����Ҫ�ڴ�ӡ��;�л����Ȳ��Եĸ߼�������</div>
-  <h3 class="sub-title" id="82-model-fan">8.2 ģ�ͷ��ȣ�Model Cooling Fan��</h3>
-  <blockquote><p>ģ�ͷ��ȣ�part cooling fan���ǿ��Ƽ�����Ĳ���ȴ�ٶȵĺ����豸���ʵ�����ȴ�ɷ�ֹ PLA �Ȳ��Ϲ��ȱ��Ρ�����ϸ�ھ��ȣ���Ӱ����ճ����</p></blockquote>
-  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
-  <tr><td>8.2.1</td><td>ģ�ͷ���</td><td>Model Cooling Fan</td><td>ģ����ȴ���ȵ����ÿ���</td><td>���� / �ر�</td><td><strong>Ӱ������ɢ�Ȳ���</strong>�����رպ�ȫ����ģ����ȴ����ʹ�û������ɢ�ȣ����� ABS ����Ҫ������ȴ�Ĳ���</td></tr>
-  <tr><td>8.2.2</td><td>�������ٶ�</td><td>Maximum Fan Speed</td><td>ģ�ͷ��ȵ����ת������</td><td>50%�C100%</td><td>100%=ȫ�٣����Ϳɷ�ֹ PLA �ײ�����������̱ߣ���ϸ�ڴ�ӡ���������� 80%</td></tr>
-  <tr><td>8.2.3</td><td>��С�����ٶ�</td><td>Minimum Fan Speed</td><td>ģ�ͷ��ȵ����ת������</td><td>0%�C50%</td><td>����ֵ��֤����ɢ�ȣ�PLA ���� �R30%����������ӡ�����������ٶ��Է�����</td></tr>
-  <tr><td>8.2.4</td><td>���������ٶ�</td><td>Throttled Fan Speed</td><td>�� CPU/�����¶ȹ���ʱ�Զ����ͷ���ת��</td><td>0%�C100%</td><td>��������Ԫ������ֹ����ȵ��¹̼���Ƶ���������������� 50-70%</td></tr>
-  <tr><td>8.2.5</td><td>����������ײ�����</td><td>Fan Always On from Layer Zero</td><td>���ײ㿪ʼ������ģ�ͷ���</td><td>���� / �ر�</td><td>�ر�=�ײ���ȹر���ȷ�����ţ�����=�ײ㼴��ʼɢ�ȣ��������ض��ĸ��ٴ�ӡ����</td></tr>
-  <tr><td>8.2.6</td><td>�ײ�����ٶ�</td><td>Initial Layer Fan Speed</td><td>��һ���ӡʱ�ķ����ٶ�</td><td>0%�C100%</td><td>ͨ����Ϊ 0% ���ת���Ա�֤�ײ㸽�ţ����ٴ�ӡʱ������Ҫ�Ը�ת��</td></tr>
-  <tr><td>8.2.7</td><td>�ײ���ȴ����߶�</td><td>First Layer Cooling Activation Height</td><td>�ײ��ʼ���ӷ��ȵĸ߶���ֵ</td><td>0.1�C5 mm</td><td>ȷ���ײ�̻����ٿ�ʼ���磻ͨ����Ϊ 0.5-1mm</td></tr>
-  <tr><td>8.2.8</td><td>��ȴ�㿪ʼ�ٶ�</td><td>Layer Start Fan Speed</td><td>ÿ�㿪ʼ��ӡʱ�ĳ�ʼ����ת��</td><td>0%�C100%</td><td>����ÿ������ʱ�ķ�����Ӧ��Ϊ</td></tr>
-  <tr><td>8.2.9</td><td>��ȴ�ٶ�</td><td>Cooling Fan Speed</td><td>������ӡ��ķ���ת�٣���� > ��ȴ����߶ȣ�</td><td>0%�C100%</td><td><strong>����ĵ���ȴ����</strong>����PLA �Ƽ� 50-100%��PETG �Ƽ� 20-50%��PETG �¹�����ȴ����ABS �Ƽ� 0-20%</td></tr>
-  <tr><td>8.2.10</td><td>��ȴ�ٶ����仯</td><td>Cooling Fan Speed by Layer</td><td>���������ٶ����߱仯</td><td>���� / �ر�</td><td>����������÷����ٶ���߶Ƚ�����������ײ��͡������ߣ�</td></tr>
-  <tr><td>8.2.11</td><td>��ȴ�ٶȱ�</td><td>Cooling Fan Speed Table</td><td>���岻ͬ��߶�Ӧ�ķ���ת�ٱ�</td><td>��� + ����ת��</td><td>��ϸ���Ʋ�ͬ�߶ȵ���ȴ����</td></tr>
-  <tr><td>8.2.12</td><td>�Žӷ����ٶ�</td><td>Bridging Fan Speed</td><td>�����Ž�ʱ�ķ���ת��</td><td>100%�����٣�</td><td>�Ž�ʱ������ȴ�ɼ����´��������Ž�����</td></tr>
+  <div class="info-note">特定层冷却通常用于多层材料打印或需要在打印中途切换风扇策略的高级场景。</div>
+  <h3 class="sub-title" id="82-model-fan">8.2 模型风扇（Model Cooling Fan）</h3>
+  <blockquote><p>模型风扇（part cooling fan）是控制挤出后耗材冷却速度的核心设备。适当的冷却可防止 PLA 等材料过热变形、保持细节精度，并影响层间粘附。</p></blockquote>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>8.2.1</td><td>模型风扇</td><td>Model Cooling Fan</td><td>模型冷却风扇的启用开关</td><td>开启 / 关闭</td><td><strong>影响整体散热策略</strong>——关闭后全程无模型冷却，仅使用机箱风扇散热；用于 ABS 等需要慢速冷却的材料</td></tr>
+  <tr><td>8.2.2</td><td>最大风扇速度</td><td>Maximum Fan Speed</td><td>模型风扇的最高转速限制</td><td>50%–100%</td><td>100%=全速；降低可防止 PLA 首层因冷风冲击而翘边；高细节打印建议限制在 80%</td></tr>
+  <tr><td>8.2.3</td><td>最小风扇速度</td><td>Minimum Fan Speed</td><td>模型风扇的最低转速限制</td><td>0%–50%</td><td>非零值保证基础散热；PLA 建议 ≧30%；高流量打印建议提高最低速度以防过热</td></tr>
+  <tr><td>8.2.4</td><td>节流风扇速度</td><td>Throttled Fan Speed</td><td>当 CPU/主板温度过高时自动降低风扇转速</td><td>0%–100%</td><td>保护电子元件，防止因过热导致固件降频或重启；建议设置 50-70%</td></tr>
+  <tr><td>8.2.5</td><td>风扇总在最底层启动</td><td>Fan Always On from Layer Zero</td><td>从首层开始即启用模型风扇</td><td>开启 / 关闭</td><td>关闭=首层风扇关闭以确保附着；开启=首层即开始散热，适用于特定的高速打印场景</td></tr>
+  <tr><td>8.2.6</td><td>首层风扇速度</td><td>Initial Layer Fan Speed</td><td>第一层打印时的风扇速度</td><td>0%–100%</td><td>通常设为 0% 或低转速以保证首层附着；高速打印时可能需要略高转速</td></tr>
+  <tr><td>8.2.7</td><td>首层冷却激活高度</td><td>First Layer Cooling Activation Height</td><td>首层后开始增加风扇的高度阈值</td><td>0.1–5 mm</td><td>确保首层固化后再开始吹风；通常设为 0.5-1mm</td></tr>
+  <tr><td>8.2.8</td><td>冷却层开始速度</td><td>Layer Start Fan Speed</td><td>每层开始打印时的初始风扇转速</td><td>0%–100%</td><td>控制每层重启时的风扇响应行为</td></tr>
+  <tr><td>8.2.9</td><td>冷却速度</td><td>Cooling Fan Speed</td><td>正常打印层的风扇转速（层高 > 冷却激活高度）</td><td>0%–100%</td><td><strong>最核心的冷却参数</strong>——PLA 推荐 50-100%；PETG 推荐 20-50%（PETG 怕过度冷却）；ABS 推荐 0-20%</td></tr>
+  <tr><td>8.2.10</td><td>冷却速度逐层变化</td><td>Cooling Fan Speed by Layer</td><td>允许风扇速度随层高变化</td><td>开启 / 关闭</td><td>开启后可设置风扇速度随高度渐进调整（如底部低、顶部高）</td></tr>
+  <tr><td>8.2.11</td><td>冷却速度表</td><td>Cooling Fan Speed Table</td><td>定义不同层高对应的风扇转速表</td><td>层高 + 风扇转速</td><td>精细控制不同高度的冷却策略</td></tr>
+  <tr><td>8.2.12</td><td>桥接风扇速度</td><td>Bridging Fan Speed</td><td>悬空桥接时的风扇转速</td><td>100%（满速）</td><td>桥接时满速冷却可减少下垂，提升桥接质量</td></tr>
   </tbody></table>
-  <div class="design-note"><p>��ȴ�����ǲ������Բ������Ĳ����顣PLA ��Ҫǿ��ȴ��50-100%����ABS ��Ҫ��������ȴ��0-20%����PETG ��������֮�䣨20-50%����Creality Print Ӧ���ݺĲ������Զ��Ƽ�Ĭ��ֵ��</p></div>
-  <h3 class="sub-title" id="83-auxiliary-fan">8.3 �������ȣ�Auxiliary Cooling Fan��</h3>
-  <blockquote><p>�����������ڲ���ģ�ͷ��ȵ���ȴ��������Ϊ��ӡ�����ض������ṩ������ȴ��</p></blockquote>
-  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
-  <tr><td>8.3.1</td><td>���ø�������</td><td>Enable Auxiliary Fan</td><td>���ø��������豸</td><td>���� / �ر�</td><td>����������õڶ�����ȴ���ȣ����ڴ��ʹ�ӡ������Ҫ������ȴ�ĳ���</td></tr>
-  <tr><td>8.3.2</td><td>���������ٶ�</td><td>Auxiliary Fan Speed</td><td>�������ȵ�Ŀ��ת��</td><td>0%�C100%</td><td>������ģ�ͷ��ȿ��ƣ������ڶ�׼�ض����򴵷�</td></tr>
-  <tr><td>8.3.3</td><td>��������ͬ��ģ�ͷ���</td><td>Sync Auxiliary with Model Fan</td><td>����������ģ�ͷ���ͬ��ת��</td><td>���� / �ر�</td><td>�������������ٶȸ���ģ�ͷ��ȱ仯���رպ��������</td></tr>
+  <div class="design-note"><p>冷却参数是材料特性差异最大的参数组。PLA 需要强冷却（50-100%），ABS 需要几乎无冷却（0-20%），PETG 介于两者之间（20-50%）。Creality Print 应根据耗材类型自动推荐默认值。</p></div>
+  <h3 class="sub-title" id="83-auxiliary-fan">8.3 辅助风扇（Auxiliary Cooling Fan）</h3>
+  <blockquote><p>辅助风扇用于补充模型风扇的冷却能力，或为打印件的特定区域提供定向冷却。</p></blockquote>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>8.3.1</td><td>启用辅助风扇</td><td>Enable Auxiliary Fan</td><td>启用辅助风扇设备</td><td>开启 / 关闭</td><td>开启后可配置第二个冷却风扇；用于大型打印机或需要定向冷却的场景</td></tr>
+  <tr><td>8.3.2</td><td>辅助风扇速度</td><td>Auxiliary Fan Speed</td><td>辅助风扇的目标转速</td><td>0%–100%</td><td>独立于模型风扇控制；可用于对准特定区域吹风</td></tr>
+  <tr><td>8.3.3</td><td>辅助风扇同步模型风扇</td><td>Sync Auxiliary with Model Fan</td><td>辅助风扇与模型风扇同步转速</td><td>开启 / 关闭</td><td>开启后辅助风扇速度跟随模型风扇变化；关闭后独立控制</td></tr>
   </tbody></table>
-  <div class="info-note">����������ҪӲ��֧�֣����� Creality �����ṩ AUX �ӿڣ���</div>
-  <h3 class="sub-title" id="84-chamber-fan">8.4 ������ȣ�Chamber Cooling Fan��</h3>
-  <blockquote><p>������ȿ��ƴ�ӡ��ǻ�壨���䣩�ڲ��Ŀ���ѭ��������ά���ȶ��Ĵ�ӡ�����¶ȣ���ģ����ȴ�����б�������</p></blockquote>
-  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
-  <tr><td>8.4.1</td><td>�������</td><td>Chamber Cooling Fan</td><td>������ȵ����ÿ���</td><td>���� / �ر�</td><td><strong>����ά�ֲ����ȶ�</strong>�������������ѭ�������ڿ�����ABS/ASA ��ӡʱ������Ҫ�ر��Ա��ָ��»���</td></tr>
-  <tr><td>8.4.2</td><td>��Сǻ���¶�</td><td>Minimum Chamber Temperature</td><td>����������ȿ�������Ͳ�����ֵ</td><td>0�C80��</td><td>�������¸��ڴ�ֵʱ����������ȣ����ڸ��²��ϴ�ӡʱ��ֹ����</td></tr>
-  <tr><td>8.4.3</td><td>ǻ���¶ȹ���ʱ���ʹ�ӡ�ٶ�</td><td>Slow Down if Chamber Temperature Too High</td><td>�����³�����ֵʱ���ʹ�ӡ�ٶ�</td><td>���� / �ر�</td><td>�����ɷ�ֹ���µ��µĴ�ӡ��������</td></tr>
-  <tr><td>8.4.4</td><td>�¶ȹ���ʱ���ٶ�ϵ��</td><td>Speed Factor if Chamber Temperature Too High</td><td>���¹���ʱ�ٶȽ��͵ı���</td><td>50%�C100%</td><td>ֵԽ��=���¹���ʱ����Խ��</td></tr>
+  <div class="info-note">辅助风扇需要硬件支持（部分 Creality 机型提供 AUX 接口）。</div>
+  <h3 class="sub-title" id="84-chamber-fan">8.4 机箱风扇（Chamber Cooling Fan）</h3>
+  <blockquote><p>机箱风扇控制打印机腔体（机箱）内部的空气循环，用于维持稳定的打印环境温度，与模型冷却风扇有本质区别。</p></blockquote>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>8.4.1</td><td>机箱风扇</td><td>Chamber Cooling Fan</td><td>机箱风扇的启用开关</td><td>开启 / 关闭</td><td><strong>用于维持仓温稳定</strong>——开启后持续循环机箱内空气；ABS/ASA 打印时可能需要关闭以保持高温环境</td></tr>
+  <tr><td>8.4.2</td><td>最小腔室温度</td><td>Minimum Chamber Temperature</td><td>触发机箱风扇开启的最低仓温阈值</td><td>0–80℃</td><td>仅当仓温高于此值时开启机箱风扇，用于高温材料打印时防止过热</td></tr>
+  <tr><td>8.4.3</td><td>腔室温度过高时降低打印速度</td><td>Slow Down if Chamber Temperature Too High</td><td>当仓温超过阈值时降低打印速度</td><td>开启 / 关闭</td><td>开启可防止高温导致的打印质量问题</td></tr>
+  <tr><td>8.4.4</td><td>温度过高时的速度系数</td><td>Speed Factor if Chamber Temperature Too High</td><td>仓温过高时速度降低的比例</td><td>50%–100%</td><td>值越低=仓温过高时降速越多</td></tr>
   </tbody></table>
-  <div class="design-note"><p>���������ģ�ͷ��ȵĹ��ܶ�λ��ͬ��ģ�ͷ������ڿ�����ȴ����˿�ģ�Ӱ�����Ϻ�ϸ�ڣ�������������ڿ������廷���¶ȣ�Ӱ���̱ߺ���������������Ҫ���ʹ�á�</p></div>
-  <h2 class="section-title" id="�ھ���-��������overrides">�ھ��� �������ǣ�Overrides��</h2>
-  <h3 class="sub-title" id="91-retraction-overrides">9.1 �س鸲�ǣ�Retraction Overrides��</h3>
-  <blockquote><p>�����������ض��Ĳĵ������ǹ���ģ���еĻس����á���ͬһ��ӡ��ʹ�ö��ֺĲ�ʱ����ͬ���Ͽ�����Ҫ��ͬ�Ļس���ԣ��� TPU ��Ҫ���ٵĻس飩��</p></blockquote>
-  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
-  <tr><td>9.1.1</td><td>���ûس鸲��</td><td>Enable Retraction Overrides</td><td>���úĲļ���Ļس��������</td><td>���� / �ر�</td><td>�����������˺Ĳ�ʹ�ö����Ļس����ã����Ǽ̳й���ģ���ȫ������</td></tr>
-  <tr><td>9.1.2</td><td>�س����</td><td>Retraction Distance</td><td>�س�ʱ�Ĳı����صĳ��ȣ�mm��</td><td>0�C10 mm������ 2-6mm��</td><td><strong>������˿�ĺ��Ĳ���</strong>����PLA 3-5mm��PETG 4-6mm��TPU 0-1mm�����ļ������س飩��Bowden ��������Ҫ��������</td></tr>
-  <tr><td>9.1.3</td><td>�س��ٶ�</td><td>Retraction Speed</td><td>�س鶯����ִ���ٶȣ�mm/s��</td><td>15�C60 mm/s</td><td>�ٶ�Խ��س�Խ�ɾ�������ĥ��Ĳģ����Ľ������٣�15-25mm/s����Ӳ�Ŀɿ��٣�30-60mm/s��</td></tr>
-  <tr><td>9.1.4</td><td>����س����</td><td>Extra Retraction Distance</td><td>ÿ�������س�֮��Ķ���س鳤��</td><td>0�C5 mm</td><td>���ڼ��������̾����ƶ������˿</td></tr>
-  <tr><td>9.1.5</td><td>��С�س鼷��ͷ�¶�</td><td>Minimum Extrusion Temperature for Retraction</td><td>�����س����������¶�</td><td>180�C250��</td><td>����ʱ���ûس�ɷ�ֹ�����ճ�ȴ��µĻس�ʧ�ܺͶ�ͷ��PLA ͨ����Ϊ 190��</td></tr>
-  <tr><td>9.1.6</td><td>�س���С�г�</td><td>Retraction Minimum Travel</td><td>�ƶ����볬����ֵʱ�Ŵ����س�</td><td>0�C10 mm</td><td>���ô�ֵ�ɱ���̾����ʻҲ�����س飬���ٻس�������ӳ�����������</td></tr>
-  <tr><td>9.1.7</td><td>���س����</td><td>Maximum Retraction Count</td><td>ÿ�����г����������س����</td><td>0�C200 ��/mm</td><td>���ƹ���Ƶ�ʵĻس飬��������������0=������</td></tr>
-  <tr><td>9.1.8</td><td>�س�Ƶ����������</td><td>Retraction Frequency Limit</td><td>���ûس�Ƶ������</td><td>���� / �ر�</td><td>����������ÿ�����г̵Ļس��������ֹ���Ȼس�</td></tr>
-  <tr><td>9.1.9</td><td>���ٻس����</td><td>High Speed Retraction Distance</td><td>���ٴ�ӡʱ�Ļس����</td><td>0�C10 mm</td><td>���ٴ�ӡʱ������Ҫ�����Ļس�����Բ�������</td></tr>
-  <tr><td>9.1.10</td><td>���ٻس��ٶ�</td><td>High Speed Retraction Speed</td><td>���ٴ�ӡʱ�Ļس��ٶ�</td><td>30�C100 mm/s</td><td>���ټ���ʱ�س�Ҳ��Ҫ�����ٶ���ƥ������</td></tr>
-  <tr><td>9.1.11</td><td>���ٻس�������ֵ</td><td>High Speed Retraction Enable Threshold</td><td>�������ٻس���ԵĴ�ӡ�ٶ���ֵ</td><td>50�C200 mm/s</td><td>����ӡ�ٶȳ�����ֵʱ���ø��ٻس����</td></tr>
-  <tr><td>9.1.12</td><td>�س����</td><td>Retraction Lift</td><td>�س�ʱ Z ��̧��Ķ���߶�</td><td>0�C5 mm</td><td>�س�ʱ��΢̧����ɼ�����ײδ�̻����ϵķ��գ�����̧����0.1-0.2mm������Ч��ֹ��˿</td></tr>
-  <tr><td>9.1.13</td><td>���� Z hop �س�</td><td>Enable Retraction Z Hop</td><td>�س�ʱ���� Z hop��Z ��̧��</td><td>���� / �ر�</td><td>������س�ʱ������΢̧�𣬱��⻮��δ�̻��㣻�����ڴ�ӡ��ϸ��ģ��</td></tr>
-  <tr><td>9.1.14</td><td>�س� Z hop �߶�</td><td>Retraction Z Hop Height</td><td>�س�ʱ Z ��̧��ĸ߶�</td><td>0.1�C2.0 mm</td><td>һ�� 0.2-0.5mm �㹻�����߻��������Ӵ�ӡʱ��</td></tr>
-  <tr><td>9.1.15</td><td>�س���ӳ�</td><td>Retraction Retract Before Wipe</td><td>���ö���ǰ�Ļس��ӳ�</td><td>0�C200 ms</td><td>���ƻس�����ö���֮���ʱ��</td></tr>
-  <tr><td>9.1.16</td><td>��Ļس�</td><td>Multi Material Retraction</td><td>����ϴ�ӡʱ�Ļس����</td><td>���� / �ر�</td><td>�����������л�ʱʹ��ר�õĶ���ϻس����</td></tr>
-  <tr><td>9.1.17</td><td>����ϻس����</td><td>Multi Material Retraction Distance</td><td>������л�ʱ��ר�ûس����</td><td>0�C10 mm</td><td>ͨ������ͨ�س��������Ϊ�����ϵͳ�ĺ��ܸ���</td></tr>
-  <tr><td>9.1.18</td><td>����"���ֻس�"</td><td>Enable Partial Wipe</td><td>���ò��ֻس飨���ö�����ȫ�س飩</td><td>���� / �ر�</td><td>����������ò��ֻس������ȫ�س飬���ٻس������ʱ��</td></tr>
-  <tr><td>9.1.19</td><td>���ֻس����</td><td>Partial Wipe Distance</td><td>���ֻس飨���ã��ľ���</td><td>0�C10 mm</td><td>С����ȫ�س���룬�����Ĳ��������츽��������ȫ�س�</td></tr>
+  <div class="design-note"><p>机箱风扇与模型风扇的功能定位不同：模型风扇用于快速冷却挤出丝材（影响层间结合和细节）；机箱风扇用于控制整体环境温度（影响翘边和收缩）。两者需要配合使用。</p></div>
+  <h2 class="section-title" id="第九章-参数覆盖overrides">第九章 参数覆盖（Overrides）</h2>
+  <h3 class="sub-title" id="91-retraction-overrides">9.1 回抽覆盖（Retraction Overrides）</h3>
+  <blockquote><p>本节允许对特定耗材单独覆盖工艺模块中的回抽设置。当同一打印机使用多种耗材时，不同材料可能需要不同的回抽策略（如 TPU 需要更少的回抽）。</p></blockquote>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>9.1.1</td><td>启用回抽覆盖</td><td>Enable Retraction Overrides</td><td>启用耗材级别的回抽参数覆盖</td><td>开启 / 关闭</td><td>开启后允许此耗材使用独立的回抽设置，而非继承工艺模块的全局设置</td></tr>
+  <tr><td>9.1.2</td><td>回抽距离</td><td>Retraction Distance</td><td>回抽时耗材被拉回的长度（mm）</td><td>0–10 mm（典型 2-6mm）</td><td><strong>控制拉丝的核心参数</strong>——PLA 3-5mm；PETG 4-6mm；TPU 0-1mm（软材几乎不回抽）；Bowden 挤出机需要更长距离</td></tr>
+  <tr><td>9.1.3</td><td>回抽速度</td><td>Retraction Speed</td><td>回抽动作的执行速度（mm/s）</td><td>15–60 mm/s</td><td>速度越快回抽越干净但可能磨损耗材；软材建议慢速（15-25mm/s）；硬材可快速（30-60mm/s）</td></tr>
+  <tr><td>9.1.4</td><td>额外回抽距离</td><td>Extra Retraction Distance</td><td>每次连续回抽之间的额外回抽长度</td><td>0–5 mm</td><td>用于减少连续短距离移动后的拉丝</td></tr>
+  <tr><td>9.1.5</td><td>最小回抽挤出头温度</td><td>Minimum Extrusion Temperature for Retraction</td><td>允许回抽的最低喷嘴温度</td><td>180–250℃</td><td>低温时禁用回抽可防止因材料粘度大导致的回抽失败和堵头；PLA 通常设为 190℃</td></tr>
+  <tr><td>9.1.6</td><td>回抽最小行程</td><td>Retraction Minimum Travel</td><td>移动距离超过此值时才触发回抽</td><td>0–10 mm</td><td>设置此值可避免短距离空驶也触发回抽，减少回抽次数，延长挤出机寿命</td></tr>
+  <tr><td>9.1.7</td><td>最大回抽计数</td><td>Maximum Retraction Count</td><td>每毫米行程允许的最大回抽次数</td><td>0–200 次/mm</td><td>限制过高频率的回抽，保护挤出机构；0=不限制</td></tr>
+  <tr><td>9.1.8</td><td>回抽频率限制启用</td><td>Retraction Frequency Limit</td><td>启用回抽频率限制</td><td>开启 / 关闭</td><td>开启后限制每毫米行程的回抽次数，防止过度回抽</td></tr>
+  <tr><td>9.1.9</td><td>高速回抽距离</td><td>High Speed Retraction Distance</td><td>高速打印时的回抽距离</td><td>0–10 mm</td><td>高速打印时可能需要更长的回抽距离以补偿惯性</td></tr>
+  <tr><td>9.1.10</td><td>高速回抽速度</td><td>High Speed Retraction Speed</td><td>高速打印时的回抽速度</td><td>30–100 mm/s</td><td>高速挤出时回抽也需要更快速度以匹配流量</td></tr>
+  <tr><td>9.1.11</td><td>高速回抽启用阈值</td><td>High Speed Retraction Enable Threshold</td><td>触发高速回抽策略的打印速度阈值</td><td>50–200 mm/s</td><td>当打印速度超过此值时启用高速回抽参数</td></tr>
+  <tr><td>9.1.12</td><td>回抽提笔</td><td>Retraction Lift</td><td>回抽时 Z 轴抬起的额外高度</td><td>0–5 mm</td><td>回抽时轻微抬喷嘴可减少碰撞未固化材料的风险；极短抬升（0.1-0.2mm）可有效防止拉丝</td></tr>
+  <tr><td>9.1.13</td><td>启用 Z hop 回抽</td><td>Enable Retraction Z Hop</td><td>回抽时启用 Z hop（Z 轴抬起）</td><td>开启 / 关闭</td><td>开启后回抽时喷嘴轻微抬起，避免划过未固化层；有助于打印高细节模型</td></tr>
+  <tr><td>9.1.14</td><td>回抽 Z hop 高度</td><td>Retraction Z Hop Height</td><td>回抽时 Z 轴抬起的高度</td><td>0.1–2.0 mm</td><td>一般 0.2-0.5mm 足够；过高会明显增加打印时间</td></tr>
+  <tr><td>9.1.15</td><td>回抽后延迟</td><td>Retraction Retract Before Wipe</td><td>擦拭动作前的回抽延迟</td><td>0–200 ms</td><td>控制回抽与擦拭动作之间的时序</td></tr>
+  <tr><td>9.1.16</td><td>多材回抽</td><td>Multi Material Retraction</td><td>多材料打印时的回抽策略</td><td>开启 / 关闭</td><td>开启后多材料切换时使用专用的多材料回抽距离</td></tr>
+  <tr><td>9.1.17</td><td>多材料回抽距离</td><td>Multi Material Retraction Distance</td><td>多材料切换时的专用回抽距离</td><td>0–10 mm</td><td>通常比普通回抽更长，因为多材料系统的喉管更长</td></tr>
+  <tr><td>9.1.18</td><td>启用"部分回抽"</td><td>Enable Partial Wipe</td><td>启用部分回抽（擦拭而非完全回抽）</td><td>开启 / 关闭</td><td>开启后可设置部分回抽代替完全回抽，减少回抽次数和时间</td></tr>
+  <tr><td>9.1.19</td><td>部分回抽距离</td><td>Partial Wipe Distance</td><td>部分回抽（擦拭）的距离</td><td>0–10 mm</td><td>小于完全回抽距离，仅将耗材拉回喷嘴附近而非完全回抽</td></tr>
   </tbody></table>
-  <div class="design-note"><p>�س������ FDM ��ӡ����Ӱ����˿�����ϵĺĲļ�������TPU��PVA ������/�����Բ�����Ҫ���������������ûس顣�س����Ӧ��Ϊ�Ĳ�Ԥ���һ���֣�����ÿ�ε���������</p></div>
-  <h2 class="section-title" id="��ʮ��-�߼�advanced">��ʮ�� �߼���Advanced��</h2>
-  <h3 class="sub-title" id="101-filament-gcode">10.1 �Ĳ�˿ G-code��Filament G-code��</h3>
-  <blockquote><p>��������Ϊ�ض��Ĳ������Զ��� G-code ָ��ڴ�ӡ��ʼǰ����������ض���ִ�У����ڲ����ض��ĳ�ʼ�������������⹦�ܴ�����</p></blockquote>
-  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
-  <tr><td>10.1.1</td><td>���úĲ�˿ G-code</td><td>Enable Filament G-code</td><td>���ô˺Ĳĵ��Զ��� G-code</td><td>���� / �ر�</td><td>�������Ϊ�˺Ĳ�����ר�� G-code �ű��������ڷǱ�׼���ϻ������ӡ������</td></tr>
-  <tr><td>10.1.2</td><td>���� G-code</td><td>Filament Start G-code</td><td>�˺ĲĿ�ʼ��ӡʱִ�е� G-code</td><td>�Զ��� G-code</td><td>�����Ӳ����ض���Ԥ�ȡ���ɨ��̽��ָ��磺`M104 S{material_print_temperature} ;���������¶�`</td></tr>
-  <tr><td>10.1.3</td><td>���� G-code</td><td>Filament End G-code</td><td>�˺ĲĴ�ӡ����ʱִ�е� G-code</td><td>�Զ��� G-code</td><td>�����Ӳ����ض��Ľ��¡���������������ָ��</td></tr>
-  <tr><td>10.1.4</td><td>���� G-code</td><td>Filament Layer Change G-code</td><td>ÿ���л�ʱִ�е� G-code</td><td>�Զ��� G-code</td><td>�����ڴ��������ȴ������ͷ���ջ� LED ָʾ�Ʊ仯</td></tr>
-  <tr><td>10.1.5</td><td>��� G-code</td><td>Filament Tool Change G-code</td><td>�л�����/�Ĳ�ʱִ�е� G-code</td><td>�Զ��� G-code</td><td>���ڶ���ϴ�ӡ���л��Ĳ�ʱ����������</td></tr>
-  <tr><td>10.1.6</td><td>Ԥ�� G-code</td><td>Filament Preset G-code</td><td>����Ԥ��ʱִ�е� G-code</td><td>�Զ��� G-code</td><td>�ڼ��ش˺Ĳ�Ԥ��ʱ�������������Զ�������</td></tr>
+  <div class="design-note"><p>回抽参数是 FDM 打印中最影响拉丝和渗料的耗材级参数。TPU、PVA 等软性/可溶性材料需要显著减少甚至禁用回抽。回抽策略应作为耗材预设的一部分，而非每次单独调整。</p></div>
+  <h2 class="section-title" id="第十章-高级advanced">第十章 高级（Advanced）</h2>
+  <h3 class="sub-title" id="101-filament-gcode">10.1 耗材丝 G-code（Filament G-code）</h3>
+  <blockquote><p>本节允许为特定耗材添加自定义 G-code 指令，在打印开始前、结束后或特定层执行，用于材料特定的初始化、后处理或特殊功能触发。</p></blockquote>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>10.1.1</td><td>启用耗材丝 G-code</td><td>Enable Filament G-code</td><td>启用此耗材的自定义 G-code</td><td>开启 / 关闭</td><td>开启后可为此耗材添加专属 G-code 脚本；常用于非标准材料或特殊打印机配置</td></tr>
+  <tr><td>10.1.2</td><td>启动 G-code</td><td>Filament Start G-code</td><td>此耗材开始打印时执行的 G-code</td><td>自定义 G-code</td><td>可添加材料特定的预热、吹扫或探针指令。如：`M104 S{material_print_temperature} ;设置喷嘴温度`</td></tr>
+  <tr><td>10.1.3</td><td>结束 G-code</td><td>Filament End G-code</td><td>此耗材打印结束时执行的 G-code</td><td>自定义 G-code</td><td>可添加材料特定的降温、挤出撤销或清理指令</td></tr>
+  <tr><td>10.1.4</td><td>换层 G-code</td><td>Filament Layer Change G-code</td><td>每层切换时执行的 G-code</td><td>自定义 G-code</td><td>可用于触发层间冷却、摄像头拍照或 LED 指示灯变化</td></tr>
+  <tr><td>10.1.5</td><td>提笔 G-code</td><td>Filament Tool Change G-code</td><td>切换喷嘴/耗材时执行的 G-code</td><td>自定义 G-code</td><td>用于多材料打印机切换耗材时的清理动作</td></tr>
+  <tr><td>10.1.6</td><td>预设 G-code</td><td>Filament Preset G-code</td><td>调用预设时执行的 G-code</td><td>自定义 G-code</td><td>在加载此耗材预设时触发，常用于自动化流程</td></tr>
   </tbody></table>
-  <div class="design-note"><p>�Ĳ� G-code �Ǹ߼����ƹ��ܣ�����֧��������ϣ���������Ԥ���PC ��߹��ʵ�˿�����Զ�����������Ӧ�ṩ���ò��ϵ�Ԥ��ģ�塣</p></div>
-  <h2 class="section-title" id="��ʮһ��-����materials">��ʮһ�� ���ϣ�Materials��</h2>
-  <h3 class="sub-title" id="111-multi-material-color-change">11.1 ����ϻ�ɫ������Multi Material Color Change��</h3>
-  <blockquote><p>���ڿ��ƶ���ϴ�ӡ����ɫ����Ĳģ�ʱ�Ļ�ɫ���Ժ���ɫ�л������������� CFS��Color Filament System���ȶ����ϵͳ��</p></blockquote>
-  <table><thead><tr><th>���</th><th>��������</th><th>Ӣ������</th><th>����</th><th>����ȡֵ</th><th>ʵ��Ӱ�쳡��</th></tr></thead><tbody>
-  <tr><td>11.1.1</td><td>��������</td><td>Number of Materials</td><td>��ǰ���õĺĲĲ�λ����</td><td>2�C8</td><td>�����ӡ����ͬʱʹ�õ����Ĳ�������K2 Pro CFS ֧����� 4 ɫ</td></tr>
-  <tr><td>11.1.2</td><td>ÿ�ֲ��ϵ���ɫ</td><td>Color</td><td>ÿ���ĲĲ�λ����ʾ��ɫ</td><td>ɫֵѡ����</td><td>������ƬԤ����ɫ�Ͷ�ɫ��������ɫӦ��ʵ�ʺĲ�ƥ��</td></tr>
-  <tr><td>11.1.3</td><td>���ٻ�ɫ</td><td>Fast Color Change</td><td>���ÿ��ٻ�ɫ�㷨���������������裩</td><td>���� / �ر�</td><td>������ʹ�ø��̵ĳ�ˢ·������ʡ���Ϻ�ʱ�䣻����������������ɫ�л�</td></tr>
-  <tr><td>11.1.4</td><td>��ɫ�仯ʱ��</td><td>Color Change Time</td><td>Ԥ��Ļ�ɫ��������ʱ��</td><td>0�C60 s</td><td>����׼ȷ�����ܴ�ӡʱ�䣻ʵ��ʱ����Ĳĺ���ɫ������ܲ�ͬ</td></tr>
-  <tr><td>11.1.5</td><td>��ȴ��ɫ����</td><td>Cool Down Color Change Area</td><td>��ɫǰ���콵�µ�����</td><td>���� / �ر�</td><td>������ɫǰ�����콵�£��������ϣ��������ӻ�ɫʱ��</td></tr>
-  <tr><td>11.1.6</td><td>��ȴ��ɫ�¶�</td><td>Cool Down Temperature for Color Change</td><td>��ɫǰ��Ŀ�꽵���¶�</td><td>150�C220��</td><td>PLA ����Լ 180�棻PETG ����Լ 200�棻���߻����ϣ����Ϳ��ܶ�ͷ</td></tr>
-  <tr><td>11.1.7</td><td>��ɫ��ָ��¶�</td><td>Temperature Restore After Color Change</td><td>��ɫ��ָ���Ŀ���¶�</td><td>180�C260��</td><td>��ɫ��Ѹ�ٻָ���������ӡ�¶ȣ���֤��������</td></tr>
-  <tr><td>11.1.8</td><td>�Զ��ָ��¶�</td><td>Auto Temperature Restore</td><td>�Զ��ָ���ӡ�¶�</td><td>���� / �ر�</td><td>�������Զ��ڱ�ɫ�����£��رպ����ֶ�����</td></tr>
-  <tr><td>11.1.9</td><td>��㻻ɫ</td><td>Color Change per Layer</td><td>ÿ��ɵ���������ɫ�л�</td><td>���� / �ر�</td><td>������ɶ���ÿ��Ļ�ɫ�㣻���ڸ��Ӷ�ɫģ��</td></tr>
-  <tr><td>11.1.10</td><td>��ɫ����</td><td>Color Change Layers</td><td>����ÿ��Ļ�ɫ���б�</td><td>��� + �Ĳ�����</td><td>������������л���������ɫ�ĺĲ�</td></tr>
-  <tr><td>11.1.11</td><td>��ɫ Z �߶�</td><td>Color Change Z Height</td><td>���ض� Z �߶ȴ�����ɫ</td><td>�Զ���߶��б�</td><td>���ھ��� Z �߶ȶ��ǲ������û�ɫ��</td></tr>
-  <tr><td>11.1.12</td><td>���һ�㲻��ɫ</td><td>No Color Change at Top</td><td>����������û�ɫ</td><td>���� / �ر�</td><td>������ɷ�ֹ������ֻ�ɫ���µı���覴�</td></tr>
-  <tr><td>11.1.13</td><td>���һ�㲻��ɫ�ĺ��</td><td>Top Distance for Color Change</td><td>�������򲻴�����ɫ�ĺ��</td><td>0�C5 mm</td><td>ȷ������������������⻻ɫ�ۼ�Ӱ��չʾ��</td></tr>
-  <tr><td>11.1.14</td><td>���һ�㲻��ɫ�����ȼ�</td><td>Top Color Change Priority</td><td>���㻻ɫ���Ƶ����ȼ�</td><td>0�C10</td><td>ֵԽ��=���㻻ɫ����Խ�ϸ�</td></tr>
+  <div class="design-note"><p>耗材 G-code 是高级定制功能，用于支持特殊材料（如尼龙需预干燥、PC 需高功率灯丝）和自动化工作流。应提供常用材料的预设模板。</p></div>
+  <h2 class="section-title" id="第十一章-材料materials">第十一章 材料（Materials）</h2>
+  <h3 class="sub-title" id="111-multi-material-color-change">11.1 多材料换色参数（Multi Material Color Change）</h3>
+  <blockquote><p>本节控制多材料打印（多色、多耗材）时的换色策略和颜色切换参数，适用于 CFS（Color Filament System）等多进料系统。</p></blockquote>
+  <table><thead><tr><th>序号</th><th>参数名称</th><th>英文名称</th><th>定义</th><th>典型取值</th><th>实际影响场景</th></tr></thead><tbody>
+  <tr><td>11.1.1</td><td>材料数量</td><td>Number of Materials</td><td>当前配置的耗材槽位数量</td><td>2–8</td><td>定义打印机可同时使用的最大耗材数量；K2 Pro CFS 支持最多 4 色</td></tr>
+  <tr><td>11.1.2</td><td>每种材料的颜色</td><td>Color</td><td>每个耗材槽位的显示颜色</td><td>色值选择器</td><td>用于切片预览着色和多色管理；颜色应与实际耗材匹配</td></tr>
+  <tr><td>11.1.3</td><td>快速换色</td><td>Fast Color Change</td><td>启用快速换色算法（跳过擦拭塔步骤）</td><td>开启 / 关闭</td><td>开启后使用更短的冲刷路径，节省材料和时间；但仅适用于相似颜色切换</td></tr>
+  <tr><td>11.1.4</td><td>颜色变化时间</td><td>Color Change Time</td><td>预设的换色操作所需时间</td><td>0–60 s</td><td>用于准确估算总打印时间；实际时间因耗材和颜色差异可能不同</td></tr>
+  <tr><td>11.1.5</td><td>冷却变色区域</td><td>Cool Down Color Change Area</td><td>换色前喷嘴降温的区域</td><td>开启 / 关闭</td><td>开启后换色前将喷嘴降温，减少渗料；但会增加换色时间</td></tr>
+  <tr><td>11.1.6</td><td>冷却变色温度</td><td>Cool Down Temperature for Color Change</td><td>换色前的目标降温温度</td><td>150–220℃</td><td>PLA 降至约 180℃；PETG 降至约 200℃；过高会渗料，过低可能堵头</td></tr>
+  <tr><td>11.1.7</td><td>变色后恢复温度</td><td>Temperature Restore After Color Change</td><td>换色后恢复的目标温度</td><td>180–260℃</td><td>换色后迅速恢复至正常打印温度，保证挤出流畅</td></tr>
+  <tr><td>11.1.8</td><td>自动恢复温度</td><td>Auto Temperature Restore</td><td>自动恢复打印温度</td><td>开启 / 关闭</td><td>开启后自动在变色后升温；关闭后需手动控制</td></tr>
+  <tr><td>11.1.9</td><td>逐层换色</td><td>Color Change per Layer</td><td>每层可单独设置颜色切换</td><td>开启 / 关闭</td><td>开启后可定义每层的换色点；用于复杂多色模型</td></tr>
+  <tr><td>11.1.10</td><td>换色层数</td><td>Color Change Layers</td><td>定义每层的换色点列表</td><td>层号 + 耗材索引</td><td>可设置任意层切换到任意颜色的耗材</td></tr>
+  <tr><td>11.1.11</td><td>换色 Z 高度</td><td>Color Change Z Height</td><td>在特定 Z 高度触发换色</td><td>自定义高度列表</td><td>基于绝对 Z 高度而非层数设置换色点</td></tr>
+  <tr><td>11.1.12</td><td>最后一层不换色</td><td>No Color Change at Top</td><td>顶层区域禁用换色</td><td>开启 / 关闭</td><td>开启后可防止顶层出现换色导致的表面瑕疵</td></tr>
+  <tr><td>11.1.13</td><td>最后一层不换色的厚度</td><td>Top Distance for Color Change</td><td>顶层区域不触发换色的厚度</td><td>0–5 mm</td><td>确保顶层外观完整，避免换色痕迹影响展示面</td></tr>
+  <tr><td>11.1.14</td><td>最后一层不换色的优先级</td><td>Top Color Change Priority</td><td>顶层换色限制的优先级</td><td>0–10</td><td>值越高=顶层换色限制越严格</td></tr>
   </tbody></table>
-  <div class="design-note"><p>����ϻ�ɫ�Ƕ�ɫ��ӡ����ĺ��ģ�ֱ��Ӱ�컻ɫ�ۼ��Ŀɼ��Ժ���ɫ�����ȡ����ٻ�ɫ��11.1.3���������������ɫ�л�����������ɫ����ڡ��ף�Ӧʹ�ñ�׼��ɫ���Բ�������������</p></div>
+  <div class="design-note"><p>多材料换色是多色打印体验的核心，直接影响换色痕迹的可见性和颜色纯净度。快速换色（11.1.3）仅适用于相近颜色切换；反差大的颜色（如黑→白）应使用标准换色策略并增加清理量。</p></div>
   <hr class="section-divider">
   <div class="footer">
-    <p>Creality Print ��Ƭ����ȫ�� v2.2 | ������ Creality Print ��Ƭ���� | ����������</p>
+    <p>Creality Print 切片参数全解 v2.2 | 适用于 Creality Print 切片软件 | 持续更新中</p>
   </div>
 </main>
 <script>
