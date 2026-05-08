@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3D鎵撳嵃姣忔棩閫熼€?- 褰掓。</title>
+<title>3D打印每日速递 - 归档</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -13,7 +13,7 @@ body {
   min-height:100vh;
 }
 
-/* ===== 宸︿晶瀵艰埅鏍?===== */
+/* ===== 左侧导航栏 ===== */
 .sidebar {
   position:fixed; left:0; top:0; bottom:0;
   width:200px;
@@ -66,10 +66,10 @@ body {
 .sidebar-footer a { color:#64b5f6; text-decoration:none; }
 .sidebar-footer a:hover { text-decoration:underline; }
 
-/* ===== 涓诲唴瀹瑰尯 ===== */
+/* ===== 主内容区 ===== */
 .main { margin-left:200px; padding:20px 24px 40px; }
 
-/* 椤堕儴澶?*/
+/* 顶部头 */
 .top-bar {
   display:flex; align-items:center; justify-content:space-between;
   margin-bottom:24px;
@@ -81,18 +81,18 @@ body {
 .brand .brand-text .author-line a { color:#1e88e5; text-decoration:none; font-weight:600; }
 .brand .brand-text .author-line a:hover { text-decoration:underline; }
 
-/* 缁熻鏍?*/
+/* 统计栏 */
 .stats-bar { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px; }
 .stats-pill { display:inline-flex; align-items:center; gap:5px; font-size:12px; color:#555; background:#fff; border-radius:20px; padding:6px 14px; border:1px solid #e8edff; box-shadow:0 1px 4px rgba(0,0,0,.04); }
 .stats-pill b { color:#1a237e; font-weight:700; }
 
-/* 鍐呭鍗＄墖 */
+/* 内容卡片 */
 .content-card { background:#fff; border-radius:14px; box-shadow:0 2px 16px rgba(0,0,0,.05); overflow:hidden; }
 
-/* 鍒嗘湡鏍囬 */
+/* 分期标题 */
 .section-label { padding:18px 24px 10px; font-size:13px; font-weight:600; color:#999; letter-spacing:1.5px; text-transform:uppercase; }
 
-/* 绠€鎶ユ潯鐩?*/
+/* 简报条目 */
 .briefing-item {
   display:flex; align-items:center; padding:16px 24px;
   border-bottom:1px solid #f5f5f5;
@@ -119,12 +119,12 @@ body {
 .arrow { color:#ccc; font-size:20px; flex-shrink:0; margin-left:10px; transition:transform .15s; }
 .briefing-item:hover .arrow { transform:translateX(3px); color:#1e88e5; }
 
-/* 搴曢儴 */
+/* 底部 */
 .footer { text-align:center; padding:24px; font-size:11.5px; color:#bbb; margin-top:24px; }
 .footer a { color:#1e88e5; text-decoration:none; }
 .footer a:hover { text-decoration:underline; }
 
-/* ===== 绉诲姩绔€傞厤 ===== */
+/* ===== 移动端适配 ===== */
 .mobile-header {
   display:none;
   position:fixed; top:0; left:0; right:0;
@@ -152,39 +152,39 @@ body {
 </head>
 <body>
 
-<!-- 绉诲姩绔《鏍?-->
+<!-- 移动端顶栏 -->
 <div class="mobile-header">
   <span class="menu-btn" onclick="toggleSidebar()">&#9776;</span>
-  <span class="mobile-title">3D鎵撳嵃姣忔棩閫熼€?/span>
+  <span class="mobile-title">3D打印每日速递</span>
 </div>
 <div class="mobile-overlay" id="mobileOverlay" onclick="toggleSidebar()"></div>
 
-<!-- 宸︿晶瀵艰埅 -->
+<!-- 左侧导航 -->
 <div class="sidebar" id="sidebar">
   <div class="sidebar-logo">
-    <span class="logo-icon">馃枿锔?/span>
-    <div class="logo-title">3D鎵撳嵃姣忔棩閫熼€?/div>
+    <span class="logo-icon">🖨️</span>
+    <div class="logo-title">3D打印每日速递</div>
     <div class="logo-sub">Daily 3D Printing Express</div>
   </div>
 
   <div class="sidebar-nav">
-    <div class="nav-section-label">鍐呭妯″潡</div>
-    <a class="nav-item active" href="#archive" onclick="navTo(this,'archive')">
-      <span class="nav-icon">馃摪</span><span>璧勮褰掓。</span>
-      <span class="nav-badge">8</span>
+    <div class="nav-section-label">内容模块</div>
+    <a class="nav-item" href="briefing_20260508.html">
+      <span class="nav-icon">🔥</span><span>最新资讯</span>
+      <span class="nav-badge">今日</span>
     </a>
     <a class="nav-item" href="lifecycle.html">
-      <span class="nav-icon">馃攧</span><span>浜у搧鐢熷懡鍛ㄦ湡</span>
-      <span class="nav-badge">5闃舵</span>
+      <span class="nav-icon">🔄</span><span>产品生命周期</span>
+      <span class="nav-badge">5阶段</span>
     </a>
     <a class="nav-item coming-soon">
-      <span class="nav-icon">馃搳</span><span>鏁版嵁鍒嗘瀽</span>
-      <span class="nav-badge" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.35)">鏁鏈熷緟</span>
+      <span class="nav-icon">📊</span><span>数据分析</span>
+      <span class="nav-badge" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.35)">敬请期待</span>
     </a>
 
-    <div class="nav-section-label" style="margin-top:16px">宸ュ叿</div>
+    <div class="nav-section-label" style="margin-top:16px">工具</div>
     <a class="nav-item" href="slicing-params.html" target="_blank">
-      <span class="nav-icon">鈿欙笍</span><span>鍒囩墖鍙傛暟閫熸煡</span>
+      <span class="nav-icon">⚙️</span><span>切片参数速查</span>
       <span class="nav-badge">v2.2</span>
     </a>
   </div>
@@ -195,100 +195,100 @@ body {
   </div>
 </div>
 
-<!-- 涓诲唴瀹?-->
+<!-- 主内容 -->
 <div class="main">
   <div class="top-bar">
     <div class="brand">
-      <span class="brand-icon">馃殌</span>
+      <span class="brand-icon">🚀</span>
       <div class="brand-text">
-        <h1>3D鎵撳嵃姣忔棩閫熼€?/h1>
+        <h1>3D打印每日速递</h1>
         <div class="author-line">by <a href="https://github.com/Cruise-Ling" target="_blank">Cruise</a> &nbsp;|&nbsp; 3D Printing Daily Express</div>
       </div>
     </div>
   </div>
 
   <div class="stats-bar">
-    <div class="stats-pill">馃摪 <b>8</b> 鏈熺畝鎶?/div>
-    <div class="stats-pill">馃搮 2026骞?鏈?/div>
-    <div class="stats-pill">馃彿锔?5澶у垎鍖?/div>
-    <div class="stats-pill">馃摤 200鏉¤祫璁?/div>
+    <div class="stats-pill">📰 <b>8</b> 期简报</div>
+    <div class="stats-pill">📅 2026年5月</div>
+    <div class="stats-pill">🏷️ 5大分区</div>
+    <div class="stats-pill">📬 200条资讯</div>
   </div>
 
   <div class="content-card" id="archive">
-    <div class="section-label">2026 骞?5 鏈?/ MAY</div>
+    <div class="section-label">2026 年 5 月 / MAY</div>
 
     <!-- NEW_ENTRIES_HERE -->
 
     <a class="briefing-item" href="briefing_20260508.html">
       <div class="date-badge"><span class="day">08</span><span class="month">MAY</span></div>
       <div class="briefing-info">
-        <div class="title-line">3D鎵撳嵃姣忔棩閫熼€?/div>
-        <div class="meta-line">25鏉¤祫璁?span class="weekday">鍛ㄤ簲 Friday</span></div>
+        <div class="title-line">3D打印每日速递</div>
+        <div class="meta-line">25条资讯<span class="weekday">周五 Friday</span></div>
       </div>
-      <span class="arrow">鈥?/span>
+      <span class="arrow">›</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260507.html">
       <div class="date-badge"><span class="day">07</span><span class="month">MAY</span></div>
       <div class="briefing-info">
-        <div class="title-line">3D鎵撳嵃姣忔棩閫熼€?/div>
-        <div class="meta-line">25鏉¤祫璁?span class="weekday">鍛ㄥ洓 Thursday</span></div>
+        <div class="title-line">3D打印每日速递</div>
+        <div class="meta-line">25条资讯<span class="weekday">周四 Thursday</span></div>
       </div>
-      <span class="arrow">鈥?/span>
+      <span class="arrow">›</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260506.html">
       <div class="date-badge"><span class="day">06</span><span class="month">MAY</span></div>
       <div class="briefing-info">
-        <div class="title-line">3D鎵撳嵃姣忔棩閫熼€?/div>
-        <div class="meta-line">25鏉¤祫璁?span class="weekday">鍛ㄤ笁 Wednesday</span></div>
+        <div class="title-line">3D打印每日速递</div>
+        <div class="meta-line">25条资讯<span class="weekday">周三 Wednesday</span></div>
       </div>
-      <span class="arrow">鈥?/span>
+      <span class="arrow">›</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260505.html">
       <div class="date-badge"><span class="day">05</span><span class="month">MAY</span></div>
       <div class="briefing-info">
-        <div class="title-line">3D鎵撳嵃姣忔棩閫熼€?/div>
-        <div class="meta-line"><span class="weekday">鍛ㄤ簩 Tuesday</span></div>
+        <div class="title-line">3D打印每日速递</div>
+        <div class="meta-line"><span class="weekday">周二 Tuesday</span></div>
       </div>
-      <span class="arrow">鈥?/span>
+      <span class="arrow">›</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260504.html">
       <div class="date-badge"><span class="day">04</span><span class="month">MAY</span></div>
       <div class="briefing-info">
-        <div class="title-line">3D鎵撳嵃姣忔棩閫熼€?/div>
-        <div class="meta-line"><span class="weekday">鍛ㄤ竴 Monday</span></div>
+        <div class="title-line">3D打印每日速递</div>
+        <div class="meta-line"><span class="weekday">周一 Monday</span></div>
       </div>
-      <span class="arrow">鈥?/span>
+      <span class="arrow">›</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260503.html">
       <div class="date-badge"><span class="day">03</span><span class="month">MAY</span></div>
       <div class="briefing-info">
-        <div class="title-line">3D鎵撳嵃姣忔棩閫熼€?/div>
-        <div class="meta-line"><span class="weekday">鍛ㄦ棩 Sunday</span></div>
+        <div class="title-line">3D打印每日速递</div>
+        <div class="meta-line"><span class="weekday">周日 Sunday</span></div>
       </div>
-      <span class="arrow">鈥?/span>
+      <span class="arrow">›</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260502.html">
       <div class="date-badge"><span class="day">02</span><span class="month">MAY</span></div>
       <div class="briefing-info">
-        <div class="title-line">3D鎵撳嵃姣忔棩閫熼€?/div>
-        <div class="meta-line"><span class="weekday">鍛ㄥ叚 Saturday</span></div>
+        <div class="title-line">3D打印每日速递</div>
+        <div class="meta-line"><span class="weekday">周六 Saturday</span></div>
       </div>
-      <span class="arrow">鈥?/span>
+      <span class="arrow">›</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260501.html">
       <div class="date-badge"><span class="day">01</span><span class="month">MAY</span></div>
       <div class="briefing-info">
-        <div class="title-line">3D鎵撳嵃姣忔棩閫熼€?/div>
-        <div class="meta-line"><span class="weekday">鍛ㄤ簲 Friday</span></div>
+        <div class="title-line">3D打印每日速递</div>
+        <div class="meta-line"><span class="weekday">周五 Friday</span></div>
       </div>
-      <span class="arrow">鈥?/span>
+      <span class="arrow">›</span>
     </a>
 
     <!-- EXISTING_ENTRIES -->
@@ -305,7 +305,8 @@ function navTo(el, id) {
   el.classList.add('active');
   var target = document.getElementById(id);
   if (target) target.scrollIntoView({ behavior:'smooth', block:'start' });
-  // 绉诲姩绔叧闂彍鍗?  if (window.innerWidth <= 768) toggleSidebar();
+  // 移动端关闭菜单
+  if (window.innerWidth <= 768) toggleSidebar();
 }
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
