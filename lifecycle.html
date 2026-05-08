@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D鎵撳嵃浜у搧鐢熷懡鍛ㄦ湡 - 璺緞鍥?/title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background:#f0f2f5;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  min-height:100vh;
+}
+
+/* ===== 宸︿晶瀵艰埅鏍?===== */
+.sidebar {
+  position:fixed; left:0; top:0; bottom:0;
+  width:200px;
+  background:linear-gradient(180deg,#0d1b2a,#1b2838,#1a237e);
+  color:#fff;
+  display:flex; flex-direction:column;
+  z-index:100;
+  box-shadow:2px 0 20px rgba(0,0,0,.15);
+}
+.sidebar-logo {
+  padding:28px 20px 20px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.sidebar-logo .logo-icon { font-size:32px; margin-bottom:8px; display:block; }
+.sidebar-logo .logo-title { font-size:16px; font-weight:700; letter-spacing:.5px; line-height:1.4; }
+.sidebar-logo .logo-sub { font-size:11px; opacity:.5; margin-top:4px; }
+
+.sidebar-nav { flex:1; padding:16px 0; overflow-y:auto; }
+.nav-section-label {
+  padding:10px 20px 6px;
+  font-size:10px; text-transform:uppercase; letter-spacing:2px;
+  color:rgba(255,255,255,.35); font-weight:600;
+}
+.nav-item {
+  display:flex; align-items:center; gap:10px;
+  padding:11px 20px;
+  color:rgba(255,255,255,.7);
+  text-decoration:none;
+  font-size:13.5px; font-weight:500;
+  transition:all .2s;
+  border-left:3px solid transparent;
+  cursor:pointer;
+}
+.nav-item:hover { background:rgba(255,255,255,.06); color:#fff; }
+.nav-item.active { background:rgba(255,255,255,.1); color:#fff; border-left-color:#42a5f5; }
+.nav-item .nav-icon { font-size:17px; width:24px; text-align:center; flex-shrink:0; }
+.nav-item .nav-badge {
+  margin-left:auto; font-size:10px; font-weight:700;
+  background:rgba(66,165,245,.25); color:#64b5f6;
+  padding:2px 7px; border-radius:10px;
+}
+
+.sidebar-footer {
+  padding:16px 20px;
+  border-top:1px solid rgba(255,255,255,.08);
+  font-size:11px; color:rgba(255,255,255,.35); line-height:1.6;
+}
+.sidebar-footer a { color:#64b5f6; text-decoration:none; }
+.sidebar-footer a:hover { text-decoration:underline; }
+
+/* ===== 涓诲唴瀹瑰尯 ===== */
+.main { margin-left:200px; padding:20px 24px 40px; }
+
+.top-bar {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:24px;
+}
+.brand { display:flex; align-items:center; gap:10px; }
+.brand .brand-icon { font-size:30px; }
+.brand .brand-text h1 { font-size:24px; font-weight:800; color:#1a237e; letter-spacing:.5px; }
+.brand .brand-text .author-line { font-size:13px; color:#888; margin-top:2px; }
+.brand .brand-text .author-line a { color:#1e88e5; text-decoration:none; font-weight:600; }
+
+/* ===== 鏃堕棿绾挎€昏 ===== */
+.timeline-overview {
+  background:#fff; border-radius:14px; box-shadow:0 2px 16px rgba(0,0,0,.05);
+  padding:24px 28px; margin-bottom:28px;
+  overflow-x:auto;
+}
+.timeline-bar {
+  display:flex; align-items:center; gap:0; min-width:900px;
+  padding:4px 0;
+}
+.tl-seg {
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  flex:1; position:relative; cursor:pointer;
+  transition:all .2s;
+}
+.tl-seg:hover .tl-dot { transform:scale(1.3); }
+.tl-dot {
+  width:14px; height:14px; border-radius:50%;
+  border:3px solid #fff; box-shadow:0 1px 6px rgba(0,0,0,.15);
+  transition:transform .2s; flex-shrink:0;
+}
+.tl-label { font-size:11px; font-weight:600; text-align:center; white-space:nowrap; }
+.tl-time { font-size:10px; color:#999; text-align:center; }
+.tl-connector {
+  flex:1; height:2px; margin:0 -2px; margin-bottom:30px; min-width:12px;
+}
+.tl-phase-label {
+  position:absolute; top:24px; left:50%; transform:translateX(-50%);
+  font-size:9px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+  white-space:nowrap; padding:2px 8px; border-radius:4px;
+}
+
+/* ===== 闃舵鍗＄墖 ===== */
+.phase-section { margin-bottom:28px; }
+.phase-card {
+  background:#fff; border-radius:14px; box-shadow:0 2px 16px rgba(0,0,0,.05);
+  overflow:hidden; transition:box-shadow .2s;
+}
+.phase-card:hover { box-shadow:0 4px 24px rgba(0,0,0,.08); }
+
+.phase-header {
+  display:flex; align-items:center; padding:22px 28px;
+  cursor:pointer; transition:background .15s; user-select:none;
+  border-left:4px solid transparent;
+}
+.phase-header:hover { background:#f8f9ff; }
+
+.phase-num {
+  width:44px; height:44px; border-radius:12px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px; font-weight:800; color:#fff; flex-shrink:0;
+  margin-right:18px;
+}
+.phase-title { flex:1; }
+.phase-title .en { font-size:17px; font-weight:700; color:#1a237e; }
+.phase-title .cn { font-size:12px; color:#999; margin-top:2px; }
+.phase-time-badge {
+  font-size:11px; font-weight:600; color:#fff;
+  padding:5px 14px; border-radius:20px; flex-shrink:0;
+  margin-left:12px;
+}
+.phase-toggle {
+  width:28px; height:28px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  background:#f0f2f5; color:#666; font-size:12px;
+  flex-shrink:0; margin-left:12px;
+  transition:transform .3s, background .2s;
+}
+.phase-card.open .phase-toggle { transform:rotate(180deg); background:#e8edff; color:#1a237e; }
+
+.phase-body {
+  display:none; padding:0 28px 24px 90px;
+  animation:fadeSlide .3s ease;
+}
+.phase-card.open .phase-body { display:block; }
+@keyframes fadeSlide { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+
+.phase-desc {
+  font-size:13.5px; color:#666; line-height:1.7; margin-bottom:20px;
+  padding:14px 18px; background:#f8f9ff; border-radius:10px;
+  border-left:3px solid #1e88e5;
+}
+
+/* 瀛愰樁娈?*/
+.sub-list { display:flex; flex-direction:column; gap:12px; }
+.sub-item {
+  background:#fafbfe; border-radius:12px; padding:18px 22px;
+  border:1px solid #eef0f5; transition:all .15s;
+}
+.sub-item:hover { border-color:#d5ddf5; background:#f5f7ff; }
+
+.sub-head { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.sub-tag {
+  font-size:10px; font-weight:800; color:#fff;
+  padding:3px 10px; border-radius:6px; letter-spacing:.5px;
+  flex-shrink:0;
+}
+.sub-name { font-size:14px; font-weight:600; color:#333; }
+.sub-name-en { font-size:11px; color:#aaa; margin-left:6px; font-weight:400; }
+
+.sub-content { font-size:13px; color:#666; line-height:1.7; }
+.sub-content strong { color:#333; }
+
+.sub-deliver {
+  margin-top:8px; font-size:12px; color:#999;
+  display:flex; align-items:center; gap:6px;
+}
+.sub-deliver::before { content:''; display:block; width:4px; height:4px; border-radius:50%; background:#c5cae9; }
+
+/* Phase 棰滆壊 */
+.p1 .phase-num { background:linear-gradient(135deg,#5c6bc0,#7e57c2); }
+.p1 .phase-time-badge { background:linear-gradient(135deg,#5c6bc0,#7e57c2); }
+.p1 .phase-header { border-left-color:#5c6bc0; }
+.p1 .sub-tag { background:linear-gradient(135deg,#5c6bc0,#7e57c2); }
+.p1 .tl-dot { background:#5c6bc0; }
+
+.p2 .phase-num { background:linear-gradient(135deg,#1565c0,#1e88e5); }
+.p2 .phase-time-badge { background:linear-gradient(135deg,#1565c0,#1e88e5); }
+.p2 .phase-header { border-left-color:#1565c0; }
+.p2 .sub-tag { background:linear-gradient(135deg,#1565c0,#1e88e5); }
+.p2 .tl-dot { background:#1565c0; }
+
+.p3 .phase-num { background:linear-gradient(135deg,#2e7d32,#43a047); }
+.p3 .phase-time-badge { background:linear-gradient(135deg,#2e7d32,#43a047); }
+.p3 .phase-header { border-left-color:#2e7d32; }
+.p3 .sub-tag { background:linear-gradient(135deg,#2e7d32,#43a047); }
+.p3 .tl-dot { background:#2e7d32; }
+
+.p4 .phase-num { background:linear-gradient(135deg,#ef6c00,#ffa726); }
+.p4 .phase-time-badge { background:linear-gradient(135deg,#ef6c00,#ffa726); }
+.p4 .phase-header { border-left-color:#ef6c00; }
+.p4 .sub-tag { background:linear-gradient(135deg,#ef6c00,#ffa726); }
+.p4 .tl-dot { background:#ef6c00; }
+
+.p5 .phase-num { background:linear-gradient(135deg,#c62828,#e53935); }
+.p5 .phase-time-badge { background:linear-gradient(135deg,#c62828,#e53935); }
+.p5 .phase-header { border-left-color:#c62828; }
+.p5 .sub-tag { background:linear-gradient(135deg,#c62828,#e53935); }
+.p5 .tl-dot { background:#c62828; }
+
+.tl-connector { background:linear-gradient(90deg,#5c6bc0,#1565c0,#2e7d32,#ef6c00,#e53935); }
+
+/* 鏈琛?*/
+.glossary {
+  background:#fff; border-radius:14px; box-shadow:0 2px 16px rgba(0,0,0,.05);
+  padding:24px 28px; margin-top:28px;
+}
+.glossary-title { font-size:15px; font-weight:700; color:#1a237e; margin-bottom:16px; }
+.glossary-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:8px; }
+.glossary-item { display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:8px; background:#f8f9ff; }
+.glossary-term { font-size:12px; font-weight:700; color:#1a237e; min-width:44px; }
+.glossary-def { font-size:12px; color:#666; }
+
+/* ===== Footer ===== */
+.footer { text-align:center; padding:24px; font-size:11.5px; color:#bbb; margin-top:24px; }
+.footer a { color:#1e88e5; text-decoration:none; }
+.footer a:hover { text-decoration:underline; }
+
+/* ===== 绉诲姩绔€傞厤 ===== */
+.mobile-header {
+  display:none;
+  position:fixed; top:0; left:0; right:0;
+  height:52px;
+  background:linear-gradient(135deg,#0d1b2a,#1a237e);
+  color:#fff;
+  align-items:center; padding:0 16px;
+  z-index:200;
+  box-shadow:0 2px 12px rgba(0,0,0,.15);
+}
+.mobile-header .menu-btn { font-size:22px; cursor:pointer; padding:4px; }
+.mobile-header .mobile-title { font-size:15px; font-weight:700; margin-left:12px; flex:1; }
+.mobile-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:150; }
+
+@media (max-width:768px) {
+  .sidebar { transform:translateX(-100%); transition:transform .3s ease; }
+  .sidebar.open { transform:translateX(0); }
+  .mobile-header { display:flex; }
+  .mobile-overlay.show { display:block; }
+  .main { margin-left:0; padding:68px 12px 40px; }
+  .brand .brand-text h1 { font-size:18px; }
+  .phase-header { padding:16px 18px; }
+  .phase-body { padding:0 18px 20px 18px; }
+  .phase-num { width:36px; height:36px; font-size:15px; margin-right:14px; }
+  .phase-time-badge { display:none; }
+  .sub-list { gap:8px; }
+  .sub-item { padding:14px 16px; }
+  .glossary-grid { grid-template-columns:1fr; }
+  .timeline-overview { padding:16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- 绉诲姩绔《鏍?-->
+<div class="mobile-header">
+  <span class="menu-btn" onclick="toggleSidebar()">&#9776;</span>
+  <span class="mobile-title">浜у搧鐢熷懡鍛ㄦ湡</span>
+</div>
+<div class="mobile-overlay" id="mobileOverlay" onclick="toggleSidebar()"></div>
+
+<!-- 宸︿晶瀵艰埅 -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <span class="logo-icon">馃枿锔?/span>
+    <div class="logo-title">3D鎵撳嵃姣忔棩閫熼€?/div>
+    <div class="logo-sub">Daily 3D Printing Express</div>
+  </div>
+
+  <div class="sidebar-nav">
+    <div class="nav-section-label">鍐呭妯″潡</div>
+    <a class="nav-item" href="index.html">
+      <span class="nav-icon">馃摪</span><span>璧勮褰掓。</span>
+      <span class="nav-badge">8</span>
+    </a>
+    <a class="nav-item active" href="lifecycle.html">
+      <span class="nav-icon">馃攧</span><span>浜у搧鐢熷懡鍛ㄦ湡</span>
+      <span class="nav-badge">5闃舵</span>
+    </a>
+    <a class="nav-item coming-soon">
+      <span class="nav-icon">馃搳</span><span>鏁版嵁鍒嗘瀽</span>
+      <span class="nav-badge" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.35)">鏁鏈熷緟</span>
+    </a>
+
+    <div class="nav-section-label" style="margin-top:16px">宸ュ叿</div>
+    <a class="nav-item" href="slicing-params.html" target="_blank">
+      <span class="nav-icon">鈿欙笍</span><span>鍒囩墖鍙傛暟閫熸煡</span>
+      <span class="nav-badge">v2.2</span>
+    </a>
+  </div>
+
+  <div class="sidebar-footer">
+    Author: <a href="https://github.com/Cruise-Ling" target="_blank">Cruise</a><br>
+    Powered by WorkBuddy
+  </div>
+</div>
+
+<!-- 涓诲唴瀹?-->
+<div class="main">
+  <div class="top-bar">
+    <div class="brand">
+      <span class="brand-icon">馃攧</span>
+      <div class="brand-text">
+        <h1>3D鎵撳嵃鏈轰骇鍝佺敓鍛藉懆鏈?/h1>
+        <div class="author-line">Product Lifecycle Roadmap &nbsp;|&nbsp; 浠庢蹇靛埌閫€甯傜殑瀹屾暣璺緞</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 鏃堕棿绾挎€昏 -->
+  <div class="timeline-overview">
+    <div class="timeline-bar">
+      <div class="tl-seg p1" onclick="scrollToPhase(1)">
+        <div class="tl-dot"></div>
+        <div class="tl-label">MRD / PRD</div>
+        <div class="tl-time">M1 鈥?M2</div>
+        <div class="tl-phase-label" style="background:#ede7f6;color:#5c6bc0">瀹氫箟鏈?/div>
+      </div>
+      <div class="tl-connector"></div>
+      <div class="tl-seg p2" onclick="scrollToPhase(2)">
+        <div class="tl-dot"></div>
+        <div class="tl-label">EVT</div>
+        <div class="tl-time">M3 鈥?M5</div>
+        <div class="tl-phase-label" style="background:#e3f2fd;color:#1565c0">鐮斿彂鏈?/div>
+      </div>
+      <div class="tl-connector"></div>
+      <div class="tl-seg p2" onclick="scrollToPhase(2)">
+        <div class="tl-dot"></div>
+        <div class="tl-label">DVT</div>
+        <div class="tl-time">M5 鈥?M7</div>
+      </div>
+      <div class="tl-connector"></div>
+      <div class="tl-seg p2" onclick="scrollToPhase(2)">
+        <div class="tl-dot"></div>
+        <div class="tl-label">PVT</div>
+        <div class="tl-time">M8 鈥?M9</div>
+      </div>
+      <div class="tl-connector"></div>
+      <div class="tl-seg p3" onclick="scrollToPhase(3)">
+        <div class="tl-dot"></div>
+        <div class="tl-label">Ramp / MP</div>
+        <div class="tl-time">M10 鈥?M12</div>
+        <div class="tl-phase-label" style="background:#e8f5e9;color:#2e7d32">閲忎骇鏈?/div>
+      </div>
+      <div class="tl-connector"></div>
+      <div class="tl-seg p3" onclick="scrollToPhase(3)">
+        <div class="tl-dot"></div>
+        <div class="tl-label">Launch</div>
+        <div class="tl-time">M13 鈥?M14</div>
+      </div>
+      <div class="tl-connector"></div>
+      <div class="tl-seg p4" onclick="scrollToPhase(4)">
+        <div class="tl-dot"></div>
+        <div class="tl-label">PI / UL</div>
+        <div class="tl-time">M14 鈥?M30+</div>
+        <div class="tl-phase-label" style="background:#fff3e0;color:#ef6c00">杩愯惀鏈?/div>
+      </div>
+      <div class="tl-connector"></div>
+      <div class="tl-seg p5" onclick="scrollToPhase(5)">
+        <div class="tl-dot"></div>
+        <div class="tl-label">EOL / EOSP</div>
+        <div class="tl-time">M30+</div>
+        <div class="tl-phase-label" style="background:#ffebee;color:#c62828">閫€甯傛湡</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== Phase 1: 浜у搧瀹氫箟鏈?==================== -->
+  <div class="phase-section" id="phase-1">
+    <div class="phase-card p1 open">
+      <div class="phase-header" onclick="togglePhase(this)">
+        <div class="phase-num">馃搵</div>
+        <div class="phase-title">
+          <div class="en">Phase 1: Product Definition</div>
+          <div class="cn">浜у搧瀹氫箟鏈?鈥?鍥炵瓟"鍋氫粈涔堛€佸崠缁欒皝銆佸崠澶氬皯閽?</div>
+        </div>
+        <div class="phase-time-badge">M1 鈥?M2</div>
+        <div class="phase-toggle">鈻?/div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-desc">
+          浜у搧绔嬮」鍓嶇殑瀹氫箟闃舵銆傞€氳繃甯傚満璋冪爺纭畾浜у搧鏂瑰悜锛岃緭鍑洪渶姹傛枃妗ｅ拰璁捐鏂规锛屾渶缁堥€氳繃绔嬮」璇勫姝ｅ紡杩涘叆鐮斿彂娴佺▼銆?        </div>
+        <div class="sub-list">
+          <div class="sub-item">
+            <div class="sub-head"><span class="sub-tag">MRD</span><span class="sub-name">甯傚満闇€姹傛枃妗?<span class="sub-name-en">Market Requirements Document</span></span></div>
+            <div class="sub-content">甯傚満璋冪爺涓庣珵鍝佸垎鏋愶紝鏋勫缓鐢ㄦ埛鐢诲儚锛岃瘎浼板競鍦鸿妯★紙TAM/SAM/SOM锛夈€傛槑纭競鍦虹棝鐐广€佺敤鎴烽渶姹備紭鍏堢骇鍜岀珵浜夋牸灞€銆?/div>
+            <div class="sub-deliver">浜у嚭锛歁RD鏂囨。銆佸競鍦鸿妯″垎鏋愭姤鍛娿€佺珵鍝佸鏍囩煩闃?/div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-head"><span class="sub-tag">PRD</span><span class="sub-name">浜у搧闇€姹傛枃妗?<span class="sub-name-en">Product Requirements Document</span></span></div>
+            <div class="sub-content">鍔熻兘瑙勬牸瀹氫箟涓?strong>鎶€鏈柟妗堥€夊瀷</strong>锛堟鏋剁粨鏋勩€佽繍鍔ㄦ灦鏋勩€佸浐浠惰矾绾匡級锛孊OM鍒濈増鎴愭湰棰勪及锛岀洰鏍囧畾浠蜂笌姣涘埄鍒嗘瀽銆?/div>
+            <div class="sub-deliver">浜у嚭锛歅RD鏂囨。銆佸爢鍙犲竷灞€鏂规銆佹垚鏈浼拌〃</div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-head"><span class="sub-tag">ID</span><span class="sub-name">宸ヤ笟璁捐 <span class="sub-name-en">Industrial Design</span></span></div>
+            <div class="sub-content">澶栬閫犲瀷璁捐锛?strong>CMF瀹氫箟</strong>锛堣壊褰?鏉愯川/琛ㄩ潰澶勭悊锛夛紝浜烘満宸ョ▼璇勫銆傚吋椤炬暎鐑閬撱€佺淮鎶や究鎹锋€х瓑宸ョ▼绾︽潫銆?/div>
+            <div class="sub-deliver">浜у嚭锛?D娓叉煋鍥俱€佹补娉?鍘熷瀷妯″瀷銆丆MF瑙勮寖</div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-head"><span class="sub-tag">G0</span><span class="sub-name">绔嬮」璇勫 <span class="sub-name-en">Gate 0 鈥?Project Approval</span></span></div>
+            <div class="sub-content">ROI璇勫锛岃祫婧愮‘璁わ紙鐮斿彂/妯″叿/浜х嚎锛夛紝绔嬮」鎵瑰噯銆傛湭閫氳繃鍒欐墦鍥炴垨缁堟椤圭洰銆?/div>
+            <div class="sub-deliver">浜у嚭锛氱珛椤逛功銆侀」鐩鍒掍功銆佽祫婧愬垎閰嶈〃</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== Phase 2: 鐮斿彂楠岃瘉鏈?==================== -->
+  <div class="phase-section" id="phase-2">
+    <div class="phase-card p2">
+      <div class="phase-header" onclick="togglePhase(this)">
+        <div class="phase-num">馃И</div>
+        <div class="phase-title">
+          <div class="en">Phase 2: R&D Verification (NPI)</div>
+          <div class="cn">鐮斿彂楠岃瘉鏈?鈥?"鑳藉仛鍑烘潵銆佽璁℃纭€佽兘閲忎骇"</div>
+        </div>
+        <div class="phase-time-badge">M3 鈥?M9</div>
+        <div class="phase-toggle">鈻?/div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-desc">
+          鏂颁骇鍝佸鍏ワ紙NPI锛夌殑鏍稿績闃舵銆備粠鍘熺悊楠岃瘉锛圗VT锛夊埌璁捐瀹氬瀷锛圖VT锛夊啀鍒扮敓浜ч獙璇侊紙PVT锛夛紝閫愭娑堥櫎鎶€鏈闄╁苟纭繚閲忎骇鍙鎬с€?        </div>
+        <div class="sub-list">
+          <div class="sub-item">
+            <div class="sub-head"><span class="sub-tag">EVT</span><span class="sub-name">宸ョ▼楠岃瘉娴嬭瘯 <span class="sub-name-en">Engineering Verification Test</span></span></div>
+            <div class="sub-content">楠岃瘉鏍稿績鍘熺悊鍙鎬с€?D鎵撳嵃缁撴瀯浠舵墜鏉裤€丳CB椋炵嚎鐐逛寒銆?strong>鍥轰欢鍒濈増</strong>璺戦€氬熀鏈姛鑳斤紙褰掗浂/鍔犵儹/鎸ゅ嚭锛夈€佽瘑鍒叧閿妧鏈闄┿€傚彲浜у嚭澶氳疆EVT1/EVT2鏍锋満銆?/div>
+            <div class="sub-deliver">浜у嚭锛欵VT鏍锋満銆佸師鐞嗛獙璇佹姤鍛娿€佹妧鏈闄╂竻鍗?/div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-head"><span class="sub-tag">DVT</span><span class="sub-name">璁捐楠岃瘉娴嬭瘯 <span class="sub-name-en">Design Verification Test</span></span></div>
+            <div class="sub-content">楠岃瘉璁捐瀹屾暣鎬э紝<strong>鑰楁椂鏈€闀?/strong>銆傚澹?妗嗘灦姝ｅ紡<strong>寮€妯?/strong>锛堟ā鍏疯垂鏁板崄涓囪捣锛夛紝瀹夎璁よ瘉閫佹牱锛圕E/FCC/UL/RoHS锛夛紝鏁存満鍙潬鎬ф祴璇曪紙璺岃惤/鎸姩/娓╁崌/鑰佸寲/杩炵画鎵撳嵃鏁扮櫨灏忔椂锛夛紝<strong>鍥轰欢涓嶣OM鍐荤粨</strong>锛屼骇绾垮伐鑹鸿璁°€?/div>
+            <div class="sub-deliver">浜у嚭锛欴VT鏍锋満銆佹ā鍏稵1/T2浠躲€佽璇佽瘉涔︺€丅OM瀹氱増</div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-head"><span class="sub-tag">PVT</span><span class="sub-name">鐢熶骇楠岃瘉娴嬭瘯 <span class="sub-name-en">Production Verification Test</span></span></div>
+            <div class="sub-content">楠岃瘉閲忎骇鑳藉姏銆傚皬鎵归噺璇曚骇 50-500 鍙帮紝<strong>SOP浣滀笟鎸囧涔?/strong>缂栧埗锛屽伐瑁呭す鍏疯璁★紝鐩撮€氱巼鐖潯锛堢洰鏍?70% 鈫?95%+锛夛紝鍖呰/鐗╂祦妯℃嫙杩愯緭楠岃瘉銆?/div>
+            <div class="sub-deliver">浜у嚭锛歅VT鏍锋満銆丼OP鏂囨。銆佸伐瑁呮竻鍗曘€佺洿閫氱巼鎶ュ憡</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== Phase 3: 閲忎骇涓婂競鏈?==================== -->
+  <div class="phase-section" id="phase-3">
+    <div class="phase-card p3">
+      <div class="phase-header" onclick="togglePhase(this)">
+        <div class="phase-num">馃彮</div>
+        <div class="phase-title">
+          <div class="en">Phase 3: Mass Production & Launch</div>
+          <div class="cn">閲忎骇涓婂競鏈?鈥?绋冲畾鍑鸿揣锛屾帹鍚戝競鍦?/div>
+        </div>
+        <div class="phase-time-badge">M10 鈥?M14</div>
+        <div class="phase-toggle">鈻?/div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-desc">
+          浠庤瘯浜х埇鍧″埌澶ф壒閲忓嚭璐у苟鎺ㄥ悜鍏ㄧ悆甯傚満銆備骇鑳介€愭鐖崌锛屽搧璐ㄧ鎺у叏闈笂绾匡紝钀ラ攢鍚屾鍚姩銆?        </div>
+        <div class="sub-list">
+          <div class="sub-item">
+            <div class="sub-head"><span class="sub-tag">Ramp</span><span class="sub-name">浜ц兘鐖潯 <span class="sub-name-en">Production Ramp-up</span></span></div>
+            <div class="sub-content">浜ц兘浠庤瘯浜ф按骞抽€愭鎻愬崌鍒版弧浜х洰鏍囥€備骇绾胯妭鎷嶄紭鍖栵紝鐗╂枡榻愬鐜囩洃鎺э紝鏃ヤ骇閲忛樁姊紡鐖崌銆?/div>
+            <div class="sub-deliver">浜у嚭锛氫骇鑳界埇鍧¤鍒掋€佹棩浜ц兘杈炬爣鎶ュ憡</div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-head"><span class="sub-tag">MP</span><span class="sub-name">閲忎骇 <span class="sub-name-en">Mass Production</span></span></div>
+            <div class="sub-content">澶ф壒閲忕ǔ瀹氱敓浜с€?strong>IQC/IPQC/OQC</strong>鍏ㄦ祦绋嬪搧璐ㄧ鎺э紝OQC鍑鸿揣閫氳繃鐜囩洰鏍?鈮?97%锛屼緵搴旈摼鎸佺画淇濅緵涓庡璐с€?/div>
+            <div class="sub-deliver">浜у嚭锛氭壒閲忓嚭璐с€佸搧璐ㄥ懆鎶?鏈堟姤</div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-head"><span class="sub-tag">Launch</span><span class="sub-name">涓婂競鍙戝竷 <span class="sub-name-en">Product Launch</span></span></div>
+            <div class="sub-content">钀ラ攢棰勭儹涓嶬OL璇勬祴鏈哄彂鏀撅紝鍙戝竷浼?鐩存挱娲诲姩锛屽叏鐞冩笭閬撳悓姝ラ摵璐э紝棣栨壒鐢ㄦ埛绉嶅瓙绀惧尯鍩瑰吇銆?/div>
+            <div class="sub-deliver">浜у嚭锛氫笂甯傜墿鏂欏寘銆佹笭閬撳埌璐х‘璁?/div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== Phase 4: 杩愯惀缁存姢鏈?==================== -->
+  <div class="phase-section" id="phase-4">
+    <div class="phase-card p4">
+      <div class="phase-header" onclick="togglePhase(this)">
+        <div class="phase-num">馃敡</div>
+        <div class="phase-title">
+          <div class="en">Phase 4: Operations & Lifecycle (UL)</div>
+          <div class="cn">杩愯惀缁存姢鏈?鈥?鎸佺画缁存姢浼樺寲锛屼繚鎸佺珵浜夊姏</div>
+        </div>
+        <div class="phase-time-badge">M14 鈥?M30+</div>
+        <div class="phase-toggle">鈻?/div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-desc">
+          浜у搧涓婂競鍚?strong>鏈€闀跨殑鐢熷懡鍛ㄦ湡闃舵</strong>锛堢害鍗犳€诲懆鏈熺殑70%锛夈€備笉杩涜澶у箙鍔熻兘鏀瑰姩锛屼互Sustaining Engineering鏂瑰紡鎸佺画缁存姢浼樺寲浜у搧锛屼繚鎸佸競鍦虹珵浜夊姏骞跺欢闀跨泩鍒╁懆鏈熴€?        </div>
+        <div class="sub-list">
+          <div class="sub-item">
+            <div class="sub-head"><span class="sub-tag">PI</span><span class="sub-name">浜у搧瀵煎叆甯傚満 <span class="sub-name-en">Product Introduction</span></span></div>
+            <div class="sub-content">涓婂競鍚庡垵鏈熻繍钀ワ紙0-3涓湀锛夈€傜敤鎴峰弽棣堝揩閫熸敹闆嗕笌鍒嗘瀽锛岀ぞ鍖鸿繍钀ュ惎鍔紝鏃╂湡鍞悗闂蹇€熷搷搴斾笌淇銆?/div>
+            <div class="sub-deliver">鍛ㄦ湡锛氫笂甯傚悗0-3涓湀</div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-head"><span class="sub-tag">GTM</span><span class="sub-name">鎸佺画钀ラ攢鎺ㄥ箍 <span class="sub-name-en">Go-To-Market</span></span></div>
+            <div class="sub-content">璐┛鏁翠釜杩愯惀鏈熴€傛笭閬撴嫇灞曘€丳R/KOL璇勬祴鍚堜綔銆佷績閿€娲诲姩銆佸尯鍩熷競鍦哄畾鍒跺寲鎺ㄥ箍鏂规銆?/div>
+            <div class="sub-deliver">鍛ㄦ湡锛氭寔缁繘琛?/div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-head"><span class="sub-tag">UL</span><span class="sub-name">鏇存柊涓庣敓鍛藉懆鏈熺淮鎶?<span class="sub-name-en">Update & Lifecycle / Sustaining</span></span></div>
+            <div class="sub-content"><strong>Sustaining Engineering</strong> 鈥?涓嶅仛澶у箙鏀瑰姩锛屾寔缁淮鎶や紭鍖栥€傚浐浠禣TA杩唬锛坴1.0 鈫?v1.1 鈫?...锛夈€佽€楁潗鍏煎鎬ф墿灞曘€佺敤鎴峰弽棣圔ug淇銆?strong>BOM闄嶆湰</strong>锛堝悓鍔熻兘鎹緵搴斿晢锛夈€佹柊閰嶈壊/鍖哄煙鐗堟湰鍙樹綋鎺ㄥ嚭銆?/div>
+            <div class="sub-deliver">鍛ㄦ湡锛氫骇鍝佺敓鍛藉懆鏈熶腑鍗犳瘮鏈€闀匡紙绾?0%鏃堕棿锛?/div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-head"><span class="sub-tag">NG</span><span class="sub-name">涓嬩竴浠ｈ鍒?<span class="sub-name-en">Next-Gen Planning</span></span></div>
+            <div class="sub-content">浠庣敤鎴峰弽棣堝拰鍞悗鏁版嵁涓彁鐐奸渶姹傦紝椹卞姩涓嬩竴浠ｄ骇鍝佸畾涔夈€備笌Phase 1鐨凪RD褰㈡垚<strong>闂幆</strong>銆?/div>
+            <div class="sub-deliver">浜у嚭锛氫笅涓€浠ｄ骇鍝侀渶姹傝緭鍏ユ枃妗?/div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== Phase 5: 琛伴€€閫€甯傛湡 ==================== -->
+  <div class="phase-section" id="phase-5">
+    <div class="phase-card p5">
+      <div class="phase-header" onclick="togglePhase(this)">
+        <div class="phase-num">馃弫</div>
+        <div class="phase-title">
+          <div class="en">Phase 5: End of Life</div>
+          <div class="cn">琛伴€€閫€甯傛湡 鈥?鏈夊簭閫€鍑猴紝骞崇ǔ杩囨浮</div>
+        </div>
+        <div class="phase-time-badge">M30+</div>
+        <div class="phase-toggle">鈻?/div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-desc">
+          浜у搧閫愭閫€鍑哄競鍦虹殑闃舵銆傛寜 EOL 鈫?EOS 鈫?EOM 鈫?EOSP 鐨勯『搴忔湁搴忓畬鎴愬仠浜с€佹竻浠撱€佹柇渚涖€佸仠鏈嶏紝纭繚鐢ㄦ埛鍜屾笭閬撳钩绋宠繃娓°€?        </div>
+        <div class="sub-list">
+          <div class="sub-item">
+            <div class="sub-head"><span class="sub-tag">EOL</span><span class="sub-name">鍋滀骇鍐崇瓥 <span class="sub-name-en">End of Life</span></span></div>
+            <div class="sub-content">姝ｅ紡瀹ｅ竷鍋滀骇锛屽仠姝㈡柊鐨勫競鍦烘帹骞挎姇鍏ュ拰娓犻亾琛ヨ揣銆傝瘎浼板墿浣欏簱瀛樺拰鍞悗閰嶄欢鍌ㄥ閲忥紝鍒跺畾澶勭疆璁″垝銆?/div>
+            <div class="sub-deliver">浜у嚭锛欵OL鍏憡銆佸簱瀛樺缃鍒?/div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-head"><span class="sub-tag">EOS</span><span class="sub-name">鍋滄閿€鍞?<span class="sub-name-en">End of Sale</span></span></div>
+            <div class="sub-content">鍋滄閿€鍞紝娓犻亾搴撳瓨娓呬粨锛堟姌鎵?鎹嗙粦/杞尯鍩燂級銆傚畼缃戜骇鍝侀〉鏍囨敞"宸插仠浜?銆?/div>
+            <div class="sub-deliver">浜у嚭锛氭竻浠撳畬鎴愮‘璁?/div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-head"><span class="sub-tag">EOM</span><span class="sub-name">鍋滄鍒堕€?<span class="sub-name-en">End of Manufacturing</span></span></div>
+            <div class="sub-content">浜х嚎鍒囨崲鑷虫柊浜у搧鐢熶骇銆備繚鐣欏叧閿ā鍏峰拰宸ヨ锛堢煭鏈熷彲澶嶄骇澶囬€夛級銆?/div>
+            <div class="sub-deliver">浜у嚭锛氫骇绾垮垏鎹㈠畬鎴愭姤鍛?/div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-head"><span class="sub-tag">EOSP</span><span class="sub-name">鍋滄鎶€鏈敮鎸?<span class="sub-name-en">End of Service & Support</span></span></div>
+            <div class="sub-content">瀹樻柟涓嶅啀鎻愪緵鍥轰欢鏇存柊銆侀厤浠朵緵搴斿拰鎶€鏈敮鎸併€傜煡璇嗗簱褰掓。锛岀敤鎴风ぞ鍖哄彲鑳界户缁嚜鍙戠淮鎶わ紙寮€婧愭柟妗堬級銆?/div>
+            <div class="sub-deliver">浜у嚭锛欵OSP鍏憡銆佺煡璇嗗簱褰掓。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 鏈閫熸煡琛?-->
+  <div class="glossary">
+    <div class="glossary-title">馃摉 鏈閫熸煡琛?Glossary</div>
+    <div class="glossary-grid">
+      <div class="glossary-item"><span class="glossary-term">NPI</span><span class="glossary-def">New Product Introduction 鏂颁骇鍝佸鍏?/span></div>
+      <div class="glossary-item"><span class="glossary-term">MRD</span><span class="glossary-def">Market Requirements Document 甯傚満闇€姹傛枃妗?/span></div>
+      <div class="glossary-item"><span class="glossary-term">PRD</span><span class="glossary-def">Product Requirements Document 浜у搧闇€姹傛枃妗?/span></div>
+      <div class="glossary-item"><span class="glossary-term">ID</span><span class="glossary-def">Industrial Design 宸ヤ笟璁捐</span></div>
+      <div class="glossary-item"><span class="glossary-term">CMF</span><span class="glossary-def">Color / Material / Finish 鑹插僵鏉愯川琛ㄩ潰澶勭悊</span></div>
+      <div class="glossary-item"><span class="glossary-term">BOM</span><span class="glossary-def">Bill of Materials 鐗╂枡娓呭崟</span></div>
+      <div class="glossary-item"><span class="glossary-term">EVT</span><span class="glossary-def">Engineering Verification Test 宸ョ▼楠岃瘉娴嬭瘯</span></div>
+      <div class="glossary-item"><span class="glossary-term">DVT</span><span class="glossary-def">Design Verification Test 璁捐楠岃瘉娴嬭瘯</span></div>
+      <div class="glossary-item"><span class="glossary-term">PVT</span><span class="glossary-def">Production Verification Test 鐢熶骇楠岃瘉娴嬭瘯</span></div>
+      <div class="glossary-item"><span class="glossary-term">SOP</span><span class="glossary-def">Standard Operating Procedure 鏍囧噯浣滀笟绋嬪簭</span></div>
+      <div class="glossary-item"><span class="glossary-term">OTA</span><span class="glossary-def">Over-The-Air 绌轰腑鍥轰欢鍗囩骇</span></div>
+      <div class="glossary-item"><span class="glossary-term">MP</span><span class="glossary-def">Mass Production 閲忎骇</span></div>
+      <div class="glossary-item"><span class="glossary-term">PI</span><span class="glossary-def">Product Introduction 浜у搧瀵煎叆甯傚満</span></div>
+      <div class="glossary-item"><span class="glossary-term">GTM</span><span class="glossary-def">Go-To-Market 甯傚満鎺ㄥ箍绛栫暐</span></div>
+      <div class="glossary-item"><span class="glossary-term">UL</span><span class="glossary-def">Update & Lifecycle 鏇存柊涓庣敓鍛藉懆鏈熺淮鎶?/span></div>
+      <div class="glossary-item"><span class="glossary-term">EOL</span><span class="glossary-def">End of Life 鍋滀骇</span></div>
+      <div class="glossary-item"><span class="glossary-term">EOS</span><span class="glossary-def">End of Sale 鍋滄閿€鍞?/span></div>
+      <div class="glossary-item"><span class="glossary-term">EOM</span><span class="glossary-def">End of Manufacturing 鍋滄鍒堕€?/span></div>
+      <div class="glossary-item"><span class="glossary-term">EOSP</span><span class="glossary-def">End of Support 鍋滄鎶€鏈敮鎸?/span></div>
+      <div class="glossary-item"><span class="glossary-term">IQC</span><span class="glossary-def">Incoming Quality Control 鏉ユ枡妫€楠?/span></div>
+      <div class="glossary-item"><span class="glossary-term">IPQC</span><span class="glossary-def">In-Process Quality Control 鍒剁▼妫€楠?/span></div>
+      <div class="glossary-item"><span class="glossary-term">OQC</span><span class="glossary-def">Outgoing Quality Control 鍑鸿揣妫€楠?/span></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Powered by WorkBuddy Automation &nbsp;|&nbsp; <a href="https://github.com/Cruise-Ling/3d-printing-daily">GitHub</a>
+  </div>
+</div>
+
+<script>
+function togglePhase(header) {
+  header.closest('.phase-card').classList.toggle('open');
+}
+function scrollToPhase(n) {
+  var el = document.getElementById('phase-' + n);
+  if (el) {
+    el.scrollIntoView({ behavior:'smooth', block:'start' });
+    var card = el.querySelector('.phase-card');
+    if (card && !card.classList.contains('open')) card.classList.add('open');
+  }
+}
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('mobileOverlay').classList.toggle('show');
+}
+</script>
+</body>
+</html>
