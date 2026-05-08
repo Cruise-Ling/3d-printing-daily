@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3D鎵撳嵃浜у搧鐢熷懡鍛ㄦ湡 - 璺緞鍥?/title>
+<title>3D打印产品生命周期 - 路径图</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -13,7 +13,7 @@ body {
   min-height:100vh;
 }
 
-/* ===== 宸︿晶瀵艰埅鏍?===== */
+/* ===== 左侧导航栏 ===== */
 .sidebar {
   position:fixed; left:0; top:0; bottom:0;
   width:200px;
@@ -64,7 +64,7 @@ body {
 .sidebar-footer a { color:#64b5f6; text-decoration:none; }
 .sidebar-footer a:hover { text-decoration:underline; }
 
-/* ===== 涓诲唴瀹瑰尯 ===== */
+/* ===== 主内容区 ===== */
 .main { margin-left:200px; padding:20px 24px 40px; }
 
 .top-bar {
@@ -77,7 +77,7 @@ body {
 .brand .brand-text .author-line { font-size:13px; color:#888; margin-top:2px; }
 .brand .brand-text .author-line a { color:#1e88e5; text-decoration:none; font-weight:600; }
 
-/* ===== 鏃堕棿绾挎€昏 ===== */
+/* ===== 时间线总览 ===== */
 .timeline-overview {
   background:#fff; border-radius:14px; box-shadow:0 2px 16px rgba(0,0,0,.05);
   padding:24px 28px; margin-bottom:28px;
@@ -109,7 +109,7 @@ body {
   white-space:nowrap; padding:2px 8px; border-radius:4px;
 }
 
-/* ===== 闃舵鍗＄墖 ===== */
+/* ===== 阶段卡片 ===== */
 .phase-section { margin-bottom:28px; }
 .phase-card {
   background:#fff; border-radius:14px; box-shadow:0 2px 16px rgba(0,0,0,.05);
@@ -160,7 +160,7 @@ body {
   border-left:3px solid #1e88e5;
 }
 
-/* 瀛愰樁娈?*/
+/* 子阶段 */
 .sub-list { display:flex; flex-direction:column; gap:12px; }
 .sub-item {
   background:#fafbfe; border-radius:12px; padding:18px 22px;
@@ -186,7 +186,7 @@ body {
 }
 .sub-deliver::before { content:''; display:block; width:4px; height:4px; border-radius:50%; background:#c5cae9; }
 
-/* Phase 棰滆壊 */
+/* Phase 颜色 */
 .p1 .phase-num { background:linear-gradient(135deg,#5c6bc0,#7e57c2); }
 .p1 .phase-time-badge { background:linear-gradient(135deg,#5c6bc0,#7e57c2); }
 .p1 .phase-header { border-left-color:#5c6bc0; }
@@ -219,7 +219,7 @@ body {
 
 .tl-connector { background:linear-gradient(90deg,#5c6bc0,#1565c0,#2e7d32,#ef6c00,#e53935); }
 
-/* 鏈琛?*/
+/* 术语表 */
 .glossary {
   background:#fff; border-radius:14px; box-shadow:0 2px 16px rgba(0,0,0,.05);
   padding:24px 28px; margin-top:28px;
@@ -235,7 +235,7 @@ body {
 .footer a { color:#1e88e5; text-decoration:none; }
 .footer a:hover { text-decoration:underline; }
 
-/* ===== 绉诲姩绔€傞厤 ===== */
+/* ===== 移动端适配 ===== */
 .mobile-header {
   display:none;
   position:fixed; top:0; left:0; right:0;
@@ -270,39 +270,39 @@ body {
 </head>
 <body>
 
-<!-- 绉诲姩绔《鏍?-->
+<!-- 移动端顶栏 -->
 <div class="mobile-header">
   <span class="menu-btn" onclick="toggleSidebar()">&#9776;</span>
-  <span class="mobile-title">浜у搧鐢熷懡鍛ㄦ湡</span>
+  <span class="mobile-title">产品生命周期</span>
 </div>
 <div class="mobile-overlay" id="mobileOverlay" onclick="toggleSidebar()"></div>
 
-<!-- 宸︿晶瀵艰埅 -->
+<!-- 左侧导航 -->
 <div class="sidebar" id="sidebar">
   <div class="sidebar-logo">
-    <span class="logo-icon">馃枿锔?/span>
-    <div class="logo-title">3D鎵撳嵃姣忔棩閫熼€?/div>
+    <span class="logo-icon">🖨️</span>
+    <div class="logo-title">3D打印每日速递</div>
     <div class="logo-sub">Daily 3D Printing Express</div>
   </div>
 
   <div class="sidebar-nav">
-    <div class="nav-section-label">鍐呭妯″潡</div>
-    <a class="nav-item" href="index.html">
-      <span class="nav-icon">馃摪</span><span>璧勮褰掓。</span>
-      <span class="nav-badge">8</span>
+    <div class="nav-section-label">内容模块</div>
+    <a class="nav-item" href="briefing_20260508.html">
+      <span class="nav-icon">🔥</span><span>最新资讯</span>
+      <span class="nav-badge">今日</span>
     </a>
     <a class="nav-item active" href="lifecycle.html">
-      <span class="nav-icon">馃攧</span><span>浜у搧鐢熷懡鍛ㄦ湡</span>
-      <span class="nav-badge">5闃舵</span>
+      <span class="nav-icon">🔄</span><span>产品生命周期</span>
+      <span class="nav-badge">5阶段</span>
     </a>
     <a class="nav-item coming-soon">
-      <span class="nav-icon">馃搳</span><span>鏁版嵁鍒嗘瀽</span>
-      <span class="nav-badge" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.35)">鏁鏈熷緟</span>
+      <span class="nav-icon">📊</span><span>数据分析</span>
+      <span class="nav-badge" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.35)">敬请期待</span>
     </a>
 
-    <div class="nav-section-label" style="margin-top:16px">宸ュ叿</div>
+    <div class="nav-section-label" style="margin-top:16px">工具</div>
     <a class="nav-item" href="slicing-params.html" target="_blank">
-      <span class="nav-icon">鈿欙笍</span><span>鍒囩墖鍙傛暟閫熸煡</span>
+      <span class="nav-icon">⚙️</span><span>切片参数速查</span>
       <span class="nav-badge">v2.2</span>
     </a>
   </div>
@@ -313,297 +313,302 @@ body {
   </div>
 </div>
 
-<!-- 涓诲唴瀹?-->
+<!-- 主内容 -->
 <div class="main">
   <div class="top-bar">
     <div class="brand">
-      <span class="brand-icon">馃攧</span>
+      <span class="brand-icon">🔄</span>
       <div class="brand-text">
-        <h1>3D鎵撳嵃鏈轰骇鍝佺敓鍛藉懆鏈?/h1>
-        <div class="author-line">Product Lifecycle Roadmap &nbsp;|&nbsp; 浠庢蹇靛埌閫€甯傜殑瀹屾暣璺緞</div>
+        <h1>3D打印机产品生命周期</h1>
+        <div class="author-line">Product Lifecycle Roadmap &nbsp;|&nbsp; 从概念到退市的完整路径</div>
       </div>
     </div>
   </div>
 
-  <!-- 鏃堕棿绾挎€昏 -->
+  <!-- 时间线总览 -->
   <div class="timeline-overview">
     <div class="timeline-bar">
       <div class="tl-seg p1" onclick="scrollToPhase(1)">
         <div class="tl-dot"></div>
         <div class="tl-label">MRD / PRD</div>
-        <div class="tl-time">M1 鈥?M2</div>
-        <div class="tl-phase-label" style="background:#ede7f6;color:#5c6bc0">瀹氫箟鏈?/div>
+        <div class="tl-time">M1 – M2</div>
+        <div class="tl-phase-label" style="background:#ede7f6;color:#5c6bc0">定义期</div>
       </div>
       <div class="tl-connector"></div>
       <div class="tl-seg p2" onclick="scrollToPhase(2)">
         <div class="tl-dot"></div>
         <div class="tl-label">EVT</div>
-        <div class="tl-time">M3 鈥?M5</div>
-        <div class="tl-phase-label" style="background:#e3f2fd;color:#1565c0">鐮斿彂鏈?/div>
+        <div class="tl-time">M3 – M5</div>
+        <div class="tl-phase-label" style="background:#e3f2fd;color:#1565c0">研发期</div>
       </div>
       <div class="tl-connector"></div>
       <div class="tl-seg p2" onclick="scrollToPhase(2)">
         <div class="tl-dot"></div>
         <div class="tl-label">DVT</div>
-        <div class="tl-time">M5 鈥?M7</div>
+        <div class="tl-time">M5 – M7</div>
       </div>
       <div class="tl-connector"></div>
       <div class="tl-seg p2" onclick="scrollToPhase(2)">
         <div class="tl-dot"></div>
         <div class="tl-label">PVT</div>
-        <div class="tl-time">M8 鈥?M9</div>
+        <div class="tl-time">M8 – M9</div>
       </div>
       <div class="tl-connector"></div>
       <div class="tl-seg p3" onclick="scrollToPhase(3)">
         <div class="tl-dot"></div>
         <div class="tl-label">Ramp / MP</div>
-        <div class="tl-time">M10 鈥?M12</div>
-        <div class="tl-phase-label" style="background:#e8f5e9;color:#2e7d32">閲忎骇鏈?/div>
+        <div class="tl-time">M10 – M12</div>
+        <div class="tl-phase-label" style="background:#e8f5e9;color:#2e7d32">量产期</div>
       </div>
       <div class="tl-connector"></div>
       <div class="tl-seg p3" onclick="scrollToPhase(3)">
         <div class="tl-dot"></div>
         <div class="tl-label">Launch</div>
-        <div class="tl-time">M13 鈥?M14</div>
+        <div class="tl-time">M13 – M14</div>
       </div>
       <div class="tl-connector"></div>
       <div class="tl-seg p4" onclick="scrollToPhase(4)">
         <div class="tl-dot"></div>
         <div class="tl-label">PI / UL</div>
-        <div class="tl-time">M14 鈥?M30+</div>
-        <div class="tl-phase-label" style="background:#fff3e0;color:#ef6c00">杩愯惀鏈?/div>
+        <div class="tl-time">M14 – M30+</div>
+        <div class="tl-phase-label" style="background:#fff3e0;color:#ef6c00">运营期</div>
       </div>
       <div class="tl-connector"></div>
       <div class="tl-seg p5" onclick="scrollToPhase(5)">
         <div class="tl-dot"></div>
         <div class="tl-label">EOL / EOSP</div>
         <div class="tl-time">M30+</div>
-        <div class="tl-phase-label" style="background:#ffebee;color:#c62828">閫€甯傛湡</div>
+        <div class="tl-phase-label" style="background:#ffebee;color:#c62828">退市期</div>
       </div>
     </div>
   </div>
 
-  <!-- ==================== Phase 1: 浜у搧瀹氫箟鏈?==================== -->
+  <!-- ==================== Phase 1: 产品定义期 ==================== -->
   <div class="phase-section" id="phase-1">
     <div class="phase-card p1 open">
       <div class="phase-header" onclick="togglePhase(this)">
-        <div class="phase-num">馃搵</div>
+        <div class="phase-num">📋</div>
         <div class="phase-title">
           <div class="en">Phase 1: Product Definition</div>
-          <div class="cn">浜у搧瀹氫箟鏈?鈥?鍥炵瓟"鍋氫粈涔堛€佸崠缁欒皝銆佸崠澶氬皯閽?</div>
+          <div class="cn">产品定义期 — 回答"做什么、卖给谁、卖多少钱"</div>
         </div>
-        <div class="phase-time-badge">M1 鈥?M2</div>
-        <div class="phase-toggle">鈻?/div>
+        <div class="phase-time-badge">M1 – M2</div>
+        <div class="phase-toggle">▼</div>
       </div>
       <div class="phase-body">
         <div class="phase-desc">
-          浜у搧绔嬮」鍓嶇殑瀹氫箟闃舵銆傞€氳繃甯傚満璋冪爺纭畾浜у搧鏂瑰悜锛岃緭鍑洪渶姹傛枃妗ｅ拰璁捐鏂规锛屾渶缁堥€氳繃绔嬮」璇勫姝ｅ紡杩涘叆鐮斿彂娴佺▼銆?        </div>
+          产品立项前的定义阶段。通过市场调研确定产品方向，输出需求文档和设计方案，最终通过立项评审正式进入研发流程。
+        </div>
         <div class="sub-list">
           <div class="sub-item">
-            <div class="sub-head"><span class="sub-tag">MRD</span><span class="sub-name">甯傚満闇€姹傛枃妗?<span class="sub-name-en">Market Requirements Document</span></span></div>
-            <div class="sub-content">甯傚満璋冪爺涓庣珵鍝佸垎鏋愶紝鏋勫缓鐢ㄦ埛鐢诲儚锛岃瘎浼板競鍦鸿妯★紙TAM/SAM/SOM锛夈€傛槑纭競鍦虹棝鐐广€佺敤鎴烽渶姹備紭鍏堢骇鍜岀珵浜夋牸灞€銆?/div>
-            <div class="sub-deliver">浜у嚭锛歁RD鏂囨。銆佸競鍦鸿妯″垎鏋愭姤鍛娿€佺珵鍝佸鏍囩煩闃?/div>
+            <div class="sub-head"><span class="sub-tag">MRD</span><span class="sub-name">市场需求文档 <span class="sub-name-en">Market Requirements Document</span></span></div>
+            <div class="sub-content">市场调研与竞品分析，构建用户画像，评估市场规模（TAM/SAM/SOM）。明确市场痛点、用户需求优先级和竞争格局。</div>
+            <div class="sub-deliver">产出：MRD文档、市场规模分析报告、竞品对标矩阵</div>
           </div>
           <div class="sub-item">
-            <div class="sub-head"><span class="sub-tag">PRD</span><span class="sub-name">浜у搧闇€姹傛枃妗?<span class="sub-name-en">Product Requirements Document</span></span></div>
-            <div class="sub-content">鍔熻兘瑙勬牸瀹氫箟涓?strong>鎶€鏈柟妗堥€夊瀷</strong>锛堟鏋剁粨鏋勩€佽繍鍔ㄦ灦鏋勩€佸浐浠惰矾绾匡級锛孊OM鍒濈増鎴愭湰棰勪及锛岀洰鏍囧畾浠蜂笌姣涘埄鍒嗘瀽銆?/div>
-            <div class="sub-deliver">浜у嚭锛歅RD鏂囨。銆佸爢鍙犲竷灞€鏂规銆佹垚鏈浼拌〃</div>
+            <div class="sub-head"><span class="sub-tag">PRD</span><span class="sub-name">产品需求文档 <span class="sub-name-en">Product Requirements Document</span></span></div>
+            <div class="sub-content">功能规格定义与<strong>技术方案选型</strong>（框架结构、运动架构、固件路线），BOM初版成本预估，目标定价与毛利分析。</div>
+            <div class="sub-deliver">产出：PRD文档、堆叠布局方案、成本预估表</div>
           </div>
           <div class="sub-item">
-            <div class="sub-head"><span class="sub-tag">ID</span><span class="sub-name">宸ヤ笟璁捐 <span class="sub-name-en">Industrial Design</span></span></div>
-            <div class="sub-content">澶栬閫犲瀷璁捐锛?strong>CMF瀹氫箟</strong>锛堣壊褰?鏉愯川/琛ㄩ潰澶勭悊锛夛紝浜烘満宸ョ▼璇勫銆傚吋椤炬暎鐑閬撱€佺淮鎶や究鎹锋€х瓑宸ョ▼绾︽潫銆?/div>
-            <div class="sub-deliver">浜у嚭锛?D娓叉煋鍥俱€佹补娉?鍘熷瀷妯″瀷銆丆MF瑙勮寖</div>
+            <div class="sub-head"><span class="sub-tag">ID</span><span class="sub-name">工业设计 <span class="sub-name-en">Industrial Design</span></span></div>
+            <div class="sub-content">外观造型设计，<strong>CMF定义</strong>（色彩/材质/表面处理），人机工程评审。兼顾散热风道、维护便捷性等工程约束。</div>
+            <div class="sub-deliver">产出：3D渲染图、油泥/原型模型、CMF规范</div>
           </div>
           <div class="sub-item">
-            <div class="sub-head"><span class="sub-tag">G0</span><span class="sub-name">绔嬮」璇勫 <span class="sub-name-en">Gate 0 鈥?Project Approval</span></span></div>
-            <div class="sub-content">ROI璇勫锛岃祫婧愮‘璁わ紙鐮斿彂/妯″叿/浜х嚎锛夛紝绔嬮」鎵瑰噯銆傛湭閫氳繃鍒欐墦鍥炴垨缁堟椤圭洰銆?/div>
-            <div class="sub-deliver">浜у嚭锛氱珛椤逛功銆侀」鐩鍒掍功銆佽祫婧愬垎閰嶈〃</div>
+            <div class="sub-head"><span class="sub-tag">G0</span><span class="sub-name">立项评审 <span class="sub-name-en">Gate 0 — Project Approval</span></span></div>
+            <div class="sub-content">ROI评审，资源确认（研发/模具/产线），立项批准。未通过则打回或终止项目。</div>
+            <div class="sub-deliver">产出：立项书、项目计划书、资源分配表</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ==================== Phase 2: 鐮斿彂楠岃瘉鏈?==================== -->
+  <!-- ==================== Phase 2: 研发验证期 ==================== -->
   <div class="phase-section" id="phase-2">
     <div class="phase-card p2">
       <div class="phase-header" onclick="togglePhase(this)">
-        <div class="phase-num">馃И</div>
+        <div class="phase-num">🧪</div>
         <div class="phase-title">
           <div class="en">Phase 2: R&D Verification (NPI)</div>
-          <div class="cn">鐮斿彂楠岃瘉鏈?鈥?"鑳藉仛鍑烘潵銆佽璁℃纭€佽兘閲忎骇"</div>
+          <div class="cn">研发验证期 — "能做出来、设计正确、能量产"</div>
         </div>
-        <div class="phase-time-badge">M3 鈥?M9</div>
-        <div class="phase-toggle">鈻?/div>
+        <div class="phase-time-badge">M3 – M9</div>
+        <div class="phase-toggle">▼</div>
       </div>
       <div class="phase-body">
         <div class="phase-desc">
-          鏂颁骇鍝佸鍏ワ紙NPI锛夌殑鏍稿績闃舵銆備粠鍘熺悊楠岃瘉锛圗VT锛夊埌璁捐瀹氬瀷锛圖VT锛夊啀鍒扮敓浜ч獙璇侊紙PVT锛夛紝閫愭娑堥櫎鎶€鏈闄╁苟纭繚閲忎骇鍙鎬с€?        </div>
+          新产品导入（NPI）的核心阶段。从原理验证（EVT）到设计定型（DVT）再到生产验证（PVT），逐步消除技术风险并确保量产可行性。
+        </div>
         <div class="sub-list">
           <div class="sub-item">
-            <div class="sub-head"><span class="sub-tag">EVT</span><span class="sub-name">宸ョ▼楠岃瘉娴嬭瘯 <span class="sub-name-en">Engineering Verification Test</span></span></div>
-            <div class="sub-content">楠岃瘉鏍稿績鍘熺悊鍙鎬с€?D鎵撳嵃缁撴瀯浠舵墜鏉裤€丳CB椋炵嚎鐐逛寒銆?strong>鍥轰欢鍒濈増</strong>璺戦€氬熀鏈姛鑳斤紙褰掗浂/鍔犵儹/鎸ゅ嚭锛夈€佽瘑鍒叧閿妧鏈闄┿€傚彲浜у嚭澶氳疆EVT1/EVT2鏍锋満銆?/div>
-            <div class="sub-deliver">浜у嚭锛欵VT鏍锋満銆佸師鐞嗛獙璇佹姤鍛娿€佹妧鏈闄╂竻鍗?/div>
+            <div class="sub-head"><span class="sub-tag">EVT</span><span class="sub-name">工程验证测试 <span class="sub-name-en">Engineering Verification Test</span></span></div>
+            <div class="sub-content">验证核心原理可行性。3D打印结构件手板、PCB飞线点亮、<strong>固件初版</strong>跑通基本功能（归零/加热/挤出）、识别关键技术风险。可产出多轮EVT1/EVT2样机。</div>
+            <div class="sub-deliver">产出：EVT样机、原理验证报告、技术风险清单</div>
           </div>
           <div class="sub-item">
-            <div class="sub-head"><span class="sub-tag">DVT</span><span class="sub-name">璁捐楠岃瘉娴嬭瘯 <span class="sub-name-en">Design Verification Test</span></span></div>
-            <div class="sub-content">楠岃瘉璁捐瀹屾暣鎬э紝<strong>鑰楁椂鏈€闀?/strong>銆傚澹?妗嗘灦姝ｅ紡<strong>寮€妯?/strong>锛堟ā鍏疯垂鏁板崄涓囪捣锛夛紝瀹夎璁よ瘉閫佹牱锛圕E/FCC/UL/RoHS锛夛紝鏁存満鍙潬鎬ф祴璇曪紙璺岃惤/鎸姩/娓╁崌/鑰佸寲/杩炵画鎵撳嵃鏁扮櫨灏忔椂锛夛紝<strong>鍥轰欢涓嶣OM鍐荤粨</strong>锛屼骇绾垮伐鑹鸿璁°€?/div>
-            <div class="sub-deliver">浜у嚭锛欴VT鏍锋満銆佹ā鍏稵1/T2浠躲€佽璇佽瘉涔︺€丅OM瀹氱増</div>
+            <div class="sub-head"><span class="sub-tag">DVT</span><span class="sub-name">设计验证测试 <span class="sub-name-en">Design Verification Test</span></span></div>
+            <div class="sub-content">验证设计完整性，<strong>耗时最长</strong>。外壳/框架正式<strong>开模</strong>（模具费数十万起），安规认证送样（CE/FCC/UL/RoHS），整机可靠性测试（跌落/振动/温升/老化/连续打印数百小时），<strong>固件与BOM冻结</strong>，产线工艺设计。</div>
+            <div class="sub-deliver">产出：DVT样机、模具T1/T2件、认证证书、BOM定版</div>
           </div>
           <div class="sub-item">
-            <div class="sub-head"><span class="sub-tag">PVT</span><span class="sub-name">鐢熶骇楠岃瘉娴嬭瘯 <span class="sub-name-en">Production Verification Test</span></span></div>
-            <div class="sub-content">楠岃瘉閲忎骇鑳藉姏銆傚皬鎵归噺璇曚骇 50-500 鍙帮紝<strong>SOP浣滀笟鎸囧涔?/strong>缂栧埗锛屽伐瑁呭す鍏疯璁★紝鐩撮€氱巼鐖潯锛堢洰鏍?70% 鈫?95%+锛夛紝鍖呰/鐗╂祦妯℃嫙杩愯緭楠岃瘉銆?/div>
-            <div class="sub-deliver">浜у嚭锛歅VT鏍锋満銆丼OP鏂囨。銆佸伐瑁呮竻鍗曘€佺洿閫氱巼鎶ュ憡</div>
+            <div class="sub-head"><span class="sub-tag">PVT</span><span class="sub-name">生产验证测试 <span class="sub-name-en">Production Verification Test</span></span></div>
+            <div class="sub-content">验证量产能力。小批量试产 50-500 台，<strong>SOP作业指导书</strong>编制，工装夹具设计，直通率爬坡（目标 70% → 95%+），包装/物流模拟运输验证。</div>
+            <div class="sub-deliver">产出：PVT样机、SOP文档、工装清单、直通率报告</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ==================== Phase 3: 閲忎骇涓婂競鏈?==================== -->
+  <!-- ==================== Phase 3: 量产上市期 ==================== -->
   <div class="phase-section" id="phase-3">
     <div class="phase-card p3">
       <div class="phase-header" onclick="togglePhase(this)">
-        <div class="phase-num">馃彮</div>
+        <div class="phase-num">🏭</div>
         <div class="phase-title">
           <div class="en">Phase 3: Mass Production & Launch</div>
-          <div class="cn">閲忎骇涓婂競鏈?鈥?绋冲畾鍑鸿揣锛屾帹鍚戝競鍦?/div>
+          <div class="cn">量产上市期 — 稳定出货，推向市场</div>
         </div>
-        <div class="phase-time-badge">M10 鈥?M14</div>
-        <div class="phase-toggle">鈻?/div>
+        <div class="phase-time-badge">M10 – M14</div>
+        <div class="phase-toggle">▼</div>
       </div>
       <div class="phase-body">
         <div class="phase-desc">
-          浠庤瘯浜х埇鍧″埌澶ф壒閲忓嚭璐у苟鎺ㄥ悜鍏ㄧ悆甯傚満銆備骇鑳介€愭鐖崌锛屽搧璐ㄧ鎺у叏闈笂绾匡紝钀ラ攢鍚屾鍚姩銆?        </div>
+          从试产爬坡到大批量出货并推向全球市场。产能逐步爬升，品质管控全面上线，营销同步启动。
+        </div>
         <div class="sub-list">
           <div class="sub-item">
-            <div class="sub-head"><span class="sub-tag">Ramp</span><span class="sub-name">浜ц兘鐖潯 <span class="sub-name-en">Production Ramp-up</span></span></div>
-            <div class="sub-content">浜ц兘浠庤瘯浜ф按骞抽€愭鎻愬崌鍒版弧浜х洰鏍囥€備骇绾胯妭鎷嶄紭鍖栵紝鐗╂枡榻愬鐜囩洃鎺э紝鏃ヤ骇閲忛樁姊紡鐖崌銆?/div>
-            <div class="sub-deliver">浜у嚭锛氫骇鑳界埇鍧¤鍒掋€佹棩浜ц兘杈炬爣鎶ュ憡</div>
+            <div class="sub-head"><span class="sub-tag">Ramp</span><span class="sub-name">产能爬坡 <span class="sub-name-en">Production Ramp-up</span></span></div>
+            <div class="sub-content">产能从试产水平逐步提升到满产目标。产线节拍优化，物料齐套率监控，日产量阶梯式爬升。</div>
+            <div class="sub-deliver">产出：产能爬坡计划、日产能达标报告</div>
           </div>
           <div class="sub-item">
-            <div class="sub-head"><span class="sub-tag">MP</span><span class="sub-name">閲忎骇 <span class="sub-name-en">Mass Production</span></span></div>
-            <div class="sub-content">澶ф壒閲忕ǔ瀹氱敓浜с€?strong>IQC/IPQC/OQC</strong>鍏ㄦ祦绋嬪搧璐ㄧ鎺э紝OQC鍑鸿揣閫氳繃鐜囩洰鏍?鈮?97%锛屼緵搴旈摼鎸佺画淇濅緵涓庡璐с€?/div>
-            <div class="sub-deliver">浜у嚭锛氭壒閲忓嚭璐с€佸搧璐ㄥ懆鎶?鏈堟姤</div>
+            <div class="sub-head"><span class="sub-tag">MP</span><span class="sub-name">量产 <span class="sub-name-en">Mass Production</span></span></div>
+            <div class="sub-content">大批量稳定生产。<strong>IQC/IPQC/OQC</strong>全流程品质管控，OQC出货通过率目标 ≥ 97%，供应链持续保供与备货。</div>
+            <div class="sub-deliver">产出：批量出货、品质周报/月报</div>
           </div>
           <div class="sub-item">
-            <div class="sub-head"><span class="sub-tag">Launch</span><span class="sub-name">涓婂競鍙戝竷 <span class="sub-name-en">Product Launch</span></span></div>
-            <div class="sub-content">钀ラ攢棰勭儹涓嶬OL璇勬祴鏈哄彂鏀撅紝鍙戝竷浼?鐩存挱娲诲姩锛屽叏鐞冩笭閬撳悓姝ラ摵璐э紝棣栨壒鐢ㄦ埛绉嶅瓙绀惧尯鍩瑰吇銆?/div>
-            <div class="sub-deliver">浜у嚭锛氫笂甯傜墿鏂欏寘銆佹笭閬撳埌璐х‘璁?/div>
+            <div class="sub-head"><span class="sub-tag">Launch</span><span class="sub-name">上市发布 <span class="sub-name-en">Product Launch</span></span></div>
+            <div class="sub-content">营销预热与KOL评测机发放，发布会/直播活动，全球渠道同步铺货，首批用户种子社区培养。</div>
+            <div class="sub-deliver">产出：上市物料包、渠道到货确认</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ==================== Phase 4: 杩愯惀缁存姢鏈?==================== -->
+  <!-- ==================== Phase 4: 运营维护期 ==================== -->
   <div class="phase-section" id="phase-4">
     <div class="phase-card p4">
       <div class="phase-header" onclick="togglePhase(this)">
-        <div class="phase-num">馃敡</div>
+        <div class="phase-num">🔧</div>
         <div class="phase-title">
           <div class="en">Phase 4: Operations & Lifecycle (UL)</div>
-          <div class="cn">杩愯惀缁存姢鏈?鈥?鎸佺画缁存姢浼樺寲锛屼繚鎸佺珵浜夊姏</div>
+          <div class="cn">运营维护期 — 持续维护优化，保持竞争力</div>
         </div>
-        <div class="phase-time-badge">M14 鈥?M30+</div>
-        <div class="phase-toggle">鈻?/div>
+        <div class="phase-time-badge">M14 – M30+</div>
+        <div class="phase-toggle">▼</div>
       </div>
       <div class="phase-body">
         <div class="phase-desc">
-          浜у搧涓婂競鍚?strong>鏈€闀跨殑鐢熷懡鍛ㄦ湡闃舵</strong>锛堢害鍗犳€诲懆鏈熺殑70%锛夈€備笉杩涜澶у箙鍔熻兘鏀瑰姩锛屼互Sustaining Engineering鏂瑰紡鎸佺画缁存姢浼樺寲浜у搧锛屼繚鎸佸競鍦虹珵浜夊姏骞跺欢闀跨泩鍒╁懆鏈熴€?        </div>
+          产品上市后<strong>最长的生命周期阶段</strong>（约占总周期的70%）。不进行大幅功能改动，以Sustaining Engineering方式持续维护优化产品，保持市场竞争力并延长盈利周期。
+        </div>
         <div class="sub-list">
           <div class="sub-item">
-            <div class="sub-head"><span class="sub-tag">PI</span><span class="sub-name">浜у搧瀵煎叆甯傚満 <span class="sub-name-en">Product Introduction</span></span></div>
-            <div class="sub-content">涓婂競鍚庡垵鏈熻繍钀ワ紙0-3涓湀锛夈€傜敤鎴峰弽棣堝揩閫熸敹闆嗕笌鍒嗘瀽锛岀ぞ鍖鸿繍钀ュ惎鍔紝鏃╂湡鍞悗闂蹇€熷搷搴斾笌淇銆?/div>
-            <div class="sub-deliver">鍛ㄦ湡锛氫笂甯傚悗0-3涓湀</div>
+            <div class="sub-head"><span class="sub-tag">PI</span><span class="sub-name">产品导入市场 <span class="sub-name-en">Product Introduction</span></span></div>
+            <div class="sub-content">上市后初期运营（0-3个月）。用户反馈快速收集与分析，社区运营启动，早期售后问题快速响应与修复。</div>
+            <div class="sub-deliver">周期：上市后0-3个月</div>
           </div>
           <div class="sub-item">
-            <div class="sub-head"><span class="sub-tag">GTM</span><span class="sub-name">鎸佺画钀ラ攢鎺ㄥ箍 <span class="sub-name-en">Go-To-Market</span></span></div>
-            <div class="sub-content">璐┛鏁翠釜杩愯惀鏈熴€傛笭閬撴嫇灞曘€丳R/KOL璇勬祴鍚堜綔銆佷績閿€娲诲姩銆佸尯鍩熷競鍦哄畾鍒跺寲鎺ㄥ箍鏂规銆?/div>
-            <div class="sub-deliver">鍛ㄦ湡锛氭寔缁繘琛?/div>
+            <div class="sub-head"><span class="sub-tag">GTM</span><span class="sub-name">持续营销推广 <span class="sub-name-en">Go-To-Market</span></span></div>
+            <div class="sub-content">贯穿整个运营期。渠道拓展、PR/KOL评测合作、促销活动、区域市场定制化推广方案。</div>
+            <div class="sub-deliver">周期：持续进行</div>
           </div>
           <div class="sub-item">
-            <div class="sub-head"><span class="sub-tag">UL</span><span class="sub-name">鏇存柊涓庣敓鍛藉懆鏈熺淮鎶?<span class="sub-name-en">Update & Lifecycle / Sustaining</span></span></div>
-            <div class="sub-content"><strong>Sustaining Engineering</strong> 鈥?涓嶅仛澶у箙鏀瑰姩锛屾寔缁淮鎶や紭鍖栥€傚浐浠禣TA杩唬锛坴1.0 鈫?v1.1 鈫?...锛夈€佽€楁潗鍏煎鎬ф墿灞曘€佺敤鎴峰弽棣圔ug淇銆?strong>BOM闄嶆湰</strong>锛堝悓鍔熻兘鎹緵搴斿晢锛夈€佹柊閰嶈壊/鍖哄煙鐗堟湰鍙樹綋鎺ㄥ嚭銆?/div>
-            <div class="sub-deliver">鍛ㄦ湡锛氫骇鍝佺敓鍛藉懆鏈熶腑鍗犳瘮鏈€闀匡紙绾?0%鏃堕棿锛?/div>
+            <div class="sub-head"><span class="sub-tag">UL</span><span class="sub-name">更新与生命周期维护 <span class="sub-name-en">Update & Lifecycle / Sustaining</span></span></div>
+            <div class="sub-content"><strong>Sustaining Engineering</strong> — 不做大幅改动，持续维护优化。固件OTA迭代（v1.0 → v1.1 → ...）、耗材兼容性扩展、用户反馈Bug修复、<strong>BOM降本</strong>（同功能换供应商）、新配色/区域版本变体推出。</div>
+            <div class="sub-deliver">周期：产品生命周期中占比最长（约70%时间）</div>
           </div>
           <div class="sub-item">
-            <div class="sub-head"><span class="sub-tag">NG</span><span class="sub-name">涓嬩竴浠ｈ鍒?<span class="sub-name-en">Next-Gen Planning</span></span></div>
-            <div class="sub-content">浠庣敤鎴峰弽棣堝拰鍞悗鏁版嵁涓彁鐐奸渶姹傦紝椹卞姩涓嬩竴浠ｄ骇鍝佸畾涔夈€備笌Phase 1鐨凪RD褰㈡垚<strong>闂幆</strong>銆?/div>
-            <div class="sub-deliver">浜у嚭锛氫笅涓€浠ｄ骇鍝侀渶姹傝緭鍏ユ枃妗?/div>
+            <div class="sub-head"><span class="sub-tag">NG</span><span class="sub-name">下一代规划 <span class="sub-name-en">Next-Gen Planning</span></span></div>
+            <div class="sub-content">从用户反馈和售后数据中提炼需求，驱动下一代产品定义。与Phase 1的MRD形成<strong>闭环</strong>。</div>
+            <div class="sub-deliver">产出：下一代产品需求输入文档</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ==================== Phase 5: 琛伴€€閫€甯傛湡 ==================== -->
+  <!-- ==================== Phase 5: 衰退退市期 ==================== -->
   <div class="phase-section" id="phase-5">
     <div class="phase-card p5">
       <div class="phase-header" onclick="togglePhase(this)">
-        <div class="phase-num">馃弫</div>
+        <div class="phase-num">🏁</div>
         <div class="phase-title">
           <div class="en">Phase 5: End of Life</div>
-          <div class="cn">琛伴€€閫€甯傛湡 鈥?鏈夊簭閫€鍑猴紝骞崇ǔ杩囨浮</div>
+          <div class="cn">衰退退市期 — 有序退出，平稳过渡</div>
         </div>
         <div class="phase-time-badge">M30+</div>
-        <div class="phase-toggle">鈻?/div>
+        <div class="phase-toggle">▼</div>
       </div>
       <div class="phase-body">
         <div class="phase-desc">
-          浜у搧閫愭閫€鍑哄競鍦虹殑闃舵銆傛寜 EOL 鈫?EOS 鈫?EOM 鈫?EOSP 鐨勯『搴忔湁搴忓畬鎴愬仠浜с€佹竻浠撱€佹柇渚涖€佸仠鏈嶏紝纭繚鐢ㄦ埛鍜屾笭閬撳钩绋宠繃娓°€?        </div>
+          产品逐步退出市场的阶段。按 EOL → EOS → EOM → EOSP 的顺序有序完成停产、清仓、断供、停服，确保用户和渠道平稳过渡。
+        </div>
         <div class="sub-list">
           <div class="sub-item">
-            <div class="sub-head"><span class="sub-tag">EOL</span><span class="sub-name">鍋滀骇鍐崇瓥 <span class="sub-name-en">End of Life</span></span></div>
-            <div class="sub-content">姝ｅ紡瀹ｅ竷鍋滀骇锛屽仠姝㈡柊鐨勫競鍦烘帹骞挎姇鍏ュ拰娓犻亾琛ヨ揣銆傝瘎浼板墿浣欏簱瀛樺拰鍞悗閰嶄欢鍌ㄥ閲忥紝鍒跺畾澶勭疆璁″垝銆?/div>
-            <div class="sub-deliver">浜у嚭锛欵OL鍏憡銆佸簱瀛樺缃鍒?/div>
+            <div class="sub-head"><span class="sub-tag">EOL</span><span class="sub-name">停产决策 <span class="sub-name-en">End of Life</span></span></div>
+            <div class="sub-content">正式宣布停产，停止新的市场推广投入和渠道补货。评估剩余库存和售后配件储备量，制定处置计划。</div>
+            <div class="sub-deliver">产出：EOL公告、库存处置计划</div>
           </div>
           <div class="sub-item">
-            <div class="sub-head"><span class="sub-tag">EOS</span><span class="sub-name">鍋滄閿€鍞?<span class="sub-name-en">End of Sale</span></span></div>
-            <div class="sub-content">鍋滄閿€鍞紝娓犻亾搴撳瓨娓呬粨锛堟姌鎵?鎹嗙粦/杞尯鍩燂級銆傚畼缃戜骇鍝侀〉鏍囨敞"宸插仠浜?銆?/div>
-            <div class="sub-deliver">浜у嚭锛氭竻浠撳畬鎴愮‘璁?/div>
+            <div class="sub-head"><span class="sub-tag">EOS</span><span class="sub-name">停止销售 <span class="sub-name-en">End of Sale</span></span></div>
+            <div class="sub-content">停止销售，渠道库存清仓（折扣/捆绑/转区域）。官网产品页标注"已停产"。</div>
+            <div class="sub-deliver">产出：清仓完成确认</div>
           </div>
           <div class="sub-item">
-            <div class="sub-head"><span class="sub-tag">EOM</span><span class="sub-name">鍋滄鍒堕€?<span class="sub-name-en">End of Manufacturing</span></span></div>
-            <div class="sub-content">浜х嚎鍒囨崲鑷虫柊浜у搧鐢熶骇銆備繚鐣欏叧閿ā鍏峰拰宸ヨ锛堢煭鏈熷彲澶嶄骇澶囬€夛級銆?/div>
-            <div class="sub-deliver">浜у嚭锛氫骇绾垮垏鎹㈠畬鎴愭姤鍛?/div>
+            <div class="sub-head"><span class="sub-tag">EOM</span><span class="sub-name">停止制造 <span class="sub-name-en">End of Manufacturing</span></span></div>
+            <div class="sub-content">产线切换至新产品生产。保留关键模具和工装（短期可复产备选）。</div>
+            <div class="sub-deliver">产出：产线切换完成报告</div>
           </div>
           <div class="sub-item">
-            <div class="sub-head"><span class="sub-tag">EOSP</span><span class="sub-name">鍋滄鎶€鏈敮鎸?<span class="sub-name-en">End of Service & Support</span></span></div>
-            <div class="sub-content">瀹樻柟涓嶅啀鎻愪緵鍥轰欢鏇存柊銆侀厤浠朵緵搴斿拰鎶€鏈敮鎸併€傜煡璇嗗簱褰掓。锛岀敤鎴风ぞ鍖哄彲鑳界户缁嚜鍙戠淮鎶わ紙寮€婧愭柟妗堬級銆?/div>
-            <div class="sub-deliver">浜у嚭锛欵OSP鍏憡銆佺煡璇嗗簱褰掓。</div>
+            <div class="sub-head"><span class="sub-tag">EOSP</span><span class="sub-name">停止技术支持 <span class="sub-name-en">End of Service & Support</span></span></div>
+            <div class="sub-content">官方不再提供固件更新、配件供应和技术支持。知识库归档，用户社区可能继续自发维护（开源方案）。</div>
+            <div class="sub-deliver">产出：EOSP公告、知识库归档</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 鏈閫熸煡琛?-->
+  <!-- 术语速查表 -->
   <div class="glossary">
-    <div class="glossary-title">馃摉 鏈閫熸煡琛?Glossary</div>
+    <div class="glossary-title">📖 术语速查表 Glossary</div>
     <div class="glossary-grid">
-      <div class="glossary-item"><span class="glossary-term">NPI</span><span class="glossary-def">New Product Introduction 鏂颁骇鍝佸鍏?/span></div>
-      <div class="glossary-item"><span class="glossary-term">MRD</span><span class="glossary-def">Market Requirements Document 甯傚満闇€姹傛枃妗?/span></div>
-      <div class="glossary-item"><span class="glossary-term">PRD</span><span class="glossary-def">Product Requirements Document 浜у搧闇€姹傛枃妗?/span></div>
-      <div class="glossary-item"><span class="glossary-term">ID</span><span class="glossary-def">Industrial Design 宸ヤ笟璁捐</span></div>
-      <div class="glossary-item"><span class="glossary-term">CMF</span><span class="glossary-def">Color / Material / Finish 鑹插僵鏉愯川琛ㄩ潰澶勭悊</span></div>
-      <div class="glossary-item"><span class="glossary-term">BOM</span><span class="glossary-def">Bill of Materials 鐗╂枡娓呭崟</span></div>
-      <div class="glossary-item"><span class="glossary-term">EVT</span><span class="glossary-def">Engineering Verification Test 宸ョ▼楠岃瘉娴嬭瘯</span></div>
-      <div class="glossary-item"><span class="glossary-term">DVT</span><span class="glossary-def">Design Verification Test 璁捐楠岃瘉娴嬭瘯</span></div>
-      <div class="glossary-item"><span class="glossary-term">PVT</span><span class="glossary-def">Production Verification Test 鐢熶骇楠岃瘉娴嬭瘯</span></div>
-      <div class="glossary-item"><span class="glossary-term">SOP</span><span class="glossary-def">Standard Operating Procedure 鏍囧噯浣滀笟绋嬪簭</span></div>
-      <div class="glossary-item"><span class="glossary-term">OTA</span><span class="glossary-def">Over-The-Air 绌轰腑鍥轰欢鍗囩骇</span></div>
-      <div class="glossary-item"><span class="glossary-term">MP</span><span class="glossary-def">Mass Production 閲忎骇</span></div>
-      <div class="glossary-item"><span class="glossary-term">PI</span><span class="glossary-def">Product Introduction 浜у搧瀵煎叆甯傚満</span></div>
-      <div class="glossary-item"><span class="glossary-term">GTM</span><span class="glossary-def">Go-To-Market 甯傚満鎺ㄥ箍绛栫暐</span></div>
-      <div class="glossary-item"><span class="glossary-term">UL</span><span class="glossary-def">Update & Lifecycle 鏇存柊涓庣敓鍛藉懆鏈熺淮鎶?/span></div>
-      <div class="glossary-item"><span class="glossary-term">EOL</span><span class="glossary-def">End of Life 鍋滀骇</span></div>
-      <div class="glossary-item"><span class="glossary-term">EOS</span><span class="glossary-def">End of Sale 鍋滄閿€鍞?/span></div>
-      <div class="glossary-item"><span class="glossary-term">EOM</span><span class="glossary-def">End of Manufacturing 鍋滄鍒堕€?/span></div>
-      <div class="glossary-item"><span class="glossary-term">EOSP</span><span class="glossary-def">End of Support 鍋滄鎶€鏈敮鎸?/span></div>
-      <div class="glossary-item"><span class="glossary-term">IQC</span><span class="glossary-def">Incoming Quality Control 鏉ユ枡妫€楠?/span></div>
-      <div class="glossary-item"><span class="glossary-term">IPQC</span><span class="glossary-def">In-Process Quality Control 鍒剁▼妫€楠?/span></div>
-      <div class="glossary-item"><span class="glossary-term">OQC</span><span class="glossary-def">Outgoing Quality Control 鍑鸿揣妫€楠?/span></div>
+      <div class="glossary-item"><span class="glossary-term">NPI</span><span class="glossary-def">New Product Introduction 新产品导入</span></div>
+      <div class="glossary-item"><span class="glossary-term">MRD</span><span class="glossary-def">Market Requirements Document 市场需求文档</span></div>
+      <div class="glossary-item"><span class="glossary-term">PRD</span><span class="glossary-def">Product Requirements Document 产品需求文档</span></div>
+      <div class="glossary-item"><span class="glossary-term">ID</span><span class="glossary-def">Industrial Design 工业设计</span></div>
+      <div class="glossary-item"><span class="glossary-term">CMF</span><span class="glossary-def">Color / Material / Finish 色彩材质表面处理</span></div>
+      <div class="glossary-item"><span class="glossary-term">BOM</span><span class="glossary-def">Bill of Materials 物料清单</span></div>
+      <div class="glossary-item"><span class="glossary-term">EVT</span><span class="glossary-def">Engineering Verification Test 工程验证测试</span></div>
+      <div class="glossary-item"><span class="glossary-term">DVT</span><span class="glossary-def">Design Verification Test 设计验证测试</span></div>
+      <div class="glossary-item"><span class="glossary-term">PVT</span><span class="glossary-def">Production Verification Test 生产验证测试</span></div>
+      <div class="glossary-item"><span class="glossary-term">SOP</span><span class="glossary-def">Standard Operating Procedure 标准作业程序</span></div>
+      <div class="glossary-item"><span class="glossary-term">OTA</span><span class="glossary-def">Over-The-Air 空中固件升级</span></div>
+      <div class="glossary-item"><span class="glossary-term">MP</span><span class="glossary-def">Mass Production 量产</span></div>
+      <div class="glossary-item"><span class="glossary-term">PI</span><span class="glossary-def">Product Introduction 产品导入市场</span></div>
+      <div class="glossary-item"><span class="glossary-term">GTM</span><span class="glossary-def">Go-To-Market 市场推广策略</span></div>
+      <div class="glossary-item"><span class="glossary-term">UL</span><span class="glossary-def">Update & Lifecycle 更新与生命周期维护</span></div>
+      <div class="glossary-item"><span class="glossary-term">EOL</span><span class="glossary-def">End of Life 停产</span></div>
+      <div class="glossary-item"><span class="glossary-term">EOS</span><span class="glossary-def">End of Sale 停止销售</span></div>
+      <div class="glossary-item"><span class="glossary-term">EOM</span><span class="glossary-def">End of Manufacturing 停止制造</span></div>
+      <div class="glossary-item"><span class="glossary-term">EOSP</span><span class="glossary-def">End of Support 停止技术支持</span></div>
+      <div class="glossary-item"><span class="glossary-term">IQC</span><span class="glossary-def">Incoming Quality Control 来料检验</span></div>
+      <div class="glossary-item"><span class="glossary-term">IPQC</span><span class="glossary-def">In-Process Quality Control 制程检验</span></div>
+      <div class="glossary-item"><span class="glossary-term">OQC</span><span class="glossary-def">Outgoing Quality Control 出货检验</span></div>
     </div>
   </div>
 
