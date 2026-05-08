@@ -30,9 +30,27 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helv
 .sidebar::-webkit-scrollbar { width: 6px; }
 .sidebar::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); }
 .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 3px; }
-.sidebar-header { padding: 20px 16px; background: rgba(0,0,0,0.2); border-bottom: 1px solid rgba(255,255,255,0.1); }
-.sidebar-header h1 { font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 8px; }
-.version-badge { display: inline-block; background: var(--accent-yellow); color: #333; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+.sidebar-header { padding: 16px 16px 20px; background: rgba(0,0,0,0.2); border-bottom: 1px solid rgba(255,255,255,0.1); }
+.sidebar-header .header-top { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+.sidebar-header h1 { font-size: 16px; font-weight: 600; color: #fff; flex: 1; }
+.version-badge { display: inline-block; background: var(--accent-yellow); color: #333; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; flex-shrink: 0; }
+.sidebar-header .home-btn { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; height: 40px; background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%); border: 1px solid rgba(255,255,255,0.3); border-radius: 10px; color: #fff; text-decoration: none; font-size: 14px; font-weight: 500; box-shadow: 0 2px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1); transition: all 0.25s ease; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+.sidebar-header .home-btn:hover { background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.1) 100%); border-color: rgba(255,255,255,0.5); box-shadow: 0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.15); transform: translateY(-1px); }
+.sidebar-header .home-btn:active { transform: translateY(0); box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+.sidebar-header .home-btn .home-icon { font-size: 16px; }
+.sidebar-search { padding: 10px 12px; background: rgba(0,0,0,0.15); border-bottom: 1px solid rgba(255,255,255,0.1); }
+.sidebar-search input { width: 100%; padding: 8px 12px 8px 32px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: #fff; font-size: 13px; outline: none; transition: all 0.2s; }
+.sidebar-search input::placeholder { color: rgba(255,255,255,0.5); }
+.sidebar-search input:focus { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.4); }
+.sidebar-search { position: relative; }
+.sidebar-search .search-icon { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.5); font-size: 13px; pointer-events: none; }
+.sidebar-search .search-clear { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.5); font-size: 14px; cursor: pointer; display: none; }
+.sidebar-search .search-clear:hover { color: #fff; }
+.sidebar-search .search-nav { display: none; align-items: center; justify-content: center; gap: 8px; padding: 4px 0 2px; }
+.sidebar-search .search-nav.visible { display: flex; }
+.sidebar-search .search-nav button { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.8); width: 24px; height: 22px; border-radius: 4px; cursor: pointer; font-size: 13px; line-height: 1; display: flex; align-items: center; justify-content: center; }
+.sidebar-search .search-nav button:hover { background: rgba(255,255,255,0.25); color: #fff; }
+.sidebar-search .search-nav .search-count { color: rgba(255,255,255,0.6); font-size: 11px; min-width: 50px; text-align: center; }
 .nav-section { border-bottom: 1px solid rgba(255,255,255,0.1); }
 .nav-toggle { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; color: #fff; font-weight: 600; font-size: 14px; cursor: pointer; transition: background 0.2s; }
 .nav-toggle:hover { background: rgba(255,255,255,0.1); }
@@ -90,6 +108,8 @@ pre code { background: none; padding: 0; }
   table { font-size: 12px; }
   th, td { padding: 8px 10px; }
 }
+mark.search-hl { background: #ffd54f; color: #333; padding: 1px 2px; border-radius: 2px; }
+mark.search-hl.current { background: #ff6d00; color: #fff; }
 @media (max-width: 600px) {
   .doc-meta { padding: 16px; }
   .doc-meta h1 { font-size: 22px; }
@@ -103,7 +123,23 @@ pre code { background: none; padding: 0; }
 <div class="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span></div>
 <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
 <aside class="sidebar">
-  <div class="sidebar-header"><h1>Creality Print 切片参数全解</h1><span class="version-badge">v2.2</span></div>
+  <div class="sidebar-header">
+    <div class="header-top">
+      <h1>Creality Print 切片参数全解</h1>
+      <span class="version-badge">v2.2</span>
+    </div>
+    <a href="index.html" class="home-btn" title="返回主页"><span class="home-icon">&#8962;</span> 返回主页</a>
+  </div>
+  <div class="sidebar-search">
+    <span class="search-icon">&#128269;</span>
+    <input type="text" id="sidebarSearch" placeholder="搜索参数..." oninput="handleSearch(this.value)" onfocus="handleSearch(this.value)" onkeydown="handleSearchKeydown(event)">
+    <span class="search-clear" id="searchClear" onclick="clearSearch()">&times;</span>
+    <div class="search-nav" id="searchNav">
+      <button onclick="jumpSearch(-1)" title="上一个">&#9650;</button>
+      <span class="search-count" id="searchCount"></span>
+      <button onclick="jumpSearch(1)" title="下一个">&#9660;</button>
+    </div>
+  </div>
   <div class="nav-section">
     <div class="nav-toggle" onclick="toggleNavSection(this)"><span>工艺（Process）</span><span class="arrow">▼</span></div>
     <div class="nav-chapters">
@@ -855,6 +891,199 @@ navItems.forEach(item => {
     }
   });
 });
+
+// ===== Full-text Search =====
+let searchMarks = [];      // all <mark> elements in document order
+let currentMarkIdx = -1;   // currently focused mark index
+let lastSearchQuery = '';
+
+function handleSearch(query) {
+  const clearBtn = document.getElementById('searchClear');
+  const navEl = document.getElementById('searchNav');
+  const countEl = document.getElementById('searchCount');
+  const q = query.trim();
+
+  clearBtn.style.display = q ? 'block' : 'none';
+
+  // Always clear old highlights before re-applying
+  restoreDOM();
+  searchMarks = [];
+  currentMarkIdx = -1;
+
+  if (!q) {
+    navEl.classList.remove('visible');
+    // Restore sidebar nav visibility
+    document.querySelectorAll('.nav-item').forEach(el => el.style.display = '');
+    document.querySelectorAll('.nav-chapter').forEach(el => el.style.display = '');
+    document.querySelectorAll('.nav-toggle').forEach(el => { el.classList.remove('collapsed'); el.style.display = ''; });
+    document.querySelectorAll('.nav-chapter-toggle').forEach(el => { el.classList.remove('collapsed'); el.style.display = ''; });
+    document.querySelectorAll('.nav-items').forEach(el => el.style.display = '');
+    lastSearchQuery = '';
+    return;
+  }
+
+  lastSearchQuery = q;
+
+  // 1) Highlight matching text in full document
+  const contentArea = document.querySelector('.main-content');
+  highlightTextNodes(contentArea, q);
+
+  // 2) Filter sidebar nav to matching items
+  filterSidebarNav(q);
+
+  // 3) Update search result count & nav
+  const total = searchMarks.length;
+  if (total > 0) {
+    navEl.classList.add('visible');
+    jumpSearch(1); // jump to first match
+  } else {
+    navEl.classList.remove('visible');
+  }
+  updateSearchCount();
+}
+
+function highlightTextNodes(root, query) {
+  // Walk text nodes and wrap matches in <mark>
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+  const textNodes = [];
+  while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+  const lowerQ = query.toLowerCase();
+  // Escape regex special chars
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp('(' + escaped + ')', 'gi');
+
+  textNodes.forEach(node => {
+    // Skip text inside <script> or <style>
+    if (node.parentElement.tagName === 'SCRIPT' || node.parentElement.tagName === 'STYLE') return;
+
+    const text = node.textContent;
+    if (!regex.test(text)) return;
+    regex.lastIndex = 0; // reset
+
+    const frag = document.createDocumentFragment();
+    let lastIndex = 0;
+    let match;
+
+    while ((match = regex.exec(text)) !== null) {
+      // Text before match
+      if (match.index > lastIndex) {
+        frag.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+      }
+      const mark = document.createElement('mark');
+      mark.className = 'search-hl';
+      mark.textContent = match[1];
+      frag.appendChild(mark);
+      searchMarks.push(mark);
+      lastIndex = regex.lastIndex;
+    }
+
+    // Remaining text after last match
+    if (lastIndex < text.length) {
+      frag.appendChild(document.createTextNode(text.slice(lastIndex)));
+    }
+
+    node.parentNode.replaceChild(frag, node);
+  });
+}
+
+function restoreDOM() {
+  searchMarks.forEach(mark => {
+    const parent = mark.parentNode;
+    if (!parent) return;
+    const text = document.createTextNode(mark.textContent);
+    parent.replaceChild(text, mark);
+    parent.normalize(); // merge adjacent text nodes
+  });
+  searchMarks = [];
+}
+
+function filterSidebarNav(query) {
+  const lowerQ = query.toLowerCase();
+  const allNavItems = document.querySelectorAll('.nav-item');
+
+  // Hide everything first
+  allNavItems.forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.nav-chapter').forEach(el => el.style.display = 'none');
+
+  const matchedChapters = new Set();
+  const matchedSections = new Set();
+
+  allNavItems.forEach(item => {
+    const text = item.textContent.toLowerCase();
+    if (text.includes(lowerQ)) {
+      item.style.display = 'block';
+      const chapter = item.closest('.nav-chapter');
+      if (chapter) matchedChapters.add(chapter);
+      const section = item.closest('.nav-section');
+      if (section) {
+        const toggle = section.querySelector('.nav-toggle');
+        if (toggle) matchedSections.add(toggle);
+      }
+    }
+  });
+
+  matchedChapters.forEach(chapter => {
+    chapter.style.display = 'block';
+    const toggle = chapter.querySelector('.nav-chapter-toggle');
+    if (toggle) toggle.classList.remove('collapsed');
+  });
+
+  matchedSections.forEach(toggle => {
+    toggle.classList.remove('collapsed');
+    toggle.style.display = '';
+    const chapters = toggle.nextElementSibling;
+    if (chapters) chapters.style.display = '';
+  });
+}
+
+function jumpSearch(direction) {
+  if (searchMarks.length === 0) return;
+
+  // Remove current highlight
+  if (currentMarkIdx >= 0 && currentMarkIdx < searchMarks.length) {
+    searchMarks[currentMarkIdx].classList.remove('current');
+  }
+
+  // Advance index with wrap-around
+  currentMarkIdx += direction;
+  if (currentMarkIdx >= searchMarks.length) currentMarkIdx = 0;
+  if (currentMarkIdx < 0) currentMarkIdx = searchMarks.length - 1;
+
+  // Highlight current
+  const current = searchMarks[currentMarkIdx];
+  current.classList.add('current');
+  current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  updateSearchCount();
+}
+
+function updateSearchCount() {
+  const countEl = document.getElementById('searchCount');
+  const total = searchMarks.length;
+  if (total === 0) {
+    countEl.textContent = '无匹配';
+  } else {
+    countEl.textContent = (currentMarkIdx + 1) + ' / ' + total;
+  }
+}
+
+function handleSearchKeydown(event) {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    jumpSearch(event.shiftKey ? -1 : 1);
+  } else if (event.key === 'Escape') {
+    clearSearch();
+  }
+}
+
+function clearSearch() {
+  const input = document.getElementById('sidebarSearch');
+  input.value = '';
+  handleSearch('');
+  input.focus();
+}
+
 </script>
 </body>
 </html>
