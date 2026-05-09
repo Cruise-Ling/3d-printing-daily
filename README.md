@@ -7,7 +7,7 @@
 
 ---
 
-## 五大分区 / Five Sections
+## 七大分区 / Seven Sections
 
 | 分区 Section | 色系 Color | 说明 Description |
 |-------------|-----------|-----------------|
@@ -16,6 +16,8 @@
 | 消费级赛道 Consumer | 🟢 Green | 消费级3D打印机、众筹、平台竞争 Consumer 3D printers, crowdfunding, platform competition |
 | 海外资讯 Global | 🟣 Purple | 海外品牌动态、国际市场、技术突破 International brand news, global markets, breakthroughs |
 | 用户口碑 Reviews | 🔷 Cyan | 横评、实测、社区讨论 Benchmarks, reviews, community discussions |
+| 细分市场 Niche | 🔶 Dark Orange | 价格段、应用场景、区域市场 Price segments, use cases, regional markets |
+| 场景×3D打印 Scenario | 🌊 Teal | 教育、文创、家居、食品等场景化应用 Education, creative, home, food & scenario apps |
 
 ## 数据来源 / Sources
 
@@ -44,7 +46,7 @@
 - **自动化**: WorkBuddy Automation (每日 08:00 GMT+8)
 - **格式**: 单页 HTML (375px mobile-first)
 - **发布**: GitHub Pages
-- **配色**: Deep blue gradient (`#1a237e` → `#3949ab`), five-color section system
+- **配色**: Deep blue gradient (`#1a237e` → `#3949ab`), seven-color section system
 
 ## License
 
