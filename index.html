@@ -124,6 +124,15 @@ body {
 .footer a { color:#1e88e5; text-decoration:none; }
 .footer a:hover { text-decoration:underline; }
 
+/* ===== 分区导航（用于 briefing 内页，index 也同步样式） ===== */
+.section-nav { display:flex; gap:6px; padding:10px 20px; background:#fafbff; border-bottom:1px solid #f0f0f0; flex-wrap:wrap; }
+.section-nav .nav-btn { display:inline-flex; align-items:center; gap:5px; padding:5px 12px; border-radius:20px; border:1px solid #e0e0e0; background:#fff; font-size:12px; color:#555; cursor:pointer; transition:all .2s; user-select:none; }
+.section-nav .nav-btn:hover { border-color:#999; }
+.section-nav .nav-btn.active { font-weight:500; border-width:1.5px; }
+.section-nav .nav-btn .dot { width:7px;height:7px;border-radius:50%;flex-shrink:0; }
+.section-highlight { animation:sectionGlow .6s ease; }
+@keyframes sectionGlow { 0%{box-shadow:inset 0 0 0 2px rgba(0,0,0,.08);} 100%{box-shadow:none;} }
+
 /* ===== 移动端适配 ===== */
 .mobile-header {
   display:none;
@@ -169,7 +178,7 @@ body {
 
   <div class="sidebar-nav">
     <div class="nav-section-label">内容模块</div>
-    <a class="nav-item" href="briefing_20260508.html">
+    <a class="nav-item" href="briefing_20260509.html">
       <span class="nav-icon">🔥</span><span>最新资讯</span>
       <span class="nav-badge">今日</span>
     </a>
@@ -208,16 +217,24 @@ body {
   </div>
 
   <div class="stats-bar">
-    <div class="stats-pill">📰 <b>8</b> 期简报</div>
+    <div class="stats-pill">📰 <b>9</b> 期简报</div>
     <div class="stats-pill">📅 2026年5月</div>
     <div class="stats-pill">🏷️ 5大分区</div>
-    <div class="stats-pill">📬 200条资讯</div>
+    <div class="stats-pill">📬 225条资讯</div>
   </div>
 
   <div class="content-card" id="archive">
     <div class="section-label">2026 年 5 月 / MAY</div>
 
     <!-- NEW_ENTRIES_HERE -->
+    <a class="briefing-item" href="briefing_20260509.html">
+      <div class="date-badge"><span class="day">09</span><span class="month">MAY</span></div>
+      <div class="briefing-info">
+        <div class="title-line">3D打印每日速递</div>
+        <div class="meta-line">25条资讯<span class="weekday">周六 Saturday</span></div>
+      </div>
+      <span class="arrow">›</span>
+    </a>
 
     <a class="briefing-item" href="briefing_20260508.html">
       <div class="date-badge"><span class="day">08</span><span class="month">MAY</span></div>
