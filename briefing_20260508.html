@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -25,7 +25,7 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
 .stats-pill.warn b { color:#e65100; }
 
 /* 分区标题 */
-.section-title { display:flex; align-items:center; padding:16px 20px 10px; font-size:15px; font-weight:700; color:#1a237e; }
+.section-title { display:flex; align-items:center; padding:18px 20px 12px; font-size:16px; font-weight:800; color:#0d47a1; background:linear-gradient(90deg,rgba(26,115,232,.08),transparent); border-bottom:2px solid #1a73e8; }
 .section-title .icon { width:4px;height:16px;border-radius:2px;margin-right:8px; }
 .section-title.general .icon { background:linear-gradient(180deg,#42a5f5,#1e88e5); }
 .section-title.specific .icon { background:linear-gradient(180deg,#ffa726,#fb8c00); }
@@ -137,11 +137,11 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
 }
 
 /* 移动端适配 */
-@media (max-width:768px) {
+@media (max-width:767px) {
   .side-nav { display:none; }
   .section-nav { position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,.06); }
 }
-@media (min-width:769px) {
+@media (min-width:768px) {
   .section-nav { display:none; }
 }
 /* 热点摘要栏 */
@@ -544,3 +544,5 @@ window.addEventListener('load', updateActiveNav);
 </body>
 </html>
 <!-- utf-8 commit fix -->
+
+
