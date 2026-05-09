@@ -408,7 +408,7 @@ function renderTable(){
   function row(b){
     const lt=b.levels.map(l=>`<span class="level level-${l}">${l==='consumer'?'消费级':l==='pro'?'专业级':'工业级'}</span>`).join(' ');
     const tt=b.techs.map(t=>{
-      const c=t.toLowerCase().replace(/\s/g,''));
+      const c=t.toLowerCase().replace(/\s/g,'');
       if(['fff','fdm','cff','bfp','lfm','ebm','3d扫描','uv'].includes(c))return`<span class="tag tag-fff">${t}</span>`;
       if(['sla','mjp'].includes(c))return`<span class="tag tag-sla">${t}</span>`;
       if(['slm'].includes(c))return`<span class="tag tag-slm">${t}</span>`;
