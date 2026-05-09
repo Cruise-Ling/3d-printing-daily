@@ -141,65 +141,68 @@ tbody td{padding:14px 16px;font-size:.9rem;border-bottom:1px solid #2d3a4d;verti
 <body>
 
 <div class="hero">
-  <h1>3D打印机品牌列表</h1>
-  <p>30+ 主流品牌 · 20+ 城市 · 点击列表项查看品牌详情</p>
+  <div style="position:absolute;top:20px;left:20px;z-index:10;">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:8px;color:#fff;font-size:.85rem;text-decoration:none;transition:all .2s;backdrop-filter:blur(4px);" onmouseover="this.style.background='rgba(255,255,255,0.25)';this.style.transform='translateX(-2px)'" onmouseout="this.style.background='rgba(255,255,255,0.15)';this.style.transform=''">&#8592; Back to Home</a>
+  </div>
+  <h1>3D Printer Brands</h1>
+  <p>30+ Leading Brands · 20+ Cities · Click to view details</p>
 </div>
 
 <div class="stats-bar">
   <div class="stat-item">
     <div class="stat-value" id="statTotal">0</div>
-    <div class="stat-label">品牌总数</div>
+    <div class="stat-label">Total Brands</div>
   </div>
   <div class="stat-item">
     <div class="stat-value" id="statCN">0</div>
-    <div class="stat-label">中国品牌</div>
+    <div class="stat-label">Chinese</div>
   </div>
   <div class="stat-item">
     <div class="stat-value" id="statINTL">0</div>
-    <div class="stat-label">国际品牌</div>
+    <div class="stat-label">International</div>
   </div>
   <div class="stat-item">
     <div class="stat-value" id="statIndustrial">0</div>
-    <div class="stat-label">工业级</div>
+    <div class="stat-label">Industrial</div>
   </div>
 </div>
 
 <div class="filters">
   <div class="filter-group">
-    <span class="filter-label">地区：</span>
-    <button class="filter-btn active" data-filter="region" data-value="all">全部</button>
-    <button class="filter-btn" data-filter="region" data-value="cn">中国</button>
-    <button class="filter-btn" data-filter="region" data-value="us">北美</button>
-    <button class="filter-btn" data-filter="region" data-value="eu">欧洲</button>
+    <span class="filter-label">Region:</span>
+    <button class="filter-btn active" data-filter="region" data-value="all">All</button>
+    <button class="filter-btn" data-filter="region" data-value="cn">China</button>
+    <button class="filter-btn" data-filter="region" data-value="us">North America</button>
+    <button class="filter-btn" data-filter="region" data-value="eu">Europe</button>
   </div>
   <div class="filter-divider"></div>
   <div class="filter-group">
-    <span class="filter-label">级别：</span>
-    <button class="filter-btn active" data-filter="level" data-value="all">全部</button>
-    <button class="filter-btn" data-filter="level" data-value="consumer">消费级</button>
-    <button class="filter-btn" data-filter="level" data-value="pro">专业级</button>
-    <button class="filter-btn" data-filter="level" data-value="industrial">工业级</button>
+    <span class="filter-label">Level:</span>
+    <button class="filter-btn active" data-filter="level" data-value="all">All</button>
+    <button class="filter-btn" data-filter="level" data-value="consumer">Consumer</button>
+    <button class="filter-btn" data-filter="level" data-value="pro">Professional</button>
+    <button class="filter-btn" data-filter="level" data-value="industrial">Industrial</button>
   </div>
   <div class="filter-divider"></div>
   <div class="search-box">
-    <span class="search-icon">🔍</span>
-    <input type="text" class="search-input" id="searchInput" placeholder="搜索品牌名称...">
+    <span class="search-icon">&#128269;</span>
+    <input type="text" class="search-input" id="searchInput" placeholder="Search brands...">
   </div>
 </div>
 
 <div class="active-filters" id="activeFilters">
-  <span class="filter-label">已选：</span>
+  <span class="filter-label">Active filters:</span>
   <span id="activeFilterTags"></span>
-  <button class="clear-filters" id="clearFilters">清除全部</button>
+  <button class="clear-filters" id="clearFilters">Clear All</button>
 </div>
 
 <div class="table-view show" id="tableView">
   <div class="table-header">
-    <div class="table-title">品牌列表 <span id="resultCount" style="font-size:.7rem;padding:2px 10px;border-radius:20px;background:rgba(96,165,250,0.15);color:#60a5fa;font-weight:500;margin-left:8px"></span></div>
+    <div class="table-title">Brand List <span id="resultCount" style="font-size:.7rem;padding:2px 10px;border-radius:20px;background:rgba(96,165,250,0.15);color:#60a5fa;font-weight:500;margin-left:8px"></span></div>
     <div class="table-actions">
-      <button class="sort-btn" data-sort="name">按名称</button>
-      <button class="sort-btn" data-sort="city">按城市</button>
-      <button class="sort-btn" data-sort="level">按级别</button>
+      <button class="sort-btn" data-sort="name">By Name</button>
+      <button class="sort-btn" data-sort="city">By City</button>
+      <button class="sort-btn" data-sort="level">By Level</button>
     </div>
   </div>
   <div id="tableContent"></div>
@@ -217,8 +220,8 @@ tbody td{padding:14px 16px;font-size:.9rem;border-bottom:1px solid #2d3a4d;verti
 </div>
 
 <div class="footer">
-  <p>数据来源：各品牌官网、行业报告、公开资料 | 更新时间：2026年5月</p>
-  <p>排名不分先后 · 仅收录主流品牌 · 点击列表项查看详情</p>
+  <p>Data Source: Official websites, industry reports, public information | Updated: May 2026</p>
+  <p>Brands listed in no particular order · Click to view details</p>
 </div>
 
 <script>
@@ -282,7 +285,7 @@ function updateStats(){
 
 function updateResultCount(){
   const filtered=brands.filter(b=>isVisible(b));
-  document.getElementById('resultCount').textContent=`共 ${filtered.length} 个品牌`;
+  document.getElementById('resultCount').textContent=`Total: ${filtered.length} brands`;
 }
 
 function updateFilterCountBadges(){
@@ -305,17 +308,17 @@ function updateActiveFiltersBar(){
   let hasActive=false;
   let html='';
   if(activeFilters.region!=='all'){
-    const labels={cn:'中国',us:'北美',eu:'欧洲'};
+    const labels={cn:'China',us:'North America',eu:'Europe'};
     html+=`<span class="active-filter-tag">${labels[activeFilters.region]} <span class="remove" data-filter="region">&times;</span></span>`;
     hasActive=true;
   }
   if(activeFilters.level!=='all'){
-    const labels={consumer:'消费级',pro:'专业级',industrial:'工业级'};
+    const labels={consumer:'Consumer',pro:'Professional',industrial:'Industrial'};
     html+=`<span class="active-filter-tag">${labels[activeFilters.level]} <span class="remove" data-filter="level">&times;</span></span>`;
     hasActive=true;
   }
   if(searchQuery){
-    html+=`<span class="active-filter-tag">搜索: "${searchQuery}" <span class="remove" data-filter="search">&times;</span></span>`;
+    html+=`<span class="active-filter-tag">Search: "${searchQuery}" <span class="remove" data-filter="search">&times;</span></span>`;
     hasActive=true;
   }
   tags.innerHTML=html;
@@ -357,27 +360,27 @@ function showDetail(b){
   document.getElementById('panelEn').textContent=b.en;
   document.getElementById('panelMeta').innerHTML=`
     <div class="panel-meta-item">&#128205; ${b.city}</div>
-    <div class="panel-meta-item">&#128197; 成立 ${b.founded}</div>
-    <div class="panel-meta-item">&#127760; ${b.region==='cn'?'中国':'国际'}</div>
+    <div class="panel-meta-item">&#128197; Founded ${b.founded}</div>
+    <div class="panel-meta-item">&#127760; ${b.region==='cn'?'China':'International'}</div>
   `;
-  const lt=b.levels.map(l=>`<span class="panel-tag ${l}">${l==='consumer'?'消费级':l==='pro'?'专业级':'工业级'}</span>`).join(' ');
+  const lt=b.levels.map(l=>`<span class="panel-tag ${l}">${l==='consumer'?'Consumer':l==='pro'?'Professional':'Industrial'}</span>`).join(' ');
   const tt=b.techs.map(t=>`<span class="panel-tag tech">${t}</span>`).join('');
   document.getElementById('panelBody').innerHTML=`
     <div class="panel-section">
-      <div class="panel-section-title">品牌简介</div>
+      <div class="panel-section-title">Brand Overview</div>
       <div class="panel-desc">${b.desc}</div>
-      <a href="${b.website}" target="_blank" class="official-link">&#127760; 访问官网 ${b.website}</a>
+      <a href="${b.website}" target="_blank" class="official-link">&#127760; Visit Website ${b.website}</a>
     </div>
     <div class="panel-section">
-      <div class="panel-section-title">市场级别</div>
+      <div class="panel-section-title">Market Level</div>
       <div class="panel-tags">${lt}</div>
     </div>
     <div class="panel-section">
-      <div class="panel-section-title">核心技术</div>
+      <div class="panel-section-title">Core Technologies</div>
       <div class="panel-tags">${tt}</div>
     </div>
     <div class="panel-section">
-      <div class="panel-section-title">核心产品 (${b.products.length})</div>
+      <div class="panel-section-title">Core Products (${b.products.length})</div>
       ${b.products.map(p=>`<div class="product-card"><div class="product-card-name">${p.name}</div><div class="product-card-desc">${p.d}</div></div>`).join('')}
     </div>
   `;
@@ -406,7 +409,7 @@ function renderTable(){
   const intl=filtered.filter(b=>b.region!=='cn');
   
   function row(b){
-    const lt=b.levels.map(l=>`<span class="level level-${l}">${l==='consumer'?'消费级':l==='pro'?'专业级':'工业级'}</span>`).join(' ');
+    const lt=b.levels.map(l=>`<span class="level level-${l}">${l==='consumer'?'Consumer':l==='pro'?'Professional':'Industrial'}</span>`).join(' ');
     const tt=b.techs.map(t=>{
       const c=t.toLowerCase().replace(/\s/g,'');
       if(['fff','fdm','cff','bfp','lfm','ebm','3d扫描','uv'].includes(c))return`<span class="tag tag-fff">${t}</span>`;
@@ -418,15 +421,15 @@ function renderTable(){
       return`<span class="tag tag-fdm">${t}</span>`;
     }).join(' ');
     const pi=b.products.map(p=>`<span class="product-item">${p.name}</span>`).join('');
-    return`<tr data-id="${b.id}" class="fade-in"><td><div class="brand-cell"><div class="brand-icon" style="background:linear-gradient(135deg,${b.color},${b.color}dd)">&#9679;</div><div><div class="brand-name">${b.name}</div><div class="brand-en">${b.en} · 成立于${b.founded}</div></div></div></td><td><div class="city">${b.city}</div></td><td>${lt}</td><td><div style="display:flex;flex-wrap:wrap;gap:6px">${tt}</div></td><td><div class="product-list">${pi}</div></td></tr>`;
+    return`<tr data-id="${b.id}" class="fade-in"><td><div class="brand-cell"><div class="brand-icon" style="background:linear-gradient(135deg,${b.color},${b.color}dd)">&#9679;</div><div><div class="brand-name">${b.name}</div><div class="brand-en">${b.en} · Est. ${b.founded}</div></div></div></td><td><div class="city">${b.city}</div></td><td>${lt}</td><td><div style="display:flex;flex-wrap:wrap;gap:6px">${tt}</div></td><td><div class="product-list">${pi}</div></td></tr>`;
   }
   
   let html='';
   if(cn.length>0){
-    html+=`<div class="section" style="margin-bottom:36px"><div style="font-size:1.3rem;font-weight:600;margin-bottom:16px;padding-left:14px;border-left:4px solid #f59e0b">中国品牌 <span style="font-size:.7rem;padding:2px 10px;border-radius:20px;background:rgba(245,158,11,0.15);color:#fbbf24;font-weight:500">${cn.length} brands</span></div><div class="table-wrap"><table><thead><tr><th data-sort="name">Brand</th><th data-sort="city">Location</th><th>Level</th><th>Technology</th><th>Core Products</th></tr></thead><tbody>${cn.map(row).join('')}</tbody></table></div></div>`;
+    html+=`<div class="section" style="margin-bottom:36px"><div style="font-size:1.3rem;font-weight:600;margin-bottom:16px;padding-left:14px;border-left:4px solid #f59e0b">Chinese Brands <span style="font-size:.7rem;padding:2px 10px;border-radius:20px;background:rgba(245,158,11,0.15);color:#fbbf24;font-weight:500">${cn.length} brands</span></div><div class="table-wrap"><table><thead><tr><th data-sort="name">Brand</th><th data-sort="city">Location</th><th>Level</th><th>Technology</th><th>Core Products</th></tr></thead><tbody>${cn.map(row).join('')}</tbody></table></div></div>`;
   }
   if(intl.length>0){
-    html+=`<div class="section"><div style="font-size:1.3rem;font-weight:600;margin-bottom:16px;padding-left:14px;border-left:4px solid #3b82f6">国际品牌 <span style="font-size:.7rem;padding:2px 10px;border-radius:20px;background:rgba(59,130,246,0.15);color:#60a5fa;font-weight:500">${intl.length} brands</span></div><div class="table-wrap"><table><thead><tr><th data-sort="name">Brand</th><th data-sort="city">Location</th><th>Level</th><th>Technology</th><th>Core Products</th></tr></thead><tbody>${intl.map(row).join('')}</tbody></table></div></div>`;
+    html+=`<div class="section"><div style="font-size:1.3rem;font-weight:600;margin-bottom:16px;padding-left:14px;border-left:4px solid #3b82f6">International Brands <span style="font-size:.7rem;padding:2px 10px;border-radius:20px;background:rgba(59,130,246,0.15);color:#60a5fa;font-weight:500">${intl.length} brands</span></div><div class="table-wrap"><table><thead><tr><th data-sort="name">Brand</th><th data-sort="city">Location</th><th>Level</th><th>Technology</th><th>Core Products</th></tr></thead><tbody>${intl.map(row).join('')}</tbody></table></div></div>`;
   }
   
   document.getElementById('tableContent').innerHTML=html;
