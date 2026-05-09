@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -32,6 +32,8 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
 .section-title.consumer .icon { background:linear-gradient(180deg,#66bb6a,#43a047); }
 .section-title.global .icon { background:linear-gradient(180deg,#ab47bc,#7b1fa2); }
 .section-title.feedback .icon { background:linear-gradient(180deg,#26c6da,#00838f); }
+.section-title.niche .icon { background:linear-gradient(180deg,#e64a19,#d84315); }
+.section-title.scenario .icon { background:linear-gradient(180deg,#00796b,#00695c); }
 
 /* 资讯条目 */
 .item { padding:12px 20px 14px; border-bottom:1px solid #f5f5f5; }
@@ -48,6 +50,8 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
 .consumer-zone .num-dot { background:linear-gradient(135deg,#66bb6a,#43a047); }
 .global-zone .num-dot { background:linear-gradient(135deg,#ab47bc,#7b1fa2); }
 .feedback-zone .num-dot { background:linear-gradient(135deg,#26c6da,#00838f); }
+.niche-zone .num-dot { background:linear-gradient(135deg,#e64a19,#d84315); }
+.scenario-zone .num-dot { background:linear-gradient(135deg,#00796b,#00695c); }
 .item-title { font-size:14.5px; font-weight:600; line-height:1.45; color:#212121; flex:1; }
 .item-summary { font-size:12.8px; line-height:1.7; color:#616161; padding-left:32px; word-break:break-all; }
 .item-source { font-size:11px; color:#9e9e9e; padding-left:32px; margin-top:4px; }
@@ -59,6 +63,8 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
 .consumer-zone .tag { background:#e8f5e9; color:#2e7d32; }
 .global-zone .tag { background:#f3e5f5; color:#6a1b9a; }
 .feedback-zone .tag { background:#e0f7fa; color:#006064; }
+.niche-zone .tag { background:#fbe9e7; color:#bf360c; }
+.scenario-zone .tag { background:#e0f2f1; color:#004d40; }
 
 /* 来源标签 */
 .from-tag { font-size:10px; padding:1px 6px; border-radius:6px; margin-left:6px; opacity:.75; }
@@ -200,6 +206,12 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
   <div class="side-nav-item" onclick="scrollToSection('feedback')" data-section="feedback">
     <span class="side-nav-dot" style="background:#1565c0;"></span>用户口碑
   </div>
+  <div class="side-nav-item" onclick="scrollToSection('niche')" data-section="niche">
+    <span class="side-nav-dot" style="background:#d84315;"></span>细分市场
+  </div>
+  <div class="side-nav-item" onclick="scrollToSection('scenario')" data-section="scenario">
+    <span class="side-nav-dot" style="background:#00695c;"></span>场景打印
+  </div>
 </div>
 
 <div class="card">
@@ -236,6 +248,14 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
       <span class="hl-dot" style="background:#1565c0;"></span>
       <span>用户口碑：Bambu Lab P2S获评2026最佳中端3D打印机；知乎热议Bambu评价两极分化</span>
     </div>
+    <div class="hl-item" onclick="scrollToSection('niche')">
+      <span class="hl-dot" style="background:#d84315;"></span>
+      <span>细分市场：Desktop Metal / 打印服务 / 儿童打印机（占位）</span>
+    </div>
+    <div class="hl-item" onclick="scrollToSection('scenario')">
+      <span class="hl-dot" style="background:#00695c;"></span>
+      <span>场景×3D打印：AI教育 / TTRPG / 微缩模型 / ACGN（占位）</span>
+    </div>
   </div>
 </div>
 
@@ -256,6 +276,8 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
   <div class="nav-btn" id="nav-btn-consumer" onclick="scrollToSection('consumer')"><span class="dot" style="background:#2e7d32;"></span>消费级</div>
   <div class="nav-btn" id="nav-btn-global" onclick="scrollToSection('global')"><span class="dot" style="background:#7b1fa2;"></span>海外</div>
   <div class="nav-btn" id="nav-btn-feedback" onclick="scrollToSection('feedback')"><span class="dot" style="background:#1565c0;"></span>用户口碑</div>
+  <div class="nav-btn" id="nav-btn-niche" onclick="scrollToSection('niche')"><span class="dot" style="background:#d84315;"></span>细分市场</div>
+  <div class="nav-btn" id="nav-btn-scenario" onclick="scrollToSection('scenario')"><span class="dot" style="background:#00695c;"></span>场景打印</div>
 </div>
 
 
@@ -545,6 +567,90 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
   <div class="item-source"><a href="https://post.smzdm.com/p/amo0630z/" target="_blank" rel="noopener">来源：什么值得买</a> <span class="from-tag from-smzdm">值得买</span></div>
 </div>
 
+<!-- ==================== 分区六：细分市场 ==================== -->
+<div class="section-title niche" id="section-niche">
+  <div class="icon"></div>
+  <span>细分市场</span>
+  <span style="font-size:11px;color:#9e9e9e;font-weight:400;margin-left:6px;">Desktop Metal · 打印服务 · 儿童打印机</span>
+</div>
+
+<!-- 26 -->
+<div class="item niche-zone">
+  <div class="item-head">
+    <div class="num-dot">26</div>
+    <div class="item-title">【占位】Desktop Metal 3D Printer 细分市场动态</div>
+  </div>
+  <div class="item-summary">明日自动化任务将抓取相关内容填充此位置。<span class="tag">Desktop Metal</span><span class="tag">工业金属</span></div>
+  <div class="item-source"><a href="#" target="_blank" rel="noopener">来源：待抓取</a> <span class="from-tag from-other">待更新</span></div>
+</div>
+
+<!-- 27 -->
+<div class="item niche-zone">
+  <div class="item-head">
+    <div class="num-dot">27</div>
+    <div class="item-title">【占位】3D Printing Service Company / Additive Manufacturing Service Provider</div>
+  </div>
+  <div class="item-summary">明日自动化任务将抓取相关内容填充此位置。<span class="tag">打印服务</span><span class="tag">服务商</span></div>
+  <div class="item-source"><a href="#" target="_blank" rel="noopener">来源：待抓取</a> <span class="from-tag from-other">待更新</span></div>
+</div>
+
+<!-- 28 -->
+<div class="item niche-zone">
+  <div class="item-head">
+    <div class="num-dot">28</div>
+    <div class="item-title">【占位】Kids' 3D Printer / Children's 3D Printer / Kids' 3D Printing Kit</div>
+  </div>
+  <div class="item-summary">明日自动化任务将抓取相关内容填充此位置。<span class="tag">教育市场</span><span class="tag">儿童</span></div>
+  <div class="item-source"><a href="#" target="_blank" rel="noopener">来源：待抓取</a> <span class="from-tag from-other">待更新</span></div>
+</div>
+
+<!-- ==================== 分区七：场景×3D打印 ==================== -->
+<div class="section-title scenario" id="section-scenario">
+  <div class="icon"></div>
+  <span>场景×3D打印</span>
+  <span style="font-size:11px;color:#9e9e9e;font-weight:400;margin-left:6px;">AI教育 · TTRPG · 微缩模型 · ACGN</span>
+</div>
+
+<!-- 29 -->
+<div class="item scenario-zone">
+  <div class="item-head">
+    <div class="num-dot">29</div>
+    <div class="item-title">【占位】AI辅助教育 / AI赋能教育×3D打印</div>
+  </div>
+  <div class="item-summary">明日自动化任务将抓取相关内容填充此位置。<span class="tag">AI教育</span><span class="tag">教育科技</span></div>
+  <div class="item-source"><a href="#" target="_blank" rel="noopener">来源：待抓取</a> <span class="from-tag from-other">待更新</span></div>
+</div>
+
+<!-- 30 -->
+<div class="item scenario-zone">
+  <div class="item-head">
+    <div class="num-dot">30</div>
+    <div class="item-title">【占位】TTRPG（桌面角色扮演游戏）×3D打印</div>
+  </div>
+  <div class="item-summary">明日自动化任务将抓取相关内容填充此位置。<span class="tag">TTRPG</span><span class="tag">桌面游戏</span></div>
+  <div class="item-source"><a href="#" target="_blank" rel="noopener">来源：待抓取</a> <span class="from-tag from-other">待更新</span></div>
+</div>
+
+<!-- 31 -->
+<div class="item scenario-zone">
+  <div class="item-head">
+    <div class="num-dot">31</div>
+    <div class="item-title">【占位】微缩模型×3D打印</div>
+  </div>
+  <div class="item-summary">明日自动化任务将抓取相关内容填充此位置。<span class="tag">微缩模型</span><span class="tag">Hobby</span></div>
+  <div class="item-source"><a href="#" target="_blank" rel="noopener">来源：待抓取</a> <span class="from-tag from-other">待更新</span></div>
+</div>
+
+<!-- 32 -->
+<div class="item scenario-zone">
+  <div class="item-head">
+    <div class="num-dot">32</div>
+    <div class="item-title">【占位】ACGN×3D打印</div>
+  </div>
+  <div class="item-summary">明日自动化任务将抓取相关内容填充此位置。<span class="tag">ACGN</span><span class="tag">二次元</span></div>
+  <div class="item-source"><a href="#" target="_blank" rel="noopener">来源：待抓取</a> <span class="from-tag from-other">待更新</span></div>
+</div>
+
 <!-- 底部 -->
 <div class="footer">
   完整版 · 国内：南极熊 · 36氪 · 搜狐 · 中研网 · 中国网<br>
@@ -556,8 +662,8 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
 <script>
 /* 点击跳转分区 */
 function scrollToSection(name) {
-  var colors = { general:'#e8f0fe', specific:'#fff3e0', consumer:'#e8f5e9', global:'#f3e5f5', feedback:'#e3f2fd' };
-  var borderColors = { general:'#1a73e8', specific:'#e65100', consumer:'#2e7d32', global:'#7b1fa2', feedback:'#1565c0' };
+  var colors = { general:'#e8f0fe', specific:'#fff3e0', consumer:'#e8f5e9', global:'#f3e5f5', feedback:'#e3f2fd', niche:'#fbe9e7', scenario:'#e0f2f1' };
+  var borderColors = { general:'#1a73e8', specific:'#e65100', consumer:'#2e7d32', global:'#7b1fa2', feedback:'#1565c0', niche:'#d84315', scenario:'#00695c' };
   // 清除所有高亮
   document.querySelectorAll('.nav-btn').forEach(function(b){ b.classList.remove('active'); b.style.background=''; b.style.borderColor=''; b.style.color=''; });
   document.querySelectorAll('.side-nav-item').forEach(function(b){ b.classList.remove('active'); b.style.background=''; b.style.borderColor=''; b.style.color=''; });
@@ -580,8 +686,8 @@ function scrollToSection(name) {
 
 /* 滚动监听：自动高亮当前可见分区 */
 function updateActiveNav() {
-  var sections = ['general','specific','consumer','global','feedback'];
-  var colors = { general:'#1a73e8', specific:'#e65100', consumer:'#2e7d32', global:'#7b1fa2', feedback:'#1565c0' };
+  var sections = ['general','specific','consumer','global','feedback','niche','scenario'];
+  var colors = { general:'#1a73e8', specific:'#e65100', consumer:'#2e7d32', global:'#7b1fa2', feedback:'#1565c0', niche:'#d84315', scenario:'#00695c' };
   var offset = 120;
   var current = 'general';
   for (var i = 0; i < sections.length; i++) {
