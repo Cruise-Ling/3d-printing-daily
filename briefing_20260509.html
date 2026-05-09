@@ -140,6 +140,41 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
 @media (min-width:769px) {
   .section-nav { display:none; }
 }
+/* 热点摘要栏 */
+.highlight-bar {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding:14px 20px;
+  background:linear-gradient(135deg,#f8f9ff 0%,#e8eaf6 100%);
+  border-bottom:1px solid #e8e0f0;
+}
+.highlight-bar .hl-title {
+  font-size:12px;
+  font-weight:700;
+  color:#5c6bc0;
+  letter-spacing:1px;
+  margin-bottom:2px;
+}
+.highlight-bar .hl-items {
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+.highlight-bar .hl-item {
+  display:flex;
+  align-items:flex-start;
+  gap:7px;
+  font-size:12.5px;
+  line-height:1.5;
+  color:#37474f;
+  cursor:pointer;
+  transition:color .15s;
+}
+.highlight-bar .hl-item:hover { color:#1a237e; }
+.highlight-bar .hl-dot {
+  width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px;
+}
 /* 底部 */
 .footer { padding:12px 20px; background:#fafbff; border-top:1px solid #eee; font-size:11px; color:#999; text-align:center; line-height:1.6; }
 </style>
@@ -172,6 +207,33 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
     <h1>3D打印行业每日资讯</h1>
   <div class="date">2026年5月9日 · 星期六</div>
   <div class="source-note">完整版 · 国内5源 + 海外3源 + 用户口碑 · 25条全覆盖</div>
+</div>
+
+<!-- 热点摘要 -->
+<div class="highlight-bar" id="highlightBar">
+  <div class="hl-title">⚡ 今日热点速览（点击跳转详情）</div>
+  <div class="hl-items">
+    <div class="hl-item" onclick="scrollToSection('general')">
+      <span class="hl-dot" style="background:#1a73e8;"></span>
+      <span>泛行业：创想三维通过港交所聆讯，冲刺"消费级3D打印第一股"；3D打印鞋真假混战，百元以下多为仿冒品</span>
+    </div>
+    <div class="hl-item" onclick="scrollToSection('specific')">
+      <span class="hl-dot" style="background:#e65100;"></span>
+      <span>细分领域：铂力特2025年报净利润大增95%；北大口腔综述3D生物打印从口腔到骨科全景应用</span>
+    </div>
+    <div class="hl-item" onclick="scrollToSection('consumer')">
+      <span class="hl-dot" style="background:#2e7d32;"></span>
+      <span>消费级：ELEGOO亮相RAPID+TCT 2026，Jupiter 2超大幅面树脂打印机首秀；消费级新机呈多头化全彩化趋势</span>
+    </div>
+    <div class="hl-item" onclick="scrollToSection('global')">
+      <span class="hl-dot" style="background:#7b1fa2;"></span>
+      <span>海外资讯：FUGO开发离心式增材制造系统一腔三工序；Eplus3D×Rosswag×Qualloy签署MOU共建金属生态</span>
+    </div>
+    <div class="hl-item" onclick="scrollToSection('feedback')">
+      <span class="hl-dot" style="background:#1565c0;"></span>
+      <span>用户口碑：Bambu Lab P2S获评2026最佳中端3D打印机；知乎热议Bambu评价两极分化</span>
+    </div>
+  </div>
 </div>
 
 <!-- 统计栏 -->
