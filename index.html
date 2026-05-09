@@ -133,6 +133,38 @@ body {
 .section-highlight { animation:sectionGlow .6s ease; }
 @keyframes sectionGlow { 0%{box-shadow:inset 0 0 0 2px rgba(0,0,0,.08);} 100%{box-shadow:none;} }
 
+/* ===== 五大分区介绍 ===== */
+.section-tabs {
+  display:grid;
+  grid-template-columns:repeat(5, 1fr);
+  gap:10px;
+  margin-bottom:24px;
+}
+.section-tab {
+  background:#fff;
+  border-radius:12px;
+  padding:16px 10px;
+  box-shadow:0 2px 12px rgba(0,0,0,.04);
+  cursor:pointer;
+  transition:all .2s;
+  border:1.5px solid #f0f0f0;
+  text-align:center;
+}
+.section-tab:hover {
+  transform:translateY(-2px);
+  box-shadow:0 4px 16px rgba(0,0,0,.08);
+}
+.section-tab .tab-dot {
+  width:10px;height:10px;border-radius:50%;
+  display:inline-block;margin-bottom:8px;
+}
+.section-tab .tab-name {
+  display:block;font-size:13px;font-weight:700;color:#212121;margin-bottom:4px;
+}
+.section-tab .tab-desc {
+  display:block;font-size:11px;color:#9e9e9e;line-height:1.4;
+}
+
 /* ===== 移动端适配 ===== */
 .mobile-header {
   display:none;
@@ -156,6 +188,10 @@ body {
   .main { margin-left:0; padding:68px 12px 40px; }
   .brand .brand-text h1 { font-size:20px; }
   .briefing-item { padding:14px 16px; }
+  .section-tabs { grid-template-columns:repeat(3, 1fr); gap:8px; }
+  .section-tab { padding:12px 8px; }
+  .section-tab .tab-name { font-size:12px; }
+  .section-tab .tab-desc { font-size:10px; }
 }
 </style>
 </head>
@@ -221,6 +257,35 @@ body {
     <div class="stats-pill">📅 2026年5月</div>
     <div class="stats-pill">🏷️ 5大分区</div>
     <div class="stats-pill">📬 225条资讯</div>
+  </div>
+
+  <!-- 五大分区介绍 -->
+  <div class="section-tabs">
+    <div class="section-tab" onclick="location.href='briefing_20260509.html#section-general'">
+      <span class="tab-dot" style="background:#1a73e8;"></span>
+      <span class="tab-name">泛行业资讯</span>
+      <span class="tab-desc">政策 · 市场 · 投融资 · 宏观趋势</span>
+    </div>
+    <div class="section-tab" onclick="location.href='briefing_20260509.html#section-specific'">
+      <span class="tab-dot" style="background:#e65100;"></span>
+      <span class="tab-name">细分领域动态</span>
+      <span class="tab-desc">医疗 · 齿科 · 航天 · 建筑 · 新材料</span>
+    </div>
+    <div class="section-tab" onclick="location.href='briefing_20260509.html#section-consumer'">
+      <span class="tab-dot" style="background:#2e7d32;"></span>
+      <span class="tab-name">消费级赛道</span>
+      <span class="tab-desc">消费级3D打印机 · 众筹 · 平台竞争</span>
+    </div>
+    <div class="section-tab" onclick="location.href='briefing_20260509.html#section-global'">
+      <span class="tab-dot" style="background:#7b1fa2;"></span>
+      <span class="tab-name">海外资讯</span>
+      <span class="tab-desc">海外品牌 · 国际市场 · 技术突破</span>
+    </div>
+    <div class="section-tab" onclick="location.href='briefing_20260509.html#section-feedback'">
+      <span class="tab-dot" style="background:#1565c0;"></span>
+      <span class="tab-name">用户口碑</span>
+      <span class="tab-desc">横评 · 实测 · 社区讨论</span>
+    </div>
   </div>
 
   <div class="content-card" id="archive">
