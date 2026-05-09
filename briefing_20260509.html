@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -25,7 +25,7 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
 .stats-pill.warn b { color:#e65100; }
 
 /* 分区标题 */
-.section-title { display:flex; align-items:center; padding:16px 20px 10px; font-size:15px; font-weight:700; color:#1a237e; }
+.section-title { display:flex; align-items:center; padding:18px 20px 12px; font-size:16px; font-weight:800; color:#0d47a1; background:linear-gradient(90deg,rgba(26,115,232,.08),transparent); border-bottom:2px solid #1a73e8; }
 .section-title .icon { width:4px;height:16px;border-radius:2px;margin-right:8px; }
 .section-title.general .icon { background:linear-gradient(180deg,#42a5f5,#1e88e5); }
 .section-title.specific .icon { background:linear-gradient(180deg,#ffa726,#fb8c00); }
@@ -133,11 +133,11 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
 }
 
 /* 移动端：左侧导航隐藏，顶部导航加强 */
-@media (max-width:768px) {
+@media (max-width:767px) {
   .side-nav { display:none; }
   .section-nav { position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,.06); }
 }
-@media (min-width:769px) {
+@media (min-width:768px) {
   .section-nav { display:none; }
 }
 /* 热点摘要栏 */
@@ -182,6 +182,9 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
 <body>
 <!-- 左侧悬浮导航（宽屏显示） -->
 <div class="side-nav" id="sideNav">
+  <div class="side-nav-item" onclick="location.href='index.html'" title="返回首页">
+    <span class="side-nav-dot" style="background:#999;"></span>← 首页
+  </div>
   <div class="side-nav-item" onclick="scrollToSection('general')" data-section="general">
     <span class="side-nav-dot" style="background:#1a73e8;"></span>泛行业
   </div>
@@ -219,7 +222,7 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
     </div>
     <div class="hl-item" onclick="scrollToSection('specific')">
       <span class="hl-dot" style="background:#e65100;"></span>
-      <span>细分领域：铂力特2025年报净利润大增95%；北大口腔综述3D生物打印从口腔到骨科全景应用</span>
+      <span>细分领域：铂力特2025年报净利润大增<b>95%</b>；北大口腔综述3D生物打印从口腔到骨科全景应用</span>
     </div>
     <div class="hl-item" onclick="scrollToSection('consumer')">
       <span class="hl-dot" style="background:#2e7d32;"></span>
@@ -247,6 +250,7 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
 
 <!-- 分区导航 -->
 <div class="section-nav" id="sectionNav">
+  <div class="nav-btn" onclick="location.href='index.html'"><span class="dot" style="background:#999;"></span>← 首页</div>
   <div class="nav-btn" id="nav-btn-general" onclick="scrollToSection('general')"><span class="dot" style="background:#1a73e8;"></span>泛行业</div>
   <div class="nav-btn" id="nav-btn-specific" onclick="scrollToSection('specific')"><span class="dot" style="background:#e65100;"></span>细分领域</div>
   <div class="nav-btn" id="nav-btn-consumer" onclick="scrollToSection('consumer')"><span class="dot" style="background:#2e7d32;"></span>消费级</div>
@@ -602,3 +606,5 @@ window.addEventListener('load', updateActiveNav);
 </div>
 </body>
 </html>
+
+
