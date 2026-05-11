@@ -29,6 +29,8 @@
 
 | 日期 Date | 链接 Link |
 |----------|-----------|
+| 2026-05-11 (Mon) | [briefing_20260511.html](briefing_20260511.html) |
+| 2026-05-10 (Sun) | [briefing_20260510.html](briefing_20260510.html) |
 | 2026-05-09 (Sat) | [briefing_20260509.html](briefing_20260509.html) |
 | 2026-05-08 (Fri) | [briefing_20260508.html](briefing_20260508.html) |
 | 2026-05-07 (Thu) | [briefing_20260507.html](briefing_20260507.html) |
@@ -43,7 +45,7 @@
 
 ## 技术栈 / Tech Stack
 
-- **自动化**: WorkBuddy Automation (每日 08:00 GMT+8)
+- **自动化**: WorkBuddy Automation (每日 09:00 GMT+8)
 - **格式**: 单页 HTML (375px mobile-first)
 - **发布**: GitHub Pages
 - **配色**: Deep blue gradient (`#1a237e` → `#3949ab`), seven-color section system
