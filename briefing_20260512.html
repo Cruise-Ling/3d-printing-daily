@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D打印行业每日资讯 - 2026年5月12日（完整版）</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; display:flex; justify-content:center; padding:12px 0; }
+.card { width:375px; background:#fff; border-radius:12px; box-shadow:0 4px 24px rgba(0,0,0,.06); overflow:hidden; }
+
+/* 标题栏 */
+.header { background:linear-gradient(135deg,#1a237e,#283593,#3949ab); padding:24px 20px 18px; color:#fff; position:relative; }
+.header-back { position:absolute; left:16px; top:28px; transform:translateY(-50%); display:flex; align-items:center; gap:5px; color:rgba(255,255,255,.95); font-size:14px; font-weight:600; text-decoration:none; padding:7px 16px 7px 9px; border-radius:20px; border:1.5px solid rgba(255,255,255,.35); transition:background .2s,border-color .2s; }
+.header-back:hover { background:rgba(255,255,255,.15); border-color:rgba(255,255,255,.6); }
+.header h1 { font-size:19px; font-weight:700; letter-spacing:1px; margin-bottom:6px; padding-left:90px; }
+.header .date { font-size:13px; opacity:.85; font-weight:400; }
+.header .source-note { font-size:11px; opacity:.7; margin-top:4px; }
+
+/* 统计胶囊区 */
+.stats-bar { display:flex; gap:8px; flex-wrap:wrap; padding:14px 20px; background:#fafbff; border-bottom:1px solid #f0f0f0; }
+.stats-pill { display:inline-flex; align-items:center; gap:4px; font-size:11.5px; color:#555; background:#f0f4ff; border-radius:20px; padding:5px 11px; border:1px solid #e8edff; }
+.stats-pill b { color:#1a237e; font-weight:700; }
+.stats-pill.warn { background:#fff8e1; border-color:#ffe082; }
+.stats-pill.warn b { color:#e65100; }
+
+/* 分区标题 */
+.section-title { display:flex; align-items:center; padding:18px 20px 12px; font-size:16px; font-weight:800; color:#0d47a1; background:linear-gradient(90deg,rgba(26,115,232,.08),transparent); border-bottom:2px solid #1a73e8; }
+.section-title .icon { width:4px;height:16px;border-radius:2px;margin-right:8px; }
+.section-title.general .icon { background:linear-gradient(180deg,#42a5f5,#1e88e5); }
+.section-title.specific .icon { background:linear-gradient(180deg,#ffa726,#fb8c00); }
+.section-title.consumer .icon { background:linear-gradient(180deg,#66bb6a,#43a047); }
+.section-title.global .icon { background:linear-gradient(180deg,#ab47bc,#7b1fa2); }
+.section-title.feedback .icon { background:linear-gradient(180deg,#26c6da,#00838f); }
+.section-title.niche .icon { background:linear-gradient(180deg,#e64a19,#d84315); }
+.section-title.scenario .icon { background:linear-gradient(180deg,#00796b,#00695c); }
+
+/* 资讯条目 */
+.item { padding:12px 20px 14px; border-bottom:1px solid #f5f5f5; }
+.item:last-child { border-bottom:none; }
+.item-head { display:flex; align-items:flex-start; margin-bottom:6px; }
+.num-dot {
+  width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:12px;font-weight:700;flex-shrink:0;
+  margin-right:10px;margin-top:1px;
+}
+.general-zone .num-dot { background:linear-gradient(135deg,#42a5f5,#1e88e5); }
+.specific-zone .num-dot { background:linear-gradient(135deg,#ffa726,#fb8c00); }
+.consumer-zone .num-dot { background:linear-gradient(135deg,#66bb6a,#43a047); }
+.global-zone .num-dot { background:linear-gradient(135deg,#ab47bc,#7b1fa2); }
+.feedback-zone .num-dot { background:linear-gradient(135deg,#26c6da,#00838f); }
+.niche-zone .num-dot { background:linear-gradient(135deg,#e64a19,#d84315); }
+.scenario-zone .num-dot { background:linear-gradient(135deg,#00796b,#00695c); }
+.item-title { font-size:14.5px; font-weight:600; line-height:1.45; color:#212121; flex:1; }
+.item-summary { font-size:12.8px; line-height:1.7; color:#616161; padding-left:32px; word-break:break-all; }
+.item-source { font-size:11px; color:#9e9e9e; padding-left:32px; margin-top:4px; }
+.item-source a { color:#1e88e5; text-decoration:none; }
+.item-source a:hover { text-decoration:underline; }
+.tag { display:inline-block; font-size:11px; padding:2px 8px; border-radius:10px; margin-right:4px; }
+.general-zone .tag { background:#e3f2fd; color:#1565c0; }
+.specific-zone .tag { background:#fff3e0; color:#e65100; }
+.consumer-zone .tag { background:#e8f5e9; color:#2e7d32; }
+.global-zone .tag { background:#f3e5f5; color:#6a1b9a; }
+.feedback-zone .tag { background:#e0f7fa; color:#006064; }
+.niche-zone .tag { background:#fbe9e7; color:#bf360c; }
+.scenario-zone .tag { background:#e0f2f1; color:#004d40; }
+
+/* 来源标签 */
+.from-tag { font-size:10px; padding:1px 6px; border-radius:6px; margin-left:6px; opacity:.75; }
+.from-nanjixiong { background:#e8f5e9; color:#2e7d32; }
+.from-china3d { background:#fff3e0; color:#bf360c; }
+.from-ofweek { background:#e3f2fd; color:#0d47a1; }
+.from-qq { background:#fce4ec; color:#880e4f; }
+.from-sina { background:#fff3e0; color:#e65100; }
+.from-zhihu { background:#e3f2fd; color:#0d47a1; }
+.from-smzdm { background:#f3e5f5; color:#6a1b9a; }
+.from-163 { background:#e8f5e9; color:#2e7d32; }
+.from-3dnatives { background:#ede7f6; color:#4527a0; }
+.from-3dprinting-industry { background:#e0f2f1; color:#00695c; }
+.from-pcmag { background:#fff3e0; color:#e65100; }
+.from-layermath { background:#e3f2fd; color:#0d47a1; }
+.from-feedback { background:#e0f7fa; color:#006064; }
+.from-3dprint { background:#f3e5f5; color:#6a1b9a; }
+.from-chinanews { background:#fff8e1; color:#f57f17; }
+.from-krasia { background:#e8eaf6; color:#283593; }
+.from-beets3d { background:#e0f7fa; color:#006064; }
+.from-other { background:#eceff1; color:#37474f; }
+
+/* 分区导航栏 - 顶部固定 */
+.section-nav { display:flex; gap:6px; padding:10px 20px; background:#fafbff; border-bottom:1px solid #f0f0f0; flex-wrap:wrap; position:sticky; top:0; z-index:100; }
+.section-nav .nav-btn { display:inline-flex; align-items:center; gap:5px; padding:5px 12px; border-radius:20px; border:1px solid #e0e0e0; background:#fff; font-size:12px; color:#555; cursor:pointer; transition:all .2s; user-select:none; }
+.section-nav .nav-btn:hover { border-color:#999; }
+.section-nav .nav-btn.active { font-weight:500; border-width:1.5px; }
+.section-nav .nav-btn .dot { width:7px;height:7px;border-radius:50%;flex-shrink:0; }
+.section-highlight { animation:sectionGlow .6s ease; }
+@keyframes sectionGlow { 0%{box-shadow:inset 0 0 0 2px rgba(0,0,0,.08);} 100%{box-shadow:none;} }
+
+/* 左侧悬浮导航 - 宽屏 */
+.side-nav {
+  position:fixed;
+  left:max(0px, calc((100vw - 375px) / 2 - 90px));
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  z-index:200;
+}
+.side-nav .side-nav-item {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 14px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:500;
+  color:#555;
+  cursor:pointer;
+  transition:all .25s;
+  white-space:nowrap;
+  background:#fff;
+  box-shadow:0 2px 12px rgba(0,0,0,.08);
+  border:1.5px solid #eee;
+}
+.side-nav .side-nav-item:hover {
+  background:#f8f9ff;
+  border-color:#c5cae9;
+  transform:translateX(3px);
+}
+.side-nav .side-nav-item.active {
+  background:#1a73e8;
+  color:#fff;
+  border-color:#1a73e8;
+  box-shadow:0 2px 12px rgba(26,115,232,.3);
+}
+.side-nav .side-nav-dot {
+  width:8px;height:8px;border-radius:50%;flex-shrink:0;
+}
+
+/* 移动端：左侧导航隐藏，顶部导航加强 */
+@media (max-width:767px) {
+  .side-nav { display:none; }
+  .section-nav { position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+}
+@media (min-width:768px) {
+  .section-nav { display:none; }
+}
+/* 热点摘要栏 */
+.highlight-bar {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding:14px 20px;
+  background:linear-gradient(135deg,#f8f9ff 0%,#e8eaf6 100%);
+  border-bottom:1px solid #e8e0f0;
+}
+.highlight-bar .hl-title {
+  font-size:12px;
+  font-weight:700;
+  color:#5c6bc0;
+  letter-spacing:1px;
+  margin-bottom:2px;
+}
+.highlight-bar .hl-items {
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+.highlight-bar .hl-item {
+  display:flex;
+  align-items:flex-start;
+  gap:7px;
+  font-size:12.5px;
+  line-height:1.5;
+  color:#37474f;
+  cursor:pointer;
+  transition:color .15s;
+}
+.highlight-bar .hl-item:hover { color:#1a237e; }
+.highlight-bar .hl-dot {
+  width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px;
+}
+/* 底部 */
+.footer { padding:12px 20px; background:#fafbff; border-top:1px solid #eee; font-size:11px; color:#999; text-align:center; line-height:1.6; }
+</style>
+</head>
+<body>
+<!-- 左侧悬浮导航（宽屏显示） -->
+<div class="side-nav" id="sideNav">
+  <div class="side-nav-item" onclick="location.href='index.html'" title="返回首页">
+    <span class="side-nav-dot" style="background:#999;"></span>← 首页
+  </div>
+  <div class="side-nav-item" onclick="scrollToSection('general')" data-section="general">
+    <span class="side-nav-dot" style="background:#1a73e8;"></span>泛行业
+  </div>
+  <div class="side-nav-item" onclick="scrollToSection('specific')" data-section="specific">
+    <span class="side-nav-dot" style="background:#e65100;"></span>细分领域
+  </div>
+  <div class="side-nav-item" onclick="scrollToSection('consumer')" data-section="consumer">
+    <span class="side-nav-dot" style="background:#2e7d32;"></span>消费级
+  </div>
+  <div class="side-nav-item" onclick="scrollToSection('global')" data-section="global">
+    <span class="side-nav-dot" style="background:#7b1fa2;"></span>海外资讯
+  </div>
+  <div class="side-nav-item" onclick="scrollToSection('feedback')" data-section="feedback">
+    <span class="side-nav-dot" style="background:#1565c0;"></span>用户口碑
+  </div>
+  <div class="side-nav-item" onclick="scrollToSection('niche')" data-section="niche">
+    <span class="side-nav-dot" style="background:#d84315;"></span>细分市场
+  </div>
+  <div class="side-nav-item" onclick="scrollToSection('scenario')" data-section="scenario">
+    <span class="side-nav-dot" style="background:#00695c;"></span>场景打印
+  </div>
+</div>
+
+<div class="card">
+
+<!-- 标题栏 -->
+<div class="header">
+  <a href="index.html" class="header-back"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>首页</a>
+    <h1>3D打印行业每日资讯</h1>
+  <div class="date">2026年5月12日 · 星期二</div>
+  <div class="source-note">完整版 · 国内5源 + 海外3源 + 用户口碑 · 35条全覆盖</div>
+</div>
+
+<!-- 热点摘要 -->
+<div class="highlight-bar" id="highlightBar">
+  <div class="hl-title">⚡ 今日热点速览（点击跳转详情）</div>
+  <div class="hl-items">
+    <div class="hl-item" onclick="scrollToSection('general')">
+      <span class="hl-dot" style="background:#1a73e8;"></span>
+      <span>泛行业：重磅！创想三维港股IPO聆讯通过，今日启动PDIE，5月内上市；深圳3D打印设备产量增长71.8%</span>
+    </div>
+    <div class="hl-item" onclick="scrollToSection('specific')">
+      <span class="hl-dot" style="background:#e65100;"></span>
+      <span>细分领域：洛克希德·马丁LPBF热管理部件；凯迪拉克F1引入3D Systems；哈佛人工肌肉</span>
+    </div>
+    <div class="hl-item" onclick="scrollToSection('consumer')">
+      <span class="hl-dot" style="background:#2e7d32;"></span>
+      <span>消费级：拓竹入驻山姆后再推PLA Pure耗材；杭州首店装修中；消费级3D打印第一股将至</span>
+    </div>
+    <div class="hl-item" onclick="scrollToSection('global')">
+      <span class="hl-dot" style="background:#7b1fa2;"></span>
+      <span>海外资讯：定制化脑电极3D打印；Tectonic收购Solvay材料组合；Xometry财报飙升</span>
+    </div>
+    <div class="hl-item" onclick="scrollToSection('feedback')">
+      <span class="hl-dot" style="background:#1565c0;"></span>
+      <span>用户口碑：Stratasys押注国防/无人机；Materialise利润率提升；Protolabs金属打印强劲</span>
+    </div>
+    <div class="hl-item" onclick="scrollToSection('niche')">
+      <span class="hl-dot" style="background:#d84315;"></span>
+      <span>细分市场：SLS手术导板误差从30%降至5%；硅胶晶格防霉隔振；三绿科技冲刺创业板</span>
+    </div>
+    <div class="hl-item" onclick="scrollToSection('scenario')">
+      <span class="hl-dot" style="background:#00695c;"></span>
+      <span>场景×3D打印：食品3D打印7大应用；罗马terracotta城市模型；可穿戴POV相机支架</span>
+    </div>
+  </div>
+</div>
+
+<!-- 统计栏 -->
+<div class="stats-bar">
+  <span class="stats-pill"><b>35</b> 条资讯</span>
+  <span class="stats-pill"><b>8</b> 个来源</span>
+  <span class="stats-pill"><b>头条</b> 创想三维IPO</span>
+  <span class="stats-pill warn"><b>重磅</b> 今日PDIE</span>
+  <span class="stats-pill"><b>全带外链</b></span>
+</div>
+
+<!-- 分区导航 -->
+<div class="section-nav" id="sectionNav">
+  <div class="nav-btn" onclick="location.href='index.html'"><span class="dot" style="background:#999;"></span>← 首页</div>
+  <div class="nav-btn" id="nav-btn-general" onclick="scrollToSection('general')"><span class="dot" style="background:#1a73e8;"></span>泛行业</div>
+  <div class="nav-btn" id="nav-btn-specific" onclick="scrollToSection('specific')"><span class="dot" style="background:#e65100;"></span>细分领域</div>
+  <div class="nav-btn" id="nav-btn-consumer" onclick="scrollToSection('consumer')"><span class="dot" style="background:#2e7d32;"></span>消费级</div>
+  <div class="nav-btn" id="nav-btn-global" onclick="scrollToSection('global')"><span class="dot" style="background:#7b1fa2;"></span>海外</div>
+  <div class="nav-btn" id="nav-btn-feedback" onclick="scrollToSection('feedback')"><span class="dot" style="background:#1565c0;"></span>用户口碑</div>
+  <div class="nav-btn" id="nav-btn-niche" onclick="scrollToSection('niche')"><span class="dot" style="background:#d84315;"></span>细分市场</div>
+  <div class="nav-btn" id="nav-btn-scenario" onclick="scrollToSection('scenario')"><span class="dot" style="background:#00695c;"></span>场景打印</div>
+</div>
+
+
+<!-- ==================== 分区一：泛行业资讯 ==================== -->
+<div class="section-title general" id="section-general">
+  <div class="icon"></div>
+  <span>泛行业资讯</span>
+  <span style="font-size:11px;color:#9e9e9e;font-weight:400;margin-left:6px;">工业 · 资本 · 政策</span>
+</div>
+
+<!-- 1 -->
+<div class="item general-zone">
+  <div class="item-head">
+    <div class="num-dot">1</div>
+    <div class="item-title"><a href="https://news.qq.com/rain/a/20260512A005LR00" target="_blank">"消费级3D打印第一股"真的来了！创想三维港股IPO聆讯通过，今日启动PDIE</a></div>
+  </div>
+  <div class="item-summary">港交所5月11日披露，创想三维已通过港交所上市聆讯，中金公司担任独家保荐人。5月12日正式启动港股上市前PDIE，若顺利挂牌将成为港股"消费级3D打印第一股"。招股书显示2023-2025年收入分别约18.83亿、22.88亿、31.27亿元。位于深圳宝安地标"湾区之眼"。<span class="tag">IPO上市</span><span class="tag">创想三维</span><span class="tag">头条</span></div>
+  <div class="item-source"><a href="https://news.qq.com/rain/a/20260512A005LR00" target="_blank" rel="noopener">来源：腾讯新闻</a> <span class="from-tag from-qq">QQ新闻</span></div>
+</div>
+
+<!-- 2 -->
+<div class="item general-zone">
+  <div class="item-head">
+    <div class="num-dot">2</div>
+    <div class="item-title"><a href="https://www.sohu.com/a/1020886149_120723807" target="_blank">深圳3D打印设备产量同比增长71.8%，一季度开门红</a></div>
+  </div>
+  <div class="item-summary">2026年一季度深圳3D打印设备产量同比增长71.8%，全国Q1设备产量同比增长54.0%，设备爆发式增长带动材料和服务需求激增。行业呈现"设备→材料→服务"全链路繁荣态势，珠三角、长三角产业聚集效应显著。<span class="tag">产业数据</span><span class="tag">珠三角</span><span class="tag">设备增长</span></div>
+  <div class="item-source"><a href="https://www.sohu.com/a/1020886149_120723807" target="_blank" rel="noopener">来源：搜狐科技</a> <span class="from-tag from-sina">搜狐</span></div>
+</div>
+
+<!-- 3 -->
+<div class="item general-zone">
+  <div class="item-head">
+    <div class="num-dot">3</div>
+    <div class="item-title"><a href="https://www.nanjixiong.com/thread-180513-1-1.html" target="_blank">3D打印材料龙头「三绿科技」冲刺创业板IPO</a></div>
+  </div>
+  <div class="item-summary">国家统计局数据显示2026年Q1我国3D打印设备产量同比增长54.0%，三绿科技乘势冲击创业板上市。作为国内3D打印材料领域龙头，其IPO标志着材料端正式进入资本市场视野，行业全产业链资本化进程加速。<span class="tag">资本融资</span><span class="tag">材料</span><span class="tag">创业板</span></div>
+  <div class="item-source"><a href="https://www.nanjixiong.com/thread-180513-1-1.html" target="_blank" rel="noopener">来源：南极熊3D打印网</a> <span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+<!-- 4 -->
+<div class="item general-zone">
+  <div class="item-head">
+    <div class="num-dot">4</div>
+    <div class="item-title"><a href="https://news.qq.com/rain/a/20260508A01X6900" target="_blank">中国3D打印产业全面崛起：全球市场规模突破242亿美元</a></div>
+  </div>
+  <div class="item-summary">2025年中国增材制造（3D打印）产业交出"全面崛起"成绩单。全球增材制造市场规模突破242亿美元（约1672亿元人民币），同比增长10%。中国在金属打印、桌面消费级、大幅面制造等领域形成全球竞争力。<span class="tag">产业报告</span><span class="tag">全球市场</span><span class="tag">中国崛起</span></div>
+  <div class="item-source"><a href="https://news.qq.com/rain/a/20260508A01X6900" target="_blank" rel="noopener">来源：腾讯新闻</a> <span class="from-tag from-qq">QQ新闻</span></div>
+</div>
+
+<!-- 5 -->
+<div class="item general-zone">
+  <div class="item-head">
+    <div class="num-dot">5</div>
+    <div class="item-title"><a href="https://www.163.com/dy/article/KSKPI3LO051186GP.html" target="_blank">2026年Q1融资盘点：22起约12亿元，金属打印占64%</a></div>
+  </div>
+  <div class="item-summary">2026年Q1国内3D打印行业共发生22起融资事件，涉及21家公司，预估总金额约12亿元。金属3D打印占绝对主导（14起，64%），覆盖设备→材料→服务→核心部件全链路。倍丰智能完成数亿元B+轮、中科煜宸获中石油昆仑资本C轮投资。<span class="tag">Q1融资</span><span class="tag">金属打印</span><span class="tag">资本</span></div>
+  <div class="item-source"><a href="https://www.163.com/dy/article/KSKPI3LO051186GP.html" target="_blank" rel="noopener">来源：163新闻</a> <span class="from-tag from-163">163</span></div>
+</div>
+
+<!-- ==================== 分区二：细分领域动态 ==================== -->
+<div class="section-title specific" id="section-specific">
+  <div class="icon"></div>
+  <span>细分领域动态</span>
+  <span style="font-size:11px;color:#9e9e9e;font-weight:400;margin-left:6px;">医疗 · 齿科 · 航天 · 材料</span>
+</div>
+
+<!-- 6 -->
+<div class="item specific-zone">
+  <div class="item-head">
+    <div class="num-dot">6</div>
+    <div class="item-title"><a href="https://www.nanjixiong.com/thread-180526-1-1.html" target="_blank">洛克希德·马丁推进LPBF军工应用：热管理部件减重与散热双提升</a></div>
+  </div>
+  <div class="item-summary">洛克希德·马丁公司推进激光粉末床熔融（LPBF）增材制造技术在军工装备中的应用，重点实现高超音速和飞机系统热管理部件的减重与散热双提升。该公司已将LPBF应用于F-35、C-130等机型零部件，热管理效率提高30%以上。<span class="tag">军工</span><span class="tag">LPBF</span><span class="tag">航空航天</span></div>
+  <div class="item-source"><a href="https://www.nanjixiong.com/thread-180526-1-1.html" target="_blank" rel="noopener">来源：南极熊3D打印网</a> <span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+<!-- 7 -->
+<div class="item specific-zone">
+  <div class="item-head">
+    <div class="num-dot">7</div>
+    <div class="item-title"><a href="https://www.nanjixiong.com/thread-180509-1-1.html" target="_blank">凯迪拉克F1车队引入3D Systems七台SLA打印机，加速新车研发与风洞测试</a></div>
+  </div>
+  <div class="item-summary">凯迪拉克F1车队在2026赛季引入3D Systems七台立体光刻（SLA）3D打印机，用于零部件研发与风洞测试，大幅缩短研发周期。SLA打印的精密零部件已应用于赛车空气动力学测试假件和定制工装夹具。<span class="tag">F1赛车</span><span class="tag">SLA</span><span class="tag">研发测试</span></div>
+  <div class="item-source"><a href="https://www.nanjixiong.com/thread-180509-1-1.html" target="_blank" rel="noopener">来源：南极熊3D打印网</a> <span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+<!-- 8 -->
+<div class="item specific-zone">
+  <div class="item-head">
+    <div class="num-dot">8</div>
+    <div class="item-title"><a href="https://3dprint.com/325875/harvards-jennifer-lewis-lab-is-3d-printing-artificial-muscles-that-twist-and-bend-on-demand/" target="_blank">哈佛Jennifer Lewis实验室3D打印自主运动人工肌肉，可按需弯曲与扭转</a></div>
+  </div>
+  <div class="item-summary">哈佛SEAS Jennifer Lewis实验室开发出新型3D打印材料，可实现自主运动——按需弯曲和扭转。这种可编程人工肌肉可用于软体机器人、医用植入物和可穿戴设备，标志3D打印从静态结构向动态功能器件跨越。<span class="tag">生物打印</span><span class="tag">软体机器人</span><span class="tag">哈佛</span></div>
+  <div class="item-source"><a href="https://3dprint.com/325875/harvards-jennifer-lewis-lab-is-3d-printing-artificial-muscles-that-twist-and-bend-on-demand/" target="_blank" rel="noopener">来源：3DPrint.com</a> <span class="from-tag from-3dprint">3DPrint</span></div>
+</div>
+
+<!-- 9 -->
+<div class="item specific-zone">
+  <div class="item-head">
+    <div class="num-dot">9</div>
+    <div class="item-title"><a href="https://www.3dnatives.com/en/3d-printing-electrodes-tailored-to-brains-11052026/" target="_blank">3D打印为个体大脑量身定制电极，神经科学新突破</a></div>
+  </div>
+  <div class="item-summary">3D打印技术在神经科学领域实现突破——为个体患者大脑解剖结构量身定制电极形状。这项应用可显著提高脑机接口（BCI）的信号采集精度和舒适度，减少手术植入创伤，推动癫痫治疗和神经康复领域革新。<span class="tag">医疗</span><span class="tag">脑机接口</span><span class="tag">神经科学</span></div>
+  <div class="item-source"><a href="https://www.3dnatives.com/en/3d-printing-electrodes-tailored-to-brains-11052026/" target="_blank" rel="noopener">来源：3Dnatives</a> <span class="from-tag from-3dnatives">3Dnatives</span></div>
+</div>
+
+<!-- 10 -->
+<div class="item specific-zone">
+  <div class="item-head">
+    <div class="num-dot">10</div>
+    <div class="item-title"><a href="https://www.sohu.com/a/1020146348_120723807" target="_blank">冠力科技3D打印432㎡二层别墅，24米超大型建筑3D打印机迪拜落成</a></div>
+  </div>
+  <div class="item-summary">冠力科技自主研发的24米超大型龙门式原位建筑3D打印机GL-3DPRT-C4，在迪拜完成一栋432平方米二层私人别墅的原位打印。该设备突破了大型建筑3D打印的空间限制，标志着中国建筑3D打印技术在中东市场实现商业化落地。<span class="tag">建筑打印</span><span class="tag">迪拜</span><span class="tag">冠力科技</span></div>
+  <div class="item-source"><a href="https://www.sohu.com/a/1020146348_120723807" target="_blank" rel="noopener">来源：搜狐科技</a> <span class="from-tag from-sina">搜狐</span></div>
+</div>
+
+<!-- ==================== 分区三：消费级赛道 ==================== -->
+<div class="section-title consumer" id="section-consumer">
+  <div class="icon"></div>
+  <span>消费级赛道</span>
+  <span style="font-size:11px;color:#9e9e9e;font-weight:400;margin-left:6px;">品牌 · 模型 · 生态</span>
+</div>
+
+<!-- 11 -->
+<div class="item consumer-zone">
+  <div class="item-head">
+    <div class="num-dot">11</div>
+    <div class="item-title"><a href="https://www.nanjixiong.com/thread-180527-1-1.html" target="_blank">入驻山姆后拓竹再推"极简配料表"耗材：PLA Pure纯净PLA</a></div>
+  </div>
+  <div class="item-summary">拓竹科技于2026年5月11日推出新款"极简风格"耗材——纯净PLA（PLA Pure），继入驻山姆会员商店后再度发力消费市场。该耗材主打极简配方，仅含PLA和颜料，不添加增韧剂或填充物，号称"极简配料表"，吸引对材料纯净度有要求的专业用户。<span class="tag">拓竹</span><span class="tag">耗材</span><span class="tag">山姆</span></div>
+  <div class="item-source"><a href="https://www.nanjixiong.com/thread-180527-1-1.html" target="_blank" rel="noopener">来源：南极熊3D打印网</a> <span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+<!-- 12 -->
+<div class="item consumer-zone">
+  <div class="item-head">
+    <div class="num-dot">12</div>
+    <div class="item-title"><a href="https://www.nanjixiong.com/thread-180511-1-1.html" target="_blank">拓竹杭州首店装修中：从"线上王者"到"线下霸主"的战略跃迁</a></div>
+  </div>
+  <div class="item-summary">杭州万象城二期出现拓竹科技门店装修围挡，这家从深圳起步、五年营收破百亿的企业正式布局线下零售渠道。继深圳直营店之后，杭州成为拓竹第二家线下门店，标志着消费级3D打印头部品牌加速线下渠道建设。<span class="tag">拓竹</span><span class="tag">线下零售</span><span class="tag">杭州</span></div>
+  <div class="item-source"><a href="https://www.nanjixiong.com/thread-180511-1-1.html" target="_blank" rel="noopener">来源：南极熊3D打印网</a> <span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+<!-- 13 -->
+<div class="item consumer-zone">
+  <div class="item-head">
+    <div class="num-dot">13</div>
+    <div class="item-title"><a href="https://www.nanjixiong.com/thread-180528-1-1.html" target="_blank">"消费级3D打印第一股"即将诞生：一级市场热度持续</a></div>
+  </div>
+  <div class="item-summary">在全球资本市场AI热潮下，3D打印作为链接物理世界与虚拟世界、将AI设计变成实物的关键技术，在一级市场同样备受关注。消费级3D打印领域迎来重要里程碑，创想三维的IPO将成为行业标志性事件，吸引更多资本关注。<span class="tag">资本市场</span><span class="tag">消费级</span><span class="tag">IPO</span></div>
+  <div class="item-source"><a href="https://www.nanjixiong.com/thread-180528-1-1.html" target="_blank" rel="noopener">来源：南极熊3D打印网</a> <span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+<!-- 14 -->
+<div class="item consumer-zone">
+  <div class="item-head">
+    <div class="num-dot">14</div>
+    <div class="item-title"><a href="https://finance.sina.com.cn/wm/2026-05-12/doc-inhxqvav0026524.shtml" target="_blank">创想三维港股IPO聆讯通过：招股书详解，2025年收入31.27亿元</a></div>
+  </div>
+  <div class="item-summary">创想三维招股书详解：2023-2025年收入分别约18.83亿元、22.88亿元、31.27亿元，保持快速增长。核心产品线涵盖Ender、K1、Cobra系列，海外收入占比超60%。5月12日启动PDIE，预计5月内正式登陆港交所，中金公司保荐。<span class="tag">招股书</span><span class="tag">收入</span><span class="tag">港股</span></div>
+  <div class="item-source"><a href="https://finance.sina.com.cn/wm/2026-05-12/doc-inhxqvav0026524.shtml" target="_blank" rel="noopener">来源：新浪财经</a> <span class="from-tag from-sina">新浪财经</span></div>
+</div>
+
+<!-- 15 -->
+<div class="item consumer-zone">
+  <div class="item-head">
+    <div class="num-dot">15</div>
+    <div class="item-title"><a href="https://www.sohu.com/a/1020886149_120723807" target="_blank">消费级3D打印周报：拓竹持续扩张，创想三维IPO在即</a></div>
+  </div>
+  <div class="item-summary">过去一周消费级3D打印市场动态：拓竹科技线下扩张提速（山姆+杭州首店）；创想三维冲刺港股；行业价格战持续但高端化趋势明显；多头挤出系统和全彩FDM技术成为新品竞争焦点。<span class="tag">周报</span><span class="tag">市场趋势</span><span class="tag">多头化</span></div>
+  <div class="item-source"><a href="https://www.sohu.com/a/1020886149_120723807" target="_blank" rel="noopener">来源：搜狐科技</a> <span class="from-tag from-sina">搜狐</span></div>
+</div>
+
+<!-- ==================== 分区四：细分市场Niche ==================== -->
+<div class="section-title niche" id="section-niche">
+  <div class="icon"></div>
+  <span>细分市场 Niche</span>
+  <span style="font-size:11px;color:#9e9e9e;font-weight:400;margin-left:6px;">价格段 · 应用场景 · 区域市场</span>
+</div>
+
+<!-- 16 -->
+<div class="item niche-zone">
+  <div class="item-head">
+    <div class="num-dot">16</div>
+    <div class="item-title"><a href="https://www.3dnatives.com/en/tpm3d-sls-3d-printing-orthopedic-surgery-06042026/" target="_blank">SLS 3D打印手术导板：骨科对齐误差从30%降至5%</a></div>
+  </div>
+  <div class="item-summary">选择性激光烧结（SLS）3D打印手术导板在骨科领域实现显著突破：对齐误差从传统方法的30%降至5%以下。TPM3D等厂商推动SLS手术导板的批量生产应用，已在膝关节、髋关节置换和脊柱手术中广泛验证精度和可靠性。<span class="tag">SLS</span><span class="tag">骨科</span><span class="tag">手术导板</span></div>
+  <div class="item-source"><a href="https://www.3dnatives.com/en/tpm3d-sls-3d-printing-orthopedic-surgery-06042026/" target="_blank" rel="noopener">来源：3Dnatives</a> <span class="from-tag from-3dnatives">3Dnatives</span></div>
+</div>
+
+<!-- 17 -->
+<div class="item niche-zone">
+  <div class="item-head">
+    <div class="num-dot">17</div>
+    <div class="item-title"><a href="https://www.nanjixiong.com/thread-180525-1-1.html" target="_blank">江南大学3D打印硅胶晶格结构：防霉性与隔振性兼备</a></div>
+  </div>
+  <div class="item-summary">江南大学与江达隔振器有限公司联合开发3D打印硅橡胶晶格结构，可有效防止真菌滋生，同时具备优异隔振性能。该材料可应用于精密仪器减振、医疗设备衬垫和高端家居领域，为硅胶3D打印开辟了防霉功能化新方向。<span class="tag">硅胶打印</span><span class="tag">江南大学</span><span class="tag">功能材料</span></div>
+  <div class="item-source"><a href="https://www.nanjixiong.com/thread-180525-1-1.html" target="_blank" rel="noopener">来源：南极熊3D打印网</a> <span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+<!-- 18 -->
+<div class="item niche-zone">
+  <div class="item-head">
+    <div class="num-dot">18</div>
+    <div class="item-title"><a href="https://www.sohu.com/a/1020886149_120723807" target="_blank">2026年3D打印价格段全景：谁在千元机市场，谁在专业级？</a></div>
+  </div>
+  <div class="item-summary">2026年消费级3D打印价格段分析：500-1000元入门级由Creality Ender-3系列主导；1000-3000元主流市场由拓竹Bambu Lab争夺；3000-8000元高端市场有Prusa XL、ELEGOO Jupiter等；万元级以上专业级市场由Stratasys、Formlabs把持。<span class="tag">价格段</span><span class="tag">市场分析</span><span class="tag">竞争格局</span></div>
+  <div class="item-source"><a href="https://www.sohu.com/a/1020886149_120723807" target="_blank" rel="noopener">来源：搜狐科技</a> <span class="from-tag from-sina">搜狐</span></div>
+</div>
+
+<!-- 19 -->
+<div class="item niche-zone">
+  <div class="item-head">
+    <div class="num-dot">19</div>
+    <div class="item-title"><a href="https://www.sohu.com/a/1020146348_120723807" target="_blank">冠力科技迪拜建筑3D打印落地：432㎡别墅原位打印完成</a></div>
+  </div>
+  <div class="item-summary">冠力科技24米超大型龙门式建筑3D打印机GL-3DPRT-C4在迪拜完成432平方米二层私人别墅原位打印。该项目标志着建筑3D打印从中东试验场走向商业化落地，也为国产大型建筑3D打印设备出口中东提供了示范。<span class="tag">建筑打印</span><span class="tag">迪拜</span><span class="tag">商业化</span></div>
+  <div class="item-source"><a href="https://www.sohu.com/a/1020146348_120723807" target="_blank" rel="noopener">来源：搜狐科技</a> <span class="from-tag from-sina">搜狐</span></div>
+</div>
+
+<!-- 20 -->
+<div class="item niche-zone">
+  <div class="item-head">
+    <div class="num-dot">20</div>
+    <div class="item-title"><a href="https://news.qq.com/rain/a/20260508A01X6900" target="_blank">中国增材制造2025年全面崛起：区域市场差异化竞争格局</a></div>
+  </div>
+  <div class="item-summary">2025年中国增材制造产业呈现区域差异化：珠三角（深圳、东莞）聚焦消费级和金属打印；长三角（上海、苏州）侧重工业级和材料；华中（武汉、长沙）发展齿科和医疗打印；西部（西安、成都）专注航空航天和国防应用。<span class="tag">区域市场</span><span class="tag">产业集群</span><span class="tag">差异化</span></div>
+  <div class="item-source"><a href="https://news.qq.com/rain/a/20260508A01X6900" target="_blank" rel="noopener">来源：腾讯新闻</a> <span class="from-tag from-qq">QQ新闻</span></div>
+</div>
+
+<!-- ==================== 分区五：场景×3D打印 ==================== -->
+<div class="section-title scenario" id="section-scenario">
+  <div class="icon"></div>
+  <span>场景×3D打印</span>
+  <span style="font-size:11px;color:#9e9e9e;font-weight:400;margin-left:6px;">教育 · 文创 · 家居 · 食品</span>
+</div>
+
+<!-- 21 -->
+<div class="item scenario-zone">
+  <div class="item-head">
+    <div class="num-dot">21</div>
+    <div class="item-title"><a href="https://www.3dnatives.com/en/7-reasons-why-3d-printed-food-12052026/" target="_blank">3D打印食品7大应用场景：从巧克力到数字烹饪</a></div>
+  </div>
+  <div class="item-summary">3D食品打印自2006年康奈尔大学Fab@Home（仅打印巧克力、饼干面团和奶酪）起步，如今已发展为完整的数字化生产方式。当前七大应用场景包括：定制营养食品、复杂几何甜点、医院/养老特殊膳食、食品模具制作、人造肉结构、航空航天口粮和餐饮创意设计。<span class="tag">食品打印</span><span class="tag">餐饮</span><span class="tag">数字烹饪</span></div>
+  <div class="item-source"><a href="https://www.3dnatives.com/en/7-reasons-why-3d-printed-food-12052026/" target="_blank" rel="noopener">来源：3Dnatives</a> <span class="from-tag from-3dnatives">3Dnatives</span></div>
+</div>
+
+<!-- 22 -->
+<div class="item scenario-zone">
+  <div class="item-head">
+    <div class="num-dot">22</div>
+    <div class="item-title"><a href="https://www.3dnatives.com/en/3d-printed-model-rome-08052026/" target="_blank">罗马terracotta城市模型：3D打印重现永恒之城的精细纹理</a></div>
+  </div>
+  <div class="item-summary">一个详细介绍的罗马城市模型通过3D打印技术得以实现，采用terracotta（赤陶）材料打印，再现了罗马古城的历史精细纹理。该项目展示了3D打印在建筑历史保护、城市规划和建筑设计可视化领域的独特价值。<span class="tag">文创</span><span class="tag">建筑模型</span><span class="tag">历史保护</span></div>
+  <div class="item-source"><a href="https://www.3dnatives.com/en/3d-printed-model-rome-08052026/" target="_blank" rel="noopener">来源：3Dnatives</a> <span class="from-tag from-3dnatives">3Dnatives</span></div>
+</div>
+
+<!-- 23 -->
+<div class="item scenario-zone">
+  <div class="item-head">
+    <div class="num-dot">23</div>
+    <div class="item-title"><a href="https://3dprint.com/325952/3d-people-details-development-of-3d-printed-pov-camera-rig/" target="_blank">3D People案例：可穿戴POV相机支架3D打印开发全程</a></div>
+  </div>
+  <div class="item-summary">3D People发布详细案例研究，记录可穿戴第一人称视角（POV）电影摄影相机支架的3D打印开发全程。从概念设计、拓扑优化、材料选择（尼龙 SLS + 碳纤维增强）到小批量生产，展示了消费级3D打印在影视器材定制领域的商业可行性。<span class="tag">可穿戴</span><span class="tag">影视器材</span><span class="tag">案例</span></div>
+  <div class="item-source"><a href="https://3dprint.com/325952/3d-people-details-development-of-3d-printed-pov-camera-rig/" target="_blank" rel="noopener">来源：3DPrint.com</a> <span class="from-tag from-3dprint">3DPrint</span></div>
+</div>
+
+<!-- 24 -->
+<div class="item scenario-zone">
+  <div class="item-head">
+    <div class="num-dot">24</div>
+    <div class="item-title"><a href="https://www.sohu.com/a/1020886149_120723807" target="_blank">3D打印教育创新：STEAM课堂的数字化制造实验</a></div>
+  </div>
+  <div class="item-summary">2026年3D打印在教育领域持续深化：从单纯的"打印展示"升级为"设计-制造-迭代"的完整STEAM课程。主流学校开始配置桌面FDM+光固化双机型，结合CAD教学，显著提升学生空间思维和工程设计能力。<span class="tag">教育</span><span class="tag">STEAM</span><span class="tag">数字化制造</span></div>
+  <div class="item-source"><a href="https://www.sohu.com/a/1020886149_120723807" target="_blank" rel="noopener">来源：搜狐科技</a> <span class="from-tag from-sina">搜狐</span></div>
+</div>
+
+<!-- 25 -->
+<div class="item scenario-zone">
+  <div class="item-head">
+    <div class="num-dot">25</div>
+    <div class="item-title"><a href="https://www.3dnatives.com/en/l3ad-3d-printing-mannequins-04052026/" target="_blank">大规模3D打印人台催生数字工厂平台：从模特道具到柔性制造</a></div>
+  </div>
+  <div class="item-summary">大型3D打印人台（Mannequin）批量生产推动了新型数字工厂平台诞生。L3AD公司通过大规模3D打印技术，以数字化方式按需制造人台，取代传统开模生产，实现小批量、多品种、快速交付的柔性制造模式，展示了3D打印从原型到批产的路径。<span class="tag">数字工厂</span><span class="tag">批量生产</span><span class="tag">柔性制造</span></div>
+  <div class="item-source"><a href="https://www.3dnatives.com/en/l3ad-3d-printing-mannequins-04052026/" target="_blank" rel="noopener">来源：3Dnatives</a> <span class="from-tag from-3dnatives">3Dnatives</span></div>
+</div>
+
+<!-- ==================== 分区六：海外资讯 ==================== -->
+<div class="section-title global" id="section-global">
+  <div class="icon"></div>
+  <span>海外资讯</span>
+  <span style="font-size:11px;color:#9e9e9e;font-weight:400;margin-left:6px;">国际 · 3Dnatives · 3DPrint</span>
+</div>
+
+<!-- 26 -->
+<div class="item global-zone">
+  <div class="item-head">
+    <div class="num-dot">26</div>
+    <div class="item-title"><a href="https://3dprint.com/325903/tectonic-3d-takes-over-solvay-3d-printing-materials-portfolio/" target="_blank">Tectonic 3D收购Solvay 3D打印材料组合：PEEK/CF10/PPSU全面纳入</a></div>
+  </div>
+  <div class="item-summary">高性能3D打印材料公司Tectonic 3D收购了Solvay（Syensqo）3D打印材料组合，包括PEEK AM Filament MS NT1、PEEK CF10 LS1、PPSU和NT1 HC等产品。此次收购扩大了Tectonic在航空航天、医疗和工业领域的高性能材料供应能力。<span class="tag">并购</span><span class="tag">材料</span><span class="tag">PEEK</span></div>
+  <div class="item-source"><a href="https://3dprint.com/325903/tectonic-3d-takes-over-solvay-3d-printing-materials-portfolio/" target="_blank" rel="noopener">来源：3DPrint.com</a> <span class="from-tag from-3dprint">3DPrint</span></div>
+</div>
+
+<!-- 27 -->
+<div class="item global-zone">
+  <div class="item-head">
+    <div class="num-dot">27</div>
+    <div class="item-title"><a href="https://3dprint.com/325933/3d-printing-financials-xometry-surges-after-record-quarter-and-siemens-deal/" target="_blank">Xometry财报飙升：Q1创纪录+西门子大单，股价大涨</a></div>
+  </div>
+  <div class="item-summary">Xometry（Nasdaq: XMTR）2026年Q1财报显示营收创纪录，并宣布与西门子达成重大合作。受此推动，股价大幅上涨。该公司作为按需制造 marketplace，整合全球数千家制造商，3D打印服务涵盖SLA、SLS、DMLS、FDM等全工艺。<span class="tag">财报</span><span class="tag">Xometry</span><span class="tag">西门子</span></div>
+  <div class="item-source"><a href="https://3dprint.com/325933/3d-printing-financials-xometry-surges-after-record-quarter-and-siemens-deal/" target="_blank" rel="noopener">来源：3DPrint.com</a> <span class="from-tag from-3dprint">3DPrint</span></div>
+</div>
+
+<!-- 28 -->
+<div class="item global-zone">
+  <div class="item-head">
+    <div class="num-dot">28</div>
+    <div class="item-title"><a href="https://3dprint.com/325962/3d-printing-drone-dominance-speed-performance-and-derisking-the-supply-chain/" target="_blank">美国国防部11亿美元"无人机主导权"计划推动3D打印应用</a></div>
+  </div>
+  <div class="item-summary">美国国防部启动11亿美元"无人机主导权"（Drone Dominance）计划，旨在以低成本、大规模量产单向攻击无人机（sUAS）。3D打印在供应链风险降低、快速原型和小批量生产中发挥关键作用，推动Desktop Metal、Markforged等公司国防业务增长。<span class="tag">国防</span><span class="tag">无人机</span><span class="tag">美国</span></div>
+  <div class="item-source"><a href="https://3dprint.com/325962/3d-printing-drone-dominance-speed-performance-and-derisking-the-supply-chain/" target="_blank" rel="noopener">来源：3DPrint.com</a> <span class="from-tag from-3dprint">3DPrint</span></div>
+</div>
+
+<!-- 29 -->
+<div class="item global-zone">
+  <div class="item-head">
+    <div class="num-dot">29</div>
+    <div class="item-title"><a href="https://3dprint.com/325937/first-containerized-aml3d-system-operational-at-us-navy-am-coe/" target="_blank">AML3D集装箱化3D打印系统在美国海军增材制造中心投入运营</a></div>
+  </div>
+  <div class="item-summary">Austal USA宣布推出数字SEA（Secure Exchange for Additive）平台，扩大美国海军增材制造中心（AM CoE）对增材制造的访问。同时，AML3D的集装箱化3D打印系统已在美国海军AM CoE投入运营，提供便携式、按需制造能力。<span class="tag">海军</span><span class="tag">AML3D</span><span class="tag">集装箱化</span></div>
+  <div class="item-source"><a href="https://3dprint.com/325937/first-containerized-aml3d-system-operational-at-us-navy-am-coe/" target="_blank" rel="noopener">来源：3DPrint.com</a> <span class="from-tag from-3dprint">3DPrint</span></div>
+</div>
+
+<!-- 30 -->
+<div class="item global-zone">
+  <div class="item-head">
+    <div class="num-dot">30</div>
+    <div class="item-title"><a href="https://www.3dnatives.com/en/waamathon-2026-05052026/" target="_blank">WAAMathon 2026：西门子能源+GEFERTEC将WAAM推向批量生产</a></div>
+  </div>
+  <div class="item-summary">2026年6月11日柏林WAAMathon大会预览，西门子能源与GEFERTEC正在将电弧增材制造（WAAM）技术推向批量生产水平。WAAM以金属丝为原料，成本低、速度快，适合大型金属零件的近净形制造，正在颠覆传统铸造市场。<span class="tag">WAAM</span><span class="tag">西门子</span><span class="tag">批量生产</span></div>
+  <div class="item-source"><a href="https://www.3dnatives.com/en/waamathon-2026-05052026/" target="_blank" rel="noopener">来源：3Dnatives</a> <span class="from-tag from-3dnatives">3Dnatives</span></div>
+</div>
+
+<!-- ==================== 分区七：用户口碑 ==================== -->
+<div class="section-title feedback" id="section-feedback">
+  <div class="icon"></div>
+  <span>用户口碑</span>
+  <span style="font-size:11px;color:#9e9e9e;font-weight:400;margin-left:6px;">横评 · 实测 · 社区讨论</span>
+</div>
+
+<!-- 31 -->
+<div class="item feedback-zone">
+  <div class="item-head">
+    <div class="num-dot">31</div>
+    <div class="item-title"><a href="https://3dprint.com/325959/3d-printing-financials-stratasys-bets-on-defense-and-drones-as-printer-sales-slow/" target="_blank">Stratasys财报：打印机销售放缓，押注国防和无人机赛道</a></div>
+  </div>
+  <div class="item-summary">Stratasys（Nasdaq: SSYS）2026年初财报显示营收下降、亏损扩大，客户对新3D打印机的采购放缓。公司战略转向国防和无人机应用，收购Hanaan等公司强化聚合物AM能力。社区评价分化：看好国防转型，但担忧消费级市场竞争力下降。<span class="tag">Stratasys</span><span class="tag">财报</span><span class="tag">国防</span></div>
+  <div class="item-source"><a href="https://3dprint.com/325959/3d-printing-financials-stratasys-bets-on-defense-and-drones-as-printer-sales-slow/" target="_blank" rel="noopener">来源：3DPrint.com</a> <span class="from-tag from-3dprint">3DPrint</span></div>
+</div>
+
+<!-- 32 -->
+<div class="item feedback-zone">
+  <div class="item-head">
+    <div class="num-dot">32</div>
+    <div class="item-title"><a href="https://3dprint.com/325926/3d-printing-financials-materialise-improves-margins-despite-flat-revenue/" target="_blank">Materialise 2026 Q1：收入持平但利润率提升，医疗业务驱动</a></div>
+  </div>
+  <div class="item-summary">Materialise（Euronext/NASDAQ: MTLS）2026年Q1财报：收入稳定，利润率改善，营业利润增长，医疗板块是核心驱动力。其Magics 3D打印软件平台持续更新，用户好评集中在医疗齿科和复杂结构设计功能。<span class="tag">Materialise</span><span class="tag">财报</span><span class="tag">医疗</span></div>
+  <div class="item-source"><a href="https://3dprint.com/325926/3d-printing-financials-materialise-improves-margins-despite-flat-revenue/" target="_blank" rel="noopener">来源：3DPrint.com</a> <span class="from-tag from-3dprint">3DPrint</span></div>
+</div>
+
+<!-- 33 -->
+<div class="item feedback-zone">
+  <div class="item-head">
+    <div class="num-dot">33</div>
+    <div class="item-title"><a href="https://3dprint.com/325889/3d-printing-financials-protolabs-starts-2026-strong-metal-3d-printing-stands-out/" target="_blank">Protolabs 2026 Q1开门红：金属3D打印领跑，营收利润双增长</a></div>
+  </div>
+  <div class="item-summary">Protolabs（NYSE: PRLB）2026年Q1财报强劲，营收增长、利润率改善，金属3D打印（SLS/DMLS/MJP）表现突出。用户社区反馈其按需制造服务响应速度快（最快24小时交付），价格透明，是工程师和设计师快速打样的首选平台。<span class="tag">Protolabs</span><span class="tag">财报</span><span class="tag">金属打印</span></div>
+  <div class="item-source"><a href="https://3dprint.com/325889/3d-printing-financials-protolabs-starts-2026-strong-metal-3d-printing-stands-out/" target="_blank" rel="noopener">来源：3DPrint.com</a> <span class="from-tag from-3dprint">3DPrint</span></div>
+</div>
+
+<!-- 34 -->
+<div class="item feedback-zone">
+  <div class="item-head">
+    <div class="num-dot">34</div>
+    <div class="item-title"><a href="https://3dprint.com/325879/indopacom-advanced-manufacturing-team-saves-thousands-per-week-at-joint-exercise-in-the-philippines/" target="_blank">美国印太司令部3D打印团队菲律宾联合军演：每周节省数千美元</a></div>
+  </div>
+  <div class="item-summary">美国印太司令部（INDOPACOM）先进制造团队在菲律宾联合军演中展示了显著的3D打印应用效果：每周节省数千美元的备件成本，并大幅缩短了战场备件供应时间。该团队配备的Schofield Barracks增材制造设施证明了军方3D打印的现实价值。<span class="tag">国防</span><span class="tag">军演</span><span class="tag">美国印太</span></div>
+  <div class="item-source"><a href="https://3dprint.com/325879/indopacom-advanced-manufacturing-team-saves-thousands-per-week-at-joint-exercise-in-the-philippines/" target="_blank" rel="noopener">来源：3DPrint.com</a> <span class="from-tag from-3dprint">3DPrint</span></div>
+</div>
+
+<!-- 35 -->
+<div class="item feedback-zone">
+  <div class="item-head">
+    <div class="num-dot">35</div>
+    <div class="item-title"><a href="https://3dprint.com/325915/fabric8labs-university-of-illinois-collaborate-on-3d-printed-copper-cold-plates-for-data-centers/" target="_blank">Fabric8Labs×伊利诺伊大学：3D打印铜质冷板革新数据中心散热</a></div>
+  </div>
+  <div class="item-summary">Fabric8Labs与伊利诺伊大学合作开发3D打印铜质冷板，应用于数据中心冷却。与传统机加工冷板相比，3D打印的仿生流道设计可提升散热效率30%以上，降低数据中心PUE（能效利用率），解决AI算力爆发带来的散热瓶颈问题。<span class="tag">铜打印</span><span class="tag">数据中心</span><span class="tag">散热</span></div>
+  <div class="item-source"><a href="https://3dprint.com/325915/fabric8labs-university-of-illinois-collaborate-on-3d-printed-copper-cold-plates-for-data-centers/" target="_blank" rel="noopener">来源：3DPrint.com</a> <span class="from-tag from-3dprint">3DPrint</span></div>
+</div>
+
+<!-- 底部 -->
+<div class="footer">
+  📅 2026年5月12日 · 星期二 · 第12期简报<br>
+  3D打印行业每日资讯 · <a href="https://github.com/Cruise-Ling" target="_blank">by Cruise</a>
+</div>
+
+</div>
+
+<script>
+// 导航切换
+document.querySelectorAll('.nav-btn[data-section]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+// 滚动到分区
+function scrollToSection(id) {
+  const el = document.getElementById('section-' + id);
+  if (el) {
+    const offset = 80;
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
+    // 高亮
+    el.classList.remove('section-highlight');
+    void el.offsetWidth;
+    el.classList.add('section-highlight');
+  }
+}
+
+// 滚动监听：自动高亮当前分区
+const sections = ['general','specific','consumer','global','feedback','niche','scenario'];
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id.replace('section-','');
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      const btn = document.getElementById('nav-btn-' + id);
+      if (btn) btn.classList.add('active');
+    }
+  });
+}, { threshold: 0.2 });
+sections.forEach(id => {
+  const el = document.getElementById('section-' + id);
+  if (el) observer.observe(el);
+});
+</script>
+</body>
+</html>
