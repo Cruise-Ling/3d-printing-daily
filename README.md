@@ -29,6 +29,7 @@
 
 | 日期 Date | 链接 Link |
 |----------|-----------|
+| 2026-05-12 (Tue) | [briefing_20260512.html](briefing_20260512.html) |
 | 2026-05-11 (Mon) | [briefing_20260511.html](briefing_20260511.html) |
 | 2026-05-10 (Sun) | [briefing_20260510.html](briefing_20260510.html) |
 | 2026-05-09 (Sat) | [briefing_20260509.html](briefing_20260509.html) |
