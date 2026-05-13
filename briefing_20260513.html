@@ -8,7 +8,7 @@
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; display:flex; justify-content:center; padding:12px 0; }
-.card { width:375px; background:#fff; border-radius:12px; box-shadow:0 4px 24px rgba(0,0,0,.06); overflow:hidden; }
+.card { width:375px; background:#fff; border-radius:12px; box-shadow:0 4px 24px rgba(0,0,0,.06); overflow:clip; }
 
 /* 标题栏 */
 .header { background:linear-gradient(135deg,#1a237e,#283593,#3949ab); padding:24px 20px 18px; color:#fff; position:relative; }
@@ -83,8 +83,8 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
 .from-msn { background:#e3f2fd; color:#1565c0; }
 .from-eeo { background:#fff8e1; color:#f57f17; }
 
-/* 分区导航栏 - 顶部固定 */
-.section-nav { display:flex; gap:6px; padding:10px 20px; background:#fafbff; border-bottom:1px solid #f0f0f0; flex-wrap:wrap; position:sticky; top:0; z-index:100; }
+/* 分区导航栏 - 移动端固定在顶部 */
+.section-nav { display:flex; gap:6px; padding:10px 12px; background:#fff; border-bottom:1px solid #f0f0f0; flex-wrap:wrap; z-index:300; }
 .section-nav .nav-btn { display:inline-flex; align-items:center; gap:5px; padding:5px 12px; border-radius:20px; border:1px solid #e0e0e0; background:#fff; font-size:12px; color:#555; cursor:pointer; transition:all .2s; user-select:none; }
 .section-nav .nav-btn:hover { border-color:#999; }
 .section-nav .nav-btn.active { font-weight:500; border-width:1.5px; }
@@ -132,10 +132,12 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
   width:8px;height:8px;border-radius:50%;flex-shrink:0;
 }
 
-/* 移动端：左侧导航隐藏，顶部导航加强 */
+/* 移动端：左侧导航隐藏，顶部导航固定悬浮 */
 @media (max-width:767px) {
   .side-nav { display:none; }
-  .section-nav { position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+  .section-nav { position:fixed; top:0; left:0; right:0; width:100%; box-shadow:0 2px 12px rgba(0,0,0,.1); border-radius:0; padding:10px 12px; justify-content:flex-start; overflow-x:auto; flex-wrap:nowrap; -webkit-overflow-scrolling:touch; }
+  .section-nav::-webkit-scrollbar { display:none; }
+  .card { margin-top:52px; }
 }
 @media (min-width:768px) {
   .section-nav { display:none; }
@@ -225,6 +227,18 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
   </div>
 </div>
 
+<!-- 分区导航（移动端固定悬浮，位于card外部以支持fixed定位） -->
+<div class="section-nav" id="sectionNav">
+  <div class="nav-btn" onclick="location.href='index.html'"><span class="dot" style="background:#999;"></span>← 首页</div>
+  <div class="nav-btn" id="nav-btn-general" onclick="scrollToSection('general')"><span class="dot" style="background:#1a73e8;"></span>泛行业</div>
+  <div class="nav-btn" id="nav-btn-specific" onclick="scrollToSection('specific')"><span class="dot" style="background:#e65100;"></span>细分领域</div>
+  <div class="nav-btn" id="nav-btn-consumer" onclick="scrollToSection('consumer')"><span class="dot" style="background:#2e7d32;"></span>消费级</div>
+  <div class="nav-btn" id="nav-btn-niche" onclick="scrollToSection('niche')"><span class="dot" style="background:#d84315;"></span>细分市场</div>
+  <div class="nav-btn" id="nav-btn-scenario" onclick="scrollToSection('scenario')"><span class="dot" style="background:#00695c;"></span>场景打印</div>
+  <div class="nav-btn" id="nav-btn-global" onclick="scrollToSection('global')"><span class="dot" style="background:#7b1fa2;"></span>海外</div>
+  <div class="nav-btn" id="nav-btn-feedback" onclick="scrollToSection('feedback')"><span class="dot" style="background:#00838f;"></span>用户口碑</div>
+</div>
+
 <div class="card">
 
 <!-- 标题栏 -->
@@ -278,18 +292,6 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
   <span class="stats-pill warn"><b>重磅</b> 全部A级</span>
   <span class="stats-pill"><b>全带外链</b></span>
   <span class="stats-pill" title="外链-标题关联度"><b>关联度</b> <span style="background:#d4edda;color:#155724;padding:2px 6px;border-radius:8px;font-size:11px;">✅A:35</span></span>
-</div>
-
-<!-- 分区导航 -->
-<div class="section-nav" id="sectionNav">
-  <div class="nav-btn" onclick="location.href='index.html'"><span class="dot" style="background:#999;"></span>← 首页</div>
-  <div class="nav-btn" id="nav-btn-general" onclick="scrollToSection('general')"><span class="dot" style="background:#1a73e8;"></span>泛行业</div>
-  <div class="nav-btn" id="nav-btn-specific" onclick="scrollToSection('specific')"><span class="dot" style="background:#e65100;"></span>细分领域</div>
-  <div class="nav-btn" id="nav-btn-consumer" onclick="scrollToSection('consumer')"><span class="dot" style="background:#2e7d32;"></span>消费级</div>
-  <div class="nav-btn" id="nav-btn-niche" onclick="scrollToSection('niche')"><span class="dot" style="background:#d84315;"></span>细分市场</div>
-  <div class="nav-btn" id="nav-btn-scenario" onclick="scrollToSection('scenario')"><span class="dot" style="background:#00695c;"></span>场景打印</div>
-  <div class="nav-btn" id="nav-btn-global" onclick="scrollToSection('global')"><span class="dot" style="background:#7b1fa2;"></span>海外</div>
-  <div class="nav-btn" id="nav-btn-feedback" onclick="scrollToSection('feedback')"><span class="dot" style="background:#00838f;"></span>用户口碑</div>
 </div>
 
 <!-- ==================== 分区一：泛行业资讯 ==================== -->
@@ -712,7 +714,8 @@ document.querySelectorAll('.nav-btn[data-section]').forEach(btn => {
 function scrollToSection(id) {
   const el = document.getElementById('section-' + id);
   if (el) {
-    const offset = 80;
+    const isMobile = window.innerWidth <= 767;
+    const offset = isMobile ? 60 : 80;
     const top = el.getBoundingClientRect().top + window.scrollY - offset;
     window.scrollTo({ top, behavior: 'smooth' });
     el.classList.remove('section-highlight');
