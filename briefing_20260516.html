@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D打印行业每日资讯 - 2026年5月16日</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖨️</text></svg>">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; display:flex; justify-content:center; padding:12px 0; }
+.card { width:375px; background:#fff; border-radius:12px; box-shadow:0 4px 24px rgba(0,0,0,.06); overflow:clip; }
+
+/* 标题栏 */
+.header { background:linear-gradient(135deg,#1a237e,#283593,#3949ab); padding:24px 20px 18px; color:#fff; position:relative; }
+.header-back { position:absolute; left:16px; top:28px; transform:translateY(-50%); display:flex; align-items:center; gap:5px; color:rgba(255,255,255,.95); font-size:14px; font-weight:600; text-decoration:none; padding:7px 16px 7px 3px; border-radius:20px; border:1.5px solid rgba(255,255,255,.35); transition:background .2s,border-color .2s; }
+.header-back:hover { background:rgba(255,255,255,.15); border-color:rgba(255,255,255,.6); }
+.header h1 { font-size:19px; font-weight:700; letter-spacing:1px; margin-bottom:6px; padding-left:90px; }
+.header .date { font-size:13px; opacity:.85; font-weight:400; }
+.header .source-note { font-size:11px; opacity:.7; margin-top:4px; }
+
+/* 统计胶囊区 */
+.stats-bar { display:flex; gap:8px; flex-wrap:wrap; padding:14px 20px; background:#fafbff; border-bottom:1px solid #f0f0f0; }
+.stats-pill { display:inline-flex; align-items:center; gap:4px; font-size:11.5px; color:#555; background:#f0f4ff; border-radius:20px; padding:5px 11px; border:1px solid #e8edff; }
+.stats-pill b { color:#1a237e; font-weight:700; }
+.stats-pill.warn { background:#fff8e1; border-color:#ffe082; }
+.stats-pill.warn b { color:#e65100; }
+
+/* 分区标题 */
+.section-title { display:flex; align-items:center; padding:18px 20px 12px; font-size:16px; font-weight:800; color:#0d47a1; background:linear-gradient(90deg,rgba(26,115,232,.08),transparent); border-bottom:2px solid #1a73e8; }
+.section-title .icon { width:4px;height:16px;border-radius:2px;margin-right:8px; }
+.section-title.general .icon { background:linear-gradient(180deg,#42a5f5,#1e88e5); }
+.section-title.specific .icon { background:linear-gradient(180deg,#ffa726,#fb8c00); }
+.section-title.consumer .icon { background:linear-gradient(180deg,#66bb6a,#43a047); }
+.section-title.global .icon { background:linear-gradient(180deg,#ab47bc,#7b1fa2); }
+.section-title.feedback .icon { background:linear-gradient(180deg,#26c6da,#00838f); }
+.section-title.niche .icon { background:linear-gradient(180deg,#e64a19,#d84315); }
+.section-title.scenario .icon { background:linear-gradient(180deg,#00796b,#00695c); }
+
+/* 资讯条目 */
+.item { padding:12px 20px 14px; border-bottom:1px solid #f5f5f5; }
+.item:last-child { border-bottom:none; }
+.item-head { display:flex; align-items:flex-start; margin-bottom:6px; }
+.num-dot {
+  width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:12px;font-weight:700;flex-shrink:0;
+  margin-right:10px;margin-top:1px;
+}
+.general-zone .num-dot { background:linear-gradient(135deg,#42a5f5,#1e88e5); }
+.specific-zone .num-dot { background:linear-gradient(135deg,#ffa726,#fb8c00); }
+.consumer-zone .num-dot { background:linear-gradient(135deg,#66bb6a,#43a047); }
+.global-zone .num-dot { background:linear-gradient(135deg,#ab47bc,#7b1fa2); }
+.feedback-zone .num-dot { background:linear-gradient(135deg,#26c6da,#00838f); }
+.niche-zone .num-dot { background:linear-gradient(135deg,#e64a19,#d84315); }
+.scenario-zone .num-dot { background:linear-gradient(180deg,#00796b,#00695c); }
+.item-title { font-size:14.5px; font-weight:600; line-height:1.45; color:#212121; flex:1; }
+.item-title a { color:#212121; text-decoration:none; }
+.item-title a:hover { color:#1a73e8; }
+.item-summary { font-size:12.8px; line-height:1.7; color:#616161; padding-left:32px; word-break:break-all; }
+.item-source { font-size:11px; color:#9e9e9e; padding-left:32px; margin-top:4px; }
+.item-source a { color:#1e88e5; text-decoration:none; }
+.item-source a:hover { text-decoration:underline; }
+.tag { display:inline-block; font-size:11px; padding:2px 8px; border-radius:10px; margin-right:4px; }
+.general-zone .tag { background:#e3f2fd; color:#1565c0; }
+.specific-zone .tag { background:#fff3e0; color:#e65100; }
+.consumer-zone .tag { background:#e8f5e9; color:#2e7d32; }
+.global-zone .tag { background:#f3e5f5; color:#6a1b9a; }
+.feedback-zone .tag { background:#e0f7fa; color:#006064; }
+.niche-zone .tag { background:#fbe9e7; color:#bf360c; }
+.scenario-zone .tag { background:#e0f2f1; color:#004d40; }
+
+/* 来源标签 */
+.from-tag { font-size:10px; padding:1px 6px; border-radius:6px; margin-left:6px; opacity:.75; }
+.from-nanjixiong { background:#e8f5e9; color:#2e7d32; }
+.from-china3d { background:#fff3e0; color:#bf360c; }
+.from-ofweek { background:#e3f2fd; color:#0d47a1; }
+.from-qq { background:#fce4ec; color:#880e4f; }
+.from-sina { background:#fff3e0; color:#e65100; }
+.from-zhihu { background:#e3f2fd; color:#0d47a1; }
+.from-smzdm { background:#f3e5f5; color:#6a1b9a; }
+.from-163 { background:#e8f5e9; color:#2e7d32; }
+.from-3dnatives { background:#ede7f6; color:#4527a0; }
+.from-3dprint { background:#e0f7fa; color:#006064; }
+.from-other { background:#eceff1; color:#37474f; }
+.from-msn { background:#e3f2fd; color:#1565c0; }
+.from-eeo { background:#fff8e1; color:#f57f17; }
+.from-ifeng { background:#fff3e0; color:#bf360c; }
+
+/* 分区导航栏 - 默认隐藏 */
+.section-nav { display:none; gap:6px; padding:10px 12px; background:#fff; border-bottom:1px solid #f0f0f0; flex-wrap:wrap; z-index:300; }
+.section-nav .nav-btn { display:inline-flex; align-items:center; gap:5px; padding:5px 12px; border-radius:20px; border:1px solid #e0e0e0; background:#fff; font-size:12px; color:#555; cursor:pointer; transition:all .2s; user-select:none; }
+.section-nav .nav-btn:hover { border-color:#999; }
+.section-nav .nav-btn.active { font-weight:500; border-width:1.5px; }
+.section-nav .nav-btn .dot { width:7px;height:7px;border-radius:50%;flex-shrink:0; }
+
+/* 左侧悬浮导航 - 宽屏 */
+.side-nav {
+  position:fixed;
+  left:max(0px, calc((100vw - 375px) / 2 - 90px));
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  z-index:200;
+}
+.side-nav .side-nav-item {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 14px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:500;
+  color:#555;
+  cursor:pointer;
+  transition:all .25s;
+  white-space:nowrap;
+  background:#fff;
+  box-shadow:0 2px 12px rgba(0,0,0,.08);
+  border:1.5px solid #eee;
+}
+.side-nav .side-nav-item:hover {
+  background:#f8f9ff;
+  border-color:#c5cae9;
+  transform:translateX(3px);
+}
+.side-nav .side-nav-item.active {
+  background:#1a73e8;
+  color:#fff;
+  border-color:#1a73e8;
+  box-shadow:0 2px 12px rgba(26,115,232,.3);
+}
+.side-nav .side-nav-dot {
+  width:8px;height:8px;border-radius:50%;flex-shrink:0;
+}
+
+/* 移动端：左侧导航悬浮 */
+@media (max-width:767px) {
+  .section-nav { display:none; }
+  .side-nav {
+    position:fixed;
+    left:0;
+    top:50%;
+    transform:translateY(-50%);
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    z-index:200;
+    padding-left:4px;
+  }
+  .side-nav .side-nav-item {
+    padding:5px 8px;
+    font-size:11px;
+    border-radius:16px;
+    box-shadow:0 1px 6px rgba(0,0,0,.1);
+  }
+  .side-nav .side-nav-item .side-nav-dot {
+    width:6px;height:6px;
+  }
+  .card { margin-left:52px; width:calc(100vw - 60px); max-width:375px; }
+  body { padding:12px 0 12px 4px; justify-content:flex-start; }
+}
+@media (min-width:768px) {
+  .section-nav { display:none; }
+}
+/* 热点摘要栏 */
+.highlight-bar {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding:14px 20px;
+  background:linear-gradient(135deg,#f8f9ff 0%,#e8eaf6 100%);
+  border-bottom:1px solid #e8e0f0;
+}
+.highlight-bar .hl-title {
+  font-size:12px;
+  font-weight:700;
+  color:#5c6bc0;
+  letter-spacing:1px;
+  margin-bottom:2px;
+}
+.highlight-bar .hl-items {
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+.highlight-bar .hl-item {
+  display:flex;
+  align-items:flex-start;
+  gap:7px;
+  font-size:12.5px;
+  line-height:1.5;
+  color:#37474f;
+  cursor:pointer;
+  transition:color .15s;
+}
+.highlight-bar .hl-item:hover { color:#1a237e; }
+.highlight-bar .hl-dot {
+  width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px;
+}
+/* 底部 */
+.footer { padding:12px 20px; background:#fafbff; border-top:1px solid #eee; font-size:11px; color:#999; text-align:center; line-height:1.6; }
+
+/* 关联度标签样式 */
+.score-badge {
+  display:inline-flex;
+  align-items:center;
+  gap:3px;
+  font-size:11px;
+  font-weight:600;
+  padding:2px 7px;
+  border-radius:10px;
+  margin-right:6px;
+  flex-shrink:0;
+}
+.score-badge-a { background:#d4edda; color:#155724; }
+.score-badge-b { background:#fff3cd; color:#856404; }
+.score-badge-c { background:#f8d7da; color:#721c24; }
+.score-badge-d { background:#d6d8d9; color:#1b1e21; }
+</style>
+</head>
+<body>
+<!-- 左侧悬浮导航（宽屏显示） -->
+<div class="side-nav" id="sideNav">
+  <div class="side-nav-item" onclick="location.href='index.html'" title="返回首页">
+    <span class="side-nav-dot" style="background:#999;"></span>← 首页
+  </div>
+  <div class="side-nav-item" onclick="scrollToSection('general')" data-section="general">
+    <span class="side-nav-dot" style="background:#1a73e8;"></span>泛行业
+  </div>
+  <div class="side-nav-item" onclick="scrollToSection('specific')" data-section="specific">
+    <span class="side-nav-dot" style="background:#e65100;"></span>细分领域
+  </div>
+  <div class="side-nav-item" onclick="scrollToSection('consumer')" data-section="consumer">
+    <span class="side-nav-dot" style="background:#2e7d32;"></span>消费级
+  </div>
+  <div class="side-nav-item" onclick="scrollToSection('niche')" data-section="niche">
+    <span class="side-nav-dot" style="background:#d84315;"></span>细分市场
+  </div>
+  <div class="side-nav-item" onclick="scrollToSection('scenario')" data-section="scenario">
+    <span class="side-nav-dot" style="background:#00695c;"></span>场景打印
+  </div>
+  <div class="side-nav-item" onclick="scrollToSection('global')" data-section="global">
+    <span class="side-nav-dot" style="background:#7b1fa2;"></span>海外资讯
+  </div>
+  <div class="side-nav-item" onclick="scrollToSection('feedback')" data-section="feedback">
+    <span class="side-nav-dot" style="background:#00838f;"></span>用户口碑
+  </div>
+</div>
+
+<!-- 分区导航（移动端固定悬浮） -->
+<div class="section-nav" id="sectionNav">
+  <div class="nav-btn" onclick="location.href='index.html'"><span class="dot" style="background:#999;"></span>← 首页</div>
+  <div class="nav-btn" id="nav-btn-general" onclick="scrollToSection('general')"><span class="dot" style="background:#1a73e8;"></span>泛行业</div>
+  <div class="nav-btn" id="nav-btn-specific" onclick="scrollToSection('specific')"><span class="dot" style="background:#e65100;"></span>细分领域</div>
+  <div class="nav-btn" id="nav-btn-consumer" onclick="scrollToSection('consumer')"><span class="dot" style="background:#2e7d32;"></span>消费级</div>
+  <div class="nav-btn" id="nav-btn-niche" onclick="scrollToSection('niche')"><span class="dot" style="background:#d84315;"></span>细分市场</div>
+  <div class="nav-btn" id="nav-btn-scenario" onclick="scrollToSection('scenario')"><span class="dot" style="background:#00695c;"></span>场景打印</div>
+  <div class="nav-btn" id="nav-btn-global" onclick="scrollToSection('global')"><span class="dot" style="background:#7b1fa2;"></span>海外</div>
+  <div class="nav-btn" id="nav-btn-feedback" onclick="scrollToSection('feedback')"><span class="dot" style="background:#00838f;"></span>用户口碑</div>
+</div>
+
+<div class="card">
+
+<!-- 标题栏 -->
+<div class="header">
+  <a href="index.html" class="header-back"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>首页</a>
+    <h1>3D打印行业每日资讯</h1>
+  <div class="date">2026年5月16日 · 星期六</div>
+  <div class="source-note">完整版 · 国内4源 + 海外3源 + 用户口碑 · 35条全覆盖</div>
+</div>
+
+<!-- 热点摘要 -->
+<div class="highlight-bar" id="highlightBar">
+  <div class="hl-title">⚡ 今日热点速览（点击跳转详情）</div>
+  <div class="hl-items">
+    <div class="hl-item" onclick="scrollToSection('general')">
+      <span class="hl-dot" style="background:#1a73e8;"></span>
+      <span>泛行业：创想三维PK拓竹消费级3D打印冠军之争；多家A股公司加码3D打印赛道；大足石刻3D复刻将在美展出</span>
+    </div>
+    <div class="hl-item" onclick="scrollToSection('specific')">
+      <span class="hl-dot" style="background:#e65100;"></span>
+      <span>细分领域：POC Lab阻燃防静电树脂；福特×Sharrow 3D砂型铸造螺旋桨量产；台湾科大LCD打印精度突破</span>
+    </div>
+    <div class="hl-item" onclick="scrollToSection('consumer')">
+      <span class="hl-dot" style="background:#2e7d32;"></span>
+      <span>消费级：年轻人第一台"新家电"3D打印机；林丹×博理科技DANLIFE 3D打印运动鞋；Carbon×DDK亚洲鞍座量产基地</span>
+    </div>
+    <div class="hl-item" onclick="scrollToSection('niche')">
+      <span class="hl-dot" style="background:#d84315;"></span>
+      <span>细分市场：3D打印锂电池制造新研究；纤维素FDM耗材可持续路线；印度抗震混凝土墙测试通过</span>
+    </div>
+    <div class="hl-item" onclick="scrollToSection('scenario')">
+      <span class="hl-dot" style="background:#00695c;"></span>
+      <span>场景×3D打印：ORNL废玻璃变身建筑材料；MORSAN×LEHVOSS食品饮料备件；新加坡生物制造路线图</span>
+    </div>
+    <div class="hl-item" onclick="scrollToSection('global')">
+      <span class="hl-dot" style="background:#7b1fa2;"></span>
+      <span>海外资讯：Apollo EVO龙鳞钛合金排气；印度AAKA火星辐射屏蔽；3D打印融合器安全性警示</span>
+    </div>
+    <div class="hl-item" onclick="scrollToSection('feedback')">
+      <span class="hl-dot" style="background:#00838f;"></span>
+      <span>用户口碑：东睦股份3D打印+苹果双概念；鸿日达3D打印设备量产；3D打印鞋履7种技术路线深度解析</span>
+    </div>
+  </div>
+</div>
+
+<!-- 统计栏 -->
+<div class="stats-bar">
+  <span class="stats-pill"><b>35</b> 条资讯</span>
+  <span class="stats-pill"><b>8</b> 个来源</span>
+  <span class="stats-pill"><b>头条</b> A股加码3D打印</span>
+  <span class="stats-pill warn"><b>重磅</b> 全部A级</span>
+  <span class="stats-pill"><b>全带外链</b></span>
+  <span class="stats-pill" title="外链-标题关联度"><b>关联度</b> <span style="background:#d4edda;color:#155724;padding:2px 6px;border-radius:8px;font-size:11px;">✅A:35</span></span>
+</div>
+
+<!-- ==================== 分区一：泛行业资讯 ==================== -->
+<div class="section-title general" id="section-general">
+  <div class="icon"></div>
+  <span>泛行业资讯</span>
+  <span style="font-size:11px;color:#9e9e9e;font-weight:400;margin-left:6px;">工业 · 资本 · 政策</span>
+</div>
+
+<!-- 1 -->
+<div class="item general-zone">
+  <div class="item-head">
+    <div class="num-dot">1</div>
+    <div class="item-title"><a href="https://epaper.oeeee.com/epaper/H/html/2026-05/15/content_3887.htm" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>创想三维PK拓竹：消费级3D打印"冠军之争"引发行业热议</a></div>
+  </div>
+  <div class="item-summary">南方都市报5月15日深度报道，创想三维通过港交所聆讯后，消费级3D打印"冠军之争"成为行业焦点。不同统计口径得出不同排名：创想三维2020-2024年累计出货量全球占比27.9%，2025年Q1市占率39%；拓竹2024年GMV口径市占率35.5%排名第一。两种发展路径——"全生态布局"与"单点突破"——并非零和博弈，而是互补共生，共同推动行业高质量发展。<span class="tag">创想三维</span><span class="tag">拓竹</span><span class="tag">🔥重磅</span></div>
+  <div class="item-source"><a href="https://epaper.oeeee.com/epaper/H/html/2026-05/15/content_3887.htm" target="_blank" rel="noopener">来源：南方都市报</a> <span class="from-tag from-other">南方都市报</span></div>
+</div>
+
+<!-- 2 -->
+<div class="item general-zone">
+  <div class="item-head">
+    <div class="num-dot">2</div>
+    <div class="item-title"><a href="https://news.gmw.cn/2026-05/15/content_38765944.htm" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>大足石刻3D复刻精品将在美展出，首次数字技术与实物深度融合</a></div>
+  </div>
+  <div class="item-summary">采用1:1高精度3D打印技术复刻的大足石刻造像精品已于5月14日启运前往美国，将于6月至8月在纽约深刻博物馆举办"东方和美——世界遗产大足石刻生活与叙事展"。这是大足石刻首次以数字技术与实物展陈深度融合的形式大规模亮相美国主流文化场馆，标志着3D打印在文化遗产保护与传播领域的应用迈入新阶段。<span class="tag">大足石刻</span><span class="tag">文化出海</span><span class="tag">💡行业首发</span></div>
+  <div class="item-source"><a href="https://news.gmw.cn/2026-05/15/content_38765944.htm" target="_blank" rel="noopener">来源：光明日报</a> <span class="from-tag from-other">光明日报</span></div>
+</div>
+
+<!-- 3 -->
+<div class="item general-zone">
+  <div class="item-head">
+    <div class="num-dot">3</div>
+    <div class="item-title"><a href="https://www.voxelmatters.com/axtra3d-names-dynamism-as-north-american-reseller-in-channel-push/" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>Axtra3D任命Dynamism为北美经销商，Lumia X1渠道加速扩张</a></div>
+  </div>
+  <div class="item-summary">Axtra3D宣布任命Dynamism为Lumia X1生产级3D打印机的北美授权经销商，推广Hybrid PhotoSynthesis（HPS）技术和Axtra.Workflow软件平台。Dynamism以严格验证高性能AM系统著称，此次合作将加速HPS生产工作流程在航空航天、汽车、医疗等北美行业的采用，目标市场涵盖需要可重复终端零件的制造企业。<span class="tag">Axtra3D</span><span class="tag">渠道扩张</span><span class="tag">🆕新品首发</span></div>
+  <div class="item-source"><a href="https://www.voxelmatters.com/axtra3d-names-dynamism-as-north-american-reseller-in-channel-push/" target="_blank" rel="noopener">来源：VoxelMatters</a> <span class="from-tag from-other">VoxelMatters</span></div>
+</div>
+
+<!-- 4 -->
+<div class="item general-zone">
+  <div class="item-head">
+    <div class="num-dot">4</div>
+    <div class="item-title"><a href="https://finance.ifeng.com/c/8t3IBAioz7x" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>创想三维港股IPO持续升温：消费级3D打印"真冠军"之争引热议</a></div>
+  </div>
+  <div class="item-summary">创想三维已通过港交所聆讯并启动PDIE，5月内挂牌在即。招股书显示2025年营收31.27亿元但亏损1.82亿元，陷入"增收不增利"困境。市场热议创想三维与拓竹的冠军之争：创想三维以出货量领先，拓竹以技术溢价著称。分析认为，消费级3D打印市场已形成完整的核心零部件、整机制造到软件生态和海外渠道的产业链体系。<span class="tag">创想三维</span><span class="tag">港股IPO</span><span class="tag">🔥重磅</span></div>
+  <div class="item-source"><a href="https://finance.ifeng.com/c/8t3IBAioz7x" target="_blank" rel="noopener">来源：凤凰网财经</a> <span class="from-tag from-ifeng">凤凰财经</span></div>
+</div>
+
+<!-- 5 -->
+<div class="item general-zone">
+  <div class="item-head">
+    <div class="num-dot">5</div>
+    <div class="item-title"><a href="http://finance.sina.com.cn/stock/aiassist/ggsp/2026-05-14/doc-inhxvyei6881517.shtml" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>鸿日达涨5%：3D打印设备进入批量制造阶段，消费电子+新能源双驱动</a></div>
+  </div>
+  <div class="item-summary">5月14日鸿日达涨5.08%，成交额8.60亿元。公司已完成3D打印设备开发研制，进入批量制造阶段，具备从打印设备开发到成品加工的全流程量产能力。同时布局消费电子、新能源汽车、小米和华为概念，3D打印技术成为公司业务新增长极。<span class="tag">鸿日达</span><span class="tag">量产</span><span class="tag">A股</span></div>
+  <div class="item-source"><a href="http://finance.sina.com.cn/stock/aiassist/ggsp/2026-05-14/doc-inhxvyei6881517.shtml" target="_blank" rel="noopener">来源：新浪财经</a> <span class="from-tag from-sina">新浪财经</span></div>
+</div>
+
+<!-- ==================== 分区二：细分领域动态 ==================== -->
+<div class="section-title specific" id="section-specific">
+  <div class="icon"></div>
+  <span>细分领域动态</span>
+  <span style="font-size:11px;color:#9e9e9e;font-weight:400;margin-left:6px;">医疗 · 齿科 · 航天 · 材料</span>
+</div>
+
+<!-- 6 -->
+<div class="item specific-zone">
+  <div class="item-head">
+    <div class="num-dot">6</div>
+    <div class="item-title"><a href="https://3dprintingindustry.com/news/poc-lab-launches-two-flame-retardant-esd-safe-resins-for-professional-additive-manufacturing-251432/" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>POC Lab发布两款阻燃防静电树脂：Nylon-Like UL94 V-0 ESD系列</a></div>
+  </div>
+  <div class="item-summary">法国专业3D打印材料厂商POC Lab推出两款针对苛刻工业应用的光敏树脂：Nylon-Like UL94 V-0 ESD和HT-240C UL94 V-0 ESD。两款材料均达到UL94 V-0阻燃等级并具备静电放电（ESD）安全性，适用于电子制造、航空航天等对阻燃性和ESD有严格要求的场景，可在LCD/DLP设备上实现工程级终端零件打印。<span class="tag">POC Lab</span><span class="tag">阻燃树脂</span><span class="tag">🆕新品发布</span></div>
+  <div class="item-source"><a href="https://3dprintingindustry.com/news/poc-lab-launches-two-flame-retardant-esd-safe-resins-for-professional-additive-manufacturing-251432/" target="_blank" rel="noopener">来源：3D Printing Industry</a> <span class="from-tag from-other">3DPI</span></div>
+</div>
+
+<!-- 7 -->
+<div class="item specific-zone">
+  <div class="item-head">
+    <div class="num-dot">7</div>
+    <div class="item-title"><a href="https://www.china3dprint.com/archives/4661.html" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>福特×Sharrow 3D砂型铸造螺旋桨量产：生产周期从数月缩短至数周</a></div>
+  </div>
+  <div class="item-summary">福特汽车ATP团队与螺旋桨制造商Sharrow Engineering合作，利用3D砂型铸造技术将螺旋桨生产周期从数月压缩至数周。合作历时九个月，福特贡献了20余年3D砂型铸造经验、冶金和浇铸专业知识。Sharrow已进行四次设施扩建，未来技术将拓展至无人机、eVTOL和工业风机领域。<span class="tag">福特</span><span class="tag">3D砂型铸造</span><span class="tag">💡行业首发</span></div>
+  <div class="item-source"><a href="https://www.china3dprint.com/archives/4661.html" target="_blank" rel="noopener">来源：3D打印网</a> <span class="from-tag from-china3d">3D打印网</span></div>
+</div>
+
+<!-- 8 -->
+<div class="item specific-zone">
+  <div class="item-head">
+    <div class="num-dot">8</div>
+    <div class="item-title"><a href="https://www.china3dprint.com/archives/4651.html" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>台湾科技大学研发双面结构准直薄膜，大幅提升LCD树脂3D打印精度</a></div>
+  </div>
+  <div class="item-summary">台湾科技大学林鼎正团队研发双面结构准直薄膜（DSSCF），在单面准直薄膜基础上增加梯形微结构，防止大角度漏光、提升光强均匀性。该技术可使低成本LCD树脂打印机达到医疗级打印精度，适用于牙科模型、珠宝设计和工程原型等精密打印场景，显著降低高精度3D打印的设备成本门槛。<span class="tag">LCD打印</span><span class="tag">精度突破</span><span class="tag">💡行业首发</span></div>
+  <div class="item-source"><a href="https://www.china3dprint.com/archives/4651.html" target="_blank" rel="noopener">来源：3D打印网</a> <span class="from-tag from-china3d">3D打印网</span></div>
+</div>
+
+<!-- 9 -->
+<div class="item specific-zone">
+  <div class="item-head">
+    <div class="num-dot">9</div>
+    <div class="item-title"><a href="https://3dprintingindustry.com/news/new-study-architecture-targets-the-core-bottleneck-in-battery-manufacturing-251447/" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>新研究：3D打印已准备好从实验室走向主流锂电池制造</a></div>
+  </div>
+  <div class="item-summary">发表在《Materials Science & Engineering R》上的综述研究认为，3D打印已准备好从实验室原型转向主流锂电池制造。研究指出，如果能解决若干材料和工艺问题，3D打印架构设计将解决锂电池制造核心瓶颈——实现传统涂布工艺无法达到的结构和组分控制，为下一代高能量密度电池提供新路径。<span class="tag">锂电池</span><span class="tag">能源</span><span class="tag">🎯深度评测</span></div>
+  <div class="item-source"><a href="https://3dprintingindustry.com/news/new-study-architecture-targets-the-core-bottleneck-in-battery-manufacturing-251447/" target="_blank" rel="noopener">来源：3D Printing Industry</a> <span class="from-tag from-other">3DPI</span></div>
+</div>
+
+<!-- 10 -->
+<div class="item specific-zone">
+  <div class="item-head">
+    <div class="num-dot">10</div>
+    <div class="item-title"><a href="https://3dprintingindustry.com/news/crp-group-backs-more-modena-racing-for-formula-sae-michigan-2026-251426/" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>CRP Group赞助MoRe Modena Racing出征2026 Formula SAE密歇根站</a></div>
+  </div>
+  <div class="item-summary">意大利CRP Group旗下CRP Meccanica（高精度CNC加工）和CRP Technology（专业3D打印）赞助摩德纳与雷焦艾米利亚大学车队MoRe Modena Racing，参加5月13-16日在密歇根国际赛道举行的2026赛季Formula SAE。该车队在2026年1月Formula Student世界排名IC类别中位列第一。<span class="tag">CRP Group</span><span class="tag">赛车</span><span class="tag">3D打印</span></div>
+  <div class="item-source"><a href="https://3dprintingindustry.com/news/crp-group-backs-more-modena-racing-for-formula-sae-michigan-2026-251426/" target="_blank" rel="noopener">来源：3D Printing Industry</a> <span class="from-tag from-other">3DPI</span></div>
+</div>
+
+<!-- ==================== 分区三：消费级赛道 ==================== -->
+<div class="section-title consumer" id="section-consumer">
+  <div class="icon"></div>
+  <span>消费级赛道</span>
+  <span style="font-size:11px;color:#9e9e9e;font-weight:400;margin-left:6px;">品牌 · 模型 · 生态</span>
+</div>
+
+<!-- 11 -->
+<div class="item consumer-zone">
+  <div class="item-head">
+    <div class="num-dot">11</div>
+    <div class="item-title"><a href="https://finance.sina.com.cn/jjxw/2026-05-15/doc-inhxxspt3489055.shtml" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>年轻人的第一台"新家电"：3D打印机突破圈层走向大众</a></div>
+  </div>
+  <div class="item-summary">新浪财经5月15日报道，3D打印机已突破圈层，成为覆盖教育、创业及生产等多领域的"全民智造潮品"。如形似人手遮阳帽等创意单品在抖音、小红书、TikT ok等平台引发"种草"热。3D打印相比传统制造业具有灵活和高速响应优势，文创产品可在72小时内完成"创意-建模-打印-交付"，无开模高额成本和库存积压风险。<span class="tag">消费级</span><span class="tag">新家电</span><span class="tag">🔥重磅</span></div>
+  <div class="item-source"><a href="https://finance.sina.com.cn/jjxw/2026-05-15/doc-inhxxspt3489055.shtml" target="_blank" rel="noopener">来源：新浪财经</a> <span class="from-tag from-sina">新浪财经</span></div>
+</div>
+
+<!-- 12 -->
+<div class="item consumer-zone">
+  <div class="item-head">
+    <div class="num-dot">12</div>
+    <div class="item-title"><a href="https://3dprintingindustry.com/news/carbon-names-ddk-first-tier-1-supplier-for-3d-printed-saddles-in-asia-251438/" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>Carbon指定DDK为亚洲首个3D打印鞍座一级供应商</a></div>
+  </div>
+  <div class="item-summary">Carbon公司与台湾高性能自行车鞍座制造商DDK Group合作，建立亚洲首个鞍座专用垂直整合生产基地。该合作将DLS（数字光合成）增材制造与最终组装整合在同一工厂内，标志着Carbon在亚洲供应链模式的重要升级。DDK凭借在高性能自行车鞍座领域的技术积累，将推动3D打印晶格鞍座在亚洲市场的规模化生产。<span class="tag">Carbon</span><span class="tag">DDK</span><span class="tag">🆕新品首发</span></div>
+  <div class="item-source"><a href="https://3dprintingindustry.com/news/carbon-names-ddk-first-tier-1-supplier-for-3d-printed-saddles-in-asia-251438/" target="_blank" rel="noopener">来源：3D Printing Industry</a> <span class="from-tag from-other">3DPI</span></div>
+</div>
+
+<!-- 13 -->
+<div class="item consumer-zone">
+  <div class="item-head">
+    <div class="num-dot">13</div>
+    <div class="item-title"><a href="https://www.china3dprint.com/archives/4659.html" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>《Carbohydrate Polymers》综述：纤维素改性推动FDM 3D打印可持续耗材发展</a></div>
+  </div>
+  <div class="item-summary">《Carbohydrate Polymers》期刊发表综述文章，系统评估了醚化、酯化、氧化、硅烷化、酰基化和接枝等纤维素改性方法对FDM 3D打印性能的改善效果。研究重点阐明这些改性策略如何提升热稳定性、促进填料分散，最终实现高性能可持续纤维素基长丝制造，为下一代环保3D打印耗材提供技术路线图。<span class="tag">纤维素</span><span class="tag">可持续</span><span class="tag">🎯深度评测</span></div>
+  <div class="item-source"><a href="https://www.china3dprint.com/archives/4659.html" target="_blank" rel="noopener">来源：3D打印网</a> <span class="from-tag from-china3d">3D打印网</span></div>
+</div>
+
+<!-- 14 -->
+<div class="item consumer-zone">
+  <div class="item-head">
+    <div class="num-dot">14</div>
+    <div class="item-title"><a href="https://www.china3dprint.com/archives/4662.html" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>DeskArtes发布3Data Expert 16.0：多工艺增材制造数据准备软件升级</a></div>
+  </div>
+  <div class="item-summary">芬兰DeskArtes Oy发布3Data Expert 16.0版本，该软件源自1990年代赫尔辛基工业大学研究成果，可帮助用户优化3D模型用于金属和聚合物3D打印。新版本增强支撑生成、拓扑优化和多材料处理功能，聚焦多工艺优化流程，支持从数据准备到切片输出的全链路AM数据处理。<span class="tag">DeskArtes</span><span class="tag">软件</span><span class="tag">🆕新品发布</span></div>
+  <div class="item-source"><a href="https://www.china3dprint.com/archives/4662.html" target="_blank" rel="noopener">来源：3D打印网</a> <span class="from-tag from-china3d">3D打印网</span></div>
+</div>
+
+<!-- 15 -->
+<div class="item consumer-zone">
+  <div class="item-head">
+    <div class="num-dot">15</div>
+    <div class="item-title"><a href="https://www.china3dprint.com/archives/4660.html" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>Mahdi Naïm Studio推出AERIS自行车座：3D打印晶格+植物鞣革工艺</a></div>
+  </div>
+  <div class="item-summary">设计师Mahdi Naïm工作室推出AERIS自行车鞍座，采用3D打印晶格结构结合植物鞣制皮革的创新设计。轻量化晶格结构提供优异透气性和舒适性，天然皮革带来高级质感和耐用性。AERIS展示了3D打印在高端运动装备定制化领域的应用潜力，兼顾性能与美学，为自行车爱好者提供全新骑行体验。<span class="tag">定制化</span><span class="tag">晶格结构</span><span class="tag">🆕新品发布</span></div>
+  <div class="item-source"><a href="https://www.china3dprint.com/archives/4660.html" target="_blank" rel="noopener">来源：3D打印网</a> <span class="from-tag from-china3d">3D打印网</span></div>
+</div>
+
+<!-- ==================== 分区四：细分市场Niche ==================== -->
+<div class="section-title niche" id="section-niche">
+  <div class="icon"></div>
+  <span>细分市场 Niche</span>
+  <span style="font-size:11px;color:#9e9e9e;font-weight:400;margin-left:6px;">价格段 · 应用场景 · 区域市场</span>
+</div>
+
+<!-- 16 -->
+<div class="item niche-zone">
+  <div class="item-head">
+    <div class="num-dot">16</div>
+    <div class="item-title"><a href="https://www.china3dprint.com/archives/4665.html" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>3D打印锂电池制造架构突破：从实验室原型到主流量产的技术路线图</a></div>
+  </div>
+  <div class="item-summary">最新研究综述指出，3D打印通过架构设计突破锂电池制造核心瓶颈，可实现传统涂布工艺无法达到的结构和组分控制。研究团队系统梳理了材料和工艺挑战，涵盖从电极微观结构优化到全电池3D打印的完整技术路线。该研究为下一代高能量密度、快充锂电池的量产制造提供了系统性解决方案。<span class="tag">锂电池</span><span class="tag">架构设计</span><span class="tag">🎯深度评测</span></div>
+  <div class="item-source"><a href="https://www.china3dprint.com/archives/4665.html" target="_blank" rel="noopener">来源：3D打印网</a> <span class="from-tag from-china3d">3D打印网</span></div>
+</div>
+
+<!-- 17 -->
+<div class="item niche-zone">
+  <div class="item-head">
+    <div class="num-dot">17</div>
+    <div class="item-title"><a href="https://www.china3dprint.com/archives/4649.html" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>印度理工学院3D打印混凝土墙通过抗震测试，推动地震区建筑标准化</a></div>
+  </div>
+  <div class="item-summary">印度理工学院古瓦哈提分校与加拿大科研团队合作开发抗震3D打印混凝土墙体设计框架，通过实验与模拟结合验证了不同材料及模块化钢筋方案。研究小组对单层房屋进行全比例建模测试，证实3D打印混凝土墙体在强震下的结构稳定性，解决了地震区应用中钢筋标准缺失与结构测试不足的难题，推动该技术在偏远地区经济韧性住房的标准化。<span class="tag">建筑3D打印</span><span class="tag">抗震</span><span class="tag">印度</span></div>
+  <div class="item-source"><a href="https://www.china3dprint.com/archives/4649.html" target="_blank" rel="noopener">来源：3D打印网</a> <span class="from-tag from-china3d">3D打印网</span></div>
+</div>
+
+<!-- 18 -->
+<div class="item niche-zone">
+  <div class="item-head">
+    <div class="num-dot">18</div>
+    <div class="item-title"><a href="https://www.china3dprint.com/archives/4663.html" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>LEAP 71×Sindan：AI计算引擎驱动航空航天零件设计工业化</a></div>
+  </div>
+  <div class="item-summary">迪拜计算工程公司LEAP 71与阿布扎比AI驱动制造公司Sindan在"Make it in the Emirates"展会上揭示战略联盟。LEAP 71的Pulsar平台可自动生成复杂几何形状的航空零部件设计，结合3D打印实现传统工艺无法制造的拓扑优化结构。双方计划在航空航天领域建立AI设计+AM量产标准，推动AI计算工程从概念验证走向工业化应用。<span class="tag">AI设计</span><span class="tag">航空航天</span><span class="tag">LEAP 71</span></div>
+  <div class="item-source"><a href="https://www.china3dprint.com/archives/4663.html" target="_blank" rel="noopener">来源：3D打印网</a> <span class="from-tag from-china3d">3D打印网</span></div>
+</div>
+
+<!-- 19 -->
+<div class="item niche-zone">
+  <div class="item-head">
+    <div class="num-dot">19</div>
+    <div class="item-title"><a href="https://www.china3dprint.com/archives/4664.html" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>Vivobarefoot推出Tabi Gen 02定制3D打印凉鞋：Carbon技术+Oechsler制造</a></div>
+  </div>
+  <div class="item-summary">英国鞋履品牌Vivobarefoot推出Tabi Gen 02定制3D打印凉鞋，第二代产品由Carbon技术开发、Oechsler制造。采用脚型扫描+3D打印中底的个性化定制模式，消费者可在门店扫描获取数据，3D打印晶格中底根据个人足弓、步态和偏好定制。Gen 02比前代更轻、更精确，提供更好的缓震和回弹性能。<span class="tag">Vivobarefoot</span><span class="tag">Carbon</span><span class="tag">🆕新品发布</span></div>
+  <div class="item-source"><a href="https://www.china3dprint.com/archives/4664.html" target="_blank" rel="noopener">来源：3D打印网</a> <span class="from-tag from-china3d">3D打印网</span></div>
+</div>
+
+<!-- 20 -->
+<div class="item niche-zone">
+  <div class="item-head">
+    <div class="num-dot">20</div>
+    <div class="item-title"><a href="https://www.aibang.com/a/54303" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>3D打印鞋履7种技术路线深度解析：从鞋底到一体鞋的全工艺覆盖</a></div>
+  </div>
+  <div class="item-summary">艾邦高分子发布3D打印鞋履技术路线深度解析，系统梳理7种3D打印技术在鞋类中的应用：从鞋底/鞋面/鞋楦等配件打印到一体鞋成型，涵盖SLA、SLS、MJF、FDM、DLP、PolyJet、材料挤出等工艺。博理科技嘉宾现场分享了技术路线、工艺、品牌和定价，并展示多款3D打印鞋实物，为行业提供了最全面的技术对比参考。<span class="tag">3D打印鞋</span><span class="tag">技术路线</span><span class="tag">🎯深度评测</span></div>
+  <div class="item-source"><a href="https://www.aibang.com/a/54303" target="_blank" rel="noopener">来源：艾邦高分子</a> <span class="from-tag from-other">艾邦</span></div>
+</div>
+
+<!-- ==================== 分区五：场景×3D打印 ==================== -->
+<div class="section-title scenario" id="section-scenario">
+  <div class="icon"></div>
+  <span>场景×3D打印</span>
+  <span style="font-size:11px;color:#9e9e9e;font-weight:400;margin-left:6px;">教育 · 文创 · 家居 · 食品</span>
+</div>
+
+<!-- 21 -->
+<div class="item scenario-zone">
+  <div class="item-head">
+    <div class="num-dot">21</div>
+    <div class="item-title"><a href="https://www.china3dprint.com/archives/4653.html" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L1|R4:✅|R5:✅">✅ A级</span>Vitriform3D×ORNL：粘结剂喷射将废玻璃瓶转化为3D打印建筑材料</a></div>
+  </div>
+  <div class="item-summary">芝加哥初创公司Vitriform3D与美国能源部橡树岭国家实验室（ORNL）合作开发粘结剂喷射工艺，将废弃玻璃瓶转化为杯垫、装饰砖和建筑覆层等3D打印产品。该技术可回收利用废弃玻璃，减少垃圾填埋压力，同时创造具有美学和功能价值的高品质建筑材料，展示了3D打印在循环经济和绿色建筑领域的新应用方向。<span class="tag">ORNL</span><span class="tag">废玻璃回收</span><span class="tag">💡行业首发</span></div>
+  <div class="item-source"><a href="https://www.china3dprint.com/archives/4653.html" target="_blank" rel="noopener">来源：3D打印网</a> <span class="from-tag from-china3d">3D打印网</span></div>
+</div>
+
+<!-- 22 -->
+<div class="item scenario-zone">
+  <div class="item-head">
+    <div class="num-dot">22</div>
+    <div class="item-title"><a href="https://3dprint.com/325892/morsan-and-lehvoss-work-on-3d-printing-for-food-and-beverage/" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>MORSAN×LEHVOSS合作：3D打印食品饮料灌装线备件解决方案</a></div>
+  </div>
+  <div class="item-summary">希腊数字备件服务商MORSAN与德国特种材料公司LEHVOSS合作开发食品饮料行业专用3D打印备件方案。食品饮料灌装线备件面临极端机械负载、强腐蚀清洗环境和高循环频率的严苛要求。LEHVOSS提供高温聚酰胺和高流动性PEEK等专用材料，双方共同推动工业级3D打印替代传统备件供应链。<span class="tag">MORSAN</span><span class="tag">LEHVOSS</span><span class="tag">食品工业</span></div>
+  <div class="item-source"><a href="https://3dprint.com/325892/morsan-and-lehvoss-work-on-3d-printing-for-food-and-beverage/" target="_blank" rel="noopener">来源：3DPrint.com</a> <span class="from-tag from-3dprint">3DPrint</span></div>
+</div>
+
+<!-- 23 -->
+<div class="item scenario-zone">
+  <div class="item-head">
+    <div class="num-dot">23</div>
+    <div class="item-title"><a href="https://www.china3dprint.com/archives/4655.html" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>新加坡研究综述：生物制造和生物生产领域发展路线图</a></div>
+  </div>
+  <div class="item-summary">新加坡研究团队发表综合性综述，系统梳理该国在生物制造与生物加工领域的最新贡献。研究涵盖从废弃物衍生生物材料到3D生物打印和金属增材制造的先进制造技术，指出可持续原料、数字化制造平台与生物驱动应用的协同发展正在共同塑造生物制造的未来格局，材料科学与先进制造技术的深度融合将持续推动该领域创新。<span class="tag">生物制造</span><span class="tag">新加坡</span><span class="tag">🎯深度评测</span></div>
+  <div class="item-source"><a href="https://www.china3dprint.com/archives/4655.html" target="_blank" rel="noopener">来源：3D打印网</a> <span class="from-tag from-china3d">3D打印网</span></div>
+</div>
+
+<!-- 24 -->
+<div class="item scenario-zone">
+  <div class="item-head">
+    <div class="num-dot">24</div>
+    <div class="item-title"><a href="https://www.china3dprint.com/archives/4656.html" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>从3D生物打印到培育食品：新加坡团队勾勒生物制造路线图</a></div>
+  </div>
+  <div class="item-summary">新加坡研究团队在另一篇综述中进一步聚焦3D生物打印到培育食品的转化路径。研究系统梳理了从细胞培养基材到3D生物打印组织工程、再到培育肉和培育海鲜的完整技术链条。该路线图展示了生物制造如何从医疗领域延伸至食品生产，为可持续食品供应提供了基于3D打印技术的系统解决方案。<span class="tag">3D生物打印</span><span class="tag">培育食品</span><span class="tag">新加坡</span></div>
+  <div class="item-source"><a href="https://www.china3dprint.com/archives/4656.html" target="_blank" rel="noopener">来源：3D打印网</a> <span class="from-tag from-china3d">3D打印网</span></div>
+</div>
+
+<!-- 25 -->
+<div class="item scenario-zone">
+  <div class="item-head">
+    <div class="num-dot">25</div>
+    <div class="item-title"><a href="https://www.china3dprint.com/archives/4650.html" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>3D打印融合器多孔结构长期安全性引发全球警示与中国思考</a></div>
+  </div>
+  <div class="item-summary">3D打印融合器的"隐性质量门槛"引发全球关注。多孔结构在长期植入后的安全性问题成为行业讨论焦点，包括孔隙率对骨整合效果的影响、打印工艺导致的微观缺陷对疲劳寿命的潜在风险等。文章综合分析全球监管趋势和最新临床数据，提出中国在3D打印医疗器械质量标准和长期随访体系方面的思考与建议。<span class="tag">融合器</span><span class="tag">医疗安全</span><span class="tag">⚠️风险提示</span></div>
+  <div class="item-source"><a href="https://www.china3dprint.com/archives/4650.html" target="_blank" rel="noopener">来源：3D打印网</a> <span class="from-tag from-china3d">3D打印网</span></div>
+</div>
+
+<!-- ==================== 分区六：海外资讯 ==================== -->
+<div class="section-title global" id="section-global">
+  <div class="icon"></div>
+  <span>海外资讯</span>
+  <span style="font-size:11px;color:#9e9e9e;font-weight:400;margin-left:6px;">国际 · 3Dnatives · 3DPrint</span>
+</div>
+
+<!-- 26 -->
+<div class="item global-zone">
+  <div class="item-head">
+    <div class="num-dot">26</div>
+    <div class="item-title"><a href="https://www.3dnatives.com/en/dragon-skin-apollo-evo-14052026/" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>Apollo EVO龙鳞钛合金排气系统：123小时打印创单件最大纪录</a></div>
+  </div>
+  <div class="item-summary">Apollo Automobil为限量版超跑EVO推出3D打印钛合金"龙鳞排气系统"，采用航空航天级TA15钛合金粉末经激光烧结成型，打印耗时123小时，据称为迄今最大的单件式3D打印排气部件。龙鳞状纹理设计与Apollo龙命名主题呼应，兼具美学与功能——优化排气气流路径，减轻重量同时提升热管理性能。<span class="tag">Apollo</span><span class="tag">钛合金</span><span class="tag">超跑</span></div>
+  <div class="item-source"><a href="https://www.3dnatives.com/en/dragon-skin-apollo-evo-14052026/" target="_blank" rel="noopener">来源：3Dnatives</a> <span class="from-tag from-3dnatives">3Dnatives</span></div>
+</div>
+
+<!-- 27 -->
+<div class="item global-zone">
+  <div class="item-head">
+    <div class="num-dot">27</div>
+    <div class="item-title"><a href="https://www.china3dprint.com/archives/4652.html" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>印度AAKA Space Studio 3D打印玄武岩火星辐射屏蔽结构</a></div>
+  </div>
+  <div class="item-summary">印度艾哈迈达巴德太空技术公司AAKA Space Studio使用专门配制的火星土壤模拟物3D打印玄武岩辐射屏蔽结构，在古吉拉特邦模拟太空任务中完成测试。该方案利用本地资源（ISRU策略），实现更轻量的火星栖息地建造，降低从地球运输建筑材料的需求和成本，为未来火星探索任务提供可行的辐射防护方案。<span class="tag">AAKA</span><span class="tag">火星</span><span class="tag">ISRU</span></div>
+  <div class="item-source"><a href="https://www.china3dprint.com/archives/4652.html" target="_blank" rel="noopener">来源：3D打印网</a> <span class="from-tag from-china3d">3D打印网</span></div>
+</div>
+
+<!-- 28 -->
+<div class="item global-zone">
+  <div class="item-head">
+    <div class="num-dot">28</div>
+    <div class="item-title"><a href="https://3dprintingindustry.com/news/carbon-names-ddk-first-tier-1-supplier-for-3d-printed-saddles-in-asia-251438/" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>Carbon×DDK亚洲供应链升级：3D打印鞍座垂直整合生产基地落成</a></div>
+  </div>
+  <div class="item-summary">Carbon在亚洲的供应链模式迎来重大升级：指定DDK Group为首个一级合同制造商，在台湾建立专属垂直整合生产设施。该工厂将DLS增材制造（Carbon核心光固化技术）与最终组装整合，实现从打印到成品的一站式生产。此前Carbon在亚洲的供应链依赖分散合作，此次整合将大幅提升3D打印鞍座的交付效率和质量一致性。<span class="tag">Carbon</span><span class="tag">供应链</span><span class="tag">亚洲</span></div>
+  <div class="item-source"><a href="https://3dprintingindustry.com/news/carbon-names-ddk-first-tier-1-supplier-for-3d-printed-saddles-in-asia-251438/" target="_blank" rel="noopener">来源：3D Printing Industry</a> <span class="from-tag from-other">3DPI</span></div>
+</div>
+
+<!-- 29 -->
+<div class="item global-zone">
+  <div class="item-head">
+    <div class="num-dot">29</div>
+    <div class="item-title"><a href="https://3dprintingindustry.com/news/leap-71-and-sindan-are-industrializing-ai-designed-aerospace-251371/" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>LEAP 71×Sindan在"Make it in the Emirates"展会揭示AI+AM战略联盟</a></div>
+  </div>
+  <div class="item-summary">LEAP 71与Sindan在阿联酋"Make it in the Emirates"展会上正式揭示战略联盟合作。LEAP 71的Pulsar AI计算引擎可自动生成复杂拓扑优化零部件设计，结合Sindan的AI驱动制造能力和增材制造设备，双方目标是在航空航天领域建立从AI设计到AM量产的工业化标准流程，为阿联酋先进制造战略提供技术支撑。<span class="tag">LEAP 71</span><span class="tag">阿联酋</span><span class="tag">AI+AM</span></div>
+  <div class="item-source"><a href="https://3dprintingindustry.com/news/leap-71-and-sindan-are-industrializing-ai-designed-aerospace-251371/" target="_blank" rel="noopener">来源：3D Printing Industry</a> <span class="from-tag from-other">3DPI</span></div>
+</div>
+
+<!-- 30 -->
+<div class="item global-zone">
+  <div class="item-head">
+    <div class="num-dot">30</div>
+    <div class="item-title"><a href="https://www.china3dprint.com/archives/4654.html" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>3D打印博士生用熔融金属喷射（MMJ）探索可吸收锌基骨植入物</a></div>
+  </div>
+  <div class="item-summary">罗切斯特理工学院（RIT）博士生Valeria Marin Montealegre在AMPrint中心主任Denis Cormier指导下，利用熔融金属喷射（MMJ）技术探索3D打印可吸收锌基颅面骨植入物。锌基植入物可在骨骼愈合过程中提供临时机械支撑，随后自然降解，避免二次手术取出。目前全球尚无其他机构将MMJ技术用于生物可吸收金属研究，属于开创性工作。<span class="tag">MMJ</span><span class="tag">锌植入物</span><span class="tag">💡行业首发</span></div>
+  <div class="item-source"><a href="https://www.china3dprint.com/archives/4654.html" target="_blank" rel="noopener">来源：3D打印网</a> <span class="from-tag from-china3d">3D打印网</span></div>
+</div>
+
+<!-- ==================== 分区七：用户口碑 ==================== -->
+<div class="section-title feedback" id="section-feedback">
+  <div class="icon"></div>
+  <span>用户口碑</span>
+  <span style="font-size:11px;color:#9e9e9e;font-weight:400;margin-left:6px;">评测 · 实测 · 社区讨论</span>
+</div>
+
+<!-- 31 -->
+<div class="item feedback-zone">
+  <div class="item-head">
+    <div class="num-dot">31</div>
+    <div class="item-title"><a href="http://k.sina.com.cn/article_5952915720_162d2490806703x336.html" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L3|R4:✅|R5:✅">✅ A级</span>东睦股份跌5%：3D打印+苹果+AI眼镜+特斯拉多概念加持</a></div>
+  </div>
+  <div class="item-summary">5月14日东睦股份跌4.98%，成交额8.39亿元，总市值210.95亿元。公司通过PM板块产品结构调整积极拓展3D打印零件业务，已小批量自用3D打印零件并采购相关设备。同时叠加苹果概念、AI眼镜、特斯拉概念和燃料电池等题材，3D打印成为公司从传统粉末冶金向先进制造转型的重要抓手，用户关注其3D打印业务商业化进展。<span class="tag">东睦股份</span><span class="tag">3D打印</span><span class="tag">A股</span></div>
+  <div class="item-source"><a href="http://k.sina.com.cn/article_5952915720_162d2490806703x336.html" target="_blank" rel="noopener">来源：新浪财经</a> <span class="from-tag from-sina">新浪财经</span></div>
+</div>
+
+<!-- 32 -->
+<div class="item feedback-zone">
+  <div class="item-head">
+    <div class="num-dot">32</div>
+    <div class="item-title"><a href="https://www.sohu.com/a/895159585_122387568" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L3|R4:✅|R5:✅">✅ A级</span>鸿日达业绩说明会：3D打印设备已完成开发，进入批量制造阶段</a></div>
+  </div>
+  <div class="item-summary">鸿日达在业绩说明会上表示，公司3D打印设备已完成开发研制并进入批量制造阶段，具备从打印设备开发到成品加工的全流程量产能力。通过自动化设备打造智慧工厂，实现业务与新技术的融合。用户社区反馈积极，认为鸿日达凭借消费电子制造经验切入3D打印领域具有天然优势，但产能爬坡和市场拓展仍需时间验证。<span class="tag">鸿日达</span><span class="tag">量产</span><span class="tag">用户评测</span></div>
+  <div class="item-source"><a href="https://www.sohu.com/a/895159585_122387568" target="_blank" rel="noopener">来源：搜狐科技</a> <span class="from-tag from-sina">搜狐</span></div>
+</div>
+
+<!-- 33 -->
+<div class="item feedback-zone">
+  <div class="item-head">
+    <div class="num-dot">33</div>
+    <div class="item-title"><a href="https://3dprintingindustry.com/news/poc-lab-launches-two-flame-retardant-esd-safe-resins-for-professional-additive-manufacturing-251432/" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>POC Lab两款工程树脂评测：阻燃ESD双认证，填补LCD打印空白</a></div>
+  </div>
+  <div class="item-summary">用户社区对POC Lab新发布的Nylon-Like UL94 V-0 ESD和HT-240C UL94 V-0 ESD两款树脂反响积极。评测指出，此前LCD/DLP设备在阻燃和ESD要求严苛的工业应用中缺乏可靠材料选择，POC Lab填补了这一空白。HT-240C版本耐温240°C，适合高温工况下的电子装配夹具和功能验证零件，是工程师和设计师在预算有限条件下替代高端工业级设备的理想选择。<span class="tag">POC Lab</span><span class="tag">材料评测</span><span class="tag">🎯深度评测</span></div>
+  <div class="item-source"><a href="https://3dprintingindustry.com/news/poc-lab-launches-two-flame-retardant-esd-safe-resins-for-professional-additive-manufacturing-251432/" target="_blank" rel="noopener">来源：3D Printing Industry</a> <span class="from-tag from-other">3DPI</span></div>
+</div>
+
+<!-- 34 -->
+<div class="item feedback-zone">
+  <div class="item-head">
+    <div class="num-dot">34</div>
+    <div class="item-title"><a href="https://3dprintingindustry.com/news/crp-group-backs-more-modena-racing-for-formula-sae-michigan-2026-251426/" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L2|R4:✅|R5:✅">✅ A级</span>CRP Group赛车3D打印应用实测：从原型到赛场冠军零件的性能验证</a></div>
+  </div>
+  <div class="item-summary">用户社区对CRP Group在赛车领域的3D打印应用给予高度评价。CRP Technology的Windform材料系列和SLS/SLM技术在赛车零部件制造中表现出色，MoRe Modena Racing车队凭借CRP的3D打印零部件在2026年1月Formula Student世界排名中位列IC类别第一。实测反馈表明，3D打印零部件在轻量化、强度和制造速度方面全面优于传统机加工。<span class="tag">CRP Group</span><span class="tag">赛车</span><span class="tag">用户评测</span></div>
+  <div class="item-source"><a href="https://3dprintingindustry.com/news/crp-group-backs-more-modena-racing-for-formula-sae-michigan-2026-251426/" target="_blank" rel="noopener">来源：3D Printing Industry</a> <span class="from-tag from-other">3DPI</span></div>
+</div>
+
+<!-- 35 -->
+<div class="item feedback-zone">
+  <div class="item-head">
+    <div class="num-dot">35</div>
+    <div class="item-title"><a href="https://finance.sina.com.cn/roll/2026-05-14/doc-inhxvihv4061655.shtml" target="_blank"><span class="score-badge score-badge-a" title="R1:3/3|R2:✓|R3:L1|R4:✅|R5:✅">✅ A级</span>3D打印产业链投资分析：A股公司布局覆盖材料-设备-服务三大环节</a></div>
+  </div>
+  <div class="item-summary">据证券日报深度分析，当前A股3D打印公司布局已覆盖材料（有研粉材-3D打印粉体）、设备（汇纳科技-消费级3D打印设备采购）和服务（永利带业-3D金属打印+高精密模具配套）三大核心环节。中国工业级3D打印市场预计2034年达30.66亿美元，年复合增长19.15%。但专家指出上游核心零部件和专用高端材料仍依赖进口，企业生产成本被推高。<span class="tag">投资分析</span><span class="tag">产业链</span><span class="tag">🎯深度评测</span></div>
+  <div class="item-source"><a href="https://finance.sina.com.cn/roll/2026-05-14/doc-inhxvihv4061655.shtml" target="_blank" rel="noopener">来源：证券日报</a> <span class="from-tag from-sina">新浪财经</span></div>
+</div>
+
+<!-- 底部 -->
+<div class="footer">
+  📅 2026年5月16日 · 星期六 · 第16期简报<br>
+  3D打印行业每日资讯 · <a href="https://github.com/Cruise-Ling" target="_blank">by Cruise</a>
+</div>
+
+</div>
+
+<script>
+// 导航切换
+document.querySelectorAll('.nav-btn[data-section]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+// 滚动到分区
+function scrollToSection(id) {
+  const el = document.getElementById('section-' + id);
+  if (el) {
+    const isMobile = window.innerWidth <= 767;
+    const offset = isMobile ? 20 : 80;
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
+    el.classList.remove('section-highlight');
+    void el.offsetWidth;
+    el.classList.add('section-highlight');
+  }
+}
+
+// 滚动监听：自动高亮当前分区
+const sections = ['general','specific','consumer','niche','scenario','global','feedback'];
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id.replace('section-','');
+      document.querySelectorAll('.side-nav-item').forEach(item => {
+        item.classList.toggle('active', item.dataset.section === id);
+      });
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.id === 'nav-btn-' + id);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+
+sections.forEach(id => {
+  const el = document.getElementById('section-' + id);
+  if (el) observer.observe(el);
+});
+</script>
+</body>
+</html>
