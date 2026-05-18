@@ -57,3 +57,5 @@
 ## License
 
 MIT
+
+| 2026-05-18 (Sun) | [briefing_20260518.html](briefing_20260518.html) |
