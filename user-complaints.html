@@ -19,6 +19,7 @@ html{scroll-behavior:smooth}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 40%,rgba(255,255,255,0.06),transparent 60%)}
 .hero h1{font-size:2.2rem;font-weight:800;color:#fff;margin-bottom:8px;position:relative;letter-spacing:-.5px}
 .hero .hero-sub{color:rgba(255,255,255,0.8);font-size:.95rem;position:relative;max-width:560px;margin:0 auto}
+.hero .date-badge{display:inline-block;margin:10px auto 0;padding:6px 18px;border-radius:20px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:.88rem;font-weight:600;position:relative;backdrop-filter:blur(4px)}
 .hero .update-time{color:rgba(255,255,255,0.55);font-size:.8rem;margin-top:12px;position:relative}
 
 /* ===== Stats Bar ===== */
@@ -116,6 +117,7 @@ html{scroll-behavior:smooth}
 <!-- Hero -->
 <div class="hero">
   <h1>😡 用户吐槽墙</h1>
+  <div class="date-badge" id="dateBadge">📅 2026年05月18日</div>
   <p class="hero-sub">汇集各平台 3D 打印用户的真实反馈与吐槽，追踪品牌口碑动态</p>
   <p class="update-time" id="updateTime">最近更新：加载中...</p>
 </div>
@@ -136,7 +138,7 @@ html{scroll-behavior:smooth}
   </div>
   <div class="stat-item">
     <div class="stat-value" id="statToday">-</div>
-    <div class="stat-label">今日新增</div>
+    <div class="stat-label">本日采集</div>
   </div>
 </div>
 
@@ -169,7 +171,8 @@ html{scroll-behavior:smooth}
 // ===== 数据 =====
 const COMPLAINTS_DATA = {
   date: "2026-05-19",
-  stats: { total: 38, brands: 7, platforms: 7, today: 12 },
+  dateLabel: "2026年05月18日",
+  stats: { total: 38, brands: 7, platforms: 7, today: 38 },
   brands: [
     {
       name: "Creality",
@@ -428,6 +431,9 @@ const PLATFORM_MAP = {
 // ===== 渲染 =====
 function renderPage() {
   const data = COMPLAINTS_DATA;
+
+  // Date badge
+  document.getElementById('dateBadge').textContent = '📅 ' + (data.dateLabel || data.date);
 
   // Update time
   document.getElementById('updateTime').textContent = '最近更新：' + data.date;
