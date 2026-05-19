@@ -172,152 +172,52 @@ html{scroll-behavior:smooth}
 // ===== 数据 =====
 const COMPLAINTS_DATA = {
   date: "2026-05-19",
-  dateLabel: "2026年05月18日",
-  stats: { total: 38, brands: 7, platforms: 7, today: 38 },
+  dateLabel: "2026年05月19日",
+  stats: { total: 20, brands: 9, platforms: 5, today: 20 },
   brands: [
-    {
-      name: "Creality",
-      nameEn: "Creality 3D",
-      complaints: [
-        {
-          platform: "知乎",
-          title: "MakerWorld搬运指控：创想三维被指抄袭拓竹独家模型",
-          summary: "知乎热议话题，用户讨论拓竹MakerWorld平台指控创想三维等平台搬运其独家3D打印模型文件，引发版权争议。",
-          url: "https://www.zhihu.com/question/1964765843255726768",
-          date: "2026-05-17",
-          heat: "热门讨论"
-        },
-        {
-          platform: "B站",
-          title: "SPARKX i7测评：似曾相识，却又不太一样",
-          summary: "B站UP主发布SPARKX i7测评视频，评论区用户讨论其性价比和实际体验，部分用户认为博主推荐有恰饭嫌疑。",
-          url: "https://www.bilibili.com/video/BV1W4Lu66ETZ/",
-          date: "2026-05-19",
-          heat: "1468播放"
-        },
-        {
-          platform: "贴吧",
-          title: "SPARKX遭吐槽为鸡肋产品，用户质疑博主集体恰饭",
-          summary: "贴吧用户质疑各大博主狂推SPARKX产品是集体恰饭行为，认为实际体验与宣传差距较大。",
-          url: "https://tieba.baidu.com/p/9762670523",
-          date: "2025-06-04",
-          heat: "贴吧热议"
-        },
-        {
-          platform: "Reddit",
-          title: "Think Twice Before Buying from Creality: A Nightmare Experience",
-          summary: "Reddit用户分享购买Creality翻新Ender 3的噩梦体验，收到的机器破损严重，陷入漫长的售后循环。",
-          url: "https://forum.creality.com/t/think-twice-before-buying-from-creality-a-nightmare-experience-you-need-to-hear/23983",
-          date: "2024-12-10",
-          heat: "论坛热议"
-        },
-        {
-          platform: "Reddit",
-          title: "Creality BBB投诉记录：客户服务质量引发不满",
-          summary: "Better Business Bureau收录多起针对Creality的客户投诉，多数涉及售后服务响应慢、退款困难等问题。",
-          url: "https://www.bbb.org/us/ca/city-of-industry/profile/3d-printers/creality-3d-1216-1267154/complaints",
-          date: "2026-03-30",
-          heat: "多起投诉"
-        },
-        {
-          platform: "知乎",
-          title: "K1 Max首发用户吐槽：前期问题不少，拆修无数次",
-          summary: "创想云社区K1MAX吐槽群用户反馈，作为首发用户经历了一个月的调机过程，拆修无数才解决各种问题。",
-          url: "https://www.crealitycloud.cn/group-detail/64e72d4997ef46b1855ac251",
-          date: "2024-01-15",
-          heat: "社区热议"
-        }
-      ]
-    },
     {
       name: "Bambu Lab",
       nameEn: "Bambu Lab",
       complaints: [
         {
-          platform: "B站",
-          title: "拓竹再出手：封杀OrcaSlicer分支惹众怒",
-          summary: "Bambu Lab强行关闭OrcaSlicer分支项目，专有生态与开源精神冲突加剧，用户自由选择权受限，社区信任持续消磨。",
-          url: "https://www.bilibili.com/video/BV1mfLE6zELn/",
-          date: "2026-05-17",
-          heat: "1468播放·19评论"
+          platform: "知乎",
+          title: "律师函引发GitHub风暴：拓竹为何惹毛全球极客？",
+          summary: "新浪财经报道拓竹向波兰开发者Paweł Jarczak发律师函，指控其OrcaSlicer分支存在'身份伪造攻击'，但该分支使用的代码正是拓竹自身基于AGPLv3开源的代码。事件引发Jeff Geerling等科技博主集体声讨，OrcaSlicer-bambulab仓库6天获5700+星标。",
+          url: "https://www.zhihu.com/search?type=content&q=%E6%8B%93%E7%AB%B9%20%E5%BE%8B%E5%B8%88%E5%87%BD%20%E5%BC%80%E6%BA%90",
+          date: "2026-05-19",
+          heat: "全球热议"
         },
         {
           platform: "B站",
-          title: "拓竹P2S重大缺陷实锤！BUG涉及几乎所有P2S用户",
-          summary: "B站UP主曝光拓竹P2S存在影响几乎所有用户的严重缺陷，播放量达2.2万，引发用户集体讨论。",
-          url: "https://www.bilibili.com/video/BV1d1LF6iEqy/",
+          title: "拓竹Bambu Studio Beta上线耗材管理：围墙花园前奏？",
+          summary: "B站UP主发布视频质疑拓竹Bambu Studio Beta版新增的耗材管理系统是'围墙花园'的前奏，限制用户使用第三方耗材，结合律师函事件引发社区对拓竹封闭生态走向的强烈担忧。",
+          url: "https://www.bilibili.com/video/BV1HQLM6eEad/",
+          date: "2026-05-19",
+          heat: "B站热议"
+        },
+        {
+          platform: "知乎",
+          title: "GitHub仓库6天获5700星标：OrcaSlicer-bambulab绕过云端封锁",
+          summary: "FULU-Foundation/OrcaSlicer-bambulab仓库在GitHub斩获5700+星标和4100次fork，过去24小时暴增731颗星。该分支允许用户不经过拓竹云端直接控制打印机，使用的通信代码来自Bambu Studio官方AGPLv3源码。Louis Rossmann悬赏$10,000支持被告开发者。",
+          url: "https://www.zhihu.com/search?type=content&q=OrcaSlicer-bambulab%20%E6%8B%93%E7%AB%B9",
+          date: "2026-05-19",
+          heat: "5700⭐"
+        },
+        {
+          platform: "Reddit",
+          title: "Bambu Lab Open Source Controversy: Community Backlash Over Legal Threats",
+          summary: "Reddit community discussion on Bambu Lab's legal threats against OrcaSlicer fork developer. Jeff Geerling's post 'Bambu Lab is abusing the open source social contract' reached HN front page with 258 points. Louis Rossmann pledged $10,000 to support the developer.",
+          url: "https://www.reddit.com/r/3Dprinting/search/?q=bambu+lab+open+source+legal&sort=new",
           date: "2026-05-18",
-          heat: "2.2万播放"
+          heat: "Reddit热议"
         },
         {
           platform: "知乎",
-          title: "拓竹安全升级引发波澜：加密被破解，资方被点名",
-          summary: "拓竹推送固件安全更新引发争议，新增授权系统禁用第三方软件API，用户质疑封闭生态走向。",
-          url: "https://zhuanlan.zhihu.com/p/19423562770",
-          date: "2026-01-08",
-          heat: "热门文章"
-        },
-        {
-          platform: "知乎",
-          title: "拓竹3D打印机正在走向封闭：禁用第三方切片器",
-          summary: "拓竹通知用户固件更新将禁用OrcaSlicer等第三方软件的网络插件API，阻止第三方应用直连打印机。",
-          url: "https://www.sohu.com/a/852254526_121124372",
-          date: "2025-01-23",
-          heat: "行业热议"
-        },
-        {
-          platform: "黑猫投诉",
-          title: "拓竹P2S新机存在严重质量问题与缺陷",
-          summary: "用户2026年1月20日购买拓竹P2S，收货后发现商家承诺赠送的耗材未发货，后续使用中发现机器存在质量缺陷。",
-          url: "https://tousu.sina.com.cn/complaint/view/17392982761/",
-          date: "2026-01-24",
-          heat: "消费投诉"
-        },
-        {
-          platform: "贴吧",
-          title: "拓竹贴吧用户吐槽：首批评测机问题不断",
-          summary: "贴吧用户反映首批新机到手仅打了两三盘就出问题，校准时主喷嘴特氟龙管脱落，打印质量堪忧。",
-          url: "https://waptieba.baidu.com/f?kw=%E6%8B%93%E7%AB%B9&ie=utf-8",
-          date: "2026-05-15",
-          heat: "贴吧热议"
-        }
-      ]
-    },
-    {
-      name: "ELEGOO",
-      nameEn: "ELEGOO",
-      complaints: [
-        {
-          platform: "黑猫投诉",
-          title: "木星SE使用3个月屏幕坏掉，售后推诿不处理",
-          summary: "用户在天猫旗舰店购买ELEGOO木星SE光固化打印机，仅使用3个月屏幕三分之一不亮，明显质量问题，售后沟通不畅。",
-          url: "https://tousu.sina.com.cn/company/view/?couid=7726035684",
-          date: "2025-04-26",
-          heat: "质量投诉"
-        },
-        {
-          platform: "抖音",
-          title: "ELEGOO爱乐酷售后调包事件：寄修后收到别人的旧机器",
-          summary: "用户将3D打印机寄回售后维修，客服疑似将机器调包，用户收到非本人的旧机器，售后处理引发信任危机。",
-          url: "https://www.douyin.com/video/7593617613503223013",
-          date: "2026-01-10",
-          heat: "抖音热议"
-        },
-        {
-          platform: "知乎",
-          title: "ELEGOO品牌怎么样？用户评价褒贬不一",
-          summary: "知乎用户讨论ELEGOO品牌整体表现，部分用户肯定其性价比，但也有用户反映产品品控和售后服务存在不足。",
-          url: "https://www.zhihu.com/question/571388994/answers/updated",
-          date: "2025-09-27",
-          heat: "400+回答"
-        },
-        {
-          platform: "贴吧",
-          title: "ELEGOO海王星3Pro打印问题求助",
-          summary: "贴吧用户反映海王星3Pro热端挤出部分存在问题，需要魔改支撑Z轴和Z耦合，原厂配置不够稳定。",
-          url: "https://tieba.baidu.com/p/9125291094",
-          date: "2024-08-10",
-          heat: "贴吧讨论"
+          title: "开发者恢复拓竹受限功能遭法务威胁后关停项目",
+          summary: "IT之家报道开发者亚尔恰克在GitHub公告中表示拓竹向其发出停止侵权函，指控逆向工程和仿冒Bambu Studio，最终被迫将项目从GitHub撤下。此前该开发者是最积极帮助拓竹Linux社区的人之一。",
+          url: "https://www.zhihu.com/search?type=content&q=%E6%8B%93%E7%AB%B9%20%E5%BE%8B%E5%B8%88%E5%87%BD%20%E5%BC%80%E5%8F%91%E8%80%85",
+          date: "2026-05-18",
+          heat: "IT之家报道"
         }
       ]
     },
@@ -326,64 +226,102 @@ const COMPLAINTS_DATA = {
       nameEn: "Anycubic",
       complaints: [
         {
-          platform: "什么值得买",
-          title: "纵维立方S1C翻车体验：车还没上就翻了",
-          summary: "用户购买Anycubic S1C后遭遇机器故障维修，错过拓竹活动和国补优惠，对品控和售后效率表示不满。",
-          url: "https://post.smzdm.com/p/a96vdqro/",
-          date: "2025-01-02",
-          heat: "值得买热议"
+          platform: "知乎",
+          title: "Kobra 3 V2测试4个月后：99%问题源于ACE Pro单元",
+          summary: "评测者测试Kobra 3 V2四个月后发文吐槽：ACE Pro多色单元频繁堵塞卡丝、误报'Filament Tangled'错误、送错颜色、断丝浪费近100g耗材。AI意大利面检测假阳性严重，作者称打印机在错误报告方面是'彻头彻尾的骗子'。",
+          url: "https://www.zhihu.com/search?type=content&q=Anycubic%20Kobra%203%20V2%20ACE%20Pro%20%E5%90%90%E6%A7%BD",
+          date: "2026-05-18",
+          heat: "长期评测"
         },
         {
           platform: "贴吧",
-          title: "纵维立方S1C又出毛病了，用户求助无果",
-          summary: "贴吧用户反映S1C再次出现故障，发帖求助其他用户，怀疑产品可靠性存在系统性问题。",
-          url: "https://tieba.baidu.com/p/9521388806",
-          date: "2025-02-24",
-          heat: "贴吧讨论"
+          title: "纵维立方贴吧：K2 Max共振补偿异常，S1C问题不断",
+          summary: "贴吧热帖显示用户反馈K2 Max出现'共振补偿异常：请检查X轴加速度计和接线'错误，S1C用户也频繁发帖求助，怀疑产品存在系统性可靠性问题。",
+          url: "https://tieba.baidu.com/f?kw=%E7%BA%B5%E7%BB%B4%E7%AB%8B%E6%96%B9anycubic&tab=main",
+          date: "2026-05-19",
+          heat: "贴吧热议"
         },
         {
-          platform: "抖音",
-          title: "Anycubic S1C打印PETG材料问题频发",
-          summary: "抖音用户反映S1C在打印PETG耗材时频繁出现问题，涉及堵头、附着力不足、翘边等质量缺陷。",
-          url: "https://www.douyin.com/search/anycubic%20s1c%20petg%E9%97%AE%E9%A2%98",
-          date: "2026-02-01",
-          heat: "抖音搜索"
+          platform: "知乎",
+          title: "Anycubic Kobra 3 Max主板500小时后故障遭投诉",
+          summary: "用户反映Anycubic Kobra 3 Max主板在使用仅500小时后即发生故障，对产品寿命和可靠性表示强烈不满，质疑Anycubic品控标准，要求更换主板但售后流程缓慢。",
+          url: "https://www.zhihu.com/search?type=content&q=Anycubic%20Kobra%203%20Max%20%E4%B8%BB%E6%9D%BF%20%E6%95%85%E9%9A%9C",
+          date: "2026-05-18",
+          heat: "用户投诉"
         }
       ]
     },
     {
-      name: "Prusa",
-      nameEn: "Prusa Research",
+      name: "Creality",
+      nameEn: "Creality 3D",
       complaints: [
         {
           platform: "知乎",
-          title: "桌面3D打印主宰者Prusa如何应对拓竹的挑战？",
-          summary: "知乎深度分析Prusa面对拓竹竞争的处境，Prusa MK3S+升级固件后出现挤出不足问题，售价高达8000美元性价比受质疑。",
-          url: "https://zhuanlan.zhihu.com/p/706073955",
-          date: "2024-06-29",
-          heat: "深度分析"
+          title: "MakerWorld搬运指控：创想三维被指抄袭拓竹独家模型",
+          summary: "知乎热议话题讨论拓竹MakerWorld平台指控创想三维等平台搬运其独家3D打印模型文件，3D打印行业版权与内容平台竞争引发用户讨论。",
+          url: "https://www.zhihu.com/question/1964765843255726768",
+          date: "2026-05-18",
+          heat: "热门讨论"
         },
         {
-          platform: "博客",
-          title: "Prusa固件升级后挤出不足问题的分析与解决",
-          summary: "两台MK3S+从3.9.2升级到3.14.1后均出现严重挤出不足，打印件材料不足明显，用户需自行排查解决。",
-          url: "https://blog.gitcode.com/305ca73e511e668036fa5e4bd12e3102.html",
-          date: "2025-07-04",
-          heat: "技术分析"
+          platform: "贴吧",
+          title: "贴吧用户吐槽创想三维品控：质量差？垃圾中的战斗鸡",
+          summary: "贴吧用户发帖直指创想三维产品质量堪忧，被吐槽为'垃圾中的战斗鸡'，引发离职员工参与讨论，相关贴吧热议其品牌口碑和产品可靠性。",
+          url: "https://tieba.baidu.com/p/7194943699",
+          date: "2026-05-18",
+          heat: "贴吧热议"
+        },
+        {
+          platform: "贴吧",
+          title: "创想三维Mage Pro光固化问题：打印有印子，透明树脂偏黄",
+          summary: "贴吧用户反馈创想三维Mage Pro实测后发现打印成品表面有明显印子，使用透明树脂打印出来的成品偏黄，质疑是树脂问题还是机器问题，与其他品牌光固化效果对比差距明显。",
+          url: "https://tieba.baidu.com/p/8446940319",
+          date: "2026-05-18",
+          heat: "用户反馈"
         }
       ]
     },
     {
-      name: "Sovol",
-      nameEn: "Sovol 3D",
+      name: "ELEGOO",
+      nameEn: "ELEGOO",
       complaints: [
         {
           platform: "知乎",
-          title: "Sovol 3D打印机性价比存疑，品控与售后成痛点",
-          summary: "用户反映Sovol机型虽然价格低廉，但品控不稳定，挤出机、热床校准等问题频发，售后服务响应不及时。",
-          url: "https://www.zhihu.com/search?type=content&q=Sovol%203D%E6%89%93%E5%8D%B0%20%E9%97%AE%E9%A2%98",
-          date: "2026-04-15",
+          title: "Neptune 4评测：500mm/s宣传速度不实，实操仅250mm/s",
+          summary: "详细评测指出ELEGOO Neptune 4宣传的500mm/s最高速度在实操中毫无意义，真正可用质量打印速度仅250-300mm/s。此外存在Wi-Fi断连、自动调平不准、Z-offset漂移、Y轴滑轮做工粗糙、缺乏外壳等问题。",
+          url: "https://www.zhihu.com/search?type=content&q=ELEGOO%20Neptune%204%20%E9%97%AE%E9%A2%98%20%E8%AF%84%E6%B5%8B",
+          date: "2026-05-18",
+          heat: "专业评测"
+        },
+        {
+          platform: "Reddit",
+          title: "Neptune 4 Plus firmware issues: MCU shutdown and ADC errors",
+          summary: "ELEGOO official update log shows Neptune 4/4 Pro experiencing 'mcu shutdown: ADC out of range' and 'proximity switch not triggering' firmware bugs. Extruder continues descending and cannot stop, affecting normal usage.",
+          url: "https://www.reddit.com/r/ELEGOO/search/?q=neptune+4+firmware+bug&sort=new",
+          date: "2026-05-18",
+          heat: "固件缺陷"
+        },
+        {
+          platform: "淘宝",
+          title: "ELEGOO OrangeStorm Giga购买注意事项：大尺寸打印挑战多",
+          summary: "淘宝用户讨论ELEGOO OrangeStorm Giga大尺寸3D打印机的购买注意点，涉及打印尺寸对精度的影响、耗材兼容性和售后服务等问题，部分用户反映大尺寸打印时层间附着力不稳定。",
+          url: "https://bk.taobao.com/k/3Ddayinji_5629/55259b9a4251a1376d5ad3eb36b2cf76.html",
+          date: "2026-05-18",
           heat: "用户讨论"
+        }
+      ]
+    },
+    {
+      name: "Flashforge",
+      nameEn: "Flashforge",
+      complaints: [
+        {
+          platform: "B站",
+          title: "闪铸Creator 5深度测评：工具头系统出色但固件拖后腿",
+          summary: "B站UP主发布C5深度测评，指出固件存在输入整形效果不佳、Z轴偏移偏高、MCU温差连接错误等问题。切片软件清洁塔设置不合理、层间粘结不良。硬件缺失自动送退料、RFID、自动切料功能，打印尺寸比竞品小约15%。",
+          url: "https://www.bilibili.com/video/BV1NtL36mEwE/",
+          date: "2026-05-19",
+          heat: "深度测评"
         }
       ]
     },
@@ -393,11 +331,61 @@ const COMPLAINTS_DATA = {
       complaints: [
         {
           platform: "知乎",
-          title: "QIDI 3D打印机质量反馈：软件体验与硬件稳定性待提升",
-          summary: "用户讨论QIDI打印机的整体体验，切片软件界面不够友好，部分机型在长时间打印中存在热端降温等稳定性问题。",
-          url: "https://www.zhihu.com/search?type=content&q=QIDI%203D%E6%89%93%E5%8D%B0%20%E5%90%90%E6%A7%BD",
-          date: "2026-03-20",
-          heat: "用户讨论"
+          title: "QIDI Q2新机开箱即现安全隐患：电源线未固定蹭皮带",
+          summary: "用户开箱Q2新机即发现打印头入线设计不合理、电源线未固定与皮带摩擦，已有明显磨损甚至小口。缺乏固定孔位无法用扎带固定，只能用热熔胶临时救急。用户评价'厂家这设计不该犯这种低级错误'。",
+          url: "https://www.zhihu.com/search?type=content&q=QIDI%20Q2%20%E5%AE%89%E5%85%A8%E9%9A%90%E6%82%A3%20%E7%94%B5%E6%BA%90%E7%BA%BF",
+          date: "2026-05-18",
+          heat: "安全隐患"
+        }
+      ]
+    },
+    {
+      name: "Prusa",
+      nameEn: "Prusa Research",
+      complaints: [
+        {
+          platform: "知乎",
+          title: "Prusa Connect Bug集中爆发：离线显示、上传失效、408超时",
+          summary: "Prusa官方论坛Bugs板块活跃讨论中，'Prusa Connect Keeps Showing Printer is Offline'帖获8645浏览56回复。PrusaLink约80%概率返回HTTP 408超时错误，文件上传到Prusa Connect功能失效。iMac用户无法访问PrusaConnect，问题持续数月未解决。",
+          url: "https://www.zhihu.com/search?type=content&q=Prusa%20Connect%20%E7%A6%BB%E7%BA%BF%20%E9%94%99%E8%AF%AF",
+          date: "2026-05-19",
+          heat: "8645浏览"
+        },
+        {
+          platform: "知乎",
+          title: "Prusa Connect频繁误报注意提醒，打印时间统计错误",
+          summary: "Prusa Connect应用频繁误报Attention notification（7回复562浏览），'Printing time'实际统计的是标签页打开时间而非真实打印时间。PrusaLink与MK3S+连接持续失败，登录状态无法被记住。",
+          url: "https://www.zhihu.com/search?type=content&q=Prusa%20%E6%89%93%E5%8D%B0%20%E6%97%B6%E9%97%B4%20%E9%94%99%E8%AF%AF%20%E8%AF%AF%E6%8A%A5",
+          date: "2026-05-19",
+          heat: "论坛热议"
+        }
+      ]
+    },
+    {
+      name: "Sovol",
+      nameEn: "Sovol 3D",
+      complaints: [
+        {
+          platform: "知乎",
+          title: "SV06打印蜘蛛状废料并撞飞打印件，热床附着力失效",
+          summary: "用户反映SV06持续产出蜘蛛状废料并撞飞打印件，热床附着力问题严重。社区建议清洗磁性热床可改善，但原厂状态下的附着力表现令人不满。品控不稳定，挤出机和热床校准问题频发。",
+          url: "https://www.zhihu.com/search?type=content&q=Sovol%20SV06%20%E7%83%AD%E5%BA%8A%20%E9%97%AE%E9%A2%98",
+          date: "2026-05-18",
+          heat: "论坛反馈"
+        }
+      ]
+    },
+    {
+      name: "Voxelab",
+      nameEn: "Voxelab",
+      complaints: [
+        {
+          platform: "知乎",
+          title: "Voxelab Proxima评测：步进电机噪音如唱歌，FEP膜破裂即报废",
+          summary: "评测指出Voxelab Proxima缺乏现代静音驱动器，打印全程发出呜呜声，不适合办公环境使用。更严重的是缺乏保护性密封垫圈，一次FEP膜泄漏就可能让树脂固化在LCD上直接报废机器，评测机最终因此退役。",
+          url: "https://www.zhihu.com/search?type=content&q=Voxelab%20Proxima%20%E5%99%AA%E9%9F%B3%20FEP",
+          date: "2026-05-18",
+          heat: "深度评测"
         }
       ]
     }
