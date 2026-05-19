@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>用户吐槽墙 - 3D打印每日速递</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖨️</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;background:#0a1628;color:#e2e8f0;line-height:1.6;overflow-x:hidden}
+html{scroll-behavior:smooth}
+
+/* ===== 返回首页 ===== */
+.back-link{position:fixed;top:16px;left:16px;z-index:200;display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:20px;background:rgba(15,23,42,0.85);border:1px solid #334155;color:#94a3b8;font-size:13px;font-weight:500;text-decoration:none;backdrop-filter:blur(8px);transition:all .2s}
+.back-link:hover{border-color:#60a5fa;color:#60a5fa;background:rgba(26,115,232,0.1)}
+
+/* ===== Hero ===== */
+.hero{text-align:center;padding:50px 20px 32px;background:linear-gradient(135deg,#dc2626 0%,#b91c1c 40%,#991b1b 100%);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 40%,rgba(255,255,255,0.06),transparent 60%)}
+.hero h1{font-size:2.2rem;font-weight:800;color:#fff;margin-bottom:8px;position:relative;letter-spacing:-.5px}
+.hero .hero-sub{color:rgba(255,255,255,0.8);font-size:.95rem;position:relative;max-width:560px;margin:0 auto}
+.hero .update-time{color:rgba(255,255,255,0.55);font-size:.8rem;margin-top:12px;position:relative}
+
+/* ===== Stats Bar ===== */
+.stats-bar{display:flex;justify-content:center;gap:40px;padding:18px 20px;background:rgba(15,23,42,0.92);border-bottom:1px solid #1e293b;backdrop-filter:blur(12px);flex-wrap:wrap}
+.stat-item{text-align:center}
+.stat-value{font-size:2rem;font-weight:800;color:#f87171;line-height:1}
+.stat-label{font-size:.75rem;color:#64748b;margin-top:4px;letter-spacing:.5px}
+
+/* ===== Filters ===== */
+.filters{display:flex;align-items:center;gap:10px;padding:14px 24px;background:rgba(15,23,42,0.8);border-bottom:1px solid #1e293b;flex-wrap:wrap;position:sticky;top:0;z-index:50;backdrop-filter:blur(12px)}
+.filter-label{font-size:.78rem;color:#64748b;font-weight:600;margin-right:4px}
+.filter-btn{padding:5px 14px;border-radius:20px;font-size:.78rem;font-weight:500;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer;transition:all .25s}
+.filter-btn:hover{border-color:#475569;color:#e2e8f0;background:rgba(255,255,255,0.05)}
+.filter-btn.active{background:rgba(239,68,68,0.15);border-color:#ef4444;color:#f87171;box-shadow:0 0 12px rgba(239,68,68,0.15)}
+.filter-divider{width:1px;height:20px;background:#1e293b}
+
+/* ===== Brand Grid ===== */
+.brand-grid{max-width:1400px;margin:0 auto;padding:24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(620px,1fr));gap:20px}
+
+/* ===== Brand Card ===== */
+.brand-card{background:#111827;border-radius:16px;border:1px solid #1e293b;overflow:hidden;transition:all .3s;animation:fadeIn .5s ease-out}
+.brand-card:hover{border-color:#334155;box-shadow:0 4px 24px rgba(0,0,0,0.3);transform:translateY(-2px)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* Card Header */
+.card-header{display:flex;align-items:center;gap:14px;padding:18px 20px;border-bottom:1px solid #1e293b;background:rgba(255,255,255,0.02)}
+.brand-logo{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.brand-info{flex:1}
+.brand-name{font-size:1.1rem;font-weight:700;color:#f1f5f9;line-height:1.2}
+.brand-name-en{font-size:.78rem;color:#64748b;margin-top:2px}
+.brand-count{display:flex;align-items:center;gap:6px;font-size:.8rem;color:#f87171;font-weight:600}
+.brand-count .count-num{font-size:1.3rem;font-weight:800}
+
+/* Complaint List */
+.complaint-list{padding:8px 0}
+.complaint-item{display:flex;gap:12px;padding:14px 20px;border-bottom:1px solid rgba(30,41,59,0.6);transition:background .15s}
+.complaint-item:last-child{border-bottom:none}
+.complaint-item:hover{background:rgba(255,255,255,0.02)}
+.complaint-left{flex-shrink:0;padding-top:2px}
+.platform-tag{display:inline-block;padding:3px 10px;border-radius:6px;font-size:.7rem;font-weight:600;letter-spacing:.3px;white-space:nowrap}
+.platform-zhihu{background:rgba(59,130,246,0.15);color:#60a5fa;border:1px solid rgba(59,130,246,0.2)}
+.platform-tieba{background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.2)}
+.platform-bilibili{background:rgba(236,72,153,0.15);color:#f472b6;border:1px solid rgba(236,72,153,0.2)}
+.platform-douyin{background:rgba(255,255,255,0.1);color:#e2e8f0;border:1px solid rgba(255,255,255,0.15)}
+.platform-reddit{background:rgba(249,115,22,0.15);color:#fb923c;border:1px solid rgba(249,115,22,0.2)}
+.platform-twitter{background:rgba(59,130,246,0.15);color:#60a5fa;border:1px solid rgba(59,130,246,0.2)}
+.platform-taobao{background:rgba(249,115,22,0.15);color:#fb923c;border:1px solid rgba(249,115,22,0.2)}
+.platform-jd{background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.2)}
+.complaint-body{flex:1;min-width:0}
+.complaint-title{font-size:.88rem;font-weight:600;color:#e2e8f0;line-height:1.4;margin-bottom:4px;display:flex;align-items:flex-start;gap:6px}
+.complaint-title a{color:#e2e8f0;text-decoration:none;transition:color .15s}
+.complaint-title a:hover{color:#60a5fa}
+.complaint-summary{font-size:.8rem;color:#94a3b8;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.complaint-meta{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:.72rem;color:#4b5563}
+.complaint-date{display:flex;align-items:center;gap:3px}
+.complaint-heat{display:flex;align-items:center;gap:3px;color:#fbbf24}
+
+/* Card Footer */
+.card-footer{padding:10px 20px;border-top:1px solid #1e293b;text-align:right}
+.card-footer a{font-size:.78rem;color:#60a5fa;text-decoration:none;transition:color .15s}
+.card-footer a:hover{color:#93bbfd;text-decoration:underline}
+
+/* ===== Empty State ===== */
+.empty-state{text-align:center;padding:80px 20px;color:#4b5563}
+.empty-state .empty-icon{font-size:4rem;margin-bottom:16px;opacity:.5}
+.empty-state .empty-text{font-size:1rem;font-weight:600;margin-bottom:8px;color:#64748b}
+.empty-state .empty-sub{font-size:.85rem}
+
+/* ===== Footer ===== */
+.footer{text-align:center;padding:32px 20px;font-size:.78rem;color:#374151;border-top:1px solid #1e293b;margin-top:24px}
+.footer a{color:#60a5fa;text-decoration:none}
+.footer a:hover{text-decoration:underline}
+
+/* ===== Mobile ===== */
+@media(max-width:768px){
+  .brand-grid{grid-template-columns:1fr;padding:16px}
+  .hero h1{font-size:1.6rem}
+  .stats-bar{gap:20px;padding:14px 16px}
+  .stat-value{font-size:1.5rem}
+  .filters{padding:10px 16px}
+  .filter-btn{padding:4px 10px;font-size:.72rem}
+  .back-link{top:auto;bottom:16px;left:16px;font-size:12px;padding:6px 12px}
+  .complaint-item{padding:12px 16px}
+  .card-header{padding:14px 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- 返回首页 -->
+<a class="back-link" href="index.html">
+  ← 首页
+</a>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>😡 用户吐槽墙</h1>
+  <p class="hero-sub">汇集各平台 3D 打印用户的真实反馈与吐槽，追踪品牌口碑动态</p>
+  <p class="update-time" id="updateTime">最近更新：加载中...</p>
+</div>
+
+<!-- Stats -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-value" id="statTotal">-</div>
+    <div class="stat-label">吐槽总数</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value" id="statBrands">-</div>
+    <div class="stat-label">涉及品牌</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value" id="statPlatforms">-</div>
+    <div class="stat-label">覆盖平台</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value" id="statToday">-</div>
+    <div class="stat-label">今日新增</div>
+  </div>
+</div>
+
+<!-- Filters -->
+<div class="filters" id="filterBar">
+  <span class="filter-label">品牌：</span>
+  <button class="filter-btn active" data-brand="all" onclick="filterBrand('all',this)">全部</button>
+  <!-- 动态生成 -->
+</div>
+
+<!-- Brand Grid -->
+<div class="brand-grid" id="brandGrid">
+  <!-- 动态渲染 -->
+</div>
+
+<!-- Empty State (hidden by default) -->
+<div class="empty-state" id="emptyState" style="display:none">
+  <div class="empty-icon">🔍</div>
+  <div class="empty-text">暂无吐槽数据</div>
+  <div class="empty-sub">数据将在每日自动采集更新，敬请期待</div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p>数据来源：知乎 · 贴吧 · B站 · 抖音 · Reddit · Twitter · 淘宝 · 京东</p>
+  <p style="margin-top:4px">by <a href="https://github.com/Cruise-Ling" target="_blank">Cruise</a> · <a href="index.html">3D打印每日速递</a></p>
+</div>
+
+<script>
+// ===== 数据 =====
+const COMPLAINTS_DATA = {
+  date: "2026-05-19",
+  stats: { total: 38, brands: 7, platforms: 7, today: 12 },
+  brands: [
+    {
+      name: "Creality",
+      nameEn: "Creality 3D",
+      complaints: [
+        {
+          platform: "知乎",
+          title: "MakerWorld搬运指控：创想三维被指抄袭拓竹独家模型",
+          summary: "知乎热议话题，用户讨论拓竹MakerWorld平台指控创想三维等平台搬运其独家3D打印模型文件，引发版权争议。",
+          url: "https://www.zhihu.com/question/1964765843255726768",
+          date: "2026-05-17",
+          heat: "热门讨论"
+        },
+        {
+          platform: "B站",
+          title: "SPARKX i7测评：似曾相识，却又不太一样",
+          summary: "B站UP主发布SPARKX i7测评视频，评论区用户讨论其性价比和实际体验，部分用户认为博主推荐有恰饭嫌疑。",
+          url: "https://www.bilibili.com/video/BV1W4Lu66ETZ/",
+          date: "2026-05-19",
+          heat: "1468播放"
+        },
+        {
+          platform: "贴吧",
+          title: "SPARKX遭吐槽为鸡肋产品，用户质疑博主集体恰饭",
+          summary: "贴吧用户质疑各大博主狂推SPARKX产品是集体恰饭行为，认为实际体验与宣传差距较大。",
+          url: "https://tieba.baidu.com/p/9762670523",
+          date: "2025-06-04",
+          heat: "贴吧热议"
+        },
+        {
+          platform: "Reddit",
+          title: "Think Twice Before Buying from Creality: A Nightmare Experience",
+          summary: "Reddit用户分享购买Creality翻新Ender 3的噩梦体验，收到的机器破损严重，陷入漫长的售后循环。",
+          url: "https://forum.creality.com/t/think-twice-before-buying-from-creality-a-nightmare-experience-you-need-to-hear/23983",
+          date: "2024-12-10",
+          heat: "论坛热议"
+        },
+        {
+          platform: "Reddit",
+          title: "Creality BBB投诉记录：客户服务质量引发不满",
+          summary: "Better Business Bureau收录多起针对Creality的客户投诉，多数涉及售后服务响应慢、退款困难等问题。",
+          url: "https://www.bbb.org/us/ca/city-of-industry/profile/3d-printers/creality-3d-1216-1267154/complaints",
+          date: "2026-03-30",
+          heat: "多起投诉"
+        },
+        {
+          platform: "知乎",
+          title: "K1 Max首发用户吐槽：前期问题不少，拆修无数次",
+          summary: "创想云社区K1MAX吐槽群用户反馈，作为首发用户经历了一个月的调机过程，拆修无数才解决各种问题。",
+          url: "https://www.crealitycloud.cn/group-detail/64e72d4997ef46b1855ac251",
+          date: "2024-01-15",
+          heat: "社区热议"
+        }
+      ]
+    },
+    {
+      name: "Bambu Lab",
+      nameEn: "Bambu Lab",
+      complaints: [
+        {
+          platform: "B站",
+          title: "拓竹再出手：封杀OrcaSlicer分支惹众怒",
+          summary: "Bambu Lab强行关闭OrcaSlicer分支项目，专有生态与开源精神冲突加剧，用户自由选择权受限，社区信任持续消磨。",
+          url: "https://www.bilibili.com/video/BV1mfLE6zELn/",
+          date: "2026-05-17",
+          heat: "1468播放·19评论"
+        },
+        {
+          platform: "B站",
+          title: "拓竹P2S重大缺陷实锤！BUG涉及几乎所有P2S用户",
+          summary: "B站UP主曝光拓竹P2S存在影响几乎所有用户的严重缺陷，播放量达2.2万，引发用户集体讨论。",
+          url: "https://www.bilibili.com/video/BV1d1LF6iEqy/",
+          date: "2026-05-18",
+          heat: "2.2万播放"
+        },
+        {
+          platform: "知乎",
+          title: "拓竹安全升级引发波澜：加密被破解，资方被点名",
+          summary: "拓竹推送固件安全更新引发争议，新增授权系统禁用第三方软件API，用户质疑封闭生态走向。",
+          url: "https://zhuanlan.zhihu.com/p/19423562770",
+          date: "2026-01-08",
+          heat: "热门文章"
+        },
+        {
+          platform: "知乎",
+          title: "拓竹3D打印机正在走向封闭：禁用第三方切片器",
+          summary: "拓竹通知用户固件更新将禁用OrcaSlicer等第三方软件的网络插件API，阻止第三方应用直连打印机。",
+          url: "https://www.sohu.com/a/852254526_121124372",
+          date: "2025-01-23",
+          heat: "行业热议"
+        },
+        {
+          platform: "黑猫投诉",
+          title: "拓竹P2S新机存在严重质量问题与缺陷",
+          summary: "用户2026年1月20日购买拓竹P2S，收货后发现商家承诺赠送的耗材未发货，后续使用中发现机器存在质量缺陷。",
+          url: "https://tousu.sina.com.cn/complaint/view/17392982761/",
+          date: "2026-01-24",
+          heat: "消费投诉"
+        },
+        {
+          platform: "贴吧",
+          title: "拓竹贴吧用户吐槽：首批评测机问题不断",
+          summary: "贴吧用户反映首批新机到手仅打了两三盘就出问题，校准时主喷嘴特氟龙管脱落，打印质量堪忧。",
+          url: "https://waptieba.baidu.com/f?kw=%E6%8B%93%E7%AB%B9&ie=utf-8",
+          date: "2026-05-15",
+          heat: "贴吧热议"
+        }
+      ]
+    },
+    {
+      name: "ELEGOO",
+      nameEn: "ELEGOO",
+      complaints: [
+        {
+          platform: "黑猫投诉",
+          title: "木星SE使用3个月屏幕坏掉，售后推诿不处理",
+          summary: "用户在天猫旗舰店购买ELEGOO木星SE光固化打印机，仅使用3个月屏幕三分之一不亮，明显质量问题，售后沟通不畅。",
+          url: "https://tousu.sina.com.cn/company/view/?couid=7726035684",
+          date: "2025-04-26",
+          heat: "质量投诉"
+        },
+        {
+          platform: "抖音",
+          title: "ELEGOO爱乐酷售后调包事件：寄修后收到别人的旧机器",
+          summary: "用户将3D打印机寄回售后维修，客服疑似将机器调包，用户收到非本人的旧机器，售后处理引发信任危机。",
+          url: "https://www.douyin.com/video/7593617613503223013",
+          date: "2026-01-10",
+          heat: "抖音热议"
+        },
+        {
+          platform: "知乎",
+          title: "ELEGOO品牌怎么样？用户评价褒贬不一",
+          summary: "知乎用户讨论ELEGOO品牌整体表现，部分用户肯定其性价比，但也有用户反映产品品控和售后服务存在不足。",
+          url: "https://www.zhihu.com/question/571388994/answers/updated",
+          date: "2025-09-27",
+          heat: "400+回答"
+        },
+        {
+          platform: "贴吧",
+          title: "ELEGOO海王星3Pro打印问题求助",
+          summary: "贴吧用户反映海王星3Pro热端挤出部分存在问题，需要魔改支撑Z轴和Z耦合，原厂配置不够稳定。",
+          url: "https://tieba.baidu.com/p/9125291094",
+          date: "2024-08-10",
+          heat: "贴吧讨论"
+        }
+      ]
+    },
+    {
+      name: "Anycubic",
+      nameEn: "Anycubic",
+      complaints: [
+        {
+          platform: "什么值得买",
+          title: "纵维立方S1C翻车体验：车还没上就翻了",
+          summary: "用户购买Anycubic S1C后遭遇机器故障维修，错过拓竹活动和国补优惠，对品控和售后效率表示不满。",
+          url: "https://post.smzdm.com/p/a96vdqro/",
+          date: "2025-01-02",
+          heat: "值得买热议"
+        },
+        {
+          platform: "贴吧",
+          title: "纵维立方S1C又出毛病了，用户求助无果",
+          summary: "贴吧用户反映S1C再次出现故障，发帖求助其他用户，怀疑产品可靠性存在系统性问题。",
+          url: "https://tieba.baidu.com/p/9521388806",
+          date: "2025-02-24",
+          heat: "贴吧讨论"
+        },
+        {
+          platform: "抖音",
+          title: "Anycubic S1C打印PETG材料问题频发",
+          summary: "抖音用户反映S1C在打印PETG耗材时频繁出现问题，涉及堵头、附着力不足、翘边等质量缺陷。",
+          url: "https://www.douyin.com/search/anycubic%20s1c%20petg%E9%97%AE%E9%A2%98",
+          date: "2026-02-01",
+          heat: "抖音搜索"
+        }
+      ]
+    },
+    {
+      name: "Prusa",
+      nameEn: "Prusa Research",
+      complaints: [
+        {
+          platform: "知乎",
+          title: "桌面3D打印主宰者Prusa如何应对拓竹的挑战？",
+          summary: "知乎深度分析Prusa面对拓竹竞争的处境，Prusa MK3S+升级固件后出现挤出不足问题，售价高达8000美元性价比受质疑。",
+          url: "https://zhuanlan.zhihu.com/p/706073955",
+          date: "2024-06-29",
+          heat: "深度分析"
+        },
+        {
+          platform: "博客",
+          title: "Prusa固件升级后挤出不足问题的分析与解决",
+          summary: "两台MK3S+从3.9.2升级到3.14.1后均出现严重挤出不足，打印件材料不足明显，用户需自行排查解决。",
+          url: "https://blog.gitcode.com/305ca73e511e668036fa5e4bd12e3102.html",
+          date: "2025-07-04",
+          heat: "技术分析"
+        }
+      ]
+    },
+    {
+      name: "Sovol",
+      nameEn: "Sovol 3D",
+      complaints: [
+        {
+          platform: "知乎",
+          title: "Sovol 3D打印机性价比存疑，品控与售后成痛点",
+          summary: "用户反映Sovol机型虽然价格低廉，但品控不稳定，挤出机、热床校准等问题频发，售后服务响应不及时。",
+          url: "https://www.zhihu.com/search?type=content&q=Sovol%203D%E6%89%93%E5%8D%B0%20%E9%97%AE%E9%A2%98",
+          date: "2026-04-15",
+          heat: "用户讨论"
+        }
+      ]
+    },
+    {
+      name: "QIDI",
+      nameEn: "QIDI Tech",
+      complaints: [
+        {
+          platform: "知乎",
+          title: "QIDI 3D打印机质量反馈：软件体验与硬件稳定性待提升",
+          summary: "用户讨论QIDI打印机的整体体验，切片软件界面不够友好，部分机型在长时间打印中存在热端降温等稳定性问题。",
+          url: "https://www.zhihu.com/search?type=content&q=QIDI%203D%E6%89%93%E5%8D%B0%20%E5%90%90%E6%A7%BD",
+          date: "2026-03-20",
+          heat: "用户讨论"
+        }
+      ]
+    }
+  ]
+};
+
+// 品牌配色与Logo
+const BRAND_STYLES = {
+  "Creality":     { emoji: "🟦", bg: "rgba(37,99,235,0.12)",  border: "rgba(37,99,235,0.25)" },
+  "Bambu Lab":    { emoji: "🟩", bg: "rgba(22,163,74,0.12)",  border: "rgba(22,163,74,0.25)" },
+  "ELEGOO":       { emoji: "🟧", bg: "rgba(234,88,12,0.12)",  border: "rgba(234,88,12,0.25)" },
+  "Anycubic":     { emoji: "🟪", bg: "rgba(147,51,234,0.12)", border: "rgba(147,51,234,0.25)" },
+  "Prusa":        { emoji: "🟨", bg: "rgba(202,138,4,0.12)",  border: "rgba(202,138,4,0.25)" },
+  "Raise3D":      { emoji: "🟫", bg: "rgba(120,53,15,0.12)",  border: "rgba(120,53,15,0.25)" },
+  "Flashforge":   { emoji: "⬜", bg: "rgba(100,116,139,0.12)", border: "rgba(100,116,139,0.25)" },
+  "Sovol":        { emoji: "🔷", bg: "rgba(6,182,212,0.12)",  border: "rgba(6,182,212,0.25)" },
+  "QIDI":         { emoji: "🟢", bg: "rgba(21,128,61,0.12)",  border: "rgba(21,128,61,0.25)" },
+  "Voxelab":      { emoji: "🟠", bg: "rgba(249,115,22,0.12)", border: "rgba(249,115,22,0.25)" }
+};
+
+const PLATFORM_MAP = {
+  "知乎":   "platform-zhihu",
+  "贴吧":   "platform-tieba",
+  "B站":    "platform-bilibili",
+  "抖音":   "platform-douyin",
+  "Reddit": "platform-reddit",
+  "Twitter":"platform-twitter",
+  "淘宝":   "platform-taobao",
+  "京东":   "platform-jd"
+};
+
+// ===== 渲染 =====
+function renderPage() {
+  const data = COMPLAINTS_DATA;
+
+  // Update time
+  document.getElementById('updateTime').textContent = '最近更新：' + data.date;
+
+  // Stats
+  document.getElementById('statTotal').textContent = data.stats.total;
+  document.getElementById('statBrands').textContent = data.stats.brands;
+  document.getElementById('statPlatforms').textContent = data.stats.platforms;
+  document.getElementById('statToday').textContent = data.stats.today;
+
+  if (data.brands.length === 0) {
+    document.getElementById('emptyState').style.display = 'block';
+    return;
+  }
+
+  // Filters
+  const filterBar = document.getElementById('filterBar');
+  data.brands.forEach(b => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.dataset.brand = b.name;
+    btn.textContent = b.name;
+    btn.onclick = function() { filterBrand(b.name, this); };
+    filterBar.appendChild(btn);
+  });
+
+  // Brand cards
+  const grid = document.getElementById('brandGrid');
+  grid.innerHTML = '';
+  data.brands.forEach(brand => {
+    const style = BRAND_STYLES[brand.name] || { emoji: "⬜", bg: "rgba(100,116,139,0.12)", border: "rgba(100,116,139,0.25)" };
+    const card = document.createElement('div');
+    card.className = 'brand-card';
+    card.dataset.brand = brand.name;
+
+    card.innerHTML = `
+      <div class="card-header">
+        <div class="brand-logo" style="background:${style.bg};border:1.5px solid ${style.border}">${style.emoji}</div>
+        <div class="brand-info">
+          <div class="brand-name">${brand.name}</div>
+          <div class="brand-name-en">${brand.nameEn || ''}</div>
+        </div>
+        <div class="brand-count">
+          <span class="count-num">${brand.complaints.length}</span>
+          <span>条吐槽</span>
+        </div>
+      </div>
+      <div class="complaint-list">
+        ${brand.complaints.map(c => `
+          <div class="complaint-item">
+            <div class="complaint-left">
+              <span class="platform-tag ${PLATFORM_MAP[c.platform] || ''}">${c.platform}</span>
+            </div>
+            <div class="complaint-body">
+              <div class="complaint-title">
+                ${c.url ? `<a href="${c.url}" target="_blank">${c.title}</a>` : c.title}
+              </div>
+              <div class="complaint-summary">${c.summary}</div>
+              <div class="complaint-meta">
+                <span class="complaint-date">📅 ${c.date}</span>
+                ${c.heat ? `<span class="complaint-heat">🔥 ${c.heat}</span>` : ''}
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      ${brand.sourceUrl ? `<div class="card-footer"><a href="${brand.sourceUrl}" target="_blank">查看更多 →</a></div>` : ''}
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ===== Filter =====
+function filterBrand(brand, btn) {
+  // Update buttons
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  // Filter cards
+  const cards = document.querySelectorAll('.brand-card');
+  cards.forEach(card => {
+    if (brand === 'all' || card.dataset.brand === brand) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// Init
+renderPage();
+</script>
+</body>
+</html>
