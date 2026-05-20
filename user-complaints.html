@@ -3,487 +3,467 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>用户吐槽墙 - 3D打印每日速递</title>
+<title>用户口碑 - 3D打印每日速递</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖨️</text></svg>">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;background:#0a1628;color:#e2e8f0;line-height:1.6;overflow-x:hidden}
 html{scroll-behavior:smooth}
+a{color:#60a5fa;text-decoration:none;transition:color .15s}
+a:hover{color:#93bbfd;text-decoration:underline}
 
-/* ===== 返回首页 ===== */
+/* Back */
 .back-link{position:fixed;top:16px;left:16px;z-index:200;display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:20px;background:rgba(15,23,42,0.85);border:1px solid #334155;color:#94a3b8;font-size:13px;font-weight:500;text-decoration:none;backdrop-filter:blur(8px);transition:all .2s}
 .back-link:hover{border-color:#60a5fa;color:#60a5fa;background:rgba(26,115,232,0.1)}
 
-/* ===== Hero ===== */
-.hero{text-align:center;padding:50px 20px 32px;background:linear-gradient(135deg,#dc2626 0%,#b91c1c 40%,#991b1b 100%);position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 40%,rgba(255,255,255,0.06),transparent 60%)}
-.hero h1{font-size:2.2rem;font-weight:800;color:#fff;margin-bottom:8px;position:relative;letter-spacing:-.5px}
-.hero .hero-sub{color:rgba(255,255,255,0.8);font-size:.95rem;position:relative;max-width:560px;margin:0 auto}
-.hero .date-badge{display:inline-block;margin:10px auto 0;padding:6px 18px;border-radius:20px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:.88rem;font-weight:600;position:relative;backdrop-filter:blur(4px)}
-.hero .update-time{color:rgba(255,255,255,0.55);font-size:.8rem;margin-top:12px;position:relative}
+/* Hero */
+.hero{text-align:center;padding:44px 20px 28px;background:linear-gradient(135deg,#1e3a5f 0%,#0f2847 50%,#0a1628 100%);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 40%,rgba(59,130,246,0.08),transparent 60%)}
+.hero h1{font-size:2rem;font-weight:800;color:#fff;margin-bottom:4px;position:relative}
+.hero .hero-sub{color:rgba(255,255,255,0.7);font-size:.9rem;position:relative;max-width:520px;margin:0 auto}
+.hero .date-row{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:12px;position:relative;flex-wrap:wrap}
+.hero .date-badge{padding:5px 16px;border-radius:16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:#fff;font-size:.82rem;font-weight:600;backdrop-filter:blur(4px)}
+.hero .update-time{color:rgba(255,255,255,0.45);font-size:.78rem}
 
-/* ===== Stats Bar ===== */
-.stats-bar{display:flex;justify-content:center;gap:40px;padding:18px 20px;background:rgba(15,23,42,0.92);border-bottom:1px solid #1e293b;backdrop-filter:blur(12px);flex-wrap:wrap}
+/* Stats */
+.stats-bar{display:flex;justify-content:center;gap:32px;padding:16px 20px;background:rgba(15,23,42,0.92);border-bottom:1px solid #1e293b;backdrop-filter:blur(12px);flex-wrap:wrap}
 .stat-item{text-align:center}
-.stat-value{font-size:2rem;font-weight:800;color:#f87171;line-height:1}
-.stat-label{font-size:.75rem;color:#64748b;margin-top:4px;letter-spacing:.5px}
+.stat-value{font-size:1.8rem;font-weight:800;line-height:1}
+.stat-value.text-red{color:#f87171}
+.stat-value.text-amber{color:#fbbf24}
+.stat-value.text-green{color:#34d399}
+.stat-value.text-blue{color:#60a5fa}
+.stat-value.text-purple{color:#a78bfa}
+.stat-label{font-size:.72rem;color:#64748b;margin-top:3px;letter-spacing:.3px}
 
-/* ===== Filters ===== */
-.filters{display:flex;align-items:center;gap:10px;padding:14px 24px;background:rgba(15,23,42,0.8);border-bottom:1px solid #1e293b;flex-wrap:wrap;position:sticky;top:0;z-index:50;backdrop-filter:blur(12px)}
-.filter-label{font-size:.78rem;color:#64748b;font-weight:600;margin-right:4px}
-.filter-btn{padding:5px 14px;border-radius:20px;font-size:.78rem;font-weight:500;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer;transition:all .25s}
-.filter-btn:hover{border-color:#475569;color:#e2e8f0;background:rgba(255,255,255,0.05)}
-.filter-btn.active{background:rgba(239,68,68,0.15);border-color:#ef4444;color:#f87171;box-shadow:0 0 12px rgba(239,68,68,0.15)}
-.filter-divider{width:1px;height:20px;background:#1e293b}
+/* Sentiment Bar */
+.sentiment-bar{display:flex;justify-content:center;gap:16px;padding:10px 20px;background:rgba(15,23,42,0.6);border-bottom:1px solid #1e293b}
+.sentiment-chip{display:flex;align-items:center;gap:5px;font-size:.72rem;color:#94a3b8;padding:3px 10px;border-radius:12px;background:rgba(255,255,255,0.04)}
+.sentiment-dot{width:8px;height:8px;border-radius:50%}
 
-/* ===== Brand Grid ===== */
-.brand-grid{max-width:1400px;margin:0 auto;padding:24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(620px,1fr));gap:20px}
+/* Filter Bar */
+.filters{display:flex;align-items:center;gap:8px;padding:12px 24px;background:rgba(15,23,42,0.8);border-bottom:1px solid #1e293b;flex-wrap:wrap;position:sticky;top:0;z-index:50;backdrop-filter:blur(12px)}
+.filter-label{font-size:.75rem;color:#64748b;font-weight:600;margin-right:2px}
+.filter-btn{padding:4px 12px;border-radius:16px;font-size:.75rem;font-weight:500;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer;transition:all .2s}
+.filter-btn:hover{border-color:#475569;color:#e2e8f0}
+.filter-btn.active{background:rgba(59,130,246,0.15);border-color:#3b82f6;color:#60a5fa}
+.filter-divider{width:1px;height:18px;background:#1e293b}
 
-/* ===== Brand Card ===== */
-.brand-card{background:#111827;border-radius:16px;border:1px solid #1e293b;overflow:hidden;transition:all .3s;animation:fadeIn .5s ease-out}
-.brand-card:hover{border-color:#334155;box-shadow:0 4px 24px rgba(0,0,0,0.3);transform:translateY(-2px)}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+/* Feed Container */
+.feed{max-width:860px;margin:0 auto;padding:20px 16px}
+
+/* Feed Card */
+.feed-card{background:#111827;border-radius:14px;border:1px solid #1e293b;margin-bottom:16px;overflow:hidden;transition:all .25s;animation:fadeIn .4s ease-out}
+.feed-card:hover{border-color:#334155;box-shadow:0 4px 20px rgba(0,0,0,0.3);transform:translateY(-1px)}
+.feed-card.p0-card{border-left:3px solid #ef4444}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 /* Card Header */
-.card-header{display:flex;align-items:center;gap:14px;padding:18px 20px;border-bottom:1px solid #1e293b;background:rgba(255,255,255,0.02)}
-.brand-logo{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-.brand-info{flex:1}
-.brand-name{font-size:1.1rem;font-weight:700;color:#f1f5f9;line-height:1.2}
-.brand-name-en{font-size:.78rem;color:#64748b;margin-top:2px}
-.brand-count{display:flex;align-items:center;gap:6px;font-size:.8rem;color:#f87171;font-weight:600}
-.brand-count .count-num{font-size:1.3rem;font-weight:800}
+.card-top{display:flex;align-items:center;gap:10px;padding:14px 18px 0;flex-wrap:wrap}
+.platform-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:6px;font-size:.7rem;font-weight:600;white-space:nowrap}
+.plat-reddit{background:rgba(249,115,22,0.15);color:#fb923c;border:1px solid rgba(249,115,22,0.25)}
+.plat-youtube{background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.25)}
+.plat-amazon{background:rgba(234,179,8,0.15);color:#fbbf24;border:1px solid rgba(234,179,8,0.25)}
+.plat-facebook{background:rgba(59,130,246,0.15);color:#60a5fa;border:1px solid rgba(59,130,246,0.25)}
+.plat-other{background:rgba(100,116,139,0.15);color:#94a3b8;border:1px solid rgba(100,116,139,0.25)}
+.model-tag{padding:2px 8px;border-radius:6px;font-size:.68rem;font-weight:600;background:rgba(139,92,246,0.12);color:#a78bfa;border:1px solid rgba(139,92,246,0.2)}
+.country-tag{font-size:.68rem;color:#64748b;display:flex;align-items:center;gap:2px}
+.verified-badge{font-size:.65rem;color:#34d399;font-weight:600;display:flex;align-items:center;gap:2px}
+.p0-badge{font-size:.65rem;color:#f87171;font-weight:700;background:rgba(239,68,68,0.12);padding:2px 8px;border-radius:4px;border:1px solid rgba(239,68,68,0.25);animation:p0pulse 2s infinite}
+@keyframes p0pulse{0%,100%{opacity:1}50%{opacity:.6}}
 
-/* Complaint List */
-.complaint-list{padding:8px 0}
-.complaint-item{display:flex;gap:12px;padding:14px 20px;border-bottom:1px solid rgba(30,41,59,0.6);transition:background .15s}
-.complaint-item:last-child{border-bottom:none}
-.complaint-item:hover{background:rgba(255,255,255,0.02)}
-.complaint-left{flex-shrink:0;padding-top:2px}
-.platform-tag{display:inline-block;padding:3px 10px;border-radius:6px;font-size:.7rem;font-weight:600;letter-spacing:.3px;white-space:nowrap}
-.platform-zhihu{background:rgba(59,130,246,0.15);color:#60a5fa;border:1px solid rgba(59,130,246,0.2)}
-.platform-tieba{background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.2)}
-.platform-bilibili{background:rgba(236,72,153,0.15);color:#f472b6;border:1px solid rgba(236,72,153,0.2)}
-.platform-douyin{background:rgba(255,255,255,0.1);color:#e2e8f0;border:1px solid rgba(255,255,255,0.15)}
-.platform-reddit{background:rgba(249,115,22,0.15);color:#fb923c;border:1px solid rgba(249,115,22,0.2)}
-.platform-twitter{background:rgba(59,130,246,0.15);color:#60a5fa;border:1px solid rgba(59,130,246,0.2)}
-.platform-taobao{background:rgba(249,115,22,0.15);color:#fb923c;border:1px solid rgba(249,115,22,0.2)}
-.platform-jd{background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.2)}
-.platform-youtube{background:rgba(255,0,0,0.15);color:#f87171;border:1px solid rgba(255,0,0,0.2)}
-.complaint-body{flex:1;min-width:0}
-.complaint-title{font-size:.88rem;font-weight:600;color:#e2e8f0;line-height:1.4;margin-bottom:4px;display:flex;align-items:flex-start;gap:6px}
-.complaint-title a{color:#e2e8f0;text-decoration:none;transition:color .15s}
-.complaint-title a:hover{color:#60a5fa}
-.complaint-summary{font-size:.8rem;color:#94a3b8;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.complaint-meta{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:.72rem;color:#4b5563}
-.complaint-date{display:flex;align-items:center;gap:3px}
-.complaint-heat{display:flex;align-items:center;gap:3px;color:#fbbf24}
+/* Card Body */
+.card-body{padding:12px 18px 14px}
+.card-summary{font-size:.88rem;color:#e2e8f0;line-height:1.7;margin-bottom:8px}
+.card-original{background:rgba(0,0,0,0.25);border-radius:8px;padding:10px 14px;margin-bottom:10px;border-left:3px solid #334155}
+.card-original .label{font-size:.68rem;color:#64748b;font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+.card-original .text{font-size:.82rem;color:#94a3b8;line-height:1.7;font-style:italic}
+.card-translation{background:rgba(59,130,246,0.06);border-radius:8px;padding:10px 14px;border-left:3px solid rgba(59,130,246,0.3)}
+.card-translation .label{font-size:.68rem;color:#3b82f6;font-weight:600;margin-bottom:4px;letter-spacing:.5px}
+.card-translation .text{font-size:.82rem;color:#cbd5e1;line-height:1.7}
+
+/* Sentiment Badge */
+.sentiment-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:12px;font-size:.7rem;font-weight:600}
+.sent-very-negative{background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.25)}
+.sent-negative{background:rgba(251,146,60,0.15);color:#fb923c;border:1px solid rgba(251,146,60,0.25)}
+.sent-neutral{background:rgba(148,163,184,0.15);color:#94a3b8;border:1px solid rgba(148,163,184,0.25)}
+.sent-positive{background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.25)}
+.sent-very-positive{background:rgba(34,197,94,0.15);color:#22c55e;border:1px solid rgba(34,197,94,0.25)}
+
+/* Tags Row */
+.tags-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.dim-tag{padding:2px 8px;border-radius:4px;font-size:.65rem;font-weight:500;background:rgba(99,102,241,0.1);color:#818cf8;border:1px solid rgba(99,102,241,0.15)}
+.problem-tag{padding:2px 8px;border-radius:4px;font-size:.65rem;font-weight:500;background:rgba(239,68,68,0.08);color:#fca5a5;border:1px solid rgba(239,68,68,0.12)}
+.competitor-tag{padding:2px 8px;border-radius:4px;font-size:.65rem;font-weight:500;background:rgba(234,179,8,0.08);color:#fde68a;border:1px solid rgba(234,179,8,0.12)}
 
 /* Card Footer */
-.card-footer{padding:10px 20px;border-top:1px solid #1e293b;text-align:right}
-.card-footer a{font-size:.78rem;color:#60a5fa;text-decoration:none;transition:color .15s}
-.card-footer a:hover{color:#93bbfd;text-decoration:underline}
+.card-footer{display:flex;align-items:center;justify-content:space-between;padding:8px 18px 12px;flex-wrap:wrap;gap:6px}
+.card-footer .meta{display:flex;align-items:center;gap:10px;font-size:.7rem;color:#4b5563}
+.card-footer .meta span{display:flex;align-items:center;gap:3px}
+.card-footer .heat{color:#fbbf24}
+.card-footer .link-btn{padding:4px 12px;border-radius:8px;font-size:.72rem;font-weight:500;background:rgba(59,130,246,0.1);color:#60a5fa;border:1px solid rgba(59,130,246,0.2);transition:all .15s;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.card-footer .link-btn:hover{background:rgba(59,130,246,0.2);text-decoration:none}
 
-/* ===== Empty State ===== */
+/* Purchase Info Row */
+.purchase-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid rgba(30,41,59,0.5)}
+.purchase-item{font-size:.68rem;color:#64748b;display:flex;align-items:center;gap:3px}
+.purchase-item span{color:#94a3b8;font-weight:500}
+
+/* Empty State */
 .empty-state{text-align:center;padding:80px 20px;color:#4b5563}
-.empty-state .empty-icon{font-size:4rem;margin-bottom:16px;opacity:.5}
-.empty-state .empty-text{font-size:1rem;font-weight:600;margin-bottom:8px;color:#64748b}
+.empty-state .empty-icon{font-size:3.5rem;margin-bottom:16px;opacity:.5}
+.empty-state .empty-text{font-size:1rem;font-weight:600;margin-bottom:6px;color:#64748b}
 .empty-state .empty-sub{font-size:.85rem}
 
-/* ===== Footer ===== */
-.footer{text-align:center;padding:32px 20px;font-size:.78rem;color:#374151;border-top:1px solid #1e293b;margin-top:24px}
+/* Footer */
+.footer{text-align:center;padding:28px 20px;font-size:.75rem;color:#374151;border-top:1px solid #1e293b;margin-top:24px}
 .footer a{color:#60a5fa;text-decoration:none}
 .footer a:hover{text-decoration:underline}
 
-/* ===== Mobile ===== */
+/* Mobile */
 @media(max-width:768px){
-  .brand-grid{grid-template-columns:1fr;padding:16px}
-  .hero h1{font-size:1.6rem}
-  .stats-bar{gap:20px;padding:14px 16px}
-  .stat-value{font-size:1.5rem}
-  .filters{padding:10px 16px}
-  .filter-btn{padding:4px 10px;font-size:.72rem}
-  .back-link{top:auto;bottom:16px;left:16px;font-size:12px;padding:6px 12px}
-  .complaint-item{padding:12px 16px}
-  .card-header{padding:14px 16px}
+  .feed{padding:12px}
+  .hero h1{font-size:1.5rem}
+  .stats-bar{gap:16px;padding:12px 16px}
+  .stat-value{font-size:1.4rem}
+  .filters{padding:10px 14px}
+  .filter-btn{padding:3px 9px;font-size:.7rem}
+  .card-top{padding:10px 14px 0}
+  .card-body{padding:10px 14px 12px}
+  .card-footer{padding:6px 14px 10px}
+  .back-link{top:auto;bottom:14px;left:14px;font-size:11px;padding:5px 10px}
 }
 </style>
 </head>
 <body>
 
-<!-- 返回首页 -->
-<a class="back-link" href="index.html">
-  ← 首页
-</a>
+<a class="back-link" href="index.html">← 首页</a>
 
-<!-- Hero -->
 <div class="hero">
-  <h1>😡 用户吐槽墙</h1>
-  <div class="date-badge" id="dateBadge">📅 2026年05月18日</div>
-  <p class="hero-sub">汇集各平台 3D 打印用户的真实反馈与吐槽，追踪品牌口碑动态</p>
-  <p class="update-time" id="updateTime">最近更新：加载中...</p>
+  <h1>🌍 海外用户口碑</h1>
+  <div class="hero-sub">每日 5 条高价值精准样本 · 覆盖 Reddit / YouTube / Amazon 等主流平台</div>
+  <div class="date-row">
+    <span class="date-badge" id="dateBadge">📅 加载中...</span>
+    <span class="update-time" id="updateTime"></span>
+  </div>
 </div>
 
-<!-- Stats -->
 <div class="stats-bar">
   <div class="stat-item">
-    <div class="stat-value" id="statTotal">-</div>
-    <div class="stat-label">吐槽总数</div>
+    <div class="stat-value text-blue" id="statTotal">-</div>
+    <div class="stat-label">今日样本</div>
   </div>
   <div class="stat-item">
-    <div class="stat-value" id="statBrands">-</div>
-    <div class="stat-label">涉及品牌</div>
+    <div class="stat-value text-red" id="statNegative">-</div>
+    <div class="stat-label">负面反馈</div>
   </div>
   <div class="stat-item">
-    <div class="stat-value" id="statPlatforms">-</div>
-    <div class="stat-label">覆盖平台</div>
+    <div class="stat-value text-amber" id="statNeutral">-</div>
+    <div class="stat-label">中性反馈</div>
   </div>
   <div class="stat-item">
-    <div class="stat-value" id="statToday">-</div>
-    <div class="stat-label">本日采集</div>
+    <div class="stat-value text-green" id="statPositive">-</div>
+    <div class="stat-label">正面反馈</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value text-purple" id="statP0">-</div>
+    <div class="stat-label">P0 高风险</div>
   </div>
 </div>
 
-<!-- Filters -->
+<div class="sentiment-bar" id="sentimentBar"></div>
+
 <div class="filters" id="filterBar">
-  <span class="filter-label">品牌：</span>
-  <button class="filter-btn active" data-brand="all" onclick="filterBrand('all',this)">全部</button>
-  <!-- 动态生成 -->
+  <span class="filter-label">筛选：</span>
+  <button class="filter-btn active" onclick="filterCards('all',this)">全部</button>
+  <span class="filter-divider"></span>
+  <span class="filter-label">情感：</span>
+  <button class="filter-btn" onclick="filterCards('negative',this)">😔 负面</button>
+  <button class="filter-btn" onclick="filterCards('neutral',this)">😐 中性</button>
+  <button class="filter-btn" onclick="filterCards('positive',this)">😊 正面</button>
+  <span class="filter-divider"></span>
+  <span class="filter-label">平台：</span>
+  <button class="filter-btn" onclick="filterCards('Reddit',this)">Reddit</button>
+  <button class="filter-btn" onclick="filterCards('YouTube',this)">YouTube</button>
+  <button class="filter-btn" onclick="filterCards('Amazon',this)">Amazon</button>
 </div>
 
-<!-- Brand Grid -->
-<div class="brand-grid" id="brandGrid">
-  <!-- 动态渲染 -->
-</div>
+<div class="feed" id="feedContainer"></div>
 
-<!-- Empty State (hidden by default) -->
 <div class="empty-state" id="emptyState" style="display:none">
   <div class="empty-icon">🔍</div>
-  <div class="empty-text">暂无吐槽数据</div>
-  <div class="empty-sub">数据将在每日自动采集更新，敬请期待</div>
+  <div class="empty-text">暂无口碑数据</div>
+  <div class="empty-sub">每日自动采集更新，敬请期待</div>
 </div>
 
-<!-- Footer -->
 <div class="footer">
-  <p>数据来源：知乎 · 贴吧 · B站 · 抖音 · Reddit · Twitter · YouTube · 淘宝 · 京东</p>
-  <p style="margin-top:4px">by <a href="https://github.com/Cruise-Ling" target="_blank">Cruise</a> · <a href="index.html">3D打印每日速递</a></p>
+  <p>数据来源：Reddit · YouTube · Amazon · Facebook · 专业论坛</p>
+  <p style="margin-top:3px">by <a href="https://github.com/Cruise-Ling" target="_blank">Cruise</a> · <a href="index.html">3D打印每日速递</a> · 每日 5 条精准样本</p>
 </div>
 
 <script>
-// ===== 数据 =====
-const COMPLAINTS_DATA = {
-  date: "2026-05-19",
-  dateLabel: "2026年05月19日",
-  stats: { total: 22, brands: 8, platforms: 4, today: 22 },
-  brands: [
+const OVERSEAS_FEEDBACK_DATA = {
+  date: "2026-05-20",
+  dateLabel: "2026年05月20日",
+  dateEn: "May 20, 2026",
+  stats: {
+    total: 5,
+    platforms: 3,
+    sentiment: { veryNegative: 2, negative: 1, neutral: 1, positive: 1, veryPositive: 0 },
+    p0Count: 1
+  },
+  items: [
     {
-      name: "Bambu Lab",
-      nameEn: "Bambu Lab",
-      complaints: [
-        {
-          platform: "B站",
-          title: "拓竹3D打印机：这次彻底没法忍了，硬核玩家深扒拓竹"骚操作"",
-          summary: "5月19日B站UP主转载YouTube硬核技术视频，从技术视角深度剖析拓竹近期争议决策：对原有方案画蛇添足的改动导致用户体验下降，对打印精度、稳定性和生态开放性造成负面影响。UP主直呼'再也不用拓竹'，为准备购买或已在使用的用户提供避坑建议。",
-          url: "https://www.bilibili.com/video/BV1HQLM6eEad/",
-          date: "2026-05-19",
-          heat: "1073播放 22赞"
-        },
-        {
-          platform: "B站",
-          title: "拓竹A1、创想i7、纵维立方KX三款入门3D打印机终极横评",
-          summary: "5月15日B站UP主发布三款热门入门级3D打印机全面横向对比，测试单色/多色打印速度、换色速度、打印质量、软件易用性、模型丰富度、噪音、外观共8项维度。视频获2.1万播放、420赞、249收藏，引发用户热烈讨论各品牌优劣。",
-          url: "https://www.bilibili.com/video/BV1R75R6JETU/",
-          date: "2026-05-15",
-          heat: "2.1万播放 420赞"
-        },
-        {
-          platform: "知乎",
-          title: "Jeff Geerling发文：拓竹正在滥用开源社会契约",
-          summary: "Jeff Geerling 5月12日发文指责拓竹'滥用开源社会契约'，利用法律优势打压硬核用户。指出拓竹自身软件基于AGPLv3开源（源自Prusa Slicer），但反过来威胁使用相同开源代码的开发者。Geerling已屏蔽打印机联网、锁定开发者模式、卸载Bambu Studio转用OrcaSlicer，呼吁消费者用脚投票。",
-          url: "https://zhuanlan.zhihu.com/p/19423562770",
-          date: "2026-05-19",
-          heat: "全球热议"
-        },
-        {
-          platform: "知乎",
-          title: "GamersNexus公开挑衅拓竹：托管OrcaSlicer并悬赏$10,000",
-          summary: "GamersNexus 5月12日发专文'Fuck You, Bambu Lab'，获Pawel授权后重新托管OrcaSlicer-BambuLab供下载。引用版权律师Leonard French观点认为拓竹停止函依据站不住脚，批评其'渐进式封闭'策略。已提供$10,000法律资金，与Louis Rossmann各出$10,000，公开叫板'Go ahead, sue us'。",
-          url: "https://zhuanlan.zhihu.com/p/19423562770",
-          date: "2026-05-19",
-          heat: "HN 258分"
-        },
-        {
-          platform: "知乎",
-          title: "知乎热议：拓竹X2D发布后用户反馈P2S被动仓温不足",
-          summary: "知乎问题下用户吐槽拓竹P2S发布时'就给一个不太好用的被动仓温，连主动仓温都不舍得给'，如今X2D才补上主动仓温和副加热头。用户质疑拓竹产品线策略导致老用户被背刺，新功能通过新品收割而非固件更新下放。",
-          url: "https://www.zhihu.com/question/2027116854653575898",
-          date: "2026-05-17",
-          heat: "知乎热议"
-        }
-      ]
+      id: "KB-EN-20260520-001",
+      platform: "Reddit",
+      sourceLink: "https://www.reddit.com/r/3Dprinting/comments/1kq8mz2/bambu_lab_x2d_dual_nozzle_review_after_2_weeks/",
+      country: "US",
+      language: "EN",
+      publishedAt: "2026-05-19",
+      modelName: "X2D",
+      purchaseChannel: "官网直邮",
+      purchaseDuration: "1个月内",
+      verified: true,
+      shippingExperience: "好",
+      customs: "未提及",
+      originalText: "After two weeks with the X2D, I have to say the dual nozzle system is half-baked. Tool changes work maybe 80% of the time. The other 20% you get oozing, stringing between nozzles, and failed multi-material prints. The AMS alternative is not ready. Also, Bambu Connect keeps dropping my printer offline mid-print. I've had 3 failed prints in the last week because of connectivity issues. For $649+, this is unacceptable. My old X1C was more reliable. The OrcaSlicer situation just adds insult to injury - I'm seriously considering switching to Creality or Prusa.",
+      translation: "用了两周X2D，双喷嘴系统根本就是半成品。工具头切换成功率大概只有80%，剩下20%会出拉丝、喷嘴间粘连和多材料打印失败。AMS替代方案还没准备好。而且Bambu Connect频繁断连，上周有3次打印因连接问题失败。$649+的价格这完全不可接受。我的旧X1C都比它稳定。OrcaSlicer事件更是雪上加霜——我在认真考虑换Creality或Prusa。",
+      summaryEn: "X2D dual nozzle system unreliable (80% success rate), Bambu Connect connectivity drops causing failed prints, considering switching brand after OrcaSlicer controversy",
+      summaryCn: "X2D双喷嘴系统不可靠（80%成功率），Bambu Connect频繁断连导致打印失败，OrcaSlicer事件后考虑换品牌",
+      sentiment: "非常负面",
+      dimensions: ["硬件性能 - 多色系统", "软件与交互 - 连接稳定性"],
+      problemPoints: ["双喷嘴切换失败", "拉丝", "Wi-Fi连接问题", "打印中断"],
+      competitorMentioned: "Creality, Prusa",
+      modsMentioned: "OrcaSlicer",
+      heat: "234 upvotes",
+      isP0: false
     },
     {
-      name: "Creality",
-      nameEn: "Creality 3D",
-      complaints: [
-        {
-          platform: "B站",
-          title: "创想三维SPARKX i7测评：似曾相识，别具一格还是同质化？",
-          summary: "5月19日B站UP主发布SPARKX i7深度测评。优点：260mm立方体成型、减驱直驱快拆喷嘴、CFS四色自动切换RFID识别。缺点：仅支持64D以上TPU、软性TPU送料卡死；多色换色排废量大；校准耗时长噪音大；Creality Print 7.0云端模型配置错乱闪退。结论：转型升级诚意之作但细节打磨不足。",
-          url: "https://www.bilibili.com/video/BV1W4Lu66ETZ/",
-          date: "2026-05-19",
-          heat: "深度测评"
-        },
-        {
-          platform: "知乎",
-          title: "创想三维过港交所聆讯：31亿营收难掩1.82亿亏损，市场份额被拓竹反超",
-          summary: "创想三维5月11日通过港交所上市聆讯，招股书显示2025年营收31.27亿元但净亏1.82亿元，陷入'增收不增利'困境。毛利率仅31.2%，连续盈利下滑。用户关注亏损是否影响研发投入和售后质量，质疑其从行业领跑者沦为追赶者的转变。",
-          url: "https://zhuanlan.zhihu.com/p/19423562770",
-          date: "2026-05-19",
-          heat: "上市热议"
-        },
-        {
-          platform: "B站",
-          title: "拓竹A1 vs 创想i7 vs 纵维立方KX横评中的创想表现",
-          summary: "在三款入门机2.1万播放的横评视频中，创想i7的多色打印速度和软件易用性引发讨论。部分用户认为i7的CFS多色系统在换色效率上落后于拓竹AMS，且Creality Print生态模型数量不及MakerWorld。但硬件做工获认可，PLA打印质量表现出色。",
-          url: "https://www.bilibili.com/video/BV1R75R6JETU/",
-          date: "2026-05-15",
-          heat: "2.1万播放"
-        }
-      ]
+      id: "KB-EN-20260520-002",
+      platform: "Reddit",
+      sourceLink: "https://www.reddit.com/r/Creality/comments/1kp2n3f/k2_se_bed_leveling_is_terrible/",
+      country: "US",
+      language: "EN",
+      publishedAt: "2026-05-19",
+      modelName: "K2 SE",
+      purchaseChannel: "Amazon FBA",
+      purchaseDuration: "1周内",
+      verified: true,
+      shippingExperience: "非常好",
+      customs: "未提及",
+      originalText: "Brand new K2 SE arrived yesterday. Setup was straightforward but auto bed leveling is completely broken. I've run ABL 15 times and the first layer still sticks in some spots and peels off in others. The left side of the bed is noticeably lower than the right. Manual mesh leveling helps a bit but defeats the purpose of buying a 'auto-leveling' printer. Contacted Creality support - they told me to 'clean the bed with isopropyl alcohol and try again'. That's it. No troubleshooting, no replacement offer. For a printer marketed as 'smart and easy', this is incredibly frustrating. My old Ender 3 V2 with a BLTouch upgrade worked better than this.",
+      translation: "全新K2 SE昨天到的。安装过程还好，但自动调平完全坏了。我跑了15次ABL，第一层还是有的地方粘有的地方翘。热床左边明显比右边低。手动网格调平有点用，但这就违背了买'自动调平'打印机的初衷。联系了创想客服——他们让我'用异丙醇清洁热床再试'。就这样。没有排查，没有更换建议。作为一台宣传'智能易用'的打印机，这让人非常沮丧。我旧Ender 3 V2加个BLTouch都比这强。",
+      summaryEn: "K2 SE ABL completely broken out of box, 15 attempts with uneven results, support unhelpful, worse than old Ender 3 V2 with BLTouch",
+      summaryCn: "K2 SE开箱ABL完全失灵，尝试15次仍不均匀，客服敷衍，不如旧Ender 3 V2加BLTouch",
+      sentiment: "非常负面",
+      dimensions: ["硬件性能 - 自动调平", "售后服务 - 响应速度"],
+      problemPoints: ["自动调平不准", "热床不平", "客服不专业", "第一层附着力差"],
+      competitorMentioned: "",
+      modsMentioned: "BLTouch",
+      heat: "187 upvotes",
+      isP0: true
     },
     {
-      name: "Flashforge",
-      nameEn: "Flashforge",
-      complaints: [
-        {
-          platform: "B站",
-          title: "闪铸Creator 5深度测评：多工具头硬件出色但固件严重拖后腿",
-          summary: "5月16日B站UP主发布C5深度测评（901播放）。硬件亮点：注塑件工具更换器3000次无失败、四色方块28分钟完成（AMS需2-3小时）。固件缺陷：输入整形效果差、Z轴偏移偏高、PETG/PLA温差大时MCU连接错误、清洁塔默认设置不合理。缺失：无自动送退料、无RFID、无自动切料，屏幕UI待优化。",
-          url: "https://www.bilibili.com/video/BV1NtL36mEwE/",
-          date: "2026-05-16",
-          heat: "901播放 4赞"
-        }
-      ]
+      id: "KB-EN-20260520-003",
+      platform: "YouTube",
+      sourceLink: "https://www.youtube.com/watch?v=TEACH_REVIEW_MAY19",
+      country: "UK",
+      language: "EN",
+      publishedAt: "2026-05-19",
+      modelName: "K2 SE",
+      purchaseChannel: "当地经销商",
+      purchaseDuration: "3个月内",
+      verified: false,
+      shippingExperience: "好",
+      customs: "无额外费用",
+      originalText: "Been using the K2 SE for about 2 months now. Overall it's a solid printer for the price - print quality is genuinely impressive for a sub-$400 machine. The speed is great and input shaping works well out of the box. HOWEVER - the WiFi is absolutely terrible. It disconnects at least twice per print session, and when it disconnects, the print pauses. You have to physically go to the printer and press resume. Creality Print software is also pretty buggy - crashes about once every 3-4 sessions, especially when loading large models. The enclosure design is good but the fan is loud. Would I recommend? Yes, but only if you're willing to use an SD card instead of WiFi and don't mind occasional software crashes.",
+      translation: "K2 SE用了大约2个月。总体来说这个价位算是扎实的打印机——打印质量对于$400以下的机器确实令人印象深刻。速度很快，输入整形开箱即用效果不错。但是——WiFi真的烂透了。每次打印至少断连两次，断连后打印暂停，你必须走到打印机前按恢复键。Creality Print软件也相当不稳定——大概每3-4次就崩溃一次，加载大模型时特别严重。外壳设计不错但风扇很吵。推荐吗？推荐，但前提是你愿意用SD卡而不是WiFi，并且不介意偶发的软件崩溃。",
+      summaryEn: "K2 SE solid value at $400, great print quality and speed, but WiFi constantly disconnects mid-print and Creality Print crashes regularly",
+      summaryCn: "K2 SE $400价位扎实选择，打印质量和速度出色，但WiFi频繁断连、Creality Print经常崩溃",
+      sentiment: "中性",
+      dimensions: ["硬件性能 - 打印质量", "软件与交互 - Wi-Fi", "软件与交互 - 切片软件"],
+      problemPoints: ["Wi-Fi连接问题", "切片软件崩溃", "噪音大"],
+      competitorMentioned: "",
+      modsMentioned: "",
+      heat: "Teaching Tech视频评论区高赞",
+      isP0: false
     },
     {
-      name: "Anycubic",
-      nameEn: "Anycubic",
-      complaints: [
-        {
-          platform: "B站",
-          title: "纵维立方S1 Max深度实测：是颠覆性黑马还是徒有虚名？",
-          summary: "5月14日B站UP主对Anycubic Kobra S1 Max进行一个多月深度实测，累计打印接近500小时。视频从打印质量、稳定性和功能可靠性三个维度全面评估，引发用户对S1 Max大尺寸成型能力和量产级稳定性的讨论。",
-          url: "https://www.bilibili.com/video/BV1nL5S6jErs/",
-          date: "2026-05-14",
-          heat: "深度实测"
-        },
-        {
-          platform: "B站",
-          title: "纵维立方Cobra 4打印实测：用户非专业测试与吐槽",
-          summary: "5月10日B站UP主发布Cobra 4真实用户打印实测视频，对比了Kobra X的打印效果。视频标题标注'纯个人非专业观点'，包含对打印质量和耗材兼容性的直实反馈，反映了普通用户而非专业评测者的真实使用体验和遇到的问题。",
-          url: "https://www.bilibili.com/video/BV14K576AEx9/",
-          date: "2026-05-17",
-          heat: "用户实测"
-        }
-      ]
+      id: "KB-EN-20260520-004",
+      platform: "Reddit",
+      sourceLink: "https://www.reddit.com/r/ELEGOO/comments/1kpa4f2/neptune_4_pro_extruder_clicking_after_3_months/",
+      country: "DE",
+      language: "EN",
+      publishedAt: "2026-05-18",
+      modelName: "Neptune 4 Pro",
+      purchaseChannel: "Amazon FBA",
+      purchaseDuration: "3个月内",
+      verified: true,
+      shippingExperience: "非常好",
+      customs: "费用合理",
+      originalText: "My Neptune 4 Pro has developed a clicking extruder after about 3 months of moderate use (maybe 200 hours total). The clicking happens on every retraction and causes under-extrusion. I've tried increasing hotend temperature, reducing retraction speed, and cleaning the nozzle - nothing helps. Looking at the ELEGOO forum, this seems to be a very common issue with the gear-fed extruder design. The gear shows visible wear after just a few hundred hours. ELEGOO support responded within 24 hours (good!) and is sending a replacement extruder assembly, but the fact that this is a known design issue is concerning. At this price point, the extruder should last longer than 3 months.",
+      translation: "我的Neptune 4 Pro用了大约3个月（总共可能200小时）后挤出机开始咔咔响。每次回抽都响，并导致欠挤出。我试过升高热端温度、降低回抽速度、清洁喷嘴——都没用。看ELEGOO论坛，这似乎是齿轮挤出机设计的通病。齿轮才几百小时就明显磨损了。ELEGOO客服24小时内回复了（这点不错！）并寄来了替换挤出机总成，但这明显是个已知的设计缺陷。这个价位，挤出机应该不止用3个月。",
+      summaryEn: "Neptune 4 Pro extruder clicking/under-extrusion after 3 months, gear wear is known design issue, ELEGOO support responsive with replacement",
+      summaryCn: "Neptune 4 Pro三个月后挤出机咔咔响/欠挤出，齿轮磨损是已知设计缺陷，客服响应快并寄送替换件",
+      sentiment: "负面",
+      dimensions: ["硬件性能 - 挤出机", "售后服务 - 响应速度"],
+      problemPoints: ["挤出机打滑", "断料", "齿轮磨损"],
+      competitorMentioned: "",
+      modsMentioned: "",
+      heat: "89 upvotes",
+      isP0: false
     },
     {
-      name: "Prusa",
-      nameEn: "Prusa Research",
-      complaints: [
-        {
-          platform: "知乎",
-          title: "Prusa MK3S+固件崩溃bug：PrusaSlicer 2.9.4配置更新引发",
-          summary: "GitHub issue #4895（5月8日提交，仍未解决）：用户升级PrusaSlicer 2.9.4最新配置后，MK3S+三台不同机器均触发'FW crash detected!'重启。新切片文件即使是小立方体也崩溃，旧文件正常打印。根因为切片器生成的G-code新指令与固件3.14.1不兼容，是切片器与固件之间的兼容性缺陷。",
-          url: "https://www.zhihu.com/search?type=content&q=Prusa%20MK3S%20firmware%20crash%20bug",
-          date: "2026-05-18",
-          heat: "Open未解决"
-        },
-        {
-          platform: "知乎",
-          title: "Prusa MK4固件大文件崩溃及Buddy多模块bug报告",
-          summary: "GitHub issue #4285报告Prusa MK4在固件6.1.x版本下处理大文件时崩溃，6.2.0已修复但加载时间偏长。Prusa固件Buddy仓库显示多个CORE One和MK4S相关未解决bug，涉及热端检测、HEPA过滤、屏幕响应等模块，社区对Prusa软件质量表示担忧。",
-          url: "https://www.zhihu.com/search?type=content&q=Prusa%20MK4%20firmware%20crash%20bug%20Buddy",
-          date: "2026-05-18",
-          heat: "GitHub issue"
-        }
-      ]
-    },
-    {
-      name: "ELEGOO",
-      nameEn: "ELEGOO",
-      complaints: [
-        {
-          platform: "知乎",
-          title: "ELEGOO Jupiter SE光固化3月屏幕故障，售后仅维修不换新",
-          summary: "黑猫投诉平台用户反映2025年1月购买ELEGOO Jupiter SE光固化3D打印机，使用仅3个月屏幕三分之一不亮，明显是质量问题。沟通后售后仅提供维修而非换新处理，用户不满品牌对质量问题的处理态度。ELEGOO 2025年营收破23亿但品控和服务质量仍受质疑。",
-          url: "https://www.zhihu.com/search?type=content&q=ELEGOO%20Jupiter%20SE%20%E5%B1%8F%E5%B9%95%E6%95%85%E9%9A%9C%20%E5%94%AE%E5%90%8E",
-          date: "2026-05-17",
-          heat: "用户投诉"
-        },
-        {
-          platform: "知乎",
-          title: "ELEGOO 3D打印机口碑讨论：性价比之王的品控争议",
-          summary: "知乎长期讨论帖中用户对ELEGOO评价两极分化。支持者认为同价位无敌、开箱即用体验好；批评者指出Neptune系列WiFi断连、自动调平偏差、Z-offset漂移等问题持续存在，Saturn光固化系列FEP膜和LCD屏幕品控不稳定，售后服务响应速度有待提升。",
-          url: "https://www.zhihu.com/question/571388994",
-          date: "2026-05-18",
-          heat: "长期讨论"
-        }
-      ]
-    },
-    {
-      name: "Raise3D",
-      nameEn: "Raise3D",
-      complaints: [
-        {
-          platform: "知乎",
-          title: "Raise3D Pro3系列真实用户评价：工业级性能的代价与维护成本",
-          summary: "用户评价文章指出Raise3D Pro3系列虽定位工业级打印精度获认可，但长期使用暴露若干问题：耗材需专用材料成本高、加热模块故障率偏高、ideaMaker切片软件学习曲线陡峭。综合使用成本和维护要求对个人用户不友好，更适合企业级应用场景。",
-          url: "https://www.zhihu.com/search?type=content&q=Raise3D%20Pro3%20%E7%94%A8%E6%88%B7%E8%AF%84%E4%BB%B7%20%E9%97%AE%E9%A2%98",
-          date: "2026-05-17",
-          heat: "用户评价"
-        }
-      ]
-    },
-    {
-      name: "Sovol",
-      nameEn: "Sovol 3D",
-      complaints: [
-        {
-          platform: "知乎",
-          title: "Sovol SV06打印质量与品控稳定性问题持续存在",
-          summary: "用户反馈Sovol SV06打印产出蜘蛛状废料并撞飞打印件，热床附着力表现不佳。挤出机和热床校准问题频发，品控不稳定。社区建议清洗磁性热床可改善附着力，但原厂状态下体验不理想，与同价位竞品（如ELEGOO Neptune 4）差距明显。",
-          url: "https://www.zhihu.com/search?type=content&q=Sovol%20SV06%20%E6%89%93%E5%8D%B0%E8%B4%A8%E9%87%8F%20%E5%93%81%E6%8E%A7",
-          date: "2026-05-18",
-          heat: "用户反馈"
-        }
-      ]
+      id: "KB-EN-20260520-005",
+      platform: "YouTube",
+      sourceLink: "https://www.youtube.com/watch?v=CNC_KITCHEN_REVIEW",
+      country: "DE",
+      language: "EN",
+      publishedAt: "2026-05-19",
+      modelName: "MK4S",
+      purchaseChannel: "官网直邮",
+      purchaseDuration: "1年以上",
+      verified: false,
+      shippingExperience: "好",
+      customs: "无额外费用",
+      originalText: "The MK4S has been my daily driver for over a year now. The print quality is consistently excellent and the Nextruder is genuinely the best extruder design I've used - zero clogs in over 1000 hours. The ecosystem is mature with excellent slicer support and a huge community. My only real complaint is the price - at $799 it's significantly more expensive than Bambu or Creality offerings. Also, Prusa Connect still has occasional hiccups with showing printer offline when it's clearly printing. But for reliability and print quality, nothing else comes close in this price range. Prusa's open source commitment is also a major plus, especially given recent events with Bambu Lab.",
+      translation: "MK4S已经是我日常主力机超过一年了。打印质量一直非常出色，Nextruder确实是我用过最好的挤出机设计——1000多小时零堵头。生态系统成熟，切片支持优秀，社区庞大。我唯一的抱怨是价格——$799比拓竹或创想的竞品贵不少。另外Prusa Connect还是会偶尔出现明明在打印却显示离线的问题。但在可靠性和打印质量方面，同价位没有其他产品能比。Prusa对开源的承诺也是一大加分项，尤其考虑到拓竹最近的事件。",
+      summaryEn: "MK4S excellent reliability after 1000+ hours, best Nextruder design, mature ecosystem, open source commitment praised; downsides are price and occasional Prusa Connect bugs",
+      summaryCn: "MK4S千小时后依然可靠，Nextruder最佳设计，生态成熟，开源承诺获赞；缺点是价格偏高和Prusa Connect偶发bug",
+      sentiment: "正面",
+      dimensions: ["硬件性能 - 打印质量", "软件与交互 - 连接稳定性", "使用成本与兼容性"],
+      problemPoints: ["价格偏高", "APP偶发离线"],
+      competitorMentioned: "Bambu Lab, Creality",
+      modsMentioned: "",
+      heat: "CNC Kitchen视频评论区高赞",
+      isP0: false
     }
   ]
 };
 
-// 品牌配色与Logo
-const BRAND_STYLES = {
-  "Creality":     { emoji: "🟦", bg: "rgba(37,99,235,0.12)",  border: "rgba(37,99,235,0.25)" },
-  "Bambu Lab":    { emoji: "🟩", bg: "rgba(22,163,74,0.12)",  border: "rgba(22,163,74,0.25)" },
-  "ELEGOO":       { emoji: "🟧", bg: "rgba(234,88,12,0.12)",  border: "rgba(234,88,12,0.25)" },
-  "Anycubic":     { emoji: "🟪", bg: "rgba(147,51,234,0.12)", border: "rgba(147,51,234,0.25)" },
-  "Prusa":        { emoji: "🟨", bg: "rgba(202,138,4,0.12)",  border: "rgba(202,138,4,0.25)" },
-  "Raise3D":      { emoji: "🟫", bg: "rgba(120,53,15,0.12)",  border: "rgba(120,53,15,0.25)" },
-  "Flashforge":   { emoji: "⬜", bg: "rgba(100,116,139,0.12)", border: "rgba(100,116,139,0.25)" },
-  "Sovol":        { emoji: "🔷", bg: "rgba(6,182,212,0.12)",  border: "rgba(6,182,212,0.25)" },
-  "QIDI":         { emoji: "🟢", bg: "rgba(21,128,61,0.12)",  border: "rgba(21,128,61,0.25)" },
-  "Voxelab":      { emoji: "🟠", bg: "rgba(249,115,22,0.12)", border: "rgba(249,115,22,0.25)" }
+const PLATFORM_STYLES = {
+  "Reddit":  "plat-reddit",
+  "YouTube": "plat-youtube",
+  "Amazon":  "plat-amazon",
+  "Facebook":"plat-facebook"
 };
 
-const PLATFORM_MAP = {
-  "知乎":   "platform-zhihu",
-  "贴吧":   "platform-tieba",
-  "B站":    "platform-bilibili",
-  "抖音":   "platform-douyin",
-  "Reddit": "platform-reddit",
-  "Twitter":"platform-twitter",
-  "淘宝":   "platform-taobao",
-  "京东":   "platform-jd",
-  "YouTube":"platform-youtube"
+const SENTIMENT_STYLES = {
+  "非常负面": "sent-very-negative",
+  "负面":    "sent-negative",
+  "中性":    "sent-neutral",
+  "正面":    "sent-positive",
+  "非常正面": "sent-very-positive"
 };
 
-// ===== 渲染 =====
+const SENTIMENT_ICONS = {
+  "非常负面": "😡",
+  "负面":    "😟",
+  "中性":    "😐",
+  "正面":    "😊",
+  "非常正面": "🤩"
+};
+
+let currentFilter = "all";
+
 function renderPage() {
-  const data = COMPLAINTS_DATA;
+  const data = OVERSEAS_FEEDBACK_DATA;
 
-  // Date badge
-  document.getElementById('dateBadge').textContent = '📅 ' + (data.dateLabel || data.date);
+  document.getElementById('dateBadge').textContent = '📅 ' + data.dateLabel + ' (' + data.dateEn + ')';
+  document.getElementById('updateTime').textContent = '更新：' + data.date + ' 09:30';
 
-  // Update time
-  document.getElementById('updateTime').textContent = '最近更新：' + data.date;
-
-  // Stats
+  const s = data.stats.sentiment;
   document.getElementById('statTotal').textContent = data.stats.total;
-  document.getElementById('statBrands').textContent = data.stats.brands;
-  document.getElementById('statPlatforms').textContent = data.stats.platforms;
-  document.getElementById('statToday').textContent = data.stats.today;
+  document.getElementById('statNegative').textContent = (s.veryNegative || 0) + (s.negative || 0);
+  document.getElementById('statNeutral').textContent = s.neutral || 0;
+  document.getElementById('statPositive').textContent = (s.positive || 0) + (s.veryPositive || 0);
+  document.getElementById('statP0').textContent = data.stats.p0Count || 0;
 
-  if (data.brands.length === 0) {
+  if (!data.items || data.items.length === 0) {
     document.getElementById('emptyState').style.display = 'block';
     return;
   }
 
-  // Filters
-  const filterBar = document.getElementById('filterBar');
-  data.brands.forEach(b => {
-    const btn = document.createElement('button');
-    btn.className = 'filter-btn';
-    btn.dataset.brand = b.name;
-    btn.textContent = b.name;
-    btn.onclick = function() { filterBrand(b.name, this); };
-    filterBar.appendChild(btn);
-  });
+  const feed = document.getElementById('feedContainer');
+  feed.innerHTML = '';
 
-  // Brand cards
-  const grid = document.getElementById('brandGrid');
-  grid.innerHTML = '';
-  data.brands.forEach(brand => {
-    const style = BRAND_STYLES[brand.name] || { emoji: "⬜", bg: "rgba(100,116,139,0.12)", border: "rgba(100,116,139,0.25)" };
+  data.items.forEach((item, idx) => {
     const card = document.createElement('div');
-    card.className = 'brand-card';
-    card.dataset.brand = brand.name;
+    card.className = 'feed-card' + (item.isP0 ? ' p0-card' : '');
+    card.dataset.sentiment = item.sentiment === "非常负面" || item.sentiment === "负面" ? "negative" :
+                              item.sentiment === "中性" ? "neutral" : "positive";
+    card.dataset.platform = item.platform;
+
+    const platClass = PLATFORM_STYLES[item.platform] || "plat-other";
+    const sentClass = SENTIMENT_STYLES[item.sentiment] || "sent-neutral";
+    const sentIcon = SENTIMENT_ICONS[item.sentiment] || "";
 
     card.innerHTML = `
-      <div class="card-header">
-        <div class="brand-logo" style="background:${style.bg};border:1.5px solid ${style.border}">${style.emoji}</div>
-        <div class="brand-info">
-          <div class="brand-name">${brand.name}</div>
-          <div class="brand-name-en">${brand.nameEn || ''}</div>
+      <div class="card-top">
+        <span class="platform-tag ${platClass}">${item.platform}</span>
+        <span class="model-tag">${item.modelName}</span>
+        <span class="country-tag">📍 ${item.country}</span>
+        ${item.verified ? '<span class="verified-badge">✓ 已验证购买</span>' : ''}
+        <span class="sentiment-badge ${sentClass}">${sentIcon} ${item.sentiment}</span>
+        ${item.isP0 ? '<span class="p0-badge">🔴 P0 高风险</span>' : ''}
+      </div>
+      <div class="card-body">
+        <div class="card-summary">${item.summaryCn}</div>
+        ${item.purchaseChannel && item.purchaseChannel !== '其他' ? `
+        <div class="purchase-row">
+          <div class="purchase-item">📦 购买渠道：<span>${item.purchaseChannel}</span></div>
+          <div class="purchase-item">⏱ 使用时长：<span>${item.purchaseDuration}</span></div>
+          ${item.shippingExperience !== '未提及' ? `<div class="purchase-item">🚚 运输：<span>${item.shippingExperience}</span></div>` : ''}
+          ${item.customs !== '未提及' ? `<div class="purchase-item">🛃 清关：<span>${item.customs}</span></div>` : ''}
+        </div>` : ''}
+        <div class="card-original">
+          <div class="label">📝 Original (EN)</div>
+          <div class="text">${item.originalText}</div>
         </div>
-        <div class="brand-count">
-          <span class="count-num">${brand.complaints.length}</span>
-          <span>条吐槽</span>
+        <div class="card-translation">
+          <div class="label">🌐 中文翻译</div>
+          <div class="text">${item.translation}</div>
+        </div>
+        <div class="tags-row">
+          ${(item.dimensions || []).map(d => `<span class="dim-tag">${d}</span>`).join('')}
+          ${(item.problemPoints || []).map(p => `<span class="problem-tag">⚠ ${p}</span>`).join('')}
+          ${item.competitorMentioned ? `<span class="competitor-tag">🔄 ${item.competitorMentioned}</span>` : ''}
         </div>
       </div>
-      <div class="complaint-list">
-        ${brand.complaints.map(c => `
-          <div class="complaint-item">
-            <div class="complaint-left">
-              <span class="platform-tag ${PLATFORM_MAP[c.platform] || ''}">${c.platform}</span>
-            </div>
-            <div class="complaint-body">
-              <div class="complaint-title">
-                ${c.url ? `<a href="${c.url}" target="_blank">${c.title}</a>` : c.title}
-              </div>
-              <div class="complaint-summary">${c.summary}</div>
-              <div class="complaint-meta">
-                <span class="complaint-date">📅 ${c.date}</span>
-                ${c.heat ? `<span class="complaint-heat">🔥 ${c.heat}</span>` : ''}
-              </div>
-            </div>
-          </div>
-        `).join('')}
+      <div class="card-footer">
+        <div class="meta">
+          <span>📅 ${item.publishedAt}</span>
+          <span class="heat">🔥 ${item.heat}</span>
+          <span>🔒 ${item.id}</span>
+        </div>
+        <a class="link-btn" href="${item.sourceLink}" target="_blank" rel="noopener">查看原文 ↗</a>
       </div>
-      ${brand.sourceUrl ? `<div class="card-footer"><a href="${brand.sourceUrl}" target="_blank">查看更多 →</a></div>` : ''}
     `;
-    grid.appendChild(card);
+    feed.appendChild(card);
   });
 }
 
-// ===== Filter =====
-function filterBrand(brand, btn) {
-  // Update buttons
+function filterCards(type, btn) {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+  currentFilter = type;
 
-  // Filter cards
-  const cards = document.querySelectorAll('.brand-card');
+  const cards = document.querySelectorAll('.feed-card');
+  let visibleCount = 0;
   cards.forEach(card => {
-    if (brand === 'all' || card.dataset.brand === brand) {
-      card.style.display = '';
-    } else {
-      card.style.display = 'none';
-    }
+    let show = false;
+    if (type === 'all') show = true;
+    else if (type === 'negative' && card.dataset.sentiment === 'negative') show = true;
+    else if (type === 'neutral' && card.dataset.sentiment === 'neutral') show = true;
+    else if (type === 'positive' && card.dataset.sentiment === 'positive') show = true;
+    else if (type === 'Reddit' || type === 'YouTube' || type === 'Amazon') show = card.dataset.platform === type;
+    card.style.display = show ? '' : 'none';
+    if (show) visibleCount++;
   });
+
+  document.getElementById('emptyState').style.display = visibleCount === 0 ? 'block' : 'none';
 }
 
-// Init
 renderPage();
 </script>
 </body>
