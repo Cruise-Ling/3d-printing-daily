@@ -163,6 +163,14 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
   .section-nav { display:none; }
   .side-nav { left:max(0px, calc((100vw - 375px) / 2 - 90px)); }
 }
+
+/* 搜索高亮样式 */
+.search-highlight {
+  background: #fffde7 !important;
+  border-top: 2px solid #f9a825 !important;
+  box-shadow: 0 -2px 0 #f9a825 inset;
+}
+
 </style>
 </head>
 <body>
@@ -712,6 +720,18 @@ function scrollToSection(id) {
     window.scrollTo({ top: y, behavior: 'smooth' });
   }
 }
+</script>
+
+
+<script src="search_index.js"></script>
+<script>
+(function() {
+  var params = new URLSearchParams(location.search);
+  var term = params.get('h');
+  if (term) {
+    highlightSearch(term);
+  }
+})();
 </script>
 
 </body>
