@@ -183,6 +183,14 @@ body { background:#f0f2f5; font-family:-apple-system,BlinkMacSystemFont,"Segoe U
 }
 /* 底部 */
 .footer { padding:12px 20px; background:#fafbff; border-top:1px solid #eee; font-size:11px; color:#999; text-align:center; line-height:1.6; }
+
+/* 搜索高亮样式 */
+.search-highlight {
+  background: #fffde7 !important;
+  border-top: 2px solid #f9a825 !important;
+  box-shadow: 0 -2px 0 #f9a825 inset;
+}
+
 </style>
 </head>
 <body>
@@ -710,6 +718,18 @@ window.addEventListener('scroll', updateActiveNav);
 window.addEventListener('load', updateActiveNav);
 </script>
 </div>
+
+<script src="search_index.js"></script>
+<script>
+(function() {
+  var params = new URLSearchParams(location.search);
+  var term = params.get('h');
+  if (term) {
+    highlightSearch(term);
+  }
+})();
+</script>
+
 </body>
 </html>
 
