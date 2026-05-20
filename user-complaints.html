@@ -20,7 +20,7 @@ a:hover{color:#93bbfd;text-decoration:underline}
 .hero{text-align:center;padding:44px 20px 28px;background:linear-gradient(135deg,#1e3a5f 0%,#0f2847 50%,#0a1628 100%);position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 40%,rgba(59,130,246,0.08),transparent 60%)}
 .hero h1{font-size:2rem;font-weight:800;color:#fff;margin-bottom:4px;position:relative}
-.hero .hero-sub{color:rgba(255,255,255,0.7);font-size:.9rem;position:relative;max-width:520px;margin:0 auto}
+.hero .hero-sub{color:rgba(255,255,255,0.7);font-size:.9rem;position:relative;max-width:580px;margin:0 auto}
 .hero .date-row{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:12px;position:relative;flex-wrap:wrap}
 .hero .date-badge{padding:5px 16px;border-radius:16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:#fff;font-size:.82rem;font-weight:600;backdrop-filter:blur(4px)}
 .hero .update-time{color:rgba(255,255,255,0.45);font-size:.78rem}
@@ -36,18 +36,39 @@ a:hover{color:#93bbfd;text-decoration:underline}
 .stat-value.text-purple{color:#a78bfa}
 .stat-label{font-size:.72rem;color:#64748b;margin-top:3px;letter-spacing:.3px}
 
-/* Sentiment Bar */
-.sentiment-bar{display:flex;justify-content:center;gap:16px;padding:10px 20px;background:rgba(15,23,42,0.6);border-bottom:1px solid #1e293b}
-.sentiment-chip{display:flex;align-items:center;gap:5px;font-size:.72rem;color:#94a3b8;padding:3px 10px;border-radius:12px;background:rgba(255,255,255,0.04)}
-.sentiment-dot{width:8px;height:8px;border-radius:50%}
+/* Filter Section */
+.filter-section{background:rgba(15,23,42,0.8);border-bottom:1px solid #1e293b;position:sticky;top:0;z-index:50;backdrop-filter:blur(12px)}
 
-/* Filter Bar */
-.filters{display:flex;align-items:center;gap:8px;padding:12px 24px;background:rgba(15,23,42,0.8);border-bottom:1px solid #1e293b;flex-wrap:wrap;position:sticky;top:0;z-index:50;backdrop-filter:blur(12px)}
-.filter-label{font-size:.75rem;color:#64748b;font-weight:600;margin-right:2px}
-.filter-btn{padding:4px 12px;border-radius:16px;font-size:.75rem;font-weight:500;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer;transition:all .2s}
+/* Search Row */
+.search-row{display:flex;align-items:center;gap:10px;padding:12px 24px;border-bottom:1px solid rgba(30,41,59,0.5)}
+.search-box{flex:1;position:relative;max-width:480px}
+.search-box input{width:100%;padding:8px 14px 8px 36px;border-radius:10px;border:1px solid #334155;background:rgba(0,0,0,0.3);color:#e2e8f0;font-size:.85rem;outline:none;transition:border-color .2s}
+.search-box input::placeholder{color:#4b5563}
+.search-box input:focus{border-color:#3b82f6}
+.search-box .search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#4b5563;font-size:.85rem}
+.search-clear{padding:6px 14px;border-radius:8px;border:1px solid #334155;background:transparent;color:#64748b;font-size:.78rem;cursor:pointer;transition:all .15s;white-space:nowrap}
+.search-clear:hover{border-color:#475569;color:#e2e8f0}
+.search-result-hint{font-size:.72rem;color:#4b5563;margin-left:auto;white-space:nowrap}
+
+/* Filter Row */
+.filter-row{display:flex;align-items:center;gap:8px;padding:10px 24px;border-bottom:1px solid rgba(30,41,59,0.5);flex-wrap:wrap}
+.filter-label{font-size:.72rem;color:#64748b;font-weight:600;margin-right:2px;white-space:nowrap}
+.filter-btn{padding:4px 12px;border-radius:16px;font-size:.75rem;font-weight:500;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer;transition:all .2s;white-space:nowrap}
 .filter-btn:hover{border-color:#475569;color:#e2e8f0}
 .filter-btn.active{background:rgba(59,130,246,0.15);border-color:#3b82f6;color:#60a5fa}
-.filter-divider{width:1px;height:18px;background:#1e293b}
+.filter-btn .count{font-size:.65rem;opacity:.7;margin-left:2px}
+.filter-divider{width:1px;height:18px;background:#1e293b;flex-shrink:0}
+
+/* Brand scroll */
+.brand-scroll{display:flex;gap:6px;overflow-x:auto;padding:2px 0;scrollbar-width:none;-ms-overflow-style:none;flex:1}
+.brand-scroll::-webkit-scrollbar{display:none}
+
+/* Date inputs */
+.date-input-group{display:flex;align-items:center;gap:6px}
+.date-input-group input[type="date"]{padding:4px 8px;border-radius:8px;border:1px solid #334155;background:rgba(0,0,0,0.3);color:#94a3b8;font-size:.72rem;outline:none;font-family:inherit}
+.date-input-group input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(0.6)}
+.date-input-group input[type="date"]:focus{border-color:#3b82f6}
+.date-arrow{color:#4b5563;font-size:.75rem}
 
 /* Feed Container */
 .feed{max-width:860px;margin:0 auto;padding:20px 16px}
@@ -58,6 +79,12 @@ a:hover{color:#93bbfd;text-decoration:underline}
 .feed-card.p0-card{border-left:3px solid #ef4444}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
+/* Date Group Header */
+.date-group-header{display:flex;align-items:center;gap:10px;margin:28px 0 12px;padding-bottom:8px;border-bottom:1px solid rgba(30,41,59,0.5)}
+.date-group-header:first-child{margin-top:0}
+.date-group-label{font-size:.85rem;font-weight:700;color:#60a5fa;white-space:nowrap}
+.date-group-count{font-size:.7rem;color:#4b5563;background:rgba(59,130,246,0.08);padding:2px 8px;border-radius:10px}
+
 /* Card Header */
 .card-top{display:flex;align-items:center;gap:10px;padding:14px 18px 0;flex-wrap:wrap}
 .platform-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:6px;font-size:.7rem;font-weight:600;white-space:nowrap}
@@ -66,6 +93,7 @@ a:hover{color:#93bbfd;text-decoration:underline}
 .plat-amazon{background:rgba(234,179,8,0.15);color:#fbbf24;border:1px solid rgba(234,179,8,0.25)}
 .plat-facebook{background:rgba(59,130,246,0.15);color:#60a5fa;border:1px solid rgba(59,130,246,0.25)}
 .plat-other{background:rgba(100,116,139,0.15);color:#94a3b8;border:1px solid rgba(100,116,139,0.25)}
+.brand-tag{padding:2px 8px;border-radius:6px;font-size:.68rem;font-weight:600;background:rgba(16,185,129,0.12);color:#34d399;border:1px solid rgba(16,185,129,0.2)}
 .model-tag{padding:2px 8px;border-radius:6px;font-size:.68rem;font-weight:600;background:rgba(139,92,246,0.12);color:#a78bfa;border:1px solid rgba(139,92,246,0.2)}
 .country-tag{font-size:.68rem;color:#64748b;display:flex;align-items:center;gap:2px}
 .verified-badge{font-size:.65rem;color:#34d399;font-weight:600;display:flex;align-items:center;gap:2px}
@@ -124,14 +152,19 @@ a:hover{color:#93bbfd;text-decoration:underline}
 @media(max-width:768px){
   .feed{padding:12px}
   .hero h1{font-size:1.5rem}
+  .hero .hero-sub{font-size:.82rem}
   .stats-bar{gap:16px;padding:12px 16px}
   .stat-value{font-size:1.4rem}
-  .filters{padding:10px 14px}
+  .search-row{padding:10px 14px}
+  .search-box input{font-size:.8rem;padding:7px 12px 7px 32px}
+  .filter-row{padding:8px 14px}
   .filter-btn{padding:3px 9px;font-size:.7rem}
+  .date-input-group input[type="date"]{font-size:.65rem}
   .card-top{padding:10px 14px 0}
   .card-body{padding:10px 14px 12px}
   .card-footer{padding:6px 14px 10px}
   .back-link{top:auto;bottom:14px;left:14px;font-size:11px;padding:5px 10px}
+  .date-group-header{margin:20px 0 10px}
 }
 </style>
 </head>
@@ -141,7 +174,7 @@ a:hover{color:#93bbfd;text-decoration:underline}
 
 <div class="hero">
   <h1>🌍 海外用户口碑</h1>
-  <div class="hero-sub">每日 5 条高价值精准样本 · 覆盖 Reddit / YouTube / Amazon 等主流平台</div>
+  <div class="hero-sub">每日 5 条高价值精准样本 · 覆盖 Reddit / YouTube / Amazon 等主流平台 · 支持品牌/日期/关键词筛选</div>
   <div class="date-row">
     <span class="date-badge" id="dateBadge">📅 加载中...</span>
     <span class="update-time" id="updateTime"></span>
@@ -151,7 +184,7 @@ a:hover{color:#93bbfd;text-decoration:underline}
 <div class="stats-bar">
   <div class="stat-item">
     <div class="stat-value text-blue" id="statTotal">-</div>
-    <div class="stat-label">今日样本</div>
+    <div class="stat-label" id="statTotalLabel">累计样本</div>
   </div>
   <div class="stat-item">
     <div class="stat-value text-red" id="statNegative">-</div>
@@ -171,29 +204,58 @@ a:hover{color:#93bbfd;text-decoration:underline}
   </div>
 </div>
 
-<div class="sentiment-bar" id="sentimentBar"></div>
-
-<div class="filters" id="filterBar">
-  <span class="filter-label">筛选：</span>
-  <button class="filter-btn active" onclick="filterCards('all',this)">全部</button>
-  <span class="filter-divider"></span>
-  <span class="filter-label">情感：</span>
-  <button class="filter-btn" onclick="filterCards('negative',this)">😔 负面</button>
-  <button class="filter-btn" onclick="filterCards('neutral',this)">😐 中性</button>
-  <button class="filter-btn" onclick="filterCards('positive',this)">😊 正面</button>
-  <span class="filter-divider"></span>
-  <span class="filter-label">平台：</span>
-  <button class="filter-btn" onclick="filterCards('Reddit',this)">Reddit</button>
-  <button class="filter-btn" onclick="filterCards('YouTube',this)">YouTube</button>
-  <button class="filter-btn" onclick="filterCards('Amazon',this)">Amazon</button>
+<!-- Filter Section -->
+<div class="filter-section">
+  <!-- Search Row -->
+  <div class="search-row">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="搜索机型、品牌、问题关键词..." oninput="applyFilters()">
+    </div>
+    <button class="search-clear" onclick="clearAllFilters()">清空筛选</button>
+    <span class="search-result-hint" id="resultHint"></span>
+  </div>
+  <!-- Brand Row -->
+  <div class="filter-row">
+    <span class="filter-label">品牌：</span>
+    <div class="brand-scroll" id="brandScroll"></div>
+  </div>
+  <!-- Sentiment + Platform Row -->
+  <div class="filter-row">
+    <span class="filter-label">情感：</span>
+    <button class="filter-btn active" data-group="sentiment" data-value="all" onclick="toggleFilter(this)">全部</button>
+    <button class="filter-btn" data-group="sentiment" data-value="negative" onclick="toggleFilter(this)">😔 负面</button>
+    <button class="filter-btn" data-group="sentiment" data-value="neutral" onclick="toggleFilter(this)">😐 中性</button>
+    <button class="filter-btn" data-group="sentiment" data-value="positive" onclick="toggleFilter(this)">😊 正面</button>
+    <span class="filter-divider"></span>
+    <span class="filter-label">平台：</span>
+    <button class="filter-btn active" data-group="platform" data-value="all" onclick="toggleFilter(this)">全部</button>
+    <button class="filter-btn" data-group="platform" data-value="Reddit" onclick="toggleFilter(this)">Reddit</button>
+    <button class="filter-btn" data-group="platform" data-value="YouTube" onclick="toggleFilter(this)">YouTube</button>
+    <button class="filter-btn" data-group="platform" data-value="Amazon" onclick="toggleFilter(this)">Amazon</button>
+    <button class="filter-btn" data-group="platform" data-value="Facebook" onclick="toggleFilter(this)">Facebook</button>
+  </div>
+  <!-- Date Row -->
+  <div class="filter-row">
+    <span class="filter-label">日期：</span>
+    <button class="filter-btn active" data-group="date" data-value="all" onclick="toggleDateFilter(this)">全部</button>
+    <button class="filter-btn" data-group="date" data-value="7" onclick="toggleDateFilter(this)">近 7 天</button>
+    <button class="filter-btn" data-group="date" data-value="30" onclick="toggleDateFilter(this)">近 30 天</button>
+    <span class="filter-divider"></span>
+    <div class="date-input-group">
+      <input type="date" id="dateFrom" onchange="applyDateRange()">
+      <span class="date-arrow">→</span>
+      <input type="date" id="dateTo" onchange="applyDateRange()">
+    </div>
+  </div>
 </div>
 
 <div class="feed" id="feedContainer"></div>
 
 <div class="empty-state" id="emptyState" style="display:none">
   <div class="empty-icon">🔍</div>
-  <div class="empty-text">暂无口碑数据</div>
-  <div class="empty-sub">每日自动采集更新，敬请期待</div>
+  <div class="empty-text">暂无匹配的口碑数据</div>
+  <div class="empty-sub">尝试调整筛选条件</div>
 </div>
 
 <div class="footer">
@@ -203,22 +265,17 @@ a:hover{color:#93bbfd;text-decoration:underline}
 
 <script>
 const OVERSEAS_FEEDBACK_DATA = {
-  date: "2026-05-20",
-  dateLabel: "2026年05月20日",
-  dateEn: "May 20, 2026",
-  stats: {
-    total: 5,
-    platforms: 3,
-    sentiment: { veryNegative: 2, negative: 1, neutral: 1, positive: 1, veryPositive: 0 },
-    p0Count: 1
-  },
+  mode: "accumulate",
+  maxDays: 30,
   items: [
     {
       id: "KB-EN-20260520-001",
+      brand: "Bambu Lab",
       platform: "Reddit",
       sourceLink: "https://www.reddit.com/r/3Dprinting/comments/1kq8mz2/bambu_lab_x2d_dual_nozzle_review_after_2_weeks/",
       country: "US",
       language: "EN",
+      date: "2026-05-20",
       publishedAt: "2026-05-19",
       modelName: "X2D",
       purchaseChannel: "官网直邮",
@@ -240,10 +297,12 @@ const OVERSEAS_FEEDBACK_DATA = {
     },
     {
       id: "KB-EN-20260520-002",
+      brand: "Creality",
       platform: "Reddit",
       sourceLink: "https://www.reddit.com/r/Creality/comments/1kp2n3f/k2_se_bed_leveling_is_terrible/",
       country: "US",
       language: "EN",
+      date: "2026-05-20",
       publishedAt: "2026-05-19",
       modelName: "K2 SE",
       purchaseChannel: "Amazon FBA",
@@ -265,10 +324,12 @@ const OVERSEAS_FEEDBACK_DATA = {
     },
     {
       id: "KB-EN-20260520-003",
+      brand: "Creality",
       platform: "YouTube",
       sourceLink: "https://www.youtube.com/watch?v=TEACH_REVIEW_MAY19",
       country: "UK",
       language: "EN",
+      date: "2026-05-20",
       publishedAt: "2026-05-19",
       modelName: "K2 SE",
       purchaseChannel: "当地经销商",
@@ -290,10 +351,12 @@ const OVERSEAS_FEEDBACK_DATA = {
     },
     {
       id: "KB-EN-20260520-004",
+      brand: "ELEGOO",
       platform: "Reddit",
       sourceLink: "https://www.reddit.com/r/ELEGOO/comments/1kpa4f2/neptune_4_pro_extruder_clicking_after_3_months/",
       country: "DE",
       language: "EN",
+      date: "2026-05-20",
       publishedAt: "2026-05-18",
       modelName: "Neptune 4 Pro",
       purchaseChannel: "Amazon FBA",
@@ -315,10 +378,12 @@ const OVERSEAS_FEEDBACK_DATA = {
     },
     {
       id: "KB-EN-20260520-005",
+      brand: "Prusa",
       platform: "YouTube",
       sourceLink: "https://www.youtube.com/watch?v=CNC_KITCHEN_REVIEW",
       country: "DE",
       language: "EN",
+      date: "2026-05-20",
       publishedAt: "2026-05-19",
       modelName: "MK4S",
       purchaseChannel: "官网直邮",
@@ -364,104 +429,259 @@ const SENTIMENT_ICONS = {
   "非常正面": "🤩"
 };
 
-let currentFilter = "all";
+// Filter state
+let filters = {
+  brand: "all",
+  sentiment: "all",
+  platform: "all",
+  datePreset: "all",
+  dateFrom: "",
+  dateTo: "",
+  search: ""
+};
 
-function renderPage() {
-  const data = OVERSEAS_FEEDBACK_DATA;
+// ---- Brand buttons (dynamic) ----
+function buildBrandButtons() {
+  const brandCounts = {};
+  OVERSEAS_FEEDBACK_DATA.items.forEach(item => {
+    const b = item.brand || "其他";
+    brandCounts[b] = (brandCounts[b] || 0) + 1;
+  });
+  const sorted = Object.entries(brandCounts).sort((a, b) => b[1] - a[1]);
+  const container = document.getElementById('brandScroll');
+  container.innerHTML = '<button class="filter-btn active" data-group="brand" data-value="all" onclick="toggleFilter(this)">全部 <span class="count">(' + OVERSEAS_FEEDBACK_DATA.items.length + ')</span></button>';
+  sorted.forEach(([brand, count]) => {
+    container.innerHTML += '<button class="filter-btn" data-group="brand" data-value="' + brand + '" onclick="toggleFilter(this)">' + brand + ' <span class="count">(' + count + ')</span></button>';
+  });
+}
 
-  document.getElementById('dateBadge').textContent = '📅 ' + data.dateLabel + ' (' + data.dateEn + ')';
-  document.getElementById('updateTime').textContent = '更新：' + data.date + ' 09:30';
-
-  const s = data.stats.sentiment;
-  document.getElementById('statTotal').textContent = data.stats.total;
-  document.getElementById('statNegative').textContent = (s.veryNegative || 0) + (s.negative || 0);
-  document.getElementById('statNeutral').textContent = s.neutral || 0;
-  document.getElementById('statPositive').textContent = (s.positive || 0) + (s.veryPositive || 0);
-  document.getElementById('statP0').textContent = data.stats.p0Count || 0;
-
-  if (!data.items || data.items.length === 0) {
-    document.getElementById('emptyState').style.display = 'block';
-    return;
+// ---- Toggle filter button ----
+function toggleFilter(btn) {
+  const group = btn.dataset.group;
+  const value = btn.dataset.value;
+  // Deactivate siblings
+  btn.parentElement.querySelectorAll('.filter-btn[data-group="' + group + '"]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filters[group] = value;
+  // Clear date range inputs if preset selected
+  if (group === 'date' && value !== 'custom') {
+    filters.dateFrom = '';
+    filters.dateTo = '';
+    document.getElementById('dateFrom').value = '';
+    document.getElementById('dateTo').value = '';
   }
+  applyFilters();
+}
+
+function toggleDateFilter(btn) {
+  const value = btn.dataset.value;
+  btn.parentElement.querySelectorAll('.filter-btn[data-group="date"]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filters.datePreset = value;
+  if (value !== 'custom') {
+    filters.dateFrom = '';
+    filters.dateTo = '';
+    document.getElementById('dateFrom').value = '';
+    document.getElementById('dateTo').value = '';
+  }
+  applyFilters();
+}
+
+function applyDateRange() {
+  const from = document.getElementById('dateFrom').value;
+  const to = document.getElementById('dateTo').value;
+  // Deactivate preset buttons
+  document.querySelectorAll('.filter-btn[data-group="date"]').forEach(b => b.classList.remove('active'));
+  if (from || to) {
+    filters.datePreset = 'custom';
+    filters.dateFrom = from;
+    filters.dateTo = to;
+  } else {
+    filters.datePreset = 'all';
+    filters.dateFrom = '';
+    filters.dateTo = '';
+    // Re-activate "all" button
+    document.querySelector('.filter-btn[data-group="date"][data-value="all"]').classList.add('active');
+  }
+  applyFilters();
+}
+
+function clearAllFilters() {
+  filters = { brand: "all", sentiment: "all", platform: "all", datePreset: "all", dateFrom: "", dateTo: "", search: "" };
+  document.getElementById('searchInput').value = '';
+  document.getElementById('dateFrom').value = '';
+  document.getElementById('dateTo').value = '';
+  // Reset all active states
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    if (b.dataset.value === 'all') b.classList.add('active');
+    else b.classList.remove('active');
+  });
+  applyFilters();
+}
+
+// ---- Core filter logic ----
+function getFilteredItems() {
+  const items = OVERSEAS_FEEDBACK_DATA.items || [];
+  const today = new Date(); today.setHours(23,59,59,999);
+  return items.filter(item => {
+    // Brand
+    if (filters.brand !== "all" && item.brand !== filters.brand) return false;
+    // Sentiment
+    if (filters.sentiment !== "all") {
+      const s = item.sentiment;
+      if (filters.sentiment === 'negative' && s !== '非常负面' && s !== '负面') return false;
+      if (filters.sentiment === 'neutral' && s !== '中性') return false;
+      if (filters.sentiment === 'positive' && s !== '正面' && s !== '非常正面') return false;
+    }
+    // Platform
+    if (filters.platform !== "all" && item.platform !== filters.platform) return false;
+    // Date preset
+    if (filters.datePreset === '7' || filters.datePreset === '30') {
+      const d = new Date(item.date);
+      const daysAgo = filters.datePreset === '7' ? 7 : 30;
+      const cutoff = new Date(today); cutoff.setDate(cutoff.getDate() - daysAgo); cutoff.setHours(0,0,0,0);
+      if (d < cutoff) return false;
+    }
+    // Date range
+    if (filters.datePreset === 'custom') {
+      if (filters.dateFrom) { const d = new Date(item.date); const from = new Date(filters.dateFrom); if (d < from) return false; }
+      if (filters.dateTo) { const d = new Date(item.date); const to = new Date(filters.dateTo); to.setHours(23,59,59,999); if (d > to) return false; }
+    }
+    // Search
+    if (filters.search) {
+      const q = filters.search.toLowerCase();
+      const haystack = [
+        item.brand, item.modelName, item.platform, item.originalText, item.translation,
+        item.summaryEn, item.summaryCn, item.competitorMentioned, item.modsMentioned,
+        item.country, item.id, item.sourceLink
+      ].concat(item.dimensions || []).concat(item.problemPoints || []).join(' ').toLowerCase();
+      if (!haystack.includes(q)) return false;
+    }
+    return true;
+  });
+}
+
+// ---- Render ----
+function applyFilters() {
+  filters.search = document.getElementById('searchInput').value.trim();
+  const filtered = getFilteredItems();
+
+  // Update stats
+  let negCount = 0, neuCount = 0, posCount = 0, p0Count = 0;
+  filtered.forEach(item => {
+    const s = item.sentiment;
+    if (s === '非常负面' || s === '负面') negCount++;
+    else if (s === '中性') neuCount++;
+    else posCount++;
+    if (item.isP0) p0Count++;
+  });
+  document.getElementById('statTotal').textContent = filtered.length;
+  document.getElementById('statTotalLabel').textContent = filters.search || filters.brand !== 'all' || filters.sentiment !== 'all' || filters.platform !== 'all' || filters.datePreset !== 'all' ? '筛选结果' : '累计样本';
+  document.getElementById('statNegative').textContent = negCount;
+  document.getElementById('statNeutral').textContent = neuCount;
+  document.getElementById('statPositive').textContent = posCount;
+  document.getElementById('statP0').textContent = p0Count;
+
+  document.getElementById('resultHint').textContent = filtered.length + ' / ' + (OVERSEAS_FEEDBACK_DATA.items || []).length + ' 条';
 
   const feed = document.getElementById('feedContainer');
   feed.innerHTML = '';
 
-  data.items.forEach((item, idx) => {
-    const card = document.createElement('div');
-    card.className = 'feed-card' + (item.isP0 ? ' p0-card' : '');
-    card.dataset.sentiment = item.sentiment === "非常负面" || item.sentiment === "负面" ? "negative" :
-                              item.sentiment === "中性" ? "neutral" : "positive";
-    card.dataset.platform = item.platform;
+  if (filtered.length === 0) {
+    document.getElementById('emptyState').style.display = 'block';
+    return;
+  }
+  document.getElementById('emptyState').style.display = 'none';
 
-    const platClass = PLATFORM_STYLES[item.platform] || "plat-other";
-    const sentClass = SENTIMENT_STYLES[item.sentiment] || "sent-neutral";
-    const sentIcon = SENTIMENT_ICONS[item.sentiment] || "";
+  // Group by date (descending)
+  const groups = {};
+  filtered.forEach(item => {
+    const d = item.date || 'unknown';
+    if (!groups[d]) groups[d] = [];
+    groups[d].push(item);
+  });
+  const sortedDates = Object.keys(groups).sort((a, b) => b.localeCompare(a));
 
-    card.innerHTML = `
-      <div class="card-top">
-        <span class="platform-tag ${platClass}">${item.platform}</span>
-        <span class="model-tag">${item.modelName}</span>
-        <span class="country-tag">📍 ${item.country}</span>
-        ${item.verified ? '<span class="verified-badge">✓ 已验证购买</span>' : ''}
-        <span class="sentiment-badge ${sentClass}">${sentIcon} ${item.sentiment}</span>
-        ${item.isP0 ? '<span class="p0-badge">🔴 P0 高风险</span>' : ''}
-      </div>
-      <div class="card-body">
-        <div class="card-summary">${item.summaryCn}</div>
-        ${item.purchaseChannel && item.purchaseChannel !== '其他' ? `
-        <div class="purchase-row">
-          <div class="purchase-item">📦 购买渠道：<span>${item.purchaseChannel}</span></div>
-          <div class="purchase-item">⏱ 使用时长：<span>${item.purchaseDuration}</span></div>
-          ${item.shippingExperience !== '未提及' ? `<div class="purchase-item">🚚 运输：<span>${item.shippingExperience}</span></div>` : ''}
-          ${item.customs !== '未提及' ? `<div class="purchase-item">🛃 清关：<span>${item.customs}</span></div>` : ''}
-        </div>` : ''}
-        <div class="card-original">
-          <div class="label">📝 Original (EN)</div>
-          <div class="text">${item.originalText}</div>
-        </div>
-        <div class="card-translation">
-          <div class="label">🌐 中文翻译</div>
-          <div class="text">${item.translation}</div>
-        </div>
-        <div class="tags-row">
-          ${(item.dimensions || []).map(d => `<span class="dim-tag">${d}</span>`).join('')}
-          ${(item.problemPoints || []).map(p => `<span class="problem-tag">⚠ ${p}</span>`).join('')}
-          ${item.competitorMentioned ? `<span class="competitor-tag">🔄 ${item.competitorMentioned}</span>` : ''}
-        </div>
-      </div>
-      <div class="card-footer">
-        <div class="meta">
-          <span>📅 ${item.publishedAt}</span>
-          <span class="heat">🔥 ${item.heat}</span>
-          <span>🔒 ${item.id}</span>
-        </div>
-        <a class="link-btn" href="${item.sourceLink}" target="_blank" rel="noopener">查看原文 ↗</a>
-      </div>
-    `;
-    feed.appendChild(card);
+  sortedDates.forEach(dateStr => {
+    // Date group header
+    const header = document.createElement('div');
+    header.className = 'date-group-header';
+    const dateObj = new Date(dateStr);
+    const weekDays = ['日','一','二','三','四','五','六'];
+    const label = dateStr.replace(/-/g, '.') + ' 周' + weekDays[dateObj.getDay()];
+    header.innerHTML = '<span class="date-group-label">📅 ' + label + '</span><span class="date-group-count">' + groups[dateStr].length + ' 条</span>';
+    feed.appendChild(header);
+
+    // Cards in this group, P0 first
+    const sorted = groups[dateStr].sort((a, b) => (b.isP0 ? 1 : 0) - (a.isP0 ? 1 : 0));
+    sorted.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'feed-card' + (item.isP0 ? ' p0-card' : '');
+      const platClass = PLATFORM_STYLES[item.platform] || "plat-other";
+      const sentClass = SENTIMENT_STYLES[item.sentiment] || "sent-neutral";
+      const sentIcon = SENTIMENT_ICONS[item.sentiment] || "";
+
+      card.innerHTML = '<div class="card-top">' +
+        '<span class="platform-tag ' + platClass + '">' + item.platform + '</span>' +
+        '<span class="brand-tag">' + (item.brand || '') + '</span>' +
+        '<span class="model-tag">' + item.modelName + '</span>' +
+        '<span class="country-tag">📍 ' + item.country + '</span>' +
+        (item.verified ? '<span class="verified-badge">✓ 已验证购买</span>' : '') +
+        '<span class="sentiment-badge ' + sentClass + '">' + sentIcon + ' ' + item.sentiment + '</span>' +
+        (item.isP0 ? '<span class="p0-badge">🔴 P0 高风险</span>' : '') +
+        '</div>' +
+        '<div class="card-body">' +
+        '<div class="card-summary">' + item.summaryCn + '</div>' +
+        (item.purchaseChannel && item.purchaseChannel !== '其他' ?
+          '<div class="purchase-row">' +
+          '<div class="purchase-item">📦 购买渠道：<span>' + item.purchaseChannel + '</span></div>' +
+          '<div class="purchase-item">⏱ 使用时长：<span>' + item.purchaseDuration + '</span></div>' +
+          (item.shippingExperience !== '未提及' ? '<div class="purchase-item">🚚 运输：<span>' + item.shippingExperience + '</span></div>' : '') +
+          (item.customs !== '未提及' ? '<div class="purchase-item">🛃 清关：<span>' + item.customs + '</span></div>' : '') +
+          '</div>' : '') +
+        '<div class="card-original"><div class="label">📝 Original (EN)</div><div class="text">' + item.originalText + '</div></div>' +
+        '<div class="card-translation"><div class="label">🌐 中文翻译</div><div class="text">' + item.translation + '</div></div>' +
+        '<div class="tags-row">' +
+        (item.dimensions || []).map(d => '<span class="dim-tag">' + d + '</span>').join('') +
+        (item.problemPoints || []).map(p => '<span class="problem-tag">⚠ ' + p + '</span>').join('') +
+        (item.competitorMentioned ? '<span class="competitor-tag">🔄 ' + item.competitorMentioned + '</span>' : '') +
+        '</div></div>' +
+        '<div class="card-footer"><div class="meta">' +
+        '<span>📅 ' + item.publishedAt + '</span>' +
+        '<span class="heat">🔥 ' + item.heat + '</span>' +
+        '<span>🔒 ' + item.id + '</span>' +
+        '</div><a class="link-btn" href="' + item.sourceLink + '" target="_blank" rel="noopener">查看原文 ↗</a></div>';
+      feed.appendChild(card);
+    });
   });
 }
 
-function filterCards(type, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  currentFilter = type;
+// ---- Init ----
+function renderPage() {
+  const items = OVERSEAS_FEEDBACK_DATA.items || [];
+  if (items.length === 0) {
+    document.getElementById('dateBadge').textContent = '📅 暂无数据';
+    document.getElementById('updateTime').textContent = '';
+    document.getElementById('emptyState').style.display = 'block';
+    document.getElementById('statTotalLabel').textContent = '累计样本';
+    buildBrandButtons();
+    applyFilters();
+    return;
+  }
 
-  const cards = document.querySelectorAll('.feed-card');
-  let visibleCount = 0;
-  cards.forEach(card => {
-    let show = false;
-    if (type === 'all') show = true;
-    else if (type === 'negative' && card.dataset.sentiment === 'negative') show = true;
-    else if (type === 'neutral' && card.dataset.sentiment === 'neutral') show = true;
-    else if (type === 'positive' && card.dataset.sentiment === 'positive') show = true;
-    else if (type === 'Reddit' || type === 'YouTube' || type === 'Amazon') show = card.dataset.platform === type;
-    card.style.display = show ? '' : 'none';
-    if (show) visibleCount++;
-  });
+  // Find latest date
+  const dates = items.map(i => i.date).filter(Boolean).sort().reverse();
+  const latest = dates[0];
+  const dateObj = new Date(latest);
+  const dateLabel = dateObj.getFullYear() + '年' + String(dateObj.getMonth()+1).padStart(2,'0') + '月' + String(dateObj.getDate()).padStart(2,'0') + '日';
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const dateEn = months[dateObj.getMonth()] + ' ' + dateObj.getDate() + ', ' + dateObj.getFullYear();
 
-  document.getElementById('emptyState').style.display = visibleCount === 0 ? 'block' : 'none';
+  document.getElementById('dateBadge').textContent = '📅 最新：' + dateLabel + ' (' + dateEn + ')';
+  document.getElementById('updateTime').textContent = '共 ' + items.length + ' 条 · ' + dates.length + ' 天数据';
+
+  buildBrandButtons();
+  applyFilters();
 }
 
 renderPage();
