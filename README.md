@@ -29,13 +29,13 @@
 
 | 日期 Date | 链接 Link |
 |----------|-----------|
+| 2026-05-20 (Wed) | [briefing_20260520.html](briefing_20260520.html) |
 | 2026-05-19 (Tue) | [briefing_20260519.html](briefing_20260519.html) |
-
+| 2026-05-18 (Mon) | [briefing_20260518.html](briefing_20260518.html) |
 | 2026-05-15 (Fri) | [briefing_20260515.html](briefing_20260515.html) |
 | 2026-05-14 (Thu) | [briefing_20260514.html](briefing_20260514.html) |
 | 2026-05-13 (Wed) | [briefing_20260513.html](briefing_20260513.html) |
 | 2026-05-12 (Tue) | [briefing_20260512.html](briefing_20260512.html) |
-| 2026-05-11 (Mon) | [briefing_20260511.html](briefing_20260511.html) |
 | 2026-05-10 (Sun) | [briefing_20260510.html](briefing_20260510.html) |
 | 2026-05-09 (Sat) | [briefing_20260509.html](briefing_20260509.html) |
 | 2026-05-08 (Fri) | [briefing_20260508.html](briefing_20260508.html) |
@@ -59,5 +59,3 @@
 ## License
 
 MIT
-
-| 2026-05-18 (Sun) | [briefing_20260518.html](briefing_20260518.html) |
