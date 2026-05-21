@@ -725,6 +725,9 @@ function applyFilters() {
 
   document.getElementById('resultHint').textContent = filtered.length + ' / ' + (OVERSEAS_FEEDBACK_DATA.items || []).length + ' 条';
 
+  // Return count for debugging
+  return filtered.length;
+
   const feed = document.getElementById('feedContainer');
   feed.innerHTML = '';
 
@@ -800,7 +803,10 @@ function applyFilters() {
 // ---- Init ----
 function renderPage() {
   const items = OVERSEAS_FEEDBACK_DATA.items || [];
+  console.log('[OverseasFeedback] renderPage start, items:', items.length);
+  
   if (items.length === 0) {
+    console.log('[OverseasFeedback] No items found!');
     document.getElementById('dateBadge').textContent = '📅 暂无数据';
     document.getElementById('updateTime').textContent = '';
     document.getElementById('emptyState').style.display = 'block';
@@ -821,11 +827,19 @@ function renderPage() {
   document.getElementById('dateBadge').textContent = '📅 最新：' + dateLabel + ' (' + dateEn + ')';
   document.getElementById('updateTime').textContent = '共 ' + items.length + ' 条 · ' + dates.length + ' 天数据';
 
+  console.log('[OverseasFeedback] Building brand buttons...');
   buildBrandButtons();
-  applyFilters();
+  console.log('[OverseasFeedback] Applying filters...');
+  const filteredCount = applyFilters();
+  console.log('[OverseasFeedback] Filtered count:', filteredCount);
 }
 
-renderPage();
+// Wrap in DOMContentLoaded for safety
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', renderPage);
+} else {
+  renderPage();
+}
 </script>
 </body>
 </html>
