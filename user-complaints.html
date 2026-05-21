@@ -180,6 +180,9 @@ a:hover{color:#93bbfd;text-decoration:underline}
   <div class="date-row">
     <span class="date-badge" id="dateBadge">📅 加载中...</span>
     <span class="update-time" id="updateTime"></span>
+    <select id="dateJump" onchange="jumpToDate(this.value)" style="padding:4px 10px;border-radius:14px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.08);color:#fff;font-size:.78rem;outline:none;font-family:inherit;max-width:160px;backdrop-filter:blur(4px)">
+      <option value="">📅 跳转到日期...</option>
+    </select>
   </div>
 </div>
 
@@ -251,11 +254,6 @@ a:hover{color:#93bbfd;text-decoration:underline}
       <span class="date-arrow">→</span>
       <input type="date" id="dateTo" onchange="applyDateRange()">
     </div>
-    <span class="filter-divider"></span>
-    <span class="filter-label">跳转：</span>
-    <select id="dateJump" onchange="jumpToDate(this.value)" style="padding:4px 8px;border-radius:8px;border:1px solid #334155;background:rgba(0,0,0,0.3);color:#94a3b8;font-size:.72rem;outline:none;font-family:inherit;max-width:160px">
-      <option value="">选择日期...</option>
-    </select>
   </div>
 </div>
 
