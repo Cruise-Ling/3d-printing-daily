@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>用户口碑 - 3D打印每日速递</title>
+<title>用户点评 - 3D打印每日速递</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖨️</text></svg>">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -175,7 +175,7 @@ a:hover{color:#93bbfd;text-decoration:underline}
 <a class="back-link" href="index.html">← 首页</a>
 
 <div class="hero">
-  <h1>🌍 海外用户口碑</h1>
+  <h1>🌍 海外用户点评</h1>
   <div class="hero-sub">每日 5 条高价值精准样本 · 覆盖 Reddit / YouTube / Amazon 等主流平台 · 支持品牌/日期/关键词筛选</div>
   <div class="date-row">
     <span class="date-badge" id="dateBadge">📅 加载中...</span>
@@ -251,6 +251,11 @@ a:hover{color:#93bbfd;text-decoration:underline}
       <span class="date-arrow">→</span>
       <input type="date" id="dateTo" onchange="applyDateRange()">
     </div>
+    <span class="filter-divider"></span>
+    <span class="filter-label">跳转：</span>
+    <select id="dateJump" onchange="jumpToDate(this.value)" style="padding:4px 8px;border-radius:8px;border:1px solid #334155;background:rgba(0,0,0,0.3);color:#94a3b8;font-size:.72rem;outline:none;font-family:inherit;max-width:160px">
+      <option value="">选择日期...</option>
+    </select>
   </div>
 </div>
 
@@ -258,7 +263,7 @@ a:hover{color:#93bbfd;text-decoration:underline}
 
 <div class="empty-state" id="emptyState" style="display:none">
   <div class="empty-icon">🔍</div>
-  <div class="empty-text">暂无匹配的口碑数据</div>
+  <div class="empty-text">暂无匹配的用户点评数据</div>
   <div class="empty-sub">尝试调整筛选条件</div>
 </div>
 
@@ -730,6 +735,9 @@ function applyFilters() {
 
   if (filtered.length === 0) {
     document.getElementById('emptyState').style.display = 'block';
+    // Clear date jump dropdown
+    const sel = document.getElementById('dateJump');
+    if (sel) sel.innerHTML = '<option value="">选择日期...</option>';
     return;
   }
   document.getElementById('emptyState').style.display = 'none';
@@ -747,6 +755,7 @@ function applyFilters() {
     // Date group header
     const header = document.createElement('div');
     header.className = 'date-group-header';
+    header.id = 'date-group-' + dateStr;
     const dateObj = new Date(dateStr);
     const weekDays = ['日','一','二','三','四','五','六'];
     const label = dateStr.replace(/-/g, '.') + ' 周' + weekDays[dateObj.getDay()];
@@ -795,6 +804,33 @@ function applyFilters() {
       feed.appendChild(card);
     });
   });
+
+  // Build date jump dropdown
+  buildDateJumpDropdown(sortedDates);
+}
+
+// ---- Date jump dropdown ----
+function buildDateJumpDropdown(dates) {
+  const sel = document.getElementById('dateJump');
+  if (!sel) return;
+  const currentVal = sel.value;
+  sel.innerHTML = '<option value="">选择日期...</option>';
+  dates.forEach(dateStr => {
+    const dateObj = new Date(dateStr);
+    const weekDays = ['日','一','二','三','四','五','六'];
+    const label = dateStr.replace(/-/g, '.') + ' 周' + weekDays[dateObj.getDay()];
+    sel.innerHTML += '<option value="' + dateStr + '">' + label + '</option>';
+  });
+  if (currentVal && dates.includes(currentVal)) sel.value = currentVal;
+}
+
+function jumpToDate(dateStr) {
+  if (!dateStr) return;
+  const el = document.getElementById('date-group-' + dateStr);
+  if (el) {
+    const top = el.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
 }
 
 // ---- Init ----
