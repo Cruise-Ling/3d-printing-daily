@@ -21,21 +21,28 @@
 
 ## 数据来源 / Sources
 
-**国内 / Domestic**: 南极熊、腾讯新闻、新浪财经、网易、中科院、知乎、什么值得买、Beets3D
+**国内 / Domestic**: 南极熊 (nanjixiong.com), 3D打印资源库, 36氪, 搜狐, 网易, 腾讯新闻, 雪球, 财联社
 
-**海外 / International**: 3Dnatives、3D Printing Industry、PCMag、LayerMath、FMI
+**海外 / Global**: 3Dnatives, 3DPrint.com, VoxelMatters, Engineering.com, LinkedIn News
+
+---
 
 ## 归档 / Archive
 
-| 日期 Date | 链接 Link |
-|----------|-----------|
+| 日期 Date | 简报 Briefing |
+|-----------|--------------|
+| 2026-05-22 (Fri) | [briefing_20260522.html](briefing_20260522.html) |
+| 2026-05-21 (Thu) | [briefing_20260521.html](briefing_20260521.html) |
 | 2026-05-20 (Wed) | [briefing_20260520.html](briefing_20260520.html) |
 | 2026-05-19 (Tue) | [briefing_20260519.html](briefing_20260519.html) |
 | 2026-05-18 (Mon) | [briefing_20260518.html](briefing_20260518.html) |
+| 2026-05-17 (Sun) | [briefing_20260517.html](briefing_20260517.html) |
+| 2026-05-16 (Sat) | [briefing_20260516.html](briefing_20260516.html) |
 | 2026-05-15 (Fri) | [briefing_20260515.html](briefing_20260515.html) |
 | 2026-05-14 (Thu) | [briefing_20260514.html](briefing_20260514.html) |
 | 2026-05-13 (Wed) | [briefing_20260513.html](briefing_20260513.html) |
 | 2026-05-12 (Tue) | [briefing_20260512.html](briefing_20260512.html) |
+| 2026-05-11 (Mon) | [briefing_20260511.html](briefing_20260511.html) |
 | 2026-05-10 (Sun) | [briefing_20260510.html](briefing_20260510.html) |
 | 2026-05-09 (Sat) | [briefing_20260509.html](briefing_20260509.html) |
 | 2026-05-08 (Fri) | [briefing_20260508.html](briefing_20260508.html) |
