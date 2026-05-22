@@ -23,6 +23,9 @@ a:hover{color:#93bbfd;text-decoration:underline}
 .hero .hero-sub{color:rgba(255,255,255,0.7);font-size:.9rem;position:relative;max-width:580px;margin:0 auto}
 .hero .date-row{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:12px;position:relative;flex-wrap:wrap}
 .hero .date-badge{padding:5px 16px;border-radius:16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:#fff;font-size:.82rem;font-weight:600;backdrop-filter:blur(4px)}
+.hero .hero-date-select{padding:5px 16px;border-radius:16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:#fff;font-size:.82rem;font-weight:600;outline:none;font-family:inherit;backdrop-filter:blur(4px);cursor:pointer;max-width:220px;appearance:none;-webkit-appearance:none;background-image:url(\"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M1 1l5 5 5-5' stroke='white' stroke-width='1.5' fill='none'/></svg>\");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.hero .hero-date-select option{background:#0f2847;color:#e2e8f0;font-size:.82rem}
+.hero .hero-date-select:focus{border-color:rgba(255,255,255,0.35)}
 .hero .update-time{color:rgba(255,255,255,0.45);font-size:.78rem}
 
 /* Stats */
@@ -178,11 +181,10 @@ a:hover{color:#93bbfd;text-decoration:underline}
   <h1>🌍 海外用户点评</h1>
   <div class="hero-sub">每日 5 条高价值精准样本 · 覆盖 Reddit / YouTube / Amazon 等主流平台 · 支持品牌/日期/关键词筛选</div>
   <div class="date-row">
-    <span class="date-badge" id="dateBadge">📅 加载中...</span>
-    <span class="update-time" id="updateTime"></span>
-    <select id="dateJump" onchange="jumpToDate(this.value)" style="padding:4px 10px;border-radius:14px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.08);color:#fff;font-size:.78rem;outline:none;font-family:inherit;max-width:160px;backdrop-filter:blur(4px)">
-      <option value="">📅 跳转到日期...</option>
+    <select id="heroDateFilter" class="hero-date-select" onchange="filterByHeroDate(this.value)">
+      <option value="">📅 全部日期</option>
     </select>
+    <span class="update-time" id="updateTime"></span>
   </div>
 </div>
 
@@ -545,6 +547,132 @@ const OVERSEAS_FEEDBACK_DATA = {
       heat: "官方论坛活跃讨论帖",
       isP0: true
     }
+  },
+        {
+          id: "KB-EN-20260522-001",
+          brand: "Creality",
+          platform: "独立评测",
+          sourceLink: "https://layerdepth.com/reviews/creality-k1c/",
+          country: "US",
+          language: "EN",
+          date: "2026-05-22",
+          publishedAt: "2026-04-28",
+          modelName: "K1C",
+          purchaseChannel: "Amazon",
+          purchaseDuration: "未提及",
+          verified: true,
+          shippingExperience: "未提及",
+          customs: "未提及",
+          originalText: "LayerDepth K1C analysis of 73 Amazon + 60 Trustpilot verified reviews: 42% critics, 4.08/5 Amazon avg. Top issues: QC variance with 11% arriving dead (DOA). Unicorn nozzle clogging rate ~50% (10/20 reviewers). Trustpilot only 2.95 stars. Top positive: 600mm/s speed, carbon fiber composite printing. Service support response 5-7 days avg. K1C delivers 80% of X1C performance at 39% the price, but requires self-troubleshooting.",
+          translation: "Creality K1C在亚马逊和Trustpilot的综合分析揭示严重的品控差异：42%评论者为批评者，到货故障率约11%，独角兽喷嘴堵塞率高达50%。服务响应5-7天，远落后于Bambu Lab的24-48小时。以X1C 39%的价格实现80%的性能，但需要用户具备自行排查能力。",
+          sentiment: "负面",
+          dimensions: ["硬件品质 - 品控差异", "硬件性能 - 喷嘴堵塞", "售后服务 - 响应速度"],
+          problemPoints: ["品控差异", "喷嘴堵塞", "售后响应慢"],
+          competitorMentioned: "Bambu Lab X1 Carbon",
+          modsMentioned: "",
+          heat: "73条Amazon + 60条Trustpilot评论分析",
+          isP0: true
+        },
+        {
+          id: "KB-EN-20260522-002",
+          brand: "Creality",
+          platform: "独立评测",
+          sourceLink: "https://3dprinteddecor.com/creality-k2-pro-combo-review-30-days-real-user-experience-2026/",
+          country: "US",
+          language: "EN",
+          date: "2026-05-22",
+          publishedAt: "2026-01-18",
+          modelName: "K2 Pro Combo",
+          purchaseChannel: "未提及",
+          purchaseDuration: "30天测试",
+          verified: true,
+          shippingExperience: "未提及",
+          customs: "未提及",
+          originalText: "30-day real user test with 50+ print jobs: Creality K2 Pro Combo scores 4.3/5. Top weakness: chamber heater severely underpowered — claims 60C but fails to reach target for ASA prints. Camera quality poor — grainy resolution causes false failure detection. PTFE tube collides with glass lid protective film — design flaw. Startup 3-4 minutes. Multi-color purge waste 30-40% for small prints. Nozzle cleaning method risks heatbed damage.",
+          translation: "30天50+任务实测：K2 Pro Combo最严重缺陷为腔室加热器严重不足，宣称60C但始终无法达到。相机画质差到误判打印失败。PTFE管与玻璃盖干涉。启动耗时3-4分钟。多色打印废料高达30-40%。综合评分4.3/5，加热器是致命弱点。",
+          sentiment: "负面",
+          dimensions: ["硬件性能 - 加热腔室", "硬件性能 - 相机", "硬件性能 - 启动时间", "耗材成本 - 多色废料"],
+          problemPoints: ["腔室加热不足", "相机质量差", "启动慢", "多色废料多"],
+          competitorMentioned: "",
+          modsMentioned: "",
+          heat: "30天真实测试50+打印任务",
+          isP0: false
+        },
+        {
+          id: "KB-EN-20260522-003",
+          brand: "Bambu Lab",
+          platform: "独立评测",
+          sourceLink: "https://www.tomshardware.com/3d-printing/bambu-lab-x1-carbon-3d-printer-review",
+          country: "US",
+          language: "EN",
+          date: "2026-05-22",
+          publishedAt: "2026-03-26",
+          modelName: "X1 Carbon",
+          purchaseChannel: "未提及",
+          purchaseDuration: "长期评测",
+          verified: true,
+          shippingExperience: "未提及",
+          customs: "未提及",
+          originalText: "Tom's Hardware X1 Carbon review: Best enthusiast FFF printer. Speed Benchy: 15m29s. LIDAR auto-leveling core advantage. AMS multi-color up to 16 colors. Issues: $1,449 expensive. Default purging wastes 3x material weight. Nozzle replacement complex. No PEI plate or microSD. Controversies: self-starting reports, network traffic accusations. Not open source. Verdict 4.5/5.",
+          translation: "Tom's Hardware综合评测：X1 Carbon是目前最优秀的专业消费级FFF打印机，Benchy 15分29秒，但整套售价$1,449。默认多色废料严重（模型73g废料252g）。曾因网络恶意流量指控和自动启动报告引发争议，用户隐私顾虑持续。非开源。评分4.5/5。",
+          sentiment: "中性",
+          dimensions: ["硬件性能 - 价格", "软件与交互 - 隐私争议", "耗材成本 - 多色废料"],
+          problemPoints: ["价格昂贵", "多色废料多", "隐私争议"],
+          competitorMentioned: "Bambu Lab P1S",
+          modsMentioned: "",
+          heat: "Tom's Hardware权威评测",
+          isP0: false
+        },
+        {
+          id: "KB-EN-20260522-004",
+          brand: "Bambu Lab",
+          platform: "在线论坛",
+          sourceLink: "https://3dprintingindustry.com/news/bambu-lab-controversy-deepens-firmware-update-sparks-backlash-240588/",
+          country: "US",
+          language: "EN",
+          date: "2026-05-22",
+          publishedAt: "2025-06-11",
+          modelName: "X1/X1C/P1S/A1多型号",
+          purchaseChannel: "未提及",
+          purchaseDuration: "未提及",
+          verified: false,
+          shippingExperience: "未提及",
+          customs: "未提及",
+          originalText: "Bambu Lab firmware controversy: Authorization Control feature blocks third-party software (OrcaSlicer) from direct printer communication. Community backlash over ecosystem lock-in. Users lose third-party accessory compatibility (Biqu Panda Touch). OrcaSlicer dev SoftFever refused Bambu Connect integration. Prusa CEO Josef Prusa publicly criticized. Bambu Lab offered Developer Mode as concession. Controversy remains unresolved.",
+          translation: "Bambu Lab固件争议持续发酵：授权控制功能阻止OrcaSlicer等第三方切片软件直连打印机，社区强烈反弹。Biqu Panda Touch等第三方配件无法使用。OrcaSlicer开发者SoftFever拒绝接入Bambu Connect。Prusa CEO公开批评此举。Bambu Lab推出开发者模式作为让步，但争议尚未平息。",
+          sentiment: "中性",
+          dimensions: ["软件与交互 - 固件", "生态系统 - 第三方兼容性", "软件与交互 - 隐私争议"],
+          problemPoints: ["固件限制第三方软件", "生态系统封闭", "隐私争议"],
+          competitorMentioned: "OrcaSlicer, Prusa",
+          modsMentioned: "Biqu Panda Touch",
+          heat: "行业持续关注争议事件",
+          isP0: false
+        },
+        {
+          id: "KB-EN-20260522-005",
+          brand: "Elegoo",
+          platform: "独立评测",
+          sourceLink: "https://www.pcmag.com/reviews/elegoo-jupiter-2",
+          country: "US",
+          language: "EN",
+          date: "2026-05-22",
+          publishedAt: "2026-05-02",
+          modelName: "Jupiter 2",
+          purchaseChannel: "未提及",
+          purchaseDuration: "未提及",
+          verified: true,
+          shippingExperience: "未提及",
+          customs: "未提及",
+          originalText: "PCMag Elegoo Jupiter 2 review: Large-format resin printer with exceptional build volume and print quality. Uneven automation holds it back. Auto-leveling inconsistent. UI confusing for newcomers. Software workflow less refined than competitors. Price around $800-900. Best for experienced large-format enthusiasts.",
+          translation: "PCMag评测：Elegoo Jupiter 2大幅面光固化打印机，打印质量出色、构建体积惊人，但自动调平不稳定、UI菜单不成熟、软件工作流不够完善。价格约$800-900。适合有经验的大幅面爱好者，不推荐纯新手。",
+          sentiment: "中性",
+          dimensions: ["硬件性能 - 自动调平", "软件与交互 - UI设计", "硬件性能 - 构建体积"],
+          problemPoints: ["自动调平不稳定", "UI不成熟", "软件工作流不完善"],
+          competitorMentioned: "",
+          modsMentioned: "",
+          heat: "PCMag最新评测",
+          isP0: false
+        }
   ]
 };
 
@@ -628,6 +756,11 @@ function toggleDateFilter(btn) {
     document.getElementById('dateFrom').value = '';
     document.getElementById('dateTo').value = '';
   }
+  // Reset hero date dropdown when bottom filter changes
+  if (value === 'all') {
+    const heroSel = document.getElementById('heroDateFilter');
+    if (heroSel) heroSel.value = '';
+  }
   applyFilters();
 }
 
@@ -660,6 +793,9 @@ function clearAllFilters() {
     if (b.dataset.value === 'all') b.classList.add('active');
     else b.classList.remove('active');
   });
+  // Reset hero date dropdown
+  const heroSel = document.getElementById('heroDateFilter');
+  if (heroSel) heroSel.value = '';
   applyFilters();
 }
 
@@ -733,9 +869,6 @@ function applyFilters() {
 
   if (filtered.length === 0) {
     document.getElementById('emptyState').style.display = 'block';
-    // Clear date jump dropdown
-    const sel = document.getElementById('dateJump');
-    if (sel) sel.innerHTML = '<option value="">选择日期...</option>';
     return;
   }
   document.getElementById('emptyState').style.display = 'none';
@@ -750,7 +883,7 @@ function applyFilters() {
   const sortedDates = Object.keys(groups).sort((a, b) => b.localeCompare(a));
 
   sortedDates.forEach(dateStr => {
-    // Date group header (hidden but kept as scroll anchor for jumpToDate)
+    // Date group header (scroll anchor)
     const anchor = document.createElement('div');
     anchor.id = 'date-group-' + dateStr;
     anchor.style.display = 'none';
@@ -799,32 +932,48 @@ function applyFilters() {
     });
   });
 
-  // Build date jump dropdown
-  buildDateJumpDropdown(sortedDates);
+  // Build hero date filter dropdown
+  buildHeroDateDropdown(sortedDates);
 }
 
-// ---- Date jump dropdown ----
-function buildDateJumpDropdown(dates) {
-  const sel = document.getElementById('dateJump');
+// ---- Hero date filter dropdown ----
+function buildHeroDateDropdown(dates) {
+  const sel = document.getElementById('heroDateFilter');
   if (!sel) return;
   const currentVal = sel.value;
-  sel.innerHTML = '<option value="">选择日期...</option>';
+  sel.innerHTML = '<option value="">📅 全部日期</option>';
   dates.forEach(dateStr => {
     const dateObj = new Date(dateStr);
     const weekDays = ['日','一','二','三','四','五','六'];
     const label = dateStr.replace(/-/g, '.') + ' 周' + weekDays[dateObj.getDay()];
-    sel.innerHTML += '<option value="' + dateStr + '">' + label + '</option>';
+    sel.innerHTML += '<option value="' + dateStr + '">📅 ' + label + '</option>';
   });
   if (currentVal && dates.includes(currentVal)) sel.value = currentVal;
 }
 
-function jumpToDate(dateStr) {
-  if (!dateStr) return;
-  const el = document.getElementById('date-group-' + dateStr);
-  if (el) {
-    const top = el.getBoundingClientRect().top + window.scrollY - 80;
-    window.scrollTo({ top, behavior: 'smooth' });
+function filterByHeroDate(dateStr) {
+  if (!dateStr) {
+    // "全部日期" — reset
+    filters.datePreset = 'all';
+    filters.dateFrom = '';
+    filters.dateTo = '';
+    // Reactivate bottom date "all" button
+    document.querySelectorAll('.filter-btn[data-group="date"]').forEach(b => b.classList.remove('active'));
+    const allBtn = document.querySelector('.filter-btn[data-group="date"][data-value="all"]');
+    if (allBtn) allBtn.classList.add('active');
+    document.getElementById('dateFrom').value = '';
+    document.getElementById('dateTo').value = '';
+  } else {
+    // Specific date selected
+    filters.datePreset = 'custom';
+    filters.dateFrom = dateStr;
+    filters.dateTo = dateStr;
+    // Deactivate bottom date buttons
+    document.querySelectorAll('.filter-btn[data-group="date"]').forEach(b => b.classList.remove('active'));
+    document.getElementById('dateFrom').value = dateStr;
+    document.getElementById('dateTo').value = dateStr;
   }
+  applyFilters();
 }
 
 // ---- Init ----
@@ -834,7 +983,7 @@ function renderPage() {
   
   if (items.length === 0) {
     console.log('[OverseasFeedback] No items found!');
-    document.getElementById('dateBadge').textContent = '📅 暂无数据';
+    document.getElementById('heroDateFilter').innerHTML = '<option value="">📅 暂无数据</option>';
     document.getElementById('updateTime').textContent = '';
     document.getElementById('emptyState').style.display = 'block';
     document.getElementById('statTotalLabel').textContent = '累计样本';
@@ -843,16 +992,18 @@ function renderPage() {
     return;
   }
 
-  // Find latest date
-  const dates = items.map(i => i.date).filter(Boolean).sort().reverse();
-  const latest = dates[0];
-  const dateObj = new Date(latest);
-  const dateLabel = dateObj.getFullYear() + '年' + String(dateObj.getMonth()+1).padStart(2,'0') + '月' + String(dateObj.getDate()).padStart(2,'0') + '日';
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const dateEn = months[dateObj.getMonth()] + ' ' + dateObj.getDate() + ', ' + dateObj.getFullYear();
+  // Build hero date filter dropdown
+  const allDates = [...new Set(items.map(i => i.date).filter(Boolean).sort().reverse())];
+  const sel = document.getElementById('heroDateFilter');
+  sel.innerHTML = '<option value="">📅 全部日期</option>';
+  allDates.forEach(dateStr => {
+    const dateObj = new Date(dateStr);
+    const weekDays = ['日','一','二','三','四','五','六'];
+    const label = dateStr.replace(/-/g, '.') + ' 周' + weekDays[dateObj.getDay()];
+    sel.innerHTML += '<option value="' + dateStr + '">📅 ' + label + '</option>';
+  });
 
-  document.getElementById('dateBadge').textContent = '📅 最新：' + dateLabel + ' (' + dateEn + ')';
-  document.getElementById('updateTime').textContent = '共 ' + items.length + ' 条 · ' + dates.length + ' 天数据';
+  document.getElementById('updateTime').textContent = '共 ' + items.length + ' 条 · ' + allDates.length + ' 天数据';
 
   console.log('[OverseasFeedback] Building brand buttons...');
   buildBrandButtons();
