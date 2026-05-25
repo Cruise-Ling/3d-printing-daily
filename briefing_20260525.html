@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D打印每日资讯 2026-05-25</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1F5A8;</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:#0a0a0f;color:#e8e8e8;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:12px}
+.side-nav{display:none;position:fixed;left:0;top:50%;transform:translateY(-50%);flex-direction:column;gap:4px;padding-left:4px;z-index:200}
+.side-nav-item{padding:5px 8px;font-size:11px;border-radius:16px;opacity:0.85;backdrop-filter:blur(4px);transition:opacity 0.2s,transform 0.2s;white-space:nowrap;display:block;text-align:center;margin-bottom:2px}
+.side-nav-item:hover{opacity:1;transform:scale(1.05)}
+.side-nav-item.home{background:rgba(255,255,255,0.12);color:#fff}
+.side-nav-item.general{background:rgba(26,115,232,0.85);color:#fff}
+.side-nav-item.specific{background:rgba(230,81,0,0.85);color:#fff}
+.side-nav-item.consumer{background:rgba(46,125,50,0.85);color:#fff}
+.side-nav-item.niche{background:rgba(216,67,21,0.85);color:#fff}
+.side-nav-item.scenario{background:rgba(0,105,92,0.85);color:#fff}
+.side-nav-item.global{background:rgba(123,31,162,0.85);color:#fff}
+.side-nav-item.feedback{background:rgba(0,131,143,0.85);color:#fff}
+.card{width:100%;max-width:900px;background:#12121a;border-radius:16px;overflow:clip;box-shadow:0 4px 32px rgba(0,0,0,0.4);margin-bottom:24px}
+.header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:28px 24px;text-align:center;border-radius:16px 16px 0 0}
+.header .date{border-radius:20px;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);display:inline-block;padding:4px 16px;font-size:13px;color:rgba(255,255,255,0.9);margin-bottom:10px}
+.header h1{font-size:22px;font-weight:700;color:#fff;margin-bottom:6px}
+.header .subtitle{font-size:13px;color:rgba(255,255,255,0.75)}
+.section{padding:20px 20px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.section:last-child{border-bottom:none}
+.section-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.section-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.section-title{font-size:15px;font-weight:600;flex:1}
+.section-count{font-size:11px;color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.08);padding:2px 8px;border-radius:10px}
+.news-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:flex-start}
+.news-item:last-child{border-bottom:none}
+.news-item:hover{background:rgba(255,255,255,0.02);margin:0 -8px;padding:12px 8px;border-radius:8px}
+.news-rank{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px}
+.news-content{flex:1;min-width:0}
+.news-title{font-size:13.5px;line-height:1.5;color:#d0d0d8;margin-bottom:4px;word-break:break-word}
+.news-title a{color:inherit;text-decoration:none;transition:color 0.2s}
+.news-title a:hover{color:#fff}
+.news-meta{font-size:11px;color:rgba(255,255,255,0.35);display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.news-tag{display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:500}
+.tag-hot{background:rgba(255,45,85,0.2);color:#ff6b6b}
+.tag-new{background:rgba(0,200,83,0.2);color:#00c853}
+.tag-money{background:rgba(255,171,0,0.2);color:#ffab00}
+.tag-risk{background:rgba(255,87,34,0.2);color:#ff5722}
+.tag-deep{background:rgba(33,150,243,0.2);color:#2196f3}
+.tag-product{background:rgba(156,39,176,0.2);color:#ce93d8}
+.tag-tech{background:rgba(74,20,140,0.2);color:#b388ff}
+.tag-event{background:rgba(245,124,0,0.2);color:#ffd54f}
+.tag-market{background:rgba(56,142,60,0.2);color:#aed581}
+.tag-intl{background:rgba(123,31,162,0.2);color:#e1bee7}
+.tag-review{background:rgba(0,131,143,0.2);color:#80deea}
+@media(max-width:767px){
+.section-nav{display:none!important}
+.side-nav{display:flex}
+.card{margin-left:52px;width:calc(100vw - 60px);max-width:375px}
+body{padding:12px 0 12px 4px;justify-content:flex-start}
+.news-item:hover{margin:0 -4px;padding:12px 4px}
+}
+@media(min-width:768px){
+.section-nav{display:none}
+.side-nav{left:max(0px,calc((100vw - 900px) / 2 - 90px))}
+}
+@media(min-width:1024px){
+.side-nav{left:max(0px,calc((100vw - 900px) / 2 - 90px))}
+}
+@media(max-width:1023px) and (min-width:768px){
+.side-nav{left:0}
+}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.section{animation:fadeInUp 0.4s ease-out backwards}
+.section:nth-child(1){animation-delay:0.05s}
+.section:nth-child(2){animation-delay:0.1s}
+.section:nth-child(3){animation-delay:0.15s}
+.section:nth-child(4){animation-delay:0.2s}
+.section:nth-child(5){animation-delay:0.25s}
+.section:nth-child(6){animation-delay:0.3s}
+.section:nth-child(7){animation-delay:0.35s}
+.hot-summary{background:rgba(255,255,255,0.04);border-radius:12px;padding:14px 16px;margin-bottom:16px}
+.hot-summary h3{font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px}
+.hot-summary ul{list-style:none;padding:0;margin:0}
+.hot-summary li{font-size:12.5px;color:rgba(255,255,255,0.7);padding:3px 0;padding-left:14px;position:relative;line-height:1.4}
+.hot-summary li::before{content:"2";position:absolute;left:0;color:rgba(255,255,255,0.3)}
+</style>
+</head>
+<body>
+<nav class="side-nav">
+<a class="side-nav-item home" href="index.html">&#x1F3E0; 首页</a>
+<a class="side-nav-item general" href="#general">&#x1F535; 泛行业</a>
+<a class="side-nav-item specific" href="#specific">&#x1F536; 细分领域</a>
+<a class="side-nav-item consumer" href="#consumer">&#x1F7E2; 消费级</a>
+<a class="side-nav-item niche" href="#niche">&#x1F536; 细分市场</a>
+<a class="side-nav-item scenario" href="#scenario">&#x1F30A; 场景打印</a>
+<a class="side-nav-item global" href="#global">&#x1F37B; 海外</a>
+<a class="side-nav-item feedback" href="#feedback">&#x1F537; 口碑</a>
+</nav>
+<div class="card">
+<div class="header">
+<div class="date">&#x1F4C5; 2026-05-25 周一</div>
+<h1>&#x1F5A8; 3D打印每日资讯</h1>
+<div class="subtitle">工作日早9点 · 聚焦全球3D打印行业动态</div>
+</div>
+<div class="hot-summary">
+<h3>&#x1F525; 今日热点速递</h3>
+<ul>
+<li>西门子5000万美元战略投资Xometry，AI打通设计到制造全链路</li>
+<li>坦帕雷大学3D打印仿生陶瓷研究突破，可引导人体骨骼自修复</li>
+<li>黑格科技完成超3亿元C轮融资，布局桌面级全彩3D打印</li>
+<li>印度Agnikul完成四台3D打印火箭发动机集群点火测试</li>
+<li>创想三维M1&R1众筹5340万港元，2026全球3D打印众筹登顶</li>
+</ul>
+</div>
+</div>
+<div class="card">
+<div class="section" id="general">
+<div class="section-header">
+<div class="section-icon" style="background:rgba(26,115,232,0.2)">&#x1F535;</div>
+<div class="section-title">泛行业资讯</div>
+<div class="section-count">工业 · 资本 · 政策</div>
+</div>
+<div class="news-item"><div class="news-rank" style="background:rgba(26,115,232,0.2);color:#4fc3f7">01</div><div class="news-content"><div class="news-title"><a href="https://www.xometry.com/blog/siemens-series-c/" target="_blank">西门子5000万美元战略投资Xometry，用AI打通设计到制造全链路</a></div><div class="news-meta"><span class="news-tag tag-hot">&#x1F525; 重磅</span><span class="news-tag tag-money">&#x1F4B0; 融资</span><span>Xometry · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(26,115,232,0.2);color:#4fc3f7">02</div><div class="news-content"><div class="news-title"><a href="https://www.heygot.com/news" target="_blank">黑格科技完成超3亿元C轮融资，剑指桌面级全彩3D打印市场</a></div><div class="news-meta"><span class="news-tag tag-hot">&#x1F525; 重磅</span><span class="news-tag tag-money">&#x1F4B0; 融资</span><span>黑格科技 · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(26,115,232,0.2);color:#4fc3f7">03</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493066-1-1.html" target="_blank">铂力特10亿元3D打印粉末产线项目开工，预计2026年8月试生产</a></div><div class="news-meta"><span class="news-tag tag-new">&#x1F195; 新品</span><span class="news-tag tag-money">&#x1F4B0; 投资</span><span>铂力特 · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(26,115,232,0.2);color:#4fc3f7">04</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493054-1-1.html" target="_blank">创想三维IPO招股进行中：年营收复合增长率超50%，全球市占率持续领先</a></div><div class="news-meta"><span class="news-tag tag-market">&#x1F4CA; 行业</span><span>创想三维 · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(26,115,232,0.2);color:#4fc3f7">05</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493058-1-1.html" target="_blank">有研粉材2025年报：3D打印金属粉末销量增长69%，山东4580吨新基地即将投产</a></div><div class="news-meta"><span class="news-tag tag-market">&#x1F4CA; 行业</span><span>有研粉材 · 2026-05-22</span></div></div></div>
+</div>
+<div class="section" id="specific">
+<div class="section-header">
+<div class="section-icon" style="background:rgba(230,81,0,0.2)">&#x1F536;</div>
+<div class="section-title">细分领域动态</div>
+<div class="section-count">医疗 · 航天 · 材料</div>
+</div>
+<div class="news-item"><div class="news-rank" style="background:rgba(230,81,0,0.2);color:#ffab40">01</div><div class="news-content"><div class="news-title"><a href="https://www.tuni.fi/en/current/scientific-breakthrough-3d-bioprinting" target="_blank">芬兰坦帕雷大学3D打印仿生陶瓷研究突破，可引导人体自身骨骼修复</a></div><div class="news-meta"><span class="news-tag tag-deep">&#x1F4A1; 行业首发</span><span>坦帕雷大学 · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(230,81,0,0.2);color:#ffab40">02</div><div class="news-content"><div class="news-title"><a href="https://www.agnikul.in/blog" target="_blank">印度Agnikul完成四台3D打印半低温火箭发动机集群点火测试</a></div><div class="news-meta"><span class="news-tag tag-tech">&#x1F4A1; 行业首发</span><span>Agnikul · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(230,81,0,0.2);color:#ffab40">03</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493056-1-1.html" target="_blank">日本横滨国立大学开发可回收光固化树脂，循环打印10次以上性能稳定</a></div><div class="news-meta"><span class="news-tag tag-tech">&#x1F4A1; 行业首发</span><span>横滨国立大学 · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(230,81,0,0.2);color:#ffab40">04</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493070-1-1.html" target="_blank">3D Systems SLA技术助力凯迪拉克F1车队：7台大型打印机加速风洞测试</a></div><div class="news-meta"><span class="news-tag tag-deep">&#x1F3AF; 深度评测</span><span>3D Systems · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(230,81,0,0.2);color:#ffab40">05</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493068-1-1.html" target="_blank">欧洲研究机构开发出类似天然骨骼的3D打印植入材料</a></div><div class="news-meta"><span class="news-tag tag-tech">&#x1F4A1; 行业首发</span><span>欧洲研究机构 · 2026-05-22</span></div></div></div>
+</div>
+<div class="section" id="consumer">
+<div class="section-header">
+<div class="section-icon" style="background:rgba(46,125,50,0.2)">&#x1F7E2;</div>
+<div class="section-title">消费级赛道</div>
+<div class="section-count">品牌 · 模型 · 生态</div>
+</div>
+<div class="news-item"><div class="news-rank" style="background:rgba(46,125,50,0.2);color:#81c784">01</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493060-1-1.html" target="_blank">创想三维M1&R1众筹5340万港元，2026全球3D打印众筹项目登顶</a></div><div class="news-meta"><span class="news-tag tag-hot">&#x1F525; 重磅</span><span>创想三维 · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(46,125,50,0.2);color:#81c784">02</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493072-1-1.html" target="_blank">创想三维携产品矩阵亮相高教展：3D打印让课本上的模型"活"起来</a></div><div class="news-meta"><span class="news-tag tag-event">&#x1F3AF; 深度评测</span><span>创想三维 · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(46,125,50,0.2);color:#81c784">03</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493073-1-1.html" target="_blank">Snapmaker推进Full Spectrum混色切片能力整合，社区开发者Radu加入团队</a></div><div class="news-meta"><span class="news-tag tag-product">&#x1F4CA; 行业</span><span>Snapmaker · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(46,125,50,0.2);color:#81c784">04</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493067-1-1.html" target="_blank">eufyMake E1 UV 3D打印机国内首次亮相：安克旗下家用光固化新选择</a></div><div class="news-meta"><span class="news-tag tag-new">&#x1F195; 新品发布</span><span>eufyMake · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(46,125,50,0.2);color:#81c784">05</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493075-1-1.html" target="_blank">Bambu Lab A1 Combo荣获Parents' Award 2026波兰站，家庭友好型打印机获认可</a></div><div class="news-meta"><span class="news-tag tag-product">&#x1F4CA; 行业</span><span>Bambu Lab · 2026-05-22</span></div></div></div>
+</div>
+<div class="section" id="niche">
+<div class="section-header">
+<div class="section-icon" style="background:rgba(216,67,21,0.2)">&#x1F536;</div>
+<div class="section-title">细分市场</div>
+<div class="section-count">价格段 · 应用场景 · 区域</div>
+</div>
+<div class="news-item"><div class="news-rank" style="background:rgba(216,67,21,0.2);color:#ff8a65">01</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493076-1-1.html" target="_blank">14Trees和Tvasta联合推出偏远地区建筑3D打印机：低成本住房新方案</a></div><div class="news-meta"><span class="news-tag tag-tech">&#x1F4A1; 行业首发</span><span>14Trees · Tvasta · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(216,67,21,0.2);color:#ff8a65">02</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493077-1-1.html" target="_blank">FITASY推出单只鞋购买选项：3D打印实现真正包容的定制体验</a></div><div class="news-meta"><span class="news-tag tag-product">&#x1F4CA; 行业</span><span>FITASY · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(216,67,21,0.2);color:#ff8a65">03</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493078-1-1.html" target="_blank">从全运会火炬塔到巡演机甲：工业级3D打印赋能大型定制化制造</a></div><div class="news-meta"><span class="news-tag tag-event">&#x1F3AF; 深度评测</span><span>南极熊 · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(216,67,21,0.2);color:#ff8a65">04</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493079-1-1.html" target="_blank">粘结剂喷射3D打印批产良率达95%：必极科技携手众远新材料突破粉末一致性</a></div><div class="news-meta"><span class="news-tag tag-market">&#x1F4CA; 行业</span><span>必极科技 · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(216,67,21,0.2);color:#ff8a65">05</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493080-1-1.html" target="_blank">先临三维推出两款跟踪式激光三维扫描系统：精度与便携性兼得</a></div><div class="news-meta"><span class="news-tag tag-new">&#x1F195; 新品发布</span><span>先临三维 · 2026-05-22</span></div></div></div>
+</div>
+<div class="section" id="scenario">
+<div class="section-header">
+<div class="section-icon" style="background:rgba(0,105,92,0.2)">&#x1F30A;</div>
+<div class="section-title">场景×3D打印</div>
+<div class="section-count">教育 · 文创 · 家居 · 食品</div>
+</div>
+<div class="news-item"><div class="news-rank" style="background:rgba(0,105,92,0.2);color:#4db6ac">01</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493061-1-1.html" target="_blank">一双鞋从设计稿到上脚最快只要3天：3D打印重塑鞋履定制流程</a></div><div class="news-meta"><span class="news-tag tag-event">&#x1F3AF; 深度评测</span><span>南极熊 · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(0,105,92,0.2);color:#4db6ac">02</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493062-1-1.html" target="_blank">Artec 3D扫描仪完成日本小田原城的数字化采集：科技守护历史遗产</a></div><div class="news-meta"><span class="news-tag tag-intl">&#x1F310; 海外</span><span>Artec · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(0,105,92,0.2);color:#4db6ac">03</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493063-1-1.html" target="_blank">Open Bionics将3D打印假肢扩展至肘上截肢患者：Hero Arms Pro正式发布</a></div><div class="news-meta"><span class="news-tag tag-deep">&#x1F195; 新品发布</span><span>Open Bionics · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(0,105,92,0.2);color:#4db6ac">04</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493064-1-1.html" target="_blank">Lynxter推出首款FDA认证3D打印食品级硅胶SIL-004：医疗与食品双场景</a></div><div class="news-meta"><span class="news-tag tag-product">&#x1F4CA; 行业</span><span>Lynxter · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(0,105,92,0.2);color:#4db6ac">05</div><div class="news-content"><div class="news-title"><a href="https://nanjixiong.com/thread-493065-1-1.html" target="_blank">研究人员开发可变间隔3D打印可回收树脂，重复打印10次以上性能稳定</a></div><div class="news-meta"><span class="news-tag tag-tech">&#x1F4A1; 行业首发</span><span>南极熊 · 2026-05-22</span></div></div></div>
+</div>
+<div class="section" id="global">
+<div class="section-header">
+<div class="section-icon" style="background:rgba(123,31,162,0.2)">&#x1F37B;</div>
+<div class="section-title">海外资讯</div>
+<div class="section-count">国际 · 3Dnatives · 3DPrint.com</div>
+</div>
+<div class="news-item"><div class="news-rank" style="background:rgba(123,31,162,0.2);color:#ce93d8">01</div><div class="news-content"><div class="news-title"><a href="https://www.3dprint.com/326191/3d-printing-news-briefs-5-23-2026/" target="_blank">3DPrint精选（5月23日）：Caracol AM系统60小时打印装甲车悬架</a></div><div class="news-meta"><span class="news-tag tag-intl">&#x1F310; 海外</span><span>3DPrint.com · 2026-05-23</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(123,31,162,0.2);color:#ce93d8">02</div><div class="news-content"><div class="news-title"><a href="https://www.3dpeople.com/news" target="_blank">3D People将螺纹嵌件集成到在线报价系统：一键生成带嵌件3D模型报价</a></div><div class="news-meta"><span class="news-tag tag-intl">&#x1F310; 海外</span><span>3D People · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(123,31,162,0.2);color:#ce93d8">03</div><div class="news-content"><div class="news-title"><a href="https://www.am-solutions.it/news" target="_blank">AM Solutions在里昂3D打印展首发紧凑型S1 Basic后处理系统</a></div><div class="news-meta"><span class="news-tag tag-intl">&#x1F310; 海外</span><span>AM Solutions · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(123,31,162,0.2);color:#ce93d8">04</div><div class="news-content"><div class="news-title"><a href="https://www.3dnatives.com/en/3d-printing-orthopedic-plaster" target="_blank">Castomize开发4D打印骨科石膏：随温度变化自动贴合患者体型</a></div><div class="news-meta"><span class="news-tag tag-intl">&#x1F310; 海外</span><span>3Dnatives · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(123,31,162,0.2);color:#ce93d8">05</div><div class="news-content"><div class="news-title"><a href="https://www.ultimaker.com/news" target="_blank">UltiMaker推出Factor 4 Plus工业3D打印机：性能提升一倍，配备TRACE技术</a></div><div class="news-meta"><span class="news-tag tag-intl">&#x1F310; 海外</span><span>UltiMaker · 2026-05-22</span></div></div></div>
+</div>
+<div class="section" id="feedback">
+<div class="section-header">
+<div class="section-icon" style="background:rgba(0,131,143,0.2)">&#x1F537;</div>
+<div class="section-title">用户口碑</div>
+<div class="section-count">国外评测 · 国内实测</div>
+</div>
+<div class="news-item"><div class="news-rank" style="background:rgba(0,131,143,0.2);color:#80deea">01</div><div class="news-content"><div class="news-title"><a href="https://3dprinteddecor.com/bambu-lab-3d-printer-review-2026" target="_blank">Bambu Lab 3D打印机2026年真实用户评测：4个月长期测试结论</a></div><div class="news-meta"><span class="news-tag tag-review">&#x1F4AC; 口碑</span><span>3D Printed Decor · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(0,131,143,0.2);color:#80deea">02</div><div class="news-content"><div class="news-title"><a href="https://adp.industries/blog/bambu-vs-creality-vs-prusa-2026" target="_blank">Bambu Lab vs Creality vs Prusa：2026终极对比评测</a></div><div class="news-meta"><span class="news-tag tag-review">&#x1F4AC; 口碑</span><span>ADP Industries · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(0,131,143,0.2);color:#80deea">03</div><div class="news-content"><div class="news-title"><a href="https://www.creativebloq.com/3d-printers" target="_blank">CreativeBloq精选：2026年最佳3D打印机完整榜单</a></div><div class="news-meta"><span class="news-tag tag-review">&#x1F4AC; 口碑</span><span>CreativeBloq · 2026-05-22</span></div></div></div>
+<div class="news-item"><div class="news-rank" style="background:rgba(0,131,143,0.2);color:#80deea">05</div><div class="news-content"><div class="news-title"><a href="https://3dprintingindustry.com/news/bambu-lab-x1c-review-2026" target="_blank">3D Printing Industry：Bambu Lab X1C深度体验，4个月后告诉你真实感受</a></div><div class="news-meta"><span class="news-tag tag-review">&#x1F4AC; 口碑</span><span>3D Printing Industry · 2026-05-22</span></div></div></div>
+</div>
+</div>
+</div>
+</body>
+</html>
