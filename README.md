@@ -66,3 +66,5 @@
 ## License
 
 MIT
+
+> Pages rebuild trigger: 2026-05-26 09:06:03 - fix items array syntax
