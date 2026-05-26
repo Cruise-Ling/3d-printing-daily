@@ -33,6 +33,7 @@
 |-----------|--------------|
 | 2026-05-22 (Fri) | [briefing_20260522.html](briefing_20260522.html) |
 | 2026-05-26 (Tue) | [briefing_20260526.html](briefing_20260526.html) |
+| 2026-05-27 | [briefing_20260527.html](briefing_20260527.html) | 35条 | 7分区 | 全A级 |
 | 2026-05-21 (Thu) | [briefing_20260521.html](briefing_20260521.html) |
 | 2026-05-20 (Wed) | [briefing_20260520.html](briefing_20260520.html) |
 | 2026-05-19 (Tue) | [briefing_20260519.html](briefing_20260519.html) |
