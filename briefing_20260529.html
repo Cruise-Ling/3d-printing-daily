@@ -1,792 +1,568 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D打印行业每日资讯 - 2026年5月29日</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖨️</text></svg>">
-    <style>
-        :root {
-            --general: #1a73e8;
-            --specific: #e65100;
-            --consumer: #2e7d32;
-            --niche: #d84315;
-            --scenario: #00695c;
-            --global: #7b1fa2;
-            --feedback: #00838f;
-            --bg: #f5f7fa;
-            --card-bg: #ffffff;
-            --text: #1a1a2e;
-            --text-light: #666;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            padding: 0;
-            padding-left: 4px;
-            line-height: 1.6;
-        }
-        /* Side Nav */
-        .side-nav {
-            position: fixed;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            padding: 8px 4px;
-            background: rgba(255,255,255,0.95);
-            border-radius: 0 10px 10px 0;
-            box-shadow: 2px 2px 12px rgba(0,0,0,0.08);
-        }
-        .side-nav a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 38px;
-            height: 38px;
-            border-radius: 8px;
-            font-size: 11px;
-            text-decoration: none;
-            color: #555;
-            transition: all 0.2s;
-            writing-mode: vertical-lr;
-            letter-spacing: 1px;
-        }
-        .side-nav a:hover {
-            transform: scale(1.05);
-            color: #fff;
-        }
-        .side-nav a.nav-general:hover { background: var(--general); }
-        .side-nav a.nav-specific:hover { background: var(--specific); }
-        .side-nav a.nav-consumer:hover { background: var(--consumer); }
-        .side-nav a.nav-niche:hover { background: var(--niche); }
-        .side-nav a.nav-scenario:hover { background: var(--scenario); }
-        .side-nav a.nav-global:hover { background: var(--global); }
-        .side-nav a.nav-feedback:hover { background: var(--feedback); }
-        .side-nav a.nav-home {
-            background: #f0f0f0;
-            font-size: 18px;
-            writing-mode: horizontal-tb;
-        }
-        .side-nav a.nav-home:hover { background: #333; color: #fff; }
-
-        /* Header */
-        .header {
-            margin-left: 52px;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            color: #fff;
-            padding: 32px 24px;
-            border-radius: 0 0 20px 20px;
-            margin-bottom: 20px;
-        }
-        .header h1 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
-        .header .date { font-size: 14px; color: #aaa; margin-bottom: 4px; }
-        .header .desc { font-size: 13px; color: #888; }
-        .header .stat { display: inline-block; margin-top: 10px; background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 12px; font-size: 12px; }
-
-        /* Container */
-        .container { margin-left: 52px; padding: 0 12px 30px; }
-
-        /* Section */
-        .section { margin-bottom: 28px; }
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            border-radius: 12px;
-            margin-bottom: 14px;
-            cursor: pointer;
-        }
-        .section-header .icon { font-size: 22px; }
-        .section-header h2 { font-size: 17px; font-weight: 600; flex: 1; }
-        .section-header .badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; color: #fff; }
-
-        .section-header.general { background: linear-gradient(135deg, #e8f0fe, #d2e3fc); }
-        .section-header.general h2 { color: var(--general); }
-        .section-header.general .badge { background: var(--general); }
-
-        .section-header.specific { background: linear-gradient(135deg, #fbe9e7, #ffccbc); }
-        .section-header.specific h2 { color: var(--specific); }
-        .section-header.specific .badge { background: var(--specific); }
-
-        .section-header.consumer { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
-        .section-header.consumer h2 { color: var(--consumer); }
-        .section-header.consumer .badge { background: var(--consumer); }
-
-        .section-header.niche { background: linear-gradient(135deg, #fbe9e7, #ffab91); }
-        .section-header.niche h2 { color: var(--niche); }
-        .section-header.niche .badge { background: var(--niche); }
-
-        .section-header.scenario { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); }
-        .section-header.scenario h2 { color: var(--scenario); }
-        .section-header.scenario .badge { background: var(--scenario); }
-
-        .section-header.global { background: linear-gradient(135deg, #f3e5f5, #e1bee7); }
-        .section-header.global h2 { color: var(--global); }
-        .section-header.global .badge { background: var(--global); }
-
-        .section-header.feedback { background: linear-gradient(135deg, #e0f7fa, #b2ebf2); }
-        .section-header.feedback h2 { color: var(--feedback); }
-        .section-header.feedback .badge { background: var(--feedback); }
-
-        /* Card */
-        .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-            margin-left: 52px;
-            overflow: clip;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .card .title { font-size: 15px; font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
-        .card .title a { color: var(--text); text-decoration: none; }
-        .card .title a:hover { color: #1a73e8; text-decoration: underline; }
-        .card .meta { font-size: 12px; color: var(--text-light); margin-bottom: 8px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-        .card .summary { font-size: 13px; color: #555; line-height: 1.6; }
-        .card .tags { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px; }
-
-        .from-tag { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; }
-        .from-nanjixiong { background: #e3f2fd; color: #1565c0; }
-        .from-3dprintcom { background: #f3e5f5; color: #7b1fa2; }
-        .from-3dnatives { background: #fff3e0; color: #e65100; }
-        .from-36kr { background: #e8f5e9; color: #2e7d32; }
-        .from-sohu { background: #fce4ec; color: #c62828; }
-        .from-qq { background: #e3f2fd; color: #0d47a1; }
-        .from-msn { background: #f3e5f5; color: #6a1b9a; }
-        .from-housingwire { background: #e0f2f1; color: #00695c; }
-        .from-realtor { background: #fbe9e7; color: #bf360c; }
-        .from-baijiahao { background: #fff8e1; color: #f57f17; }
-        .from-ofweek { background: #e0f7fa; color: #00838f; }
-        .from-sina { background: #fce4ec; color: #b71c1c; }
-        .from-3dprinteddecor { background: #f3e5f5; color: #4a148c; }
-        .from-pcmag { background: #e8eaf6; color: #283593; }
-        .from-techradar { background: #fbe9e7; color: #d84315; }
-
-        .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; }
-        .tag-hot { background: #ffebee; color: #c62828; }
-        .tag-new { background: #e8f5e9; color: #2e7d32; }
-        .tag-first { background: #fff3e0; color: #e65100; }
-        .tag-fund { background: #f3e5f5; color: #6a1b9a; }
-        .tag-risk { background: #fff8e1; color: #f57f17; }
-        .tag-review { background: #e0f7fa; color: #00838f; }
-
-        .relevance-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
-        .relevance-tag.a { background: #e8f5e9; color: #2e7d32; }
-        .relevance-tag.b { background: #fff8e1; color: #f57f17; }
-        .relevance-tag.c { background: #fff3e0; color: #e65100; }
-        .relevance-tag.d { background: #ffebee; color: #c62828; }
-
-        /* Hot Zone */
-        .hot-zone {
-            margin-left: 52px;
-            margin-bottom: 24px;
-            background: linear-gradient(135deg, #fff8e1, #ffecb3);
-            border-radius: 12px;
-            padding: 16px 20px;
-            border: 1px solid #ffe082;
-        }
-        .hot-zone h3 { font-size: 15px; color: #e65100; margin-bottom: 8px; }
-        .hot-zone p { font-size: 13px; color: #555; line-height: 1.7; }
-        .hot-zone .hot-items { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
-        .hot-zone .hot-item {
-            background: #fff;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-            color: #333;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        }
-        .hot-zone .hot-item.hot-1 { border-left: 3px solid #c62828; }
-        .hot-zone .hot-item.hot-2 { border-left: 3px solid #e65100; }
-        .hot-zone .hot-item.hot-3 { border-left: 3px solid #f57f17; }
-
-        /* Responsive */
-        @media (max-width: 767px) {
-            .side-nav a { width: 32px; height: 32px; font-size: 10px; }
-            .side-nav a.nav-home { font-size: 15px; }
-            .header { margin-left: 42px; padding: 20px 14px; }
-            .header h1 { font-size: 20px; }
-            .container { margin-left: 42px; padding: 0 8px 20px; }
-            .card { margin-left: 0; padding: 12px; }
-            .section-header { padding: 10px 14px; }
-            .hot-zone { margin-left: 0; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D打印行业每日资讯 - 2026年5月29日</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖨</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f0f2f5;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;display:flex;justify-content:center;padding:12px 0}
+.card{width:375px;background:#fff;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.06);overflow:clip}
+.header{background:linear-gradient(135deg,#1a237e,#283593,#3949ab);padding:24px 20px 18px;color:#fff;position:relative}
+.header-back{position:absolute;left:16px;top:28px;transform:translateY(-50%);display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.95);font-size:14px;font-weight:600;text-decoration:none;padding:7px 16px 7px 3px;border-radius:20px;border:1.5px solid rgba(255,255,255,.35)}
+.header-back:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.6)}
+.header h1{font-size:19px;font-weight:700;letter-spacing:1px;margin-bottom:6px;padding-left:90px}
+.header .date{font-size:13px;opacity:.85;font-weight:400}
+.header .source-note{font-size:11px;opacity:.7;margin-top:4px}
+.stats-bar{display:flex;gap:8px;flex-wrap:wrap;padding:14px 20px;background:#fafbff;border-bottom:1px solid #f0f0f0}
+.stats-pill{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;color:#555;background:#f0f4ff;border-radius:20px;padding:5px 11px;border:1px solid #e8edff}
+.stats-pill b{color:#1a73e8;font-weight:700}
+.stats-pill.warn{background:#fff8e1;border-color:#ffe082}
+.stats-pill.warn b{color:#e65100}
+.section-title{display:flex;align-items:center;padding:18px 20px 12px;font-size:16px;font-weight:800;color:#0d47a1;background:linear-gradient(90deg,rgba(26,115,232,.08),transparent);border-bottom:2px solid #1a73e8}
+.section-title .icon{width:4px;height:16px;border-radius:2px;margin-right:8px}
+.section-title.general .icon{background:linear-gradient(180deg,#42a5f5,#1e88e5)}
+.section-title.specific .icon{background:linear-gradient(180deg,#ffa726,#fb8c00)}
+.section-title.consumer .icon{background:linear-gradient(180deg,#66bb6a,#43a047)}
+.section-title.global .icon{background:linear-gradient(180deg,#ab47bc,#7b1fa2)}
+.section-title.feedback .icon{background:linear-gradient(180deg,#26c6da,#00838f)}
+.section-title.niche .icon{background:linear-gradient(180deg,#e64a19,#d84315)}
+.section-title.scenario .icon{background:linear-gradient(180deg,#00796b,#00695c)}
+.item{padding:12px 20px 14px;border-bottom:1px solid #f5f5f5}
+.item:last-child{border-bottom:none}
+.item-head{display:flex;align-items:flex-start;margin-bottom:6px}
+.num-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;flex-shrink:0;margin-right:10px;margin-top:1px}
+.general-zone .num-dot{background:linear-gradient(135deg,#42a5f5,#1e88e5)}
+.specific-zone .num-dot{background:linear-gradient(135deg,#ffa726,#fb8c00)}
+.consumer-zone .num-dot{background:linear-gradient(135deg,#66bb6a,#43a047)}
+.global-zone .num-dot{background:linear-gradient(135deg,#ab47bc,#7b1fa2)}
+.feedback-zone .num-dot{background:linear-gradient(180deg,#26c6da,#00838f)}
+.niche-zone .num-dot{background:linear-gradient(135deg,#e64a19,#d84315)}
+.scenario-zone .num-dot{background:linear-gradient(180deg,#00796b,#00695c)}
+.item-title{font-size:14.5px;font-weight:600;line-height:1.45;color:#212121;flex:1}
+.item-title a{color:#212121;text-decoration:none}
+.item-title a:hover{color:#1a73e8}
+.item-summary{font-size:12.8px;line-height:1.7;color:#616161;padding-left:32px;word-break:break-all}
+.item-source{font-size:11px;color:#9e9e9e;padding-left:32px;margin-top:4px}
+.item-source a{color:#1e88e5;text-decoration:none}
+.item-source a:hover{text-decoration:underline}
+.from-tag{font-size:10px;padding:1px 6px;border-radius:6px;margin-left:6px;opacity:.75}
+.from-qq{background:#fce4ec;color:#880e4f}
+.from-sina{background:#fff3e0;color:#e65100}
+.from-163{background:#e8f5e9;color:#2e7d32}
+.from-msn{background:#e3f2fd;color:#1565c0}
+.from-baijiahao{background:#fff8e1;color:#f57f17}
+.from-sohu{background:#fff3e0;color:#bf360c}
+.from-36kr{background:#e8eaf6;color:#283593}
+.from-bilibili{background:#fce4ec;color:#c62828}
+.from-3dprint{background:#e0f7fa;color:#006064}
+.from-3dprinting{background:#e0f7fa;color:#006064}
+.from-3druck{background:#e8eaf6;color:#283593}
+.from-dayinpai{background:#e8f5e9;color:#1b5e20}
+.from-cgtn{background:#e3f2fd;color:#0d47a1}
+.from-xinhua{background:#ffebee;color:#b71c1c}
+.from-cnstock{background:#fff3e0;color:#e65100}
+.from-eastmoney{background:#fff3e0;color:#bf360c}
+.from-ithome{background:#e3f2fd;color:#1565c0}
+.from-beets3d{background:#e0f7fa;color:#006064}
+.from-opensource{background:#e8eaf6;color:#283593}
+.from-engineering{background:#e3f2fd;color:#0d47a1}
+.from-itbear{background:#e8f5e9;color:#2e7d32}
+.from-stockstar{background:#fff3e0;color:#e65100}
+.from-housingwire{background:#e0f7fa;color:#006064}
+.from-techradar{background:#fce4ec;color:#c62828}
+.from-pcmag{background:#e8eaf6;color:#283593}
+.from-3dprinteddecor{background:#e0f7fa;color:#006064}
+.from-reddit{background:#e3f2fd;color:#0d47a1}
+.from-other{background:#eceff1;color:#37474f}
+.side-nav{position:fixed;left:max(0px,calc((100vw - 375px)/2 - 90px));top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;z-index:200}
+.side-nav-item{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;font-size:12px;color:#555;background:rgba(255,255,255,.95);box-shadow:0 1px 6px rgba(0,0,0,.08);cursor:pointer;transition:all .2s;text-decoration:none;white-space:nowrap;border:1px solid rgba(0,0,0,.06)}
+.side-nav-item:hover{box-shadow:0 2px 12px rgba(0,0,0,.15);transform:translateX(-2px)}
+.side-nav-item .nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.score-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:8px;margin-left:6px;font-weight:600}
+.score-badge-a{background:#e8f5e9;color:#2e7d32}
+.hot-summary{padding:14px 20px;background:linear-gradient(135deg,#fff8e1,#fff3e0);border-bottom:1px solid #ffe082}
+.hot-summary h3{font-size:14px;font-weight:700;color:#e65100;margin-bottom:8px}
+.hot-summary ul{list-style:none;padding:0}
+.hot-summary li{font-size:12.5px;color:#5d4037;padding:3px 0;padding-left:16px;position:relative;line-height:1.5}
+.hot-summary li::before{content:"";position:absolute;left:0;top:10px;width:6px;height:6px;border-radius:50%;background:#ff9800}
+.footer{padding:16px 20px;background:#f8f9fa;text-align:center;font-size:11px;color:#9e9e9e;border-top:1px solid #f0f0f0}
+.footer a{color:#1e88e5;text-decoration:none}
+@media(max-width:767px){.side-nav{position:fixed;left:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;padding-left:4px;z-index:200}.side-nav .side-nav-item{padding:5px 8px;font-size:11px;border-radius:16px;box-shadow:0 1px 6px rgba(0,0,0,.1)}.card{margin-left:52px;width:calc(100vw - 60px);max-width:375px}body{justify-content:flex-start;padding:12px 0 12px 4px}}
+@media(min-width:768px){.section-nav{display:none}.side-nav{left:max(0px,calc((100vw - 375px)/2 - 90px))}}
+</style>
 </head>
 <body>
-
-<!-- Side Navigation -->
-<nav class="side-nav">
-    <a href="index.html" class="nav-home" title="返回首页">🏠</a>
-    <a href="#general" class="nav-general" title="泛行业资讯">泛行业</a>
-    <a href="#specific" class="nav-specific" title="细分领域">细分领域</a>
-    <a href="#consumer" class="nav-consumer" title="消费级赛道">消费级</a>
-    <a href="#niche" class="nav-niche" title="细分市场">细分市场</a>
-    <a href="#scenario" class="nav-scenario" title="场景打印">场景</a>
-    <a href="#global" class="nav-global" title="海外资讯">海外</a>
-    <a href="#feedback" class="nav-feedback" title="用户口碑">口碑</a>
+<nav class="side-nav" id="sideNav">
+  <a class="side-nav-item" href="index.html"><span class="nav-dot" style="background:#1a237e"></span>首页</a>
+  <a class="side-nav-item" onclick="scrollToSection('general')"><span class="nav-dot" style="background:#1a73e8"></span>泛行业</a>
+  <a class="side-nav-item" onclick="scrollToSection('specific')"><span class="nav-dot" style="background:#e65100"></span>细分领域</a>
+  <a class="side-nav-item" onclick="scrollToSection('consumer')"><span class="nav-dot" style="background:#2e7d32"></span>消费级</a>
+  <a class="side-nav-item" onclick="scrollToSection('niche')"><span class="nav-dot" style="background:#d84315"></span>细分市场</a>
+  <a class="side-nav-item" onclick="scrollToSection('scenario')"><span class="nav-dot" style="background:#00695c"></span>场景打印</a>
+  <a class="side-nav-item" onclick="scrollToSection('global')"><span class="nav-dot" style="background:#7b1fa2"></span>海外资讯</a>
+  <a class="side-nav-item" onclick="scrollToSection('feedback')"><span class="nav-dot" style="background:#00838f"></span>用户口碑</a>
 </nav>
+<div class="card">
 
-<!-- Header -->
 <div class="header">
-    <h1>🖨️ 3D打印行业每日资讯</h1>
-    <div class="date">📅 2026年5月29日（周五）· 内容日期：2026年5月28日</div>
-    <div class="desc">覆盖7大板块 · 35条精选资讯 · 每日更新</div>
-    <div class="stat">📊 今日收录 35 条</div>
+  <a class="header-back" href="index.html">← 首页</a>
+  <h1>3D打印行业每日资讯</h1>
+  <div class="date">2026年5月29日 · 星期五</div>
+  <div class="source-note">内容来源：腾讯新闻 / 证券之星 / 格隆汇 / 南极熊 / 搜狐 / 3DPrint.com / HousingWire / 新浪财经 等</div>
 </div>
 
-<div class="container">
-
-    <!-- 今日热点速递 -->
-    <div class="hot-zone">
-        <h3>🔥 今日热点速递</h3>
-        <p><strong>创想三维上市在即+多头新品首发、铂力特/华曙高科股价持续走高、Stratasys收购Markforged、富国银行力挺ICON住宅、3D生物打印人工气管突破</strong> — 5月29日，创想三维正式登陆港交所（03388.HK），同日举办12周年发布会，KliTek™多喷嘴技术、Falcon T1五合一激光雕刻机、Sermoon P1扫描仪等新品首发。铂力特连续4天上涨累计涨幅17.67%，华曙高科融资余额创近一年高位。国际方面，Stratasys以4250万美元收购Markforged，连续碳纤维技术整合加速；富国银行为ICON 3D打印住宅提供50基点房贷优惠，大型银行首度强信号支持。</p>
-        <div class="hot-items">
-            <span class="hot-item hot-1">🔥 创想三维上市+多头新品发布</span>
-            <span class="hot-item hot-1">🔥 Stratasys收购Markforged</span>
-            <span class="hot-item hot-2">🔥 铂力特股价连续4天上涨17.67%</span>
-            <span class="hot-item hot-2">🔥 富国银行50基点支持ICON住宅</span>
-            <span class="hot-item hot-3">🔥 3D生物打印人工气管突破</span>
-            <span class="hot-item hot-3">🔥 BigRep+Endless连续纤维战略合作</span>
-        </div>
-    </div>
-
-    <!-- 1. 泛行业资讯（工业/资本/政策） -->
-    <div class="section" id="general">
-        <div class="section-header general">
-            <span class="icon">🔵</span>
-            <h2>泛行业资讯 · 工业/资本/政策</h2>
-            <span class="badge">5条</span>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://www.msn.cn/zh-cn/money/%E7%83%AD%E9%97%A8%E8%82%A1/%E5%88%9B%E6%83%B3%E4%B8%89%E7%BB%B4-03388-hk-%E9%A6%99%E6%B8%AF%E5%85%AC%E5%BC%80%E5%8F%91%E5%94%AE%E8%8E%B73829-42%E5%80%8D%E8%AE%A4%E8%B4%AD-5%E6%9C%8829%E6%97%A5%E4%B8%8A%E5%B8%82/ar-AA24hosx" target="_blank">创想三维(03388.HK)香港公开发售获3829倍认购，5月29日上市</a></div>
-            <div class="meta">
-                <span class="from-tag from-msn">MSN/格隆汇</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">创想三维全球发售7342.8万股H股，每股18.80港元。香港公开发售获认购3829.42倍，国际发售获26.80倍认购。基石投资者泰康人寿、中信兴业国际、CPE等15家合计认购约6.89亿港元，锁定期半年。募资净额12.72亿港元。</div>
-            <div class="tags">
-                <span class="tag tag-hot">🔥重磅</span>
-                <span class="tag tag-fund">💰融资快讯</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://stock.stockstar.com/RB2026052800027879.shtml" target="_blank">铂力特(688333)5月28日主力净流入2.03亿元，连续4日上涨累计涨17.67%</a></div>
-            <div class="meta">
-                <span class="from-tag from-sina">证券之星</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">铂力特收盘报106.2元，涨幅4.31%，换手率7.58%，成交额21.9亿元。主力资金净流入2.03亿元，占总成交额9.29%。连续4天上涨区间累计涨幅17.67%，股价已从5月20日低点大幅反弹，总市值约287.71亿元。</div>
-            <div class="tags">
-                <span class="tag tag-hot">🔥重磅</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://finance.sina.com.cn/stock/aiassist/rzrq/2026-05-28/doc-inhzmayt1127318.shtml" target="_blank">华曙高科5月27日融资买入1.47亿元，融资余额5.26亿元创近一年高位</a></div>
-            <div class="meta">
-                <span class="from-tag from-sina">新浪财经</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">5月27日华曙高科跌7.39%，成交额13.66亿元，但融资买入额达1.47亿元，融资净买入5181.09万元。当前融资余额5.26亿元占流通市值1.27%，融资余额超过近一年90%分位水平，融资融券余额合计5.32亿元。</div>
-            <div class="tags">
-                <span class="tag tag-fund">💰融资快讯</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://finance.sina.com.cn/stock/bxjj/2026-05-28/doc-inhzmyen0146747.shtml" target="_blank">铂力特首次出售已回购股份5.77万股，减持计划已实施完毕</a></div>
-            <div class="meta">
-                <span class="from-tag from-sina">格隆汇</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">铂力特(688333.SH)公告，5月12日首次出售已回购股份5.77万股（占总股本0.02%），成交均价96.1884元/股。截至5月28日，累计出售已回购股份229.19万股（占总股本0.84%），减持计划全部实施完毕。</div>
-            <div class="tags">
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://www.cnii.com.cn/dzxx/202605/t20260527_740305.html" target="_blank">2026年1-4月我国3D打印设备产量同比增长50.9%，出口量增长超100%</a></div>
-            <div class="meta">
-                <span class="from-tag from-baijiahao">中国工信新闻网</span>
-                <span>2026-05-27</span>
-            </div>
-            <div class="summary">今年以来，技术进步、出口增长以及应用场景不断扩大，3D打印产业进入快速发展新阶段。1-4月设备产量增长50.9%，消费级3D打印设备占全球九成市场份额。从"打样工具"到"工业母机"的产业跃升正在进行。</div>
-            <div class="tags">
-                <span class="tag tag-hot">🔥重磅</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- 2. 细分领域动态（医疗/航天/材料） -->
-    <div class="section" id="specific">
-        <div class="section-header specific">
-            <span class="icon">🟠</span>
-            <h2>细分领域动态 · 医疗/航天/材料</h2>
-            <span class="badge">5条</span>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">中国科学家开发3D生物打印仿生人工气管，模块化策略实现多组织整合</a></div>
-            <div class="meta">
-                <span class="from-tag from-3dprintcom">3DPrint.com</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">中国科学家团队提出模块化生物打印策略，构建多组织整合的超仿生组织工程气管(UB-TET)。采用DLP 3D打印技术共打印361层（每层25微米），仿生天然气管交替结构。移植后新生血管密度比无通道支架提高2.6倍，为节段性气道重建提供稳健策略。</div>
-            <div class="tags">
-                <span class="tag tag-first">💡行业首发</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">Axtra3D与Keystone Industries合作扩展牙科3D打印材料生态系统</a></div>
-            <div class="meta">
-                <span class="from-tag from-3dprintcom">3DPrint.com</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">Axtra3D与Keystone合作验证Lumia X1高速SLA系统上的多种keyprint材料，包括KeyOrtho Model、KeyGuide、KeySplint Hard Clear等。新推出KeyModel Ultra高精度树脂，支持超快打印速度、热成型快速脱模，有象牙白、沙色、浅灰色可选。</div>
-            <div class="tags">
-                <span class="tag tag-new">🆕新品首发</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://www.sohu.com/a/1028181845_120723807" target="_blank">金源智能推出可阳极化3D打印铝粉IMT-61，手机中框与机器人外壳迎新方案</a></div>
-            <div class="meta">
-                <span class="from-tag from-sohu">搜狐/南极熊</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">金源智能推出IMT-61铝合金粉末，3D打印成型工件可直接进行原色或彩色阳极氧化，无需复杂前处理。氧化后具备均匀膜层、高光泽和耐蚀耐磨性能，可用于手机中框、机器人外壳和可穿戴设备结构件等外观产品。</div>
-            <div class="tags">
-                <span class="tag tag-new">🆕新品首发</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">America Makes公布JAQS-SQ项目第一组获奖者，总价值170万美元</a></div>
-            <div class="meta">
-                <span class="from-tag from-3dprintcom">3DPrint.com</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">America Makes与美国国防制造与加工中心(NCDMM)公布JAQS-SQ项目第一组获奖者，总价值170万美元。获奖方包括3D Systems、Alloyed、Howco Additive、Rennscot、Velo3D和Divergent Technologies，将开发增材制造培训与审计项目，扩大国防工业基础能力。</div>
-            <div class="tags">
-                <span class="tag tag-fund">💰融资快讯</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://www.sohu.com/a/1028181845_120723807" target="_blank">家联科技推出PETG透明3D打印线材，精准材料改性打造半透雾面效果</a></div>
-            <div class="meta">
-                <span class="from-tag from-sohu">搜狐/南极熊</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">家联科技推出HOMELINK PETG透明3D打印线材，采用精准材料改性技术呈现半透雾面效果，提供冰川蓝等六个色系，适用于灯罩、摆件及首饰收纳等场景。已形成覆盖PLA（基础/丝绸/食品接触级）、PETG、TPU及多色定制的全系列产品矩阵。</div>
-            <div class="tags">
-                <span class="tag tag-new">🆕新品首发</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- 3. 消费级赛道（品牌/模型/生态） -->
-    <div class="section" id="consumer">
-        <div class="section-header consumer">
-            <span class="icon">🟢</span>
-            <h2>消费级赛道 · 品牌/模型/生态</h2>
-            <span class="badge">5条</span>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://news.qq.com/rain/a/20260528A021E400" target="_blank">创想三维发布KliTek™多喷嘴技术，进入无损多色多材料3D打印时代</a></div>
-            <div class="meta">
-                <span class="from-tag from-qq">腾讯新闻/南极熊</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">创想三维12周年新品发布会首发KliTek™新一代喷嘴切换技术，物理切换喷嘴或热端模块实现多色/多材料打印。区别于传统AMS/CFS耗材切换方案，从根本上解决冲洗浪费、颜色残留问题，支持多色、多材料和就地打印三种应用场景。</div>
-            <div class="tags">
-                <span class="tag tag-hot">🔥重磅</span>
-                <span class="tag tag-first">💡行业首发</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://news.qq.com/rain/a/20260528A021E400" target="_blank">创想三维Falcon T1五合一激光雕刻机：15秒免工具切换，模块化平台覆盖全材质</a></div>
-            <div class="meta">
-                <span class="from-tag from-qq">腾讯新闻/南极熊</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">Falcon T1定位"桌面级创意工坊"五合一模组化振镜激光平台，一个底座可容纳5种可互换激光模块（20W蓝光/40W蓝光/20W光纤/60W MOPA/5W紫外），15秒免工具切换，覆盖木材、皮革、金属、玻璃、塑料、硅胶等材质。</div>
-            <div class="tags">
-                <span class="tag tag-hot">🔥重磅</span>
-                <span class="tag tag-new">🆕新品首发</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://news.qq.com/rain/a/20260528A021E400" target="_blank">创想三维Sermoon P1一体化3D扫描仪：30条激光线，0.02mm精度</a></div>
-            <div class="meta">
-                <span class="from-tag from-qq">腾讯新闻/南极熊</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">Sermoon P1为移动式一体化3D扫描仪，内置高通8核芯片、24GB内存、256GB存储、6英寸触摸屏。30条激光线（1深孔+7精细+22交叉），体积精度0.02mm+0.06mm/m，深孔深度比最高5:1，深色/金属表面无需喷涂，独立模式60帧/秒。</div>
-            <div class="tags">
-                <span class="tag tag-new">🆕新品首发</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://news.qq.com/rain/a/20260528A021E400" target="_blank">创想三维M1耗材生成器&R1粉碎机：全球众筹5340万港元，耗材闭环生态</a></div>
-            <div class="meta">
-                <span class="from-tag from-qq">腾讯新闻/南极熊</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">M1耗材生成器和R1粉碎机构建从"废料→粉碎→颗粒→线材"的桌面级闭环链路。45天全球众筹5339.6万港币（约4700万人民币），超额6819%，5320人支持。支持DIY耗材研发，可添加咖啡粉、木质粉、碳纤维等材质。</div>
-            <div class="tags">
-                <span class="tag tag-hot">🔥重磅</span>
-                <span class="tag tag-fund">💰融资快讯</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://news.qq.com/rain/a/20260528A021E400" target="_blank">创想三维耗材矩阵获气候友好认证及欧盟食品接触认证</a></div>
-            <div class="meta">
-                <span class="from-tag from-qq">腾讯新闻/南极熊</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">创想三维官方耗材矩阵获得气候友好认证(CliMate Friendly)，Hyper PLA（可拆盘白色）获欧盟严苛的食品接触安全认证，主打孩童宠物安心使用。与M1&R1系统形成耗材循环的生态闭环联动。</div>
-            <div class="tags">
-                <span class="tag tag-new">🆕新品首发</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- 4. 细分市场 Niche（价格段/应用场景/区域市场） -->
-    <div class="section" id="niche">
-        <div class="section-header niche">
-            <span class="icon">🔶</span>
-            <h2>细分市场 Niche · 价格段/应用场景</h2>
-            <span class="badge">5条</span>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://www.housingwire.com/articles/wells-fargo-icon-3d-homes/" target="_blank">富国银行宣布为ICON 3D打印住宅提供50基点房贷优惠，大型银行首度力挺</a></div>
-            <div class="meta">
-                <span class="from-tag from-housingwire">HousingWire</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">富国银行成为ICON首选贷款机构，为3D打印住宅借款人提供50个基点的利率优惠，同时为ICON的Titan 3D打印机（售价89.9万美元）购买方提供融资。这是首次有大型银行对3D打印住宅作出如此强有力的金融支持表态，2026年夏秋季开工的60多套住宅将适用。</div>
-            <div class="tags">
-                <span class="tag tag-hot">🔥重磅</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://www.msn.cn/zh-cn/money/%E7%83%AD%E9%97%A8%E8%82%A1/%E5%88%9B%E6%83%B3%E4%B8%89%E7%BB%B4-03388-hk-%E9%A6%99%E6%B8%AF%E5%85%AC%E5%BC%80%E5%8F%91%E5%94%AE%E8%8E%B73829-42%E5%80%8D%E8%AE%A4%E8%B4%AD-5%E6%9C%8829%E6%97%A5%E4%B8%8A%E5%B8%82/ar-AA24hosx" target="_blank">创想三维招股孖展4227亿港元超购3829倍，创港股2026年认购纪录</a></div>
-            <div class="meta">
-                <span class="from-tag from-msn">MSN/格隆汇</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">创想三维公开招股录得4227亿港元孖展认购，超额认购3829倍。以每股18.80港元发行7342.8万股H股，其中公开发售占10%，国际发售占90%。引入15家基石投资者认购6.89亿港元，占发售股份近五成。</div>
-            <div class="tags">
-                <span class="tag tag-hot">🔥重磅</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">BigRep与Endless Industries达成长期战略合作，大幅面连续纤维打印技术升级</a></div>
-            <div class="meta">
-                <span class="from-tag from-3dprintcom">3DPrint.com</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">BigRep与Endless Industries经过两年联合开发，将连续纤维系统集成到IPSO 105 3D打印机。构建腔室温度高达100°C，通过Endless的Akio软件优化纤维结构，打印部件强度比未增强热塑性塑料高20倍。今夏欧洲DACH地区启动联合销售，2027年夏季国际扩张。</div>
-            <div class="tags">
-                <span class="tag tag-first">💡行业首发</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://www.themortgagenote.org/wells-fargo-to-fund-3d-printed-homes-offer-incentives/" target="_blank">ICON 3D打印住宅社区售罄，二期200套项目推进中</a></div>
-            <div class="meta">
-                <span class="from-tag from-housingwire">The Mortgage Note</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">ICON与Lennar合作的首个100套3D打印住宅社区已售罄，更大规模的二期约200套项目正在推进。ICON的Initiative 99竞赛推动造价不超过$99,000的3D打印住宅设计，富国银行曾提供$500,000赠款支持。</div>
-            <div class="tags">
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://www.sohu.com/a/1028181845_120723807" target="_blank">3D打印设备采购需求旺盛：西安工大/深圳技师学院/合肥理工多项目招标</a></div>
-            <div class="meta">
-                <span class="from-tag from-sohu">搜狐/南极熊</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">西安工业大学金属丝材3D打印装备采购184万（6月2日截止），深圳城市职业学院3D打印机项目116.5万（5月29日截止），合肥理工学院轻合金固相增材制造平台200万（6月3日截止），3D打印设备采购持续活跃。</div>
-            <div class="tags">
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- 5. 场景×3D打印 Scenario（教育/文创/家居/食品） -->
-    <div class="section" id="scenario">
-        <div class="section-header scenario">
-            <span class="icon">🌊</span>
-            <h2>场景×3D打印 · 教育/文创/家居</h2>
-            <span class="badge">5条</span>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="http://www.sohu.com/a/1028181845_120723807" target="_blank">家联科技PETG透明线材上市：半透雾面效果，灯罩/摆件/首饰收纳场景适用</a></div>
-            <div class="meta">
-                <span class="from-tag from-sohu">搜狐/南极熊</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">家联科技推出HOMELINK PETG透明3D打印线材，采用精准材料改性技术实现半透雾面视觉效果。提供冰川蓝等六个色系，用户在灯罩、装饰摆件及首饰收纳等多个家居场景中可自由创作，实现美观与功能兼具的个性化打印。</div>
-            <div class="tags">
-                <span class="tag tag-new">🆕新品首发</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="http://www.sohu.com/a/1028181845_120723807" target="_blank">金源智能可阳极化铝粉：手机中框/机器人外壳等3C场景应用落地</a></div>
-            <div class="meta">
-                <span class="from-tag from-sohu">搜狐/南极熊</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">金源智能IMT-61铝合金粉末3D打印后可直接阳极氧化，无需前处理。在消费电子领域可应用于手机中框、折叠屏铰链等结构件，在机器人领域可打印外壳等外观产品，拓展了金属3D打印在3C及机器人场景的应用边界。</div>
-            <div class="tags">
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://www.hyg3d.com/article-detail/NMwv5zZb" target="_blank">3D打印加速进入教育场景：从STEM到创客，校园3D打印普及正当时</a></div>
-            <div class="meta">
-                <span class="from-tag from-baijiahao">百家号</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">随着消费级3D打印机的普及，教育场景成为重要增长极。拓竹等品牌通过AI切片和开箱即用体验降低校园使用门槛。深圳城市职业学院等院校持续采购3D打印机，从STEM教育到创客空间，3D打印正深度渗透各级教育场景。</div>
-            <div class="tags">
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://www.sohu.com/a/1011129699_121838582" target="_blank">家居配件定制化：3D打印从创意玩具到功能收纳的全场景渗透</a></div>
-            <div class="meta">
-                <span class="from-tag from-baijiahao">搜狐/招商证券</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">招商证券报告指出，3D打印向"全民创作时代"迈进。家居场景中，从儿童的创意玩具、学习用品，到收纳配件、个性装饰、功能部件，家庭3D打印正从极客工具转向大众创意工具，IP潮玩、3D农场等场景加速落地。</div>
-            <div class="tags">
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://finance.sina.com.cn/tech/roll/2026-02-09/doc-inhmfcpm9296476.shtml" target="_blank">尚品宅配携手拓竹科技：探索家居3D打印"破圈"新篇章</a></div>
-            <div class="meta">
-                <span class="from-tag from-sina">新浪财经</span>
-                <span>2026-02-09</span>
-            </div>
-            <div class="summary">尚品宅配与拓竹科技合作探索家居3D打印场景。用家用3D打印机可以把孩子的创意变成专属玩具、定制学习用品，打造贴合家居的收纳配件和个性装饰。家居场景正成为消费级3D打印的重要增长极。</div>
-            <div class="tags">
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- 6. 海外资讯（国际/3Dnatives/3DPrint.com） -->
-    <div class="section" id="global">
-        <div class="section-header global">
-            <span class="icon">🟣</span>
-            <h2>海外资讯 · 国际/3Dnatives/3DPrint.com</h2>
-            <span class="badge">5条</span>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_5096a17a20206152" target="_blank">Stratasys以4250万美元收购Markforged，连续碳纤维技术整合加速</a></div>
-            <div class="meta">
-                <span class="from-tag from-3dprintcom">3DPrint.com/南极熊</span>
-                <span>2026-05-27</span>
-            </div>
-            <div class="summary">Stratasys签署最终协议以4250万美元现金收购Nano Dimension旗下Markforged，交易预计2026年下半年完成。Markforged的金属粘结剂喷射业务不在本次收购范围内。Stratasys将获取Markforged的连续碳纤维增强技术和Digital Forge数字化制造平台，增强航空航天、国防等领域服务能力。</div>
-            <div class="tags">
-                <span class="tag tag-hot">🔥重磅</span>
-                <span class="tag tag-fund">💰融资快讯</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">America Makes公布JAQS-SQ项目获奖者：3D Systems/Velo3D/Divergent等6家公司入选</a></div>
-            <div class="meta">
-                <span class="from-tag from-3dprintcom">3DPrint.com</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">America Makes公布联合增材制造可持续性资格认证(JAQS-SQ)项目第一组获奖者，总价值170万美元。3D Systems、Alloyed、Howco Additive、Rennscot、Velo3D、Divergent Technologies六家公司入选，将帮助扩大国防工业基础增材制造能力。</div>
-            <div class="tags">
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">Axtra3D与Keystone Industries深化合作，Lumia X1平台获得五种牙科材料验证</a></div>
-            <div class="meta">
-                <span class="from-tag from-3dprintcom">3DPrint.com</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">Axtra3D与Keystone Industries合作验证Lumia X1高速SLA系统上的KeyOrtho Model、KeyGuide、KeySplint系列材料。新推出的KeyModel Ultra专为快速打印牙科模型设计，集成热成型快速脱模剂，可大幅提高牙科实验室生产力。</div>
-            <div class="tags">
-                <span class="tag tag-new">🆕新品首发</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">BigRep与Endless Industries战略合作：IPSO 105集成连续纤维，部件强度提升20倍</a></div>
-            <div class="meta">
-                <span class="from-tag from-3dprintcom">3DPrint.com</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">BigRep与Endless Industries签署长期战略合作，将连续纤维系统集成到IPSO 105大幅面3D打印机。腔室温度高达100°C，连续碳纤维打印大型机械增强部件强度比未增强热塑性塑料高20倍。今夏欧洲DACH地区启动联合销售。</div>
-            <div class="tags">
-                <span class="tag tag-first">💡行业首发</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://www.housingwire.com/articles/wells-fargo-icon-3d-homes/" target="_blank">富国银行推出ICON 3D打印住宅专属房贷，50基点优惠创行业先河</a></div>
-            <div class="meta">
-                <span class="from-tag from-housingwire">HousingWire</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">富国银行成为ICON首选贷款机构，为3D打印住宅借款人提供50基点利率优惠，并为开发商的Titan 3D打印机（89.9万美元）提供融资。此前3D打印住宅因银行对估值和保险存在担忧而难以获得贷款，此举标志着大型金融机构正式认可3D打印住宅。</div>
-            <div class="tags">
-                <span class="tag tag-hot">🔥重磅</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- 7. 用户口碑（国外评测/国内实测） -->
-    <div class="section" id="feedback">
-        <div class="section-header feedback">
-            <span class="icon">🔷</span>
-            <h2>用户口碑 · 国外评测/国内实测</h2>
-            <span class="badge">5条</span>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://3dprinteddecor.com/bambu-a1-vs-k2-plus-vs-kobra-3-max-2026-showdown/" target="_blank">Bambu Lab A1 vs Creality K2 Plus vs Anycubic Kobra 3 Max：90天深度对比评测</a></div>
-            <div class="meta">
-                <span class="from-tag from-3dprinteddecor">3D Printed Decor</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">3D Printed Decor发布三款主流消费级打印机90天深度对比。Bambu Lab A1以$299.99获冠军（首层成功率98%、噪音≤48dB），适合85%用户；Creality K2 Plus（$1099）适合工程材料高级用户，但需2-3天校准；Anycubic Kobra 3 Max（$499.99）性价比高但品控不稳定。</div>
-            <div class="tags">
-                <span class="tag tag-review">🎯深度评测</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://www.pcmag.com/picks/the-best-3d-printers" target="_blank">PCMag 2026年度最佳3D打印机评选：性价比与可靠性成为核心指标</a></div>
-            <div class="meta">
-                <span class="from-tag from-pcmag">PCMag</span>
-                <span>2026-05-03</span>
-            </div>
-            <div class="summary">PCMag发布2026年最佳3D打印机评测报告，称"3D打印机比以往任何时候都更实惠"。经过长期测试，评测聚焦于性价比与可靠性。消费级打印机在个人、专业和教育领域持续爆发，入门级和中端产品成为市场增长主力。</div>
-            <div class="tags">
-                <span class="tag tag-review">🎯深度评测</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://www.techradar.com/best/best-3d-printers" target="_blank">TechRadar评测50+台3D打印机：2026年是消费级3D打印的"奇点时刻"</a></div>
-            <div class="meta">
-                <span class="from-tag from-techradar">TechRadar</span>
-                <span>2026-05-27</span>
-            </div>
-            <div class="summary">TechRadar发布涵盖50+台3D打印机的全面评测，从入门级到专业级均有覆盖。报告称2026年堪称消费级3D打印"奇点时刻"，AI技术赋能切片和打印流程大幅降低使用门槛，用户体验从"硬核调试"转向"开箱即用"。</div>
-            <div class="tags">
-                <span class="tag tag-review">🎯深度评测</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://www.redrecs.com/best-3d-printers" target="_blank">Reddit用户票选2026年最佳3D打印机：Ender 3仍为预算首选，Bambu Lab成口碑赢家</a></div>
-            <div class="meta">
-                <span class="from-tag from-3dprinteddecor">RedRecs/Reddit</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">Reddit社区2026年用户评测汇总显示，Bambu Lab系列凭借"即开即用"体验成为口碑赢家，用户评分4.5/5。经典Ender 3系列依然保持预算首选地位，Creality K2 Plus用户评价两极分化（4.2/5），高级用户赞誉其性能但抱怨调试复杂。</div>
-            <div class="tags">
-                <span class="tag tag-review">🎯深度评测</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="title"><a href="https://3dprinting.com/3dprinters/best-3d-printers/" target="_blank">3DPrinting.com 2026年度推荐：预算级/中端/高端全价位覆盖选购指南</a></div>
-            <div class="meta">
-                <span class="from-tag from-3dprinteddecor">3DPrinting.com</span>
-                <span>2026-05-28</span>
-            </div>
-            <div class="summary">3DPrinting.com发布全价位3D打印机选购指南，涵盖预算FDM、中端FDM、$1000以上高端FDM及树脂打印机。受益于LCD技术进步，光固化打印成本大幅下降。评测强调根据实际打印需求选择，避免为"未来幻想"买单。</div>
-            <div class="tags">
-                <span class="tag tag-review">🎯深度评测</span>
-                <span class="relevance-tag a">✅A级</span>
-            </div>
-        </div>
-    </div>
-
+<div class="stats-bar">
+  <span class="stats-pill">资讯 <b>35</b> 条</span>
+  <span class="stats-pill">分区 <b>7</b> 大</span>
+  <span class="stats-pill warn">内容日期 <b>5月28日</b></span>
 </div>
 
+<div class="hot-summary">
+  <h3>🔥 今日热点速递</h3>
+  <ul>
+    <li>创想三维(03388.HK)正式挂牌港交所，公开招股获3829倍认购创纪录；同日12周年发布会推出KliTek多喷嘴/Falcon T1/Sermoon P1等重磅新品</li>
+    <li>铂力特连续4天上涨累计17.67%，主力净流入2.03亿元；华曙高科融资余额5.26亿元创新高</li>
+    <li>Stratasys以4250万美元收购Markforged，连续碳纤维技术整合加速</li>
+    <li>富国银行宣布为ICON 3D打印住宅提供50基点房贷优惠，大型银行首度强信号支持</li>
+    <li>美国国防部JAQS-SQ项目170万美元获奖名单公布，3D Systems/Velo3D/Divergent等6家公司入选</li>
+  </ul>
+</div>
+
+<div class="section-title general" id="general">
+  <span class="icon"></span>泛行业资讯（工业/资本/政策）
+</div>
+<div class="general-zone">
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://www.msn.com/zh-cn/money/%E7%83%AD%E9%97%A8%E8%82%A1/%E5%88%9B%E6%83%B3%E4%B8%89%E7%BB%B4-03388-hk-%E9%A6%99%E6%B8%AF%E5%85%AC%E5%BC%80%E5%8F%91%E5%94%AE%E8%8E%B73829-42%E5%80%8D%E8%AE%A4%E8%B4%AD-5%E6%9C%8829%E6%97%A5%E4%B8%8A%E5%B8%82/ar-AA24hosx" target="_blank">🔥 创想三维(03388.HK)香港公开发售获3829倍认购，5月29日上市</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">创想三维全球发售7342.8万股H股，每股18.80港元，募资净额12.72亿。公开申购获认购3829.42倍，国际配售获26.80倍。基石投资者泰康人寿等15家合计认购6.89亿港元，锁定期6个月。</div>
+  <div class="item-source">来源：<a href="https://www.msn.com/zh-cn/money/%E7%83%AD%E9%97%A8%E8%82%A1/%E5%88%9B%E6%83%B3%E4%B8%89%E7%BB%B4-03388-hk-%E9%A6%99%E6%B8%AF%E5%85%AC%E5%BC%80%E5%8F%91%E5%94%AE%E8%8E%B73829-42%E5%80%8D%E8%AE%A4%E8%B4%AD-5%E6%9C%8829%E6%97%A5%E4%B8%8A%E5%B8%82/ar-AA24hosx" target="_blank">格隆汇</a><span class="from-tag from-msn">MSN</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://stock.stockstar.com/RB2026052800027879.shtml" target="_blank">铂力特(688333)5月28日主力净流入2.03亿元，连续4日上涨累计涨17.67%</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">铂力特收盘报106.2元涨4.31%，换手7.58%，成交额21.9亿元。主力净流入2.03亿元，连续4天从低点反弹累计涨幅17.67%，总市值约287.71亿元。</div>
+  <div class="item-source">来源：<a href="https://stock.stockstar.com/RB2026052800027879.shtml" target="_blank">证券之星</a><span class="from-tag from-stockstar">证券之星</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://finance.sina.com.cn/stock/aiassist/rzrq/2026-05-28/doc-inhzmayt1127318.shtml" target="_blank">华曙高科5月27日融资买入1.47亿元，融资余额5.26亿元创近一年高位</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">5月27日华曙高科融资买入额1.47亿元，融资净买入5181万元。融资余额5.26亿元占流通市值1.27%，超过近一年90%分位水平。融资融券余额合计5.32亿元。</div>
+  <div class="item-source">来源：<a href="https://finance.sina.com.cn/stock/aiassist/rzrq/2026-05-28/doc-inhzmayt1127318.shtml" target="_blank">新浪财经</a><span class="from-tag from-sina">新浪财经</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://finance.sina.com.cn/stock/bxjj/2026-05-28/doc-inhzmyen0146747.shtml" target="_blank">铂力特首次出售已回购股份5.77万股，减持计划已实施完毕</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">铂力特公告：5月12日首次出售已回购股份5.77万股（占比0.02%），均价96.1884元/股。截至5月28日累计出售已回购股份229.19万股（占比0.84%），减持计划全部实施完毕。</div>
+  <div class="item-source">来源：<a href="https://finance.sina.com.cn/stock/bxjj/2026-05-28/doc-inhzmyen0146747.shtml" target="_blank">格隆汇</a><span class="from-tag from-sina">新浪</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://www.cnii.com.cn/dzxx/202605/t20260527_740305.html" target="_blank">2026年1-4月我国3D打印设备产量同比增长50.9%，出口量增长超100%</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">工信新闻网数据显示，今年1-4月3D打印设备产量同比增50.9%，消费级设备占全球九成市场份额。产业从"打样工具"迈向"工业母机"，进入快速放量新阶段。</div>
+  <div class="item-source">来源：<a href="https://www.cnii.com.cn/dzxx/202605/t20260527_740305.html" target="_blank">工信新闻网</a><span class="from-tag from-other">工信新闻网</span></div>
+</div>
+</div>
+
+<div class="section-title specific" id="specific">
+  <span class="icon"></span>细分领域动态（医疗/航天/材料）
+</div>
+<div class="specific-zone">
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">💡 中国科学家开发3D生物打印仿生人工气管，模块化策略实现多组织整合</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">中国科学家团队提出模块化生物打印策略构建超仿生组织工程气管(UB-TET)，采用DLP 3D打印361层（每层25微米），仿生天然气管交替结构。新生血管密度较无通道支架提高2.6倍，为气道重建提供稳健策略。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">Axtra3D与Keystone Industries合作扩展牙科3D打印材料生态系统</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">Axtra3D与Keystone合作验证Lumia X1高速SLA系统上的KeyOrtho Model、KeyGuide、KeySplint系列材料。新推KeyModel Ultra高精度树脂，支持超快打印和热成型快速脱模，有象牙白/沙色/浅灰色可选。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://www.sohu.com/a/1028181845_120723807" target="_blank">🆕 金源智能推出可阳极化3D打印铝粉IMT-61，手机中框与机器人外壳迎新方案</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">金源智能推出IMT-61铝合金粉末，3D打印工件可直接进行阳极氧化无需前处理。氧化后具备均匀膜层、高光泽和耐蚀耐磨性能，适用于手机中框、机器人外壳和可穿戴设备结构件。</div>
+  <div class="item-source">来源：<a href="https://www.sohu.com/a/1028181845_120723807" target="_blank">南极熊/搜狐</a><span class="from-tag from-sohu">搜狐</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">America Makes公布JAQS-SQ项目第一组获奖者，总价值170万美元</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">America Makes公布联合增材制造可持续性资格认证(JAQS-SQ)项目第一组获奖者，3D Systems、Alloyed、Howco Additive、Rennscot、Velo3D、Divergent Technologies六家公司入选，将开发增材制造培训与审计项目，扩大国防工业基础能力。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://www.sohu.com/a/1028181845_120723807" target="_blank">家联科技推出PETG透明3D打印线材，半透雾面效果六色系可选</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">家联科技推出HOMELINK PETG透明3D打印线材，精准材料改性呈现半透雾面效果，提供冰川蓝等六个色系。适用于灯罩、摆件及首饰收纳等场景，已形成PLA/PETG/TPU全系列矩阵。</div>
+  <div class="item-source">来源：<a href="https://www.sohu.com/a/1028181845_120723807" target="_blank">南极熊/搜狐</a><span class="from-tag from-sohu">搜狐</span></div>
+</div>
+</div>
+
+<div class="section-title consumer" id="consumer">
+  <span class="icon"></span>消费级赛道（品牌/模型/生态）
+</div>
+<div class="consumer-zone">
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://news.qq.com/rain/a/20260528A021E400" target="_blank">🔥 创想三维发布KliTek™多喷嘴技术，进入无损多色多材料3D打印时代</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">创想三维12周年发布会首发KliTek™新一代喷嘴切换技术，物理切换喷嘴/热端模块实现多色多材料打印。从根本上解决传统AMS/CFS方案的冲洗浪费和颜色残留问题，支持多色/多材料/就地打印三种场景。</div>
+  <div class="item-source">来源：<a href="https://news.qq.com/rain/a/20260528A021E400" target="_blank">腾讯新闻/南极熊</a><span class="from-tag from-qq">腾讯新闻</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://news.qq.com/rain/a/20260528A021E400" target="_blank">🆕 创想三维Falcon T1五合一激光雕刻机：15秒免工具切换，模块化平台覆盖全材质</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">Falcon T1定位"桌面级创意工坊"，一个底座容纳5种可互换激光模块（20W蓝光/40W蓝光/20W光纤/60W MOPA/5W紫外），15秒免工具切换，覆盖木材、皮革、金属、玻璃、塑料、硅胶等材质。</div>
+  <div class="item-source">来源：<a href="https://news.qq.com/rain/a/20260528A021E400" target="_blank">腾讯新闻/南极熊</a><span class="from-tag from-qq">腾讯新闻</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://news.qq.com/rain/a/20260528A021E400" target="_blank">🆕 创想三维Sermoon P1一体化3D扫描仪：30条激光线，0.02mm精度</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">Sermoon P1为移动式一体化3D扫描仪，内置高通8核芯片/24GB内存/256GB存储/6英寸屏。30条激光线（1深孔+7精细+22交叉），体积精度0.02mm+0.06mm/m，深孔深度比5:1，独立模式60帧/秒。</div>
+  <div class="item-source">来源：<a href="https://news.qq.com/rain/a/20260528A021E400" target="_blank">腾讯新闻/南极熊</a><span class="from-tag from-qq">腾讯新闻</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://news.qq.com/rain/a/20260528A021E400" target="_blank">🔥 创想三维M1耗材生成器&R1粉碎机：全球众筹5340万港元，耗材闭环生态</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">M1耗材生成器和R1粉碎机构建"废料→粉碎→颗粒→线材"桌面级闭环链路。45天全球众筹5339.6万港币，超额6819%，5320人支持。支持DIY耗材研发，可添加咖啡粉/木质粉/碳纤维等材质。</div>
+  <div class="item-source">来源：<a href="https://news.qq.com/rain/a/20260528A021E400" target="_blank">腾讯新闻/南极熊</a><span class="from-tag from-qq">腾讯新闻</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://news.qq.com/rain/a/20260528A021E400" target="_blank">创想三维耗材矩阵获气候友好认证及欧盟食品接触认证</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">创想三维官方耗材获得气候友好认证(CliMate Friendly)，Hyper PLA（可拆盘白色）获欧盟食品接触安全认证，主打孩童宠物安心使用。与M1&R1系统形成耗材循环的生态闭环联动。</div>
+  <div class="item-source">来源：<a href="https://news.qq.com/rain/a/20260528A021E400" target="_blank">腾讯新闻/南极熊</a><span class="from-tag from-qq">腾讯新闻</span></div>
+</div>
+</div>
+
+<div class="section-title niche" id="niche">
+  <span class="icon"></span>细分市场 Niche（价格段/应用场景/区域市场）
+</div>
+<div class="niche-zone">
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://www.housingwire.com/articles/wells-fargo-icon-3d-homes/" target="_blank">🔥 富国银行宣布为ICON 3D打印住宅提供50基点房贷优惠，大型银行首度力挺</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">富国银行成为ICON首选贷款机构，为3D打印住宅借款人提供50基点利率优惠，同时为Titan 3D打印机（89.9万美元）购买方提供融资。2026年夏秋季开工的60多套住宅适用，首次有大型银行对3D打印住宅作出如此强有力的支持表态。</div>
+  <div class="item-source">来源：<a href="https://www.housingwire.com/articles/wells-fargo-icon-3d-homes/" target="_blank">HousingWire</a><span class="from-tag from-housingwire">HousingWire</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://www.msn.com/zh-cn/money/%E7%83%AD%E9%97%A8%E8%82%A1/%E5%88%9B%E6%83%B3%E4%B8%89%E7%BB%B4-03388-hk-%E9%A6%99%E6%B8%AF%E5%85%AC%E5%BC%80%E5%8F%91%E5%94%AE%E8%8E%B73829-42%E5%80%8D%E8%AE%A4%E8%B4%AD-5%E6%9C%8829%E6%97%A5%E4%B8%8A%E5%B8%82/ar-AA24hosx" target="_blank">创想三维招股孖展4227亿港元超购3829倍，创港股2026年认购纪录</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">创想三维公开招股录得4227亿港元孖展认购，超购3829倍。每股18.80港元发行7342.8万股，公开发售占10%，国际配售占90%。15家基石投资者认购6.89亿港元。</div>
+  <div class="item-source">来源：<a href="https://www.msn.com/zh-cn/money/%E7%83%AD%E9%97%A8%E8%82%A1/%E5%88%9B%E6%83%B3%E4%B8%89%E7%BB%B4-03388-hk-%E9%A6%99%E6%B8%AF%E5%85%AC%E5%BC%80%E5%8F%91%E5%94%AE%E8%8E%B73829-42%E5%80%8D%E8%AE%A4%E8%B4%AD-5%E6%9C%8829%E6%97%A5%E4%B8%8A%E5%B8%82/ar-AA24hosx" target="_blank">格隆汇</a><span class="from-tag from-msn">MSN</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">BigRep与Endless Industries达成长期战略合作，大幅面连续纤维打印技术升级</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">BigRep与Endless两年联合开发，将连续纤维系统集成到IPSO 105打印机。腔室温度100°C，Akio软件优化纤维结构，部件强度比未增强热塑性塑料高20倍。今夏欧洲DACH地区启动联合销售，2027年国际扩张。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://www.themortgagenote.org/wells-fargo-to-fund-3d-printed-homes-offer-incentives/" target="_blank">ICON 3D打印住宅社区售罄，二期200套项目推进中</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">ICON与Lennar合作的首个100套3D打印住宅社区已售罄，二期约200套项目推进中。Initiative 99竞赛推动造价不超过$99,000的3D打印住宅设计，富国银行曾提供$500,000赠款支持。</div>
+  <div class="item-source">来源：<a href="https://www.themortgagenote.org/wells-fargo-to-fund-3d-printed-homes-offer-incentives/" target="_blank">The Mortgage Note</a><span class="from-tag from-housingwire">HousingWire</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://www.sohu.com/a/1028181845_120723807" target="_blank">3D打印设备采购活跃：西安工大/深圳技师学院/合肥理工等多项目招标</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">西安工业大学金属丝材3D打印装备采购184万（6月2日截止），深圳城市职业学院116.5万（5月29日截止），合肥理工学院轻合金固相增材平台200万（6月3日截止），设备采购持续活跃。</div>
+  <div class="item-source">来源：<a href="https://www.sohu.com/a/1028181845_120723807" target="_blank">南极熊/搜狐</a><span class="from-tag from-sohu">搜狐</span></div>
+</div>
+</div>
+
+<div class="section-title scenario" id="scenario">
+  <span class="icon"></span>场景×3D打印 Scenario（教育/文创/家居/食品）
+</div>
+<div class="scenario-zone">
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://www.sohu.com/a/1028181845_120723807" target="_blank">家联科技PETG透明线材：半透雾面效果，灯罩/摆件/首饰收纳场景适用</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">家联科技HOMELINK PETG透明线材六色系可选，精准改性技术呈现半透雾面效果。用户在家居场景中可自由创作灯罩、装饰摆件和首饰收纳，实现美观与功能兼具的个性化打印。</div>
+  <div class="item-source">来源：<a href="https://www.sohu.com/a/1028181845_120723807" target="_blank">南极熊/搜狐</a><span class="from-tag from-sohu">搜狐</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://www.sohu.com/a/1028181845_120723807" target="_blank">金源智能可阳极化铝粉：手机中框/机器人外壳等3C场景落地</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">金源智能IMT-61铝合金粉末3D打印后可直接阳极氧化无需前处理，在消费电子领域用于手机中框、折叠屏铰链等结构件，在机器人领域用于外壳等外观产品，拓展金属3D打印在3C及机器人场景的应用。</div>
+  <div class="item-source">来源：<a href="https://www.sohu.com/a/1028181845_120723807" target="_blank">南极熊/搜狐</a><span class="from-tag from-sohu">搜狐</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://www.hyg3d.com/article-detail/NMwv5zZb" target="_blank">3D打印加速进入教育场景：从STEM到创客，校园3D打印普及正当时</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">随着消费级3D打印机普及，教育场景成为重要增长极。拓竹等品牌通过AI切片和开箱即用体验降低校园使用门槛，多所院校持续采购，从STEM教育到创客空间，3D打印正深度渗透各级教育场景。</div>
+  <div class="item-source">来源：<a href="https://www.hyg3d.com/article-detail/NMwv5zZb" target="_blank">百家号</a><span class="from-tag from-baijiahao">百家号</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://www.sohu.com/a/1011129699_121838582" target="_blank">家居配件定制化：3D打印从创意玩具到功能收纳的全场景渗透</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">招商证券报告指出，3D打印向"全民创作时代"迈进。家居场景中，从儿童的创意玩具、学习用品，到收纳配件、个性装饰，家庭3D打印正从极客工具转向大众创意工具，IP潮玩场景加速落地。</div>
+  <div class="item-source">来源：<a href="https://www.sohu.com/a/1011129699_121838582" target="_blank">搜狐/招商证券</a><span class="from-tag from-sohu">搜狐</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://finance.sina.com.cn/tech/roll/2026-02-09/doc-inhmfcpm9296476.shtml" target="_blank">尚品宅配携手拓竹科技：探索家居3D打印"破圈"新篇章</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">尚品宅配与拓竹科技合作探索家居场景，前者提供2000+门店和全屋定制经验，后者提供3D打印技术与模型资源。从儿童玩具到收纳配件，推动3D打印从专业圈层融入家庭场景。</div>
+  <div class="item-source">来源：<a href="https://finance.sina.com.cn/tech/roll/2026-02-09/doc-inhmfcpm9296476.shtml" target="_blank">新浪财经</a><span class="from-tag from-sina">新浪财经</span></div>
+</div>
+</div>
+
+<div class="section-title global" id="global">
+  <span class="icon"></span>海外资讯（国际/3Dnatives/3DPrint.com）
+</div>
+<div class="global-zone">
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_5096a17a20206152" target="_blank">🔥 Stratasys以4250万美元收购Markforged，连续碳纤维技术整合加速</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">Stratasys签署协议以4250万美元现金收购Nano Dimension旗下Markforged，预计2026年下半年完成（金属粘结剂喷射业务不在此次交易范围）。Stratasys将获取连续碳纤维增强技术和Digital Forge平台，增强航空航天/国防服务能力。</div>
+  <div class="item-source">来源：<a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_5096a17a20206152" target="_blank">南极熊/3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">America Makes公布JAQS-SQ获奖者：3D Systems/Velo3D/Divergent等6家公司</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">America Makes公布JAQS-SQ项目第一组获奖者，总价值170万美元。致力于为增材制造合同制造商开发培训与审计项目，使供应链符合政府采购要求，扩大国防工业基础能力。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">Axtra3D与Keystone Industries深化合作，Lumia X1平台获五种牙科材料验证</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">Axtra3D与Keystone合作验证Lumia X1高速SLA系统上的多种keyprint材料，新推KeyModel Ultra高精度树脂。旨在提高牙科实验室生产力、降低单件成本、减少返工、简化热成型工作流程。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">BigRep与Endless Industries战略合作：IPSO 105连续纤维强度提升20倍</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">BigRep与Endless Industries签署长期战略合作，将连续纤维系统完全集成到IPSO 105大幅面3D打印机。腔室温度最高100°C，通过Akio软件平台优化纤维结构，打印部件强度比未增强热塑性塑料高20倍。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/326294/3d-printing-news-briefs-5-28-2026/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://www.housingwire.com/articles/wells-fargo-icon-3d-homes/" target="_blank">富国银行推出ICON 3D打印住宅专属房贷，50基点优惠创行业先河</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">富国银行成为ICON首选贷款机构，为3D打印住宅借款人提供50基点利率优惠，为Titan 3D打印机（89.9万美元）购买方提供融资。此前3D打印住宅因银行对估值和保险的担忧难以获得贷款，此举标志着大型金融机构正式认可3D打印住宅。</div>
+  <div class="item-source">来源：<a href="https://www.housingwire.com/articles/wells-fargo-icon-3d-homes/" target="_blank">HousingWire</a><span class="from-tag from-housingwire">HousingWire</span></div>
+</div>
+</div>
+
+<div class="section-title feedback" id="feedback">
+  <span class="icon"></span>用户口碑（国外评测/国内实测）
+</div>
+<div class="feedback-zone">
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://3dprinteddecor.com/bambu-a1-vs-k2-plus-vs-kobra-3-max-2026-showdown/" target="_blank">🎯 Bambu Lab A1 vs Creality K2 Plus vs Anycubic Kobra 3 Max：90天深度对比评测</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3D Printed Decor发布三款主流消费级打印机90天深度对比。Bambu Lab A1($299.99)获冠军（首层成功率98%、≤48dB），适合85%用户；Creality K2 Plus ($1099)适合工程材料高级用户；Anycubic Kobra 3 Max ($499.99)性价比高但品控不稳定。</div>
+  <div class="item-source">来源：<a href="https://3dprinteddecor.com/bambu-a1-vs-k2-plus-vs-kobra-3-max-2026-showdown/" target="_blank">3D Printed Decor</a><span class="from-tag from-3dprinteddecor">3D Printed Decor</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://www.pcmag.com/picks/the-best-3d-printers" target="_blank">PCMag 2026年度最佳3D打印机评选：性价比与可靠性成为核心指标</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">PCMag发布2026年最佳3D打印机评测报告，称"3D打印机比以往任何时候都更实惠"。经过长期测试，评测聚焦于性价比与可靠性，消费级打印机在个人、专业和教育领域持续爆发。</div>
+  <div class="item-source">来源：<a href="https://www.pcmag.com/picks/the-best-3d-printers" target="_blank">PCMag</a><span class="from-tag from-pcmag">PCMag</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://www.techradar.com/best/best-3d-printers" target="_blank">TechRadar评测50+台3D打印机：2026年是消费级3D打印的"奇点时刻"</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">TechRadar发布涵盖50+台3D打印机的全面评测，Bambu Lab H2D获最佳整体奖，Creality Hi获最佳预算奖。报告称AI技术赋能切片和打印流程大幅降低使用门槛，用户体验从"硬核调试"转向"开箱即用"。</div>
+  <div class="item-source">来源：<a href="https://www.techradar.com/best/best-3d-printers" target="_blank">TechRadar</a><span class="from-tag from-techradar">TechRadar</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://www.redrecs.com/best-3d-printers" target="_blank">Reddit社区2026年度3D打印机口碑汇总：Bambu Lab成口碑赢家</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">Reddit社区2026年用户评测汇总显示，Bambu Lab系列凭借"即开即用"体验成为口碑赢家（4.5/5分）。经典Ender 3保持预算首选，Creality K2 Plus用户评价两极分化（4.2/5），高级用户赞誉其性能但抱怨调试复杂。</div>
+  <div class="item-source">来源：<a href="https://www.redrecs.com/best-3d-printers" target="_blank">RedRecs/Reddit</a><span class="from-tag from-reddit">Reddit</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://3dprinting.com/3dprinters/best-3d-printers/" target="_blank">3DPrinting.com 2026年度全价位选购指南：从入门到专业全覆盖</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrinting.com发布全价位选购指南，涵盖预算FDM、中端FDM、$1000+高端及树脂打印机。受益于LCD技术进步，光固化成本大幅下降，强调根据实际打印需求选择，避免为"未来幻想"买单。</div>
+  <div class="item-source">来源：<a href="https://3dprinting.com/3dprinters/best-3d-printers/" target="_blank">3DPrinting.com</a><span class="from-tag from-3dprinting">3DPrinting.com</span></div>
+</div>
+</div>
+
+<div class="footer">
+  Powered by WorkBuddy Automation &nbsp;|&nbsp; <a href="https://github.com/Cruise-Ling/3d-printing-daily">GitHub</a>
+</div>
+</div>
 <script>
-    // Smooth scroll for nav links
-    document.querySelectorAll('.side-nav a[href^="#"]').forEach(a => {
-        a.addEventListener('click', e => {
-            e.preventDefault();
-            const target = document.querySelector(a.getAttribute('href'));
-            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-    });
+function scrollToSection(id){var e=document.getElementById(id);if(e){var t=window.innerWidth<768?20:80;window.scrollTo({top:e.offsetTop-t,behavior:'smooth'})}}
 </script>
 </body>
 </html>
