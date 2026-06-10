@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D打印行业每日资讯 - 2026年6月11日</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖨</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f0f2f5;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;display:flex;justify-content:center;padding:12px 0}
+.card{width:375px;background:#fff;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.06);overflow:clip}
+.header{background:linear-gradient(135deg,#1a237e,#283593,#3949ab);padding:24px 20px 18px;color:#fff;position:relative}
+.header-back{position:absolute;left:16px;top:28px;transform:translateY(-50%);display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.95);font-size:14px;font-weight:600;text-decoration:none;padding:7px 16px 7px 3px;border-radius:20px;border:1.5px solid rgba(255,255,255,.35)}
+.header-back:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.6)}
+.header h1{font-size:19px;font-weight:700;letter-spacing:1px;margin-bottom:6px;padding-left:90px}
+.header .date{font-size:13px;opacity:.85;font-weight:400}
+.header .source-note{font-size:11px;opacity:.7;margin-top:4px}
+.stats-bar{display:flex;gap:8px;flex-wrap:wrap;padding:14px 20px;background:#fafbff;border-bottom:1px solid #f0f0f0}
+.stats-pill{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;color:#555;background:#f0f4ff;border-radius:20px;padding:5px 11px;border:1px solid #e8edff}
+.stats-pill b{color:#1a73e8;font-weight:700}
+.stats-pill.warn{background:#fff8e1;border-color:#ffe082}
+.stats-pill.warn b{color:#e65100}
+.section-title{display:flex;align-items:center;padding:18px 20px 12px;font-size:16px;font-weight:800;color:#0d47a1;background:linear-gradient(90deg,rgba(26,115,232,.08),transparent);border-bottom:2px solid #1a73e8}
+.section-title .icon{width:4px;height:16px;border-radius:2px;margin-right:8px}
+.section-title.general .icon{background:linear-gradient(180deg,#42a5f5,#1e88e5)}
+.section-title.specific .icon{background:linear-gradient(180deg,#ffa726,#fb8c00)}
+.section-title.consumer .icon{background:linear-gradient(180deg,#66bb6a,#43a047)}
+.section-title.global .icon{background:linear-gradient(180deg,#ab47bc,#7b1fa2)}
+.section-title.feedback .icon{background:linear-gradient(180deg,#26c6da,#00838f)}
+.section-title.niche .icon{background:linear-gradient(180deg,#e64a19,#d84315)}
+.section-title.scenario .icon{background:linear-gradient(180deg,#00796b,#00695c)}
+.item{padding:12px 20px 14px;border-bottom:1px solid #f5f5f5}
+.item:last-child{border-bottom:none}
+.item-head{display:flex;align-items:flex-start;margin-bottom:6px}
+.num-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;flex-shrink:0;margin-right:10px;margin-top:1px}
+.general-zone .num-dot{background:linear-gradient(135deg,#42a5f5,#1e88e5)}
+.specific-zone .num-dot{background:linear-gradient(135deg,#ffa726,#fb8c00)}
+.consumer-zone .num-dot{background:linear-gradient(135deg,#66bb6a,#43a047)}
+.global-zone .num-dot{background:linear-gradient(135deg,#ab47bc,#7b1fa2)}
+.feedback-zone .num-dot{background:linear-gradient(180deg,#26c6da,#00838f)}
+.niche-zone .num-dot{background:linear-gradient(135deg,#e64a19,#d84315)}
+.scenario-zone .num-dot{background:linear-gradient(180deg,#00796b,#00695c)}
+.item-title{font-size:14.5px;font-weight:600;line-height:1.45;color:#212121;flex:1}
+.item-title a{color:#212121;text-decoration:none}
+.item-title a:hover{color:#1a73e8}
+.item-summary{font-size:12.8px;line-height:1.7;color:#616161;padding-left:32px;word-break:break-all}
+.item-source{font-size:11px;color:#9e9e9e;padding-left:32px;margin-top:4px}
+.item-source a{color:#1e88e5;text-decoration:none}
+.item-source a:hover{text-decoration:underline}
+.from-tag{font-size:10px;padding:1px 6px;border-radius:6px;margin-left:6px;opacity:.75}
+.from-qq{background:#fce4ec;color:#880e4f}
+.from-sina{background:#fff3e0;color:#e65100}
+.from-163{background:#e8f5e9;color:#2e7d32}
+.from-msn{background:#e3f2fd;color:#1565c0}
+.from-baijiahao{background:#fff8e1;color:#f57f17}
+.from-sohu{background:#fff3e0;color:#bf360c}
+.from-36kr{background:#e8eaf6;color:#283593}
+.from-bilibili{background:#fce4ec;color:#c62828}
+.from-3dprint{background:#e0f7fa;color:#006064}
+.from-3dprinting{background:#e0f7fa;color:#006064}
+.from-3druck{background:#e8eaf6;color:#283593}
+.from-dayinpai{background:#e8f5e9;color:#1b5e20}
+.from-cgtn{background:#e3f2fd;color:#0d47a1}
+.from-xinhua{background:#ffebee;color:#b71c1c}
+.from-cnstock{background:#fff3e0;color:#e65100}
+.from-eastmoney{background:#fff3e0;color:#bf360c}
+.from-ithome{background:#e3f2fd;color:#1565c0}
+.from-cctv{background:#ffebee;color:#b71c1c}
+.from-csdn{background:#e8eaf6;color:#1a237e}
+.from-other{background:#eceff1;color:#37474f}
+.side-nav{position:fixed;left:max(0px,calc((100vw - 375px)/2 - 90px));top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;z-index:200}
+.side-nav-item{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;font-size:12px;color:#555;background:rgba(255,255,255,.95);box-shadow:0 1px 6px rgba(0,0,0,.08);cursor:pointer;transition:all .2s;text-decoration:none;white-space:nowrap;border:1px solid rgba(0,0,0,.06)}
+.side-nav-item:hover{box-shadow:0 2px 12px rgba(0,0,0,.15);transform:translateX(-2px)}
+.side-nav-item .nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.score-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:8px;margin-left:6px;font-weight:600}
+.score-badge-a{background:#e8f5e9;color:#2e7d32}
+.hot-summary{padding:14px 20px;background:linear-gradient(135deg,#fff8e1,#fff3e0);border-bottom:1px solid #ffe082}
+.hot-summary h3{font-size:14px;font-weight:700;color:#e65100;margin-bottom:8px}
+.hot-summary ul{list-style:none;padding:0}
+.hot-summary li{font-size:12.5px;color:#5d4037;padding:3px 0;padding-left:16px;position:relative;line-height:1.5}
+.hot-summary li::before{content:"";position:absolute;left:0;top:10px;width:6px;height:6px;border-radius:50%;background:#ff9800}
+.footer{padding:16px 20px;background:#f8f9fa;text-align:center;font-size:11px;color:#9e9e9e;border-top:1px solid #f0f0f0}
+.footer a{color:#1e88e5;text-decoration:none}
+@media(max-width:767px){.side-nav{position:fixed;left:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;padding-left:4px;z-index:200}.side-nav .side-nav-item{padding:5px 8px;font-size:11px;border-radius:16px;box-shadow:0 1px 6px rgba(0,0,0,.1)}.card{margin-left:52px;width:calc(100vw - 60px);max-width:375px}body{justify-content:flex-start;padding:12px 0 12px 4px}}
+@media(min-width:768px){.section-nav{display:none}.side-nav{left:max(0px,calc((100vw - 375px)/2 - 90px))}}
+</style>
+</head>
+<body>
+<nav class="side-nav" id="sideNav">
+  <a class="side-nav-item" href="index.html"><span class="nav-dot" style="background:#1a237e"></span>首页</a>
+  <a class="side-nav-item" onclick="scrollToSection('general')"><span class="nav-dot" style="background:#1a73e8"></span>泛行业</a>
+  <a class="side-nav-item" onclick="scrollToSection('specific')"><span class="nav-dot" style="background:#e65100"></span>细分领域</a>
+  <a class="side-nav-item" onclick="scrollToSection('consumer')"><span class="nav-dot" style="background:#2e7d32"></span>消费级</a>
+  <a class="side-nav-item" onclick="scrollToSection('niche')"><span class="nav-dot" style="background:#d84315"></span>细分市场</a>
+  <a class="side-nav-item" onclick="scrollToSection('scenario')"><span class="nav-dot" style="background:#00695c"></span>场景打印</a>
+  <a class="side-nav-item" onclick="scrollToSection('global')"><span class="nav-dot" style="background:#7b1fa2"></span>海外资讯</a>
+  <a class="side-nav-item" onclick="scrollToSection('feedback')"><span class="nav-dot" style="background:#00838f"></span>用户口碑</a>
+</nav>
+<div class="card">
+
+<div class="header">
+  <a class="header-back" href="index.html">← 首页</a>
+  <h1>3D打印行业每日资讯</h1>
+  <div class="date">2026年6月11日 · 星期四</div>
+  <div class="source-note">内容来源：3DPrint.com / 3Dnatives / 南极熊 / 央视 / 搜狐等</div>
+</div>
+
+<div class="stats-bar">
+  <span class="stats-pill">资讯 <b>35</b> 条</span>
+  <span class="stats-pill">分区 <b>7</b> 大</span>
+  <span class="stats-pill warn">内容日期 <b>6月10日（周三）</b></span>
+</div>
+
+<div class="hot-summary">
+  <h3>🔥 今日热点速递</h3>
+  <ul>
+    <li>纵维立方获数亿元融资，达晨财智/挑战者创投领投，消费级"四小龙"格局稳固</li>
+    <li>煜鼎增材（王华明院士）完成上市辅导冲刺科创板，投后估值33亿</li>
+    <li>TDK斥4亿美元收购Fabric8Labs，电化学3D打印冷板切入AI基础设施</li>
+    <li>埃克森美孚DED打印钛合金防渗漏装置：成本降42%，周期缩至58小时</li>
+    <li>AI+生物打印创建毛细血管网络，分辨率突破10微米级</li>
+  </ul>
+</div>
+
+<div class="section-title general" id="general">
+  <span class="icon"></span>泛行业资讯（工业/资本/政策）
+</div>
+<div class="general-zone">
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-180825-1-1.html" target="_blank">🔥 消费级3D打印厂商纵维立方获数亿元融资，达晨财智/挑战者创投领投</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊6月10日报道，深圳纵维立方（Anycubic）完成新一轮数亿元融资，达晨财智、挑战者创投（元气森林系）、国泰君安创新投资、Mirae Asset联合投资。公司主营FDM和LCD打印机，与拓竹、创想三维、智能派并称深圳"四小龙"，合计控制全球入门级3D打印机出货量90%以上。重点产品KOBRA X多色FDM搭载自研ACE GEN2四色系统，首发价1699元。深圳已形成"两小时供应链"半径。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-180825-1-1.html" target="_blank">南极熊</a><span class="from-tag from-dayinpai">南极熊</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-180823-1-1.html" target="_blank">🔥 王华明院士领衔，煜鼎增材完成上市辅导，向A股IPO发起冲刺</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊6月10日报道，由王华明院士领衔的北京煜鼎增材制造研究院完成上市辅导备案。公司核心技术为大型金属构件激光增材制造（2012年获国家技术发明一等奖），预期登陆科创板。团队含1名院士、4名长江学者/杰青。2019年A轮估值10亿，2024年B轮投后估值33亿，Pre-IPO轮再获数亿元。注册地已迁至雄安新区，落地"雄安重大装备金属新材料研究院"。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-180823-1-1.html" target="_blank">南极熊</a><span class="from-tag from-dayinpai">南极熊</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-180818-1-1.html" target="_blank">增材制造被列为湖南省"十五五"规划未来产业重点赛道</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊6月10日报道，湖南省人民政府正式印发《湖南省推进新型工业化和制造强省建设"十五五"规划》，首次在省级五年规划中将"激光增材制造"提升至未来产业战略高度，列为与下一代装备、绿色能源、空天信息等并列的潜力赛道。规划明确重点发展光纤激光器、超快激光器、智能激光加工系统、激光增材装备，体现"材料—器件—装备—应用"一体化布局。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-180818-1-1.html" target="_blank">南极熊</a><span class="from-tag from-dayinpai">南极熊</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/326720/tdk-makes-sound-ai-infrastructure-bet-witj-fabric8labs-acquisition-worth-up-to-400m/" target="_blank">💰 TDK拟4亿美元收购Fabric8Labs：电化学3D打印押注AI基础设施</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月10日报道，日本电子巨头TDK宣布以最高4亿美元全现金收购圣地亚哥3D打印初创Fabric8Labs。后者专注电化学增材制造（ECAM）技术，生产数据中心和半导体热管理硬件（液冷冷板）。液冷冷板市场预计到2035年将指数级增长。TDK自2021年起通过VC部门参与其A轮融资，此次收购被视为"教科书级别的对角线整合"。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/326720/tdk-makes-sound-ai-infrastructure-bet-witj-fabric8labs-acquisition-worth-up-to-400m/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/326517/3d-printing-financials-capital-raises-portfolio-reshuffling-and-market-pressure/" target="_blank">3D Printing Financials：Xometry筹2.25亿美元，行业投资组合调整加速</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月10日发布上市3D打印公司财务综述。Xometry成功筹集2.25亿美元用于平台扩展。多家上市公司进行投资组合调整应对市场压力。在资本市场趋于理性的背景下，具备盈利能力或明确成长路径的企业仍获支持，概念型公司面临融资压力，行业分化加速演进。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/326517/3d-printing-financials-capital-raises-portfolio-reshuffling-and-market-pressure/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+</div>
+
+<div class="section-title specific" id="specific">
+  <span class="icon"></span>细分领域动态（医疗/航天/材料）
+</div>
+<div class="specific-zone">
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/326484/researchers-combine-ai-and-bioprinting-to-create-tiny-blood-vessel-networks/" target="_blank">💡 圣母大学AI+生物打印创建毛细血管网络，分辨率突破10微米</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月10日报道，圣母大学与哈佛医学院团队在《自然·化学工程》发表突破性研究：结合挤出式生物打印与气溶胶喷射打印技术，打印出直径小于10微米（最小5-6微米）的毛细血管级通道。集成贝叶斯优化AI算法将参数优化缩至约8轮测试。NIH资助260万美元/四年。内皮细胞在通道壁上形成连续内层，验证了流体流通功能，向功能性血管化组织迈出关键一步。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/326484/researchers-combine-ai-and-bioprinting-to-create-tiny-blood-vessel-networks/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-180826-1-1.html" target="_blank">Velo3D与Aurelia Technologies合作开发小型燃气轮机增材制造技术</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊6月10日报道，Velo3D宣布与德州小型燃气轮机开发商Aurelia Technologies建立战略合作，基于Sapphire XC平台进行组件整合式增材制造。分三阶段推进：组件可行性研究、材料工艺开发、认证与小批量生产。设计端深度绑定增材制造的模式正成为新型涡轮发动机量产主流路径。行业参考：Avio在意大利年产200-300枚3D打印火箭，Upwing Energy交付周期缩至10周、部件转速验证超55,000转/分。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-180826-1-1.html" target="_blank">南极熊</a><span class="from-tag from-dayinpai">南极熊</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/326597/nx-atomics-sciaky-3d-print-nuclear-components/" target="_blank">NX Atomics与Sciaky合作3D打印核组件，EBAM工艺用于SMR反应堆</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月10日报道，核能初创NX Atomics与EBAM领导者Sciaky宣布合作，利用电子束增材制造为Vela液态燃料铅冷却小型反应堆制造核级部件。NX Atomics CEO称"核制造进入现代时代"。全球仅2座SMR在研究运行，超100座在规划中，TerraPower已筹30亿美元。两家中西部公司正引领核能制造转型，降低SMR单位成本并加速部署周期。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/326597/nx-atomics-sciaky-3d-print-nuclear-components/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://news.cctv.cn/2026/06/10/ARTICqoN2F0CjJvc5kqPZ4PV260610.shtml" target="_blank">🚀 3D打印突破！朱雀二号改进型遥六"一箭双星"成功发射</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">央视网6月10日报道，朱雀二号改进型遥六运载火箭在东风商业航天创新试验区以"一箭双星"方式成功发射千帆DTC01星和中国移动某卫星。任务亮点包括3D打印技术的应用及自研装置新突破。朱雀系列商业火箭持续推进技术迭代，3D打印在发动机喷管、推力室等关键部件中的应用正加速商业航天的降本增效。</div>
+  <div class="item-source">来源：<a href="https://news.cctv.cn/2026/06/10/ARTICqoN2F0CjJvc5kqPZ4PV260610.shtml" target="_blank">央视网</a><span class="from-tag from-cctv">央视</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://it.sohu.com/a/1034135018_122562938" target="_blank">鑫精合3D打印方案助力航空发动机/燃气轮机，联顺智造启动联产</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">搜狐6月10日报道，鑫精合发布针对航空发动机与燃气轮机领域的金属3D打印解决方案，涵盖大型导叶、涡轮导向器、闭式叶轮等热端及结构件，支持高温合金、钛合金、铜合金，设备成形尺寸覆盖150mm到2000mm。联泰科技子公司联顺智造在江苏淮安启动3D打印与精密铸件联产项目环评，年产8吨非金属模具、10吨金属零件、1000吨精密铸件。</div>
+  <div class="item-source">来源：<a href="https://it.sohu.com/a/1034135018_122562938" target="_blank">搜狐</a><span class="from-tag from-sohu">搜狐</span></div>
+</div>
+</div>
+
+<div class="section-title consumer" id="consumer">
+  <span class="icon"></span>消费级赛道（品牌/模型/生态）
+</div>
+<div class="consumer-zone">
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-180820-1-1.html" target="_blank">先临三维推出先临智星EINSTAR消费级3D扫描品牌：三款机型覆盖入门到专业</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊6月10日报道，先临三维正式发布消费级3D扫描品牌"先临智星EINSTAR"。三款机型：EINSTAR 2（入门级，双光源+无线）、Rockit（45束激光线、90帧/秒、500万像素纹理相机）、VEGA（专业级无线一体机、32GB+512GB双存储）。品牌定位"让高精度数字化触手可及"，618促销单款最高降4200元。先临三维年营收超15亿、研发投入占比超20%。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-180820-1-1.html" target="_blank">南极熊</a><span class="from-tag from-dayinpai">南极熊</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-180827-1-1.html" target="_blank">🆕 Mastrex推出MX300：18.5万美元号称最经济LPBF金属3D打印机</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊6月10日报道，美国Mastrex推出MX300 LPBF金属3D打印机，售价18.5万美元，定位"最经济工业级LPBF设备"。300×300×350mm打印尺寸，双500W激光器，兼容钛/不锈钢/铝/钴铬/镍基合金。联合创始人Ilay Fridland称代表精度和性能巅峰。市场定位瞄准高端研究平台与紧凑型入口设备之间的"中间层"，并以价格和规模产能为核心差异化优势。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-180827-1-1.html" target="_blank">南极熊</a><span class="from-tag from-dayinpai">南极熊</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/326495/breezm-releases-active-wear-collection/" target="_blank">Breezm发布定制3D打印运动太阳镜系列：12种设计+App自定义</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月10日报道，韩国Breezm发布全新定制3D打印太阳镜运动系列，含12种设计，通过App从人脸扫描到成品全数字化交付。采用LPBF金属粉末床熔融技术和1200个面部数据点精准贴合。南极熊同步报道了1200面部数据点的技术细节。在透气性和佩戴舒适性上优于传统注塑镜框，展示了金属LPBF在可穿戴消费市场的应用潜力。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/326495/breezm-releases-active-wear-collection/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-180824-1-1.html" target="_blank">纵维立方KOBRA X多色FDM 1699元：ACE GEN2四色系统引爆消费市场</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊6月10日从纵维立方融资报道中获悉，其主打产品KOBRA X多色FDM 3D打印机搭载自研第二代ACE GEN2集成式多色打印系统，实现高效四色打印，首发价仅1699元，销售火爆。中国3D打印机Q1产量增幅54%、出口量增幅119%。深圳"四小龙"合计控制全球入门级出货量90%以上。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-180825-1-1.html" target="_blank">南极熊</a><span class="from-tag from-dayinpai">南极熊</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/326563/3d-printing-news-briefs-6-10-2026/" target="_blank">3D打印News Briefs 6/10：Stratasys新总部/Nanoscribe光敏树脂</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月10日新闻简报：Stratasys新总部开幕；Nanoscribe扩大高精度光敏树脂规模；鞋类3D打印新进展。Stratasys作为工业级3D打印老牌巨头，新总部整合全球研发与运营中心；Nanoscribe的双光子聚合技术在微纳3D打印领域持续突破；鞋类3D打印应用从原型走向批量化生产。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/326563/3d-printing-news-briefs-6-10-2026/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+</div>
+
+<div class="section-title niche" id="niche">
+  <span class="icon"></span>细分市场 Niche（价格段/应用场景/区域市场）
+</div>
+<div class="niche-zone">
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-180822-1-1.html" target="_blank">💡 埃克森美孚用线材DED打印钛合金零件：4周机加工缩至58小时，成本降42%</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊6月10日报道，埃克森美孚在巴吞鲁日炼油厂用Meltio M600线材激光金属沉积系统打印钛合金防渗漏装置。单件成本削减42%，交期从4-6周压缩至58.8小时。工程师为增材制造重新设计零件（DfAM）：定制夹具实现4组件同步打印、75度悬垂设计、非平面沉积策略。核心启示：成本降低的根本驱动力是设计自由度，而非设备本身。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-180822-1-1.html" target="_blank">南极熊</a><span class="from-tag from-dayinpai">南极熊</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://it.sohu.com/a/1034135018_122562938" target="_blank">丹麦技术大学：高性能筛分设备将金属粉末处理效率提升85%</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">搜狐6月10日报道，丹麦技术大学引入Russell AMPro实验室筛分站处理316L不锈钢粉末，处理半升粉末时间从4小时缩至30分钟内，效率提升逾85%，已累计处理超100升金属粉末。这凸显了粉末筛分等外围自动化设备对3D打印整体效率的重要性——行业关注点正从"打印技术本身"扩展到"全流程自动化"。</div>
+  <div class="item-source">来源：<a href="https://it.sohu.com/a/1034135018_122562938" target="_blank">搜狐</a><span class="from-tag from-sohu">搜狐</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://it.sohu.com/a/1034135018_122562938" target="_blank">西普曼GRCop-42铜铬铌粉末国产化量产：助力商业航天火箭发动机</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">搜狐6月10日报道，西普曼增材科技（宁夏）实现GRCop-42铜铬铌球形粉末国产化量产。该粉末专用于液体火箭发动机燃烧室，在NASA合金基础上优化：铬铌配比减半、熔炼温度降低150-200℃，导热性能与高温抗裂性全面优化。同步开发了CuCr系、CuW、Cu-Li-Ta等近十种铜基粉末，采用均质熔炼和密闭氩气雾化工艺保障品质。</div>
+  <div class="item-source">来源：<a href="https://it.sohu.com/a/1034135018_122562938" target="_blank">搜狐</a><span class="from-tag from-sohu">搜狐</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://it.sohu.com/a/1034135018_122562938" target="_blank">Interspectral与Pankl扩大合作：AI缺陷检测加速增材制造工业化</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">搜狐6月10日报道，瑞典软件公司Interspectral与奥地利高性能部件制造商Pankl Racing Systems扩大合作，部署AM Explorer平台。核心功能：AI驱动缺陷检测、光学断层扫描分析、多源数据关联、实时监控。行业正从实验阶段转向工业化部署，通过增强过程控制和质量保障来建立生产信任。</div>
+  <div class="item-source">来源：<a href="https://it.sohu.com/a/1034135018_122562938" target="_blank">搜狐</a><span class="from-tag from-sohu">搜狐</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://it.sohu.com/a/1034135018_122562938" target="_blank">DfAM白皮书：Solukon/EOS/Sòphia联合发布金属3D打印粉末清除优化指南</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">搜狐6月10日报道，Solukon、EOS、Sòphia High Tech联合发布白皮书：粉末清除为零件质量关键瓶颈，需从设计阶段优化。DfAM建议包括调整内部通道长度/直径、增加粉末逃逸孔、避免矩形/窄通道、优化构建方向和支撑结构。结合SPR-Pathfinder仿真+自动清粉+闭环回收，三管齐下解决金属增材制造后处理难题。</div>
+  <div class="item-source">来源：<a href="https://it.sohu.com/a/1034135018_122562938" target="_blank">搜狐</a><span class="from-tag from-sohu">搜狐</span></div>
+</div>
+</div>
+
+<div class="section-title scenario" id="scenario">
+  <span class="icon"></span>场景×3D打印 Scenario（教育/文创/家居/食品）
+</div>
+<div class="scenario-zone">
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-180822-1-1.html" target="_blank">埃克森美孚DfAM方法论：从零件设计重新思考增材制造的场景价值</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊6月10日深入报道埃克森美孚案例的方法论启示。传统减材制造对几何形状、内部通道和零件集成方式有严格限制，而跳出这些约束、为增材制造重新设计的自由度，才是经济效益转变的根本驱动力。类似案例：GKN Additive将液压适配器从30kg降至5.5kg（减重80%）；Wabtec将17组件整合为1个阀门（成本降70%、周期减半）。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-180822-1-1.html" target="_blank">南极熊</a><span class="from-tag from-dayinpai">南极熊</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://www.3dnatives.com/en/formlabs-fuse-x1-low-cost-industrial-large-format-sls-09062026/" target="_blank">3Dnatives：Fuse X1技术拆解——AI热控制+Print Intelligence商业落地</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">此前6月9日报道的Formlabs Fuse X1持续引发行业关注。自适应热控制每秒热数据采集量比上一代多700倍，13独立热区精确控温；AI打印智能利用计算机视觉+热成像实时监控每层打印。Fuse X1主机±Fuse Sift X1粉末回收站±Fuse Blast喷砂机构成完整生态系统，客户可通过Form Now在线服务直接订购打印部件。</div>
+  <div class="item-source">来源：<a href="https://www.3dnatives.com/en/formlabs-fuse-x1-low-cost-industrial-large-format-sls-09062026/" target="_blank">3Dnatives</a><span class="from-tag from-3druck">3Dnatives</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://it.sohu.com/a/1034135018_122562938" target="_blank">联顺智造启动3D打印+精密铸件联产：协同模式降低采购门槛</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">搜狐6月10日继续跟踪，联泰科技子公司联顺智造在江苏淮安的3D打印与精密铸件联产项目进入环评阶段。年产8吨非金属打印模具、10吨金属打印零件、1000吨精密铸件。这一创新模式整合设备输出与服务输出，通过协同效应降低客户采购门槛、缩短交付周期，将3D打印从"补充工艺"升级为"核心产能"。</div>
+  <div class="item-source">来源：<a href="https://it.sohu.com/a/1034135018_122562938" target="_blank">搜狐</a><span class="from-tag from-sohu">搜狐</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-180820-1-1.html" target="_blank">先临智星EINSTAR VEGA：无线一体式3D扫描推动户外文创数字化</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊6月10日报道先临三维EINSTAR VEGA专业级3D扫描仪，无线一体式设计无需连接电脑和电源，红外VCSEL+远景相机与红外MEMS+近景相机双模配合，32GB eMMC+512GB SSD双存储。适用场景包括移动作业、现场采集、雕塑/艺术品数字化、康复医疗、实训教育。3D打印+3D扫描的"数字万物"闭环正在从工业走向文创教育场景。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-180820-1-1.html" target="_blank">南极熊</a><span class="from-tag from-dayinpai">南极熊</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/326170/killer-3d-printing-applications-tools/" target="_blank">3DPrint.com专栏：工具的"杀手级应用"——从收纳盒到工装夹具</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月10日专栏探讨3D打印在工具制造领域的杀手级应用。从制作工具收纳盒到连接不同工具组，3D打印为日常工具管理提供了前所未有的定制化能力。无需开模的自由制造让每个用户都可以为特定工具设计专属配件，在家庭车间、专业工坊和工业生产线三大场景中都具有实用价值。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/326170/killer-3d-printing-applications-tools/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+</div>
+
+<div class="section-title global" id="global">
+  <span class="icon"></span>海外资讯（国际/3Dnatives/3DPrint.com）
+</div>
+<div class="global-zone">
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://www.3dnatives.com/en/formnext-2026-preview-10062026/" target="_blank">Formnext 2026预览：11月17-20日法兰克福，聚焦AM工业化</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3Dnatives 6月10日报道Formnext 2026展会预览。展会负责人介绍将于11月17-20日在法兰克福举行的全球最大增材制造展会计划。Formnext 2026预计聚焦增材制造工业化、AI+AM融合、可持续制造等前沿话题。作为行业风向标，Formnext的议程设置反映了全球增材制造从"技术验证"向"规模量产"的转型方向。</div>
+  <div class="item-source">来源：<a href="https://www.3dnatives.com/en/formnext-2026-preview-10062026/" target="_blank">3Dnatives</a><span class="from-tag from-3druck">3Dnatives</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/326563/3d-printing-news-briefs-6-10-2026/" target="_blank">3D打印News Briefs 6/10：鞋类3D打印、Nanoscribe、Stratasys</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月10日新闻简报覆盖三大国际动态：运动品牌推进3D打印鞋类批量化生产，利用晶格结构实现缓震与轻量化；Nanoscribe扩大高精度光敏树脂产能，双光子聚合微纳3D打印向工业应用拓展；Stratasys新总部整合全球资源，推动聚合物增材制造的工业化规模应用。国际3D打印行业正向多元化应用场景加速渗透。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/326563/3d-printing-news-briefs-6-10-2026/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/326170/killer-3d-printing-applications-tools/" target="_blank">专栏：Killer 3D Printing Applications——工具制造场景的全球化视角</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月10日专栏文章从全球化视角分析了3D打印在工具制造领域的优势：快速迭代能力让工具设计者可以在24小时内完成从设计到实物验证的闭环；定制化能力让每个使用者都能获得最佳握持体验；分布式生产让工具制造不再依赖跨国物流，降低库存成本。这些特点正在重塑全球工装产业链格局。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/326170/killer-3d-printing-applications-tools/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-180827-1-1.html" target="_blank">Mastrex MX300引发行业关注：LPBF成本"中间层"市场博弈全球格局</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊6月10日报道引发国际市场讨论，Mastrex MX300以18.5万美元/双500W激光/300mm构建尺寸的性价比定位，与Metal-Base低于1万欧元的紧凑型平台和Amace高端系统形成三层市场格局。早期客户Solomon MFG称"获得显著竞争优势"。LPBF市场竞争正从"技术参数竞赛"转向"性价比分层博弈"。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-180827-1-1.html" target="_blank">南极熊</a><span class="from-tag from-dayinpai">南极熊</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/326597/nx-atomics-sciaky-3d-print-nuclear-components/" target="_blank">全球核能3D打印：从ORNL到NX Atomics，SMR赛道加速奔跑</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月10日深度报道核能增材制造全景。除NX Atomics与Sciaky合作外，ORNL、西屋电气等机构多年推进核级3D打印。目前全球仅2座SMR在研究运行，但在建+规划中超过100座，初创公司已融资数百亿美元。3D打印可大幅缩短核级部件生产周期、降低SMR单位成本，成为新一代核能部署的关键赋能技术。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/326597/nx-atomics-sciaky-3d-print-nuclear-components/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+</div>
+
+<div class="section-title feedback" id="feedback">
+  <span class="icon"></span>用户口碑（国外评测/国内实测）
+</div>
+<div class="feedback-zone">
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-180822-1-1.html" target="_blank">埃克森美孚工程师复盘：DED打印钛合金的实战经验与教训</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊6月10日报道中工程师实战分享：钛64在沉积前需90分钟氩气吹扫，层间至少7分钟冷却。早期试验暴露表面氧化、特定几何特征材料堆积过量、非挤出移动中部件位移等问题。解决路径：用定制不锈钢夹具实现四组件同步生产（延长冷却间隔）、75度悬垂角限制、非平面沉积策略免支撑、选择性降低激光功率和速度防过度生长。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-180822-1-1.html" target="_blank">南极熊</a><span class="from-tag from-dayinpai">南极熊</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-180825-1-1.html" target="_blank">纵维立方KOBRA X用户反馈：ACE GEN2多色系统获市场热捧</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊6月10日从融资报道中透露，纵维立方KOBRA X自2025年12月推出以来销售火爆。1699元的定价将四色多材料FDM打印带入"千元级"市场。深圳消费级3D打印集群的"两小时供应链"提供从设计到量产的全流程优势，中国3D打印机Q1出口量增幅119%，全球近九成消费级3D打印机产自深圳。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-180825-1-1.html" target="_blank">南极熊</a><span class="from-tag from-dayinpai">南极熊</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-180820-1-1.html" target="_blank">先临智星Rockit实测：45束激光线、90帧/秒，不贴点扫描受创客欢迎</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊6月10日实测先临智星EINSTAR Rockit：巴掌大小便携机身，蓝激光+红外VCSEL三模扫描，共45束激光线，扫描速度最高90帧/秒，激光模式支持不贴点扫描，500万像素纹理相机。适用于工业设计、文创开发、AR/VR数字资产、3D打印建模。618期间单款最高降幅4200元，开启消费级3D扫描普及。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-180820-1-1.html" target="_blank">南极熊</a><span class="from-tag from-dayinpai">南极熊</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://it.sohu.com/a/1034135018_122562938" target="_blank">丹麦技术大学实操：AMPro筛分站让金属粉末处理从4小时缩至30分钟</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">搜狐6月10日引用丹麦技术大学直接操作反馈，AMPro实验室筛分站半升316L不锈钢粉末处理时间从4小时降至30分钟内。实操显示自动化筛分解决了手动操作的一致性问题，同时降低操作人员对粉末飞散的暴露风险。累计处理超100升后设备运行稳定，证明了外围自动化对3D打印生产效率的杠杆效应。</div>
+  <div class="item-source">来源：<a href="https://it.sohu.com/a/1034135018_122562938" target="_blank">搜狐</a><span class="from-tag from-sohu">搜狐</span></div>
+</div>
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-180827-1-1.html" target="_blank">早期客户Solomon MFG谈MX300："显著竞争优势"与市场机会</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊6月10日引用Mastrex MX300早期客户Solomon MFG的CEO Eli Solomon反馈："MX300的普及使我们能够立即为现有客户提升服务能力，并开拓新的机遇。这无疑是一项显著的竞争优势。"MX300的双500W激光配置+18.5万美元定价让中小型制造服务商首次具备"买得起、用得起的工业LPBF"，有望带动金属3D打印服务市场扩容。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-180827-1-1.html" target="_blank">南极熊</a><span class="from-tag from-dayinpai">南极熊</span></div>
+</div>
+</div>
+
+<div class="footer">
+  Powered by WorkBuddy Automation &nbsp;|&nbsp; <a href="https://github.com/Cruise-Ling/3d-printing-daily">GitHub</a>
+</div>
+</div>
+<script>
+function scrollToSection(id){var e=document.getElementById(id);if(e){var t=window.innerWidth<768?20:80;window.scrollTo({top:e.offsetTop-t,behavior:'smooth'})}}
+</script>
+</body>
+</html>
