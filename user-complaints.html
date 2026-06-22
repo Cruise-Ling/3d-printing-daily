@@ -1,8 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>用户点评 - 3D打印每日速递</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖨️</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;background:#0a1628;color:#e2e8f0;line-height:1.6;overflow-x:hidden}
+html{scroll-behavior:smooth}
+a{color:#60a5fa;text-decoration:none;transition:color .15s}
+a:hover{color:#93bbfd;text-decoration:underline}
+
+/* Back */
+.back-link{position:fixed;top:16px;left:16px;z-index:200;display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:20px;background:rgba(15,23,42,0.85);border:1px solid #334155;color:#94a3b8;font-size:13px;font-weight:500;text-decoration:none;backdrop-filter:blur(8px);transition:all .2s}
+.back-link:hover{border-color:#60a5fa;color:#60a5fa;background:rgba(26,115,232,0.1)}
+
+/* Hero */
+.hero{text-align:center;padding:44px 20px 28px;background:linear-gradient(135deg,#1e3a5f 0%,#0f2847 50%,#0a1628 100%);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 40%,rgba(59,130,246,0.08),transparent 60%)}
+.hero h1{font-size:2rem;font-weight:800;color:#fff;margin-bottom:4px;position:relative}
+.hero .hero-sub{color:rgba(255,255,255,0.7);font-size:.9rem;position:relative;max-width:580px;margin:0 auto}
+.hero .date-row{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:12px;position:relative;flex-wrap:wrap}
+.hero .date-badge{padding:5px 16px;border-radius:16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:#fff;font-size:.82rem;font-weight:600;backdrop-filter:blur(4px)}
+.hero .hero-date-select{padding:5px 16px;border-radius:16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:#fff;font-size:.82rem;font-weight:600;outline:none;font-family:inherit;backdrop-filter:blur(4px);cursor:pointer;max-width:220px;appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M1 1l5 5 5-5' stroke='white' stroke-width='1.5' fill='none'/></svg>');background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.hero .hero-date-select option{background:#0f2847;color:#e2e8f0;font-size:.82rem}
+.hero .hero-date-select:focus{border-color:rgba(255,255,255,0.35)}
+.hero .update-time{color:rgba(255,255,255,0.45);font-size:.78rem}
+
+/* Stats */
+.stats-bar{display:flex;justify-content:center;gap:32px;padding:16px 20px;background:rgba(15,23,42,0.92);border-bottom:1px solid #1e293b;backdrop-filter:blur(12px);flex-wrap:wrap}
+.stat-item{text-align:center}
+.stat-value{font-size:1.8rem;font-weight:800;line-height:1}
+.stat-value.text-red{color:#f87171}
+.stat-value.text-amber{color:#fbbf24}
+.stat-value.text-green{color:#34d399}
+.stat-value.text-blue{color:#60a5fa}
+.stat-value.text-purple{color:#a78bfa}
+.stat-label{font-size:.72rem;color:#64748b;margin-top:3px;letter-spacing:.3px}
+
+/* Filter Section */
+.filter-section{background:rgba(15,23,42,0.8);border-bottom:1px solid #1e293b;position:sticky;top:0;z-index:50;backdrop-filter:blur(12px)}
+
+/* Search Row */
+.search-row{display:flex;align-items:center;gap:10px;padding:12px 24px;border-bottom:1px solid rgba(30,41,59,0.5)}
+.search-box{flex:1;position:relative;max-width:480px}
+.search-box input{width:100%;padding:8px 14px 8px 36px;border-radius:10px;border:1px solid #334155;background:rgba(0,0,0,0.3);color:#e2e8f0;font-size:.85rem;outline:none;transition:border-color .2s}
+.search-box input::placeholder{color:#4b5563}
+.search-box input:focus{border-color:#3b82f6}
+.search-box .search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#4b5563;font-size:.85rem}
+.search-clear{padding:6px 14px;border-radius:8px;border:1px solid #334155;background:transparent;color:#64748b;font-size:.78rem;cursor:pointer;transition:all .15s;white-space:nowrap}
+.search-clear:hover{border-color:#475569;color:#e2e8f0}
+.search-result-hint{font-size:.72rem;color:#4b5563;margin-left:auto;white-space:nowrap}
+
+/* Filter Row */
+.filter-row{display:flex;align-items:center;gap:8px;padding:10px 24px;border-bottom:1px solid rgba(30,41,59,0.5);flex-wrap:wrap}
+.filter-label{font-size:.72rem;color:#64748b;font-weight:600;margin-right:2px;white-space:nowrap}
+.filter-btn{padding:4px 12px;border-radius:16px;font-size:.75rem;font-weight:500;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer;transition:all .2s;white-space:nowrap}
+.filter-btn:hover{border-color:#475569;color:#e2e8f0}
+.filter-btn.active{background:rgba(59,130,246,0.15);border-color:#3b82f6;color:#60a5fa}
+.filter-btn .count{font-size:.65rem;opacity:.7;margin-left:2px}
+.filter-divider{width:1px;height:18px;background:#1e293b;flex-shrink:0}
+
+/* Brand scroll */
+.brand-scroll{display:flex;gap:6px;overflow-x:auto;padding:2px 0;scrollbar-width:none;-ms-overflow-style:none;flex:1}
+.brand-scroll::-webkit-scrollbar{display:none}
+
+/* Date inputs */
+.date-input-group{display:flex;align-items:center;gap:6px}
+.date-input-group input[type="date"]{padding:4px 8px;border-radius:8px;border:1px solid #334155;background:rgba(0,0,0,0.3);color:#94a3b8;font-size:.72rem;outline:none;font-family:inherit}
+.date-input-group input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(0.6)}
+.date-input-group input[type="date"]:focus{border-color:#3b82f6}
+.date-arrow{color:#4b5563;font-size:.75rem}
+
+/* Feed Container */
+.feed{max-width:860px;margin:0 auto;padding:20px 16px}
+
+/* Feed Card */
+.feed-card{background:#111827;border-radius:14px;border:1px solid #1e293b;margin-bottom:16px;overflow:hidden;transition:all .25s;animation:fadeIn .4s ease-out}
+.feed-card:hover{border-color:#334155;box-shadow:0 4px 20px rgba(0,0,0,0.3);transform:translateY(-1px)}
+.feed-card.p0-card{border-left:3px solid #ef4444}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* Date Group Header */
+.date-group-header{display:flex;align-items:center;gap:10px;margin:28px 0 12px;padding-bottom:8px;border-bottom:1px solid rgba(30,41,59,0.5)}
+.date-group-header:first-child{margin-top:0}
+.date-group-label{font-size:.85rem;font-weight:700;color:#60a5fa;white-space:nowrap}
+.date-group-count{font-size:.7rem;color:#4b5563;background:rgba(59,130,246,0.08);padding:2px 8px;border-radius:10px}
+
+/* Card Header */
+.card-top{display:flex;align-items:center;gap:10px;padding:14px 18px 0;flex-wrap:wrap}
+.platform-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:6px;font-size:.7rem;font-weight:600;white-space:nowrap}
+.plat-reddit{background:rgba(249,115,22,0.15);color:#fb923c;border:1px solid rgba(249,115,22,0.25)}
+.plat-youtube{background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.25)}
+.plat-amazon{background:rgba(234,179,8,0.15);color:#fbbf24;border:1px solid rgba(234,179,8,0.25)}
+.plat-facebook{background:rgba(59,130,246,0.15);color:#60a5fa;border:1px solid rgba(59,130,246,0.25)}
+.plat-other{background:rgba(100,116,139,0.15);color:#94a3b8;border:1px solid rgba(100,116,139,0.25)}
+.plat-review{background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.25)}
+.plat-forum{background:rgba(139,92,246,0.15);color:#a78bfa;border:1px solid rgba(139,92,246,0.25)}
+.brand-tag{padding:2px 8px;border-radius:6px;font-size:.68rem;font-weight:600;background:rgba(16,185,129,0.12);color:#34d399;border:1px solid rgba(16,185,129,0.2)}
+.model-tag{padding:2px 8px;border-radius:6px;font-size:.68rem;font-weight:600;background:rgba(139,92,246,0.12);color:#a78bfa;border:1px solid rgba(139,92,246,0.2)}
+.country-tag{font-size:.68rem;color:#64748b;display:flex;align-items:center;gap:2px}
+.verified-badge{font-size:.65rem;color:#34d399;font-weight:600;display:flex;align-items:center;gap:2px}
+.p0-badge{font-size:.65rem;color:#f87171;font-weight:700;background:rgba(239,68,68,0.12);padding:2px 8px;border-radius:4px;border:1px solid rgba(239,68,68,0.25);animation:p0pulse 2s infinite}
+@keyframes p0pulse{0%,100%{opacity:1}50%{opacity:.6}}
+
+/* Card Body */
+.card-body{padding:12px 18px 14px}
+.card-summary{font-size:.88rem;color:#e2e8f0;line-height:1.7;margin-bottom:8px}
+.card-original{background:rgba(0,0,0,0.25);border-radius:8px;padding:10px 14px;margin-bottom:10px;border-left:3px solid #334155}
+.card-original .label{font-size:.68rem;color:#64748b;font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+.card-original .text{font-size:.82rem;color:#94a3b8;line-height:1.7;font-style:italic}
+.card-translation{background:rgba(59,130,246,0.06);border-radius:8px;padding:10px 14px;border-left:3px solid rgba(59,130,246,0.3)}
+.card-translation .label{font-size:.68rem;color:#3b82f6;font-weight:600;margin-bottom:4px;letter-spacing:.5px}
+.card-translation .text{font-size:.82rem;color:#cbd5e1;line-height:1.7}
+
+/* Sentiment Badge */
+.sentiment-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:12px;font-size:.7rem;font-weight:600}
+.sent-very-negative{background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.25)}
+.sent-negative{background:rgba(251,146,60,0.15);color:#fb923c;border:1px solid rgba(251,146,60,0.25)}
+.sent-neutral{background:rgba(148,163,184,0.15);color:#94a3b8;border:1px solid rgba(148,163,184,0.25)}
+.sent-positive{background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.25)}
+.sent-very-positive{background:rgba(34,197,94,0.15);color:#22c55e;border:1px solid rgba(34,197,94,0.25)}
+
+/* Tags Row */
+.tags-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.dim-tag{padding:2px 8px;border-radius:4px;font-size:.65rem;font-weight:500;background:rgba(99,102,241,0.1);color:#818cf8;border:1px solid rgba(99,102,241,0.15)}
+.problem-tag{padding:2px 8px;border-radius:4px;font-size:.65rem;font-weight:500;background:rgba(239,68,68,0.08);color:#fca5a5;border:1px solid rgba(239,68,68,0.12)}
+.competitor-tag{padding:2px 8px;border-radius:4px;font-size:.65rem;font-weight:500;background:rgba(234,179,8,0.08);color:#fde68a;border:1px solid rgba(234,179,8,0.12)}
+
+/* Card Footer */
+.card-footer{display:flex;align-items:center;justify-content:space-between;padding:8px 18px 12px;flex-wrap:wrap;gap:6px}
+.card-footer .meta{display:flex;align-items:center;gap:10px;font-size:.7rem;color:#4b5563}
+.card-footer .meta span{display:flex;align-items:center;gap:3px}
+.card-footer .heat{color:#fbbf24}
+.card-footer .link-btn{padding:4px 12px;border-radius:8px;font-size:.72rem;font-weight:500;background:rgba(59,130,246,0.1);color:#60a5fa;border:1px solid rgba(59,130,246,0.2);transition:all .15s;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.card-footer .link-btn:hover{background:rgba(59,130,246,0.2);text-decoration:none}
+
+/* Purchase Info Row */
+.purchase-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid rgba(30,41,59,0.5)}
+.purchase-item{font-size:.68rem;color:#64748b;display:flex;align-items:center;gap:3px}
+.purchase-item span{color:#94a3b8;font-weight:500}
+
+/* Empty State */
+.empty-state{text-align:center;padding:80px 20px;color:#4b5563}
+.empty-state .empty-icon{font-size:3.5rem;margin-bottom:16px;opacity:.5}
+.empty-state .empty-text{font-size:1rem;font-weight:600;margin-bottom:6px;color:#64748b}
+.empty-state .empty-sub{font-size:.85rem}
+
+/* Footer */
+.footer{text-align:center;padding:28px 20px;font-size:.75rem;color:#374151;border-top:1px solid #1e293b;margin-top:24px}
+.footer a{color:#60a5fa;text-decoration:none}
+.footer a:hover{text-decoration:underline}
+
+/* Mobile */
+@media(max-width:768px){
+  .feed{padding:12px}
+  .hero h1{font-size:1.5rem}
+  .hero .hero-sub{font-size:.82rem}
+  .stats-bar{gap:16px;padding:12px 16px}
+  .stat-value{font-size:1.4rem}
+  .search-row{padding:10px 14px}
+  .search-box input{font-size:.8rem;padding:7px 12px 7px 32px}
+  .filter-row{padding:8px 14px}
+  .filter-btn{padding:3px 9px;font-size:.7rem}
+  .date-input-group input[type="date"]{font-size:.65rem}
+  .card-top{padding:10px 14px 0}
+  .card-body{padding:10px 14px 12px}
+  .card-footer{padding:6px 14px 10px}
+  .back-link{top:auto;bottom:14px;left:14px;font-size:11px;padding:5px 10px}
+  .date-group-header{margin:20px 0 10px}
+}
+</style>
+</head>
+<body>
+
+<a class="back-link" href="index.html">← 首页</a>
+
+<div class="hero">
+  <h1>🌍 海外用户点评</h1>
+  <div class="hero-sub">每日 5 条高价值精准样本 · 覆盖 Reddit / YouTube / Amazon 等主流平台 · 支持品牌/日期/关键词筛选</div>
+  <div class="date-row">
+    <select id="heroDateFilter" class="hero-date-select" onchange="filterByHeroDate(this.value)">
+      <option value="">📅 全部日期</option>
+    </select>
+    <span class="update-time" id="updateTime"></span>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-value text-blue" id="statTotal">-</div>
+    <div class="stat-label" id="statTotalLabel">累计样本</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value text-red" id="statNegative">-</div>
+    <div class="stat-label">负面反馈</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value text-amber" id="statNeutral">-</div>
+    <div class="stat-label">中性反馈</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value text-green" id="statPositive">-</div>
+    <div class="stat-label">正面反馈</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value text-purple" id="statP0">-</div>
+    <div class="stat-label">P0 高风险</div>
+  </div>
+</div>
+
+<!-- Filter Section -->
+<div class="filter-section">
+  <!-- Search Row -->
+  <div class="search-row">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="搜索机型、品牌、问题关键词..." oninput="applyFilters()">
+    </div>
+    <button class="search-clear" onclick="clearAllFilters()">清空筛选</button>
+    <span class="search-result-hint" id="resultHint"></span>
+  </div>
+  <!-- Brand Row -->
+  <div class="filter-row">
+    <span class="filter-label">品牌：</span>
+    <div class="brand-scroll" id="brandScroll"></div>
+  </div>
+  <!-- Sentiment + Platform Row -->
+  <div class="filter-row">
+    <span class="filter-label">情感：</span>
+    <button class="filter-btn active" data-group="sentiment" data-value="all" onclick="toggleFilter(this)">全部</button>
+    <button class="filter-btn" data-group="sentiment" data-value="negative" onclick="toggleFilter(this)">😔 负面</button>
+    <button class="filter-btn" data-group="sentiment" data-value="neutral" onclick="toggleFilter(this)">😐 中性</button>
+    <button class="filter-btn" data-group="sentiment" data-value="positive" onclick="toggleFilter(this)">😊 正面</button>
+    <span class="filter-divider"></span>
+    <span class="filter-label">平台：</span>
+    <button class="filter-btn active" data-group="platform" data-value="all" onclick="toggleFilter(this)">全部</button>
+    <button class="filter-btn" data-group="platform" data-value="Reddit" onclick="toggleFilter(this)">Reddit</button>
+    <button class="filter-btn" data-group="platform" data-value="YouTube" onclick="toggleFilter(this)">YouTube</button>
+    <button class="filter-btn" data-group="platform" data-value="Amazon" onclick="toggleFilter(this)">Amazon</button>
+    <button class="filter-btn" data-group="platform" data-value="Facebook" onclick="toggleFilter(this)">Facebook</button>
+    <button class="filter-btn" data-group="platform" data-value="独立评测" onclick="toggleFilter(this)">独立评测</button>
+    <button class="filter-btn" data-group="platform" data-value="在线论坛" onclick="toggleFilter(this)">在线论坛</button>
+  </div>
+  <!-- Date Row -->
+  <div class="filter-row">
+    <span class="filter-label">日期：</span>
+    <button class="filter-btn active" data-group="date" data-value="all" onclick="toggleDateFilter(this)">全部</button>
+    <button class="filter-btn" data-group="date" data-value="7" onclick="toggleDateFilter(this)">近 7 天</button>
+    <button class="filter-btn" data-group="date" data-value="30" onclick="toggleDateFilter(this)">近 30 天</button>
+    <span class="filter-divider"></span>
+    <div class="date-input-group">
+      <input type="date" id="dateFrom" onchange="applyDateRange()">
+      <span class="date-arrow">→</span>
+      <input type="date" id="dateTo" onchange="applyDateRange()">
+    </div>
+  </div>
+</div>
+
+<div class="feed" id="feedContainer"></div>
+
+<div class="empty-state" id="emptyState" style="display:none">
+  <div class="empty-icon">🔍</div>
+  <div class="empty-text">暂无匹配的用户点评数据</div>
+  <div class="empty-sub">尝试调整筛选条件</div>
+</div>
+
+<div class="footer">
+  <p>数据来源：Reddit · YouTube · Amazon · Facebook · 专业论坛</p>
+  <p style="margin-top:3px">by <a href="https://github.com/Cruise-Ling" target="_blank">Cruise</a> · <a href="index.html">3D打印每日速递</a> · 每日 5 条精准样本</p>
+</div>
+
+<script>
 const OVERSEAS_FEEDBACK_DATA = {
   mode: "accumulate",
   maxDays: 30,
         items: [
   {
+      id: "KB-EN-20260622-005",
+      brand: "ELEGOO",
+      platform: "独立评测",
+      sourceLink: "https://github.com/elegooofficial/CentauriCarbon/issues/26",
+      country: "US",
+      language: "EN",
+      date: "2026-06-22",
+      publishedAt: "2026-06-17",
+      modelName: "Centauri Carbon 2",
+      purchaseChannel: "官网直邮",
+      purchaseDuration: "3个月内",
+      verified: true,
+      shippingExperience: "好",
+      customs: "未提及",
+      originalText: "ELEGOO Centauri Carbon 2 Combo received the lowest rating among all multi-color printers in the June 2026 14-model roundup by 3dprinteddecor - just 3.8 stars based on only 59 reviews. The Canvas multi-color system is significantly less mature than Bambu Lab's AMS: color changes are slower, purge waste optimization less refined, and users report more failed color transitions. Additionally, on the official ELEGOO Centauri Carbon GitHub, multiple open issues report critical bugs: printer freezes at end of bed leveling requiring power cycle (Issue #23, #14), layer shifting about 2mm after color change or pause (Issue #25, #11), filament loader runs backwards when loading new filament (Issue #24), and a GPLv3 license compliance complaint (Issue #26, opened June 3, 2026). The combination of immature software, unresolved hardware bugs, and tiny review sample makes this a high-risk purchase at $649.",
+      translation: "ELEGOO Centauri Carbon 2 Combo在2026年6月14款打印机横评中获多色打印机最低评分——仅3.8星（59条评价）。Canvas多色系统远不如Bambu Lab AMS成熟：换色慢、废料优化差、更多换色失败。在官方GitHub仓库中，多个公开Issue报告严重Bug：调平结束时死机需断电重启（#23, #14）、换色/暂停后层移约2mm（#25, #11）、新料加载时进料器反转（#24），以及GPLv3许可证合规投诉（#26，2026年6月3日提交）。",
+      summaryEn: "ELEGOO Centauri Carbon 2: 3.8 stars/59 reviews, GitHub issues: bed leveling freeze, layer shift after color change, reverse filament loader, GPLv3 complaint",
+      summaryCn: "ELEGOO Centauri Carbon 2仅3.8星/59条评价，GitHub存在调平死机、换色层移、进料反转、GPLv3合规问题等未修复Bug",
+      sentiment: "负面",
+      dimensions: ["硬件性能 - 多色系统", "硬件性能 - 可靠性", "软件与交互 - 固件bug"],
+      problemPoints: ["多色系统不成熟", "换色失败率高", "调平死机需重启", "进料器反转", "换色后层移", "评价样本量极少"],
+      competitorMentioned: "Bambu Lab AMS",
+      modsMentioned: "",
+      heat: "3DPrintedDecor 6月17日横评 + GitHub Issues (#23 #24 #25)",
+      isP0: false
+  },
+
+{
+      id: "KB-EN-20260622-001",
+      brand: "Prusa",
+      platform: "官网",
+      sourceLink: "https://forum.prusa3d.com/forum/english-forum-original-prusa-i3-mk4s-hardware-firmware-and-software-help/layer-shift-issues-with-6-5-3/",
+      country: "US",
+      language: "EN",
+      date: "2026-06-22",
+      publishedAt: "2026-06-17",
+      modelName: "MK4S",
+      purchaseChannel: "官网直邮",
+      purchaseDuration: "3个月内",
+      verified: true,
+      shippingExperience: "未提及",
+      customs: "未提及",
+      originalText: "Multiple MK4S users on Prusa3D Forum reporting that upgrading to firmware 6.5.3 causes severe layer shifting during MMU3 multi-material prints. One user's test model failed 6 times at varying Z heights, with shifts along Y and later X+Y axes. Hardware checks (belt tension, nozzle, Nextruder) all verified good. Another user confirmed two identical MK4S machines: the one on 6.4.0 prints perfectly, the upgraded one fails every time with the same sliced file. A third user without MMU also experiences layer shifting on 6.5.3. Downgrading to 6.4.0 resolves the issue completely. Last post on June 17, 2026 confirms the bug persists.",
+      translation: "多名MK4S用户在Prusa3D论坛报告升级到固件6.5.3后，MMU3多材料打印出现严重层移。一个用户的测试模型在不同Z高度失败6次，Y轴和X+Y轴均出现位移。硬件检查均正常。另一用户确认两台相同的MK4S：运行6.4.0的打印完美，升级的每次失败。没有MMU的用户也遇到层移。降级到6.4.0完全解决问题。2026年6月17日的最新回帖确认该Bug仍然存在。",
+      summaryEn: "Prusa MK4S firmware 6.5.3 causes severe layer shifting in MMU3 and non-MMU prints, downgrading to 6.4.0 is the only fix",
+      summaryCn: "Prusa MK4S固件6.5.3导致层移严重，MMU3和非MMU打印均受影响，降级到6.4.0为唯一解决方案",
+      sentiment: "非常负面",
+      dimensions: ["软件与交互 - 固件bug", "硬件性能 - 打印质量"],
+      problemPoints: ["固件6.5.3层移", "MMU3打印失败", "降级才能解决", "影响多个机型", "官方未修复"],
+      competitorMentioned: "",
+      modsMentioned: "",
+      heat: "Prusa3D论坛多用户确认，最后活跃6月17日，810次浏览",
+      isP0: false
+  },
+
+{
+      id: "KB-EN-20260622-002",
+      brand: "Creality",
+      platform: "官网",
+      sourceLink: "https://forum.creality.com/t/overhang-in-abs-not-working-anymore/52065",
+      country: "US",
+      language: "EN",
+      date: "2026-06-22",
+      publishedAt: "2026-06-15",
+      modelName: "K2 Pro",
+      purchaseChannel: "官网直邮",
+      purchaseDuration: "3个月内",
+      verified: true,
+      shippingExperience: "好",
+      customs: "未提及",
+      originalText: "Creality K2 Pro user reports that ABS overhang print quality has significantly degraded after recent firmware or Creality Print slicer update. Previously acceptable overhangs at 45-60 degrees now show severe drooping and poor surface finish. The user notes the issue started after a CP update and they have tried multiple settings adjustments without success. Other users in the thread report similar experiences with firmware updates causing print quality regression.",
+      translation: "Creality K2 Pro用户报告最近的固件或Creality Print切片器更新后，ABS悬垂打印质量严重下降。以前可接受的45-60度悬垂现在出现严重下垂和表面质量差。用户尝试了多种设置调整均无效果。其他用户也报告了固件更新导致打印质量退化的类似经历。",
+      summaryEn: "Creality K2 Pro ABS overhang quality degraded after firmware/CP update, 45-60 degree overhangs now show severe drooping",
+      summaryCn: "Creality K2 Pro在固件/CP更新后ABS悬垂质量下降，45-60度悬垂出现严重下垂",
+      sentiment: "负面",
+      dimensions: ["软件与交互 - 固件bug", "硬件性能 - 打印质量"],
+      problemPoints: ["ABS悬垂质量下降", "固件更新导致退化", "CP切片器更新问题", "设置调整无效"],
+      competitorMentioned: "",
+      modsMentioned: "",
+      heat: "Creality论坛求助帖，7天前(6月15日)发布",
+      isP0: false
+  },
+
+{
+      id: "KB-EN-20260622-003",
+      brand: "Creality",
+      platform: "官网",
+      sourceLink: "https://forum.creality.com/t/where-are-the-replacement-parts-k2-not-pro-or-plus/52062",
+      country: "US",
+      language: "EN",
+      date: "2026-06-22",
+      publishedAt: "2026-06-16",
+      modelName: "K2",
+      purchaseChannel: "官网直邮",
+      purchaseDuration: "6个月内",
+      verified: true,
+      shippingExperience: "一般",
+      customs: "未提及",
+      originalText: "A Creality K2 (base model, not Pro or Plus) owner is unable to find replacement parts for their printer. The user specifically notes that the K2 Pro and K2 Plus have parts available, but the base K2 model seems to have been abandoned. Parts such as hotend assemblies, print beds, and extruder gears are not listed on Creality's official store or any third-party sellers. The user expresses frustration that a printer still within its warranty period has no parts support.",
+      translation: "一位Creality K2（基础版，非Pro或Plus）用户找不到打印机的替换零件。用户特别指出K2 Pro和K2 Plus有配件，但基础K2似乎被抛弃了。热端总成、打印床、挤出机齿轮等零件在Creality官方商店和第三方卖家处均未列出。用户对保修期内打印机无配件支持感到沮丧。",
+      summaryEn: "Creality K2 base model replacement parts completely unavailable, owners frustrated as printer becomes disposable within warranty period",
+      summaryCn: "Creality K2基础版替换零件完全不可用，用户对保修期内打印机变一次性设备感到沮丧",
+      sentiment: "负面",
+      dimensions: ["售后服务与社区 - 配件供应", "售后服务与社区 - 售后服务"],
+      problemPoints: ["K2基础版无配件", "官方不提供替换件", "第三方也无货", "保修期内无支持"],
+      competitorMentioned: "K2 Pro, K2 Plus（有配件）",
+      modsMentioned: "",
+      heat: "Creality论坛求助帖，6天前(6月16日)发布",
+      isP0: false
+  },
+
+{
+      id: "KB-EN-20260622-004",
+      brand: "Creality",
+      platform: "官网",
+      sourceLink: "https://forum.creality.com/t/k2-strandard-hitting-back-right-corner-before-every-print/52101",
+      country: "US",
+      language: "EN",
+      date: "2026-06-22",
+      publishedAt: "2026-06-19",
+      modelName: "K2",
+      purchaseChannel: "官网直邮",
+      purchaseDuration: "1个月内",
+      verified: true,
+      shippingExperience: "一般",
+      customs: "未提及",
+      originalText: "Creality K2 standard model user reports that the printer hits the back right corner of the build area before every print starts. This happens during the homing/calibration sequence at the beginning of each print. The nozzle or print head collides with the rear right area, creating a loud noise. The user suspects a firmware homing issue or incorrect build volume configuration. Other users in the thread confirm similar behavior on their K2 units after recent firmware updates. The issue appears to be related to the Z-homing sequence or an incorrect coordinate mapping in the latest firmware.",
+      translation: "Creality K2标准版用户报告打印机在每次打印前都会撞击构建区域的右后角。这发生在每次打印开始的归零/校准序列中。喷嘴或打印头与右后区域碰撞，发出巨大噪音。用户怀疑是固件归零问题或构建体积配置错误。其他用户确认最近的固件更新后他们的K2也有类似行为。",
+      summaryEn: "Creality K2 crashes into back right corner before every print, firmware homing issue confirmed by multiple users after recent updates",
+      summaryCn: "Creality K2每次打印前撞击右后角，多名用户确认是最近固件更新后的归零问题",
+      sentiment: "负面",
+      dimensions: ["软件与交互 - 固件bug", "硬件性能 - 可靠性"],
+      problemPoints: ["打印前撞击右后角", "固件归零问题", "多次更新未修复", "发出巨响"],
+      competitorMentioned: "",
+      modsMentioned: "",
+      heat: "Creality论坛3天前(6月19日)发布，标签trouble-shooting",
+      isP0: false
+  },
+
+{
       id: "KB-EN-20260619-001",
       brand: "Bambu Lab",
       platform: "独立评测",
@@ -29,143 +444,8 @@ const OVERSEAS_FEEDBACK_DATA = {
       heat: "3DPrintedDecor 2026年14款打印机横评，6月17日发布",
       isP0: false
   },
-  {
-      id: "KB-EN-20260619-002",
-      brand: "Creality",
-      platform: "Reddit",
-      sourceLink: "https://makers101.com/fix-a-jammed-filament-on-creality-k2-series-3d-printers/",
-      country: "US",
-      language: "EN",
-      date: "2026-06-19",
-      publishedAt: "2026-06-17",
-      modelName: "K2 Plus",
-      purchaseChannel: "官网直邮",
-      purchaseDuration: "3个月内",
-      verified: true,
-      shippingExperience: "好",
-      customs: "未提及",
-      originalText: "Several Reddit users report that the K2 Plus spring assembly can shift slightly out of alignment after multiple jams. When clearing a jam by pulling the filament out from the extruder, the spring mechanism gradually moves off-center. This causes inconsistent tension and makes the printer more prone to future jams. The fix requires disassembling the extruder to realign the spring assembly - a process that is not documented in the official Creality guides. Users who have experienced 3+ jams are most affected, with the spring misalignment becoming progressively worse. One Reddit user posted that after the 4th jam in 2 months, the extruder won't grab filament at all unless manually holding the lever.",
-      translation: "多名Reddit用户报告K2 Plus的弹簧组件在多次卡料后会逐渐移位。从挤出器中拉出卡住的耗材时，弹簧机构逐渐偏离中心位置。这导致张力不一致，使打印机更容易再次卡料。修复需要拆卸挤出器重新对齐弹簧组件——该过程不在官方指南中。经历过3次以上卡料的用户受影响最严重，弹簧偏移逐渐恶化。",
-      summaryEn: "K2 Plus spring assembly shifts after multiple filament jams causing progressive misalignment, requires undocumented extruder disassembly to fix",
-      summaryCn: "K2 Plus弹簧组件在多次卡料后逐渐移位导致一致性变差，需拆卸挤出器重新对齐，用户报告问题随卡料次数增加而恶化",
-      sentiment: "负面",
-      dimensions: ["硬件性能 - 挤出系统", "硬件性能 - 故障率"],
-      problemPoints: ["弹簧组件移位", "卡料后恶化", "需拆卸挤出器", "官方无修复指南"],
-      competitorMentioned: "",
-      modsMentioned: "",
-      heat: "Makers101 6月17日发布，引用多位Reddit用户报告",
-      isP0: false
-  },
-  {
-      id: "KB-EN-20260619-003",
-      brand: "ELEGOO",
-      platform: "独立评测",
-      sourceLink: "https://3dprinteddecor.com/best-3d-printer-2026-14-models-tested-and-compared/",
-      country: "US",
-      language: "EN",
-      date: "2026-06-19",
-      publishedAt: "2026-06-17",
-      modelName: "Centauri Carbon 2",
-      purchaseChannel: "官网直邮",
-      purchaseDuration: "3个月内",
-      verified: true,
-      shippingExperience: "好",
-      customs: "未提及",
-      originalText: "The Centauri Carbon 2 Combo has the lowest rating among multi-color printers in our 2026 review - just 3.8 out of 5 stars based on only 59 reviews. This extremely small sample size means long-term reliability is essentially unknown. The Canvas multi-color system feels significantly less mature than Bambu Lab's AMS: color changes are slower, the purge waste optimization is not as refined, and users report more failed color transitions. At $649 it costs more than the Bambu A1 Combo at $399 while delivering an inferior multi-color experience. The fact that only 59 users have left reviews after months on the market suggests relatively low adoption.",
-      translation: "Centauri Carbon 2 Combo在2026年评测中获多色打印机最低评分——基于仅59条评价的3.8星。极小的样本量意味着长期可靠性基本未知。Canvas多色系统明显不如Bambu Lab的AMS成熟：换色较慢、废料优化不够精细、用户报告更多换色失败。$649的售价高于Bambu A1 Combo的$399，却提供更差的多色体验。仅59条评价表明市场接受度较低。",
-      summaryEn: "Centauri Carbon 2 Combo lowest rated multi-color printer (3.8 stars, 59 reviews), Canvas system immature vs Bambu AMS, slow color changes, failed transitions, poor value",
-      summaryCn: "Centauri Carbon 2多色打印机评分最低（3.8星/59条评价）、Canvas系统远不如Bambu AMS成熟、换色慢失败率高、$649性价比差",
-      sentiment: "负面",
-      dimensions: ["硬件性能 - 多色系统", "日常使用体验 - 可靠性", "使用成本与兼容性 - 性价比"],
-      problemPoints: ["多色系统不成熟", "换色速度慢", "换色失败率高", "评价样本量极少", "长期可靠性未知", "价格偏高"],
-      competitorMentioned: "Bambu Lab A1 Combo (AMS)",
-      modsMentioned: "",
-      heat: "3DPrintedDecor 2026年14款打印机横评",
-      isP0: false
-  },
-  {
-      id: "KB-EN-20260619-004",
-      brand: "Flashforge",
-      platform: "独立评测",
-      sourceLink: "https://3dprinteddecor.com/best-3d-printer-2026-14-models-tested-and-compared/",
-      country: "US",
-      language: "EN",
-      date: "2026-06-19",
-      publishedAt: "2026-06-17",
-      modelName: "Adventurer 5M Pro",
-      purchaseChannel: "官网直邮",
-      purchaseDuration: "1个月内",
-      verified: true,
-      shippingExperience: "未提及",
-      customs: "未提及",
-      originalText: "The Adventurer 5M Pro is essentially the same printer as the base 5M with a single added feature: one-click auto print. For that, Flashforge charges an extra $140. The hardware is identical - same 220mm build volume, same 280C max nozzle temperature, same lack of multi-color support. That 280C limit means you cannot print many engineering-grade materials like PC or Nylon which need higher temperatures. The user rating of 3.9 stars partly reflects this poor value proposition. The small community compared to Bambu and Creality also means fewer user-created profiles and troubleshooting resources available online.",
-      translation: "Adventurer 5M Pro与基础款5M硬件完全相同，仅增加了一键自动打印功能，价格高出$140。280°C的最高喷嘴温度意味着无法打印许多工程材料如PC、尼龙等。3.9星用户评分部分反映了这个糟糕的性价比。社区规模小于Bambu和Creality。",
-      summaryEn: "Flashforge Adventurer 5M Pro poor value: $140 premium for single feature, 280C nozzle limits engineering materials, 3.9 stars, small community",
-      summaryCn: "Flashforge Adventurer 5M Pro性价比差：比基础款贵$140仅增加一键打印、280°C喷嘴限制工程材料、3.9星评分、社区小",
-      sentiment: "负面",
-      dimensions: ["使用成本与兼容性 - 性价比", "硬件性能 - 打印能力限制", "售后服务与社区 - 社区支持"],
-      problemPoints: ["Pro版升级费贵$140", "280°C喷头温度上限", "无法打印工程材料", "无多色功能", "社区小"],
-      competitorMentioned: "Bambu Lab A1, Creality K1C",
-      modsMentioned: "",
-      heat: "3DPrintedDecor 2026年14款打印机横评，6月17日发布",
-      isP0: false
-  },
-  {
-      id: "KB-EN-20260619-005",
-      brand: "Prusa",
-      platform: "独立评测",
-      sourceLink: "https://3dprinteddecor.com/best-3d-printer-2026-14-models-tested-and-compared/",
-      country: "US",
-      language: "EN",
-      date: "2026-06-19",
-      publishedAt: "2026-06-17",
-      modelName: "CORE One",
-      purchaseChannel: "官网直邮",
-      purchaseDuration: "未适用",
-      verified: false,
-      shippingExperience: "未提及",
-      customs: "未提及",
-      originalText: "The Original Prusa CORE One is priced at $1,212 - three times the price of a Bambu Lab A1 Combo. Despite this premium price tag, it has only accumulated 30 reviews on major platforms, making it extremely difficult to assess long-term reliability. The assembly takes 5-10 hours, a significant time investment that beginners may not expect at this price point. The base model does not support multi-color printing - you need to buy the MMU3 separately. While Prusa's reputation for build quality and long-term support is well established, the CORE One's low review count is concerning for such an expensive machine.",
-      translation: "Prusa CORE One售价$1,212——是Bambu Lab A1 Combo的三倍。尽管价格如此高昂，主流平台上仅积累了30条评价，极难评估长期可靠性。组装需要5-10小时。基础款不支持多色打印，需另购MMU3。虽然Prusa品质声誉良好，但CORE One的低评价数对于一个昂贵的机器来说值得关注。",
-      summaryEn: "Prusa CORE One: only 30 reviews for a $1,212 printer, 5-10h assembly required, no multi-color base model, review count concerning for long-term reliability",
-      summaryCn: "Prusa CORE One售价$1,212但仅30条评价、需5-10小时组装、基础款无多色、低评价数对长期可靠性评估构成挑战",
-      sentiment: "中性",
-      dimensions: ["使用成本与兼容性 - 性价比", "日常使用体验 - 组装复杂性", "售后服务与社区 - 产品质量"],
-      problemPoints: ["评价数量极少", "价格昂贵", "组装耗时长", "基础款无多色", "可靠性数据不足"],
-      competitorMentioned: "Bambu Lab P2S, A1 Combo",
-      modsMentioned: "MMU3（需另购）",
-      heat: "3DPrintedDecor 2026年14款打印机横评，6月17日发布",
-      isP0: false
-  },
+
 {
-      id: "KB-EN-20260619-001",
-      brand: "Bambu Lab",
-      platform: "独立评测",
-      sourceLink: "https://3dprinteddecor.com/best-3d-printer-2026-14-models-tested-and-compared/",
-      country: "US",
-      language: "EN",
-      date: "2026-06-19",
-      publishedAt: "2026-06-17",
-      modelName: "A1 Combo",
-      purchaseChannel: "官网直邮",
-      purchaseDuration: "未适用",
-      verified: false,
-      shippingExperience: "未提及",
-      customs: "未提及",
-      originalText: "The A1 Combo's closed ecosystem is its biggest drawback. You are locked into Bambu Lab's filament ecosystem - third-party spools require RFID tags or manual configuration to work properly. The AMS Lite only supports 4 colors, while the full AMS needed for 16 colors costs extra. There is no enclosure, so printing ABS or other high-temperature materials requires buying or building an enclosure separately. The cloud dependency means if Bambu Lab's servers go down or your internet drops, some features become unavailable. For users who want freedom to choose any filament, this ecosystem lock-in is a real concern.",
-      translation: "A1 Combo最大的问题是封闭生态系统。用户被锁定在Bambu Lab的耗材生态中——第三方料盘需要RFID标签或手动配置才能正常使用。AMS Lite仅支持4色。没有封闭仓，打印ABS等高温材料需要额外购买或自制封闭箱。云端依赖意味着如果Bambu服务器宕机或网络断连，部分功能将无法使用。",
-      summaryEn: "Bambu Lab A1 Combo ecosystem lock-in: requires RFID tags for 3rd party filament, only 4 colors with AMS Lite, no enclosure for high-temp materials, internet dependency",
-      summaryCn: "Bambu Lab A1 Combo封闭生态：第三方耗材需RFID标签、仅4色多色、无封闭仓、依赖云端",
-      sentiment: "负面",
-      dimensions: ["使用成本与兼容性 - 耗材成本", "日常使用体验 - 局限性", "使用成本与兼容性 - 封闭生态"
-],
-      problemPoints: ["第三方耗材需RFID标签", "AMS Lite仅4色", "无封闭仓", "云端依赖", "生态锁定"],
-      competitorMentioned: "Creality K2 Combo（开放生态）",
-      modsMentioned: "第三方封闭箱",
-      heat: "3DPrintedDecor 2026年14款打印机横评，6月17日发布",
-      isP0: false
-  },
-  {
       id: "KB-EN-20260619-002",
       brand: "Creality",
       platform: "Reddit",
@@ -192,143 +472,8 @@ const OVERSEAS_FEEDBACK_DATA = {
       heat: "Makers101 6月17日发布，引用多位Reddit用户报告",
       isP0: false
   },
-  {
-      id: "KB-EN-20260619-003",
-      brand: "ELEGOO",
-      platform: "独立评测",
-      sourceLink: "https://3dprinteddecor.com/best-3d-printer-2026-14-models-tested-and-compared/",
-      country: "US",
-      language: "EN",
-      date: "2026-06-19",
-      publishedAt: "2026-06-17",
-      modelName: "Centauri Carbon 2",
-      purchaseChannel: "官网直邮",
-      purchaseDuration: "3个月内",
-      verified: true,
-      shippingExperience: "好",
-      customs: "未提及",
-      originalText: "The Centauri Carbon 2 Combo has the lowest rating among multi-color printers in our 2026 review - just 3.8 out of 5 stars based on only 59 reviews. This extremely small sample size means long-term reliability is essentially unknown. The Canvas multi-color system feels significantly less mature than Bambu Lab's AMS: color changes are slower, the purge waste optimization is not as refined, and users report more failed color transitions. At $649 it costs more than the Bambu A1 Combo at $399 while delivering an inferior multi-color experience. The fact that only 59 users have left reviews after months on the market suggests relatively low adoption.",
-      translation: "Centauri Carbon 2 Combo在2026年评测中获多色打印机最低评分——基于仅59条评价的3.8星。极小的样本量意味着长期可靠性基本未知。Canvas多色系统明显不如Bambu Lab的AMS成熟：换色较慢、废料优化不够精细、用户报告更多换色失败。$649的售价高于Bambu A1 Combo的$399，却提供更差的多色体验。仅59条评价表明市场接受度较低。",
-      summaryEn: "Centauri Carbon 2 Combo lowest rated multi-color printer (3.8 stars, 59 reviews), Canvas system immature vs Bambu AMS, slow color changes, failed transitions, poor value",
-      summaryCn: "Centauri Carbon 2多色打印机评分最低（3.8星/59条评价）、Canvas系统远不如Bambu AMS成熟、换色慢失败率高、$649性价比差",
-      sentiment: "负面",
-      dimensions: ["硬件性能 - 多色系统", "日常使用体验 - 可靠性", "使用成本与兼容性 - 性价比"],
-      problemPoints: ["多色系统不成熟", "换色速度慢", "换色失败率高", "评价样本量极少", "长期可靠性未知", "价格偏高"],
-      competitorMentioned: "Bambu Lab A1 Combo (AMS)",
-      modsMentioned: "",
-      heat: "3DPrintedDecor 2026年14款打印机横评",
-      isP0: false
-  },
-  {
-      id: "KB-EN-20260619-004",
-      brand: "Flashforge",
-      platform: "独立评测",
-      sourceLink: "https://3dprinteddecor.com/best-3d-printer-2026-14-models-tested-and-compared/",
-      country: "US",
-      language: "EN",
-      date: "2026-06-19",
-      publishedAt: "2026-06-17",
-      modelName: "Adventurer 5M Pro",
-      purchaseChannel: "官网直邮",
-      purchaseDuration: "1个月内",
-      verified: true,
-      shippingExperience: "未提及",
-      customs: "未提及",
-      originalText: "The Adventurer 5M Pro is essentially the same printer as the base 5M with a single added feature: one-click auto print. For that, Flashforge charges an extra $140. The hardware is identical - same 220mm build volume, same 280C max nozzle temperature, same lack of multi-color support. That 280C limit means you cannot print many engineering-grade materials like PC or Nylon which need higher temperatures. The user rating of 3.9 stars partly reflects this poor value proposition. The small community compared to Bambu and Creality also means fewer user-created profiles and troubleshooting resources available online.",
-      translation: "Adventurer 5M Pro与基础款5M硬件完全相同，仅增加了一键自动打印功能，价格高出$140。280°C的最高喷嘴温度意味着无法打印许多工程材料如PC、尼龙等。3.9星用户评分部分反映了这个糟糕的性价比。社区规模小于Bambu和Creality。",
-      summaryEn: "Flashforge Adventurer 5M Pro poor value: $140 premium for single feature, 280C nozzle limits engineering materials, 3.9 stars, small community",
-      summaryCn: "Flashforge Adventurer 5M Pro性价比差：比基础款贵$140仅增加一键打印、280°C喷嘴限制工程材料、3.9星评分、社区小",
-      sentiment: "负面",
-      dimensions: ["使用成本与兼容性 - 性价比", "硬件性能 - 打印能力限制", "售后服务与社区 - 社区支持"],
-      problemPoints: ["Pro版升级费贵$140", "280°C喷头温度上限", "无法打印工程材料", "无多色功能", "社区小"],
-      competitorMentioned: "Bambu Lab A1, Creality K1C",
-      modsMentioned: "",
-      heat: "3DPrintedDecor 2026年14款打印机横评，6月17日发布",
-      isP0: false
-  },
-  {
-      id: "KB-EN-20260619-005",
-      brand: "Prusa",
-      platform: "独立评测",
-      sourceLink: "https://3dprinteddecor.com/best-3d-printer-2026-14-models-tested-and-compared/",
-      country: "US",
-      language: "EN",
-      date: "2026-06-19",
-      publishedAt: "2026-06-17",
-      modelName: "CORE One",
-      purchaseChannel: "官网直邮",
-      purchaseDuration: "未适用",
-      verified: false,
-      shippingExperience: "未提及",
-      customs: "未提及",
-      originalText: "The Original Prusa CORE One is priced at $1,212 - three times the price of a Bambu Lab A1 Combo. Despite this premium price tag, it has only accumulated 30 reviews on major platforms, making it extremely difficult to assess long-term reliability. The assembly takes 5-10 hours, a significant time investment that beginners may not expect at this price point. The base model does not support multi-color printing - you need to buy the MMU3 separately. While Prusa's reputation for build quality and long-term support is well established, the CORE One's low review count is concerning for such an expensive machine.",
-      translation: "Prusa CORE One售价$1,212——是Bambu Lab A1 Combo的三倍。尽管价格如此高昂，主流平台上仅积累了30条评价，极难评估长期可靠性。组装需要5-10小时。基础款不支持多色打印，需另购MMU3。虽然Prusa品质声誉良好，但CORE One的低评价数对于一个昂贵的机器来说值得关注。",
-      summaryEn: "Prusa CORE One: only 30 reviews for a $1,212 printer, 5-10h assembly required, no multi-color base model, review count concerning for long-term reliability",
-      summaryCn: "Prusa CORE One售价$1,212但仅30条评价、需5-10小时组装、基础款无多色、低评价数对长期可靠性评估构成挑战",
-      sentiment: "中性",
-      dimensions: ["使用成本与兼容性 - 性价比", "日常使用体验 - 组装复杂性", "售后服务与社区 - 产品质量"],
-      problemPoints: ["评价数量极少", "价格昂贵", "组装耗时长", "基础款无多色", "可靠性数据不足"],
-      competitorMentioned: "Bambu Lab P2S, A1 Combo",
-      modsMentioned: "MMU3（需另购）",
-      heat: "3DPrintedDecor 2026年14款打印机横评，6月17日发布",
-      isP0: false
-  },
+
 {
-      id: "KB-EN-20260619-001",
-      brand: "Bambu Lab",
-      platform: "独立评测",
-      sourceLink: "https://3dprinteddecor.com/best-3d-printer-2026-14-models-tested-and-compared/",
-      country: "US",
-      language: "EN",
-      date: "2026-06-19",
-      publishedAt: "2026-06-17",
-      modelName: "A1 Combo",
-      purchaseChannel: "官网直邮",
-      purchaseDuration: "未适用",
-      verified: false,
-      shippingExperience: "未提及",
-      customs: "未提及",
-      originalText: "The A1 Combo's closed ecosystem is its biggest drawback. You are locked into Bambu Lab's filament ecosystem - third-party spools require RFID tags or manual configuration to work properly. The AMS Lite only supports 4 colors, while the full AMS needed for 16 colors costs extra. There is no enclosure, so printing ABS or other high-temperature materials requires buying or building an enclosure separately. The cloud dependency means if Bambu Lab's servers go down or your internet drops, some features become unavailable. For users who want freedom to choose any filament, this ecosystem lock-in is a real concern.",
-      translation: "A1 Combo最大的问题是封闭生态系统。用户被锁定在Bambu Lab的耗材生态中——第三方料盘需要RFID标签或手动配置才能正常使用。AMS Lite仅支持4色。没有封闭仓，打印ABS等高温材料需要额外购买或自制封闭箱。云端依赖意味着如果Bambu服务器宕机或网络断连，部分功能将无法使用。",
-      summaryEn: "Bambu Lab A1 Combo ecosystem lock-in: requires RFID tags for 3rd party filament, only 4 colors with AMS Lite, no enclosure for high-temp materials, internet dependency",
-      summaryCn: "Bambu Lab A1 Combo封闭生态：第三方耗材需RFID标签、仅4色多色、无封闭仓、依赖云端",
-      sentiment: "负面",
-      dimensions: ["使用成本与兼容性 - 耗材成本", "日常使用体验 - 局限性", "使用成本与兼容性 - 封闭生态"
-],
-      problemPoints: ["第三方耗材需RFID标签", "AMS Lite仅4色", "无封闭仓", "云端依赖", "生态锁定"],
-      competitorMentioned: "Creality K2 Combo（开放生态）",
-      modsMentioned: "第三方封闭箱",
-      heat: "3DPrintedDecor 2026年14款打印机横评，6月17日发布",
-      isP0: false
-  },
-  {
-      id: "KB-EN-20260619-002",
-      brand: "Creality",
-      platform: "Reddit",
-      sourceLink: "https://makers101.com/fix-a-jammed-filament-on-creality-k2-series-3d-printers/",
-      country: "US",
-      language: "EN",
-      date: "2026-06-19",
-      publishedAt: "2026-06-17",
-      modelName: "K2 Plus",
-      purchaseChannel: "官网直邮",
-      purchaseDuration: "3个月内",
-      verified: true,
-      shippingExperience: "好",
-      customs: "未提及",
-      originalText: "Several Reddit users report that the K2 Plus spring assembly can shift slightly out of alignment after multiple jams. When clearing a jam by pulling the filament out from the extruder, the spring mechanism gradually moves off-center. This causes inconsistent tension and makes the printer more prone to future jams. The fix requires disassembling the extruder to realign the spring assembly - a process that is not documented in the official Creality guides. Users who have experienced 3+ jams are most affected, with the spring misalignment becoming progressively worse. One Reddit user posted that after the 4th jam in 2 months, the extruder won't grab filament at all unless manually holding the lever.",
-      translation: "多名Reddit用户报告K2 Plus的弹簧组件在多次卡料后会逐渐移位。从挤出器中拉出卡住的耗材时，弹簧机构逐渐偏离中心位置。这导致张力不一致，使打印机更容易再次卡料。修复需要拆卸挤出器重新对齐弹簧组件——该过程不在官方指南中。经历过3次以上卡料的用户受影响最严重，弹簧偏移逐渐恶化。",
-      summaryEn: "K2 Plus spring assembly shifts after multiple filament jams causing progressive misalignment, requires undocumented extruder disassembly to fix",
-      summaryCn: "K2 Plus弹簧组件在多次卡料后逐渐移位导致一致性变差，需拆卸挤出器重新对齐，用户报告问题随卡料次数增加而恶化",
-      sentiment: "负面",
-      dimensions: ["硬件性能 - 挤出系统", "硬件性能 - 故障率"],
-      problemPoints: ["弹簧组件移位", "卡料后恶化", "需拆卸挤出器", "官方无修复指南"],
-      competitorMentioned: "",
-      modsMentioned: "",
-      heat: "Makers101 6月17日发布，引用多位Reddit用户报告",
-      isP0: false
-  },
-  {
       id: "KB-EN-20260619-003",
       brand: "ELEGOO",
       platform: "独立评测",
@@ -355,7 +500,8 @@ const OVERSEAS_FEEDBACK_DATA = {
       heat: "3DPrintedDecor 2026年14款打印机横评",
       isP0: false
   },
-  {
+
+{
       id: "KB-EN-20260619-004",
       brand: "Flashforge",
       platform: "独立评测",
@@ -382,7 +528,8 @@ const OVERSEAS_FEEDBACK_DATA = {
       heat: "3DPrintedDecor 2026年14款打印机横评，6月17日发布",
       isP0: false
   },
-  {
+
+{
       id: "KB-EN-20260619-005",
       brand: "Prusa",
       platform: "独立评测",
@@ -409,6 +556,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       heat: "3DPrintedDecor 2026年14款打印机横评，6月17日发布",
       isP0: false
   },
+
 {
       id: "KB-EN-20260618-001",
       brand: "Creality",
@@ -437,7 +585,8 @@ const OVERSEAS_FEEDBACK_DATA = {
       heat: "3DWork.io深度评测，Creality K2系列专题",
       isP0: false
   },
-  {
+
+{
       id: "KB-EN-20260618-002",
       brand: "Creality",
       platform: "独立评测",
@@ -464,7 +613,8 @@ const OVERSEAS_FEEDBACK_DATA = {
       heat: "3DWork.io深度评测",
       isP0: false
   },
-  {
+
+{
       id: "KB-EN-20260618-003",
       brand: "Creality",
       platform: "独立评测",
@@ -491,7 +641,8 @@ const OVERSEAS_FEEDBACK_DATA = {
       heat: "3DWork.io深度评测，Creality社区反复报告",
       isP0: false
   },
-  {
+
+{
       id: "KB-EN-20260618-004",
       brand: "Creality",
       platform: "在线论坛",
@@ -518,7 +669,8 @@ const OVERSEAS_FEEDBACK_DATA = {
       heat: "Creality社区论坛K2 Pro版块，6月15日发布，社区回复提及耗材干燥建议",
       isP0: false
   },
-  {
+
+{
       id: "KB-EN-20260618-005",
       brand: "Creality",
       platform: "独立评测",
@@ -545,7 +697,8 @@ const OVERSEAS_FEEDBACK_DATA = {
       heat: "3DWork.io深度评测",
       isP0: false
   },
-  {
+
+{
       id: "KB-EN-20260617-001",
       brand: "Creality",
       platform: "在线论坛",
@@ -572,7 +725,8 @@ const OVERSEAS_FEEDBACK_DATA = {
       heat: "5 days active",
       isP0: false
   },
-  {
+
+{
       id: "KB-EN-20260617-002",
       brand: "Creality",
       platform: "在线论坛",
@@ -599,7 +753,8 @@ const OVERSEAS_FEEDBACK_DATA = {
       heat: "3 days active",
       isP0: false
   },
-  {
+
+{
       id: "KB-EN-20260617-003",
       brand: "Creality",
       platform: "在线论坛",
@@ -626,7 +781,8 @@ const OVERSEAS_FEEDBACK_DATA = {
       heat: "1 day active",
       isP0: false
   },
-  {
+
+{
       id: "KB-EN-20260617-004",
       brand: "Prusa",
       platform: "在线论坛",
@@ -653,7 +809,8 @@ const OVERSEAS_FEEDBACK_DATA = {
       heat: "22 replies, active Jun 13-15",
       isP0: false
   },
-  {
+
+{
       id: "KB-EN-20260617-005",
       brand: "Prusa",
       platform: "在线论坛",
@@ -681,7 +838,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       isP0: false
   },
 
-  {
+{
       id: "KB-EN-20260616-001",
       brand: "Prusa",
       platform: "在线论坛",
@@ -709,7 +866,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       isP0: false,
   },
 
-  {
+{
       id: "KB-EN-20260616-002",
       brand: "Prusa",
       platform: "在线论坛",
@@ -737,7 +894,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       isP0: false,
   },
 
-  {
+{
       id: "KB-EN-20260616-003",
       brand: "Creality",
       platform: "在线论坛",
@@ -765,7 +922,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       isP0: false,
   },
 
-  {
+{
       id: "KB-EN-20260616-004",
       brand: "Creality",
       platform: "在线论坛",
@@ -793,7 +950,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       isP0: false,
   },
 
-  {
+{
       id: "KB-EN-20260616-005",
       brand: "Prusa",
       platform: "在线论坛",
@@ -821,7 +978,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       isP0: false,
   },
 
-    {
+{
       id: "KB-EN-20260615-001",
       brand: "Creality",
       platform: "独立评测",
@@ -848,7 +1005,8 @@ const OVERSEAS_FEEDBACK_DATA = {
       heat: "peccadille.net 2026年6月12款3D打印机横评引用14%用户报告软件问题",
       isP0: false,
   },
-  {
+
+{
       id: "KB-EN-20260615-002",
       brand: "Flashforge",
       platform: "独立评测",
@@ -875,7 +1033,8 @@ const OVERSEAS_FEEDBACK_DATA = {
       heat: "peccadille.net 2026年6月12款3D打印机横评，16%差评率提及",
       isP0: false,
   },
-  {
+
+{
       id: "KB-EN-20260615-003",
       brand: "ELEGOO",
       platform: "独立评测",
@@ -902,7 +1061,8 @@ const OVERSEAS_FEEDBACK_DATA = {
       heat: "peccadille.net 2026年6月12款3D打印机横评，13%差评率+用户噪音描述",
       isP0: false,
   },
-  {
+
+{
       id: "KB-EN-20260615-004",
       brand: "Creality",
       platform: "独立评测",
@@ -929,7 +1089,8 @@ const OVERSEAS_FEEDBACK_DATA = {
       heat: "peccadille.net 2026年6月12款3D打印机横评，5%用户报告品控问题",
       isP0: false,
   },
-  {
+
+{
       id: "KB-EN-20260615-005",
       brand: "Bambu Lab",
       platform: "独立评测",
@@ -957,7 +1118,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       isP0: false,
   },
 
-  {
+{
       id: "KB-EN-20260612-001",
       brand: "Bambu Lab",
       platform: "独立评测",
@@ -985,7 +1146,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       isP0: false,
 },
 
-  {
+{
       id: "KB-EN-20260612-002",
       brand: "Prusa",
       platform: "在线论坛",
@@ -1013,7 +1174,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       isP0: false,
 },
 
-  {
+{
       id: "KB-EN-20260612-003",
       brand: "Prusa",
       platform: "在线论坛",
@@ -1041,7 +1202,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       isP0: false,
 },
 
-  {
+{
       id: "KB-EN-20260612-004",
       brand: "Creality",
       platform: "独立评测",
@@ -1069,7 +1230,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       isP0: false,
 },
 
-  {
+{
       id: "KB-EN-20260612-005",
       brand: "ELEGOO",
       platform: "独立评测",
@@ -1097,8 +1258,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       isP0: false,
 },
 
-
-  {
+{
     id: "KB-EN-20260611-001",
     brand: "Bambu Lab",
     platform: "独立评测",
@@ -1135,7 +1295,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     isP0: true
   },
 
-  {
+{
     id: "KB-EN-20260611-002",
     brand: "Prusa",
     platform: "在线论坛",
@@ -1172,7 +1332,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     isP0: false
   },
 
-  {
+{
     id: "KB-EN-20260611-003",
     brand: "Prusa",
     platform: "在线论坛",
@@ -1210,7 +1370,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     isP0: false
   },
 
-  {
+{
     id: "KB-EN-20260611-004",
     brand: "Prusa",
     platform: "在线论坛",
@@ -1247,7 +1407,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     isP0: false
   },
 
-  {
+{
     id: "KB-EN-20260611-005",
     brand: "Bambu Lab",
     platform: "独立评测",
@@ -1285,7 +1445,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     isP0: false
   },
 
-  {
+{
     id: "KB-EN-20260610-001",
     brand: "Prusa",
     platform: "在线论坛",
@@ -1320,7 +1480,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     isP0: false,
   },
 
-  {
+{
     id: "KB-EN-20260610-002",
     brand: "Creality",
     platform: "独立评测",
@@ -1358,7 +1518,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     isP0: false,
   },
 
-  {
+{
     id: "KB-EN-20260610-003",
     brand: "Anycubic",
     platform: "独立评测",
@@ -1396,7 +1556,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     isP0: false,
   },
 
-  {
+{
     id: "KB-EN-20260610-004",
     brand: "Bambu Lab",
     platform: "独立评测",
@@ -1433,7 +1593,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     isP0: false,
   },
 
-  {
+{
     id: "KB-EN-20260610-005",
     brand: "ELEGOO",
     platform: "独立评测",
@@ -1471,7 +1631,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     isP0: false,
   },
 
-  {
+{
     id: "KB-EN-20260609-001",
     brand: "ELEGOO",
     platform: "独立评测",
@@ -1509,7 +1669,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     isP0: false
   },
 
-  {
+{
     id: "KB-EN-20260609-002",
     brand: "Prusa",
     platform: "在线论坛",
@@ -1545,7 +1705,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     isP0: false
   },
 
-  {
+{
     id: "KB-EN-20260609-003",
     brand: "Creality",
     platform: "独立评测",
@@ -1583,7 +1743,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     isP0: false
   },
 
-  {
+{
     id: "KB-EN-20260609-004",
     brand: "Bambu Lab",
     platform: "独立评测",
@@ -1621,7 +1781,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     isP0: false
   },
 
-  {
+{
     id: "KB-EN-20260609-005",
     brand: "Prusa",
     platform: "在线论坛",
@@ -1657,7 +1817,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     isP0: false
   },
 
-  {
+{
 id: "KB-EN-20260608-002",
       brand: "Prusa",
       platform: "在线论坛",
@@ -1685,7 +1845,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260608-003",
       brand: "Anycubic",
       platform: "独立评测",
@@ -1713,7 +1873,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260608-004",
       brand: "Bambu Lab",
       platform: "独立评测",
@@ -1741,7 +1901,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260608-005",
       brand: "Sovol",
       platform: "在线论坛",
@@ -1769,7 +1929,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260605-001",
       brand: "Bambu Lab",
       platform: "独立评测",
@@ -1795,7 +1955,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260605-002",
       brand: "Prusa",
       platform: "独立评测",
@@ -1821,7 +1981,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260605-003",
       brand: "ELEGOO",
       platform: "独立评测",
@@ -1847,7 +2007,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260605-004",
       brand: "Bambu Lab",
       platform: "独立评测",
@@ -1873,7 +2033,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260605-005",
       brand: "Bambu Lab",
       platform: "独立评测",
@@ -1899,7 +2059,7 @@ id: "KB-EN-20260608-002",
       isP0: true
     },
 
-  {
+{
       id: "KB-EN-20260604-001",
       brand: "Bambu Lab",
       platform: "行业评测",
@@ -1927,7 +2087,7 @@ id: "KB-EN-20260608-002",
       isP0: false,
     },
 
-  {
+{
       id: "KB-EN-20260604-002",
       brand: "Prusa",
       platform: "在线论坛",
@@ -1955,7 +2115,7 @@ id: "KB-EN-20260608-002",
       isP0: false,
     },
 
-  {
+{
       id: "KB-EN-20260604-003",
       brand: "Creality",
       platform: "在线论坛",
@@ -1983,7 +2143,7 @@ id: "KB-EN-20260608-002",
       isP0: false,
     },
 
-  {
+{
       id: "KB-EN-20260604-004",
       brand: "Bambu Lab",
       platform: "独立评测",
@@ -2011,7 +2171,7 @@ id: "KB-EN-20260608-002",
       isP0: false,
     },
 
-  {
+{
       id: "KB-EN-20260604-005",
       brand: "ELEGOO",
       platform: "独立评测",
@@ -2039,7 +2199,7 @@ id: "KB-EN-20260608-002",
       isP0: false,
     },
 
-  {
+{
       id: "KB-EN-20260603-001",
       brand: "Bambu Lab",
       platform: "行业评测",
@@ -2067,7 +2227,7 @@ id: "KB-EN-20260608-002",
       isP0: true
     },
 
-  {
+{
       id: "KB-EN-20260603-002",
       brand: "Bambu Lab",
       platform: "独立评测",
@@ -2095,7 +2255,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260603-003",
       brand: "Creality",
       platform: "行业评测",
@@ -2123,7 +2283,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260603-004",
       brand: "Bambu Lab",
       platform: "行业评测",
@@ -2151,7 +2311,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260603-005",
       brand: "Bambu Lab",
       platform: "行业评测",
@@ -2179,7 +2339,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260602-001",
       brand: "Bambu Lab",
       platform: "行业评测",
@@ -2207,7 +2367,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260602-002",
       brand: "Anycubic",
       platform: "独立评测",
@@ -2235,7 +2395,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260602-003",
       brand: "ELEGOO",
       platform: "行业评测",
@@ -2263,7 +2423,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260602-004",
       brand: "Creality",
       platform: "行业评测",
@@ -2291,7 +2451,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260602-005",
       brand: "Prusa",
       platform: "行业评测",
@@ -2319,7 +2479,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260601-001",
       brand: "Bambu Lab",
       platform: "Reddit综合",
@@ -2347,7 +2507,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260601-002",
       brand: "Prusa",
       platform: "独立评测",
@@ -2375,7 +2535,7 @@ id: "KB-EN-20260608-002",
       isP0: true
     },
 
-  {
+{
       id: "KB-EN-20260601-003",
       brand: "Prusa",
       platform: "独立评测",
@@ -2403,7 +2563,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260601-004",
       brand: "ELEGOO",
       platform: "独立评测",
@@ -2431,7 +2591,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260601-005",
       brand: "Creality",
       platform: "独立评测",
@@ -2459,7 +2619,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260529-001",
       brand: "Bambu Lab",
       platform: "行业评测",
@@ -2485,7 +2645,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260529-002",
       brand: "Creality",
       platform: "行业评测",
@@ -2511,7 +2671,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260529-003",
       brand: "Anycubic",
       platform: "独立评测",
@@ -2537,7 +2697,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260529-004",
       brand: "ELEGOO",
       platform: "独立评测",
@@ -2563,7 +2723,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260529-005",
       brand: "Creality",
       platform: "行业评测",
@@ -2589,7 +2749,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260528-001",
       brand: "Anycubic",
       platform: "独立评测",
@@ -2615,7 +2775,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260528-002",
       brand: "Prusa",
       platform: "独立评测",
@@ -2641,7 +2801,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260528-003",
       brand: "Bambu Lab",
       platform: "独立评测",
@@ -2667,7 +2827,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260528-004",
       brand: "Sovol",
       platform: "独立评测",
@@ -2693,7 +2853,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260528-005",
       brand: "Flashforge",
       platform: "独立评测",
@@ -2719,7 +2879,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260527-001",
       brand: "Bambu Lab",
       platform: "行业评测",
@@ -2745,7 +2905,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260527-002",
       brand: "QIDI",
       platform: "独立评测",
@@ -2771,7 +2931,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260527-003",
       brand: "Bambu Lab",
       platform: "行业评测",
@@ -2797,7 +2957,7 @@ id: "KB-EN-20260608-002",
       isP0: true
     },
 
-  {
+{
       id: "KB-EN-20260527-004",
       brand: "Prusa",
       platform: "Reddit综合",
@@ -2823,7 +2983,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260527-005",
       brand: "Prusa",
       platform: "Reddit综合",
@@ -2849,7 +3009,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260526-001",
       brand: "Creality",
       platform: "独立评测",
@@ -2875,7 +3035,7 @@ id: "KB-EN-20260608-002",
       isP0: true
     },
 
-  {
+{
       id: "KB-EN-20260526-002",
       brand: "Creality",
       platform: "行业评测",
@@ -2901,7 +3061,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260526-003",
       brand: "ELEGOO",
       platform: "独立评测",
@@ -2927,7 +3087,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260526-004",
       brand: "Anycubic",
       platform: "独立评测",
@@ -2953,7 +3113,7 @@ id: "KB-EN-20260608-002",
       isP0: true
     },
 
-  {
+{
       id: "KB-EN-20260526-005",
       brand: "Anycubic",
       platform: "独立评测",
@@ -2979,7 +3139,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260525-001",
       brand: "Anycubic",
       platform: "独立评测",
@@ -3005,7 +3165,7 @@ id: "KB-EN-20260608-002",
       isP0: true
     },
 
-  {
+{
       id: "KB-EN-20260525-002",
       brand: "Bambu Lab",
       platform: "行业评测",
@@ -3031,7 +3191,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260525-003",
       brand: "Creality",
       platform: "行业评测",
@@ -3057,7 +3217,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260525-004",
       brand: "ELEGOO",
       platform: "行业评测",
@@ -3083,7 +3243,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
+{
       id: "KB-EN-20260525-005",
       brand: "QIDI",
       platform: "独立评测",
@@ -3109,259 +3269,7 @@ id: "KB-EN-20260608-002",
       isP0: false
     },
 
-  {
-      id: "KB-EN-20260521-001",
-      brand: "Flashforge",
-      platform: "独立评测",
-      sourceLink: "https://layerdepth.com/reviews/flashforge-adventurer-5m/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-21",
-      publishedAt: "2026-04-03",
-      modelName: "Adventurer 5M",
-      purchaseChannel: "Amazon FBA",
-      purchaseDuration: "3个月内",
-      verified: true,
-      shippingExperience: "一般",
-      customs: "未提及",
-      originalText: "LayerDepth analysis of 563 Amazon reviews: 87% enthusiasts (489), 11% critics (62). The most prominent weakness: noise. Running at ~55dB, it's the loudest printer in their test group. One reviewer described it as 'sounds like a jet engine.' The second major complaint is binary failure mode — 11% of critics mentioned 'refund' (0% of enthusiasts), and 11% mentioned 'Nothing' suggesting the printer either works perfectly or arrives completely dead. The default print quality is only 'middling' and the FlashPrint slicer is limited compared to OrcaSlicer. Hotend fan noise is noticeably louder than A1 Mini. No built-in camera or enclosure. Nozzle temp maxes at 280°C, unable to print carbon-fiber composites requiring 300°C+. However, it's evaluated as a 'print farm favorite' for speed and toolhead maintenance ease.",
-      translation: "LayerDepth分析563条Amazon评论：87%爱好者（489人），11%批评者（62人）。最突出的缺点是噪音——约55dB，测试组中最吵的打印机。一位用户形容\"听起来像喷气发动机\"。第二个主要抱怨是二元故障模式——11%的批评者提到\"退款\"（爱好者中0%），11%提到\"什么也没有\"，说明打印机要么完美工作要么开箱就坏。默认打印质量仅\"中等\"，FlashPrint切片器功能远不如OrcaSlicer。热端风扇噪音明显比A1 Mini更响。无内置摄像头或无外壳。喷嘴最高280°C，无法打印需300°C+的碳纤维复合材料。但评测仍将其评为\"打印农场之选\"——速度快、工具头维护方便。",
-      summaryEn: "AD5M 87% satisfaction, but 55dB loudest in class, 11% critics cite refunds for DOA units, middling default quality, 280°C max nozzle, no enclosure/camera, FlashPrint limited",
-      summaryCn: "AD5M满意度87%，但55dB噪音同级最高、11%批评者因开箱即坏要求退款、默认质量中等、喷嘴仅280°C、无外壳/摄像头、FlashPrint受限",
-      sentiment: "负面",
-      dimensions: ["硬件性能 - 噪音", "硬件性能 - 品控", "日常使用体验 - 入门难度"],
-      problemPoints: ["噪音大", "开箱故障率较高", "默认打印质量中等", "切片软件功能弱", "最高温度限制"],
-      competitorMentioned: "Bambu Lab A1 Mini",
-      modsMentioned: "",
-      heat: "563条Amazon评论数据挖掘分析",
-      isP0: false
-    },
-
-  {
-      id: "KB-EN-20260521-002",
-      brand: "Prusa",
-      platform: "独立评测",
-      sourceLink: "https://layerdepth.com/reviews/prusa-core-one/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-21",
-      publishedAt: "2026-04-03",
-      modelName: "CORE One",
-      purchaseChannel: "官网直邮",
-      purchaseDuration: "3个月内",
-      verified: true,
-      shippingExperience: "好",
-      customs: "费用合理",
-      originalText: "LayerDepth analysis of 205 Amazon reviews: 95% enthusiasts (195), only 3.5% critics (7). However, the most common criticism is price-to-build-volume ratio — at $949-$1,199 with only 250×220×270mm build volume, it's roughly 2x the price of comparable Bambu Lab P1S ($549) with similar volume. Speed is also a weakness at max 320mm/s — the slowest enclosed CoreXY tested, 19-31% slower than P1S/Centauri Carbon/K2 SE. The 7 critic reviews all point to 3D-printed parts assembly quality (tolerances, surface finish as issues). One reviewer noted cable routing slightly interfered with motion (first batch issue, fixed by firmware). PrusaSlicer is more complex than Bambu Studio for beginners. \"Opensource means no RFID auto-config, no cloud features.\" Nozzle max temp at 300°C. But excels at active heated chamber to 55°C — unique for enclosed CoreXY, enabling reliable ABS/ASA/nylon printing. 48dB quietest enclosed CoreXY tested.",
-      translation: "LayerDepth分析205条Amazon评论：95%爱好者（195人），仅3.5%批评者（7人）。最常见的批评是价格与构建体积比——$949-$1,199售价仅250×220×270mm构建体积，是同尺寸Bambu Lab P1S（$549）的约2倍。速度也是短板——最高320mm/s，是测试中最慢的封闭式CoreXY，比P1S/Centauri Carbon/K2 SE慢19-31%。7条批评评论均指向3D打印组建装质量（公差、表面处理问题）。一位用户提到线缆排布轻微干涉运动（第一批次问题，已通过固件修复）。PrusaSlicer对新手比Bambu Studio更复杂。\"开源意味着无RFID自动配置、无云功能。\"但主动加热腔室至55°C是独特优势——封闭式CoreXY中独一无二，可实现可靠ABS/ASA/尼龙打印。48dB是测试中最安静的封闭式CoreXY。",
-      summaryEn: "CORE One 95% satisfaction, but 2x price of P1S for comparable build volume, 320mm/s slowest enclosed CoreXY, 7 critics cite 3D-printed assembly quality, PrusaSlicer complex",
-      summaryCn: "CORE One满意度95%，但同等体积价格是P1S两倍、320mm/s最慢封闭CoreXY、7位批评者指3D打印组装质量、PrusaSlicer复杂",
-      sentiment: "中性",
-      dimensions: ["硬件性能 - 打印速度", "使用成本与兼容性", "日常使用体验 - 入门难度"],
-      problemPoints: ["价格偏高", "打印速度偏慢", "组装质量不尽如人意", "对新手不友好"],
-      competitorMentioned: "Bambu Lab P1S, Creality K2 SE, ELEGOO Centauri Carbon",
-      modsMentioned: "",
-      heat: "205条Amazon评论数据挖掘分析",
-      isP0: false
-    },
-
-  {
-      id: "KB-EN-20260521-003",
-      brand: "Bambu Lab",
-      platform: "独立评测",
-      sourceLink: "https://www.tomshardware.com/3d-printing/bambu-lab-x2d-review",
-      country: "US",
-      language: "EN",
-      date: "2026-05-21",
-      publishedAt: "2026-04-14",
-      modelName: "X2D",
-      purchaseChannel: "官网直邮",
-      purchaseDuration: "1个月内",
-      verified: true,
-      shippingExperience: "好",
-      customs: "未提及",
-      originalText: "Tom's Hardware review by Denise Bertacchi: The X2D's biggest drawback is the auxiliary Bowden-driven nozzle. The same calibration cube that took 20min 35sec on the main nozzle took 41min 59sec on the aux nozzle with visible surface waviness. TPU compatibility is severely limited — AMS 2 Pro only handles stiff 'TPU for AMS', and running soft TPU through the Bowden aux nozzle is described as 'like pushing wet spaghetti through a pipe.' AMS 2 Pro drying function only works in non-printing state. No USB drive included. 'Motion Mode' and 'Insane Mode' at 1000mm/s produce 'dubious' quality only suitable for rough drafts. Users also noted confusion about the Bowden extruder on a modern printer — one reviewer commented 'Didn't expect a Bowden extruder, but the price is really good.' The printer lacks a solution for waste material 'poops' — Bambu still hasn't addressed this. Overall it's \"a fantastic example of strategic improvement while keeping costs in check\" but the aux nozzle design trade-offs are real.",
-      translation: "Tom's Hardware评测（Denise Bertacchi）：X2D最大缺陷是辅助Bowden驱动喷嘴。同样校准方块，主喷嘴20分35秒完成，辅助喷嘴需41分59秒且侧壁可见波纹。TPU兼容性严重受限——AMS 2 Pro只能处理硬质\"TPU for AMS\"，软TPU通过Bowden辅助喷嘴\"就像把湿面条推过管道\"。AMS 2 Pro烘干功能仅在非打印状态运行。不含USB存储。\"运动模式\"和\"疯狂模式\"在1000mm/s下质量\"可疑\"，仅适合粗稿。用户对现代打印机使用Bowden挤出机感到困惑——一位评测者评论\"没想到是Bowden挤出机，但价格确实不错\"。打印机没有解决废料\"poops\"问题——Bambu至今未处理。总体评价\"在控制成本的同时进行战略改进的绝佳范例\"，但辅助喷嘴的设计平衡是真实存在的。",
-      summaryEn: "X2D Bowden aux nozzle 2x slower than main with surface waviness, TPU severely limited, AMS drying only when idle, 1000mm/s 'Insane Mode' quality dubious, no poop solution",
-      summaryCn: "X2D辅助Bowden喷嘴速度慢一倍且表面波纹、TPU严重受限、AMS仅空闲时烘干、1000mm/s\"疯狂模式\"质量可疑、无废料解决方案",
-      sentiment: "负面",
-      dimensions: ["硬件性能 - 多色/多喷嘴系统", "硬件性能 - 打印质量", "软件与交互 - 切片软件"],
-      problemPoints: ["Bowden辅助喷嘴性能差", "TPU兼容性受限", "高速模式质量存疑", "耗材废弃无解决方案"],
-      competitorMentioned: "Bambu Lab X1 Carbon, P2S",
-      modsMentioned: "",
-      heat: "Tom's Hardware专业评测",
-      isP0: false
-    },
-
-  {
-      id: "KB-EN-20260521-004",
-      brand: "Bambu Lab",
-      platform: "独立评测",
-      sourceLink: "https://www.call-3d.com/blogs/bambu-printer-review-hub/bambu-x2d-review-who-should-not-buy",
-      country: "UK",
-      language: "EN",
-      date: "2026-05-21",
-      publishedAt: "2026-04-16",
-      modelName: "X2D",
-      purchaseChannel: "官网直邮",
-      purchaseDuration: "1个月内",
-      verified: true,
-      shippingExperience: "好",
-      customs: "未提及",
-      originalText: "Call-3D review by BIG BRO: The X2D is NOT a plug-and-play printer. It explicitly lists 6 types of users who should NOT buy it: (1) True beginners who just want to 'download and print' — X2D requires printer fundamentals knowledge. (2) Users who hate calibration, tuning, and profile testing — manual material tuning is required, not just automatic flow. (3) Users who need TPU on both toolheads — the auxiliary toolhead cannot print TPU at all. The main toolhead with TPU Feeding Module handles 85A+ TPU. (4) Users sensitive to maintenance complexity — the dual-toolhead system makes repairs 'much more involved', requires opening the toolhead and handling cables. (5) Users wanting absolute best-in-class multi-color — X2D multi-color experience 'still generally behind H2C and Snapmaker U1', needs extra Filament Track Switch and dual AMS. (6) Users printing only small parts — dual-nozzle is overkill. Verdict: \"recommendation is simple, but admiration is hard.\"",
-      translation: "Call-3D评测（BIG BRO）：X2D并非即插即用打印机。明确列出6类不应购买的用户：(1)只想\"下载即打印\"的真正新手——X2D需要打印机基础知识。(2)讨厌校准、调试和参数配置的用户——需要手动材料调试，非自动流量调谐。(3)需双工具头都支持TPU的用户——辅助工具头完全不能打TPU，主工具头配合TPU送料模块可处理85A+ TPU。(4)对维护复杂度敏感的用户——双工具头系统使维修\"极其复杂\"，需打开工具头处理电缆。(5)追求绝对最佳多色打印的用户——X2D多色体验\"仍落后于H2C和Snapmaker U1\"，需额外Filament Track Switch和双AMS。(6)仅打印小零件的用户——双喷嘴大材小用。评语：\"推荐起来很简单，但很难欣赏它。\"",
-      summaryEn: "X2D explicitly not for beginners, no TPU on aux toolhead, maintenance complexity high, multi-color lags behind H2C/Snapmaker U1, overkill for small parts",
-      summaryCn: "X2D明确不适合新手、辅助工具头不支持TPU、维护复杂度高、多色落后于H2C/Snapmaker U1、小零件打印大材小用",
-      sentiment: "负面",
-      dimensions: ["日常使用体验 - 入门难度", "硬件性能 - 多色/多喷嘴系统", "售后服务 - 维护难度"],
-      problemPoints: ["不适合新手", "辅助工具头TPU不兼容", "维护复杂度高", "多色性能非最优"],
-      competitorMentioned: "Snapmaker U1, H2C, H2D",
-      modsMentioned: "TPU Feeding Module, Filament Track Switch",
-      heat: "Call-3D专业评测",
-      isP0: false
-    },
-
-  {
-      id: "KB-EN-20260521-005",
-      brand: "Bambu Lab",
-      platform: "独立评测",
-      sourceLink: "https://makers101.com/bambu-lab-p2s-vs-x2d/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-21",
-      publishedAt: "2026-04-17",
-      modelName: "X2D",
-      purchaseChannel: "官网直邮",
-      purchaseDuration: "1个月内",
-      verified: true,
-      shippingExperience: "好",
-      customs: "未提及",
-      originalText: "Makers101 review by Nik: X2D compared to P2S after 600+ hours testing each. The X2D is described as a '1.5-nozzle system' — the right (auxiliary) Bowden nozzle is capped at 200mm/s, has no auto flow calibration, and produces slightly lower print quality. Key trade-offs: material switching drops from 1min21sec-2min13sec (P2S) to 14 seconds (X2D), purge waste drops from 62g to 8g, but pre-print calibration takes ~9min vs P2S's 7min. The X2D has active chamber heating to 65°C vs P2S's passive 40-50°C, enabling reliable ABS/ASA/nylon. However, the dual-nozzle workflow has 'a real learning curve' and 'material allocation still needs improvement.' A key problem: the filament path around the aux extruder is screw-secured for stable extrusion pressure, but this creates a risk — brittle third-party or degraded filament can break inside the secured PTFE path, requiring disassembly-level clearing. Verdict: X2D is 'excellent value, messy execution — easy to recommend, not easy to admire.'",
-      translation: "Makers101评测（Nik）：经600+小时对比测试，X2D被描述为\"1.5喷嘴系统\"——右（辅助）Bowden喷嘴最高200mm/s，无自动流量校准，打印质量略低。关键权衡：材料切换从P2S的1分21秒-2分13秒降至X2D的14秒，废料从62g降至8g，但打印前校准需约9分钟（P2S为7分钟）。X2D主动腔室加热至65°C vs P2S被动40-50°C，可可靠打印ABS/ASA/尼龙。但双喷嘴工作流\"有真正的学习曲线\"，\"材料分配仍需改进\"。关键问题：辅助挤出机处耗材路径被螺丝固定以保持稳定挤出压力，但使用较脆的第三方耗材或长时间受热降解的耗材时，细丝可能在被固定的PTFE路径内断裂，需要拆卸级清理。评语：\"极高性价比，执行一团乱——推荐起来很简单，但很难欣赏它。\"",
-      summaryEn: "X2D called '1.5-nozzle system': right nozzle 200mm/s cap, no auto flow cal, 9min pre-print calibration vs P2S 7min, brittle filament risk in secured PTFE path, real learning curve",
-      summaryCn: "X2D被称为“1.5喷嘴系统”：右喷嘴限速200mm/s、无自动流量校准、打印前校准9分钟vs P2S的7分钟、脆性耗材在固定PTFE路径中断裂风险、真正学习曲线",
-      sentiment: "中性",
-      dimensions: ["硬件性能 - 多色/多喷嘴系统", "日常使用体验 - 入门难度", "使用成本与兼容性"],
-      problemPoints: ["辅助喷嘴性能有限", "学习曲线陡峭", "耗材路径设计缺陷", "校准时间长"],
-      competitorMentioned: "Bambu Lab P2S",
-      modsMentioned: "",
-      heat: "600+小时对比评测",
-      isP0: false
-    },
-
-  {
-      id: "KB-EN-20260520-001",
-      brand: "Creality",
-      platform: "独立评测",
-      sourceLink: "https://layerdepth.com/reviews/creality-k2-se/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-20",
-      publishedAt: "2026-04-03",
-      modelName: "K2 SE",
-      purchaseChannel: "Amazon FBA",
-      purchaseDuration: "1个月内",
-      verified: true,
-      shippingExperience: "一般",
-      customs: "未提及",
-      originalText: "\"sounded like a vacuum\" — multiple Amazon and Google Shopping reviewers, 2025-2026. The most frequent complaint across 51 reviews analyzed: the open-frame CoreXY design produces high-frequency motor noise that users find more irritating than bed-slinger printers. One reviewer built a plexiglass enclosure specifically for noise management, not thermal insulation. Another reviewer running a K2 Plus alongside described enclosure as 'a necessity, not an upgrade.' At ~50dB, the K2 SE is technically not louder than competitors, but the CoreXY motion system produces frequencies that human ears find more grating. Creality's official recommendation: 'Skip the K2 SE if noise tolerance is low. If you live in a studio apartment or print in a bedroom.'",
-      translation: "\"听起来像吸尘器\" — 多位Amazon和Google Shopping用户评价，2025-2026年度。51条评价中最高频投诉：开放式CoreXY设计产生的高频电机噪音比床甩式打印机更令人烦躁。一位用户专门搭建了亚克力外壳来降噪而非保温。另一位同时使用K2 Plus的用户将外壳描述为\"必需品而非升级\"。K2 SE约50dB的数值并不比竞品高，但CoreXY运动系统产生的人耳感知频率更刺耳。Creality官方建议：\"如果对噪音容忍度低，跳过K2 SE。住在单间公寓或在卧室打印的用户切勿购买。\"",
-      summaryEn: "K2 SE noise is #1 complaint: CoreXY high-frequency motor noise described as 'vacuum-like', enclosure needed for noise management, not suitable for apartment/bedroom use",
-      summaryCn: "K2 SE噪音成最大槽点：CoreXY高频电机噪音被描述为\"吸尘器级别\"，需外壳降噪而非保温，不适合公寓/卧室使用",
-      sentiment: "负面",
-      dimensions: ["日常使用体验", "硬件性能 - 噪音"],
-      problemPoints: ["噪音大", "开放式框架放大噪音", "需额外购买外壳"],
-      competitorMentioned: "Bambu Lab A1 Mini",
-      modsMentioned: "亚克力外壳DIY",
-      heat: "51条评测分析，噪音为最高频投诉",
-      isP0: false
-    },
-
-  {
-      id: "KB-EN-20260520-002",
-      brand: "Bambu Lab",
-      platform: "独立评测",
-      sourceLink: "https://www.fauxhammer.com/reviews/bambu-x2d-review-great-value-smart-features-and-one-big-problem/",
-      country: "UK",
-      language: "EN",
-      date: "2026-05-20",
-      publishedAt: "2026-05-05",
-      modelName: "X2D",
-      purchaseChannel: "官网直邮",
-      purchaseDuration: "1个月内",
-      verified: true,
-      shippingExperience: "好",
-      customs: "未提及",
-      originalText: "FauxHammer review, rated 3/5 stars: \"The single most annoying thing about the Bambu X2D is the inconsistent plate coverage. The moment you use the right nozzle, the Z height drops back to 256mm. The X dimension also becomes restricted to 235mm, leaving a chunk of the plate effectively unusable.\" The right nozzle uses Bowden extrusion (not direct drive), causing more stringing in retraction tests and poor handling of flexible filaments. The slicer's auto-arrange ignores the restricted zone, forcing manual rearrangement or split plates. The rear of the printer looks 'busy and cobbled together' with externally mounted exhaust and Bowden modules. Pen plotter, drag cutter, and laser add-ons are incompatible. No print queue feature. Final verdict: \"excellent value, but messy execution... It is easy to recommend, but not easy to admire.\"",
-      translation: "FauxHammer评测，3/5星：\"X2D最让人恼火的是不一致的平台可用区域。使用右侧喷嘴时，Z高度跌回256mm，X方向被限制到235mm，一大块平台直接不可用。\"右侧喷嘴为Bowden远程挤出（非直驱），回抽测试拉丝更多，柔性材料表现差。切片器自动排列忽视限制区，需手动重排或拆分多盘。打印机背部外挂排气和Bowden模块，被描述为\"凌乱拼凑\"。笔式绘图仪、拖刀、激光模块均不兼容。无打印队列功能。最终评语：\"极高的性价比，但执行一团乱...推荐起来很简单，但很难欣赏它。\"",
-      summaryEn: "X2D rated 3/5: right nozzle limits build area to 235mm, Bowden extrusion causes stringing, slicer auto-arrange broken, rear design messy, accessories incompatible",
-      summaryCn: "X2D仅得3/5星：右侧喷嘴将可用面积缩至235mm、Bowden拉丝、切片器自动排列失效、背部设计凌乱、配件不兼容",
-      sentiment: "负面",
-      dimensions: ["硬件性能 - 多色/多喷嘴系统", "软件与交互 - 切片软件", "使用成本与兼容性"],
-      problemPoints: ["打印面积限制", "拉丝", "切片软件不智能", "配件生态不兼容"],
-      competitorMentioned: "Bambu Lab P2S, X1 Carbon",
-      modsMentioned: "",
-      heat: "FauxHammer 3/5星深度评测",
-      isP0: false
-    },
-
-  {
-      id: "KB-EN-20260520-003",
-      brand: "ELEGOO",
-      platform: "独立评测",
-      sourceLink: "https://www.3dtechvalley.com/elegoo-neptune-4-pro-review/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-20",
-      publishedAt: "2026-01-05",
-      modelName: "Neptune 4 Pro",
-      purchaseChannel: "Amazon FBA",
-      purchaseDuration: "3个月内",
-      verified: true,
-      shippingExperience: "一般",
-      customs: "未提及",
-      originalText: "3D Tech Valley review: \"It's not quite plug-and-play, and you'll need to invest some time in tuning to get the best results.\" The marketing claims 500mm/s but real-world best results come at 150-250mm/s. The open-frame design means ABS prints will warp without an enclosure. Quality control is noted as \"not as consistent as premium brands.\" Noise levels at 50-55dB make it unsuitable for open-plan living spaces. Risk of clogs when mixing incompatible materials. Beginners face a learning curve with bed leveling, filament loading, and basic Klipper concepts. Compared to Bambu Lab A1, the reviewer notes the A1 is \"more polished and plug-and-play\" with multi-color capability and lower noise. The Neptune 4 Pro is recommended mainly for experienced users willing to tinker.",
-      translation: "3D Tech Valley评测：\"并非即插即用，需要投入时间调校才能获得最佳效果。\"官方宣称500mm/s但实际最佳打印速度仅150-250mm/s。开放式框架导致ABS必然翘曲。品控被指\"不如高端品牌一致\"。50-55dB噪音不适合开放生活空间。混合不兼容材料时有堵头风险。新手需学习热床调平、装料和Klipper基础。与Bambu Lab A1相比，A1\"更完善、更即插即用\"，有多色能力且噪音更低。Neptune 4 Pro主要推荐给有经验并愿意折腾的用户。",
-      summaryEn: "Neptune 4 Pro not plug-and-play, real speed far below marketing claims, open frame limits materials, QC inconsistent, 50-55dB noise, learning curve for beginners",
-      summaryCn: "Neptune 4 Pro非即插即用、实际速度远低于宣传、开放框架限制材料、品控不一致、50-55dB噪音、新手学习曲线陡",
-      sentiment: "中性",
-      dimensions: ["硬件性能 - 打印速度", "日常使用体验 - 入门难度", "硬件性能 - 品控"],
-      problemPoints: ["打印速度不达标", "品控不一致", "噪音大", "新手门槛高"],
-      competitorMentioned: "Bambu Lab A1",
-      modsMentioned: "",
-      heat: "3D Tech Valley 深度评测",
-      isP0: false
-    },
-
-  {
-      id: "KB-EN-20260520-004",
-      brand: "Prusa",
-      platform: "独立评测",
-      sourceLink: "https://layerdepth.com/reviews/prusa-mk4s/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-20",
-      publishedAt: "2026-04-03",
-      modelName: "MK4S",
-      purchaseChannel: "官网直邮",
-      purchaseDuration: "6个月内",
-      verified: true,
-      shippingExperience: "好",
-      customs: "费用合理",
-      originalText: "LayerDepth analysis of 506 Amazon reviews: 97% positive (491 enthusiasts), only 2.2% negative (11 critics). However, the speed gap is the most common criticism — at 250mm/s, MK4S is roughly 40% slower than CoreXY competitors on a Benchy. The bed-slinger architecture shows faint ringing on tall prints at higher speeds. Some users report the Nextruder filament sensor triggering false runout warnings with transparent or thin filaments. The open frame limits materials — no ABS or nylon without a $200+ enclosure. At $599 kit / $799 assembled, the price competes with enclosed CoreXY machines that offer more speed and material flexibility. Assembly time for the kit is 6-10 hours. Customer support claim was contradicted by 3 out of 506 reviewers. Overall: extremely reliable workhorse, but you pay a premium for reliability over performance.",
-      translation: "LayerDepth分析506条Amazon评论：97%正面（491位爱好者），仅2.2%负面（11位批评者）。但速度差距是最常见批评——250mm/s的MK4S在Benchy测试中比CoreXY竞品慢约40%。床甩式架构在高速高物打印中出现轻微重影。部分用户报告Nextruder断料传感器对透明/细丝材触发误报。开放框架限制材料——无$200+外壳无法打印ABS或尼龙。$599套件/$799整机的价格与更快、更灵活的封闭式CoreXY机器竞争。套件组装需6-10小时。506条评论中有3条未确认官方客服承诺。总体而言：极其可靠的工作马，但你为可靠性而非性能付出了溢价。",
-      summaryEn: "MK4S 97% satisfaction, but 40% slower than CoreXY rivals, bed-slinger ringing on tall prints, Nextruder false runout alerts, open frame needs $200+ enclosure, 6-10hr kit assembly",
-      summaryCn: "MK4S满意度97%，但比CoreXY慢40%、高物体重影、Nextruder误报断料、开放框架需$200+外壳、套件组装6-10小时",
-      sentiment: "正面",
-      dimensions: ["硬件性能 - 打印速度", "硬件性能 - 打印质量", "使用成本与兼容性"],
-      problemPoints: ["价格偏高", "打印速度偏慢", "需额外购买外壳", "组装时间长"],
-      competitorMentioned: "Bambu Lab P2S, Creality K2 SE",
-      modsMentioned: "",
-      heat: "506条Amazon评论数据挖掘分析",
-      isP0: false
-    },
-
-  {
+{
       id: "KB-EN-20260520-005",
       brand: "Creality",
       platform: "在线论坛",
@@ -3389,91 +3297,7 @@ id: "KB-EN-20260608-002",
       isP0: true
     },
 
-  {
-          id: "KB-EN-20260522-001",
-      brand: "Prusa",
-      platform: "官方论坛",
-      sourceLink: "https://forum.prusa3d.com/forum/english-forum-original-prusa-i3-mk4/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-22",
-      publishedAt: "2026-05-15",
-      modelName: "MK4",
-      purchaseChannel: "官网直邮",
-      purchaseDuration: "1个月内",
-      verified: true,
-      shippingExperience: "好",
-      customs: "未提及",
-      originalText: "Prusa Forum user report: MK4 stuck in 'disengaging idler' state, attempted multiple firmware resets and physical checks, issue persists. User asking for official support. Post date May 15, 2026. This represents a rare but serious hardware/firmware issue specific to the idler mechanism.",
-      translation: "Prusa论坛用户报告：MK4卡在\"脱离惰轮\"状态，已尝试多次固件重置和物理检查，问题持续存在。用户在等待官方支持。发布时间5月15日。这代表了特定于惰轮机构的罕见但严重的硬件/固件问题。",
-      sentiment: "负面",
-      dimensions: ["硬件性能 - 机械故障", "软件与交互 - 固件"],
-      problemPoints: ["惰轮机构故障", "固件无响应", "需官方支持"],
-      competitorMentioned: "",
-      modsMentioned: "",
-      heat: "Prusa论坛最新用户报告",
-      summaryEn: "MK4 stuck in disengaging idler state, firmware/physical fixes attempted, issue persists, awaiting official support",
-      summaryCn: "MK4卡在脱离惰轮状态，多次固件/物理修复无效，等待官方支持",
-      isP0: false
-    },
-
-  {
-          id: "KB-EN-20260522-002",
-      brand: "通用",
-      platform: "技术文章",
-      sourceLink: "https://www.3dtechvalley.com/how-to-unclog-a-3d-printer-nozzle/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-22",
-      publishedAt: "2026-05-14",
-      modelName: "通用",
-      purchaseChannel: "未提及",
-      purchaseDuration: "未提及",
-      verified: true,
-      shippingExperience: "未提及",
-      customs: "未提及",
-      originalText: "3D Tech Valley technical guide on nozzle clogging: Three main types - partial clog (symptoms: curling filament, uneven extrusion), complete clog (no extrusion, motor clicking), intermittent clog (first 10-20 layers OK then under-extrusion). Root causes: heat creep, nozzle-gap carbonization, PTFE degradation, filament contamination. Guide published May 14, 2026.",
-      translation: "3D Tech Valley喷嘴堵塞技术指南：三种主要类型 - 部分堵塞（症状：丝材卷曲、挤出不均）、完全堵塞（无挤出、电机点击）、间歇性堵塞（前10-20层正常后欠挤出）。根本原因：热爬升、喷嘴间隙碳化、PTFE降解、丝材污染。指南发布于5月14日。",
-      sentiment: "中性",
-      dimensions: ["硬件性能 - 喷嘴堵塞", "日常使用体验 - 维护"],
-      problemPoints: ["喷嘴堵塞", "热爬升问题", "PTFE老化"],
-      competitorMentioned: "",
-      modsMentioned: "",
-      heat: "最新技术指南",
-      summaryEn: "Nozzle clogging guide - 3 types: partial, complete, intermittent; causes: heat creep, carbonization, PTFE degradation",
-      summaryCn: "喷嘴堵塞指南 - 3种类型：部分/完全/间歇性堵塞，原因：热爬升、碳化、PTFE老化",
-      isP0: false
-    },
-
-  {
-          id: "KB-EN-20260522-003",
-      brand: "通用",
-      platform: "技术文章",
-      sourceLink: "https://www.4additive.com/en/noise-reduction-in-3d-printers/",
-      country: "DE",
-      language: "EN",
-      date: "2026-05-22",
-      publishedAt: "2026-05-19",
-      modelName: "通用3D打印机",
-      purchaseChannel: "未提及",
-      purchaseDuration: "未提及",
-      verified: true,
-      shippingExperience: "未提及",
-      customs: "未提及",
-      originalText: "4Additive technical article on 3D printer noise reduction: Analyzes noise sources - stepper motors, fans, belt vibration, frame resonance. Provides quantitative data on noise levels across printer types. Published May 19, 2026. Article important for users selecting printers for home/office use.",
-      translation: "4Additive关于3D打印机降噪的技术文章：分析噪音来源 - 步进电机、风扇、皮带振动、框架共振。提供各类型打印机噪音水平的定量数据。5月19日发布。对家庭/办公室选择打印机的用户具有重要参考价值。",
-      sentiment: "中性",
-      dimensions: ["日常使用体验 - 噪音", "硬件性能 - 设计"],
-      problemPoints: ["噪音问题", "使用环境限制"],
-      competitorMentioned: "",
-      modsMentioned: "",
-      heat: "最新技术分析文章",
-      summaryEn: "3D printer noise reduction analysis - sources: motors, fans, belts, frame resonance; quantitative noise level data",
-      summaryCn: "3D打印机噪音分析 - 来源：电机、风扇、皮带、框架共振；定量噪音数据",
-      isP0: false
-    },
-
-  {
+{
           id: "KB-EN-20260522-004",
       brand: "Anycubic",
       platform: "用户评价",
@@ -3499,34 +3323,352 @@ id: "KB-EN-20260608-002",
       summaryEn: "Kobra 3 Max motherboard failed after 500 hours, slow support, parts unavailable, forum reports similar failures",
       summaryCn: "Kobra 3 Max使用500小时后主板故障，售后响应慢，配件难获取，社区有类似报告",
       isP0: true
-    },
-
-  {
-          id: "KB-EN-20260522-005",
-      brand: "Bambu Lab",
-      platform: "独立评测",
-      sourceLink: "https://www.fauxhammer.com/reviews/bambu-x2d-review-great-value-smart-features-and-one-big-problem/",
-      country: "UK",
-      language: "EN",
-      date: "2026-05-22",
-      publishedAt: "2026-05-05",
-      modelName: "X2D",
-      purchaseChannel: "官网直邮",
-      purchaseDuration: "1个月内",
-      verified: true,
-      shippingExperience: "好",
-      customs: "未提及",
-      originalText: "FauxHammer X2D review rated 3/5: The single most annoying thing is inconsistent plate coverage. Using right nozzle drops Z height to 256mm, X dimension restricted to 235mm. Right nozzle uses Bowden extrusion causing more stringing. Slicer's auto-arrange ignores restricted zone. Rear design 'busy and cobbled together'. Pen plotter, drag cutter, laser add-ons incompatible. No print queue. Verdict: 'excellent value but messy execution, easy to recommend but not easy to admire.'",
-      translation: "FauxHammer X2D评测3/5星：最恼火的是不一致的平台覆盖。使用右侧喷嘴时Z高度降至256mm，X方向限制到235mm。右侧喷嘴为Bowden挤出导致更多拉丝。切片器自动排列忽视限制区域。背部设计\"凌乱拼凑\"。笔式绘图仪、拖刀、激光模块不兼容。无打印队列功能。评语：\"极高性价比但执行混乱，推荐简单但欣赏难。\"",
-      sentiment: "负面",
-      dimensions: ["硬件性能 - 打印面积", "软件与交互 - 切片软件", "使用成本与兼容性"],
-      problemPoints: ["打印面积限制", "Bowden拉丝", "切片软件问题", "配件生态不兼容"],
-      competitorMentioned: "Bambu Lab P2S, X1 Carbon",
-      modsMentioned: "",
-      heat: "FauxHammer深度评测",
-      summaryEn: "X2D 3/5 stars: right nozzle limits build area to 235mm, Bowden causes stringing, auto-arrange broken, rear messy, accessories incompatible",
-      summaryCn: "X2D仅3/5星：右侧喷嘴限制235mm、Bowden导致拉丝、切片器问题、背部凌乱、配件不兼容",
-      isP0: false
     }
   ]
 };
+
+const PLATFORM_STYLES = {
+  "Reddit":   "plat-reddit",
+  "YouTube":  "plat-youtube",
+  "Amazon":   "plat-amazon",
+  "Facebook": "plat-facebook",
+  "独立评测":   "plat-review",
+  "在线论坛":   "plat-forum"
+};
+
+const SENTIMENT_STYLES = {
+  "非常负面": "sent-very-negative",
+  "负面":    "sent-negative",
+  "中性":    "sent-neutral",
+  "正面":    "sent-positive",
+  "非常正面": "sent-very-positive"
+};
+
+const SENTIMENT_ICONS = {
+  "非常负面": "😡",
+  "负面":    "😟",
+  "中性":    "😐",
+  "正面":    "😊",
+  "非常正面": "🤩"
+};
+
+// Filter state
+let filters = {
+  brand: "all",
+  sentiment: "all",
+  platform: "all",
+  datePreset: "all",
+  dateFrom: "",
+  dateTo: "",
+  search: ""
+};
+
+// ---- Brand buttons (dynamic) ----
+function buildBrandButtons() {
+  const brandCounts = {};
+  OVERSEAS_FEEDBACK_DATA.items.forEach(item => {
+    const b = item.brand || "其他";
+    brandCounts[b] = (brandCounts[b] || 0) + 1;
+  });
+  const sorted = Object.entries(brandCounts).sort((a, b) => b[1] - a[1]);
+  const container = document.getElementById('brandScroll');
+  container.innerHTML = '<button class="filter-btn active" data-group="brand" data-value="all" onclick="toggleFilter(this)">全部 <span class="count">(' + OVERSEAS_FEEDBACK_DATA.items.length + ')</span></button>';
+  sorted.forEach(([brand, count]) => {
+    container.innerHTML += '<button class="filter-btn" data-group="brand" data-value="' + brand + '" onclick="toggleFilter(this)">' + brand + ' <span class="count">(' + count + ')</span></button>';
+  });
+}
+
+// ---- Toggle filter button ----
+function toggleFilter(btn) {
+  const group = btn.dataset.group;
+  const value = btn.dataset.value;
+  // Deactivate siblings
+  btn.parentElement.querySelectorAll('.filter-btn[data-group="' + group + '"]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filters[group] = value;
+  // Clear date range inputs if preset selected
+  if (group === 'date' && value !== 'custom') {
+    filters.dateFrom = '';
+    filters.dateTo = '';
+    document.getElementById('dateFrom').value = '';
+    document.getElementById('dateTo').value = '';
+  }
+  applyFilters();
+}
+
+function toggleDateFilter(btn) {
+  const value = btn.dataset.value;
+  btn.parentElement.querySelectorAll('.filter-btn[data-group="date"]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filters.datePreset = value;
+  if (value !== 'custom') {
+    filters.dateFrom = '';
+    filters.dateTo = '';
+    document.getElementById('dateFrom').value = '';
+    document.getElementById('dateTo').value = '';
+  }
+  // Reset hero date dropdown when bottom filter changes
+  if (value === 'all') {
+    const heroSel = document.getElementById('heroDateFilter');
+    if (heroSel) heroSel.value = '';
+  }
+  applyFilters();
+}
+
+function applyDateRange() {
+  const from = document.getElementById('dateFrom').value;
+  const to = document.getElementById('dateTo').value;
+  // Deactivate preset buttons
+  document.querySelectorAll('.filter-btn[data-group="date"]').forEach(b => b.classList.remove('active'));
+  if (from || to) {
+    filters.datePreset = 'custom';
+    filters.dateFrom = from;
+    filters.dateTo = to;
+  } else {
+    filters.datePreset = 'all';
+    filters.dateFrom = '';
+    filters.dateTo = '';
+    // Re-activate "all" button
+    document.querySelector('.filter-btn[data-group="date"][data-value="all"]').classList.add('active');
+  }
+  applyFilters();
+}
+
+function clearAllFilters() {
+  filters = { brand: "all", sentiment: "all", platform: "all", datePreset: "all", dateFrom: "", dateTo: "", search: "" };
+  document.getElementById('searchInput').value = '';
+  document.getElementById('dateFrom').value = '';
+  document.getElementById('dateTo').value = '';
+  // Reset all active states
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    if (b.dataset.value === 'all') b.classList.add('active');
+    else b.classList.remove('active');
+  });
+  // Reset hero date dropdown
+  const heroSel = document.getElementById('heroDateFilter');
+  if (heroSel) heroSel.value = '';
+  applyFilters();
+}
+
+// ---- Core filter logic ----
+function getFilteredItems() {
+  const items = OVERSEAS_FEEDBACK_DATA.items || [];
+  const today = new Date(); today.setHours(23,59,59,999);
+  return items.filter(item => {
+    // Brand
+    if (filters.brand !== "all" && item.brand !== filters.brand) return false;
+    // Sentiment
+    if (filters.sentiment !== "all") {
+      const s = item.sentiment;
+      if (filters.sentiment === 'negative' && s !== '非常负面' && s !== '负面') return false;
+      if (filters.sentiment === 'neutral' && s !== '中性') return false;
+      if (filters.sentiment === 'positive' && s !== '正面' && s !== '非常正面') return false;
+    }
+    // Platform
+    if (filters.platform !== "all" && item.platform !== filters.platform) return false;
+    // Date preset
+    if (filters.datePreset === '7' || filters.datePreset === '30') {
+      const d = new Date(item.date);
+      const daysAgo = filters.datePreset === '7' ? 7 : 30;
+      const cutoff = new Date(today); cutoff.setDate(cutoff.getDate() - daysAgo); cutoff.setHours(0,0,0,0);
+      if (d < cutoff) return false;
+    }
+    // Date range
+    if (filters.datePreset === 'custom') {
+      if (filters.dateFrom) { const d = new Date(item.date); const from = new Date(filters.dateFrom); if (d < from) return false; }
+      if (filters.dateTo) { const d = new Date(item.date); const to = new Date(filters.dateTo); to.setHours(23,59,59,999); if (d > to) return false; }
+    }
+    // Search
+    if (filters.search) {
+      const q = filters.search.toLowerCase();
+      const haystack = [
+        item.brand, item.modelName, item.platform, item.originalText, item.translation,
+        item.summaryEn, item.summaryCn, item.competitorMentioned, item.modsMentioned,
+        item.country, item.id, item.sourceLink
+      ].concat(item.dimensions || []).concat(item.problemPoints || []).join(' ').toLowerCase();
+      if (!haystack.includes(q)) return false;
+    }
+    return true;
+  });
+}
+
+// ---- Render ----
+function applyFilters() {
+  filters.search = document.getElementById('searchInput').value.trim();
+  const filtered = getFilteredItems();
+
+  // Update stats
+  let negCount = 0, neuCount = 0, posCount = 0, p0Count = 0;
+  filtered.forEach(item => {
+    const s = item.sentiment;
+    if (s === '非常负面' || s === '负面') negCount++;
+    else if (s === '中性') neuCount++;
+    else posCount++;
+    if (item.isP0) p0Count++;
+  });
+  document.getElementById('statTotal').textContent = filtered.length;
+  document.getElementById('statTotalLabel').textContent = filters.search || filters.brand !== 'all' || filters.sentiment !== 'all' || filters.platform !== 'all' || filters.datePreset !== 'all' ? '筛选结果' : '累计样本';
+  document.getElementById('statNegative').textContent = negCount;
+  document.getElementById('statNeutral').textContent = neuCount;
+  document.getElementById('statPositive').textContent = posCount;
+  document.getElementById('statP0').textContent = p0Count;
+
+  document.getElementById('resultHint').textContent = filtered.length + ' / ' + (OVERSEAS_FEEDBACK_DATA.items || []).length + ' 条';
+
+  const feed = document.getElementById('feedContainer');
+  feed.innerHTML = '';
+
+  if (filtered.length === 0) {
+    document.getElementById('emptyState').style.display = 'block';
+    return;
+  }
+  document.getElementById('emptyState').style.display = 'none';
+
+  // Group by date (descending)
+  const groups = {};
+  filtered.forEach(item => {
+    const d = item.date || 'unknown';
+    if (!groups[d]) groups[d] = [];
+    groups[d].push(item);
+  });
+  const sortedDates = Object.keys(groups).sort((a, b) => b.localeCompare(a));
+
+  sortedDates.forEach(dateStr => {
+    // Date group header (scroll anchor)
+    const anchor = document.createElement('div');
+    anchor.id = 'date-group-' + dateStr;
+    anchor.style.display = 'none';
+    feed.appendChild(anchor);
+
+    // Cards in this group, P0 first
+    const sorted = groups[dateStr].sort((a, b) => (b.isP0 ? 1 : 0) - (a.isP0 ? 1 : 0));
+    sorted.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'feed-card' + (item.isP0 ? ' p0-card' : '');
+      const platClass = PLATFORM_STYLES[item.platform] || "plat-other";
+      const sentClass = SENTIMENT_STYLES[item.sentiment] || "sent-neutral";
+      const sentIcon = SENTIMENT_ICONS[item.sentiment] || "";
+
+      card.innerHTML = '<div class="card-top">' +
+        '<span class="platform-tag ' + platClass + '">' + item.platform + '</span>' +
+        '<span class="brand-tag">' + (item.brand || '') + '</span>' +
+        '<span class="model-tag">' + item.modelName + '</span>' +
+        '<span class="country-tag">📍 ' + item.country + '</span>' +
+        (item.verified ? '<span class="verified-badge">✓ 已验证购买</span>' : '') +
+        '<span class="sentiment-badge ' + sentClass + '">' + sentIcon + ' ' + item.sentiment + '</span>' +
+        (item.isP0 ? '<span class="p0-badge">🔴 P0 高风险</span>' : '') +
+        '</div>' +
+        '<div class="card-body">' +
+        '<div class="card-summary">' + item.summaryCn + '</div>' +
+        (item.purchaseChannel && item.purchaseChannel !== '其他' ?
+          '<div class="purchase-row">' +
+          '<div class="purchase-item">📦 购买渠道：<span>' + item.purchaseChannel + '</span></div>' +
+          '<div class="purchase-item">⏱ 使用时长：<span>' + item.purchaseDuration + '</span></div>' +
+          (item.shippingExperience !== '未提及' ? '<div class="purchase-item">🚚 运输：<span>' + item.shippingExperience + '</span></div>' : '') +
+          (item.customs !== '未提及' ? '<div class="purchase-item">🛃 清关：<span>' + item.customs + '</span></div>' : '') +
+          '</div>' : '') +
+        '<div class="card-original"><div class="label">📝 Original (EN)</div><div class="text">' + item.originalText + '</div></div>' +
+        '<div class="card-translation"><div class="label">🌐 中文翻译</div><div class="text">' + item.translation + '</div></div>' +
+        '<div class="tags-row">' +
+        (item.dimensions || []).map(d => '<span class="dim-tag">' + d + '</span>').join('') +
+        (item.problemPoints || []).map(p => '<span class="problem-tag">⚠ ' + p + '</span>').join('') +
+        (item.competitorMentioned ? '<span class="competitor-tag">🔄 ' + item.competitorMentioned + '</span>' : '') +
+        '</div></div>' +
+        '<div class="card-footer"><div class="meta">' +
+        '<span>📅 ' + item.publishedAt + '</span>' +
+        '<span class="heat">🔥 ' + item.heat + '</span>' +
+        '<span>🔒 ' + item.id + '</span>' +
+        '</div><a class="link-btn" href="' + item.sourceLink + '" target="_blank" rel="noopener">查看原文 ↗</a></div>';
+      feed.appendChild(card);
+    });
+  });
+
+  // Build hero date filter dropdown
+  buildHeroDateDropdown(sortedDates);
+}
+
+// ---- Hero date filter dropdown ----
+function buildHeroDateDropdown(dates) {
+  const sel = document.getElementById('heroDateFilter');
+  if (!sel) return;
+  const currentVal = sel.value;
+  sel.innerHTML = '<option value="">📅 全部日期</option>';
+  dates.forEach(dateStr => {
+    const dateObj = new Date(dateStr);
+    const weekDays = ['日','一','二','三','四','五','六'];
+    const label = dateStr.replace(/-/g, '.') + ' 周' + weekDays[dateObj.getDay()];
+    sel.innerHTML += '<option value="' + dateStr + '">📅 ' + label + '</option>';
+  });
+  if (currentVal && dates.includes(currentVal)) sel.value = currentVal;
+}
+
+function filterByHeroDate(dateStr) {
+  if (!dateStr) {
+    // "全部日期" — reset
+    filters.datePreset = 'all';
+    filters.dateFrom = '';
+    filters.dateTo = '';
+    // Reactivate bottom date "all" button
+    document.querySelectorAll('.filter-btn[data-group="date"]').forEach(b => b.classList.remove('active'));
+    const allBtn = document.querySelector('.filter-btn[data-group="date"][data-value="all"]');
+    if (allBtn) allBtn.classList.add('active');
+    document.getElementById('dateFrom').value = '';
+    document.getElementById('dateTo').value = '';
+  } else {
+    // Specific date selected
+    filters.datePreset = 'custom';
+    filters.dateFrom = dateStr;
+    filters.dateTo = dateStr;
+    // Deactivate bottom date buttons
+    document.querySelectorAll('.filter-btn[data-group="date"]').forEach(b => b.classList.remove('active'));
+    document.getElementById('dateFrom').value = dateStr;
+    document.getElementById('dateTo').value = dateStr;
+  }
+  applyFilters();
+}
+
+// ---- Init ----
+function renderPage() {
+  const items = OVERSEAS_FEEDBACK_DATA.items || [];
+  console.log('[OverseasFeedback] renderPage start, items:', items.length);
+  
+  if (items.length === 0) {
+    console.log('[OverseasFeedback] No items found!');
+    document.getElementById('heroDateFilter').innerHTML = '<option value="">📅 暂无数据</option>';
+    document.getElementById('updateTime').textContent = '';
+    document.getElementById('emptyState').style.display = 'block';
+    document.getElementById('statTotalLabel').textContent = '累计样本';
+    buildBrandButtons();
+    applyFilters();
+    return;
+  }
+
+  // Build hero date filter dropdown
+  const allDates = [...new Set(items.map(i => i.date).filter(Boolean).sort().reverse())];
+  const sel = document.getElementById('heroDateFilter');
+  sel.innerHTML = '<option value="">📅 全部日期</option>';
+  allDates.forEach(dateStr => {
+    const dateObj = new Date(dateStr);
+    const weekDays = ['日','一','二','三','四','五','六'];
+    const label = dateStr.replace(/-/g, '.') + ' 周' + weekDays[dateObj.getDay()];
+    sel.innerHTML += '<option value="' + dateStr + '">📅 ' + label + '</option>';
+  });
+
+  document.getElementById('updateTime').textContent = '共 ' + items.length + ' 条 · ' + allDates.length + ' 天数据';
+
+  console.log('[OverseasFeedback] Building brand buttons...');
+  buildBrandButtons();
+  console.log('[OverseasFeedback] Applying filters...');
+  const filteredCount = applyFilters();
+  console.log('[OverseasFeedback] Filtered count:', filteredCount);
+}
+
+// Wrap in DOMContentLoaded for safety
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', renderPage);
+} else {
+  renderPage();
+}
+</script>
+</body>
+</html>
