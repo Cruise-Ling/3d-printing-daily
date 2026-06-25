@@ -276,7 +276,150 @@ a:hover{color:#93bbfd;text-decoration:underline}
 const OVERSEAS_FEEDBACK_DATA = {
   mode: "accumulate",
   maxDays: 30,
-        items: [
+  stats: {
+    sentiment: {"非常负面": 3, "负面": 4, "中性": 1, "正面": 0, "非常正面": 0}
+  },
+  items: [
+  {
+      id: "KB-EN-20260626-005",
+      brand: "Prusa",
+      platform: "官网",
+      sourceLink: "https://forum.prusa3d.com/forum/prusa-core-one-assembly-and-first-prints-troubleshooting/worked-fine-for-a-few-days-and-then-disaster/",
+      country: "US",
+      language: "EN",
+      date: "2026-06-26",
+      publishedAt: "2026-06-21",
+      modelName: "CORE One Plus",
+      purchaseChannel: "官网直邮",
+      purchaseDuration: "1个月内",
+      verified: true,
+      shippingExperience: "好",
+      customs: "未提及",
+      originalText: "New Prusa CORE One Plus kit user reports printer worked fine for a few days then belt tension loosened causing layer shift. Initial calibration also had loose belts. After re-tensioning, prints became lumpy. Root cause: first successful prints used pre-sliced .bgcode from USB with sample PLA; using same G-code with different PLA caused extrusion issues. Re-slicing from STL fixed it.",
+      translation: "Prusa CORE One Plus新用户报告打印机几天使用后皮带张力松脱导致层移。初始校准皮带也过松。重新张紧后打印不平整。根因：首次成功打印使用USB中预切片G-code配合随附PLA；相同G-code配不同PLA导致挤出问题。从STL重新切片后正常。",
+      summaryEn: "Prusa CORE One Plus: belt tension loosens after days use, pre-sliced G-code incompatible across different PLAs, layer shift",
+      summaryCn: "Prusa CORE One Plus：数天后皮带张力松脱、预切片G-code不兼容不同PLA耗材、层移",
+      sentiment: "负面",
+      dimensions: ["硬件性能 - 机械结构", "硬件性能 - 打印质量"],
+      problemPoints: ["皮带张力数天后松脱", "预切片G-code不兼容不同耗材", "层移严重"],
+      competitorMentioned: "",
+      modsMentioned: "",
+      heat: "Prusa3D论坛6月21日发布",
+      isP0: false
+  },
+
+  {
+      id: "KB-EN-20260626-004",
+      brand: "Creality",
+      platform: "官网",
+      sourceLink: "https://forum.creality.com/t/cfs-not-recognized/52125",
+      country: "US",
+      language: "EN",
+      date: "2026-06-26",
+      publishedAt: "2026-06-25",
+      modelName: "K2 Plus",
+      purchaseChannel: "官网直邮",
+      purchaseDuration: "3个月内",
+      verified: true,
+      shippingExperience: "未提及",
+      customs: "未提及",
+      originalText: "K2 Plus user subman631 reports: firmware 1.1.5.5 killed camera view, reverting to 1.1.4.11 caused CFS to become unrecognized (all 4 slots greyed out). Going back to 1.1.5.5 lost both camera AND CFS. White lights stream across CFS but no filament feeds. Factory reset and cable reconnect did nothing. No separate CFS firmware available for recovery.",
+      translation: "K2 Plus用户报告：固件1.1.5.5导致摄像头失效，回退1.1.4.11后CFS无法识别（4插槽灰色）。回到1.1.5.5后摄像头和CFS全部失效。白色灯光流动但不送料。出厂重置无效，无独立CFS固件可用。",
+      summaryEn: "Creality K2 Plus: firmware 1.1.5.5 kills camera, rollback kills CFS, no recovery path, factory reset fails",
+      summaryCn: "Creality K2 Plus：固件1.1.5.5杀摄像头、回退杀CFS、无恢复路径、出厂重置无效",
+      sentiment: "非常负面",
+      dimensions: ["软件与交互 - 固件bug", "硬件性能 - 多色系统"],
+      problemPoints: ["固件更新致CFS无法识别", "固件回退损坏CFS固件", "摄像头和CFS全部失效", "无恢复路径"],
+      competitorMentioned: "Bambu Lab AMS",
+      modsMentioned: "",
+      heat: "Creality论坛6月25日发布，标签k2-plus/cfs",
+      isP0: true
+  },
+
+  {
+      id: "KB-EN-20260626-003",
+      brand: "Creality",
+      platform: "官网",
+      sourceLink: "https://forum.creality.com/t/new-firmware-creality-hi-0-72-camera-fail-on-last-creality-print-slicer-but-cfs-is-quieter-now-and-other-things/52126",
+      country: "US",
+      language: "EN",
+      date: "2026-06-26",
+      publishedAt: "2026-06-25",
+      modelName: "HI",
+      purchaseChannel: "官网直邮",
+      purchaseDuration: "3个月内",
+      verified: true,
+      shippingExperience: "未提及",
+      customs: "未提及",
+      originalText: "Creality HI user ChrisDD96 reports firmware 0.72 causes camera to fail with latest Creality Print slicer. While CFS is quieter now, the camera regression is significant. Other users report layer shift and ghosting on various firmware versions, with one reverting to 0.50 to avoid stepper motor and quality issues.",
+      translation: "Creality HI用户报告固件0.72导致最新Creality Print摄像头失效。虽然CFS变安静但摄像头退化严重。其他用户报告不同固件版本存在层移和振纹，有用户退回0.50规避步进电机和质量问题。",
+      summaryEn: "Creality HI firmware 0.72 breaks camera in Creality Print, layer shift/ghosting on other fw versions, users revert to older firmware",
+      summaryCn: "Creality HI固件0.72致Creality Print摄像头失效，其他版本存在层移振纹，用户被迫回退旧版固件",
+      sentiment: "负面",
+      dimensions: ["软件与交互 - 固件bug", "硬件性能 - 打印质量"],
+      problemPoints: ["固件0.72摄像头失效", "层移和振纹问题", "固件版本质量不稳定"],
+      competitorMentioned: "",
+      modsMentioned: "",
+      heat: "Creality论坛6月25日发布，标签creality-hi/firmware",
+      isP0: false
+  },
+
+  {
+      id: "KB-EN-20260626-002",
+      brand: "Creality",
+      platform: "官网",
+      sourceLink: "https://forum.creality.com/t/k1c-with-cfs-c-just-keeps-extruding-and-retracting-over-and-over-again-and-wont-print-need-help/51853",
+      country: "US",
+      language: "EN",
+      date: "2026-06-26",
+      publishedAt: "2026-06-23",
+      modelName: "K1C",
+      purchaseChannel: "官网直邮",
+      purchaseDuration: "1年以上",
+      verified: true,
+      shippingExperience: "好",
+      customs: "未提及",
+      originalText: "K1C user reports that after connecting a new CFS-C, the printer just keeps extruding and retracting repeatedly without printing. Error FO5010 claims clog but user confirmed no clog. Works from spool holder but never from CFS-C. Community found old PLA triggers same error while newer filaments work fine.",
+      translation: "K1C用户接入新CFS-C后打印机反复挤出回抽不打印。报错FO5010声称堵塞但确认无堵塞。直连料盘架正常但从CFS-C不行。社区发现旧PLA触发相同误差而新耗材正常。",
+      summaryEn: "Creality K1C CFS-C error FO5010 false clog detection, extruder loop, works with spool holder but not CFS-C",
+      summaryCn: "Creality K1C-CFS-C报FO5010假堵头、挤出循环不打印、直连正常CFS-C异常",
+      sentiment: "负面",
+      dimensions: ["硬件性能 - 多色系统", "软件与交互 - 传感器"],
+      problemPoints: ["CFS-C报FO5010假堵头", "挤出回抽循环不打印", "纸板线轴兼容性差"],
+      competitorMentioned: "",
+      modsMentioned: "",
+      heat: "Creality论坛6月23日发布，多名用户参与排查",
+      isP0: false
+  },
+
+  {
+      id: "KB-EN-20260626-001",
+      brand: "Creality",
+      platform: "官网",
+      sourceLink: "https://forum.creality.com/t/creality-you-need-to-do-better-with-your-flagship-products/52117",
+      country: "US",
+      language: "EN",
+      date: "2026-06-26",
+      publishedAt: "2026-06-25",
+      modelName: "K2 Plus",
+      purchaseChannel: "官网直邮",
+      purchaseDuration: "6个月内",
+      verified: true,
+      shippingExperience: "未提及",
+      customs: "未提及",
+      originalText: "User JoeFriday reports that after pressing Stop on the K2 Plus touchscreen, the printer remained locked for 17 minutes before returning to a ready state. The Klippy and Moonraker logs show the printer got stuck in a G28/Z-probe/PRTouch recovery sequence with repeated errors: PR_ERR_CODE_G28_Z_DETECTION_TIMEOUT. The user states this is a repeatable design flaw in the stop/cancel/recovery path, and criticizes Creality for shipping firmware with this bug after the product has been on the market this long.",
+      translation: "K2 Plus用户JoeFriday报告按下停止后打印机锁定17分钟才恢复就绪。日志显示卡在Z探针恢复循环中反复超时。用户指责这是可复现的设计缺陷，产品上市已久此Bug仍在已发布固件中。",
+      summaryEn: "Creality K2 Plus locked 17 min after Stop - G28 Z probe recovery loop, repeatable firmware defect, user demands fix",
+      summaryCn: "Creality K2 Plus停止后锁定17分钟——G28 Z探针恢复循环，可复现固件缺陷",
+      sentiment: "非常负面",
+      dimensions: ["软件与交互 - 固件bug", "软件与交互 - 用户界面"],
+      problemPoints: ["停止命令后锁定17分钟", "Z探针恢复循环失败", "可复现固件缺陷"],
+      competitorMentioned: "",
+      modsMentioned: "",
+      heat: "Creality论坛6月25日发布，附Klippy日志，用户公开投诉",
+      isP0: true
+  },
+
 {
       id: "KB-EN-20260625-001",
       brand: "Anycubic",
@@ -3456,58 +3599,6 @@ id: "KB-EN-20260608-002",
     },
 
 {
-      id: "KB-EN-20260526-002",
-      brand: "Creality",
-      platform: "行业评测",
-      sourceLink: "https://www.3dtechvalley.com/creality-k2-plus-review/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-26",
-      publishedAt: "2026-01-24",
-      modelName: "K2 Plus",
-      purchaseChannel: "评测获取",
-      purchaseDuration: "数周",
-      verified: true,
-      shippingExperience: "未适用",
-      customs: "未适用",
-      originalText: "3DTechValley in-depth review: WiFi connectivity has occasional issues that can disrupt long prints. Review explicitly recommends using wired Ethernet for important multi-day print jobs to avoid WiFi disconnection causing print failures. CFS multi-color printing generates significant purge waste - 50-100g per color-change-heavy print with 0.4mm high-flow nozzle requiring larger purge volumes. K2 Plus cannot print TPU through CFS system; flexible materials must use direct feed port, bypassing Bowden path. First layer adhesion requires precise leveling on the large bed. Creality Print slicer is notably less refined than Bambu Studio with steeper learning curve and less automated multi-color workflow. Firmware maturity is still evolving with frequent updates indicating ongoing improvement but not yet fully stable.",
-      translation: "3DTechValley深度评测：WiFi连接存在偶发问题，可能中断长时间打印。评测明确建议重要多日打印任务使用有线以太网连接，以避免WiFi断连导致打印失败。CFS多色打印产生大量清洗废料——频繁换色的大型打印浪费50-100克材料，0.4mm高流量喷嘴需要更大清洗体积。K2 Plus无法通过CFS系统打印TPU，柔性材料必须使用直通进料端口。大尺寸热床的首层附着力需要精确调平。Creality Print切片器明显不如Bambu Studio完善，学习曲线更陡峭，多色工作流自动化程度低。固件成熟度仍在发展中，频繁更新表明持续改进但尚未完全稳定。",
-      summaryEn: "K2 Plus WiFi drops can ruin multi-day prints (review recommends Ethernet), CFS can't handle TPU, multi-color wastes 50-100g per print, Creality Print lags behind Bambu Studio.",
-      summaryCn: "K2 Plus WiFi断连可毁掉多日打印（评测建议用以太网）、CFS不支持TPU、多色每次浪费50-100克、Creality Print远不如Bambu Studio完善。",
-      sentiment: "负面",
-      dimensions: ["软件与交互", "硬件性能", "使用成本与兼容性"],
-      problemPoints: ["WiFi连接不稳定", "CFS不支持TPU", "多色耗材浪费", "切片软件不完善"],
-      competitorMentioned: "Bambu Lab",
-      isP0: false
-    },
-
-{
-      id: "KB-EN-20260526-003",
-      brand: "ELEGOO",
-      platform: "独立评测",
-      sourceLink: "https://layerdepth.com/reviews/elegoo-centauri-carbon/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-26",
-      publishedAt: "2026-04-03",
-      modelName: "Centauri Carbon",
-      purchaseChannel: "评测获取",
-      purchaseDuration: "数周",
-      verified: true,
-      shippingExperience: "未适用",
-      customs: "未适用",
-      originalText: "LayerDepth review based on 4 verified Amazon reviews: Internal lighting is extremely dim — dual LED strips barely illuminate the build area. In dark rooms, a flashlight is needed to inspect layer adhesion or spot stringing. Multiple reviewers independently pointed out this problem. PLA printing requires complete removal of the top panel (no hinge design), and removing the acrylic panel eliminates sound insulation, making CoreXY stepper whine at high speed very noticeable at ~50dB. No dedicated mobile app — cannot remotely monitor prints via phone. Camera only feeds to touchscreen and desktop ELEGOO Slicer. No chamber heating — printing ASA requires preheating bed to 110°C and waiting 30 minutes for thermal soak. Summer heat creates greenhouse effect: bed at 60°C + room temp >28°C = chamber exceeds 50°C in 30 minutes, affecting even TPU. Most users switch to OrcaSlicer within a week as ELEGOO Slicer is notably immature.",
-      translation: "LayerDepth评测（基于4条Amazon验证购买评论）：内部灯光极其昏暗——双LED灯条几乎无法照亮构建区域，暗室中需手电筒检查层附着或发现拉丝问题。多位评测者独立指出此问题。PLA打印需完全拆卸顶板（非铰链设计），移除亚克力面板后失去隔音效果，高速CoreXY步进电机啸叫在~50dB下非常明显。无专用手机App——无法远程监控打印。相机仅传输到触摸屏和桌面端ELEGOO Slicer。无腔体加热——打印ASA需预热热床至110°C并等待30分钟热渗透。夏季高温产生温室效应：热床60°C + 室温>28°C = 腔体30分钟内超过50°C，连TPU都受影响。多数用户一周内转向OrcaSlicer，ELEGOO Slicer明显不成熟。",
-      summaryEn: "Centauri Carbon's user pain points: extremely dim internal lighting, no mobile app for remote monitoring, no chamber heating for ASA, PLA requires removing non-hinged top panel (loses sound insulation), and ELEGOO Slicer drives users to OrcaSlicer within a week.",
-      summaryCn: "Centauri Carbon用户痛点：内部灯光极暗、无手机App远程监控、无腔体加热无法打印ASA、PLA需拆非铰链顶板（失去隔音）、ELEGOO Slicer驱使用户一周内转投OrcaSlicer。",
-      sentiment: "负面",
-      dimensions: ["硬件性能", "软件与交互", "日常使用体验"],
-      problemPoints: ["内部灯光昏暗", "无手机App", "无腔体加热", "切片器不成熟"],
-      competitorMentioned: "Bambu Lab",
-      isP0: false
-    },
-
-{
       id: "KB-EN-20260526-004",
       brand: "Anycubic",
       platform: "独立评测",
@@ -3534,32 +3625,6 @@ id: "KB-EN-20260608-002",
     },
 
 {
-      id: "KB-EN-20260526-005",
-      brand: "Anycubic",
-      platform: "独立评测",
-      sourceLink: "https://makers101.com/kobra-s1-max-combo-honest-review/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-26",
-      publishedAt: "2025-11-20",
-      modelName: "Kobra S1 Max Combo",
-      purchaseChannel: "评测获取",
-      purchaseDuration: "数周",
-      verified: true,
-      shippingExperience: "未适用",
-      customs: "未适用",
-      originalText: "Makers101 honest review: Multi-color printing generates purge waste and purge towers — material purging can waste more filament than the model itself. Anycubic's history is mixed: some S1 users report excellent long-term stability, others report bed-leveling inconsistency, firmware hiccups, and occasional extrusion issues. Anycubic slicer and firmware need time to mature — ecosystem is not as polished as Bambu's. 350mm printers magnify calibration errors; a 300mm print failing at layer 220 wastes half a filament roll and 20+ hours. Engineering materials require precise temperature control, correct chamber environment, good ventilation, and bed adhesion expertise. First-batch machines typically need firmware updates, slicer patches, and multi-material calibration. 600mm/s marketing speed is unrealistic for large, heavy models — actual functional speed is 200-300mm/s. Fully enclosed 350mm CoreXY is not desk-friendly; needs stable support, good ventilation, and side clearance.",
-      translation: "Makers101诚实评测：多色打印产生清洗废料和清洗塔——清洗耗材可能比模型本身还多。Anycubic历史口碑参差不齐：部分S1用户报告长期稳定性良好，其他用户报告热床调平不一致、固件小故障和偶发挤出问题。Anycubic切片器和固件需要时间成熟——生态系统不如Bambu完善。350mm打印机会放大小校准误差；300mm打印在第220层失败意味着浪费半卷耗材和20多小时。工程材料需要精确温控、正确腔体环境、良好通风和热床粘附经验。首批机器通常需要固件更新、切片器补丁和多材料校准。600mm/s标称速度对大型重型模型不现实——实际功能速度200-300mm/s。全封闭350mm CoreXY不适合桌面放置。",
-      summaryEn: "S1 Max Combo: multi-color purge waste can exceed the model itself, Anycubic's mixed QC history (leveling/extrusion issues), ecosystem far behind Bambu, 350mm failures are extremely costly, 600mm/s is marketing not reality.",
-      summaryCn: "S1 Max Combo：多色清洗浪费可能超过模型本身、Anycubic QC口碑参差（调平/挤出问题）、生态远落后Bambu、350mm失败代价极高、600mm/s是营销非现实。",
-      sentiment: "中性",
-      dimensions: ["硬件性能", "软件与交互", "使用成本与兼容性"],
-      problemPoints: ["多色耗材浪费", "调平不一致", "固件不成熟", "生态落后竞品"],
-      competitorMentioned: "Bambu Lab",
-      isP0: false
-    },
-
-{
       id: "KB-EN-20260525-001",
       brand: "Anycubic",
       platform: "独立评测",
@@ -3583,110 +3648,6 @@ id: "KB-EN-20260608-002",
       problemPoints: ["多色系统故障", "频繁报错", "AI检测误报", "耗材浪费"],
       competitorMentioned: "Bambu Lab",
       isP0: true
-    },
-
-{
-      id: "KB-EN-20260525-002",
-      brand: "Bambu Lab",
-      platform: "行业评测",
-      sourceLink: "https://adpindustries.com/blog/bambu-lab-vs-creality-vs-prusa-2026/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-25",
-      publishedAt: "2026-02-27",
-      modelName: "P1S",
-      purchaseChannel: "未适用",
-      purchaseDuration: "未适用",
-      verified: true,
-      shippingExperience: "未适用",
-      customs: "未适用",
-      originalText: "Bambu Lab's firmware isn't open-source. The closed ecosystem means you're locked into Bambu Studio and their cloud services. For complex issues, getting escalated to someone who can actually help sometimes takes persistence. Support interactions can feel formulaic - asking you to repeat troubleshooting steps you've already tried. Spare parts through official channels run higher than generic alternatives.",
-      translation: "Bambu Lab的固件并非开源。封闭的生态系统意味着你被锁定在Bambu Studio和他们的云服务中。对于复杂问题，升级到能真正提供帮助的人员有时需要坚持跟进。支持交互可能感觉很公式化——让你重复已经尝试过的故障排除步骤。通过官方渠道购买的备用零件比通用替代品更贵。",
-      summaryEn: "Bambu Lab's main weaknesses: closed ecosystem, cloud dependency, and formulaic customer support that sometimes requires persistence to get real help.",
-      summaryCn: "Bambu Lab主要短板：封闭生态系统、云服务依赖，以及需要坚持才能获得真正帮助的公式化客户支持。",
-      sentiment: "中性",
-      dimensions: ["软件与交互", "售后服务与社区"],
-      problemPoints: ["生态系统封闭", "云服务依赖", "支持响应公式化"],
-      competitorMentioned: "Prusa",
-      isP0: false
-    },
-
-{
-      id: "KB-EN-20260525-003",
-      brand: "Creality",
-      platform: "行业评测",
-      sourceLink: "https://adpindustries.com/blog/bambu-lab-vs-creality-vs-prusa-2026/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-25",
-      publishedAt: "2026-02-27",
-      modelName: "K2 SE",
-      purchaseChannel: "未适用",
-      purchaseDuration: "未适用",
-      verified: true,
-      shippingExperience: "未适用",
-      customs: "未适用",
-      originalText: "Inconsistent quality control is Creality's Achilles heel. Browse any 3D printing forum and you'll find stories of misaligned frames, inconsistent QC between batches, and the occasional DOA unit. Warranty claims are generally honored but can require extended back-and-forth. Customer support is historically the weakest of the three brands. Response times vary dramatically - sometimes you get help within hours, sometimes tickets seem to disappear. The language barrier can be an issue for complex technical problems.",
-      translation: "质量控制不一致是Creality的致命弱点。浏览任何3D打印论坛都能找到机架对齐问题、不同批次间质量不一致、以及偶尔收到开箱即损产品的故事。保修索赔通常会被受理，但可能需要漫长的来回沟通。客户支持历史上是三个品牌中最弱的。响应时间差异很大——有时几小时就能获得帮助，有时工单似乎消失了。语言障碍可能影响复杂技术问题的沟通。",
-      summaryEn: "Creality's fatal flaw: inconsistent quality control with misaligned frames and batch variations. Customer support is unreliable with highly variable response times.",
-      summaryCn: "Creality的致命缺陷：质量控制不一致，存在机架对齐和批次差异问题。客户支持不可靠，响应时间波动极大。",
-      sentiment: "负面",
-      dimensions: ["硬件性能", "售后服务与社区"],
-      problemPoints: ["质量控制不一致", "客户支持不可靠", "响应时间差异大"],
-      competitorMentioned: "Bambu Lab, Prusa",
-      isP0: false
-    },
-
-{
-      id: "KB-EN-20260525-004",
-      brand: "ELEGOO",
-      platform: "行业评测",
-      sourceLink: "https://3dprinteddecor.com/bambu-lab-3d-printer-review-2026/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-25",
-      publishedAt: "2026-05-24",
-      modelName: "Centauri Carbon",
-      purchaseChannel: "未适用",
-      purchaseDuration: "未适用",
-      verified: true,
-      shippingExperience: "未适用",
-      customs: "未适用",
-      originalText: "The Elegoo Centauri Carbon is described as 'Loud (sounds like jet engine)'. Multiple users describe it as 'sounding like it's about to launch into orbit'. Hot end replacements reportedly require disassembly that intimidates beginners. The Centauri Carbon requires significantly more hands-on involvement and 1-2 hours of calibration setup time versus 15-30 minutes for Bambu Lab. Users need to spend 5-10 hours learning calibration.",
-      translation: "Elegoo Centauri Carbon被描述为'噪音大（像喷气发动机）'。多位用户形容它'听起来像即将发射升空'。据报道，热端更换需要拆解，令初学者望而却步。Centauri Carbon需要更多的手动干预，设置校准时间需要1-2小时，而Bambu Lab仅需15-30分钟。用户需要花5-10小时学习校准。",
-      summaryEn: "Centauri Carbon's biggest complaints: jet-engine-level noise that makes it unsuitable for living spaces, complex hotend maintenance, and a steep learning curve requiring 5-10 hours of calibration.",
-      summaryCn: "Centauri Carbon最大槽点：喷气发动机级噪音（不适合放在生活空间）、复杂热端维护、以及需要5-10小时校准学习的高陡峭曲线。",
-      sentiment: "负面",
-      dimensions: ["日常使用体验", "硬件性能"],
-      problemPoints: ["噪音大", "热端维护复杂", "学习曲线陡峭"],
-      competitorMentioned: "Bambu Lab",
-      isP0: false
-    },
-
-{
-      id: "KB-EN-20260525-005",
-      brand: "QIDI",
-      platform: "独立评测",
-      sourceLink: "https://3dprinteddecor.com/qidi-x-max3-3d-printer-review-large-format-potential-with-notable-flaws/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-25",
-      publishedAt: "2026-01-12",
-      modelName: "X-Max3",
-      purchaseChannel: "Amazon",
-      purchaseDuration: "未适用",
-      verified: true,
-      shippingExperience: "未适用",
-      customs: "未适用",
-      originalText: "Power loss recovery is particularly egregious for a $899 printer. During one incident, a 20-hour print failed at 95% completion due to a brief power outage, wasting nearly a full roll of filament worth about $25. The bed temperature showed a 5-degree variance across the surface detected by thermal imaging, causing warping on multi-model prints. The trim on the frame is already peeling and the plastic housings feel thin for the price point.",
-      translation: "断电恢复功能缺失对于一台899美元的打印机来说特别不可接受。在一次事件中，一次20小时的打印任务在完成95%时因短暂断电而失败，浪费了将近一整卷耗材（价值约25美元）。热床温度存在5C的偏差（通过热成像检测），导致多模型打印时出现翘曲。机架上的装饰条已经开始剥落，塑料外壳感觉以这个价格来说过于单薄。",
-      summaryEn: "For a $899 printer, QIDI X-Max3's lack of power loss recovery is inexcusable - one power outage during a 20-hour print wasted $25 worth of filament. Bed temperature variance causes warping on multi-model prints.",
-      summaryCn: "对于899美元的打印机，QIDI X-Max3缺乏断电恢复功能是不可原谅的——一次断电导致20小时打印浪费了价值25美元的耗材。热床温度偏差导致多模型打印翘曲。",
-      sentiment: "负面",
-      dimensions: ["硬件性能", "软件与交互"],
-      problemPoints: ["无断电恢复", "热床温差", "做工单薄"],
-      competitorMentioned: "Creality, Anycubic",
-      isP0: false
     },
 
 {
@@ -3743,59 +3704,11 @@ id: "KB-EN-20260608-002",
       summaryEn: "Kobra 3 Max motherboard failed after 500 hours, slow support, parts unavailable, forum reports similar failures",
       summaryCn: "Kobra 3 Max使用500小时后主板故障，售后响应慢，配件难获取，社区有类似报告",
       isP0: true
-    },
+    }
+  ]
+};
 
-{},
 
-{
-    const b = item.brand || "其他";
-    brandCounts[b] = (brandCounts[b] || 0) + 1;
-  },
-
-{
-    container.innerHTML += '<button class="filter-btn" data-group="brand" data-value="' + brand + '" onclick="toggleFilter(this)">' + brand + ' <span class="count">(' + count + ')</span></button>';
-  },
-
-{
-    filters.dateFrom = '';
-    filters.dateTo = '';
-    document.getElementById('dateFrom').value = '';
-    document.getElementById('dateTo').value = '';
-  },
-
-{
-    filters.dateFrom = '';
-    filters.dateTo = '';
-    document.getElementById('dateFrom').value = '';
-    document.getElementById('dateTo').value = '';
-  },
-
-{
-    const heroSel = document.getElementById('heroDateFilter');
-    if (heroSel) heroSel.value = '';
-  },
-
-{
-    filters.datePreset = 'custom';
-    filters.dateFrom = from;
-    filters.dateTo = to;
-  },
-
-{
-    filters.datePreset = 'all';
-    filters.dateFrom = '';
-    filters.dateTo = '';
-    // Re-activate "all" button
-    document.querySelector('.filter-btn[data-group="date"][data-value="all"]').classList.add('active');
-  },
-
-{ brand: "all", sentiment: "all", platform: "all", datePreset: "all", dateFrom: "", dateTo: "", search: "" },
-
-{
-    if (b.dataset.value === 'all') b.classList.add('active');
-    else b.classList.remove('active');
-  }
-      ]
   const today = new Date(); today.setHours(23,59,59,999);
   return items.filter(item => {
     // Brand
