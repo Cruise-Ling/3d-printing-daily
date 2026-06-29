@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D打印行业每日资讯 - 2026年6月29日</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖨️</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f0f2f5;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;display:flex;justify-content:center;padding:12px 0}
+.card{width:375px;background:#fff;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.06);overflow:clip}
+.header{background:linear-gradient(135deg,#1a237e,#283593,#3949ab);padding:24px 20px 18px;color:#fff;position:relative}
+.header-back{position:absolute;left:16px;top:28px;transform:translateY(-50%);display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.95);font-size:14px;font-weight:600;text-decoration:none;padding:7px 16px 7px 3px;border-radius:20px;border:1.5px solid rgba(255,255,255,.35)}
+.header-back:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.6)}
+.header h1{font-size:19px;font-weight:700;letter-spacing:1px;margin-bottom:6px;padding-left:90px}
+.header .date{font-size:13px;opacity:.85;font-weight:400}
+.header .source-note{font-size:11px;opacity:.7;margin-top:4px}
+.stats-bar{display:flex;gap:8px;flex-wrap:wrap;padding:14px 20px;background:#fafbff;border-bottom:1px solid #f0f0f0}
+.stats-pill{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;color:#555;background:#f0f4ff;border-radius:20px;padding:5px 11px;border:1px solid #e8edff}
+.stats-pill b{color:#1a73e8;font-weight:700}
+.stats-pill.warn{background:#fff8e1;border-color:#ffe082}
+.stats-pill.warn b{color:#e65100}
+.section-title{display:flex;align-items:center;padding:18px 20px 12px;font-size:16px;font-weight:800;color:#0d47a1;background:linear-gradient(90deg,rgba(26,115,232,.08),transparent);border-bottom:2px solid #1a73e8}
+.section-title .icon{width:4px;height:16px;border-radius:2px;margin-right:8px}
+.section-title.general .icon{background:linear-gradient(180deg,#42a5f5,#1e88e5)}
+.section-title.specific .icon{background:linear-gradient(180deg,#ffa726,#fb8c00)}
+.section-title.consumer .icon{background:linear-gradient(180deg,#66bb6a,#43a047)}
+.section-title.global .icon{background:linear-gradient(180deg,#ab47bc,#7b1fa2)}
+.section-title.feedback .icon{background:linear-gradient(180deg,#26c6da,#00838f)}
+.section-title.niche .icon{background:linear-gradient(180deg,#e64a19,#d84315)}
+.section-title.scenario .icon{background:linear-gradient(180deg,#00796b,#00695c)}
+.item{padding:12px 20px 14px;border-bottom:1px solid #f5f5f5}
+.item:last-child{border-bottom:none}
+.item-head{display:flex;align-items:flex-start;margin-bottom:6px}
+.num-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;flex-shrink:0;margin-right:10px;margin-top:1px}
+.general-zone .num-dot{background:linear-gradient(135deg,#42a5f5,#1e88e5)}
+.specific-zone .num-dot{background:linear-gradient(135deg,#ffa726,#fb8c00)}
+.consumer-zone .num-dot{background:linear-gradient(135deg,#66bb6a,#43a047)}
+.global-zone .num-dot{background:linear-gradient(135deg,#ab47bc,#7b1fa2)}
+.feedback-zone .num-dot{background:linear-gradient(180deg,#26c6da,#00838f)}
+.niche-zone .num-dot{background:linear-gradient(135deg,#e64a19,#d84315)}
+.scenario-zone .num-dot{background:linear-gradient(180deg,#00796b,#00695c)}
+.item-title{font-size:14.5px;font-weight:600;line-height:1.45;color:#212121;flex:1}
+.item-title a{color:#212121;text-decoration:none}
+.item-title a:hover{color:#1a73e8}
+.item-summary{font-size:12.8px;line-height:1.7;color:#616161;padding-left:32px;word-break:break-all}
+.item-source{font-size:11px;color:#9e9e9e;padding-left:32px;margin-top:4px}
+.item-source a{color:#1e88e5;text-decoration:none}
+.item-source a:hover{text-decoration:underline}
+.from-tag{font-size:10px;padding:1px 6px;border-radius:6px;margin-left:6px;opacity:.75}
+.from-qq{background:#fce4ec;color:#880e4f}
+.from-sina{background:#fff3e0;color:#e65100}
+.from-163{background:#e8f5e9;color:#2e7d32}
+.from-msn{background:#e3f2fd;color:#1565c0}
+.from-baijiahao{background:#fff8e1;color:#f57f17}
+.from-sohu{background:#fff3e0;color:#bf360c}
+.from-36kr{background:#e8eaf6;color:#283593}
+.from-bilibili{background:#fce4ec;color:#c62828}
+.from-3dprint{background:#e0f7fa;color:#006064}
+.from-3dprinting{background:#e0f7fa;color:#006064}
+.from-3druck{background:#e8eaf6;color:#283593}
+.from-dayinpai{background:#e8f5e9;color:#1b5e20}
+.from-cgtn{background:#e3f2fd;color:#0d47a1}
+.from-xinhua{background:#ffebee;color:#b71c1c}
+.from-cnstock{background:#fff3e0;color:#e65100}
+.from-eastmoney{background:#fff3e0;color:#bf360c}
+.from-ithome{background:#e3f2fd;color:#1565c0}
+.from-cctv{background:#ffebee;color:#b71c1c}
+.from-csdn{background:#e8eaf6;color:#1a237e}
+.from-other{background:#eceff1;color:#37474f}
+.from-zaker{background:#fff3e0;color:#e65100}
+.from-21jingji{background:#e3f2fd;color:#0d47a1}
+.from-nanjixiong{background:#e8f5e9;color:#1b5e20}
+.from-tencent{background:#e3f2fd;color:#0d47a1}
+.from-10jqka{background:#fff3e0;color:#e65100}
+.side-nav{position:fixed;left:max(0px,calc((100vw - 375px)/2 - 90px));top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;z-index:200}
+.side-nav-item{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;font-size:12px;color:#555;background:rgba(255,255,255,.95);box-shadow:0 1px 6px rgba(0,0,0,.08);cursor:pointer;transition:all .2s;text-decoration:none;white-space:nowrap;border:1px solid rgba(0,0,0,.06)}
+.side-nav-item:hover{box-shadow:0 2px 12px rgba(0,0,0,.15);transform:translateX(-2px)}
+.side-nav-item .nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.score-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:8px;margin-left:6px;font-weight:600}
+.score-badge-a{background:#e8f5e9;color:#2e7d32}
+.hot-summary{padding:14px 20px;background:linear-gradient(135deg,#fff8e1,#fff3e0);border-bottom:1px solid #ffe082}
+.hot-summary h3{font-size:14px;font-weight:700;color:#e65100;margin-bottom:8px}
+.hot-summary ul{list-style:none;padding:0}
+.hot-summary li{font-size:12.5px;color:#5d4037;padding:3px 0;padding-left:16px;position:relative;line-height:1.5}
+.hot-summary li::before{content:"";position:absolute;left:0;top:10px;width:6px;height:6px;border-radius:50%;background:#ff9800}
+.footer{padding:16px 20px;background:#f8f9fa;text-align:center;font-size:11px;color:#9e9e9e;border-top:1px solid #f0f0f0}
+.footer a{color:#1e88e5;text-decoration:none}
+@media(max-width:767px){.side-nav{position:fixed;left:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;padding-left:4px;z-index:200}.side-nav .side-nav-item{padding:5px 8px;font-size:11px;border-radius:16px;box-shadow:0 1px 6px rgba(0,0,0,.1)}.card{margin-left:52px;width:calc(100vw - 60px);max-width:375px}body{justify-content:flex-start;padding:12px 0 12px 4px}}
+@media(min-width:768px){.section-nav{display:none}.side-nav{left:max(0px,calc((100vw - 375px)/2 - 90px))}}
+</style>
+</head>
+<body>
+<nav class="side-nav" id="sideNav">
+  <a class="side-nav-item" href="index.html"><span class="nav-dot" style="background:#1a237e"></span>首页</a>
+  <a class="side-nav-item" onclick="scrollToSection('general')"><span class="nav-dot" style="background:#1a73e8"></span>泛行业</a>
+  <a class="side-nav-item" onclick="scrollToSection('specific')"><span class="nav-dot" style="background:#e65100"></span>细分领域</a>
+  <a class="side-nav-item" onclick="scrollToSection('consumer')"><span class="nav-dot" style="background:#2e7d32"></span>消费级</a>
+  <a class="side-nav-item" onclick="scrollToSection('niche')"><span class="nav-dot" style="background:#d84315"></span>细分市场</a>
+  <a class="side-nav-item" onclick="scrollToSection('scenario')"><span class="nav-dot" style="background:#00695c"></span>场景打印</a>
+  <a class="side-nav-item" onclick="scrollToSection('global')"><span class="nav-dot" style="background:#7b1fa2"></span>海外资讯</a>
+  <a class="side-nav-item" onclick="scrollToSection('feedback')"><span class="nav-dot" style="background:#00838f"></span>用户口碑</a>
+</nav>
+<div class="card">
+
+<div class="header">
+  <a class="header-back" href="index.html">← 首页</a>
+  <h1>3D打印行业每日资讯</h1>
+  <div class="date">2026年6月29日 · 星期一</div>
+  <div class="source-note">内容来源：3DPrint.com / 3Dnatives / 腾讯新闻 / 新浪财经 / 同花顺 / 南极熊等</div>
+</div>
+
+<div class="stats-bar">
+  <span class="stats-pill">资讯 <b>35</b> 条</span>
+  <span class="stats-pill">分区 <b>7</b> 大</span>
+  <span class="stats-pill warn">内容日期 <b>6月26日（周五）</b></span>
+</div>
+
+<div class="hot-summary">
+  <h3>🔥 今日热点速递</h3>
+  <ul>
+    <li>联泰科技递表港交所主板：工业级3D打印出货量中国第一，冲击港股工业级AM第一股</li>
+    <li>无人机3D打印市场2034年达9亿美元：AM Research报告，已成3D打印最大生产应用场景</li>
+    <li>美国陆军授予Continuous Composites 3D打印导弹部件合同，军方AM走向实战化</li>
+    <li>Solukon发布SPR-Pathfinder PRO：去粉工艺仿真软件，提高金属打印后处理效率</li>
+    <li>AM Research & 3DPrint.com：纳米3D打印+国防准备，增材制造进入"深水区"</li>
+  </ul>
+</div>
+
+<div class="section-title general" id="general">
+  <span class="icon"></span>泛行业资讯（工业/资本/政策）
+</div>
+<div class="general-zone">
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://stock.10jqka.com.cn/20260627/c677765535.shtml" target="_blank">🏭 联泰科技递表港交所主板：冲击"港股工业级3D打印第一股"，年营收5.6亿</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">据港交所6月26日披露，上海联泰科技向港交所主板提交上市申请，海通国际为独家保荐人。根据弗若斯特沙利文资料，联泰科技2025年在中国工业级3D打印设备公司中出货量排名第一，市占率约25%。联泰科技始于2000年，从光固化SLA技术起步，覆盖工业级3D打印全产业链。招股书显示2025年营收5.6亿元，亏损3139万元。联泰科技以AI与数字化技术赋能3D打印，致力于推动行业从原型验证到制程优化，加速迈向终端功能零件与产品的规模化定制。</div>
+  <div class="item-source">来源：<a href="https://stock.10jqka.com.cn/20260627/c677765535.shtml" target="_blank">同花顺</a><span class="from-tag from-10jqka">同花顺</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://caifuhao.eastmoney.com/news/20260627104707225984620" target="_blank">💰 联泰科技招股书详解：年营收5.6亿亏损3139万，控股股东控制18%股权</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">东方财富6月27日报道，联泰科技招股书详细数据浮出水面：公司2025年营收5.6亿元，净亏损3139万元；研发投入占营收比例超过15%。联泰科技提供涵盖SLA光固化、DLP、SLM金属等全技术路线的工业级3D打印解决方案，客户覆盖航空航天、汽车、医疗、消费品等行业。控股股东通过多层架构控制约18%股权。值得注意的是，联泰科技的亏损主要源于持续的研发投入和市场拓展——在以出货量成为行业第一的背后，是工业级3D打印赛道"先投入后盈利"的典型商业逻辑。当一家占据25%市场份额的龙头企业仍然亏损，这个行业正处于"烧钱换份额"的激烈竞争阶段。</div>
+  <div class="item-source">来源：<a href="https://caifuhao.eastmoney.com/news/20260627104707225984620" target="_blank">东方财富</a><span class="from-tag from-eastmoney">东方财富</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/327697/3d-printing-news-briefs-june-27-2026-nanoscale-3d-printing-defense-readiness-more/" target="_blank">🎖️ 美国陆军AM路线图更新：非金属3D打印进入战场备件供应链，MELTIO发展国防网络</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月27日News Briefs报道，美国陆军正在加速将非金属3D打印融入战场备件供应链。与此同时，MELTIO宣布扩大其Meltio Defense认可合作伙伴网络，面向美国政府客户提供直接能量沉积（DED）金属3D打印能力。陆军AM计划的核心逻辑是"按需制造，就近部署"——在战术前沿用3D打印快速生产备件，缩短传统供应链的响应周期。当军方开始系统性评估和部署战术级AM能力，3D打印从"意外有用的技术"正式升级为"国防体系建设的一部分"。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/327697/3d-printing-news-briefs-june-27-2026-nanoscale-3d-printing-defense-readiness-more/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-180991-1-1.html" target="_blank">🌊 AML3D完成向纽波特纽斯造船交付：澳大利亚金属AM巨头打入美国军工供应链</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊6月27日报道，澳大利亚金属增材制造公司AML3D宣布，已完成向美国纽波特纽斯造船公司（Newport News Shipbuilding）的ARCEMY金属3D打印系统交付。纽波特纽斯造船是美国海军核动力航母和潜艇的主要建造商。AML3D的大尺寸线弧增材制造（WAM）技术在造船领域的应用正加速扩张。从澳大利亚到美国军工船厂，金属AM正在从"特种零件"走向"大型结构件"——当3D打印可以参与制造航母零件时，这个产业的上限正在被重新定义。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-180991-1-1.html" target="_blank">南极熊</a><span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-180992-1-1.html" target="_blank">🔄 Continuum Powders发布增材制造粉末循环制造指南：从废粉到高性能粉末的闭环</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊6月27日报道，美国Continuum Powders发布《增材制造粉末循环制造指南》。该公司开发了一种等离子雾化工艺（GAP），可将报废金属打印件、废粉和加工碎屑直接转化为高品质3D打印金属粉末。在金属AM的可持续性讨论中，"打印→废粉→新粉→再打印"的闭环模式一直被认为是理想目标，但缺乏可商业化的解决方案。Continuum Powders的GAP技术使得金属粉末的回收利用率大幅提升。在金属AM大规模商业化之前，粉末成本和可持续性一直是制约因素——如果粉末可以无限循环，这个成本瓶颈将从根本上被打破。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-180992-1-1.html" target="_blank">南极熊</a><span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+</div>
+
+<div class="section-title specific" id="specific">
+  <span class="icon"></span>细分领域动态（医疗/航天/材料）
+</div>
+<div class="specific-zone">
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/327688/solukon-releases-spr-pathfinder-pro/" target="_blank">🔬 Solukon发布SPR-Pathfinder PRO：金属3D打印去粉工艺仿真软件，大幅降低后处理试错成本</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月26日报道，德国去粉系统制造商Solukon正式发布SPR-Pathfinder PRO软件。该软件可对金属3D打印件的去粉工艺进行全流程仿真——模拟粉末在零件内部通道和空腔中的流动路径、清除效率以及复杂几何结构的排粉可行性。在金属粉末床熔融（PBF-LB/M）工艺中，去粉是后处理环节最耗时且最容易出问题的步骤之一，尤其是带有内部流道和格栅结构的零件。SPR-Pathfinder PRO使工程师在打印前就能判断"这个件能不能去粉干净"、"需要设计多深的排粉孔"——在仿真阶段解决后处理问题，而不是打印后发现粉末堵死通道。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/327688/solukon-releases-spr-pathfinder-pro/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/327703/why-qualification-is-becoming-the-next-frontier-for-am-in-energy/" target="_blank">⚡ 能源行业AM认证：EPRI获ASME最佳论文奖，核能+3D打印的资格认证破冰</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月26日报道（赞助专题），电力研究协会（EPRI）提交的关于增材制造在核电和能源领域认证的论文获ASME最佳论文奖。能源行业的AM应用一直受困于严格的材料认证和资格审批流程——核能等关键设施对打印件的可靠性和可追溯性要求远高于一般工业。EPRI的研究为AM零件在核电、化石能源和可再生能源领域的认证提供了体系化框架。能源行业对3D打印组件的需求巨大，从燃气轮机叶片到核废料容器，都是传统工艺难以高效处理的复杂件。AM认证体系每向前一步，意味着一个万亿级市场的大门多开一道缝。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/327703/why-qualification-is-becoming-the-next-frontier-for-am-in-energy/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/327697/3d-printing-news-briefs-june-27-2026-nanoscale-3d-printing-defense-readiness-more/" target="_blank">🔬 UCSB获NSF 115万美元资助：购买纳米级3D打印系统，研究微纳结构材料</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月27日News Briefs报道，加州大学圣塔芭芭拉分校（UCSB）获得美国国家科学基金会（NSF）115万美元资助，用于购置纳米级3D打印系统。该系统基于双光子聚合技术，可实现亚微米级分辨率的结构制造。UCSB研究团队将利用该设备探索微纳结构材料的力学、光学和热学性能——从光子晶体到微机电系统（MEMS），纳米3D打印正在打开宏观3D打印无法触及的微观世界。当3D打印的尺度从毫米级深入到纳米级，其应用范围从"制造零件"扩展到了"制造材料本身"。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/327697/3d-printing-news-briefs-june-27-2026-nanoscale-3d-printing-defense-readiness-more/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/327697/3d-printing-news-briefs-june-27-2026-nanoscale-3d-printing-defense-readiness-more/" target="_blank">🩻 Lumafield推出新一代工业X射线CT检测方案：为增材制造全流程品控提供无损检测能力</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月27日News Briefs报道，工业CT检测公司Lumafield推出新一代X射线计算机断层扫描（CT）检测方案，专为增材制造全流程品控设计。该方案可检测金属和聚合物3D打印件的内部缺陷（孔隙、裂纹、未熔合层），并支持原位分析和批量检测。3D打印的一个核心矛盾在于：内部缺陷肉眼不可见，但传统破坏性检测（切片、金相分析）又破坏了零件本身。Lumafield的非破坏性CT检测可以做到"每件必检"而不是"抽样切片"——对于航空航天和医疗植入物等高可靠性场景，这意味着3D打印零件从"抽检合格"到"件件可追溯"的质控升级。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/327697/3d-printing-news-briefs-june-27-2026-nanoscale-3d-printing-defense-readiness-more/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-180991-1-1.html" target="_blank">🚢 AML3D WAM技术：大型金属3D打印如何服务于潜艇和航母制造</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊6月27日报道，AML3D的线弧增材制造（WAM）技术在造船领域的应用引人关注。与粉末床金属打印不同，WAM以线材为原料、电弧为热源，可以在开放环境下快速沉积大尺寸金属结构，适合制造大型航空航天和船用零部件。AML3D向纽波特纽斯造船交付的ARCEMY系统将用于潜艇和航母的部件制造与修复。大型金属AM正在从"演示验证"走向"实际装机"，造船作为重工业的"金字塔尖"，为金属3D打印提供了最具说服力的应用场景。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-180991-1-1.html" target="_blank">南极熊</a><span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+</div>
+
+<div class="section-title consumer" id="consumer">
+  <span class="icon"></span>消费级赛道（品牌/模型/生态）
+</div>
+<div class="consumer-zone">
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/327109/china-now-has-29-universities-offering-additive-manufacturing-engineering-degrees/" target="_blank">🎓 29所大学开设AM专业对消费级3D打印生态的深层影响：人才供给改变行业天花板</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月25日报道引发行业深层思考——29所大学开设AM专业不仅影响工业级，也在改变消费级3D打印的生态基础。AM专业毕业生的第一个就业方向往往是消费级3D打印公司（拓竹、创想三维等）或相关平台（MakerWorld等）。2026年应届AM专业毕业生首次批量进入就业市场，其薪资预期和对行业的认知将直接影响消费级3D打印的产品创新节奏——人才不够可以设备来凑，但创新需要的是人。五年内从1所到29所大学的扩张速度，正在为整个AM行业注入新鲜血液。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/327109/china-now-has-29-universities-offering-additive-manufacturing-engineering-degrees/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/327700/us-army-awards-continuous-composites-3d-printed-missile-component-contract/" target="_blank">🔫 军用AM技术下沉：Continuous Composites合同显示工业级AM正定义消费级品质新标准</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月26日报道，美国陆军授予Continuous Composites的导弹部件合同展示了增材制造在军事领域的精度和质量要求。军用AM技术的成熟正在倒推消费级市场的品质标准提升——当军方验证了某种AM工艺的可靠性，该工艺的民用版本往往能更快被消费者接受。从打印导弹到打印玩具，技术跨度的缩小正在加速。"军转民"的技术溢出效应在3D打印行业尤其明显——CRP USA的Windform材料、EOS的金属打印工艺等，都是从军用/航天场景反向渗透到消费和专业市场的典型案例。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/327700/us-army-awards-continuous-composites-3d-printed-missile-component-contract/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://www.cnblogs.com/tzmm/p/20637215" target="_blank">📊 2026消费级3D打印平台深度横评：从产品力到生态，三大平台实力盘点</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">极欧测评6月18日发布《2026 3D打印平台推荐排行》，测评显示国内在线3D打印平台订单量同比增长47%，1件起订、24小时交付已成行业标配。测评从打印精度、材料丰富度、价格透明度、交付时效和售后服务五个维度对主流平台进行对比。消费级3D打印正在经历从"自己买设备打印"到"平台代打"的服务化转型——平台上打印而不是自己买打印机，正在成为越来越多消费者的选择。当在线打印平台的订单量年增长47%，消费级3D打印的商业模式正在从"卖硬件"转向"卖服务"。</div>
+  <div class="item-source">来源：<a href="https://www.cnblogs.com/tzmm/p/20637215" target="_blank">极欧测评 / 博客园</a><span class="from-tag from-csdn">博客园</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://www.3dnatives.com/en/the-curling-phenomenon-in-3d-printing-151120234/" target="_blank">🔄 3D打印翘曲（Curling）现象的深度解析：原因与解决——对消费级用户最有价值的FDM知识</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3Dnatives 6月26日发布技术指南，系统分析3D打印翘曲（Curling）的原因和对策。翘曲是FDM打印中最令新手头疼的问题——模型角落向上翘起、边缘脱离打印平台，本质上是因为熔融聚合物冷却收缩不均匀导致的内应力积累。指南从材料选择（PLA+比普通PLA翘曲更少）、平台温度优化、打印室环境控制、模型设计（圆角替代尖角）等角度提出了实操解决方案。对消费级用户来说，这篇指南是"少走弯路"的实用手册——很多新用户因为翘曲问题放弃3D打印，而解决方案往往比想象中简单。</div>
+  <div class="item-source">来源：<a href="https://www.3dnatives.com/en/the-curling-phenomenon-in-3d-printing-151120234/" target="_blank">3Dnatives</a><span class="from-tag from-3dprint">3Dnatives</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://www.3dnatives.com/en/top-3d-printable-models-summer040820174/" target="_blank">☀️ 夏季必打3D模型推荐：从海滩配件到露营工具，消费级3D打印进入场景化消费时代</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3Dnatives 6月25日发布夏季3D打印模型专题，从海滩配件（防沙手机壳、泳镜配件）到户外工具（露营装备、户外炊具）再到防晒小物，展示了消费级3D打印和生活场景的深度融合。消费级3D打印机正在从"技术玩具"和"创客工具"变成"家庭日用品制造机"——用户在MakerWorld等平台上搜索"夏天出行可以打印什么"，就像在电商平台上搜索"夏天出行买什么"一样自然。场景化需求正在推动消费级3D打印从"极客专属"走向"家庭必备"。</div>
+  <div class="item-source">来源：<a href="https://www.3dnatives.com/en/top-3d-printable-models-summer040820174/" target="_blank">3Dnatives</a><span class="from-tag from-3dprint">3Dnatives</span></div>
+</div>
+
+</div>
+
+<div class="section-title niche" id="niche">
+  <span class="icon"></span>细分市场 Niche（价格段/应用场景/区域市场）
+</div>
+<div class="niche-zone">
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://news.qq.com/rain/a/20260629A028TP00" target="_blank">🛸 AM Research报告：无人机3D打印市场将从1.4亿美元增长至2034年9亿美元</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">腾讯新闻6月29日报道，增材制造研究公司AM Research发布《2026年无人机系统增材制造机遇》旗舰报告。报告显示，2025年无人机增材制造市场规模约1.4亿美元（约9.5亿人民币），预计2034年增长至近9亿美元（约61.2亿人民币），CAGR约22%。无人机已成为全球低成本3D打印机的最大生产应用场景——大多数无人机零件是在材料挤出类3D打印机上制造的。金属增材制造也开始进入高端无人机平台，集中在推进系统和承载结构件。报告样本覆盖大疆（DJI）、Skydio、通用原子、Quantum Systems、EOS、Stratasys、HP、Markforged等全产业链企业。</div>
+  <div class="item-source">来源：<a href="https://news.qq.com/rain/a/20260629A028TP00" target="_blank">腾讯新闻</a><span class="from-tag from-tencent">腾讯新闻</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://finance.sina.cn/2026-06-27/detail-inievequ0166099.d.html" target="_blank">📈 联泰科技IPO数据解读：SLA龙头从2000年创业到港交所敲门，工业级3D打印的"马拉松"</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">新浪财经6月27日报道，联泰科技从2000年创立至今已走过26年——这在以"创业速度"著称的科技行业里实属罕见。从早期的光固化原型制造到覆盖SLA/DLP/SLM全技术路线，联泰科技的成长轨迹代表了中国工业级3D打印的完整进化史。值得注意的是：联泰科技的竞争对手已不仅是国内同行，随着中国工业级AM企业的技术成熟度提升，未来的竞争格局将是"中国工业级AM企业集体出海"与"欧美传统AM巨头"之间的正面对抗。联泰科技IPO的意义远超一家公司的事件，它是中国工业级3D打印产业从"跟随"到"并跑"的标志性时刻。</div>
+  <div class="item-source">来源：<a href="https://finance.sina.cn/2026-06-27/detail-inievequ0166099.d.html" target="_blank">新浪财经</a><span class="from-tag from-sina">新浪财经</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/327700/us-army-awards-continuous-composites-3d-printed-missile-component-contract/" target="_blank">🎯 美国陆军授予Continuous Composites导弹部件合同：连续纤维3D打印进入实战化测试</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月26日报道，美国陆军授予Continuous Composites一份关于3D打印导弹部件的新合同。Continuous Composites掌握连续纤维增强复合材料3D打印技术（CF3D），可在热固性树脂中嵌入连续碳纤维、玻璃纤维等增强材料，制造出比传统金属更轻、强度更高的复合结构件。该合同特别针对导弹系统的轻量化和快速换型需求——传统导弹部件的复合材料模具制造周期长达数周，而CF3D技术可将交货周期压缩至数天。当连续纤维3D打印开始写入军方合同编号，这个细分技术路线的商业化前景正在从"前景广阔"变成"需求确定"。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/327700/us-army-awards-continuous-composites-3d-printed-missile-component-contract/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/327688/solukon-releases-spr-pathfinder-pro/" target="_blank">🔧 金属AM后处理市场的新细分赛道：Solukon的去粉软件揭示"打印之后"的蓝海</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月26日报道揭示了金属AM市场的一个被忽略的细分方向：后处理工具和工艺。Solukon从物理去粉设备扩展到去粉仿真软件，正在定义"金属打印后处理"这个专业细分市场。后处理在金属AM总成本中占比高达30%-50%，但市场上的专用工具和软件长期供给不足。当打印端的竞争日趋激烈（设备价格战、参数同质化），后处理端反而成为"利润洼地"——谁能通过自动化和仿真降低后处理成本，谁就能帮助客户大幅降低金属件的单件成本，从而加速金属AM从"原型"向"生产"的跨越。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/327688/solukon-releases-spr-pathfinder-pro/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-180992-1-1.html" target="_blank">♻️ 金属粉末回收市场：Continuum Powders等离子雾化工艺打开AM可持续性新路径</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊6月27日报道，Continuum Powders的GAP等离子雾化工艺实现了金属3D打印粉末的闭环循环，从废粉到新粉的损耗率大幅降低。金属粉末是金属AM中成本最高的耗材之一——高品质雾化不锈钢粉末价格可达每公斤数百元，钛合金和镍基合金更贵。粉末回收不仅能降低成本，还能解决一个日益突出的环境问题：废弃金属粉末的处理。当"粉末回收"成为一个独立的商业细分市场，金属AM的全产业链正在从"设备→材料→服务"扩展到"设备→材料→后处理→回收"的完整闭环。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-180992-1-1.html" target="_blank">南极熊</a><span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+</div>
+
+<div class="section-title scenario" id="scenario">
+  <span class="icon"></span>场景×3D打印 Scenario（教育/文创/家居/食品）
+</div>
+<div class="scenario-zone">
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/327687/artist-using-3d-printing-to-tell-stories-about-the-ocean/" target="_blank">🐋 艺术家Kimberly Callas用3D打印讲述海洋故事：当增材制造遇见环保叙事</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月28日报道，艺术家Kimberly Callas正在用3D打印技术创作以海洋为主题的系列艺术作品。她通过扫描真实海洋生物（珊瑚、贝壳、海星等）的形态数据，转化为3D打印模型，再结合不同材料的打印工艺制作艺术装置。Callas的作品既保留了自然形态的有机美感，又通过3D打印的几何精度和材料多样性赋予了作品独特的视觉语言。3D打印正在从"功能性制造"延伸到"文化表达"层面——当艺术家开始批量拥抱3D打印作为创作媒介，这个技术的文化影响力正在超越传统的"制造工具"定位。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/327687/artist-using-3d-printing-to-tell-stories-about-the-ocean/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://www.3dnatives.com/en/npe-2027-additive-manufacturing-exhibitors-29062027/" target="_blank">🏗️ NPE2027塑料展预热：AM行业"不可错过的展会"——当塑料加工和3D打印的界限正在模糊</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3Dnatives 6月29日报道，NPE2027（美国国际塑料展览会）即将开幕，组委会发布"AM行业参展指南"。NPE是全球最大的塑料行业展会之一，近年来3D打印展商数量持续增长。塑料行业和增材制造正在经历深度融合——注塑+3D打印的混合制造、热塑材料的3D打印线材开发、聚合物材料的AM认证等。NPE2027的AM展区将展示从材料供给到设备制造再到终端应用的全链条解决方案。当NPE（塑料展）开始专门向AM行业发出参展指南，说明3D打印已经从塑料行业的"新兴技术"演变为"核心工艺之一"。</div>
+  <div class="item-source">来源：<a href="https://www.3dnatives.com/en/npe-2027-additive-manufacturing-exhibitors-29062027/" target="_blank">3Dnatives</a><span class="from-tag from-3dprint">3Dnatives</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/327687/artist-using-3d-printing-to-tell-stories-about-the-ocean/" target="_blank">🌏 3D打印环保公益：从艺术项目到珊瑚礁修复，增材制造的"绿色正名"</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 6月28日的艺术家专题引发了一个更大话题：3D打印的环保形象正在改变。长期以来3D打印被认为"耗电"、"塑料浪费"——但艺术品中的环保叙事（如Kimberly Callas的海洋作品）正在帮助公众重新认识3D打印的正面社会价值。此外，3D打印珊瑚礁修复项目（如D-Shape、Reef Design Lab等）已经在全球多个海域取得成效，Continuum Powders的粉末回收技术也在解决废料问题。3D打印既不天然环保也不天然浪费——关键在于如何设计其应用场景和生产流程。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/327687/artist-using-3d-printing-to-tell-stories-about-the-ocean/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://www.3dnatives.com/en/the-curling-phenomenon-in-3d-printing-151120234/" target="_blank">📖 教育场景实用指南：3D打印翘曲知识对STEM教育的价值</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3Dnatives 6月26日的翘曲技术指南不仅是一篇实操文章，更是一份适合STEM教育的理想教材。翘曲现象的学习涵盖了材料科学（热膨胀系数差异）、工程力学（残余应力与形变）、工艺工程（参数优化）等多个学科知识的交叉应用。29所中国大学开设AM专业后，类似3Dnatives的翘曲指南这样的教学资源将成为AM教育体系的重要组成部分。当3D打印进入课堂教学，从"如何设置参数"到"为什么翘曲会发生"的底层原理学习将是培养学生AM设计思维（DfAM）的关键一步。</div>
+  <div class="item-source">来源：<a href="https://www.3dnatives.com/en/the-curling-phenomenon-in-3d-printing-151120234/" target="_blank">3Dnatives</a><span class="from-tag from-3dprint">3Dnatives</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://www.3dnatives.com/en/npe-2027-additive-manufacturing-exhibitors-29062027/" target="_blank">🏭 塑料展上的AM：当注塑成型vs3D打印不再是"二选一"，混合制造成为新范式</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3Dnatives 6月29日的NPE2027报道揭示了一个重要趋势：注塑成型和3D打印正在从"竞争关系"演变为"互补关系"。混合制造——同一个零件部分由注塑完成、部分由3D打印完成——正在成为工业生产的新范式。例如：用注塑制造大批量的基础几何体，用3D打印完成定制化的复杂特征和内部流道。NPE2027上将首次设立"注塑+3D打印混合制造"专题展区。当3D打印不再被简单归为"注塑的替代品"，而是成为注塑的"补充和增强"，增材制造在塑料工业中的定位正在从"颠覆者"变成"赋能者"。</div>
+  <div class="item-source">来源：<a href="https://www.3dnatives.com/en/npe-2027-additive-manufacturing-exhibitors-29062027/" target="_blank">3Dnatives</a><span class="from-tag from-3dprint">3Dnatives</span></div>
+</div>
+
+</div>
+
+<div class="section-title global" id="global">
+  <span class="icon"></span>海外资讯（国际/3Dnatives/3DPrint.com）
+</div>
+<div class="global-zone">
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/327700/us-army-awards-continuous-composites-3d-printed-missile-component-contract/" target="_blank">🎯 US Army Awards Continuous Composites Contract for 3D Printed Missile Components</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com June 26 — The U.S. Army has awarded Continuous Composites a contract for 3D printed missile components using its continuous fiber 3D printing (CF3D) technology. The CF3D process embeds continuous carbon fiber, glass fiber or other reinforcements in thermoset resin, producing composite structures lighter and stronger than metal alternatives. The contract targets rapid lead time reduction — from weeks for traditional composite mold tooling to just days with CF3D. The military's embrace of continuous fiber AM marks a significant milestone for this specialized technology segment.</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/327700/us-army-awards-continuous-composites-3d-printed-missile-component-contract/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/327688/solukon-releases-spr-pathfinder-pro/" target="_blank">🔬 Solukon Releases SPR-Pathfinder PRO: Simulation Software for Metal AM Powder Removal</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com June 26 — German powder removal system manufacturer Solukon has released SPR-Pathfinder PRO, a full-process simulation software for metal AM powder removal. The software simulates powder flow paths, clearance efficiency, and powder removal feasibility for complex internal geometries. In PBF-LB/M processes, powder removal is one of the most time-consuming and failure-prone post-processing steps — especially for parts with internal channels and lattice structures. SPR-Pathfinder PRO allows engineers to verify "can this part be cleaned" before printing, eliminating costly trial-and-error.</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/327688/solukon-releases-spr-pathfinder-pro/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/327687/artist-using-3d-printing-to-tell-stories-about-the-ocean/" target="_blank">🐋 Artist Kimberly Callas Uses 3D Printing to Tell Stories About the Ocean</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com June 28 — Artist Kimberly Callas is using 3D printing technology to create an ocean-themed art series. By scanning real marine organisms (coral, shells, starfish) and converting the data into 3D printed models, Callas' work bridges natural organic forms with the geometric precision of additive manufacturing. The series explores how 3D printing is expanding from functional manufacturing into cultural expression — as more artists adopt AM as their primary creative medium, the technology's cultural influence is growing beyond its traditional "manufacturing tool" identity.</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/327687/artist-using-3d-printing-to-tell-stories-about-the-ocean/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/327697/3d-printing-news-briefs-june-27-2026-nanoscale-3d-printing-defense-readiness-more/" target="_blank">📰 3D Printing News Briefs, June 27: Nanoscale AM, Defense Readiness, Lumafield, MELTIO & More</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com June 27 — Weekly News Briefs roundup covering: (1) UCSB receives $1.15M NSF grant for nanoscale dual-photon polymerization 3D printing system; (2) U.S. Army advances non-metal AM into battlefield spare parts supply chain; (3) Lumafield launches new industrial X-ray CT inspection solution for AM quality control; (4) MELTIO expands Defense-authorized partner network; (5) AML3D completes delivery to Newport News Shipbuilding. The breadth of this week's headlines — from nanometers to Navy shipyards — demonstrates the extraordinary range of AM's real-world applications.</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/327697/3d-printing-news-briefs-june-27-2026-nanoscale-3d-printing-defense-readiness-more/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://www.3dnatives.com/en/npe-2027-additive-manufacturing-exhibitors-29062027/" target="_blank">🏭 Why the Additive Manufacturing Industry Cannot Afford to Miss NPE2027</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3Dnatives June 29 — NPE2027, the world's largest plastics trade show, is positioning itself as a must-attend event for the AM industry. The plastics landscape is shifting rapidly as injection molding and 3D printing converge. NPE2027 will feature a dedicated "Injection + AM Hybrid Manufacturing" zone for the first time, recognizing that the future of polymer manufacturing lies in combining traditional processes with additive technologies. For AM companies, NPE is not just about exhibiting — it's about engaging with the broader plastics ecosystem that represents AM's largest addressable materials market.</div>
+  <div class="item-source">来源：<a href="https://www.3dnatives.com/en/npe-2027-additive-manufacturing-exhibitors-29062027/" target="_blank">3Dnatives</a><span class="from-tag from-3dprint">3Dnatives</span></div>
+</div>
+
+</div>
+
+<div class="section-title feedback" id="feedback">
+  <span class="icon"></span>用户口碑（国外评测/国内实测）
+</div>
+<div class="feedback-zone">
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://www.cnblogs.com/tzmm/p/20637215" target="_blank">📊 2026消费级3D打印平台横评：用户最关心的三个维度——精度、价格、时效</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">极欧测评6月18日发布的《2026 3D打印平台推荐排行》引发了行业讨论。测评指出，"国内在线3D打印平台订单量同比增长47%，1件起订、24小时交付已成行业标配"。评论区用户反馈分化明显：一方面是对平台服务透明化的肯定（"以前找小厂打样报价要等好几天，现在平台一键下单比价"），另一方面是对价格内卷的担忧（"平台卷价格对消费者短期是好事，但长期可能影响质量"）。也有资深用户指出："平台代打的精度和质量一致性已经超过了大多数个人用户自己调试的水平，对于追求效率的用户来说，代打是更好的选择。"</div>
+  <div class="item-source">来源：<a href="https://www.cnblogs.com/tzmm/p/20637215" target="_blank">极欧测评 / 博客园</a><span class="from-tag from-csdn">博客园</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://stock.10jqka.com.cn/20260627/c677765535.shtml" target="_blank">🏭 联泰科技IPO：投资者怎么看工业级3D打印公司的价值？</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">联泰科技递表港交所的消息在投资社区引发了讨论。有投资者认为："年营收5.6亿亏损3139万，亏损率5.6%——在工业级AM赛道里这已经是相对健康的亏损了，看看其他未上市的国产AM企业，亏损率动辄20%+。"也有投资者补充道："联泰的光韵达关系挺复杂的，控股股东只有18%的控制权，这意味着一级市场和二级市场的利益需要平衡。"但也有用户表达信心："工业级3D打印不像消费级那样直接面对终端消费者，它的增长逻辑是B端客户从'试打印'到'批量采购'的转化率——联泰25%的市占率说明转化率在加速。"</div>
+  <div class="item-source">来源：<a href="https://stock.10jqka.com.cn/20260627/c677765535.shtml" target="_blank">同花顺</a><span class="from-tag from-10jqka">同花顺</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://news.qq.com/rain/a/20260629A028TP00" target="_blank">🛸 无人机3D打印社区热议："SkyFoundry年产万架"的AM技术路线之争</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">AM Research的无人机市场报告发布后在行业内引发讨论。在军迷和AM双重视角下，评论者对其中的技术路线选择尤为关注。"无人机的聚合物3D打印零件主要是材料挤出（FDM）还是粉末床熔融（SLS）？"有技术背景的用户分析认为："FDM打印的PLA/PA零件在无人机上没问题，强度和重量比可以接受，关键是成本极低。"另一派则认为："真正进入量产阶段后，SLS的尼龙粉末效率更高，但单件成本还是比FDM高。"评论普遍结论是：FDM适合小批量快速迭代和原型测试，SLS适合中小批量生产——军用场景可能优先选择成本极低的FDM路线。</div>
+  <div class="item-source">来源：<a href="https://news.qq.com/rain/a/20260629A028TP00" target="_blank">腾讯新闻</a><span class="from-tag from-tencent">腾讯新闻</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://www.3dnatives.com/en/the-curling-phenomenon-in-3d-printing-151120234/" target="_blank">🔄 "我的模型又翘了"——3D打印翘曲问题的社区经历分享与解决方案实测</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3Dnatives 6月26日的翘曲指南发布后，Reddit r/3Dprinting社区的热烈讨论反映了社区最真实的需求。用户"Print3rN00b"分享："我换了7种平台附着方法才解决PLA翘曲，最后发现最简单的是把打印室温度保持在35°C。"另一用户补充："ABS的翘曲天然比PLA严重得多，新手直接跳过ABS是对的。"多位资深用户一致推荐的方法包括：增加brim宽度到10mm以上、使用PEI纹理板（效果优于玻璃板+胶棒）、控制打印室环境温度。讨论中还提到一个被低估的因素：耗材含水量——潮湿的耗材在打印过程中水分汽化形成气泡，导致局部热应力不均而加剧翘曲。</div>
+  <div class="item-source">来源：<a href="https://www.3dnatives.com/en/the-curling-phenomenon-in-3d-printing-151120234/" target="_blank">3Dnatives / Reddit</a><span class="from-tag from-3dprint">3Dnatives</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://www.toutiao.com/article/7637844350998708762/" target="_blank">📋 主流3D打印平台深度横评结果公布：社区投票选出的"2026最值得推荐的平台"</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">今日头条5月9日发布的《主流3D打印平台深度横评》虽已发布一月有余，但仍在社区中被广泛引用。测评从"六大实测维度+2026年最新用户口碑+场景适配能力+技术实力+售后保障"五大方面对四大主流平台进行了综合评级。测评中特别值得关注的观点是："个人用户和科研用户对3D打印平台的需求完全不同——个人用户最看重价格和交付速度，科研用户最看重材料种类和精度保证"。平台方也在评论区回应了用户关切，表示将在2026年下半年推出时效承诺和材料溯源服务。平台选择的本质是场景匹配——没有最好的平台，只有最适合你需求的平台。</div>
+  <div class="item-source">来源：<a href="https://www.toutiao.com/article/7637844350998708762/" target="_blank">今日头条</a><span class="from-tag from-other">今日头条</span></div>
+</div>
+
+</div>
+
+<div class="footer">
+  Powered by WorkBuddy Automation &nbsp;|&nbsp; <a href="https://github.com/Cruise-Ling/3d-printing-daily">GitHub</a>
+</div>
+</div>
+<script>
+function scrollToSection(id){var e=document.getElementById(id);if(e){var t=window.innerWidth<768?20:80;window.scrollTo({top:e.offsetTop-t,behavior:'smooth'})}}
+</script>
+</body>
+</html>
