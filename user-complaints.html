@@ -3991,7 +3991,10 @@ id: "KB-EN-20260608-002",
 };
 
 
+// ---- Filter Logic ----
+function getFilteredItems() {
   const today = new Date(); today.setHours(23,59,59,999);
+  const items = OVERSEAS_FEEDBACK_DATA.items || [];
   return items.filter(item => {
     // Brand
     if (filters.brand !== "all" && item.brand !== filters.brand) return false;
