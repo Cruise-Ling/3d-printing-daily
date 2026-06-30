@@ -3992,6 +3992,35 @@ id: "KB-EN-20260608-002",
 
 
 // ---- Filter Logic ----
+const PLATFORM_STYLES = {
+  "Reddit": "plat-reddit",
+  "YouTube": "plat-youtube",
+  "Amazon": "plat-amazon",
+  "Facebook": "plat-facebook",
+  "官网": "plat-official",
+  "独立评测": "plat-review",
+  "在线论坛": "plat-forum",
+  "其他": "plat-other"
+};
+const SENTIMENT_STYLES = {
+  "非常负面": "sent-very-negative",
+  "负面": "sent-negative",
+  "中性": "sent-neutral",
+  "正面": "sent-positive",
+  "非常正面": "sent-very-positive"
+};
+const SENTIMENT_ICONS = {
+  "非常负面": "🔴",
+  "负面": "🟡",
+  "中性": "⚪",
+  "正面": "🟢",
+  "非常正面": "⭐"
+};
+const filters = {
+  brand: "all", sentiment: "all", platform: "all",
+  datePreset: "all", dateFrom: "", dateTo: "", search: ""
+};
+
 function getFilteredItems() {
   const today = new Date(); today.setHours(23,59,59,999);
   const items = OVERSEAS_FEEDBACK_DATA.items || [];
@@ -4165,6 +4194,84 @@ function filterByHeroDate(dateStr) {
     document.getElementById('dateFrom').value = dateStr;
     document.getElementById('dateTo').value = dateStr;
   }
+  applyFilters();
+}
+
+// ---- Filter UI Helpers ----
+function buildBrandButtons() {
+  const items = OVERSEAS_FEEDBACK_DATA.items || [];
+  const brands = [...new Set(items.map(i => i.brand).filter(Boolean))];
+  const scroll = document.getElementById('brandScroll');
+  if (!scroll) return;
+  let html = '<button class="filter-btn active" data-group="brand" data-value="all" onclick="toggleFilter(this)">全部</button>';
+  brands.forEach(b => {
+    const count = items.filter(i => i.brand === b).length;
+    html += '<button class="filter-btn" data-group="brand" data-value="' + b + '" onclick="toggleFilter(this)">' + b + ' <span class="count">(' + count + ')</span></button>';
+  });
+  scroll.innerHTML = html;
+}
+
+function toggleFilter(btn) {
+  const group = btn.dataset.group;
+  const value = btn.dataset.value;
+  // Deactivate siblings
+  document.querySelectorAll('.filter-btn[data-group="' + group + '"]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // Update filter
+  if (group === 'brand') filters.brand = value;
+  else if (group === 'sentiment') filters.sentiment = value;
+  else if (group === 'platform') filters.platform = value;
+  // If selecting a specific brand/sentiment/platform, keep date as is
+  applyFilters();
+}
+
+function toggleDateFilter(btn) {
+  const value = btn.dataset.value;
+  document.querySelectorAll('.filter-btn[data-group="date"]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (value === 'all') {
+    filters.datePreset = 'all';
+    filters.dateFrom = '';
+    filters.dateTo = '';
+    document.getElementById('dateFrom').value = '';
+    document.getElementById('dateTo').value = '';
+    document.getElementById('heroDateFilter').value = '';
+  } else if (value === '7' || value === '30') {
+    filters.datePreset = value;
+    filters.dateFrom = '';
+    filters.dateTo = '';
+    document.getElementById('dateFrom').value = '';
+    document.getElementById('dateTo').value = '';
+  }
+  applyFilters();
+}
+
+function applyDateRange() {
+  const from = document.getElementById('dateFrom').value;
+  const to = document.getElementById('dateTo').value;
+  if (from || to) {
+    filters.datePreset = 'custom';
+    filters.dateFrom = from;
+    filters.dateTo = to;
+    document.querySelectorAll('.filter-btn[data-group="date"]').forEach(b => b.classList.remove('active'));
+  }
+  applyFilters();
+}
+
+function clearAllFilters() {
+  // Reset filters
+  filters.brand = 'all'; filters.sentiment = 'all'; filters.platform = 'all';
+  filters.datePreset = 'all'; filters.dateFrom = ''; filters.dateTo = ''; filters.search = '';
+  document.getElementById('searchInput').value = '';
+  document.getElementById('dateFrom').value = '';
+  document.getElementById('dateTo').value = '';
+  document.getElementById('heroDateFilter').value = '';
+  // Reset all buttons
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.filter-btn[data-group="brand"][data-value="all"]').forEach(b => b.classList.add('active'));
+  document.querySelectorAll('.filter-btn[data-group="sentiment"][data-value="all"]').forEach(b => b.classList.add('active'));
+  document.querySelectorAll('.filter-btn[data-group="platform"][data-value="all"]').forEach(b => b.classList.add('active'));
+  document.querySelectorAll('.filter-btn[data-group="date"][data-value="all"]').forEach(b => b.classList.add('active'));
   applyFilters();
 }
 
