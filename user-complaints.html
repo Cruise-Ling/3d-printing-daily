@@ -277,10 +277,150 @@ const OVERSEAS_FEEDBACK_DATA = {
   mode: "accumulate",
   maxDays: 30,
   stats: {
-    sentiment: {"非常负面": 22, "负面": 93, "中性": 14, "正面": 0, "非常正面": 0}
+    sentiment: {"非常负面": 22, "负面": 87, "中性": 11, "正面": 0, "非常正面": 0}
   },
   items: [
   {
+      id: "KB-EN-20260701-001",
+      brand: "Prusa",
+      platform: "行业评测",
+      sourceLink: "https://filamino.com/blog/prusa-core-one-review",
+      country: "US",
+      language: "EN",
+      date: "2026-07-01",
+      publishedAt: "2026-06-27",
+      modelName: "CORE One+",
+      purchaseChannel: "官网直邮",
+      purchaseDuration: "1周内",
+      verified: true,
+      shippingExperience: "好",
+      customs: "未提及",
+      originalText: "Filamino 2026 review of Prusa CORE One+ identifies PLA heat creep as the single biggest flaw. When printing PLA with the door closed using the stock CHT 0.4mm nozzle, heat creep causes clogs because the chamber temperature rises above 28C and softens the filament above the heat break. The included Prusament Galaxy Black PLA with glitter additives accelerates clogging - many users report Day 1 clogs on a $1200+ printer. The review states this is an unacceptable Day One failure for a premium machine. The fix requires switching to a standard hardened nozzle or printing with the door open.",
+      translation: "Filamino 2026年Prusa CORE One+评测指出PLA热端爬坡是最大的单一缺陷。在关闭机箱门使用标配CHT 0.4mm喷嘴打印PLA时，腔室温度超过28°C导致热端爬坡，耗材在喉管上方软化导致堵头。附赠的Prusament Galaxy Black PLA闪光添加耗材会加速堵头——多名用户报告在1200+美元的打印机上出现首日堵头。评测称这对一台高端机器来说是难以接受的首日故障。修复方案需更换为标准硬化喷嘴或开门打印。",
+      summaryEn: "Prusa CORE One+ PLA heat creep clogs on stock CHT nozzle when door closed - $1200+ printer clogs Day 1 with included filament, fix requires nozzle swap",
+      summaryCn: "Prusa CORE One+关闭门打印PLA时标配CHT喷嘴热端爬坡堵头——1200+美元打印机首日用原厂耗材即堵头，需更换喷嘴解决",
+      sentiment: "负面",
+      dimensions: ["硬件性能 - 配件质量", "硬件性能 - 打印质量", "日常使用体验"],
+      problemPoints: ["PLA热端爬坡导致堵头", "标配CHT喷嘴不适配PLA", "Galaxy Black耗材加速堵头", "首日即出现故障", "需更换喷嘴或开门打印"],
+      competitorMentioned: "Bambu Lab P1S",
+      modsMentioned: "更换硬化喷嘴或Obxidian喷嘴",
+      heat: "Filamino 2026年6月27日发布的CORE One+深度评测，含CHT喷嘴PLA堵头详细分析",
+      isP0: false,
+  },
+
+  {
+      id: "KB-EN-20260701-002",
+      brand: "Prusa",
+      platform: "官网",
+      sourceLink: "https://forum.prusa3d.com/forum/prusa-core-one-how-do-i-print-this-printing-help/is-this-layer-shifting-messing-up-my-asa-print/",
+      country: "US",
+      language: "EN",
+      date: "2026-07-01",
+      publishedAt: "2026-06-30",
+      modelName: "CORE One",
+      purchaseChannel: "官网直邮",
+      purchaseDuration: "3个月内",
+      verified: true,
+      shippingExperience: "好",
+      customs: "未提及",
+      originalText: "Prusa CORE One user dutch3dprints reports repeated layer shift failures when printing ASA parts for an INBXX build. The first ASA print completed successfully, but the second and third prints failed badly after 5+ hours with severe layer shifting. A Voron test cube printed before the ASA job came out perfect. The user is using a 0.6 hardened HF nozzle at .20 layer height with balanced profile and 15% infill. Community responses suggest checking motor pulley grub screws for tightness on the spindle, and recommend switching from Grid infill to Cubic infill. The user is trying to complete critical enclosure parts and is losing hours of print time to these intermittent shifts.",
+      translation: "Prusa CORE One用户dutch3dprints在打印ASA材料的INBXX外壳零件时反复遇到层移失败。首次ASA打印成功完成，但第二次和第三次打印在5+小时后出现严重层移导致打印失败。打印前的Voron测试立方体完美完成。用户使用0.6硬化HF喷嘴、0.20层高均衡配置和15%填充。社区建议检查电机皮带轮紧定螺丝是否松动，并将Grid填充改为Cubic填充。用户正在打印关键的封闭外壳零件，因间歇性层移浪费了大量打印时间。",
+      summaryEn: "Prusa CORE One ASA print layer shift after 5+ hours on 2nd/3rd attempt - test cubes fine, suspected pulley grub screw or Grid infill issue, user frustrated",
+      summaryCn: "Prusa CORE One ASA打印5+小时后层移——第2/3次均失败、测试方块正常、怀疑皮带轮螺丝松动或Grid填充问题、用户沮丧",
+      sentiment: "负面",
+      dimensions: ["硬件性能 - 打印质量", "硬件性能 - 机械结构"],
+      problemPoints: ["ASA打印反复层移", "间歇性故障难以复现", "5+小时后报废", "高强度材料不稳定"],
+      competitorMentioned: "",
+      modsMentioned: "Cubic填充替代Grid填充",
+      heat: "Prusa3D论坛CORE One打印帮助帖，6月30日发布，多条社区回复",
+      isP0: false,
+  },
+
+  {
+      id: "KB-EN-20260701-003",
+      brand: "Prusa",
+      platform: "官网",
+      sourceLink: "https://forum.prusa3d.com/forum/prusa-core-one-hardware-firmware-and-software-help/tiny-rubber-ring/",
+      country: "US",
+      language: "EN",
+      date: "2026-07-01",
+      publishedAt: "2026-06-30",
+      modelName: "CORE One",
+      purchaseChannel: "官网直邮",
+      purchaseDuration: "3个月内",
+      verified: true,
+      shippingExperience: "好",
+      customs: "未提及",
+      originalText: "Prusa CORE One user edovino reports finding a tiny black rubber ring at the bottom of the print volume after disassembling and reassembling the CoreXY/Nextruder assembly (one of the XY belts had slipped). The ring is approximately 6mm diameter, 1mm thick. The user does not remember installing this part during assembly and is asking the community to identify it. An unidentified loose rubber ring in a precision printer raises concerns about whether it fell off a critical component during operation, potentially causing belt slippage or other mechanical issues that led to the original belt problem.",
+      translation: "Prusa CORE One用户edovino在拆卸并重新组装CoreXY/Nextruder组件（一条XY皮带滑脱）后，在打印空间底部发现一个小黑色橡胶圈。该圈直径约6mm、厚1mm。用户不记得在组装过程中安装过此零件，正在向社区求助识别。精密打印机中出现不明松脱的橡胶圈引发担忧——它可能从关键部件脱落，导致皮带打滑等机械问题。",
+      summaryEn: "Prusa CORE One user finds mystery 6mm rubber ring inside printer after belt repair - unidentified loose part raises quality and reliability concerns",
+      summaryCn: "Prusa CORE One用户维修皮带后在打印机内发现不明6mm橡胶圈——未识别松脱零件引发质量和可靠性担忧",
+      sentiment: "负面",
+      dimensions: ["硬件性能 - 制造质量", "硬件性能 - 可靠性"],
+      problemPoints: ["不明橡胶圈脱落", "可能来自关键部件", "精密打印机内出现松脱零件", "用户在求助识别"],
+      competitorMentioned: "",
+      modsMentioned: "",
+      heat: "Prusa3D论坛CORE One硬件帮助帖，6月30日发布，附零件照片",
+      isP0: false,
+  },
+
+  {
+      id: "KB-EN-20260701-004",
+      brand: "Prusa",
+      platform: "官网",
+      sourceLink: "https://forum.prusa3d.com/forum/prusa-core-one-general-discussion-announcements-and-releases/experiences-with-linear-rail-lubrication/",
+      country: "US",
+      language: "EN",
+      date: "2026-07-01",
+      publishedAt: "2026-06-27",
+      modelName: "CORE One",
+      purchaseChannel: "官网直邮",
+      purchaseDuration: "6个月以上",
+      verified: true,
+      shippingExperience: "好",
+      customs: "未提及",
+      originalText: "Prusa CORE One user chip_r with nearly a year of usage asks the community about CORE One linear rail lubrication experiences. Key concerns include: whether users had printing/noise issues before lubrication, whether the Prusa lubricant is oil-like or grease-like, and whether it is possible to over-lubricate. Community responses confirm it is a grease (not oil) that must be injected into side ports. Experienced users recommend following the maintenance schedule proactively - not waiting for noise or issues to appear. One user notes they always lubricated their XL and CORE Ones per schedule using the prescribed amounts, wiping off surplus. This maintenance discussion highlights the additional upkeep burden of the CORE One linear rail system compared to the simpler rod-and-bearing systems on older Prusa models.",
+      translation: "Prusa CORE One用户chip_r在使用了近一年后向社区咨询CORE One线性导轨润滑经验。主要关注点包括：润滑前是否有打印/噪音问题、Prusa润滑剂是油状还是脂状、是否可能过度润滑。社区回复确认是润滑脂（非润滑油），需通过侧口注入。有经验的用户建议按维护计划主动润滑——不要等到出现噪音或问题。一位用户表示他们按计划定期润滑XL和CORE One，使用规定用量并擦除多余部分。此维护讨论凸显了CORE One线性导轨系统相比老款Prusa的简单杆式轴承系统增加了额外维护负担。",
+      summaryEn: "Prusa CORE One linear rail lubrication maintenance discussion - grease-based, proactive schedule recommended, additional upkeep burden vs older Prusa models",
+      summaryCn: "Prusa CORE One线性导轨润滑维护讨论——使用润滑脂、建议主动按计划维护、相比老款Prusa增加保养负担",
+      sentiment: "中性",
+      dimensions: ["日常使用体验 - 维护", "硬件性能 - 机械结构"],
+      problemPoints: ["线性导轨需定期润滑", "维护相比老款更复杂", "过度润滑可能造成问题", "需主动维护而非被动响应"],
+      competitorMentioned: "",
+      modsMentioned: "",
+      heat: "Prusa3D论坛CORE One综合讨论区，6月27日发布，多位经验用户回复",
+      isP0: false,
+  },
+
+  {
+      id: "KB-EN-20260701-005",
+      brand: "Creality",
+      platform: "官网",
+      sourceLink: "https://forum.creality.com/t/graphite-bed-upgrade/52176",
+      country: "US",
+      language: "EN",
+      date: "2026-07-01",
+      publishedAt: "2026-06-30",
+      modelName: "K2 Plus",
+      purchaseChannel: "官网直邮",
+      purchaseDuration: "6个月内",
+      verified: true,
+      shippingExperience: "好",
+      customs: "未提及",
+      originalText: "Creality K2 Plus user on the Creality community forum asks whether anyone has upgraded to the graphite heated bed. This question implies the stock K2 Plus aluminum bed has known thermal inconsistency issues - the graphite bed upgrade promises better temperature uniformity across the build plate and reduced warping at high temperatures (up to 120C). The stock K2 Plus bed has been criticized for requiring heat soaking before consistent first layers, especially with ABS and ASA materials that need stable 100-110C bed temperatures. The user seeking the graphite bed upgrade suggests the stock thermal performance is not meeting expectations for a flagship-level printer.",
+      translation: "Creality K2 Plus用户在社区论坛询问是否有人升级到了石墨热床。此问题暗示K2 Plus标配铝热床存在已知的热一致性不足问题——石墨热床升级承诺在构建板上实现更均匀的温度分布，并减少高温（120°C）下的翘曲。K2 Plus标配热床被批评需要预热较长时间才能获得一致的首层，尤其在使用需要稳定100-110°C热床温度的ABS和ASA材料时。用户寻求石墨热床升级表明标配热性能未能达到旗舰级打印机的期望。",
+      summaryEn: "Creality K2 Plus user asking about graphite bed upgrade signals dissatisfaction with stock bed thermal uniformity - heat soaking required for consistent high-temp first layers",
+      summaryCn: "Creality K2 Plus用户询问石墨热床升级反映对标配热床热一致性不满——高温材料需长时间预热才能获得稳定首层",
+      sentiment: "负面",
+      dimensions: ["硬件性能 - 热床质量", "日常使用体验"],
+      problemPoints: ["标配热床热一致性不足", "高温材料需长时间预热", "热床翘曲问题", "用户寻求第三方升级方案"],
+      competitorMentioned: "",
+      modsMentioned: "石墨热床升级",
+      heat: "Creality官方社区K2 Plus讨论区，6月30日发布，讨论热床升级",
+      isP0: false,
+  },
+
+{
       id: "KB-EN-20260630-001",
       brand: "Prusa",
       platform: "官网",
@@ -306,9 +446,9 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Prusa3D论坛CORE One硬件帮助帖，附首层照片（6月29日发布）",
       isP0: false,
-  },
+  }
 
-  {
+{
       id: "KB-EN-20260630-002",
       brand: "Prusa",
       platform: "官网",
@@ -334,9 +474,9 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "防静电皮带处理, 舱门开关接地",
       heat: "Prusa3D论坛CORE One硬件帮助帖，6月29日发布，GitHub #4859引用",
       isP0: false,
-  },
+  }
 
-  {
+{
       id: "KB-EN-20260630-003",
       brand: "Prusa",
       platform: "官网",
@@ -362,9 +502,9 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Prusa3D论坛CORE One硬件帮助帖，6月27日发布，标签power-panic/underextrusion",
       isP0: false,
-  },
+  }
 
-  {
+{
       id: "KB-EN-20260630-004",
       brand: "Prusa",
       platform: "官网",
@@ -390,9 +530,9 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Prusa3D论坛CORE One+硬件帮助帖，6月25日发布，标签ethernet/network",
       isP0: false,
-  },
+  }
 
-  {
+{
       id: "KB-EN-20260630-005",
       brand: "Prusa",
       platform: "官网",
@@ -418,10 +558,9 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "更换第三方柔性USB-C线缆",
       heat: "Prusa3D论坛CORE One硬件帮助帖，6月23日发布，200+浏览，5条回复",
       isP0: false,
-  },
+  }
 
-
-  {
+{
       id: "KB-EN-20260629-001",
       brand: "Prusa",
       platform: "官网",
@@ -447,9 +586,9 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Prusa3D论坛CORE One+组装帮助页，多名用户报告归属位失败，标签first-print/homing",
       isP0: false,
-  },
+  }
 
-  {
+{
       id: "KB-EN-20260629-002",
       brand: "Prusa",
       platform: "官网",
@@ -475,9 +614,9 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "微焊接修复",
       heat: "Prusa3D论坛硬件帮助页，用户详细电压测量和故障排查（6月27日发布）",
       isP0: false,
-  },
+  }
 
-  {
+{
       id: "KB-EN-20260629-003",
       brand: "Prusa",
       platform: "官网",
@@ -503,9 +642,9 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "100uF 35-50V电容替换",
       heat: "Prusa3D论坛CORE One硬件帮助帖（6月27日发布，200+浏览，9条回复）",
       isP0: false,
-  },
+  }
 
-  {
+{
       id: "KB-EN-20260629-004",
       brand: "Creality",
       platform: "官网",
@@ -531,9 +670,9 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "皮带张力调整",
       heat: "Creality社区HI打印机讨论区，最新标签cutter-calibration（6月27日发布）",
       isP0: false,
-  },
+  }
 
-  {
+{
       id: "KB-EN-20260629-005",
       brand: "Flashforge",
       platform: "其他",
@@ -559,10 +698,9 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "静态IP设置, LAN模式",
       heat: "Printago指南2026年6月23日发布，Flashforge Adventurer 5M常见连接问题专题",
       isP0: false,
-  },
+  }
 
-
-  {
+{
       id: "KB-EN-20260626-005",
       brand: "Prusa",
       platform: "官网",
@@ -588,9 +726,9 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Prusa3D论坛6月21日发布",
       isP0: false
-  },
+  }
 
-  {
+{
       id: "KB-EN-20260626-004",
       brand: "Creality",
       platform: "官网",
@@ -616,9 +754,9 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Creality论坛6月25日发布，标签k2-plus/cfs",
       isP0: true
-  },
+  }
 
-  {
+{
       id: "KB-EN-20260626-003",
       brand: "Creality",
       platform: "官网",
@@ -644,9 +782,9 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Creality论坛6月25日发布，标签creality-hi/firmware",
       isP0: false
-  },
+  }
 
-  {
+{
       id: "KB-EN-20260626-002",
       brand: "Creality",
       platform: "官网",
@@ -672,9 +810,9 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Creality论坛6月23日发布，多名用户参与排查",
       isP0: false
-  },
+  }
 
-  {
+{
       id: "KB-EN-20260626-001",
       brand: "Creality",
       platform: "官网",
@@ -700,7 +838,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Creality论坛6月25日发布，附Klippy日志，用户公开投诉",
       isP0: true
-  },
+  }
 
 {
       id: "KB-EN-20260625-001",
@@ -728,7 +866,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Filamino Anycubic Kobra Series Review 6月22日更新，引用Tom's Hardware/Creative Bloq评测",
       isP0: true
-  },
+  }
 
 {
       id: "KB-EN-20260625-002",
@@ -756,7 +894,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Filamino Anycubic Kobra Series Review 6月22日更新，引用Creative Bloq 4个月长期测试",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260625-003",
@@ -784,7 +922,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "Rinkhals第三方固件",
       heat: "Filamino Anycubic Kobra Series Review 6月22日更新",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260625-004",
@@ -812,7 +950,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Filamino Anycubic Kobra Series Review 6月22日更新 + 3Dwork.io评测",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260625-005",
@@ -840,7 +978,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Filamino Anycubic Kobra Series Review 6月22日更新",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260624-001",
@@ -868,7 +1006,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "printer.cfg自定义修改",
       heat: "Creality论坛6月17日发布，23条回复，370+浏览，10个赞，持续活跃至6月23日",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260624-002",
@@ -896,7 +1034,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "冷拉技术（cold pull）",
       heat: "Creality论坛6月22日发布，附照片，Creality版主回复，标签ender-3-v3-se",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260624-003",
@@ -924,7 +1062,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Creality论坛6月22日发布，版主回复，标签ender-5-max",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260624-004",
@@ -952,7 +1090,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "回退Creality Print v5.x, OrcaSlicer",
       heat: "Creality论坛6月20日发布，持续讨论中，附截图，用户推荐替代方案OrcaSlicer",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260624-005",
@@ -980,7 +1118,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Creality论坛6月21日发布，CFS-C专用讨论区，社区成员回复排查步骤",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260623-001",
@@ -1008,7 +1146,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Creality论坛 6月16日发布，标签k2plus/trouble-shooting，多名用户跟帖确认",
       isP0: true
-  },
+  }
 
 {
       id: "KB-EN-20260623-002",
@@ -1036,7 +1174,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Creality论坛 6月20日发布，标签trouble-shooting/k2plus，多用户确认",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260623-003",
@@ -1064,7 +1202,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Creality论坛 6月21日发布，多用户确认相同噪音",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260623-004",
@@ -1092,7 +1230,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "第三方封闭箱、地面料架",
       heat: "3DPrintedDecor 6月22日更新评测，Amazon #1 Best Seller 3.9星/2,497条评价",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260623-005",
@@ -1120,7 +1258,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "3DPrintedDecor 6月22日更新14款打印机横评，Prusa Core One 4.8星/仅30条评价",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260622-005",
@@ -1148,7 +1286,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "3DPrintedDecor 6月17日横评 + GitHub Issues (#23 #24 #25)",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260622-001",
@@ -1176,7 +1314,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Prusa3D论坛多用户确认，最后活跃6月17日，810次浏览",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260622-002",
@@ -1204,7 +1342,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Creality论坛求助帖，7天前(6月15日)发布",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260622-003",
@@ -1232,7 +1370,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Creality论坛求助帖，6天前(6月16日)发布",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260622-004",
@@ -1260,7 +1398,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Creality论坛3天前(6月19日)发布，标签trouble-shooting",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260619-001",
@@ -1288,7 +1426,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "第三方封闭箱",
       heat: "3DPrintedDecor 2026年14款打印机横评，6月17日发布",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260619-002",
@@ -1316,7 +1454,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Makers101 6月17日发布，引用多位Reddit用户报告",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260619-003",
@@ -1344,7 +1482,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "3DPrintedDecor 2026年14款打印机横评",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260619-004",
@@ -1372,7 +1510,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "3DPrintedDecor 2026年14款打印机横评，6月17日发布",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260619-005",
@@ -1400,7 +1538,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "MMU3（需另购）",
       heat: "3DPrintedDecor 2026年14款打印机横评，6月17日发布",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260618-001",
@@ -1429,7 +1567,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "社区挤出机改装件（更换弹簧+调节螺丝）",
       heat: "3DWork.io深度评测，Creality K2系列专题",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260618-002",
@@ -1457,7 +1595,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "3DWork.io深度评测",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260618-003",
@@ -1485,7 +1623,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "PTFE管固定夹（打印件）",
       heat: "3DWork.io深度评测，Creality社区反复报告",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260618-004",
@@ -1513,7 +1651,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Creality社区论坛K2 Pro版块，6月15日发布，社区回复提及耗材干燥建议",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260618-005",
@@ -1541,7 +1679,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "3DWork.io深度评测",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260617-001",
@@ -1569,7 +1707,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "5 days active",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260617-002",
@@ -1597,7 +1735,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "printer.cfg BED_MESH_CALIBRATE 多次平均法",
       heat: "3 days active",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260617-003",
@@ -1625,7 +1763,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "1 day active",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260617-004",
@@ -1653,7 +1791,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "Brim, 3Dlac粘合剂",
       heat: "22 replies, active Jun 13-15",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260617-005",
@@ -1681,7 +1819,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Active Jun 13-16, detailed thermal measurements",
       isP0: false
-  },
+  }
 
 {
       id: "KB-EN-20260616-001",
@@ -1709,7 +1847,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "硬化喷嘴",
       heat: "Prusa3D官方论坛CORE One L打印故障帖，7+用户报告相同问题，活跃至6月15日",
       isP0: false,
-  },
+  }
 
 {
       id: "KB-EN-20260616-002",
@@ -1737,7 +1875,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "Capricorn XS Bowden管, 居中挤出机改装件",
       heat: "Prusa3D官方论坛Prusa MINI+打印帮助帖，GitHub #2997长期讨论引用（6月11日-14日活跃）",
       isP0: false,
-  },
+  }
 
 {
       id: "KB-EN-20260616-003",
@@ -1765,7 +1903,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Creality社区论坛K2故障排除帖，用户附视频证据（6月14日活跃）",
       isP0: false,
-  },
+  }
 
 {
       id: "KB-EN-20260616-004",
@@ -1793,7 +1931,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Creality社区论坛K2 Pro故障排除帖（6月12日活跃）",
       isP0: false,
-  },
+  }
 
 {
       id: "KB-EN-20260616-005",
@@ -1821,7 +1959,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "M6丝锥修复螺纹",
       heat: "Prusa3D官方论坛CORE One硬件帮助帖（6月13日发布，活跃讨论中）",
       isP0: false,
-  },
+  }
 
 {
       id: "KB-EN-20260615-001",
@@ -1849,7 +1987,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "CFS线轴适配环",
       heat: "peccadille.net 2026年6月12款3D打印机横评引用14%用户报告软件问题",
       isP0: false,
-  },
+  }
 
 {
       id: "KB-EN-20260615-002",
@@ -1877,7 +2015,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "peccadille.net 2026年6月12款3D打印机横评，16%差评率提及",
       isP0: false,
-  },
+  }
 
 {
       id: "KB-EN-20260615-003",
@@ -1905,7 +2043,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "peccadille.net 2026年6月12款3D打印机横评，13%差评率+用户噪音描述",
       isP0: false,
-  },
+  }
 
 {
       id: "KB-EN-20260615-004",
@@ -1933,7 +2071,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "peccadille.net 2026年6月12款3D打印机横评，5%用户报告品控问题",
       isP0: false,
-  },
+  }
 
 {
       id: "KB-EN-20260615-005",
@@ -1961,7 +2099,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "peccadille.net 2026年6月12款3D打印机横评，4.5/5评分但指出多项弱项",
       isP0: false,
-  },
+  }
 
 {
       id: "KB-EN-20260612-001",
@@ -1989,7 +2127,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "外部排气套件",
       heat: "Makers101 2026年6月深度评测引用Reddit退货讨论",
       isP0: false,
-},
+}
 
 {
       id: "KB-EN-20260612-002",
@@ -2017,7 +2155,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Prusa3D官方论坛CORE One L打印故障排除帖（2026年6月11日活跃）",
       isP0: false,
-},
+}
 
 {
       id: "KB-EN-20260612-003",
@@ -2045,7 +2183,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "Prusa3D官方论坛CORE One+打印帮助帖（2026年6月12日活跃）",
       isP0: false,
-},
+}
 
 {
       id: "KB-EN-20260612-004",
@@ -2073,7 +2211,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "TechRadar 2026年6月9日50款3D打印机横评",
       isP0: false,
-},
+}
 
 {
       id: "KB-EN-20260612-005",
@@ -2101,7 +2239,7 @@ const OVERSEAS_FEEDBACK_DATA = {
       modsMentioned: "",
       heat: "TechRadar 2026年50款3D打印机横评（6月9日更新）",
       isP0: false,
-},
+}
 
 {
     id: "KB-EN-20260611-001",
@@ -2138,7 +2276,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     modsMentioned: "完整出厂校准序列",
     heat: "Bambu Lab社区论坛数十条回复，发帖当天即起",
     isP0: true
-  },
+  }
 
 {
     id: "KB-EN-20260611-002",
@@ -2175,7 +2313,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     modsMentioned: "耗材干燥箱",
     heat: "Prusa3D官方论坛Core One活跃求助帖，发帖当晚即有社区回复",
     isP0: false
-  },
+  }
 
 {
     id: "KB-EN-20260611-003",
@@ -2213,7 +2351,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     modsMentioned: "",
     heat: "Prusa3D官方论坛XL活跃讨论帖（6月7日-10日持续讨论）",
     isP0: false
-  },
+  }
 
 {
     id: "KB-EN-20260611-004",
@@ -2250,7 +2388,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     modsMentioned: "",
     heat: "Prusa3D官方论坛Core One L硬件帮助帖，活跃讨论中",
     isP0: false
-  },
+  }
 
 {
     id: "KB-EN-20260611-005",
@@ -2288,7 +2426,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     modsMentioned: "",
     heat: "The Crafty Catsman 2026年6月深度所有者评测",
     isP0: false
-  },
+  }
 
 {
     id: "KB-EN-20260610-001",
@@ -2323,7 +2461,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     modsMentioned: "Printables door fastener",
     heat: "Prusa3D官方论坛Core One+硬件帮助帖（3回复，6月9日活跃）",
     isP0: false,
-  },
+  }
 
 {
     id: "KB-EN-20260610-002",
@@ -2361,7 +2499,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     modsMentioned: "",
     heat: "TechRadar 2026年50款3D打印机横评（6月9日更新）",
     isP0: false,
-  },
+  }
 
 {
     id: "KB-EN-20260610-003",
@@ -2399,7 +2537,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     modsMentioned: "",
     heat: "TechRadar 2026年50款3D打印机横评（6月9日更新）",
     isP0: false,
-  },
+  }
 
 {
     id: "KB-EN-20260610-004",
@@ -2436,7 +2574,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     modsMentioned: "",
     heat: "GoodPrints3D 2026年6月购机决策指南",
     isP0: false,
-  },
+  }
 
 {
     id: "KB-EN-20260610-005",
@@ -2474,7 +2612,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     modsMentioned: "",
     heat: "TechRadar 2026年50款3D打印机横评（6月9日更新）",
     isP0: false,
-  },
+  }
 
 {
     id: "KB-EN-20260609-001",
@@ -2512,7 +2650,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     modsMentioned: "",
     heat: "The Industrial Maker 2026年6月故障分析指南",
     isP0: false
-  },
+  }
 
 {
     id: "KB-EN-20260609-002",
@@ -2548,7 +2686,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     modsMentioned: "",
     heat: "Prusa3D官方论坛活跃讨论帖",
     isP0: false
-  },
+  }
 
 {
     id: "KB-EN-20260609-003",
@@ -2586,7 +2724,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     modsMentioned: "",
     heat: "Makers101 深度对比评测",
     isP0: false
-  },
+  }
 
 {
     id: "KB-EN-20260609-004",
@@ -2624,7 +2762,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     modsMentioned: "腔体改装",
     heat: "Makers101 深度对比评测",
     isP0: false
-  },
+  }
 
 {
     id: "KB-EN-20260609-005",
@@ -2660,7 +2798,7 @@ const OVERSEAS_FEEDBACK_DATA = {
     modsMentioned: "启动G-code修改",
     heat: "Prusa3D官方论坛活跃帖",
     isP0: false
-  },
+  }
 
 {
 id: "KB-EN-20260608-002",
@@ -2688,7 +2826,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "",
       heat: "Prusa官方论坛活跃帖子（多位用户确认）",
       isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260608-003",
@@ -2716,7 +2854,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "",
       heat: "Makers101深度分析 + Reddit社区热议",
       isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260608-004",
@@ -2744,7 +2882,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "OrcaSlicer",
       heat: "3D Printed Decor 用户反馈聚合分析",
       isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260608-005",
@@ -2772,7 +2910,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "Klipper固件调优, Voron改装",
       heat: "Sovol官方论坛活跃帖子",
       isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260605-001",
@@ -2798,7 +2936,7 @@ id: "KB-EN-20260608-002",
       problemPoints: ["辅助喷嘴性能严重受限", "双喷嘴打印面积缩减", "维护复杂度极高", "材料兼容性差"],
       competitorMentioned: "Prusa CORE One, Bambu Lab P1S",
       isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260605-002",
@@ -2824,7 +2962,7 @@ id: "KB-EN-20260608-002",
       problemPoints: ["无主动腔体加热", "无双挤出机", "选配成本高", "INDX未上市", "打印速度偏慢"],
       competitorMentioned: "Bambu Lab X2D",
       isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260605-003",
@@ -2850,7 +2988,7 @@ id: "KB-EN-20260608-002",
       problemPoints: ["无手机App", "腔体LED照明暗", "无主动腔体加热", "多色打印慢且废料多"],
       competitorMentioned: "Bambu Lab P1S",
       isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260605-004",
@@ -2876,7 +3014,7 @@ id: "KB-EN-20260608-002",
       problemPoints: ["组装复杂非开箱即用", "占地面积大于规格", "摄像头帧率低", "未升级喷嘴系统", "开放式框架限制材料"],
       competitorMentioned: "Bambu Lab A1, X2D",
       isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260605-005",
@@ -2902,7 +3040,7 @@ id: "KB-EN-20260608-002",
       problemPoints: ["切割刀片安全风险", "软件工作流碎片化", "生态锁定", "多色废料严重", "产品命名误导"],
       competitorMentioned: "Bambu Lab X2D, A1",
       isP0: true
-    },
+    }
 
 {
       id: "KB-EN-20260604-001",
@@ -2930,7 +3068,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "",
       heat: "Bophin / PositionIsEverything 深度报道",
       isP0: false,
-    },
+    }
 
 {
       id: "KB-EN-20260604-002",
@@ -2958,7 +3096,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "Bondtech齿轮清洁",
       heat: "Prusa官方论坛多个活跃帖子",
       isP0: false,
-    },
+    }
 
 {
       id: "KB-EN-20260604-003",
@@ -2986,7 +3124,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "",
       heat: "Creality官方社区旗舰版块活跃讨论",
       isP0: false,
-    },
+    }
 
 {
       id: "KB-EN-20260604-004",
@@ -3014,7 +3152,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "",
       heat: "3DBite发布评测 + 社区热议",
       isP0: false,
-    },
+    }
 
 {
       id: "KB-EN-20260604-005",
@@ -3042,7 +3180,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "",
       heat: "3DWithUs更新评测 + Amazon验证购买评价",
       isP0: false,
-    },
+    }
 
 {
       id: "KB-EN-20260603-001",
@@ -3070,7 +3208,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "",
       heat: "Instagram + Reddit 热议 / Tom's Hardware 报道",
       isP0: true
-    },
+    }
 
 {
       id: "KB-EN-20260603-002",
@@ -3098,7 +3236,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "切割模块 (Bambu Suite)",
       heat: "FauxHammer 深度评测 (4/5星)",
       isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260603-003",
@@ -3126,7 +3264,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "",
       heat: "Makers101 新品社区反响分析",
       isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260603-004",
@@ -3154,7 +3292,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "切割升级套件",
       heat: "3DPrint.com 战略分析",
       isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260603-005",
@@ -3182,7 +3320,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "",
       heat: "10100.com 行业战略分析",
       isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260602-001",
@@ -3210,7 +3348,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "切割模块 (Bambu Handy校准)",
       heat: "Makers101 新品首发分析",
       isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260602-002",
@@ -3238,7 +3376,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "Capricorn PTFE管替换",
       heat: "3D Printed Decor 深度评测",
       isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260602-003",
@@ -3266,7 +3404,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "",
       heat: "Logix4U 2026爱好者导购指南",
       isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260602-004",
@@ -3294,7 +3432,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "",
       heat: "Logix4U 2026爱好者导购指南",
       isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260602-005",
@@ -3322,7 +3460,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "MMU3",
       heat: "3DMaker Engineering 2026买家指南",
       isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260601-001",
@@ -3350,7 +3488,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "",
       heat: "数百条Reddit讨论分析",
       isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260601-002",
@@ -3378,7 +3516,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "WAGO 221-412端子, Sunon MF50152VX-1A00风扇",
       heat: "40+台生产环境工程分析",
       isP0: true
-    },
+    }
 
 {
       id: "KB-EN-20260601-003",
@@ -3406,7 +3544,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "管式热敏电阻替换, 3M VHB双面胶",
       heat: "综合问题分析",
       isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260601-004",
@@ -3434,7 +3572,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "",
       heat: "2026年最佳打印机汇总（5月21日审阅）",
       isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260601-005",
@@ -3462,319 +3600,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "",
       heat: "2026年最佳打印机汇总（5月21日审阅）",
       isP0: false
-    },
-
-{
-      id: "KB-EN-20260529-001",
-      brand: "Bambu Lab",
-      platform: "行业评测",
-      sourceLink: "https://www.techradar.com/best/best-3d-printers",
-      country: "US",
-      language: "EN",
-      date: "2026-05-29",
-      publishedAt: "2026-05-27",
-      modelName: "X1C",
-      purchaseChannel: "评测获取",
-      purchaseDuration: "6个月以上",
-      verified: true,
-      shippingExperience: "未适用",
-      customs: "未适用",
-      originalText: "TechRadar roundup (updated May 27, 2026): Bambu Lab X1C is still a top pick but has two major drawbacks. First, the purge waste problem is severe — the printer constantly \u2018spits out piles of waste filament\u2019 during multi-color prints. In complex 4+ color models, waste can dramatically exceed actual printed material volume. Second, the 256\u00d7256\u00d7256mm build volume is limiting for larger projects without splitting into multiple parts. The AMS multi-material system adds significant cost and maintenance overhead, with replacement extruder modules being expensive. Multi-color printing slows down considerably due to frequent filament changes and purge cycles. The printer also lacks an actively heated chamber, limiting advanced material capabilities. Alternatives like P2S now offer better overall value, while the X1C remains best for those needing carbon fiber and engineering material support, albeit at a premium price point with ongoing consumable costs.",
-      translation: "TechRadar综合评测（5月27日更新）：Bambu Lab X1C仍是顶级选择但有两个重大缺点。首先，多色打印废料问题严重——打印机在多色打印时不断\u2018吐出成堆的废料丝\u2019，复杂4色以上模型废料可远超实际打印材料。其次，256\u00d7256\u00d7256mm构建体积对于大型项目需要拆分打印。AMS多材料系统显著增加成本和维护开销，更换挤出模块费用高昂。多色打印因频繁换料和清洗循环而明显变慢。缺乏主动加热腔室限制高级材料能力。P2S等替代方案现在提供更好的综合价值。",
-      summaryEn: "X1C ranked top but has severe purge waste ('piles of waste filament'), 256mm build volume limiting for larger projects, AMS cost/maintenance high, multi-color slow, no heated chamber, P2S offers better value",
-      summaryCn: "X1C仍是顶级但多色废料严重（\u2018成堆废丝\u2019）、256mm体积对大型项目受限、AMS成本维护高、多色变慢、无加热腔室、P2S性价比更优",
-      sentiment: "负面",
-      dimensions: ["使用成本与兼容性", "硬件性能", "日常使用体验"],
-      problemPoints: ["多色废料严重", "构建体积有限", "AMS增加成本", "无加热腔室"],
-      competitorMentioned: "Bambu Lab P2S",
-      isP0: false
-    },
-
-{
-      id: "KB-EN-20260529-002",
-      brand: "Creality",
-      platform: "行业评测",
-      sourceLink: "https://www.techradar.com/best/best-3d-printers",
-      country: "US",
-      language: "EN",
-      date: "2026-05-29",
-      publishedAt: "2026-05-27",
-      modelName: "Hi",
-      purchaseChannel: "评测获取",
-      purchaseDuration: "数周",
-      verified: true,
-      shippingExperience: "未适用",
-      customs: "未适用",
-      originalText: "TechRadar best budget pick review (May 27, 2026): The Creality Hi is a great entry-level value but has several compromises. Multi-color printing is notably slow, becoming a significant bottleneck for color projects. The open-frame design primarily optimizes for PLA and struggles with materials needing stable thermal environments. Purge waste during material switching is another issue - the printer generates considerable waste filament during color changes. Dimensional accuracy degrades slightly on 4-color prints, especially on very fine details. Removing small, delicate prints from the build plate can be tricky due to strong bed adhesion. Overall speed is slower than CoreXY competitors. The printer targets budget-conscious beginners but the compromises become apparent when pushing beyond basic single-color PLA printing. At its price point, it delivers solid value but users should be aware of these limitations before purchasing.",
-      translation: "TechRadar最佳预算推荐评测（5月27日）：Creality Hi是出色的入门级选择但存在多个妥协。多色打印明显变慢，成为彩色项目的重大瓶颈。开放式框架设计主要针对PLA优化，需要稳定热环境的材料表现不佳。材料切换时的清洗废料是另一个问题——换色过程中产生大量废料。四色打印时尺寸精度略有下降，特别是在非常精细的细节上。由于热床附着力强，移除小而脆弱的打印件可能有些棘手。整体速度慢于CoreXY竞品。目标用户是预算有限的初学者，但超出基本单色PLA打印时的妥协将变得明显。",
-      summaryEn: "Creality Hi budget pick: multi-color slow bottleneck, open frame limits to PLA, significant purge waste, 4-color dimensional accuracy drops, small model removal tricky, slower than CoreXY rivals",
-      summaryCn: "Creality Hi预算之选：多色打印明显变慢瓶颈、开放框架限PLA、换色废料多、四色精度下降、小模型移除困难、慢于CoreXY竞品",
-      sentiment: "负面",
-      dimensions: ["硬件性能", "日常使用体验", "使用成本与兼容性"],
-      problemPoints: ["多色打印速度慢", "开放式框架限制材料", "多色废料多", "精度下降", "模型移除困难"],
-      competitorMentioned: "Bambu Lab A1, ELEGOO Centauri Carbon",
-      isP0: false
-    },
-
-{
-      id: "KB-EN-20260529-003",
-      brand: "Anycubic",
-      platform: "独立评测",
-      sourceLink: "https://3dprinteddecor.com/anycubic-kobra-x-vs-elegoo-centauri-carbon-2026/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-29",
-      publishedAt: "2026-05-20",
-      modelName: "Kobra X",
-      purchaseChannel: "评测获取",
-      purchaseDuration: "数周",
-      verified: true,
-      shippingExperience: "未适用",
-      customs: "未适用",
-      originalText: "3D Printed Decor comparison review (May 20, 2026): The Kobra X multi-color system has a serious long-term reliability concern — nozzle clogs become significantly more frequent over time with multi-color use, requiring cleaning every 200-300 hours. One verified buyer reported a particularly difficult clog that was \u2018very hard to clear\u2019 due to material buildup in the smaller diameter nozzle. Default purge settings waste 15-20% of filament, requiring manual tuning for optimal efficiency. The open frame makes ABS and ASA printing high-risk with severe warping above 60\u00b0C ambient. Hidden costs are substantial: achieving the advertised 19-color capability requires 4 ACE 2 Pro units at $80-120 each, adding $320-480 beyond the $299 base price. High-speed printing above 350mm/s produces visible artifacts on tall models. The printer is best suited for PLA and PETG, but users wanting engineering materials will be disappointed. In-toolhead switching reduces waste vs external units but increases hotend path maintenance needs.",
-      translation: "3D Printed Decor对比评测（5月20日）：Kobra X多色系统存在严重的长期可靠性问题——多色使用后喷嘴堵塞频率显著增加，每200-300小时需清理一次。一位已验证买家报告了一次极其困难的堵塞，由于小口径喷嘴内材料积聚\u2018非常难清理\u2019。默认清洗设置浪费15-20%耗材，需要手动调优才能达到最佳效率。开放框架使ABS和ASA打印高风险，环境温度超过60\u00b0C时严重翘曲。隐藏成本巨大：要实现广告中的19色能力需要4个ACE 2 Pro单元，每个$80-120，在$299基础价外增加$320-480。高速打印超过350mm/s时高模型出现可见伪影。最适合PLA和PETG，但对工程材料需求用户会失望。",
-      summaryEn: "Kobra X multi-color nozzle clogs every 200-300h, default purge wastes 15-20%, hidden ACE costs $320-480 extra for full 19-color, open frame severe ABS warping, 350mm/s+ artifacts, best for PLA/PETG only",
-      summaryCn: "Kobra X多色喷嘴每200-300小时必堵、默认清洗浪费15-20%、19色隐藏成本$320-480、开放框架ABS严重翘曲、350mm/s+有伪影、仅适合PLA/PETG",
-      sentiment: "负面",
-      dimensions: ["硬件性能", "使用成本与兼容性", "日常使用体验"],
-      problemPoints: ["多色喷嘴频繁堵塞", "默认清洗浪费大", "隐藏扩展成本高", "工程材料不支持", "高速打印质量下降"],
-      competitorMentioned: "ELEGOO Centauri Carbon, Bambu Lab A1",
-      isP0: false
-    },
-
-{
-      id: "KB-EN-20260529-004",
-      brand: "ELEGOO",
-      platform: "独立评测",
-      sourceLink: "https://3dprinteddecor.com/anycubic-kobra-x-vs-elegoo-centauri-carbon-2026/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-29",
-      publishedAt: "2026-05-20",
-      modelName: "Centauri Carbon",
-      purchaseChannel: "评测获取",
-      purchaseDuration: "数周",
-      verified: true,
-      shippingExperience: "未适用",
-      customs: "未适用",
-      originalText: "3D Printed Decor review (May 20, 2026): The ELEGOO Centauri Carbon is an excellent enclosed CoreXY but has three notable shortcomings. First and most critically: no multi-color support whatsoever — it is strictly a single-extruder, single-filament printer. There is no factory upgrade path; adding multi-color requires aftermarket external boxes and firmware hacks which Elegoo does not support. Second, the glass door panel accumulates fine scratches quickly if prints are removed carelessly during post-processing. While replacement panels are not expensive, this is an ongoing replacement cost that is often overlooked. Third, the ElegooSlicer software has stability issues — one verified buyer reported the software \u2018crashed on an older laptop\u2019, indicating the software may not be well-optimized for lower-end hardware. The printer also lacks published noise level specifications, which is unusual for an enclosed CoreXY at this price point. Default cooling and lighting are adequate but not exceptional compared to premium alternatives.",
-      translation: "3D Printed Decor评测（5月20日）：ELEGOO Centauri Carbon是出色的封闭式CoreXY但有三个显著短板。首先最关键的是：完全不支持多色打印——严格来说是一台单挤出机单耗材打印机。无官方升级路径，添加多色需要第三方外部盒子和固件破解（ELEGOO不支持）。其次，玻璃门面板在后处理时若不慎取件会快速积累细划痕，虽然更换不贵但这是持续成本。第三，ElegooSlicer软件存在稳定性问题——一位验证购买者报告软件\u2018在一台旧笔记本电脑上崩溃了\u2019，表明软件对低端硬件优化不足。该打印机也未公布噪音水平规格，对此价位的封闭CoreXY来说不常见。默认冷却和灯光足够但不及高端竞品出色。",
-      summaryEn: "Centauri Carbon: zero multi-color support (single extruder, no factory upgrade, requires unsupported hacks), glass panel scratches easily, ElegooSlicer crashes on older PCs, no noise spec published",
-      summaryCn: "Centauri Carbon：完全不支持多色（单挤出机无官方升级路径需破解）、玻璃面板易划伤、ElegooSlicer在老电脑上崩溃、未公布噪音规格",
-      sentiment: "负面",
-      dimensions: ["硬件性能", "软件与交互", "日常使用体验"],
-      problemPoints: ["不支持多色打印", "玻璃面板易刮花", "切片软件不稳定", "无噪音规格"],
-      competitorMentioned: "Bambu Lab A1, Anycubic Kobra X",
-      isP0: false
-    },
-
-{
-      id: "KB-EN-20260529-005",
-      brand: "Creality",
-      platform: "行业评测",
-      sourceLink: "https://beets3d.cn/2026-beginner-3dprinter.html",
-      country: "CN",
-      language: "ZH",
-      date: "2026-05-29",
-      publishedAt: "2026-05-25",
-      modelName: "Ender-3 V3 SE",
-      purchaseChannel: "官网直邮",
-      purchaseDuration: "3个月内",
-      verified: true,
-      shippingExperience: "一般",
-      customs: "未提及",
-      originalText: "2026 entry-level 3D printer comparison: The Creality Ender-3 V3 SE is the budget champion but quality compromises are real. Print quality test: 0.2mm layer height shows visible ringing artifacts (振纹), indicating motion system resonance not fully compensated by input shaping. Bridging test only achieves 10mm stable span - the weakest among 5 tested printers (others reach 15mm). Overhang performance rated \u201850\u00b0 adequate\u2019, lowest in the test group (others grade 55-60\u00b0 good). Users must assemble and calibrate the printer themselves. The PC-coated build plate is an inferior surface compared to PEI spring steel sheets used by competitors - adhesion consistency is notably worse. No Wi-Fi connectivity in 2026 is a major missing feature for modern workflows. Single Z-axis stepper motor with belt synchronization for the second lead screw creates potential alignment drift over time. Relying on community resources (社区资源) for troubleshooting suggests official support is limited. While the $179 price is entry-level unbeatable, users should expect to invest significant effort in tuning.",
-      translation: "2026入门级3D打印机横评：Ender-3 V3 SE是预算之王但质量妥协真实存在。打印质量测试：0.2mm层高可见振纹（ringing artifacts），表明运动系统共振未被输入整形完全补偿。桥接测试仅10mm稳定跨度——5台测试机中最弱（其他达15mm）。悬垂表现被评为\u201850\u00b0合格\u2019，测试组最低（其他55-60\u00b0良好）。用户需自行组装和校准。PC涂层热床是较差的表面处理，相比竞品使用PEI弹簧钢片附着一致性明显更差。2026年无Wi-Fi连接是现代化工作流的重大缺失。单Z轴步进电机通过皮带同步第二根丝杆，长期使用可能产生对齐漂移。依赖社区资源进行故障排查暗示官方支持有限。虽然$179价格入门无敌，但用户应预期投入大量调试精力。",
-      summaryEn: "Ender-3 V3 SE budget pick: visible ringing at 0.2mm, weakest bridging (10mm) and overhang (50\u00b0) in class, PC plate inferior to PEI, no Wi-Fi, single Z motor with belt sync, assembly required, community-reliant support",
-      summaryCn: "Ender-3 V3 SE预算之王：0.2mm见振纹、桥接仅10mm同级最弱、悬垂50\u00b0最低、PC热床劣于PEI、无Wi-Fi、单Z电机皮带同步、需自行组装、依赖社区支持",
-      sentiment: "负面",
-      dimensions: ["硬件性能", "软件与交互", "日常使用体验"],
-      problemPoints: ["打印有振纹", "桥接能力弱", "悬垂表现差", "无Wi-Fi", "热床质量差", "需自行组装"],
-      competitorMentioned: "Bambu Lab A1 Mini, Anycubic Kobra 3",
-      isP0: false
-    },
-
-{
-      id: "KB-EN-20260528-001",
-      brand: "Anycubic",
-      platform: "独立评测",
-      sourceLink: "https://www.fauxhammer.com/reviews/anycubic-kobra-4-review-a-perfectly-fine-printer-that-probably-shouldnt-exist/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-28",
-      publishedAt: "2026-05-21",
-      modelName: "Kobra 4",
-      purchaseChannel: "评测获取",
-      purchaseDuration: "数周",
-      verified: true,
-      shippingExperience: "未适用",
-      customs: "未适用",
-      originalText: "FauxHammer review (3/5 stars): The Kobra 4 is not a bad printer - the real problem is that Anycubic's own Kobra X makes it completely redundant. The Kobra X uses an in-toolhead filament switching system that is faster, smarter, and produces dramatically less waste than the Kobra 4's external ACE 2 Pro approach. The ACE 2 Pro unit had consistency issues - the reviewer needed a second unit before it worked properly. The Combo kit omits the top filament mount, meaning TPU printing requires a workaround. Timelapse videos still require manual USB transfer. Benchy showed wispy stringing and first-layer roughness in the front-left corner. Most critically, Anycubic's history of quickly discontinuing less successful products raises serious long-term support concerns: a good first printer is only really good if the company helps when things go wrong. At $279 without meaningful discount, the Kobra 4 is very hard to recommend over the Kobra X.",
-      translation: "FauxHammer评测（3/5星）：Kobra 4不是一台差打印机——真正的问题是Anycubic自家的Kobra X让它完全多余。Kobra X使用工具头内切换系统，比Kobra 4的外部ACE 2 Pro方案更快、更智能、废料大幅减少。ACE 2 Pro单元存在一致性问题——评测者需要第二台才能正常工作。Combo套装缺少顶部耗材架，TPU打印需要变通方案。延时摄影仍需手动USB传输。Benchy测试出现轻微拉丝和左前角首层粗糙。最关键的是，Anycubic有快速淘汰不太成功产品的历史，长期支持存疑：一台好的入门打印机只有在出问题时公司愿意帮助才算真正好。$279不打折很难推荐。",
-      summaryEn: "Kobra 4 made redundant by Kobra X (faster switching, less waste), ACE 2 Pro consistency issues, missing top filament mount in Combo, Anycubic track record of discontinuing products raises long-term support concerns, 3/5 stars.",
-      summaryCn: "Kobra 4被自家Kobra X全面压制（切换更快废料更少）、ACE 2 Pro一致性问题、Combo缺顶部耗材架、Anycubic快速淘汰产品历史引长期支持担忧，3/5星。",
-      sentiment: "负面",
-      dimensions: ["硬件性能", "使用成本与兼容性", "售后服务与社区"],
-      problemPoints: ["ACE 2 Pro一致性差", "多色废料远多于Kobra X", "Combo缺顶部耗材架", "品牌支持不可靠"],
-      competitorMentioned: "Anycubic Kobra X, Bambu Lab A1",
-      isP0: false
-    },
-
-{
-      id: "KB-EN-20260528-002",
-      brand: "Prusa",
-      platform: "独立评测",
-      sourceLink: "https://printforgehq.com/prusa-mk4-review/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-28",
-      publishedAt: "2026-04-28",
-      modelName: "MK4S",
-      purchaseChannel: "评测获取",
-      purchaseDuration: "3个月",
-      verified: true,
-      shippingExperience: "未适用",
-      customs: "未适用",
-      originalText: "PrintForgeHQ 200-hour test (67 prints): The MK4S is reliable but third in raw speed - Benchy 35 min (quality) vs Bambu P1S at 25 min and Creality K1C at 22 min. Usable print speed is only 200-250 mm/s for complex geometries. MMU3 ($429 extra) requires 8-15 minutes per color change, far worse than Bambu AMS. Kit assembly takes 8-12 hours (novices: 14-16 hours). ABS printing limited to 80mm height without the $199 enclosure. The phone app exists but is less polished than Bambu Handy. Carbon fiber requires a $35 Revo CHT hardened nozzle. Total 3-year ownership cost: $1,907 vs Bambu P1S $1,712 and Creality K1C $1,517. Only 1.4% failure rate (lowest of 9 printers tested) but at $1,099 (kit) or $1,399 (assembled), the price premium over P1S ($699) and K1C ($559) is very hard to justify for non-enthusiasts.",
-      translation: "PrintForgeHQ 200小时测试（67次打印）：MK4S可靠但速度排名第三——Benchy 35分钟（质量模式）vs Bambu P1S 25分钟、Creality K1C 22分钟。复杂几何体实际可用速度仅200-250mm/s。MMU3（额外$429）每次换色需8-15分钟，远逊Bambu AMS。套件组装需8-12小时（新手14-16小时）。无外壳时ABS打印高度限制80mm（需额外$199外壳）。手机App不如Bambu Handy精致。碳纤维需$35硬化喷嘴。三年总拥有成本$1,907 vs P1S $1,712、K1C $1,517。故障率仅1.4%（9台最低），但$1,099（套件）/$1,399（组装）相比P1S $699和K1C $559溢价难以为非发烧友接受。",
-      summaryEn: "MK4S 200h test: 3rd in speed (35min Benchy vs P1S 25min), MMU3 8-15min per color change, kit assembly 8-16h, ABS limited without $199 enclosure, 3yr cost $1,907, price premium hard to justify vs P1S/K1C.",
-      summaryCn: "MK4S 200h测试：速度排名第三（Benchy 35min vs P1S 25min）、MMU3换色8-15分钟、套件组装8-16h、ABS需$199外壳、三年$1,907、溢价难justify。",
-      sentiment: "中性",
-      dimensions: ["硬件性能", "软件与交互", "使用成本与兼容性"],
-      problemPoints: ["打印速度慢", "MMU3换色耗时长", "套件组装耗时", "三年总成本高"],
-      competitorMentioned: "Bambu Lab P1S, Creality K1C",
-      isP0: false
-    },
-
-{
-      id: "KB-EN-20260528-003",
-      brand: "Bambu Lab",
-      platform: "独立评测",
-      sourceLink: "https://3dprinteddecor.com/bambu-lab-3d-printer-review-2026/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-28",
-      publishedAt: "2026-05-27",
-      modelName: "P1S",
-      purchaseChannel: "评测获取",
-      purchaseDuration: "6个月以上",
-      verified: true,
-      shippingExperience: "未适用",
-      customs: "未适用",
-      originalText: "3D Printed Decor analysis based on Reddit r/3DPrinterComparison (83K+ views): Bambu Lab biggest user complaint is the walled garden ecosystem - Bambu Studio is proprietary, recent firmware updates have made third-party slicer support increasingly difficult, and if Bambu stops updating software, printer capabilities degrade over time. AMS filament waste is the biggest gap between marketing expectations and reality - some complex multi-color models produce more waste than actual printed material. Privacy concerns: initial setup requires internet, and cloud features (remote access, MakerWorld, timelapse upload) force users back to cloud mode even though LAN mode works. P1S and P2S are notably noisier than A1 and H series. Proprietary replacement parts (hotend, nozzle, build plate) cost significantly more than open-source alternatives - users resort to Temu/AliExpress for reasonable pricing. P1S being cleared out at $449 raises long-term support questions as P2S takes over.",
-      translation: "3D Printed Decor基于Reddit r/3DPrinterComparison（83K+浏览量）分析：Bambu Lab最大用户投诉是封闭生态——Bambu Studio专有，近期固件更新使第三方切片器支持越来越困难，若Bambu停止更新软件打印机功能将退化。AMS耗材浪费是营销期望与现实差距最大的痛点——某些复杂多色模型废料超过实际打印材料。隐私担忧：初始设置需联网，云功能（远程访问/MakerWorld/延时上传）迫使用户回到云模式（尽管LAN模式可用）。P1S和P2S噪音明显大于A1和H系列。专有替换件（热端/喷嘴/构建板）成本远高于开源替代品——用户只能去Temu/AliExpress找合理价格。P1S正以$449清仓，P2S接替后长期支持存疑。",
-      summaryEn: "Bambu walled garden top complaint (proprietary slicer, firmware blocks 3rd party), AMS waste exceeds printed material on complex models, P1S/P2S notably noisy, proprietary parts expensive, P1S being cleared out raises long-term support concerns.",
-      summaryCn: "Bambu封闭生态是最大投诉点（专有切片器+固件封锁第三方）、AMS多色废料可超过打印材料、P1S/P2S噪音明显、专有配件贵、P1S清仓长期支持存疑。",
-      sentiment: "负面",
-      dimensions: ["软件与交互", "使用成本与兼容性", "售后服务与社区", "合规与安全"],
-      problemPoints: ["封闭生态系统", "AMS废料严重", "隐私云依赖", "专有配件定价高"],
-      competitorMentioned: "ELEGOO Centauri Carbon, Prusa",
-      isP0: false
-    },
-
-{
-      id: "KB-EN-20260528-004",
-      brand: "Sovol",
-      platform: "独立评测",
-      sourceLink: "https://danb.me/blog/sv08-setup/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-28",
-      publishedAt: "2026-02-22",
-      modelName: "SV08",
-      purchaseChannel: "官网直邮",
-      purchaseDuration: "1个月内",
-      verified: true,
-      shippingExperience: "一般",
-      customs: "未提及",
-      originalText: "Danb.me SV08 setup diary: The most commonly reported SV08 problem is the Taco bed - the bed curves toward the edges, making leveling questionable. The reviewer bed was somewhat Taco and required frequent z-offset adjustments. The only real fix was upgrading to a BIGTREETECH eddy-NG sensor. Noise is a major concern: many reviews correctly complain about loud fans. The reviewer had to extensively modify the machine (24V Noctua fans, vibration dampeners, etc.) to achieve acceptable noise levels for office use. Out-of-box experience is rough - the reviewer explicitly states it won't be perfect, especially regarding noise. Not recommended for everyone: only for users who don't mind tinkering. The machine is modifiable, open-source friendly, great value, fast, and capable - but only if you are willing to put in significant effort to fix its shortcomings.",
-      translation: "Danb.me SV08搭建日记：SV08最常报告的问题是Taco热床——热床朝边缘弯曲，使调平不可靠。评测者的热床有一定程度Taco弯曲，需要频繁调整z偏移。唯一真正的解决方案是升级BIGTREETECH eddy-NG传感器。噪音是重大顾虑：很多评测正确地抱怨风扇噪音大。评测者不得不大幅改装（24V Noctua风扇、减振垫等）才能达到办公室可接受的噪音水平。开箱体验粗糙——评测者明确表示不会完美，尤其是噪音方面。不推荐给所有人：只适合不介意折腾的用户。机器可改装、开源友好、超值、快速且实用——但前提是愿意投入大量精力修复缺陷。",
-      summaryEn: "SV08 Taco bed curvature makes leveling unreliable (needs eddy-NG sensor fix), stock fans extremely loud requiring extensive Noctua modding, rough out-of-box experience, only for users willing to tinker extensively.",
-      summaryCn: "SV08 Taco热床弯曲致调平不可靠（需eddy-NG传感器修复）、原装风扇极吵需大幅Noctua改装、开箱体验粗糙、仅适合愿意深度折腾的用户。",
-      sentiment: "负面",
-      dimensions: ["硬件性能", "日常使用体验", "使用成本与兼容性"],
-      problemPoints: ["Taco热床弯曲", "调平不可靠", "噪音过大", "需大量改装"],
-      competitorMentioned: "Bambu Lab P1S",
-      isP0: false
-    },
-
-{
-      id: "KB-EN-20260528-005",
-      brand: "Flashforge",
-      platform: "独立评测",
-      sourceLink: "https://www.3dtechvalley.com/flashforge-adventurer-5m-pro-review/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-28",
-      publishedAt: "2026-03-02",
-      modelName: "Adventurer 5M Pro",
-      purchaseChannel: "评测获取",
-      purchaseDuration: "数周",
-      verified: true,
-      shippingExperience: "未适用",
-      customs: "未适用",
-      originalText: "3DTechValley Adventurer 5M Pro review (9/10 but with notable limitations): No IFS (Intelligent Filament Switching) support - this is a hard limitation with no workaround, completely ruling out multi-color printing. The 220x220x220mm build volume is limiting for larger functional part projects. Proprietary quick-swap nozzle system costs $10-20 per replacement vs $2-5 for generic E3D V6 nozzles, and supply depends entirely on Flashforge. 600mm/s speed is no longer headline-worthy in 2026 - every mid-range competitor matches it, and actual usable speed for quality prints is 300-400mm/s. FlashPrint slicer is outdated with limited advanced tuning options compared to open-source alternatives - most experienced users eventually migrate away from it. Not mod-friendly: the proprietary hotend system restricts alternative designs. Compared to Bambu P1S: smaller build volume, no multi-color capability, and a less polished ecosystem at a similar price point.",
-      translation: "3DTechValley Adventurer 5M Pro评测（9/10但有显著限制）：不支持IFS（智能耗材切换）——这是硬性限制无法变通，完全排除多色打印。220x220x220mm构建体积对大型功能件项目有限制。专有快换喷嘴系统每个$10-20（vs 通用E3D V6的$2-5），供应完全依赖Flashforge。600mm/s速度在2026年已不再吸引眼球——所有中端竞品都能达到，实际可用质量打印速度仅300-400mm/s。FlashPrint切片器过时，高级调参选项远不如开源替代品——大多数有经验用户最终会迁移。不适合改装：专有热端系统限制替代设计。对比P1S：构建体积更小、无多色能力、生态打磨度不如。",
-      summaryEn: "5M Pro: no IFS multi-color (hard limit), 220mm build volume limiting, proprietary nozzles $10-20 vs E3D $2-5, FlashPrint outdated, 600mm/s no longer unique in 2026, not mod-friendly, P1S offers more at similar price.",
-      summaryCn: "5M Pro：不支持IFS多色（硬限制）、220mm体积有限、专有喷嘴$10-20 vs E3D $2-5、FlashPrint过时、600mm/s在2026年不再独特、不适合改装、同价P1S功能更多。",
-      sentiment: "中性",
-      dimensions: ["硬件性能", "软件与交互", "使用成本与兼容性"],
-      problemPoints: ["无多色打印支持", "专有喷嘴成本高", "构建体积小", "FlashPrint切片器过时"],
-      competitorMentioned: "Bambu Lab P1S",
-      isP0: false
-    },
-
-{
-      id: "KB-EN-20260527-001",
-      brand: "Bambu Lab",
-      platform: "行业评测",
-      sourceLink: "https://www.3dtechvalley.com/bambu-lab-h2d-review/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-27",
-      publishedAt: "2026-02-23",
-      modelName: "H2D",
-      purchaseChannel: "评测获取",
-      purchaseDuration: "数周",
-      verified: true,
-      shippingExperience: "未适用",
-      customs: "未适用",
-      originalText: "3DTechValley in-depth review: The H2D's dual-nozzle system dramatically reduces purge waste compared to single-nozzle AMS printers, but maintenance complexity is significantly higher — tracking and servicing dual toolheads plus optional laser/cutting modules demands far more user effort than a P1S. The 10W laser module can only shallow-cut ~5mm basswood plywood; cutting harder/thicker materials pushes it to its limits. Laser upgrade kits come with an external air pump (messier install than built-in). AMS 2 Pro had early issues feeding non-standard spool geometries, though firmware updates have improved this. The right (auxiliary) nozzle still requires purge towers for multi-color switching — not 100% zero-waste as marketing implies. The cutting module is drag-knife only (vinyl, paper, fabric), absolutely cannot replace a CNC mill. At $2,199 for AMS Combo or up to $3,499 for full laser config, the value proposition only works for users who actually need multi-material + laser integration.",
-      translation: "3DTechValley深度评测：H2D双喷头系统相比单喷头AMS打印机大幅减少废料浪费，但维护复杂度显著更高——追踪和保养双工具头加上可选激光/切割模块需要比P1S多得多的用户精力。10W激光模块仅能浅切约5mm椴木胶合板；切割更硬/更厚材料已达到极限。激光升级套件配备外置气泵（安装比内置版更凌乱）。AMS 2 Pro早期在处理非标准线轴几何形状时存在送料问题（固件更新已改善）。右（辅助）喷嘴多色切换仍需清洗塔——非营销暗示的100%零废料。切割模块仅支持拖刀切割（乙烯基/纸张/织物），绝对无法替代CNC铣削。AMS套装$2,199至激光全套$3,499，性价比仅对真正需要多材料+激光集成的用户成立。",
-      summaryEn: "H2D dual-nozzle saves filament but maintenance is far more complex, 10W laser limited to ~5mm wood cutting, AMS 2 Pro had non-standard spool feeding issues, cutting module can't replace CNC, $2,199-$3,499 only justified if you need all features.",
-      summaryCn: "H2D双喷头省耗材但维护复杂度远高、10W激光仅能切5mm木板、AMS 2 Pro非标线轴送料问题、切割模块不能替代CNC、$2,199-$3,499仅对需要全功能的用户合理。",
-      sentiment: "中性",
-      dimensions: ["硬件性能", "软件与交互", "使用成本与兼容性"],
-      problemPoints: ["维护复杂度高", "10W激光切割能力有限", "AMS 2 Pro非标线轴问题", "切割模块非CNC"],
-      competitorMentioned: "Bambu Lab P1S, Creality K2 Plus",
-      isP0: false
-    },
-
-{
-      id: "KB-EN-20260527-002",
-      brand: "QIDI",
-      platform: "独立评测",
-      sourceLink: "https://www.3dtechvalley.com/qidi-q2-3d-printer-review/",
-      country: "US",
-      language: "EN",
-      date: "2026-05-27",
-      publishedAt: "2026-03-18",
-      modelName: "Q2",
-      purchaseChannel: "评测获取",
-      purchaseDuration: "数周",
-      verified: true,
-      shippingExperience: "未适用",
-      customs: "未适用",
-      originalText: "3DTechValley + 3Dwork combined review: PLA printing suffers from heat creep in the enclosed 65°C chamber — filament softens before reaching the hotend, causing jams. The official wiki documents this but the quick start manual does not prominently feature it. Reviewer: 'During the first week we had a few jams until we internalized this.' The solution is opening the top cover, which defeats the enclosure's purpose. QIDI Studio has synchronization issues with QIDI Box and QIDI Cloud drops. QIDI Link mobile app is 'the most disappointing aspect: frequent connection failures, not very intuitive and missing some options.' Noise level is 50-60dB during normal printing — 'It is not a quiet machine.' The processor is downgraded from Q1 Pro (Cortex-A53 1.5GHz/1GB) to Cortex-A35 1.1GHz/512MB. QIDI Box V1 has tight PTFE tube angles causing feeding issues (V2 update kit available). Running QIDI's proprietary Klipper fork creates long-term dependency risk.",
-      translation: "3DTechValley+3Dwork联合评测：PLA打印在65°C封闭腔体中遭遇热蠕变——耗材在到达热端前软化导致堵塞。官方Wiki记录了此问题但快速入门手册未突出标注。评测者：'第一周我们堵了几次料才记住这个规则。'解决方案是打开顶盖，但这违背了封闭腔体的初衷。QIDI Studio与QIDI Box同步有问题且QIDI Cloud断线。QIDI Link手机App是'最令人失望的方面：频繁连接失败、不够直观、缺少部分选项'。正常打印噪音50-60dB——'不是一台安静的机器。'处理器从Q1 Pro（A53 1.5GHz/1GB）降级到A35 1.1GHz/512MB。QIDI Box V1的PTFE管角度过紧导致送料问题（V2更新套件可改善）。运行QIDI专有Klipper分支带来长期依赖风险。",
-      summaryEn: "Q2 PLA jams in 65°C chamber (must open lid), QIDI Link app 'most disappointing' with frequent disconnections, 50-60dB noise, processor downgraded from Q1 Pro, proprietary Klipper fork creates long-term vendor dependency.",
-      summaryCn: "Q2打印PLA在65°C腔体堵料（必须开盖）、QIDI Link App\"最令人失望\"频繁断连、50-60dB噪音、处理器比Q1 Pro降级、专有Klipper分支造成长期厂商依赖。",
-      sentiment: "负面",
-      dimensions: ["硬件性能", "软件与交互", "日常使用体验"],
-      problemPoints: ["PLA热蠕变堵料", "QIDI Link App体验差", "噪音偏大", "处理器降级", "专有固件依赖"],
-      competitorMentioned: "Bambu Lab P1S, Creality K2 Plus",
-      isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260527-003",
@@ -3800,59 +3626,7 @@ id: "KB-EN-20260608-002",
       problemPoints: ["AGPLv3违规（未提供完整源码）", "法律威胁开源开发者", "虚假声称服务条款凌驾于开源许可", "生态封闭锁定用户"],
       competitorMentioned: "Prusa",
       isP0: true
-    },
-
-{
-      id: "KB-EN-20260527-004",
-      brand: "Prusa",
-      platform: "Reddit综合",
-      sourceLink: "https://www.redrecs.com/best-3d-printers",
-      country: "US",
-      language: "EN",
-      date: "2026-05-27",
-      publishedAt: "2026-04-15",
-      modelName: "XL",
-      purchaseChannel: "未适用",
-      purchaseDuration: "未适用",
-      verified: true,
-      shippingExperience: "未适用",
-      customs: "未适用",
-      originalText: "RedRecs analysis of 51 Reddit comments from r/3dprinter and r/3Dprinting: Only 73% positive (37/51), with 8 negative reviews (16%) — the highest negative ratio among top 10 printers. Key issues: 'Initial bugs reported' — early production units had software and hardware issues requiring multiple firmware patches. 'Very expensive' at $4,452.63 — the most expensive printer in the entire ranking by far. Tool changer system, while innovative for reducing multi-material waste, has been reported to cause alignment issues and increased maintenance complexity. Some users experienced print failures during long multi-day prints. The modular tool head design means more parts that can fail independently. At this price point, users expect zero defects but report inconsistent quality control between units.",
-      translation: "RedRecs基于51条Reddit评论（r/3dprinter + r/3Dprinting）分析：仅73%正面评价（37/51），8条负面（16%）——前10名中负面率最高。核心问题：'报告了初期Bug'——早期生产批次存在软硬件问题需要多次固件补丁。'非常昂贵'，售价$4,452.63——整个排行榜中最贵。工具切换系统虽然创新减少了多材料浪费，但被报告导致对齐问题和维护复杂度增加。部分用户在多日长时间打印中遇到失败。模块化工具头设计意味着更多可能独立故障的零件。在此价位用户期望零缺陷但报告不同设备间质量控制不一致。",
-      summaryEn: "Prusa XL has the highest negative rate (16%) among top 10 Reddit picks, initial bugs on early units, $4,452 most expensive in class, tool changer alignment issues, inconsistent QC at premium price.",
-      summaryCn: "Prusa XL在前10名Reddit推荐中负面率最高(16%)、早期批次Bug、$4,452同级最贵、工具切换对齐问题、溢价价位QC不一致。",
-      sentiment: "负面",
-      dimensions: ["硬件性能", "软件与交互", "使用成本与兼容性"],
-      problemPoints: ["初期Bug", "价格极高", "工具切换对齐问题", "质量控制不一致"],
-      competitorMentioned: "Bambu Lab X1 Carbon, Prusa MK4S",
-      isP0: false
-    },
-
-{
-      id: "KB-EN-20260527-005",
-      brand: "Prusa",
-      platform: "Reddit综合",
-      sourceLink: "https://www.redrecs.com/best-3d-printers",
-      country: "US",
-      language: "EN",
-      date: "2026-05-27",
-      publishedAt: "2026-04-15",
-      modelName: "CORE One",
-      purchaseChannel: "未适用",
-      purchaseDuration: "未适用",
-      verified: true,
-      shippingExperience: "未适用",
-      customs: "未适用",
-      originalText: "RedRecs analysis of 36 Reddit comments: 78% positive (28/36) with 5 negative (14%). Key weakness: 'Reliability issues reported by some' — multiple users on Reddit describe inconsistent print reliability, particularly with the enclosed CoreXY design. At $949-$1,199, it's roughly 2x the price of a comparable Bambu Lab P1S ($549) with similar build volume (250×220×270mm). Speed at max 320mm/s is the slowest enclosed CoreXY tested, 19-31% slower than P1S/Centauri Carbon/K2 SE. The 3D-printed structural parts have been criticized for tolerance and surface finish issues. PrusaSlicer is described as more complex than Bambu Studio for beginners. 'Open source means no RFID auto-config, no cloud features.' However, the 55°C active heated chamber is a unique advantage for enclosed CoreXY, and at 48dB it's the quietest in its class.",
-      translation: "RedRecs基于36条Reddit评论分析：78%正面（28/36），5条负面（14%）。核心短板：'部分用户报告了可靠性问题'——多位Reddit用户描述封闭CoreXY设计的打印可靠性不一致。$949-$1,199售价约为同等构建体积（250×220×270mm）Bambu Lab P1S（$549）的2倍。最高320mm/s是测试中最慢的封闭CoreXY，比P1S/Centauri Carbon/K2 SE慢19-31%。3D打印结构件的公差和表面处理受到批评。PrusaSlicer对新手比Bambu Studio更复杂。'开源意味着无RFID自动配置、无云功能。'但55°C主动加热腔体是封闭CoreXY中的独特优势，48dB是同级最安静。",
-      summaryEn: "CORE One 14% negative on Reddit, reliability issues with enclosed CoreXY, 2x price of P1S for similar volume, 320mm/s slowest enclosed CoreXY, 3D-printed parts quality criticized, PrusaSlicer complex for beginners.",
-      summaryCn: "CORE One在Reddit上14%负面、封闭CoreXY可靠性问题、同等体积价格是P1S两倍、320mm/s最慢封闭CoreXY、3D打印结构件质量受批评、PrusaSlicer对新手复杂。",
-      sentiment: "中性",
-      dimensions: ["硬件性能", "使用成本与兼容性", "日常使用体验"],
-      problemPoints: ["可靠性波动", "价格偏贵", "打印速度偏慢", "3D打印结构件质量", "新手不友好"],
-      competitorMentioned: "Bambu Lab P1S, ELEGOO Centauri Carbon, Creality K2 SE",
-      isP0: false
-    },
+    }
 
 {
       id: "KB-EN-20260526-001",
@@ -3878,7 +3652,7 @@ id: "KB-EN-20260608-002",
       problemPoints: ["腔体加热器不足", "多色耗材浪费严重", "相机画质差", "固件清除自定义配置"],
       competitorMentioned: "Bambu Lab, K1 Max",
       isP0: true
-    },
+    }
 
 {
       id: "KB-EN-20260526-004",
@@ -3904,7 +3678,7 @@ id: "KB-EN-20260608-002",
       problemPoints: ["固件致传感器失效", "Z轴条纹", "热端不可维护", "热床温度不足"],
       competitorMentioned: "ELEGOO, Flsun",
       isP0: true
-    },
+    }
 
 {
       id: "KB-EN-20260525-001",
@@ -3930,7 +3704,7 @@ id: "KB-EN-20260608-002",
       problemPoints: ["多色系统故障", "频繁报错", "AI检测误报", "耗材浪费"],
       competitorMentioned: "Bambu Lab",
       isP0: true
-    },
+    }
 
 {
       id: "KB-EN-20260520-005",
@@ -3958,7 +3732,7 @@ id: "KB-EN-20260608-002",
       modsMentioned: "",
       heat: "官方论坛活跃讨论帖",
       isP0: true
-    },
+    }
 
 {
           id: "KB-EN-20260522-004",
@@ -3987,7 +3761,7 @@ id: "KB-EN-20260608-002",
       summaryCn: "Kobra 3 Max使用500小时后主板故障，售后响应慢，配件难获取，社区有类似报告",
       isP0: true
     }
-  ]
+]
 };
 
 
