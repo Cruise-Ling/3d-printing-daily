@@ -324,6 +324,96 @@ body {
   .section-tab .tab-name { font-size:12px; }
   .section-tab .tab-desc { font-size:10px; }
 }
+
+
+/* ===== 日历视图样式 ===== */
+.calendar-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+.calendar-title { display:flex; align-items:center; gap:10px; }
+.calendar-title .month-year { font-size:18px; font-weight:600; color:#1a237e; }
+.calendar-title .month-en { font-size:12px; color:#888; }
+.calendar-nav { display:flex; gap:8px; }
+.calendar-nav button {
+  width:32px; height:32px; border-radius:8px; border:1px solid #e0e0e0;
+  background:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  font-size:14px; color:#555; transition:all .15s;
+}
+.calendar-nav button:hover { background:#f5f5f5; border-color:#999; }
+.view-toggle { display:flex; gap:0; border:1px solid #e0e0e0; border-radius:8px; overflow:hidden; }
+.view-toggle button {
+  padding:6px 14px; border:none; background:#fff; cursor:pointer; font-size:13px; color:#555;
+}
+.view-toggle button.active { background:#1a237e; color:#fff; }
+
+.calendar-grid { background:#fff; border:1px solid #e0e0e0; border-radius:14px; overflow:hidden; }
+.calendar-weekdays {
+  display:grid; grid-template-columns:repeat(7, 1fr);
+  background:#f8f9ff; border-bottom:1px solid #e0e0e0;
+}
+.calendar-weekdays div { padding:10px 4px; text-align:center; font-size:12px; color:#888; font-weight:600; }
+.calendar-days { display:grid; grid-template-columns:repeat(7, 1fr); }
+.calendar-day {
+  min-height:110px; padding:8px; border-right:1px solid #f0f0f0; border-bottom:1px solid #f0f0f0;
+  position:relative; transition:background .15s;
+}
+.calendar-day:nth-child(7n) { border-right:none; }
+.calendar-day:nth-last-child(-n+7) { border-bottom:none; }
+.calendar-day:hover { background:#f8f9ff; }
+.calendar-day.empty { background:#fafafa; color:#bbb; }
+.calendar-day.empty:hover { background:#f5f5f5; }
+.calendar-day .day-num { font-size:13px; font-weight:600; color:#333; margin-bottom:5px; }
+.calendar-day.empty .day-num { color:#ccc; }
+.calendar-day.today { background:rgba(26,115,232,.04); }
+.calendar-day.today .day-num {
+  width:26px; height:26px; border-radius:50%; background:#1a237e; color:#fff;
+  display:flex; align-items:center; justify-content:center; margin-bottom:5px;
+}
+.calendar-day .today-tag {
+  position:absolute; top:6px; right:6px; font-size:10px; color:#fff;
+  background:#1a237e; padding:1px 5px; border-radius:10px; font-weight:500;
+}
+.calendar-day .day-card {
+  background:#e8f0fe; border-radius:8px; padding:7px 8px; text-decoration:none; color:inherit;
+  display:block; transition:transform .1s, box-shadow .1s;
+}
+.calendar-day .day-card:hover { transform:translateY(-1px); box-shadow:0 2px 8px rgba(0,0,0,.08); }
+.calendar-day .day-card-title {
+  font-size:12px; font-weight:600; color:#1a237e; line-height:1.4;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  margin-bottom:4px;
+}
+.calendar-day .day-card-meta {
+  font-size:10px; color:#666; display:flex; justify-content:space-between; align-items:center;
+}
+.calendar-day .day-card-dots { display:flex; gap:3px; margin-top:5px; flex-wrap:wrap; }
+.calendar-day .day-card-dots span { width:5px; height:5px; border-radius:50%; }
+
+.calendar-legend {
+  display:flex; gap:16px; margin-top:14px; flex-wrap:wrap; font-size:12px; color:#666;
+  align-items:center;
+}
+.calendar-legend .legend-item { display:flex; align-items:center; gap:5px; }
+.calendar-legend .legend-dot { width:8px; height:8px; border-radius:50%; }
+
+.calendar-empty-state { padding:60px 20px; text-align:center; color:#999; font-size:14px; display:none; }
+
+/* 视图切换 */
+#listView { display:none; }
+#calendarView { display:block; }
+#calendarView.hidden, #listView.hidden { display:none; }
+
+/* 移动端日历适配 */
+@media (max-width:768px) {
+  .calendar-day { min-height:72px; padding:5px; }
+  .calendar-day .day-card { padding:5px; }
+  .calendar-day .day-card-title { font-size:10px; -webkit-line-clamp:2; }
+  .calendar-day .day-card-meta { font-size:9px; }
+  .calendar-day .day-card-dots { display:none; }
+  .calendar-day.empty { min-height:72px; }
+  .calendar-header { flex-wrap:wrap; gap:10px; }
+  .calendar-title { order:1; }
+  .view-toggle { order:3; width:100%; justify-content:flex-end; }
+  .calendar-nav { order:2; margin-left:auto; }
+}
 </style>
 </head>
 <body>
@@ -345,7 +435,7 @@ body {
 
   <div class="sidebar-nav">
     <div class="nav-section-label">内容模块</div>
-    <a class="nav-item active" href="briefing_20260629.html">
+    <a class="nav-item active" href="index.html">
       <span class="nav-icon">🔥</span><span>最新资讯</span>
       <span class="nav-badge">今日</span>
     </a>
@@ -392,29 +482,20 @@ body {
   </div>
 
   <div class="stats-bar">
-    <div class="stats-pill">📰 <b>27</b> 期简报</div>
-    <div class="stats-pill">📅 2026年6月</div>
-  <div class="stats-pill">🏷️ 7大分区</div>
-  <div class="stats-pill">📬 <span id="totalNewsCount">799</span>条资讯</div>
+    <div class="stats-pill">📰 <b>52</b> 期简报</div>
+    <div class="stats-pill">📅 2026年7月</div>
+    <div class="stats-pill">🏷️ 7大分区</div>
+    <div class="stats-pill">📬 <span id="totalNewsCount">1190</span>条资讯</div>
   </div>
 
   <!-- 搜索框 -->
   <div class="search-wrap" id="searchWrap">
     <div class="search-input-row">
       <span class="search-icon">🔍</span>
-      <input
-        class="search-input"
-        id="searchInput"
-        type="text"
-        placeholder="搜索资讯标题 / 分区名称…"
-        autocomplete="off"
-        spellcheck="false"
-      />
+      <input class="search-input" id="searchInput" type="text" placeholder="搜索资讯标题 / 分区名称…" autocomplete="off" spellcheck="false" />
       <button class="search-clear" id="searchClear" style="display:none" title="清空">✕</button>
     </div>
-    <div class="search-dropdown" id="searchDropdown">
-      <!-- 动态插入结果 -->
-    </div>
+    <div class="search-dropdown" id="searchDropdown"></div>
   </div>
 
   <!-- 五大分区介绍 -->
@@ -456,281 +537,357 @@ body {
     </div>
   </div>
 
-  <div class="content-card" id="archive">
-    <div class="section-label">2026 年 7 月 / JULY</div>
+  <!-- 日历视图 -->
+  <div class="content-card" id="calendarView">
+    <div class="calendar-header">
+      <div class="calendar-title">
+        <div class="calendar-nav">
+          <button onclick="changeMonth(-1)">←</button>
+          <button onclick="changeMonth(1)">→</button>
+        </div>
+        <div>
+          <div class="month-year" id="calendarMonthYear">2026 年 7 月</div>
+          <div class="month-en" id="calendarMonthEn">July</div>
+        </div>
+      </div>
+      <div class="view-toggle">
+        <button onclick="switchView('list')" id="listToggleBtn">列表</button>
+        <button onclick="switchView('calendar')" id="calendarToggleBtn" class="active">日历</button>
+      </div>
+    </div>
 
-                <!-- NEW_ENTRIES_HERE -->
+    <div class="calendar-grid">
+      <div class="calendar-weekdays">
+        <div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div>
+      </div>
+      <div class="calendar-days" id="calendarDays">
+        <!-- JS generated -->
+      </div>
+    </div>
+
+    <div class="calendar-legend">
+      <span style="color:#999;">分区色点：</span>
+      <div class="legend-item"><span class="legend-dot" style="background:#1a73e8;"></span>泛行业</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#e65100;"></span>细分领域</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#2e7d32;"></span>消费级</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#bf360c;"></span>细分市场</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#00695c;"></span>场景打印</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#7b1fa2;"></span>海外资讯</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#00838f;"></span>用户口碑</div>
+    </div>
+  </div>
+
+  <!-- 列表视图 -->
+  <div class="content-card" id="listView">
+    <div class="calendar-header" style="margin-bottom:14px;">
+      <div class="calendar-title">
+        <div class="calendar-title">
+          <div class="month-year">历史简报列表</div>
+        </div>
+      </div>
+      <div class="view-toggle">
+        <button onclick="switchView('list')" id="listToggleBtn2" class="active">列表</button>
+        <button onclick="switchView('calendar')" id="calendarToggleBtn2">日历</button>
+      </div>
+    </div>
+    <div class="section-label">全部简报</div>
+    <div id="listContainer">
+      
     <a class="briefing-item" href="briefing_20260703.html">
         <div class="date-badge">
             <span class="day">03</span>
             <span class="month">JUL</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">Vilory T70X钛合金粉末耐700°C：中国高端3D打印粉体获关键突破</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260702.html">
         <div class="date-badge">
             <span class="day">02</span>
             <span class="month">JUL</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">拓竹1.41亿元光明拿地，建300万台3D打印机智造总部基地——产能扩大十倍</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260701.html">
         <div class="date-badge">
             <span class="day">01</span>
             <span class="month">JUL</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">正雅齿科创业板IPO获受理，拟募资9亿元——3D打印隐形正畸龙头冲刺A股</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260630.html">
         <div class="date-badge">
             <span class="day">30</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">Rocket Lab以80亿美元收购铱星公司，对标SpaceX——3D打印火…</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260629.html">
         <div class="date-badge">
             <span class="day">29</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">联泰科技递表港交所主板：工业级3D打印出货量中国第一，冲击港股工业级AM第一股</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260626.html">
         <div class="date-badge">
             <span class="day">26</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">先临三维推出AccuFab-Aris椅旁牙科打印机：19分钟完成修复体，比笔…</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260625.html">
         <div class="date-badge">
             <span class="day">25</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">煜鼎增材（王华明院士创办）科创板IPO获受理，拟募资18.02亿元</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260624.html">
         <div class="date-badge">
             <span class="day">24</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">三绿科技递交创业板IPO申请：年营收12.8亿，拟募资18.3亿扩产可降解耗材</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260623.html">
         <div class="date-badge">
             <span class="day">23</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">拓竹科技国内累计销量突破100万台，618耗材销量同比增长198%</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260622.html">
         <div class="date-badge">
             <span class="day">22</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">Foundation Alloy完成2200万美元A轮融资，固态钼合金材料获…</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260619.html">
         <div class="date-badge">
             <span class="day">19</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">惠通科技新增&quot;3D打印&quot;概念，高韧性PLA专用料完成初期验证</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260618.html">
         <div class="date-badge">
             <span class="day">18</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">纵维立方Anycubic完成数亿元B轮融资，达晨/国泰海通领投</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260617.html">
         <div class="date-badge">
             <span class="day">17</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">5月3D打印设备产量增长54.4%，国家统计局数据确认行业高景气</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260616.html">
         <div class="date-badge">
             <span class="day">16</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">多家3D打印企业冲刺IPO：三绿科技/煜鼎增材/摩方精密齐头并进</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260615.html">
         <div class="date-badge">
             <span class="day">15</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">SpaceX纳斯达克上市：Wall Street最大3D打印巨头登陆资本市场</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260612.html">
         <div class="date-badge">
             <span class="day">12</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">中国四个月出口246万台3D打印机，同比增44.7%，全球消费级市场占90%</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260611.html">
         <div class="date-badge">
             <span class="day">11</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">纵维立方获数亿元融资，达晨财智/挑战者创投领投，消费级&quot;四小龙&quot;格局稳固</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260610.html">
         <div class="date-badge">
             <span class="day">10</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">三大风口送钱：AI数据中心/人形机器人/商业航天，3D打印成本砍83%</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260609.html">
         <div class="date-badge">
             <span class="day">09</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">锐科激光绿光3D打印技术突破：解决AI芯片散热难题，拿下算力时代隐形赛道</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260608.html">
         <div class="date-badge">
             <span class="day">08</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">央视《新闻联播》近2分钟聚焦：我国3D打印产业进入快速发展新阶段</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260605.html">
         <div class="date-badge">
             <span class="day">05</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">创想三维IPO领衔亚太3D打印市场双周综述，募资12.7亿港元</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260604.html">
         <div class="date-badge">
             <span class="day">04</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">比亚迪电子建超40万㎡金属3D打印工厂，入局3C领域</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260603.html">
         <div class="date-badge">
             <span class="day">03</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">3D打印板块6月2日涨2.25%，宏昌电子领涨，主力资金净流入2.62亿元</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260602.html">
         <div class="date-badge">
             <span class="day">02</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">拓竹科技(Bambu Lab)6月1日正式发布A2L 3D打印机：330×3…</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260601.html">
         <div class="date-badge">
             <span class="day">01</span>
             <span class="month">JUN</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">创想三维(03388.HK)5月29日港交所上市，首日高开80%，市值超15…</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
@@ -742,309 +899,527 @@ body {
             <span class="month">MAY</span>
         </div>
         <div class="briefing-info">
-            <div class="title-line">3D打印每日速递</div>
+            <div class="title-line">创想三维(03388.HK)正式挂牌港交所，公开招股获3829倍认购创纪录；…</div>
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
         </div>
         <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260528.html">
-      <div class="date-badge"><span class="day">28</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
-      </div>
-      <span class="arrow">&rsaquo;</span>
+        <div class="date-badge">
+            <span class="day">28</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">央视近6分钟专题报道：中国3D打印产业迎来&quot;量产转折&quot;，出口246万台翻倍增长</div>
+            <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260527.html">
-      <div class="date-badge"><span class="day">27</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
-      </div>
-      <span class="arrow">&rsaquo;</span>
+        <div class="date-badge">
+            <span class="day">27</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">央视近6分钟专题报道：中国3D打印产业迎来&quot;量产转折&quot;，出口246万台翻倍增长</div>
+            <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
+    </a>
+
+    <a class="briefing-item" href="briefing_20260526.html">
+        <div class="date-badge">
+            <span class="day">26</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">黑格科技完成超3亿元C轮融资，齿科3D打印出海龙头切入桌面全彩造物新赛道</div>
+            <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260525.html">
-      <div class="date-badge"><span class="day">25</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
-      </div>
-      <span class="arrow">&rsaquo;</span>
+        <div class="date-badge">
+            <span class="day">25</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">西门子5000万美元战略投资Xometry，AI打通设计到制造全链路</div>
+            <div class="meta-line">0条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260522.html">
-      <div class="date-badge"><span class="day">22</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
-      </div>
-      <span class="arrow">&rsaquo;</span>
+        <div class="date-badge">
+            <span class="day">22</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">创想三维港股募资13.8亿港元，认购启动，&quot;消费级3D打印第一股&quot;出炉</div>
+            <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260521.html">
-      <div class="date-badge"><span class="day">21</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
-      </div>
-      <span class="arrow">&rsaquo;</span>
+        <div class="date-badge">
+            <span class="day">21</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">创想三维5月20日启动招股，募资13.8亿港元，引入泰康人寿等基石投资者</div>
+            <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260520.html">
-      <div class="date-badge"><span class="day">20</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
-      </div>
-      <span class="arrow">&rsaquo;</span>
+        <div class="date-badge">
+            <span class="day">20</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">深圳1-4月消费级3D打印机产量爆发，全国2026年预计超700万台</div>
+            <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260519.html">
-      <div class="date-badge"><span class="day">19</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
-      </div>
-      <span class="arrow">&rsaquo;</span>
-    </a>
-
-    <a class="briefing-item" href="briefing_20260522.html">
-      <div class="date-badge"><span class="day">22</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
-      </div>
-      <span class="arrow">&rsaquo;</span>
+        <div class="date-badge">
+            <span class="day">19</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">国家统计局：1-4月3D打印设备产量同比增长50.9%，延续高增长态势</div>
+            <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260518.html">
-      <div class="date-badge"><span class="day">18</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周日 Sunday</span></div>
-      </div>
-      <span class="arrow">&rsaquo;</span>
+        <div class="date-badge">
+            <span class="day">18</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">Rocket Lab第1000台3D打印卢瑟福火箭发动机下线，仅2个月从80…</div>
+            <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
+    </a>
+
+    <a class="briefing-item" href="briefing_20260517.html">
+        <div class="date-badge">
+            <span class="day">17</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">✅ A级Mint集团收购Generation 3D，将大幅面3D打印纳入内部…</div>
+            <div class="meta-line">0条资讯 &middot; 7分区<span class="weekday">周日 Sunday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
+    </a>
+
+    <a class="briefing-item" href="briefing_20260516.html">
+        <div class="date-badge">
+            <span class="day">16</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">✅ A级创想三维PK拓竹：消费级3D打印&quot;冠军之争&quot;引发行业热议</div>
+            <div class="meta-line">0条资讯 &middot; 7分区<span class="weekday">周六 Saturday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260515.html">
-      <div class="date-badge"><span class="day">15</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line">35条资讯 · 7分区<span class="weekday">周五 Friday</span></div>
-      </div>
-      <span class="arrow">›</span>
+        <div class="date-badge">
+            <span class="day">15</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">✅ A级多家A股公司加码3D打印赛道，覆盖材料、设备、配套服务全环节</div>
+            <div class="meta-line">0条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
+
     <a class="briefing-item" href="briefing_20260514.html">
-      <div class="date-badge"><span class="day">14</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line">35条资讯 · 7分区<span class="weekday">周四 Thursday</span></div>
-      </div>
-      <span class="arrow">›</span>
+        <div class="date-badge">
+            <span class="day">14</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">✅ A级创想三维通过港交所聆讯：31亿营收难掩1.8亿亏损，5月内港股上市</div>
+            <div class="meta-line">0条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260513.html">
-      <div class="date-badge"><span class="day">13</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line">35条资讯 · 7分区<span class="weekday">周三 Wednesday</span></div>
-      </div>
-      <span class="arrow">›</span>
+        <div class="date-badge">
+            <span class="day">13</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">✅ A级创想三维港股IPO聆讯通过，5月12日正式启动PDIE，预计5月内上市</div>
+            <div class="meta-line">0条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260512.html">
-      <div class="date-badge"><span class="day">12</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line">35条资讯 · 7分区<span class="weekday">周二 Tuesday</span></div>
-      </div>
-      <span class="arrow">›</span>
+        <div class="date-badge">
+            <span class="day">12</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">⚠️ B级&quot;消费级3D打印第一股&quot;真的来了！创想三维港股IPO聆讯通过</div>
+            <div class="meta-line">0条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260511.html">
-      <div class="date-badge"><span class="day">11</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line">35条资讯 · 7分区<span class="weekday">周一 Monday</span></div>
-      </div>
-      <span class="arrow">›</span>
+        <div class="date-badge">
+            <span class="day">11</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">2026年Q1 3D打印融资22起约12亿元，金属打印占64%</div>
+            <div class="meta-line">0条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260510.html">
-      <div class="date-badge"><span class="day">10</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line">35条资讯 · 7分区<span class="weekday">周六 Saturday</span></div>
-      </div>
-      <span class="arrow">›</span>
+        <div class="date-badge">
+            <span class="day">10</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">3D打印每日速递</div>
+            <div class="meta-line">0条资讯 &middot; 7分区<span class="weekday">周日 Sunday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260509.html">
-      <div class="date-badge"><span class="day">09</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line">25条资讯<span class="weekday">周六 Saturday</span></div>
-      </div>
-      <span class="arrow">›</span>
+        <div class="date-badge">
+            <span class="day">09</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">3D打印每日速递</div>
+            <div class="meta-line">0条资讯 &middot; 7分区<span class="weekday">周六 Saturday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260508.html">
-      <div class="date-badge"><span class="day">08</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line">25条资讯<span class="weekday">周五 Friday</span></div>
-      </div>
-      <span class="arrow">›</span>
+        <div class="date-badge">
+            <span class="day">08</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">3D打印每日速递</div>
+            <div class="meta-line">0条资讯 &middot; 5分区<span class="weekday">周五 Friday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260507.html">
-      <div class="date-badge"><span class="day">07</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line">25条资讯<span class="weekday">周四 Thursday</span></div>
-      </div>
-      <span class="arrow">›</span>
+        <div class="date-badge">
+            <span class="day">07</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">3D打印每日速递</div>
+            <div class="meta-line">0条资讯 &middot; 5分区<span class="weekday">周四 Thursday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260506.html">
-      <div class="date-badge"><span class="day">06</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line">25条资讯<span class="weekday">周三 Wednesday</span></div>
-      </div>
-      <span class="arrow">›</span>
+        <div class="date-badge">
+            <span class="day">06</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">3D打印每日速递</div>
+            <div class="meta-line">0条资讯 &middot; 1分区<span class="weekday">周三 Wednesday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260505.html">
-      <div class="date-badge"><span class="day">05</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line"><span class="weekday">周二 Tuesday</span></div>
-      </div>
-      <span class="arrow">›</span>
+        <div class="date-badge">
+            <span class="day">05</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">3D打印每日速递</div>
+            <div class="meta-line">0条资讯 &middot; 1分区<span class="weekday">周二 Tuesday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260504.html">
-      <div class="date-badge"><span class="day">04</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line"><span class="weekday">周一 Monday</span></div>
-      </div>
-      <span class="arrow">›</span>
+        <div class="date-badge">
+            <span class="day">04</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">3D打印每日速递</div>
+            <div class="meta-line">0条资讯 &middot; 1分区<span class="weekday">周一 Monday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260503.html">
-      <div class="date-badge"><span class="day">03</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line"><span class="weekday">周日 Sunday</span></div>
-      </div>
-      <span class="arrow">›</span>
+        <div class="date-badge">
+            <span class="day">03</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">3D打印每日速递</div>
+            <div class="meta-line">0条资讯 &middot; 1分区<span class="weekday">周日 Sunday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260502.html">
-      <div class="date-badge"><span class="day">02</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line"><span class="weekday">周六 Saturday</span></div>
-      </div>
-      <span class="arrow">›</span>
+        <div class="date-badge">
+            <span class="day">02</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">3D打印每日速递</div>
+            <div class="meta-line">0条资讯 &middot; 1分区<span class="weekday">周六 Saturday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
 
     <a class="briefing-item" href="briefing_20260501.html">
-      <div class="date-badge"><span class="day">01</span><span class="month">MAY</span></div>
-      <div class="briefing-info">
-        <div class="title-line">3D打印每日速递</div>
-        <div class="meta-line"><span class="weekday">周五 Friday</span></div>
-      </div>
-      <span class="arrow">›</span>
+        <div class="date-badge">
+            <span class="day">01</span>
+            <span class="month">MAY</span>
+        </div>
+        <div class="briefing-info">
+            <div class="title-line">3D打印每日速递</div>
+            <div class="meta-line">0条资讯 &middot; 1分区<span class="weekday">周五 Friday</span></div>
+        </div>
+        <span class="arrow">&rsaquo;</span>
     </a>
-
-    <!-- EXISTING_ENTRIES -->
-  </div>
-
-  <!-- 品牌总览 -->
-  <div class="content-card" id="brands" style="margin-top:20px;">
-    <div class="section-label">品牌总览 / BRANDS OVERVIEW</div>
-
-    <div style="padding:20px 24px;">
-      <div class="stats-bar" style="margin-bottom:20px;">
-        <div class="stats-pill">🏷️ <b>29</b> 个品牌</div>
-        <div class="stats-pill">🇨🇳 <b>16</b> 中国品牌</div>
-        <div class="stats-pill">🌍 <b>13</b> 国际品牌</div>
-        <div class="stats-pill">🏭 <b>8</b> 工业级</div>
-      </div>
-
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:20px;" id="brandsPreview">
-        <!-- 中国品牌预览 -->
-        <div style="background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:12px;padding:16px;border:1px solid #f59e0b;">
-          <div style="font-size:14px;font-weight:700;color:#92400e;margin-bottom:10px;">🇨🇳 中国品牌 (16)</div>
-          <div style="font-size:12px;color:#78350f;line-height:1.8;">
-            拓竹 · 创想三维 · 纵维立方 · 智能派<br>
-            长朗三维 · Sovol · 坤联 · BIQU<br>
-            闪铸科技 · 起迪科技 · 复志科技<br>
-            联泰科技 · 先临三维 · 易加三维<br>
-            华曙高科 · 铂力特
-          </div>
-        </div>
-
-        <!-- 国际品牌预览 -->
-        <div style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-radius:12px;padding:16px;border:1px solid #3b82f6;">
-          <div style="font-size:14px;font-weight:700;color:#1e3a8a;margin-bottom:10px;">🌍 国际品牌 (13)</div>
-          <div style="font-size:12px;color:#1e40af;line-height:1.8;">
-            <b>美国：</b>Stratasys · 3D Systems · Formlabs<br>
-            Desktop Metal · Velo3D · GE Additive<br>
-            Markforged · Peopoly<br>
-            <b>欧洲：</b>EOS · SLM Solutions · TRUMPF<br>
-            Prusa Research · UltiMaker · Renishaw
-          </div>
-        </div>
-
-        <!-- 技术领域 -->
-        <div style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);border-radius:12px;padding:16px;border:1px solid #10b981;">
-          <div style="font-size:14px;font-weight:700;color:#065f46;margin-bottom:10px;">⚙️ 核心技术</div>
-          <div style="display:flex;flex-wrap:wrap;gap:6px;">
-            <span style="padding:3px 8px;background:rgba(59,130,246,0.1);color:#2563eb;border-radius:4px;font-size:11px;">FFF/FDM</span>
-            <span style="padding:3px 8px;background:rgba(168,85,247,0.1);color:#7c3aed;border-radius:4px;font-size:11px;">SLA</span>
-            <span style="padding:3px 8px;background:rgba(239,68,68,0.1);color:#dc2626;border-radius:4px;font-size:11px;">SLM</span>
-            <span style="padding:3px 8px;background:rgba(251,191,36,0.1);color:#d97706;border-radius:4px;font-size:11px;">SLS</span>
-            <span style="padding:3px 8px;background:rgba(6,182,212,0.1);color:#0e7490;border-radius:4px;font-size:11px;">DLP</span>
-            <span style="padding:3px 8px;background:rgba(34,197,94,0.1);color:#16a34a;border-radius:4px;font-size:11px;">PolyJet</span>
-          </div>
-        </div>
-      </div>
-
-      <div style="text-align:center;">
-        <a href="3d_printer_brands_v2.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:linear-gradient(135deg,#1a73e8,#0d47a1);color:#fff;text-decoration:none;border-radius:10px;font-size:14px;font-weight:600;transition:all .2s;box-shadow:0 4px 12px rgba(26,115,232,0.3);" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(26,115,232,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 12px rgba(26,115,232,0.3)'">
-          📋 查看完整品牌榜单
-          <span style="font-size:18px;">→</span>
-        </a>
-      </div>
     </div>
   </div>
 
   <div class="footer">
-    Powered by WorkBuddy Automation &nbsp;|&nbsp; <a href="https://github.com/Cruise-Ling/3d-printing-daily">GitHub</a>
+    © 2026 3D打印每日速递 · 基于公开网络资讯整理 · <a href="https://github.com/Cruise-Ling/3d-printing-daily" target="_blank">GitHub</a>
   </div>
 </div>
 
 <script>
-function navTo(el, id) {
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  el.classList.add('active');
-  var target = document.getElementById(id);
-  if (target) target.scrollIntoView({ behavior:'smooth', block:'start' });
-  // 移动端关闭菜单
-  if (window.innerWidth <= 768) toggleSidebar();
+const BRIEFING_DATA = [
+  {date:'2026-07-03',href:'briefing_20260703.html',title:'Vilory T70X钛合金粉末耐700°C：中国高端3D打印粉体获关键突破',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+  {date:'2026-07-02',href:'briefing_20260702.html',title:'拓竹1.41亿元光明拿地，建300万台3D打印机智造总部基地——产能扩大十倍',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+  {date:'2026-07-01',href:'briefing_20260701.html',title:'正雅齿科创业板IPO获受理，拟募资9亿元——3D打印隐形正畸龙头冲刺A股',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+  {date:'2026-06-30',href:'briefing_20260630.html',title:'Rocket Lab以80亿美元收购铱星公司，对标SpaceX——3D打印火…',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+  {date:'2026-06-29',href:'briefing_20260629.html',title:'联泰科技递表港交所主板：工业级3D打印出货量中国第一，冲击港股工业级AM第一股',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+  {date:'2026-06-26',href:'briefing_20260626.html',title:'先临三维推出AccuFab-Aris椅旁牙科打印机：19分钟完成修复体，比笔…',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+  {date:'2026-06-25',href:'briefing_20260625.html',title:'煜鼎增材（王华明院士创办）科创板IPO获受理，拟募资18.02亿元',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+  {date:'2026-06-24',href:'briefing_20260624.html',title:'三绿科技递交创业板IPO申请：年营收12.8亿，拟募资18.3亿扩产可降解耗材',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+  {date:'2026-06-23',href:'briefing_20260623.html',title:'拓竹科技国内累计销量突破100万台，618耗材销量同比增长198%',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+  {date:'2026-06-22',href:'briefing_20260622.html',title:'Foundation Alloy完成2200万美元A轮融资，固态钼合金材料获…',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+  {date:'2026-06-19',href:'briefing_20260619.html',title:'惠通科技新增\"3D打印\"概念，高韧性PLA专用料完成初期验证',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+  {date:'2026-06-18',href:'briefing_20260618.html',title:'纵维立方Anycubic完成数亿元B轮融资，达晨/国泰海通领投',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+  {date:'2026-06-17',href:'briefing_20260617.html',title:'5月3D打印设备产量增长54.4%，国家统计局数据确认行业高景气',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+  {date:'2026-06-16',href:'briefing_20260616.html',title:'多家3D打印企业冲刺IPO：三绿科技/煜鼎增材/摩方精密齐头并进',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+  {date:'2026-06-15',href:'briefing_20260615.html',title:'SpaceX纳斯达克上市：Wall Street最大3D打印巨头登陆资本市场',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+  {date:'2026-06-12',href:'briefing_20260612.html',title:'中国四个月出口246万台3D打印机，同比增44.7%，全球消费级市场占90%',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+  {date:'2026-06-11',href:'briefing_20260611.html',title:'纵维立方获数亿元融资，达晨财智/挑战者创投领投，消费级\"四小龙\"格局稳固',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+  {date:'2026-06-10',href:'briefing_20260610.html',title:'三大风口送钱：AI数据中心/人形机器人/商业航天，3D打印成本砍83%',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+  {date:'2026-06-09',href:'briefing_20260609.html',title:'锐科激光绿光3D打印技术突破：解决AI芯片散热难题，拿下算力时代隐形赛道',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+  {date:'2026-06-08',href:'briefing_20260608.html',title:'央视《新闻联播》近2分钟聚焦：我国3D打印产业进入快速发展新阶段',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+  {date:'2026-06-05',href:'briefing_20260605.html',title:'创想三维IPO领衔亚太3D打印市场双周综述，募资12.7亿港元',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+  {date:'2026-06-04',href:'briefing_20260604.html',title:'比亚迪电子建超40万㎡金属3D打印工厂，入局3C领域',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+  {date:'2026-06-03',href:'briefing_20260603.html',title:'3D打印板块6月2日涨2.25%，宏昌电子领涨，主力资金净流入2.62亿元',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+  {date:'2026-06-02',href:'briefing_20260602.html',title:'拓竹科技(Bambu Lab)6月1日正式发布A2L 3D打印机：330×3…',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+  {date:'2026-06-01',href:'briefing_20260601.html',title:'创想三维(03388.HK)5月29日港交所上市，首日高开80%，市值超15…',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+  {date:'2026-05-29',href:'briefing_20260529.html',title:'创想三维(03388.HK)正式挂牌港交所，公开招股获3829倍认购创纪录；…',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+  {date:'2026-05-28',href:'briefing_20260528.html',title:'央视近6分钟专题报道：中国3D打印产业迎来\"量产转折\"，出口246万台翻倍增长',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+  {date:'2026-05-27',href:'briefing_20260527.html',title:'央视近6分钟专题报道：中国3D打印产业迎来\"量产转折\"，出口246万台翻倍增长',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+  {date:'2026-05-26',href:'briefing_20260526.html',title:'黑格科技完成超3亿元C轮融资，齿科3D打印出海龙头切入桌面全彩造物新赛道',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+  {date:'2026-05-25',href:'briefing_20260525.html',title:'西门子5000万美元战略投资Xometry，AI打通设计到制造全链路',count:0,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+  {date:'2026-05-22',href:'briefing_20260522.html',title:'创想三维港股募资13.8亿港元，认购启动，\"消费级3D打印第一股\"出炉',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+  {date:'2026-05-21',href:'briefing_20260521.html',title:'创想三维5月20日启动招股，募资13.8亿港元，引入泰康人寿等基石投资者',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+  {date:'2026-05-20',href:'briefing_20260520.html',title:'深圳1-4月消费级3D打印机产量爆发，全国2026年预计超700万台',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+  {date:'2026-05-19',href:'briefing_20260519.html',title:'国家统计局：1-4月3D打印设备产量同比增长50.9%，延续高增长态势',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+  {date:'2026-05-18',href:'briefing_20260518.html',title:'Rocket Lab第1000台3D打印卢瑟福火箭发动机下线，仅2个月从80…',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+  {date:'2026-05-17',href:'briefing_20260517.html',title:'✅ A级Mint集团收购Generation 3D，将大幅面3D打印纳入内部…',count:0,sections:7,weekdayCn:'周日',weekdayEn:'Sunday'},
+  {date:'2026-05-16',href:'briefing_20260516.html',title:'✅ A级创想三维PK拓竹：消费级3D打印\"冠军之争\"引发行业热议',count:0,sections:7,weekdayCn:'周六',weekdayEn:'Saturday'},
+  {date:'2026-05-15',href:'briefing_20260515.html',title:'✅ A级多家A股公司加码3D打印赛道，覆盖材料、设备、配套服务全环节',count:0,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+  {date:'2026-05-14',href:'briefing_20260514.html',title:'✅ A级创想三维通过港交所聆讯：31亿营收难掩1.8亿亏损，5月内港股上市',count:0,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+  {date:'2026-05-13',href:'briefing_20260513.html',title:'✅ A级创想三维港股IPO聆讯通过，5月12日正式启动PDIE，预计5月内上市',count:0,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+  {date:'2026-05-12',href:'briefing_20260512.html',title:'⚠️ B级\"消费级3D打印第一股\"真的来了！创想三维港股IPO聆讯通过',count:0,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+  {date:'2026-05-11',href:'briefing_20260511.html',title:'2026年Q1 3D打印融资22起约12亿元，金属打印占64%',count:0,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+  {date:'2026-05-10',href:'briefing_20260510.html',title:'3D打印每日速递',count:0,sections:7,weekdayCn:'周日',weekdayEn:'Sunday'},
+  {date:'2026-05-09',href:'briefing_20260509.html',title:'3D打印每日速递',count:0,sections:7,weekdayCn:'周六',weekdayEn:'Saturday'},
+  {date:'2026-05-08',href:'briefing_20260508.html',title:'3D打印每日速递',count:0,sections:5,weekdayCn:'周五',weekdayEn:'Friday'},
+  {date:'2026-05-07',href:'briefing_20260507.html',title:'3D打印每日速递',count:0,sections:5,weekdayCn:'周四',weekdayEn:'Thursday'},
+  {date:'2026-05-06',href:'briefing_20260506.html',title:'3D打印每日速递',count:0,sections:1,weekdayCn:'周三',weekdayEn:'Wednesday'},
+  {date:'2026-05-05',href:'briefing_20260505.html',title:'3D打印每日速递',count:0,sections:1,weekdayCn:'周二',weekdayEn:'Tuesday'},
+  {date:'2026-05-04',href:'briefing_20260504.html',title:'3D打印每日速递',count:0,sections:1,weekdayCn:'周一',weekdayEn:'Monday'},
+  {date:'2026-05-03',href:'briefing_20260503.html',title:'3D打印每日速递',count:0,sections:1,weekdayCn:'周日',weekdayEn:'Sunday'},
+  {date:'2026-05-02',href:'briefing_20260502.html',title:'3D打印每日速递',count:0,sections:1,weekdayCn:'周六',weekdayEn:'Saturday'},
+  {date:'2026-05-01',href:'briefing_20260501.html',title:'3D打印每日速递',count:0,sections:1,weekdayCn:'周五',weekdayEn:'Friday'}
+];
+const SECTION_COLORS = ['#1a73e8','#e65100','#2e7d32','#bf360c','#00695c','#7b1fa2','#00838f'];
+const MONTHS_CN = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+const MONTHS_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+let currentDate = new Date();
+
+function getBriefingByDate(dateStr) {
+  return BRIEFING_DATA.find(b => b.date === dateStr);
 }
+
+function formatDateStr(y, m, d) {
+  return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+}
+
+function isToday(y, m, d) {
+  const t = new Date();
+  return t.getFullYear() === y && t.getMonth()+1 === m && t.getDate() === d;
+}
+
+function renderCalendar() {
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth() + 1;
+  document.getElementById('calendarMonthYear').textContent = `${year} 年 ${MONTHS_CN[month-1]}`;
+  document.getElementById('calendarMonthEn').textContent = MONTHS_EN[month-1];
+
+  const firstDay = new Date(year, month-1, 1);
+  const lastDay = new Date(year, month, 0);
+  const startWeekday = firstDay.getDay(); // 0=Sun
+  const daysInMonth = lastDay.getDate();
+
+  const grid = document.getElementById('calendarDays');
+  grid.innerHTML = '';
+
+  // Previous month padding
+  const prevMonth = new Date(year, month-1, 0);
+  const prevDays = prevMonth.getDate();
+  for (let i = startWeekday - 1; i >= 0; i--) {
+    const d = prevDays - i;
+    const cell = document.createElement('div');
+    cell.className = 'calendar-day empty';
+    cell.innerHTML = `<div class="day-num">${String(d).padStart(2,'0')}</div>`;
+    grid.appendChild(cell);
+  }
+
+  // Current month days
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = formatDateStr(year, month, d);
+    const b = getBriefingByDate(dateStr);
+    const today = isToday(year, month, d);
+    const cell = document.createElement('div');
+    cell.className = 'calendar-day' + (today ? ' today' : '') + (!b ? ' empty' : '');
+
+    let html = '';
+    if (today) {
+      html += `<div class="today-tag">今天</div>`;
+    }
+    html += `<div class="day-num">${String(d).padStart(2,'0')}</div>`;
+
+    if (b) {
+      const dots = SECTION_COLORS.slice(0, b.sections).map(c => `<span style="background:${c};"></span>`).join('');
+      html += `
+        <a class="day-card" href="${b.href}" title="${b.title}
+${b.count}条资讯 · ${b.sections}分区">
+          <div class="day-card-title">${b.title}</div>
+          <div class="day-card-meta">
+            <span>${b.count}条</span>
+            <span>${b.weekdayCn}</span>
+          </div>
+          <div class="day-card-dots">${dots}</div>
+        </a>
+      `;
+    }
+
+    cell.innerHTML = html;
+    grid.appendChild(cell);
+  }
+
+  // Next month padding to fill 6 rows (42 cells)
+  const totalCells = startWeekday + daysInMonth;
+  const remaining = (42 - totalCells) % 42;
+  for (let d = 1; d <= remaining; d++) {
+    const cell = document.createElement('div');
+    cell.className = 'calendar-day empty';
+    cell.innerHTML = `<div class="day-num">${String(d).padStart(2,'0')}</div>`;
+    grid.appendChild(cell);
+  }
+}
+
+function changeMonth(delta) {
+  currentDate.setMonth(currentDate.getMonth() + delta);
+  renderCalendar();
+}
+
+function switchView(view) {
+  const cal = document.getElementById('calendarView');
+  const list = document.getElementById('listView');
+  const btns = ['listToggleBtn','calendarToggleBtn','listToggleBtn2','calendarToggleBtn2'];
+  btns.forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.classList.remove('active');
+  });
+
+  if (view === 'calendar') {
+    cal.style.display = 'block';
+    list.style.display = 'none';
+    const active = document.getElementById('calendarToggleBtn');
+    const active2 = document.getElementById('calendarToggleBtn2');
+    if (active) active.classList.add('active');
+    if (active2) active2.classList.add('active');
+  } else {
+    cal.style.display = 'none';
+    list.style.display = 'block';
+    const active = document.getElementById('listToggleBtn');
+    const active2 = document.getElementById('listToggleBtn2');
+    if (active) active.classList.add('active');
+    if (active2) active2.classList.add('active');
+  }
+  localStorage.setItem('3dp_index_view', view);
+}
+
+function initView() {
+  const saved = localStorage.getItem('3dp_index_view') || 'calendar';
+  if (window.innerWidth <= 768) {
+    switchView('list');
+  } else {
+    switchView(saved);
+  }
+}
+
+// Mobile sidebar
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('mobileOverlay').classList.toggle('show');
 }
-</script>
 
+// Initialize
+renderCalendar();
+initView();
+window.addEventListener('resize', () => {
+  if (window.innerWidth <= 768) switchView('list');
+});
 <!-- 搜索索引 -->
 <script src="search_index.js"></script>
 <script>
