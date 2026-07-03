@@ -277,7 +277,7 @@ const OVERSEAS_FEEDBACK_DATA = {
   mode: "accumulate",
   maxDays: 30,
   stats: {
-    sentiment: {"非常负面": 22, "负面": 92, "中性": 11, "正面": 0, "非常正面": 0}
+    sentiment: {"非常负面": 23, "负面": 96, "中性": 11, "正面": 0, "非常正面": 0}
   },
   items: [
   
@@ -3902,6 +3902,190 @@ id: "KB-EN-20260608-002",
       summaryCn: "Kobra 3 Max使用500小时后主板故障，售后响应慢，配件难获取，社区有类似报告",
       isP0: true
     }
+            {
+              id: "KB-EN-20260703-001",
+              brand: "Creality",
+              platform: "官网",
+              sourceLink: "https://forum.creality.com/t/2-k2-problems-that-have-been-driving-me-nuts/52249",
+              country: "US",
+              language: "EN",
+              date: "2026-07-03",
+              publishedAt: "2026-07-02",
+              modelName: "K2 Plus",
+              purchaseChannel: "Amazon FBA",
+              purchaseDuration: "6个月内",
+              verified: true,
+              shippingExperience: "好",
+              customs: "未提及",
+              originalText: "Creality K2 Plus user user6053951524 reports over a week of failed prints due to multiple hardware failures. First, Z1/Z2 errors caused by a failing strain gauge. After ordering and replacing the strain gauge, bed leveling failed repeatedly before finally passing a full calibration. However, after the first small test print succeeded, two subsequent attempts at printing a wheelchair cup holder failed with filament stopping mid-print. Upon removing the second clog, the user found the extruder's plastic housing is physically damaged: the slot below the gears has worn down creating an open gap where filament jams, and the plastic has rough broken edges. Photos of the damaged extruder were attached. The user spent over a week troubleshooting without a successful print.",
+              translation: "Creality K2 Plus用户user6053951524报告因多个硬件故障已超过一周无法成功打印。首先，应变片故障导致Z1/Z2错误。在订购并更换应变片后，调平反复失败才最终通过完整校准。然而，第一个小测试打印成功后，两次尝试打印儿子的轮椅杯架都在中途断料。在清理第二次堵头时，用户发现挤出机塑料外壳已物理损坏：齿轮下方的槽磨损形成开口间隙导致耗材卡住，塑料边缘有粗糙断裂。用户附上了损坏挤出机的照片。已花费超过一周时间排查仍未能成功打印。",
+              summaryEn: "Creality K2 Plus strain gauge failure and extruder plastic housing physical damage - Z1/Z2 errors, repeated clogs, over a week of failed prints for wheelchair part",
+              summaryCn: "Creality K2 Plus应变片故障+挤出机塑料外壳物理损坏——Z1/Z2错误、反复堵头、超一周无法打印",
+              sentiment: "非常负面",
+              dimensions: [
+                "硬件性能 - 传感器故障",
+                "硬件性能 - 挤出系统",
+                "售后服务与社区"
+              ],,
+              problemPoints: [
+                "应变片故障",
+                "挤出机塑料外壳磨损",
+                "反复堵头",
+                "超一周无成功打印",
+                "硬件多故障并发"
+              ],,
+              competitorMentioned: "",
+              modsMentioned: "",
+              heat: "Creality社区K2 Plus讨论区，用户附损坏零件照片，多条回复建议",
+              isP0: true,
+            },
+
+            {
+              id: "KB-EN-20260703-002",
+              brand: "Prusa",
+              platform: "官网",
+              sourceLink: "https://forum.prusa3d.com/forum/prusa-core-one-hardware-firmware-and-software-help/bed-not-level-2/",
+              country: "US",
+              language: "EN",
+              date: "2026-07-03",
+              publishedAt: "2026-06-30",
+              modelName: "CORE One",
+              purchaseChannel: "官网直邮",
+              purchaseDuration: "1个月内",
+              verified: true,
+              shippingExperience: "好",
+              customs: "未提及",
+              originalText: "Prusa CORE One user MCraft555 reports persistent bed leveling issues despite completing both Z alignment and the full 49-point leveling procedure. The user printed 5 test rectangles across the build plate: the front ones look fine, but the back right corner has a fuzzy top surface that gets progressively worse toward the corner. The community expert 'hyiger' suspects it may not be a pure bed leveling issue and recommends attaching a USB-C cable to run a PrusaSlicer Bed Mesh calibration (using a custom filament-edition build) to generate a detailed probe map screenshot. The investigation suggests either the bed mesh compensation is not being applied correctly, there is a mechanical issue with the gantry, or the 49-point mesh resolution is insufficient to capture localized high/low spots.",
+              translation: "Prusa CORE One用户MCraft555报告尽管完成了Z对齐和完整的49点调平流程，调平问题仍然存在。用户在打印平台上的5个测试矩形：前几个看起来正常，但后右角出现越来越严重的表面模糊。社区专家hyiger怀疑这可能不完全是调平问题，建议连接USB-C运行PrusaSlicer热床网格校准生成详细探头图截图。调查方向包括：热床网格补偿未正确应用、龙门架存在机械问题、或49点网格分辨率不足以捕捉局部高低点。",
+              summaryEn: "Prusa CORE One 49-point leveling fails to fix back right corner print quality - fuzzy top surface, bed mesh compensation suspected not working, community investigating",
+              summaryCn: "Prusa CORE One 49点调平后仍无法解决后右角打印质量——表面模糊、热床网格补偿可能未生效、社区正在排查",
+              sentiment: "负面",
+              dimensions: [
+                "硬件性能 - 自动调平",
+                "硬件性能 - 打印质量"
+              ],,
+              problemPoints: [
+                "49点调平后仍有死角",
+                "后右角打印表面模糊",
+                "热床网格补偿可能未生效",
+                "疑似龙门架机械公差问题"
+              ],,
+              competitorMentioned: "",
+              modsMentioned: "",
+              heat: "Prusa3D论坛CORE One硬件帮助帖，6月30日发布",
+              isP0: false,
+            },
+
+            {
+              id: "KB-EN-20260703-003",
+              brand: "Prusa",
+              platform: "官网",
+              sourceLink: "https://forum.prusa3d.com/forum/prusa-core-one-general-discussion-announcements-and-releases/filament-swapping-issue/",
+              country: "US",
+              language: "EN",
+              date: "2026-07-03",
+              publishedAt: "2026-07-01",
+              modelName: "CORE One",
+              purchaseChannel: "官网直邮",
+              purchaseDuration: "3个月内",
+              verified: true,
+              shippingExperience: "好",
+              customs: "未提及",
+              originalText: "Prusa CORE One user Mikko swimmer reports a firmware bug when swapping filaments of different temperature requirements. When swapping from a high-temperature filament (e.g. ASA/PETG at 250-260C) to a lower-temperature filament (e.g. PLA at 190-220C), the nozzle jams during the purge cycle. The firmware immediately drops the nozzle temperature to the new filament's range without maintaining enough heat to fully purge the previous material out. The user suggests the firmware should have memory of the old filament's temperature requirements and start the purge at the higher temperature, then gradually cool down as the new filament pushes through. Without this temperature transition logic, the partially-melted high-temp filament residue cools and solidifies inside the nozzle, causing a clog when the lower-temp purge begins.",
+              translation: "Prusa CORE One用户Mikko swimmer报告一个固件Bug：从高温耗材（如ASA/PETG在250-260°C）切换到低温耗材（如PLA在190-220°C）时，喷嘴在清洗过程中堵头。固件立即将喷嘴温度降至新耗材的温度范围，未保持足够高温将前一种耗材完全排出。用户建议固件应该记录旧耗材的温度要求，在高温下完成清洗，然后在新耗材通过时逐渐降温。如果没有这种温度过渡逻辑，部分融化的高温耗材残渣会在喷嘴内冷却凝固，导致低温清洗开始时堵头。",
+              summaryEn: "Prusa CORE One firmware bug: nozzle jams when swapping from high-temp to low-temp filament - firmware drops temp immediately without proper purge sequence, needs temperature transition logic",
+              summaryCn: "Prusa CORE One固件Bug：高低温耗材切换时堵头——固件立即降温未正确清洗，需温度过渡逻辑",
+              sentiment: "负面",
+              dimensions: [
+                "软件与交互 - 固件bug",
+                "硬件性能 - 挤出系统"
+              ],,
+              problemPoints: [
+                "耗材切换时堵头",
+                "固件未做温度过渡",
+                "高温耗材残渣冷却凝固",
+                "需手动干预加热清洗"
+              ],,
+              competitorMentioned: "Bambu Lab AMS",
+              modsMentioned: "",
+              heat: "Prusa3D论坛CORE One综合讨论区，7月1日发布",
+              isP0: false,
+            },
+
+            {
+              id: "KB-EN-20260703-004",
+              brand: "Creality",
+              platform: "官网",
+              sourceLink: "https://forum.creality.com/t/cutter-compatibility/52203",
+              country: "US",
+              language: "EN",
+              date: "2026-07-03",
+              publishedAt: "2026-07-01",
+              modelName: "Creality Hi",
+              purchaseChannel: "官网直邮",
+              purchaseDuration: "6个月内",
+              verified: true,
+              shippingExperience: "好",
+              customs: "未提及",
+              originalText: "A Creality Hi user discovered that the filament cutter blades between the K2 series and Creality Hi are not compatible despite appearing similar. After testing, the K2 cutter positioned and moved correctly, but the Creality Hi cutter would jam in the K2 extruder slot and could not be removed manually. Community responded with a fix: the polarity of the extruder's magnet (not the cutter blade itself) is different between models, causing the magnetic detection to fail. Simply flipping the extruder magnet resolves the compatibility issue. However, this undocumented design difference means users who bought spare cutter blades for one model expecting cross-compatibility face unexpected failures. Another user with 300+ hours on their Creality Hi asked whether cutter replacement is needed at all, noting they had never experienced a clog despite printing PLA Flex on a 0.6 nozzle. The forum thread reveals poor documentation and design consistency between Creality's K2 flagship and Hi series.",
+              translation: "Creality Hi用户发现K2系列和Creality Hi之间的耗材切刀刀片尽管外观相似但不兼容。测试后，K2切刀正确定位并灵活移动，但Creality Hi刀片插入K2挤出机槽后会卡住，无法手动取出。社区找到了解决：挤出机磁铁的极性（不是刀片本身）在不同型号间不同，导致磁性检测失败。只需翻转挤出机磁铁即可解决兼容性问题。但这种未记录的设计差异意味着用户为某型号购买的备用刀片若期望跨型号通用将遇到意外故障。另一使用300+小时的Creality Hi用户询问是否需要在300小时更换刀片，指出他们打印PLA Flex使用0.6喷嘴从未遇到堵头。该论坛帖揭示了Creality K2旗舰和Hi系列之间的文档缺失和设计一致性不足。",
+              summaryEn: "Creality Hi cutter blade incompatible with K2 series - opposite magnet polarity undocumented, users buying spares for wrong model face failures, poor design consistency and documentation",
+              summaryCn: "Creality Hi切刀刀片与K2系列不通用——磁极方向相反无文档说明、用户买错备用刀片致故障、设计一致性和文档缺失",
+              sentiment: "负面",
+              dimensions: [
+                "硬件性能 - 配件质量",
+                "售后服务与社区 - 文档质量"
+              ],,
+              problemPoints: [
+                "切刀刀片跨型号不兼容",
+                "磁铁极性无文档说明",
+                "用户买错刀片导致故障",
+                "设计一致性差"
+              ],,
+              competitorMentioned: "",
+              modsMentioned: "翻转挤出机磁铁",
+              heat: "Creality社区K2 Plus讨论区，7月1日发布，含视频演示",
+              isP0: false,
+            },
+
+            {
+              id: "KB-EN-20260703-005",
+              brand: "Creality",
+              platform: "官网",
+              sourceLink: "https://forum.creality.com/t/k2-plus-y-axis-belt-replacement/52252",
+              country: "US",
+              language: "EN",
+              date: "2026-07-03",
+              publishedAt: "2026-07-02",
+              modelName: "K2 Plus",
+              purchaseChannel: "Amazon FBA",
+              purchaseDuration: "6个月内",
+              verified: true,
+              shippingExperience: "好",
+              customs: "未提及",
+              originalText: "Creality K2 Plus user Bobby_Davis reports that the official video provided for Y-axis belt replacement is incomplete. The video shows the general replacement process but does not cover how the belt is attached to the print head assembly using pins. The user is unable to figure out how to properly tension and install the belt with the pin-based retention mechanism. The user explicitly asks Creality to provide a more detailed video or guide specifically showing how to attach the belt to the print head assembly, how to properly tension it, and what the correct belt path looks like. This lack of clear maintenance documentation is a recurring complaint about Creality's flagship K2 Plus - users who want to perform their own belt maintenance are left guessing at critical steps.",
+              translation: "Creality K2 Plus用户Bobby_Davis报告官方提供的Y轴皮带更换视频不完整。视频展示了一般的更换流程，但未涉及如何使用销将皮带固定在打印头组件上。用户无法确定如何正确张紧和安装使用销式固定机构的皮带。用户明确要求Creality提供更详细的视频或指南，专门展示如何将皮带连接到打印头组件、如何正确张紧以及正确的皮带路径。缺乏清晰的维护文档是Creality旗舰K2 Plus的反复投诉——希望自行进行皮带维护的用户在关键步骤上只能靠猜测。",
+              summaryEn: "Creality K2 Plus Y-axis belt replacement video incomplete - pin attachment mechanism undocumented, users cannot figure out proper tensioning and routing, recurring maintenance documentation issue",
+              summaryCn: "Creality K2 Plus Y轴皮带更换视频不完整——销式固定机构无说明、用户无法正确张紧和布线、维护文档缺失成常态",
+              sentiment: "负面",
+              dimensions: [
+                "售后服务与社区 - 文档质量",
+                "日常使用体验 - 维护"
+              ],,
+              problemPoints: [
+                "皮带更换视频不完整",
+                "销式固定机构无说明",
+                "无法正确张紧布线",
+                "维护文档缺失",
+                "用户需自行摸索"
+              ],,
+              competitorMentioned: "Bambu Lab P2S",
+              modsMentioned: "",
+              heat: "Creality社区K2 Plus讨论区，7月2日发布，用户请求官方更新教程",
+              isP0: false,
+            },
+
+
 ]
 };
 
