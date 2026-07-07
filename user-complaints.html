@@ -273,7 +273,14 @@ a:hover{color:#93bbfd;text-decoration:underline}
 </div>
 
 <script>
-const OVERSEAS_FEEDBACK_DATA = {
+{
+  mode: "accumulate",
+  maxDays: 30,
+  stats: {
+    sentiment: {"非常负面": 2, "负面": 6, "中性": 2, "正面": 0, "非常正面": 0}
+  },
+  ]
+};const OVERSEAS_FEEDBACK_DATA = {
   mode: "accumulate",
   maxDays: 30,
   stats: {
