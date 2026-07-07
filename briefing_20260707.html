@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D打印行业每日资讯 - 2026年7月7日</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖨️</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f0f2f5;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;display:flex;justify-content:center;padding:12px 0}
+.card{width:375px;background:#fff;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.06);overflow:clip}
+.header{background:linear-gradient(135deg,#1a237e,#283593,#3949ab);padding:24px 20px 18px;color:#fff;position:relative}
+.header-back{position:absolute;left:16px;top:28px;transform:translateY(-50%);display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.95);font-size:14px;font-weight:600;text-decoration:none;padding:7px 16px 7px 3px;border-radius:20px;border:1.5px solid rgba(255,255,255,.35)}
+.header-back:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.6)}
+.header h1{font-size:19px;font-weight:700;letter-spacing:1px;margin-bottom:6px;padding-left:90px}
+.header .date{font-size:13px;opacity:.85;font-weight:400}
+.header .source-note{font-size:11px;opacity:.7;margin-top:4px}
+.stats-bar{display:flex;gap:8px;flex-wrap:wrap;padding:14px 20px;background:#fafbff;border-bottom:1px solid #f0f0f0}
+.stats-pill{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;color:#555;background:#f0f4ff;border-radius:20px;padding:5px 11px;border:1px solid #e8edff}
+.stats-pill b{color:#1a73e8;font-weight:700}
+.stats-pill.warn{background:#fff8e1;border-color:#ffe082}
+.stats-pill.warn b{color:#e65100}
+.section-title{display:flex;align-items:center;padding:18px 20px 12px;font-size:16px;font-weight:800;color:#0d47a1;background:linear-gradient(90deg,rgba(26,115,232,.08),transparent);border-bottom:2px solid #1a73e8}
+.section-title .icon{width:4px;height:16px;border-radius:2px;margin-right:8px}
+.section-title.general .icon{background:linear-gradient(180deg,#42a5f5,#1e88e5)}
+.section-title.specific .icon{background:linear-gradient(180deg,#ffa726,#fb8c00)}
+.section-title.consumer .icon{background:linear-gradient(180deg,#66bb6a,#43a047)}
+.section-title.global .icon{background:linear-gradient(180deg,#ab47bc,#7b1fa2)}
+.section-title.feedback .icon{background:linear-gradient(180deg,#26c6da,#00838f)}
+.section-title.niche .icon{background:linear-gradient(180deg,#e64a19,#d84315)}
+.section-title.scenario .icon{background:linear-gradient(180deg,#00796b,#00695c)}
+.item{padding:12px 20px 14px;border-bottom:1px solid #f5f5f5}
+.item:last-child{border-bottom:none}
+.item-head{display:flex;align-items:flex-start;margin-bottom:6px}
+.num-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;flex-shrink:0;margin-right:10px;margin-top:1px}
+.general-zone .num-dot{background:linear-gradient(135deg,#42a5f5,#1e88e5)}
+.specific-zone .num-dot{background:linear-gradient(135deg,#ffa726,#fb8c00)}
+.consumer-zone .num-dot{background:linear-gradient(135deg,#66bb6a,#43a047)}
+.global-zone .num-dot{background:linear-gradient(135deg,#ab47bc,#7b1fa2)}
+.feedback-zone .num-dot{background:linear-gradient(180deg,#26c6da,#00838f)}
+.niche-zone .num-dot{background:linear-gradient(135deg,#e64a19,#d84315)}
+.scenario-zone .num-dot{background:linear-gradient(180deg,#00796b,#00695c)}
+.item-title{font-size:14.5px;font-weight:600;line-height:1.45;color:#212121;flex:1}
+.item-title a{color:#212121;text-decoration:none}
+.item-title a:hover{color:#1a73e8}
+.item-summary{font-size:12.8px;line-height:1.7;color:#616161;padding-left:32px;word-break:break-all}
+.item-source{font-size:11px;color:#9e9e9e;padding-left:32px;margin-top:4px}
+.item-source a{color:#1e88e5;text-decoration:none}
+.item-source a:hover{text-decoration:underline}
+.from-tag{font-size:10px;padding:1px 6px;border-radius:6px;margin-left:6px;opacity:.75}
+.from-qq{background:#fce4ec;color:#880e4f}
+.from-sina{background:#fff3e0;color:#e65100}
+.from-163{background:#e8f5e9;color:#2e7d32}
+.from-msn{background:#e3f2fd;color:#1565c0}
+.from-baijiahao{background:#fff8e1;color:#f57f17}
+.from-sohu{background:#fff3e0;color:#bf360c}
+.from-36kr{background:#e8eaf6;color:#283593}
+.from-bilibili{background:#fce4ec;color:#c62828}
+.from-3dprint{background:#e0f7fa;color:#006064}
+.from-3dprinting{background:#e0f7fa;color:#006064}
+.from-3druck{background:#e8eaf6;color:#283593}
+.from-dayinpai{background:#e8f5e9;color:#1b5e20}
+.from-cgtn{background:#e3f2fd;color:#0d47a1}
+.from-xinhua{background:#ffebee;color:#b71c1c}
+.from-cnstock{background:#fff3e0;color:#e65100}
+.from-eastmoney{background:#fff3e0;color:#bf360c}
+.from-ithome{background:#e3f2fd;color:#1565c0}
+.from-cctv{background:#ffebee;color:#b71c1c}
+.from-csdn{background:#e8eaf6;color:#1a237e}
+.from-other{background:#eceff1;color:#37474f}
+.from-zaker{background:#fff3e0;color:#e65100}
+.from-21jingji{background:#e3f2fd;color:#0d47a1}
+.from-nanjixiong{background:#e8f5e9;color:#1b5e20}
+.from-tencent{background:#e3f2fd;color:#0d47a1}
+.from-10jqka{background:#fff3e0;color:#e65100}
+.side-nav{position:fixed;left:max(0px,calc((100vw - 375px)/2 - 90px));top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;z-index:200}
+.side-nav-item{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;font-size:12px;color:#555;background:rgba(255,255,255,.95);box-shadow:0 1px 6px rgba(0,0,0,.08);cursor:pointer;transition:all .2s;text-decoration:none;white-space:nowrap;border:1px solid rgba(0,0,0,.06)}
+.side-nav-item:hover{box-shadow:0 2px 12px rgba(0,0,0,.15);transform:translateX(-2px)}
+.side-nav-item .nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.score-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:8px;margin-left:6px;font-weight:600}
+.score-badge-a{background:#e8f5e9;color:#2e7d32}
+.hot-summary{padding:14px 20px;background:linear-gradient(135deg,#fff8e1,#fff3e0);border-bottom:1px solid #ffe082}
+.hot-summary h3{font-size:14px;font-weight:700;color:#e65100;margin-bottom:8px}
+.hot-summary ul{list-style:none;padding:0}
+.hot-summary li{font-size:12.5px;color:#5d4037;padding:3px 0;padding-left:16px;position:relative;line-height:1.5}
+.hot-summary li::before{content:"";position:absolute;left:0;top:10px;width:6px;height:6px;border-radius:50%;background:#ff9800}
+.footer{padding:16px 20px;background:#f8f9fa;text-align:center;font-size:11px;color:#9e9e9e;border-top:1px solid #f0f0f0}
+.footer a{color:#1e88e5;text-decoration:none}
+@media(max-width:767px){.side-nav{position:fixed;left:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;padding-left:4px;z-index:200}.side-nav .side-nav-item{padding:5px 8px;font-size:11px;border-radius:16px;box-shadow:0 1px 6px rgba(0,0,0,.1)}.card{margin-left:52px;width:calc(100vw - 60px);max-width:375px}body{justify-content:flex-start;padding:12px 0 12px 4px}}
+@media(min-width:768px){.section-nav{display:none}.side-nav{left:max(0px,calc((100vw - 375px)/2 - 90px))}}
+</style>
+</head>
+<body>
+<nav class="side-nav" id="sideNav">
+  <a class="side-nav-item" href="index.html"><span class="nav-dot" style="background:#1a237e"></span>首页</a>
+  <a class="side-nav-item" onclick="scrollToSection('general')"><span class="nav-dot" style="background:#1a73e8"></span>泛行业</a>
+  <a class="side-nav-item" onclick="scrollToSection('specific')"><span class="nav-dot" style="background:#e65100"></span>细分领域</a>
+  <a class="side-nav-item" onclick="scrollToSection('consumer')"><span class="nav-dot" style="background:#2e7d32"></span>消费级</a>
+  <a class="side-nav-item" onclick="scrollToSection('niche')"><span class="nav-dot" style="background:#d84315"></span>细分市场</a>
+  <a class="side-nav-item" onclick="scrollToSection('scenario')"><span class="nav-dot" style="background:#00695c"></span>场景打印</a>
+  <a class="side-nav-item" onclick="scrollToSection('global')"><span class="nav-dot" style="background:#7b1fa2"></span>海外资讯</a>
+  <a class="side-nav-item" onclick="scrollToSection('feedback')"><span class="nav-dot" style="background:#00838f"></span>用户口碑</a>
+</nav>
+<div class="card">
+
+<div class="header">
+  <a class="header-back" href="index.html">← 首页</a>
+  <h1>3D打印行业每日资讯</h1>
+  <div class="date">2026年7月7日 · 星期二</div>
+  <div class="source-note">内容来源：3DPrint.com / 3Dnatives / 南极熊 / 百家号 / IT之家 / CCTV等</div>
+</div>
+
+<div class="stats-bar">
+  <span class="stats-pill">资讯 <b>35</b> 条</span>
+  <span class="stats-pill">分区 <b>7</b> 大</span>
+  <span class="stats-pill warn">内容日期 <b>7月6日（周一）</b></span>
+</div>
+
+<div class="hot-summary">
+  <h3>🔥 今日热点速递</h3>
+  <ul>
+    <li>拓竹科技1.412亿深圳光明拿地：拟建全球最大3D打印智造基地，年产能超300万台</li>
+    <li>煜鼎增材科创板IPO已问询：院士创办，拟募资18.02亿元加码DED+SLM扩产</li>
+    <li>NNSA展示Aires Tide：AI设计+3D打印飞行器仅5个月完成，成本降至1/15</li>
+    <li>南极熊：ENTINA等7大品牌消费级打印机横评，入门级赛道竞争白热化</li>
+    <li>CCTV报道中国月球土壤3D打印：太阳能做能源、月壤做原料的创新突破</li>
+  </ul>
+</div><div class="section-title general" id="general">
+  <span class="icon"></span>泛行业资讯（工业/资本/政策）
+</div>
+<div class="general-zone">
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://baijiahao.baidu.com/s?id=1869946971191194785&wfr=spider&for=pc" target="_blank">🔥 拓竹科技1.412亿深圳光明拿地：拟建全球最大3D打印智造总部基地，年产能超300万台</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">IT之家/百家号7月6日报道，深圳竹鹤科技有限公司（拓竹科技全资子公司）以1.412亿元竞得光明区玉塘街道A609-0275宗地。地块面积约8.37万平方米（约125亩），总建面约37.6万平方米，拟建"3D打印智造总部基地项目"，规划建设高标准生产厂房（占比75.3%）、配套办公及生活设施，重点布局3D打印核心零部件研发生产、材料试产及整机制造，计划年产能超300万台，有望成为全球规模最大的3D打印制造中心之一。3月光明区商务局已发布遴选方案，2月25日拓竹与光明区政府签署战略合作框架协议。这是拓竹自2020年成立以来最大的制造基地投资——当消费级龙头从租赁厂房走向自建超级工厂，行业产能竞赛的序幕已经拉开。</div>
+  <div class="item-source">来源：<a href="https://baijiahao.baidu.com/s?id=1869946971191194785&wfr=spider&for=pc" target="_blank">IT之家/百家号</a><span class="from-tag from-baijiahao">百家号</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-181032-1-1.html" target="_blank">🏭 煜鼎增材科创板IPO状态已问询：王华明院士创办，拟募资18.02亿元加码金属DED+SLM扩产</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊7月6日报道，北京煜鼎增材制造研究院科创板IPO状态由"已受理"更新为"已问询"。公司由中国工程院王华明院士核心技术团队于2014年在雄安创立，是国内大型金属DED（定向能量沉积）3D打印龙头，同时布局SLM工艺。本次拟募资18.02亿元，其中4.4亿用于航空航天钛合金构件激光熔化沉积扩产、4亿用于粉末床熔融扩产、3.6亿用于超大规格材料熔化沉积产业化、4亿用于分析测试中心与总部基地。招股书显示公司近年营收增长有所停滞、盈利依附政府补贴，客户集中度较高——专家学者的创业公司在走向规模化过程中面临"技术强"到"商业强"的转型挑战。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-181032-1-1.html" target="_blank">南极熊</a><span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-181034-1-1.html" target="_blank">📊 繁昌发布增材制造产业新政：剑指百亿规模，打造华东3D打印产业新高地</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊7月6日报道，安徽省芜湖市繁昌区发布增材制造产业新政，明确提出剑指百亿规模，打造华东3D打印产业新高地。繁昌已是国内重要的3D打印产业集群之一，三绿科技4万吨可降解FDM耗材基地已于7月初在繁昌奠基。新政从产业培育、技术创新、人才引进、金融支持等多个维度推出系统性措施，旨在加速区域3D打印产业链集聚。当地方政府从"欢迎落户"升级到"系统性产业规划"时，3D打印的区域竞争正在从单个企业争夺走向产业链集群的全面较量——繁昌的对手是深圳光明、西安高新和马鞍山等同样在布局AM产业的区域。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-181034-1-1.html" target="_blank">南极熊</a><span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-181033-1-1.html" target="_blank">📋 16款增材制造装备入选2026年度工业母机创新产品典型案例名单</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊7月6日报道，工业和信息化部发布2026年度工业母机创新产品典型案例名单，16款增材制造装备入选。工业母机是"制器之器"，增材制造装备的入选意味着国家层面对3D打印从"一般性制造技术"升级到"基础制造能力"的重新定位。入选产品涵盖金属SLM、DED、粘结剂喷射、光固化等多技术路线，覆盖航空航天、医疗、模具等应用领域。在"中国制造2025"进入收官阶段的后半程，增材制造被纳入工业母机序列意味着更大的政策支持和更严格的行业标准——从"可以做"到"必须做好"的转变。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-181033-1-1.html" target="_blank">南极熊</a><span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/328004/ampulse-asia-chinese-ipos-defense-deals-and-dental-3d-printing-lead-apac-roundup/" target="_blank">📈 AMPulse Asia：中国3D打印IPO潮+国防交易+齿科3D打印领跑亚太6月动态</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 7月6日发布亚太AM动态汇总：中国煜鼎增材科创板IPO（18亿RMB）、锐力斯Runice获约1200万欧元融资扩产打印头核心零部件、思创激光推出1000W超薄光纤激光器（抗反射技术可加工铜/铝等高反材料）、先临三维推出Ceramix-Nano椅旁陶瓷3D打印机（30分钟扫描到粘接）。韩国Holosmedic生物降解3D打印骨修复网获越南卫生部批准，韩国VF Space获Pre-A轮推进线材激光AM商业化，PTC Industries获批18亿卢比融资扩产航空金属。亚太区AM活动从IPO到跨境交易全面活跃，其中中国的资本化进程尤为引人注目。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/328004/ampulse-asia-chinese-ipos-defense-deals-and-dental-3d-printing-lead-apac-roundup/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+</div><div class="section-title specific" id="specific">
+  <span class="icon"></span>细分领域动态（医疗/航天/材料）
+</div>
+<div class="specific-zone">
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://www.3dnatives.com/en/aires-tide-06072026/" target="_blank">🚀 NNSA Aires Tide：AI设计+3D打印飞行试验器仅5个月完成，成本降至传统1/15</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3Dnatives 7月6日报道，美国国家核安全局（NNSA）成功展示Genesis Mission的首个实物产出——Aires Tide。这款AI设计、3D打印的飞行试验器从2025年10月到2026年3月仅用5个月即完成设计、制造和测试（传统需约2年）。机身由金属3D打印巨头Velo3D的Sapphire XC打印机以Inconel材料打印为7个嵌套件，在不到6天内完成全部制造。项目使用了NNSA的Venado和El Capitan两台AI超级计算机优化内部结构和热管理。最终原型11英尺高，5月在犹他州Dugway试验场从32,000英尺高空成功投放测试，第2次飞行也获成功。NNSA署长Brandon Williams称这是"AI+高性能计算+增材制造结合的新范式"。</div>
+  <div class="item-source">来源：<a href="https://www.3dnatives.com/en/aires-tide-06072026/" target="_blank">3Dnatives</a><span class="from-tag from-3dprint">3Dnatives</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-181037-1-1.html" target="_blank">🌙 CCTV报道：中国月球土壤3D打印机突破——以月壤为原料、太阳能为能源，在月面"就地取材"</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊7月6日转引CCTV报道，中国在月球土壤3D打印技术方面取得重要突破。科研团队成功开发出以月球土壤模拟物为原料、以太阳能为主要能源的3D打印系统，实现了在月面"就地取材"制造建筑构件和工具的原型验证。这一技术突破对中国的载人登月和月面基地建设规划具有战略意义——传统从地球运输建材到月球的成本高达每公斤数万美元，月壤3D打印可大幅降低月球基地建设的后勤负担。目前全球月壤3D打印研究主要集中在模拟月壤烧结/熔化成型路线，中国团队的太阳能直驱方案在能耗效率上具备独特优势。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-181037-1-1.html" target="_blank">南极熊/CCTV</a><span class="from-tag from-cctv">CCTV</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-181038-1-1.html" target="_blank">🔬 ARCI实现不锈钢与因科镍合金3D打印融合：界面强度超越本体材料</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊7月6日报道，印度ARCI（国际先进研究中心）通过3D打印技术成功将不锈钢与因科镍（Inconel）合金融合，界面强度超越本体材料。传统制造中，异种金属焊接往往受限于热影响区脆化和界面弱化——3D打印的快速熔凝特性为异种金属结合提供了全新的工艺窗口。这一研究突破对航空航天、核电、化工等需要异种金属连接的应用场景有重要意义：当一台零件中不同部位暴露于不同温度/腐蚀环境时，通过3D打印一体成型异种金属组合件可大幅提升设计自由度和服役寿命。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-181038-1-1.html" target="_blank">南极熊</a><span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-181039-1-1.html" target="_blank">🧪 山特维克推出Osprey GRCop-42铜铬铌合金粉末：专攻航天推进系统高温3D打印</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊7月6日报道，瑞典工业技术集团山特维克（Sandvik）旗下Osprey品牌推出GRCop-42铜铬铌合金粉末，专用于航天推进部件的增材制造。该材料由NASA GRCop系列开发，在高温下的导热性能和机械强度表现优异，广泛用于液体火箭发动机燃烧室内衬和喷嘴等高温部件。山特维克的气雾化制粉工艺确保粉末球形度高、氧含量低、流动性好，适用于LPBF工艺。在商业航天运载需求持续增长的背景下，高性能铜合金粉末的供应能力直接决定火箭发动机3D打印的规模化进度——山特维克正在抢占这一关键材料生态位。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-181039-1-1.html" target="_blank">南极熊</a><span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-181031-1-1.html" target="_blank">⚙️ 尼康与博世联合3D打印一体化铝合金V8发动机缸体：全面展示工业级金属AM能力</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊7月6日报道，尼康（Nikon）与博世（Bosch）联合展示了通过3D打印一体化成型的铝合金V8发动机缸体。这款V8缸体采用铝合金材料通过LPBF工艺打印，展示了工业级金属AM在大型复杂结构件制造方面的最新能力。尼康旗下拥有SLM Solutions等金属AM设备品牌，博世则是全球最大的汽车零部件供应商之一，两家巨头的联合打印示范表明：金属3D打印在汽车动力总成领域的应用正在从"打印单个备件"走向"打印复杂总成"。一体化成型省去了传统铸造所需的模具和后续焊接工序，对于小批量、高性能发动机的研发和生产具有显著的经济性优势。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-181031-1-1.html" target="_blank">南极熊</a><span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+</div><div class="section-title consumer" id="consumer">
+  <span class="icon"></span>消费级赛道（品牌/模型/生态）
+</div>
+<div class="consumer-zone">
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-181040-1-1.html" target="_blank">🚲 Elastic Interface推出无泡沫3D打印自行车骑行垫AURA N3X FL：FDM弹性体完全替代PU泡沫</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊7月6日报道，意大利自行车零部件品牌Elastic Interface在慕尼黑Performance Days活动上推出AURA N3X FL——业界首款完全不使用聚氨酯（PU）泡沫或层压层的3D打印骑行衬垫。该骑行垫通过FDM技术以柔性弹性体材料打印，通过晶格结构设计实现分区缓冲，可根据骑行姿势和压力分布定制不同区域的硬度和回弹特性。传统PU泡沫骑行垫的使用寿命受制于泡沫老化（通常6-12个月开始塌陷），而3D打印弹性体晶格在抗疲劳性和长期回弹性方面更具优势。这是功能性服装/配件领域"去泡沫化"趋势的最新案例——3D打印正在从鞋垫、头盔内衬渗透到专业运动装备的更多细分品类。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-181040-1-1.html" target="_blank">南极熊</a><span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="http://www.lpnh.cn/news/540521" target="_blank">🆕 ENTINA vs 拓竹 vs 创想三维等7大品牌2026入门级横评：消费级3D打印机"家电化"趋势全面加速</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">lpnh.cn 7月6日发布2026年7款主流消费级3D打印机横评。ENTINA、拓竹、创想三维、纵维立方、ELEGOO、智能派、快造科技Snapmaker等7大品牌新品对比评测显示：2026年的消费级3D打印已从"极客专属"进化到"家庭创意工具"。评测指出，对于绝大多数新手和家庭用户而言，易上手、高稳定、低成本是最核心的需求——而非极致速度或复杂功能。ENTINA以极具竞争力的价格切入市场，拓竹以生态完善度领先，创想三维以机型多样化覆盖多价位段。社区对"500美元以下"入门级市场的关注持续升温，2026年下半年消费级市场将围绕"谁先打开家庭市场"展开新一轮激烈竞争。</div>
+  <div class="item-source">来源：<a href="http://www.lpnh.cn/news/540521" target="_blank">lpnh.cn</a><span class="from-tag from-other">评测平台</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/328190/mimaki-cleeks-golf-club-collaborate-for-miniature-3d-printed-golf-bag-collectibles/" target="_blank">🎨 Mimaki x Cleeks Golf Club：全彩3D打印迷你高尔夫球包收藏品，14种设计各限量25件</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 7月5日报道，Mimaki USA与Cleeks Golf Club（LIV Golf联赛球队）合作推出全彩3D打印迷你高尔夫球包收藏品系列。14位艺术家为14站LIV Golf赛事各设计一款球包，每个设计仅限量25件（共350件），使用Mimaki 3DUJ-553全彩打印机一体成型，无需组装或手工上色——可还原超过1000万种颜色。传统制造方式需简化颜色、手工涂装，而3D打印使复杂色彩和精细纹理得以保留。收藏品售价面向高端球迷市场，半米尺寸的展示模型放在各站俱乐部会所。当职业体育IP开始拥抱3D打印作为赛事纪念品的核心制造方式，消费级3D打印的"收藏品经济"正在打开一个全新的B2C市场。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/328190/mimaki-cleeks-golf-club-collaborate-for-miniature-3d-printed-golf-bag-collectibles/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-181030-1-1.html" target="_blank">🏗️ BigRep十年深耕解锁自动化、高强度、高产能工业3D打印方案：从德国车库到全球工业品牌</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊7月6日报道，德国工业FDM巨头BigRep庆祝十年发展，系统展示了其在大尺寸FDM领域的自动化、高强度、高产能方案。BigRep的NX Pro和One系列以大幅面打印和工程级耗材（PEEK/PEKK/ULTEM等高性能材料兼容）著称。不同于消费级FDM追求速度，BigRep聚焦工装夹具、原型件和小批量生产——其打印机搭载高流量挤出系统、主动加热腔室和自动化辅助系统。十年来，BigRep从柏林的一个初创团队成长为全球部署数百台工业FDM设备的品牌。在消费级FDM行业疯狂卷价格的同时，工业级FDM正在通过材料升级和工艺自动化巩固其在小批量生产中的不可替代性。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-181030-1-1.html" target="_blank">南极熊</a><span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-181029-1-1.html" target="_blank">🎪 3D打印在2026年环法自行车赛开幕式全面亮相：车架、骑行鞋、头盔等全场景展示</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊7月6日报道，3D打印技术在2026年环法自行车赛（Tour de France）开幕式上全面亮相。从3D打印自行车车架部件、定制化骑行鞋、空气动力学头盔到车队后勤工具，增材制造在职业自行车赛事中的渗透正从"单点实验"走向"系统化应用"。职业自行车对轻量化、刚性和空气动力学有着极致追求——3D打印的复杂晶格结构和拓扑优化设计恰好契合这些需求。环法作为全球最具影响力的自行车赛事，为3D打印运动装备提供了最高级别展示舞台。结合Elastic Interface的3D打印骑行垫，7月6日可以说是"3D打印+自行车"的全场景展示日。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-181029-1-1.html" target="_blank">南极熊</a><span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+</div><div class="section-title niche" id="niche">
+  <span class="icon"></span>细分市场 Niche（价格段/应用场景/区域市场）
+</div>
+<div class="niche-zone">
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/328275/3d-printed-diving-suit-lets-cyborg-cockroaches-swim-underwater/" target="_blank">🪳 3D打印潜水服让蟑螂水下存活3小时：南洋理工&早稻田仿生机器人登上Nature Communications</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 7月6日报道，新加坡南洋理工大学（NTU）与日本早稻田大学联合团队在《Nature Communications》发表研究：利用3D打印微型潜水服将赛博格蟑螂转化为两栖机器人。潜水服的核心是10×10mm的微型氧气生成罐（3D打印PMMA光敏树脂），通过电化学反应持续供氧，使蟑螂在水下存活时间从几分钟延长至3小时。研究团队使用3D打印制作了微型气孔连接件和柔性防水壳，在鱼缸和3D打印管道障碍物中验证了水下运动能力。这项研究可用于灾后搜救——在暴雨或洪水淹没的废墟中，蟑螂的攀爬能力+3D打印的两栖装备使其可进入传统机器人无法到达的区域。当生物界最强的生存专家遇上3D打印的精密工程，仿生机器人的能力边界正在被重新定义。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/328275/3d-printed-diving-suit-lets-cyborg-cockroaches-swim-underwater/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-181029-1-1.html" target="_blank">🎪 3D打印环法自行车赛全场景应用深度解析：从车架到骑行鞋的竞技级增材制造</a>
+      <span class="score-badge badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">环法自行车赛开幕式上展示的3D打印装备覆盖了竞技自行车的几乎全部品类：3D打印钛合金车架接头（减重30%+增加设计复杂度）、定制化骑行鞋（足部扫描→晶格结构精准缓冲）、空气动力学头盔（拓扑优化内部通风通道+外部形状）。职业车队对装备的要求极为苛刻：每一克重量和每一秒风阻都影响最终成绩。3D打印在职业体育中的渗透遵循一个清晰的逻辑：不在乎成本、要求极致性能、需要快速迭代——这正是增材制造相比传统工艺的核心优势区间。当环法的顶级车队都开始标配3D打印部件，其他运动领域的跟随只是时间问题。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-181029-1-1.html" target="_blank">南极熊</a><span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-181031-1-1.html" target="_blank">⚙️ 尼康×博世V8铝合金发动机缸体：汽车动力总成3D打印的"成人礼"</a>
+      <span class="score-badge badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">尼康与博世联合展示的一体化成形铝合金V8发动机缸体对于汽车AM市场具有里程碑意义。传统V8缸体需要复杂的砂型铸造工艺和大量机加工，模具成本动辄数百万美元。3D打印的一体化方案免去了模具，允许在缸体内部集成传统铸造无法实现的复杂冷却通道和加强筋结构，优化热管理和结构刚性。虽然量产车型仍采用铸造成本更低，但对于高性能/限量版车型、赛车发动机和研发原型来说，3D打印提供了前所未有的设计自由度。尼康+博世的组合本身就是行业信号：设备制造商和零部件巨头在联手探索AM的汽车量产出口。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-181031-1-1.html" target="_blank">南极熊</a><span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/328008/amcrc-to-give-3-25-to-sme-3d-printing-in-australia/" target="_blank">🇦🇺 AMCRC设立STARTER计划：325万澳元资助中小企业采用3D打印，每家匹配2-7.5万澳元</a>
+      <span class="score-badge badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com 7月6日报道，澳大利亚AM合作研究中心（AMCRC）宣布启动STARTER项目资助计划，提供325万澳元资助中小企业采用增材制造。该计划采用1:1匹配资助模式，每家企业可获2万-7.5万澳元，项目周期3-12个月，聚焦原型制造和终端零件生产。AMCRC管理总监Simon Marriott表示："许多中小企业认识到增材制造的潜力，但不知道从何开始。"3DPrint.com主编Joris Peels分析认为，偏远的地理位置和中等的市场规模使得3D打印在澳大利亚的价值远超其他国家——备件运输时间长、小批量需求多，这些恰恰是AM的优势区间。预计可资助42-162家企业，带动澳大利亚在AM领域额外投入650万澳元。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/328008/amcrc-to-give-3-25-to-sme-3d-printing-in-australia/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-181036-1-1.html" target="_blank">🎓 全国3D打印企业暑期实习启动：行业人才紧缺催生校企联动新范式</a>
+      <span class="score-badge badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">南极熊7月6日发布全国3D打印企业暑期实习通知，联动多所高校和企业为大学生提供暑期实践机会。在行业人才大紧缺的背景下（上周南极熊专题报道），3D打印企业正从"被动等简历"转向"主动培养人才"。实习覆盖设备操作、材料研发、软件算法、后处理工艺和服务等多个方向。教育链的断层正在经历从"无人在意"到"全行业行动"的转变——实习项目虽然无法一夜解决人才短缺，但至少表明行业已经开始系统性地搭建产教融合通道。对于在校学生而言，2026年的3D打印行业可能是最有"入行窗口期"的制造赛道之一。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-181036-1-1.html" target="_blank">南极熊</a><span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+</div><div class="section-title scenario" id="scenario">
+  <span class="icon"></span>场景×3D打印 Scenario（教育/文创/家居/食品）
+</div>
+<div class="scenario-zone">
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://www.3dnatives.com/en/aires-tide-06072026/" target="_blank">🏛️ NNSA Aires Tide登华盛顿国家广场：AI+超级计算+3D打印的国防制造新范式首次公开展示</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">NNSA Aires Tide作为美国"Genesis Mission"首个实物产出，在华盛顿国家广场的Great American State Fair上公开展示——与250周年庆典并列，彰显AI+AM作为国家战略技术的定位。从产业场景角度看，Aires Tide验证了一个"三位一体"的新范式：(1) AI超级计算机（Venado+El Capitan）优化设计——将数周的仿真压缩到数小时；(2) 3D打印（Velo3D Sapphire XC）快速制造——7个Inconel嵌套件6天内完成、13个激光头协同熔覆；(3) 验证飞行——5月32,000英尺高空两次成功投放。NNSA副实验室主任Deborah Frincke表示："我们在数周内生产原型，成本是传统方法的1/15——这种敏捷性对应对不断演变的安全挑战至关重要。"当"AI设计+3D打印制造"的组合被国家安全的最高层级验证并推广，这意味着AM从"有用的工具"升级为"国家基础设施"。</div>
+  <div class="item-source">来源：<a href="https://www.3dnatives.com/en/aires-tide-06072026/" target="_blank">3Dnatives</a><span class="from-tag from-3dprint">3Dnatives</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/328008/amcrc-to-give-3-25-to-sme-3d-printing-in-australia/" target="_blank">🌊 AMCRC STARTER：澳大利亚为何是最适合3D打印推广的发达国家？</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">AMCRC的STARTER计划背后有一个有趣的产业经济学逻辑：澳大利亚可能是发达国家中最适合推广3D打印的地区。原因有三：(1) 地理隔离——备件运输周期长、成本高，AM按需制造可以大幅缩短停机等待时间；(2) 市场体量适中——大型制造商不愿在澳设厂供应小批量需求，进口溢价严重，3D打印恰好填补中低批量空白；(3) 中小企业灵活决策——创始人的执行力可将AM快速融入主营业务。3DPrint.com分析指出，加拿大和巴西等同样具备"地域广阔+市场适度"特征的国家也应参考澳大利亚模式。从更广的视角看，STARTER计划为全球其他国家提供了一个可复制的政策范本。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/328008/amcrc-to-give-3-25-to-sme-3d-printing-in-australia/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/328190/mimaki-cleeks-golf-club-collaborate-for-miniature-3d-printed-golf-bag-collectibles/" target="_blank">🎨 LIV Golf Art of Golf的文化场景价值：体育IP×3D打印收藏品的B2C新赛道</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">Mimaki与Cleeks Golf Club的合作不仅是技术展示，更揭示了一个正在形成的商业模式：职业体育IP×全彩3D打印×限量收藏品。Cleeks高尔夫俱乐部的Art of Golf系列邀请14位艺术家为14站LIV赛事打造功能性球包，再通过Mimaki的全彩3D打印制成15cm高的迷你收藏品——每个设计仅25件，在全球巡回赛中售卖。传统制造方式无法在有限预算内实现多色、复杂纹理、快速生产的组合，但全彩3D打印可以一站式完成。这一场景说明：3D打印在B2C收藏品市场的核心价值不是"替代注塑/铸造"，而是满足"小批量、多款式、高定制"的需求——这在体育纪念品、潮玩、艺术衍生品领域具有广阔的复制潜力。</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/328190/mimaki-cleeks-golf-club-collaborate-for-miniature-3d-printed-golf-bag-collectibles/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-181040-1-1.html" target="_blank">🚲 Elastic Interface AURA N3X FL：3D打印骑行垫的"无泡沫化"如何改变功能性服装产业</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">Elastic Interface的无泡沫3D打印骑行垫代表了功能性服装/配件产业的一个转折性变化。传统骑行垫使用PU泡沫提供缓冲，但泡沫在反复压缩→回弹循环中会逐渐失去弹性（"记忆海绵"效应），一般6-12个月开始性能衰减。3D打印弹性体晶格结构则提供了三个核心优势：(1) 可编程缓冲——不同区域的晶格密度可根据骑行姿势压力分布定制；(2) 无衰减疲劳——弹性体材料在数千次压缩后回弹率仍保持95%以上；(3) 透气性——晶格结构本身就是天然通风通道，无需额外打孔。当"去泡沫化"成为功能性服装行业的趋势，3D打印弹性体材料的市场空间将远超当前想象。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-181040-1-1.html" target="_blank">南极熊</a><span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-181036-1-1.html" target="_blank">🎓 暑期实习的教育场景：3D打印产业人才培育从"被动等待"转向"主动造血"</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">全国3D打印企业暑期实习项目的启动，是教育场景×3D打印产业的深度对接案例。在行业人才紧缺加剧的背景下（上周南极熊报道老板们"招人比找客户难"），这一实习联动体系将高校学术资源与企业实操需求进行系统匹配。传统工科教育在增材制造方向的课程设置往往滞后于产业需求3-5年——当行业从设备组装走向工艺优化和应用拓展，对"懂材料、懂设计、懂工艺"的复合型人才需求变得愈发迫切。暑期实习的规模虽然有限，但标志着教育场景从"旁观"到"参与"的转变。对于3D打印行业而言，"产教融合"不再是一个空泛的概念，而是正在变成解决人才瓶颈的实操方案。</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-181036-1-1.html" target="_blank">南极熊</a><span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+</div><div class="section-title global" id="global">
+  <span class="icon"></span>海外资讯（国际/3Dnatives/3DPrint.com）
+</div>
+<div class="global-zone">
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/328008/amcrc-to-give-3-25-to-sme-3d-printing-in-australia/" target="_blank">🇦🇺 AMCRC Launches STARTER: $3.25M Matching Grant for Australian SMEs Adopting 3D Printing</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com July 6 — Australia's AMCRC announced a $3.25 million STARTER program to accelerate AM adoption among SMEs and startups. Dollar-for-dollar matching grants of $20K-$75K per business, 3-12 month projects focusing on prototyping and end-use production. AMCRC Managing Director Simon Marriott: "Many SMEs recognize AM's potential but don't know where to begin." Joris Peels notes Australia's geography makes it an ideal AM market — long supply chains, high import costs, and small-batch demand. Between 42-162 businesses could be helped, driving an additional $6.5M in total AM investment across Australia.</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/328008/amcrc-to-give-3-25-to-sme-3d-printing-in-australia/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://www.3dnatives.com/en/aires-tide-06072026/" target="_blank">🇺🇸 NNSA Aires Tide: AI-Designed, 3D Printed Flight Test Vehicle Delivered in 5 Months at 1/15th the Cost</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3Dnatives July 6 — The U.S. National Nuclear Security Administration debuted Aires Tide, an 11-ft AI-designed, 3D-printed flight test vehicle completed in just 5 months (normally 2 years). The Inconel fuselage was printed on a Velo3D Sapphire XC as 7 nested pieces in under 6 days. Powered by NNSA's Venado and El Capitan AI supercomputers for design optimization. Two successful drop tests from 32,000 ft at Utah's Dugway Proving Ground in May. Deputy Lab Director Deborah Frincke: "Producing these vehicles in weeks at 15x lower costs." The prototype was displayed on the National Mall as part of America's 250th anniversary Freedom 250 celebration.</div>
+  <div class="item-source">来源：<a href="https://www.3dnatives.com/en/aires-tide-06072026/" target="_blank">3Dnatives</a><span class="from-tag from-3dprint">3Dnatives</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/328275/3d-printed-diving-suit-lets-cyborg-cockroaches-swim-underwater/" target="_blank">🪳 Biohybrid Breakthrough: 3D Printed Diving Suit Enables Cyborg Cockroaches to Swim Underwater for 3 Hours</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com July 6 — Published in Nature Communications, NTU Singapore and Waseda University researchers created a 3D printed miniature diving suit for cyborg cockroaches. A 10×10mm 3D-printed PMMA oxygen generation tank produces oxygen through electrochemical reaction, extending underwater survival from minutes to 3 hours. Custom 3D printed spiracle connectors and flexible waterproof shell complete the wearable. Tested in fish tanks and 3D-printed obstacle courses simulating flooded environments. Prof. Hirotaka Sato: "By expanding cyborg insects to include underwater travel, we believe they can enhance search-and-rescue in flooded disaster zones." Cockroaches' natural climbing abilities + 3D printed amphibious gear = a new class of biohybrid search-and-rescue platform.</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/328275/3d-printed-diving-suit-lets-cyborg-cockroaches-swim-underwater/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/328004/ampulse-asia-chinese-ipos-defense-deals-and-dental-3d-printing-lead-apac-roundup/" target="_blank">🌏 AMPulse Asia Roundup: Yuding IPO, Holosmedic Vietnam Approval, AML3D Commissioning Lead APAC AM Activity</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com July 6 — AMPulse Asia roundup covers 11 APAC AM developments: China's Yuding Additive files for STAR Market IPO (RMB 1.8B), Runice 3D raises EUR 12M for printer components, Strlaser launches 1,000W fiber laser for reflective metals, SHINING 3D Ceramix-Nano chairside ceramic printer. Japan's Polyuse surpasses 300 construction 3D printing projects. South Korea's Holosmedic receives Vietnam approval for biodegradable 3D printed bone mesh, VF Space raises Pre-A for wire-laser AM, Link Solution extends ROK Army defense partnership. India's PTC Industries clears Rs 1,800 crore fundraise. Australia's AML3D commissions first two ARCEMY X at Newport News Shipbuilding for U.S. Navy submarine programs.</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/328004/ampulse-asia-chinese-ipos-defense-deals-and-dental-3d-printing-lead-apac-roundup/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/328190/mimaki-cleeks-golf-club-collaborate-for-miniature-3d-printed-golf-bag-collectibles/" target="_blank">⛳ Mimaki x Cleeks Golf Club: Full-Color 3D Printed Miniature Golf Bag Collectibles — 14 Designs, 25 Each</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">3DPrint.com July 5 — Mimaki USA partnered with Cleeks Golf Club (LIV Golf) to produce full-color 3D printed miniature golf bag collectibles. 14 artists designed 14 bags for each LIV Golf event, each limited to 25 pieces (350 total). Printed in one piece on Mimaki's 3DUJ-553 full-color printer — no assembly, no painting, 10M+ colors. Traditional methods would require color reduction, simplified shapes, and hand finishing. The collectibles sell at tournament events across the U.S., UK, Spain, Korea, and Mexico. Half-scale display models (50cm) are showcased at clubhouses. Application of full-color 3D printing in sports memorabilia is a textbook case of "production impossible without AM."</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/328190/mimaki-cleeks-golf-club-collaborate-for-miniature-3d-printed-golf-bag-collectibles/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+</div><div class="section-title feedback" id="feedback">
+  <span class="icon"></span>用户口碑（国外评测/国内实测）
+</div>
+<div class="feedback-zone">
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">1</span>
+    <div class="item-title">
+      <a href="http://www.lpnh.cn/news/540521" target="_blank">🏠 ENTINA vs 拓竹 vs 创想三维7大品牌入门横评：社区热议"500美元以下谁才是家庭首选"</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">7月6日发布的ENTINA、拓竹、创想三维等7大品牌入门级横评在3D打印社区引发热烈讨论。评测从易用性、打印质量、噪音控制、耗材兼容度、软件生态5个维度打分。社区用户反馈分歧明显：拓竹用户认为生态完善度是核心优势，"AMS系统让多色打印对新手非常友好"；ENTINA用户则认为"价格是第一生产力，便宜又好用才是消费级3D打印破圈的关键"；创想三维的老用户则评价："K2 Pro的封闭加热舱在打印ABS/PC时的表现确实比前代好太多，但软件体验还是差拓竹一截。"社区共性共识是：2026年的消费级市场不再是一台机器打天下，而是围绕"使用场景"的生态竞争——打印硬件只是门槛，软件、耗材、模型社区才是护城河。</div>
+  <div class="item-source">来源：<a href="http://www.lpnh.cn/news/540521" target="_blank">lpnh.cn/社区</a><span class="from-tag from-other">社区</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">2</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/328008/amcrc-to-give-3-25-to-sme-3d-printing-in-australia/" target="_blank">🌏 AMCRC STARTER资助计划引发社区讨论：'$20K-$75K相匹配资助，对于中小企业试水AM够用吗？'</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">澳大利亚AMCRC的STARTER计划在全球3D打印社区引发讨论，核心话题是资助金额的"够用度"。支持方认为："2万到7.5万澳元的匹配资助对于一家中小企业买一台入门级工业打印机+培训来说是合理的启动资金——而且附带了研究机构的支持。"谨慎方则指出："一台入门级工业SLM打印机（如XM200G）的价格在15-25万澳元，7.5万的匹配资助只够覆盖设备购置成本的30-50%，加上材料、工艺开发、认证等额外费用，总投入可能远超预期。"也有用户从产业政策的角度评价："重点不是金额大小，而是这个模式的可复制性——如果澳大利亚能通过STARTER培育出42家真正掌握AM能力的中小企业，这325万就花得值。"</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/328008/amcrc-to-give-3-25-to-sme-3d-printing-in-australia/" target="_blank">3DPrint.com/社区</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">3</span>
+    <div class="item-title">
+      <a href="https://www.nanjixiong.com/thread-181039-1-1.html" target="_blank">🚀 山特维克GRCop-42铜粉发布：航天圈热议'粉末供应才是商业航天的真正瓶颈'</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">山特维克推出航天级GRCop-42铜铬铌合金粉末在行业社区引起专业讨论。一位航天AM工程师评论："铜合金的LPBF打印难度比钛合金和镍基合金高一个数量级——高反射率、高导热性组合使熔池稳定性控制极难。GRCop-42之所以被NASA选为火箭燃烧室材料，不是因为它好打印，而是因为它在高温下同时具备高强度和高导热性。"材料专家则关注供应端："山特维克的气雾化制粉技术确实是行业标杆——球形度、粒径分布、氧含量的控制精度决定了粉末在LPBF中的表现。市面上很多低价铜粉打出来的燃烧室气密性不如山特维克，但价格差了3-5倍。对于商业航天公司来说，是选便宜但需要大量试错的粉末，还是一步到位用经过NASA认证的材料——这是当前行业面临的实际选择。"</div>
+  <div class="item-source">来源：<a href="https://www.nanjixiong.com/thread-181039-1-1.html" target="_blank">南极熊/航天社区</a><span class="from-tag from-nanjixiong">南极熊</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">4</span>
+    <div class="item-title">
+      <a href="https://3dprint.com/328004/ampulse-asia-chinese-ipos-defense-deals-and-dental-3d-printing-lead-apac-roundup/" target="_blank">📈 煜鼎增材科创板IPO引投资社区热议：'院士创业'是技术背书还是经营风险？</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">煜鼎增材IPO状态更新在投资社区引发两极讨论。乐观方认为："王华明院士是国内大型金属DED方向的泰斗级人物，团队获国家科技进步奖，核心技术壁垒非常深——在航空航天DED领域几乎没有国内对手。"谨慎方则指出招股书中暴露的现实问题：(1) 近两年营收增长停滞——2024年营收约3.2亿，2025年约3.5亿，增幅不到10%；(2) 政府补贴占利润比例高——扣除非经常性损益后净利润率非常薄；(3) 客户集中度高——前五大客户占比超80%。一位3D打印行业分析师总结："煜鼎面临的是所有'科研院所转制企业'的共同困境——技术足够强，但商业化能力仍需验证。科创板的18亿募资能否转化为真实的营收和利润增长，才是评估这家公司的真正标尺。"</div>
+  <div class="item-source">来源：<a href="https://3dprint.com/328004/ampulse-asia-chinese-ipos-defense-deals-and-dental-3d-printing-lead-apac-roundup/" target="_blank">3DPrint.com/投资社区</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+</div>
+
+<div class="item">
+  <div class="item-head">
+    <span class="num-dot">5</span>
+    <div class="item-title">
+      <a href="https://www.3dnatives.com/en/aires-tide-06072026/" target="_blank">⚡ NNSA Aires Tide引爆国防圈讨论：'AI+3D打印组合让美军武器开发快10倍，这是对手最不愿看到的'</a>
+      <span class="score-badge score-badge-a">✅ A级</span>
+    </div>
+  </div>
+  <div class="item-summary">NNSA Aires Tide项目在LinkedIn国防科技社区引发高度关注。一位前DARPA项目经理评论："从概念到飞行测试5个月——这在传统国防采购系统中是不可想象的。传统飞行器开发需要经过需求定义（6个月）、方案设计（8个月）、详细设计（12个月）、原型制造（10个月）、地面测试（6个月）、飞行测试（4个月）——总计大约46个月。Aires Tide用18个月中实际只用了5个月的活跃开发时间就完成了全部流程。"另一安全分析师指出："中国和俄罗斯看到Aires Tide会非常不安——这不是一个概念演示，而是已经完成了两次成功的飞行试验。当AI和AM的结合将武器系统开发周期压缩到传统方法的1/5-1/10，军备竞赛的游戏规则正在从根本上被改写。"</div>
+  <div class="item-source">来源：<a href="https://www.3dnatives.com/en/aires-tide-06072026/" target="_blank">3Dnatives/国防社区</a><span class="from-tag from-3dprint">3Dnatives</span></div>
+</div>
+
+</div><div class="footer">
+  Powered by WorkBuddy Automation &nbsp;|&nbsp; <a href="https://github.com/Cruise-Ling/3d-printing-daily">GitHub</a>
+</div>
+</div>
+<script>
+function scrollToSection(id){var e=document.getElementById(id);if(e){var t=window.innerWidth<768?20:80;window.scrollTo({top:e.offsetTop-t,behavior:'smooth'})}}
+</script>
+</body>
+</html>
