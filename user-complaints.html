@@ -345,9 +345,7 @@ body {
 
 
 
-<script>
-
-const OVERSEAS_FEEDBACK_DATA = {
+<script>const OVERSEAS_FEEDBACK_DATA = {
   mode: "accumulate",
   maxDays: 30,
   stats: {
@@ -7101,118 +7099,127 @@ const OVERSEAS_FEEDBACK_DATA = {
     }
 ]
 };
-
-
-
 const EMOJI = { '非常负面': '🔴', '负面': '🟡', '中性': '⚪', '正面': '🟢', '非常正面': '⭐' };
 
+let activeFilters = { sentiment: 'all', brand: 'all', datePreset: 'all', dateFrom: '', dateTo: '' };
 
-
-// (filtered managed by applyFilters)
-
-
-
-function render() {
-
-  // Stats
-
-  const stats = OVERSEAS_FEEDBACK_DATA.stats.sentiment;
-
-  document.getElementById('statsBar').innerHTML =
-
-    '<div class="stat-card"><span class="stat-label">总记录</span><span class="stat-value">' + OVERSEAS_FEEDBACK_DATA.items.length + '</span></div>' +
-
-    Object.keys(stats).map(function(k){
-
-      return '<div class="stat-card"><span class="stat-label">' + EMOJI[k] + ' ' + k + '</span><span class="stat-value">' + stats[k] + '</span></div>';
-
-    }).join('') +
-
-    '<div class="stat-card"><span class="stat-label">模式</span><span class="stat-value">' + (OVERSEAS_FEEDBACK_DATA.mode === 'accumulate' ? '累积' : '滚动') + '</span></div>';
-
-
-
-  // Filters
-
-  var sents = Object.keys(stats);
-
-  var sentHtml = '<button class="filter-btn active" onclick="setFilter(\'all\')">全部</button>';
-
-  sents.forEach(function(s){
-
-    sentHtml += '<button class="filter-btn" data-sentiment="' + s + '" onclick="setFilter(\'' + s + '\')">' + EMOJI[s] + ' ' + s + ' (' + stats[s] + ')</button>';
-
-  });
-
-  document.getElementById('filters').innerHTML = sentHtml;
-
-
-
-  // Cards
-
-  var grid = document.getElementById('cardGrid');
-
-  if (filtered.length === 0) {
-
-    grid.innerHTML = '<div class="empty-msg">没有符合筛选条件的用户点评</div>';
-
-    return;
-
-  }
-
-  var html = '';
-
-  filtered.forEach(function(item) {
-
-    var emoji = EMOJI[item.sentiment] || '⚪';
-
-    var tags = '';
-
-    (item.problemPoints || []).slice(0,3).forEach(function(p){ tags += '<span class="tag' + (item.isP0 ? ' p0' : '') + '">' + p + '</span>'; });
-
-    if (item.isP0) tags += '<span class="tag p0">⚠️高风险</span>';
-
-    // Show summaryCn or translation
-
-    var detail = item.summaryCn || item.translation || '';
-
-    if (detail.length > 120) detail = detail.slice(0, 117) + '…';
-
-    html += '<div class="review-card">' +
-
-      '<div class="card-header">' +
-
-        '<span class="sentiment-tag sentiment-' + item.sentiment + '">' + emoji + ' ' + item.sentiment + '</span>' +
-
-        '<span class="brand-line">' + item.brand + '</span>' +
-
-        '<span class="model">' + (item.modelName || '') + '</span>' +
-
-      '</div>' +
-
-      '<div class="platform">📌 ' + (item.platform || '') + (item.country ? ' · ' + item.country : '') + '</div>' +
-
-      '<div class="summary">' + detail + '</div>' +
-
-      (tags ? '<div class="tags">' + tags + '</div>' : '') +
-
-      '<div class="meta">' +
-
-        '<a href="' + item.sourceLink + '" target="_blank">🔗 查看原文</a>' +
-
-        '<span class="date">📅 ' + item.date + (item.publishedAt ? ' · ' + item.publishedAt : '') + '</span>' +
-
-      '</div>' +
-
-    '</div>';
-
-  });
-
-  grid.innerHTML = html;
-
+function getDateRange(preset) {
+  const today = new Date();
+  const fmt = d => d.toISOString().slice(0,10);
+  today.setHours(0,0,0,0);
+  if (preset === 'all') return { from: '', to: '' };
+  if (preset === 'today') return { from: fmt(today), to: fmt(today) };
+  const yest = new Date(today); yest.setDate(today.getDate()-1);
+  if (preset === 'yesterday') return { from: fmt(yest), to: fmt(yest) };
+  const d3 = new Date(today); d3.setDate(today.getDate()-3);
+  if (preset === '3d') return { from: fmt(d3), to: fmt(today) };
+  const d7 = new Date(today); d7.setDate(today.getDate()-7);
+  if (preset === '7d') return { from: fmt(d7), to: fmt(today) };
+  const d30 = new Date(today); d30.setDate(today.getDate()-30);
+  if (preset === '30d') return { from: fmt(d30), to: fmt(today) };
+  return { from: '', to: '' };
 }
 
+function applyFilters() {
+  const range = activeFilters.datePreset === 'custom' ?
+    { from: activeFilters.dateFrom, to: activeFilters.dateTo } :
+    getDateRange(activeFilters.datePreset);
+  let items = OVERSEAS_FEEDBACK_DATA.items;
+  if (activeFilters.sentiment !== 'all') items = items.filter(function(i){ return i.sentiment === activeFilters.sentiment; });
+  if (activeFilters.brand !== 'all') items = items.filter(function(i){ return i.brand === activeFilters.brand; });
+  if (range.from) items = items.filter(function(i){ return i.date >= range.from; });
+  if (range.to) items = items.filter(function(i){ return i.date <= range.to; });
+  return items;
+}
 
+function render() {
+  // Stats
+  const stats = OVERSEAS_FEEDBACK_DATA.stats.sentiment;
+  document.getElementById('statsBar').innerHTML =
+    '<div class="stat-card"><span class="stat-label">总记录</span><span class="stat-value">' + OVERSEAS_FEEDBACK_DATA.items.length + '</span></div>' +
+    Object.keys(stats).map(function(k){
+      return '<div class="stat-card"><span class="stat-label">' + EMOJI[k] + ' ' + k + '</span><span class="stat-value">' + stats[k] + '</span></div>';
+    }).join('') +
+    '<div class="stat-card"><span class="stat-label">模式</span><span class="stat-value">' + (OVERSEAS_FEEDBACK_DATA.mode === 'accumulate' ? '累积' : '滚动') + '</span></div>';
+
+  // Row 1: Sentiment filter buttons
+  const sents = Object.keys(stats);
+  const itemList = OVERSEAS_FEEDBACK_DATA.items;
+  const sentHtml = '<button class="filter-btn ' + (activeFilters.sentiment==='all'?'active':'') + '" data-sentiment="all" onclick="setFilter(\'all\')">全部 (' + itemList.length + ')</button>' +
+    sents.map(function(s){
+      const cnt = itemList.filter(function(i){ return i.sentiment === s; }).length;
+      return '<button class="filter-btn ' + (activeFilters.sentiment===s?'active':'') + '" data-sentiment="' + s + '" onclick="setFilter(\'' + s + '\')">' + EMOJI[s] + ' ' + s + ' (' + cnt + ')</button>';
+    }).join('');
+
+  // Row 2: Brand + Date filters
+  const brands = Array.from(new Set(itemList.map(function(i){ return i.brand; }))).sort();
+  const brandOptions = '<option value="all">全部品牌</option>' + brands.map(function(b){
+    const cnt = itemList.filter(function(i){ return i.brand === b; }).length;
+    return '<option value="' + b + '"' + (activeFilters.brand===b?' selected':'') + '>' + b + ' (' + cnt + ')</option>';
+  }).join('');
+  const brandHtml = '<span class="filter-label">🏭 品牌</span><select id="brandFilter" onchange="setBrandFilter(this.value)">' + brandOptions + '</select>';
+
+  const dateLabels = {all:'全部',today:'今天',yesterday:'昨天','3d':'近3天','7d':'近7天','30d':'近30天'};
+  const dateButtons = ['all','today','yesterday','3d','7d','30d'].map(function(p){
+    return '<button class="filter-btn ' + (activeFilters.datePreset===p?'active':'') + '" data-date="' + p + '" onclick="setDateFilter(\''+ p +'\')">' + dateLabels[p] + '</button>';
+  }).join('');
+  const dateHtml = '<span class="filter-label">📅 日期</span><div style="display:inline-flex;gap:4px;flex-wrap:wrap">' + dateButtons + '</div>' +
+    '<input type="date" id="dateFrom" value="' + activeFilters.dateFrom + '" style="padding:4px 8px;border-radius:6px;background:#0d1117;border:1px solid #30363d;color:#e6edf3;font-size:11px;font-family:inherit" onchange="setCustomDate()">' +
+    '<span style="color:#8b949e;font-size:11px">~</span>' +
+    '<input type="date" id="dateTo" value="' + activeFilters.dateTo + '" style="padding:4px 8px;border-radius:6px;background:#0d1117;border:1px solid #30363d;color:#e6edf3;font-size:11px;font-family:inherit" onchange="setCustomDate()">';
+
+  const clearBtn = '<button class="clear-all" onclick="clearAllFilters()">✕ 清空筛选</button>';
+
+  document.getElementById('filters').innerHTML =
+    '<div class="filters">' + sentHtml + '</div>' +
+    '<div class="filter-row">' + brandHtml + '<span class="filter-divider"></span>' + dateHtml + clearBtn + '</div>';
+
+  // Filter summary
+  const filtered = applyFilters();
+  const activeDesc = [];
+  if (activeFilters.sentiment !== 'all') activeDesc.push('情感=' + activeFilters.sentiment);
+  if (activeFilters.brand !== 'all') activeDesc.push('品牌=' + activeFilters.brand);
+  if (activeFilters.datePreset !== 'all' || activeFilters.dateFrom) {
+    const range = activeFilters.datePreset === 'custom' ?
+      (activeFilters.dateFrom + ' ~ ' + activeFilters.dateTo) :
+      dateLabels[activeFilters.datePreset];
+    activeDesc.push('日期=' + range);
+  }
+  const summaryHtml = activeDesc.length > 0
+    ? '<div class="filter-summary">筛选结果: <strong>' + filtered.length + '</strong> 条 / ' + itemList.length + ' 条 (已应用: ' + activeDesc.join(' · ') + ')</div>'
+    : '<div class="filter-summary">共 <strong>' + itemList.length + '</strong> 条口碑数据</div>';
+
+  // Render cards
+  const grid = document.getElementById('cardGrid');
+  if (filtered.length === 0) {
+    grid.innerHTML = summaryHtml + '<div class="empty-msg">没有符合筛选条件的用户点评</div>';
+    return;
+  }
+  let cards = '';
+  filtered.forEach(function(item) {
+    const emoji = EMOJI[item.sentiment] || '⚪';
+    let tags = '';
+    (item.problemPoints || []).slice(0,3).forEach(function(p){ tags += '<span class="tag' + (item.isP0 ? ' p0' : '') + '">' + p + '</span>'; });
+    if (item.isP0) tags += '<span class="tag p0">⚠️高风险</span>';
+    let detail = item.summaryCn || item.translation || '';
+    if (detail.length > 120) detail = detail.slice(0, 117) + '…';
+    cards += '<div class="review-card">' +
+      '<div class="card-header">' +
+        '<span class="sentiment-tag sentiment-' + item.sentiment + '">' + emoji + ' ' + item.sentiment + '</span>' +
+        '<span class="brand-line">' + item.brand + '</span>' +
+        '<span class="model">' + (item.modelName || '') + '</span>' +
+      '</div>' +
+      '<div class="platform">📌 ' + (item.platform || '') + (item.country ? ' · ' + item.country : '') + '</div>' +
+      '<div class="summary">' + detail + '</div>' +
+      (tags ? '<div class="tags">' + tags + '</div>' : '') +
+      '<div class="meta">' +
+        '<a href="' + item.sourceLink + '" target="_blank">🔗 查看原文</a>' +
+        '<span class="date">📅 ' + item.date + (item.publishedAt ? ' · ' + item.publishedAt : '') + '</span>' +
+      '</div>' +
+    '</div>';
+  });
+  grid.innerHTML = summaryHtml + cards;
+}
 
 function setFilter(sentiment) {
   activeFilters.sentiment = sentiment;
@@ -7253,10 +7260,7 @@ function clearAllFilters() {
   render();
 }
 
-
-
 render();
-
 </script>
 
 </body>
