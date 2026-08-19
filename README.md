@@ -31,6 +31,7 @@
 
 | 日期 Date | 简报 Briefing |
 |-----------|--------------|
+| 2026-08-19 (Wed) | [briefing_20260819.html](briefing_20260819.html) |
 | 2026-08-17 (Mon) | [briefing_20260817.html](briefing_20260817.html) |
 | 2026-08-14 (Fri) | [briefing_20260814.html](briefing_20260814.html) |
 | 2026-08-11 (Tue) | [briefing_20260811.html](briefing_20260811.html) |
