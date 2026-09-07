@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D打印行业每日资讯 - 2026年9月8日</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖨️</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f0f2f5;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;display:flex;justify-content:center;padding:12px 0}
+.card{width:375px;background:#fff;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.06);overflow:clip}
+.header{background:linear-gradient(135deg,#1a237e,#283593,#3949ab);padding:24px 20px 18px;color:#fff;position:relative}
+.header-back{position:absolute;left:16px;top:28px;transform:translateY(-50%);display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.95);font-size:14px;font-weight:600;text-decoration:none;padding:7px 16px 7px 3px;border-radius:20px;border:1.5px solid rgba(255,255,255,.35)}
+.header-back:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.6)}
+.header h1{font-size:19px;font-weight:700;letter-spacing:1px;margin-bottom:6px;padding-left:90px}
+.header .date{font-size:13px;opacity:.85;font-weight:400}
+.header .source-note{font-size:11px;opacity:.7;margin-top:4px}
+.stats-bar{display:flex;gap:8px;flex-wrap:wrap;padding:14px 20px;background:#fafbff;border-bottom:1px solid #f0f0f0}
+.stats-pill{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;color:#555;background:#f0f4ff;border-radius:20px;padding:5px 11px;border:1px solid #e8edff}
+.stats-pill b{color:#1a73e8;font-weight:700}
+.stats-pill.warn{background:#fff8e1;border-color:#ffe082}
+.stats-pill.warn b{color:#e65100}
+.section-title{display:flex;align-items:center;padding:18px 20px 12px;font-size:16px;font-weight:800;color:#0d47a1;background:linear-gradient(90deg,rgba(26,115,232,.08),transparent);border-bottom:2px solid #1a73e8}
+.section-title .icon{width:4px;height:16px;border-radius:2px;margin-right:8px}
+.section-title.general .icon{background:linear-gradient(180deg,#42a5f5,#1e88e5)}
+.section-title.specific .icon{background:linear-gradient(180deg,#ffa726,#fb8c00)}
+.section-title.consumer .icon{background:linear-gradient(180deg,#66bb6a,#43a047)}
+.section-title.global .icon{background:linear-gradient(180deg,#ab47bc,#7b1fa2)}
+.section-title.feedback .icon{background:linear-gradient(180deg,#26c6da,#00838f)}
+.section-title.niche .icon{background:linear-gradient(180deg,#e64a19,#d84315)}
+.section-title.scenario .icon{background:linear-gradient(180deg,#00796b,#00695c)}
+.item{padding:12px 20px 14px;border-bottom:1px solid #f5f5f5}
+.item:last-child{border-bottom:none}
+.item-head{display:flex;align-items:flex-start;margin-bottom:6px}
+.num-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;flex-shrink:0;margin-right:10px;margin-top:1px}
+.general-zone .num-dot{background:linear-gradient(135deg,#42a5f5,#1e88e5)}
+.specific-zone .num-dot{background:linear-gradient(135deg,#ffa726,#fb8c00)}
+.consumer-zone .num-dot{background:linear-gradient(135deg,#66bb6a,#43a047)}
+.global-zone .num-dot{background:linear-gradient(135deg,#ab47bc,#7b1fa2)}
+.feedback-zone .num-dot{background:linear-gradient(180deg,#26c6da,#00838f)}
+.niche-zone .num-dot{background:linear-gradient(135deg,#e64a19,#d84315)}
+.scenario-zone .num-dot{background:linear-gradient(135deg,#00796b,#00695c)}
+.item-title{font-size:14.5px;font-weight:600;line-height:1.45;color:#212121;flex:1}
+.item-title a{color:#212121;text-decoration:none}
+.item-title a:hover{color:#1a73e8}
+.item-summary{font-size:12.8px;line-height:1.7;color:#616161;padding-left:32px;word-break:break-all}
+.item-source{font-size:11px;color:#9e9e9e;padding-left:32px;margin-top:4px}
+.item-source a{color:#1e88e5;text-decoration:none}
+.item-source a:hover{text-decoration:underline}
+.from-tag{font-size:10px;padding:1px 6px;border-radius:6px;margin-left:6px;opacity:.75}
+.from-qq{background:#fce4ec;color:#880e4f}
+.from-sina{background:#fff3e0;color:#e65100}
+.from-163{background:#e8f5e9;color:#2e7d32}
+.from-sohu{background:#fff3e0;color:#bf360c}
+.from-36kr{background:#e8eaf6;color:#283593}
+.from-3dprint{background:#e0f7fa;color:#006064}
+.from-3dprinting{background:#e0f7fa;color:#006064}
+.from-dayinpai{background:#e8f5e9;color:#1b5e20}
+.from-cgtn{background:#e3f2fd;color:#0d47a1}
+.from-xinhua{background:#ffebee;color:#b71c1c}
+.from-cnstock{background:#fff3e0;color:#e65100}
+.from-eastmoney{background:#fff3e0;color:#bf360c}
+.from-ithome{background:#e3f2fd;color:#1565c0}
+.from-cctv{background:#ffebee;color:#b71c1c}
+.from-other{background:#eceff1;color:#37474f}
+.from-tencent{background:#e3f2fd;color:#0d47a1}
+.from-gov{background:#e8eaf6;color:#283593}
+.from-10jqka{background:#fff3e0;color:#e65100}
+.side-nav{position:fixed;left:max(0px,calc((100vw - 375px)/2 - 90px));top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;z-index:200}
+.side-nav-item{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;font-size:12px;color:#555;background:rgba(255,255,255,.95);box-shadow:0 1px 6px rgba(0,0,0,.08);cursor:pointer;transition:all .2s;text-decoration:none;white-space:nowrap;border:1px solid rgba(0,0,0,.06)}
+.side-nav-item:hover{box-shadow:0 2px 12px rgba(0,0,0,.15);transform:translateX(-2px)}
+.side-nav-item .nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.score-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:8px;margin-left:6px;font-weight:600}
+.score-badge-a{background:#e8f5e9;color:#2e7d32}
+.hot-summary{padding:14px 20px;background:linear-gradient(135deg,#fff8e1,#fff3e0);border-bottom:1px solid #ffe082}
+.hot-summary h3{font-size:14px;font-weight:700;color:#e65100;margin-bottom:8px}
+.hot-summary ul{list-style:none;padding:0}
+.hot-summary li{font-size:12.5px;color:#5d4037;padding:3px 0;padding-left:16px;position:relative;line-height:1.5}
+.hot-summary li::before{content:"";position:absolute;left:0;top:10px;width:6px;height:6px;border-radius:50%;background:#ff9800}
+.footer{padding:16px 20px;background:#f8f9fa;text-align:center;font-size:11px;color:#9e9e9e;border-top:1px solid #f0f0f0}
+.footer a{color:#1e88e5;text-decoration:none}
+@media(max-width:767px){.side-nav{position:fixed;left:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;padding-left:4px;z-index:200}.side-nav .side-nav-item{padding:5px 8px;font-size:11px;border-radius:16px;box-shadow:0 1px 6px rgba(0,0,0,.1)}.card{margin-left:52px;width:calc(100vw - 60px);max-width:375px}body{justify-content:flex-start;padding:12px 0 12px 4px}}
+@media(min-width:768px){.section-nav{display:none}.side-nav{left:max(0px,calc((100vw - 375px)/2 - 90px))}}
+</style>
+</head>
+<body>
+<nav class="side-nav" id="sideNav">
+  <a class="side-nav-item" href="index.html"><span class="nav-dot" style="background:#1a237e"></span>🏠 首页</a>
+  <a class="side-nav-item" onclick="scrollToSection('general')"><span class="nav-dot" style="background:#1a73e8"></span>泛行业</a>
+  <a class="side-nav-item" onclick="scrollToSection('specific')"><span class="nav-dot" style="background:#e65100"></span>细分领域</a>
+  <a class="side-nav-item" onclick="scrollToSection('consumer')"><span class="nav-dot" style="background:#2e7d32"></span>消费级</a>
+  <a class="side-nav-item" onclick="scrollToSection('niche')"><span class="nav-dot" style="background:#d84315"></span>细分市场</a>
+  <a class="side-nav-item" onclick="scrollToSection('scenario')"><span class="nav-dot" style="background:#00695c"></span>场景打印</a>
+  <a class="side-nav-item" onclick="scrollToSection('global')"><span class="nav-dot" style="background:#7b1fa2"></span>海外资讯</a>
+  <a class="side-nav-item" onclick="scrollToSection('feedback')"><span class="nav-dot" style="background:#00838f"></span>用户口碑</a>
+</nav>
+<script>
+function scrollToSection(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+</script>
+<div class="card">
+
+<div class="header">
+  <a class="header-back" href="index.html">← 首页</a>
+  <h1>3D打印行业每日资讯</h1>
+  <div class="date">2026年9月8日 · 星期二</div>
+  <div class="source-note">内容来源：腾讯新闻/南极熊、网易/3D打印资源库、证券时报、中国商报网、new.qq.com/南极熊、3DPrint.com、3Dnatives、Devdiscourse、今日头条、深圳市龙华区科技创新局、TechRadar、PCMag、Beets3D、链动洞察 等</div>
+</div>
+<div class="stats-bar">
+  <span class="stats-pill">资讯 <b>35</b> 条</span>
+  <span class="stats-pill">分区 <b>7</b> 大</span>
+  <span class="stats-pill warn">内容日期 <b>9月7日（周一）</b></span>
+</div>
+<div class="hot-summary">
+  <h3>🔥 今日热点速递</h3>
+    <ul>
+        <li>泛行业：商务部等7部门发文扩大3D打印产品消费；三绿科技创业板IPO进入问询拟募18.29亿；安洁科技拟投15亿建金属3D打印基地；得力集团入局3D打印大量招聘；两项增材制造国标9月1日实施</li>
+        <li>细分领域：Auxilium在国际空间站造出肝/肾/软骨组织；昆工突破X射线穿透体内无创原位3D成型；清华3D打印可降解多功能颅骨器件登Science Advances；智神星一号首飞度维科技3D打印构件通过太空验证</li>
+        <li>消费级：创想三维IFA首秀SPARKX i8、K3双获奖；原子重塑携Palette 300/M1/Glow 1出海；HeyGears G1X全彩3D打印机Kickstarter破1500万美元；PrusaSlicer 3.0大改版</li>
+        <li>细分市场：欧洲最大3D打印学生公寓丹麦完工；前7月金属3D打印设备出口845台增37.6%；Tripo AI完成30亿元B/B+轮融资；深圳龙华创想三维上市千亿赛道成型</li>
+        <li>场景打印：3D打印从原型到未来制造革命；信阳博物馆3D打印复原文物、上海第一食品3D打印月饼走红；14行业36用例全景梳理</li>
+        <li>海外资讯：3DPrint.com Quickparts搭建四国航天国防3D打印网络；AML3D营收增70%美国国防业务走强；3Dnatives聚焦STL vs 3MF与µBites太空饼干</li>
+        <li>用户口碑：Beets3D 2026十大品牌实测拓竹9.5居首；TechRadar/PCMag评测HeyGears Reflex RS Turbo与Bambu X2D；3Dnatives Lab测Snapmaker U1</li>
+    </ul>
+  </div>
+<div class="section-title general" id="general">
+  <span class="icon"></span>泛行业资讯（工业/资本/政策）</div>
+<div class="general-zone">
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">1</span>
+        <div class="item-title">
+          <a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_4276a9e49cc32952" target="_blank">📜 商务部等7部门发文扩大3D打印产品消费，纳入十五五商品消费扩容</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">8月31日，商务部等7部门发布《关于推动商品消费扩容升级的实施意见》，提出20项措施推动十五五商品消费规模稳步扩大，明确到2030年社会消费品零售总额达60万亿元左右，并在文体娱乐用品消费中专门提出扩大3D打印相关产品消费，为消费级市场打开政策窗口。</div>
+      <div class="item-source">来源：<a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_4276a9e49cc32952" target="_blank">腾讯新闻/南极熊</a><span class="from-tag from-tencent">腾讯/南极熊</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">2</span>
+        <div class="item-title">
+          <a href="https://stcn.com/ipo/detail/3712.html" target="_blank">💰 三绿科技创业板IPO进入问询，拟募18.29亿成FDM耗材第一股</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">9月1日深交所披露三绿科技创业板IPO首轮问询回复，公司主营3D打印材料及周边产品，拟募资18.29亿元投向中山、芜湖可降解生物基耗材项目。据灼识咨询，2025年三绿科技位列全球消费级FDM耗材出货量第一，Amazon渠道市占率19.57%居首；上半年营收10.65亿元、净利1.65亿元，同比增102.88%/133.14%。</div>
+      <div class="item-source">来源：<a href="https://stcn.com/ipo/detail/3712.html" target="_blank">证券时报</a><span class="from-tag from-cnstock">证券时报</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">3</span>
+        <div class="item-title">
+          <a href="https://www.163.com/dy/article/L5VJQ8CH0538J1KQ.html" target="_blank">🏭 安洁科技拟投15亿元建金属3D打印基地，配置600台SP450M</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">苏州市吴中区受理安洁科技金属增材打印总部基地项目环评，总投资15亿元，由全资子公司苏州安洁智能科技建设；拟配置600台SP450M金属3D打印机，年产钛合金、铝合金等精密增材零件1000万件，主要用于智能眼镜镜框、手表件等3C穿戴结构件，标志上市公司加速切入金属AM。</div>
+      <div class="item-source">来源：<a href="https://www.163.com/dy/article/L5VJQ8CH0538J1KQ.html" target="_blank">网易/3D打印资源库</a><span class="from-tag from-163">网易/3D打印资源库</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">4</span>
+        <div class="item-title">
+          <a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_3576a9e1bf994252" target="_blank">🆕 得力集团入局3D打印，大量招聘软硬件工程师（传开发儿童机）</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">多家招聘平台显示，得力集团正于深圳招聘3D打印产品负责人、软硬件工程师及产品经理等岗位，涉及Marlin/Klipper固件、切片算法、运动控制等技术；岗位还覆盖3D打印机、App、模型库网站及AI功能协同开发，市场消息称得力正开发面向儿童的3D打印机，文具龙头正式入局。</div>
+      <div class="item-source">来源：<a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_3576a9e1bf994252" target="_blank">腾讯新闻/南极熊</a><span class="from-tag from-tencent">腾讯/南极熊</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">5</span>
+        <div class="item-title">
+          <a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_1626a966c9084352" target="_blank">📜 两项增材制造国家标准9月1日实施：铝合金LPBF与数据接口规范</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">2026年9月1日起，《增材制造 激光粉末床熔融铝合金及其复合材料制件技术规范》（GB/T 47195—2026）与《增材制造 数据接口规范》（GB/T 47196—2026）正式实施。前者规范AlSi10Mg等铝合金及铝基复合材料制件的质量控制与验收，后者明确人机/软件/通信/设备四类接口及STL、3MF、OPC UA等格式协议，提升软件设备互联兼容性。</div>
+      <div class="item-source">来源：<a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_1626a966c9084352" target="_blank">腾讯新闻/南极熊</a><span class="from-tag from-tencent">腾讯/南极熊</span></div>
+    </div>
+</div>
+<div class="section-title specific" id="specific">
+  <span class="icon"></span>细分领域动态（医疗/航天/材料）</div>
+<div class="specific-zone">
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">6</span>
+        <div class="item-title">
+          <a href="https://www.devdiscourse.com/article/science-environment/3947834-space-station-bioprinting-experiment-advances-quest-for-lab-grown-tissues-company-says" target="_blank">🩸 空间站生物打印突破：Auxilium在轨造出肝/肾/软骨组织</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">9月7日，圣迭戈公司Auxilium Biotechnologies宣布其3D生物打印机在国际空间站制造出含人肝、肾、软骨细胞的结构，为首次在太空生物打印肝与肾组织；微重力下细胞分布更均匀，Wake Forest提供细胞、组织已返地分析，标志太空生物制造迈向可移植组织迈出关键一步（临床仍需数年）。</div>
+      <div class="item-source">来源：<a href="https://www.devdiscourse.com/article/science-environment/3947834-space-station-bioprinting-experiment-advances-for-lab-grown-tissues-company-says" target="_blank">Devdiscourse</a><span class="from-tag from-other">Devdiscourse</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">7</span>
+        <div class="item-title">
+          <a href="https://www.toutiao.com/article/7681102612426490409/" target="_blank">⚛️ 昆工团队突破深层光制造：X射线穿透实现体内无创原位3D成型</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">昆明理工大学张鹏、徐旭辉团队利用无铅钙钛矿闪烁体将X射线转为蓝色发光、匹配光引发剂吸收谱，构建X射线穿透性光聚合成型技术，突破紫外/近红外在生物组织中的穿透瓶颈，在动物实验实现厚层组织遮挡下个性化体内原位固化成型，全程无需侵入性手术，拓展活体无创制造与深层组织工程路径。</div>
+      <div class="item-source">来源：<a href="https://www.toutiao.com/article/7681102612426490409/" target="_blank">今日头条/昆明信息港</a><span class="from-tag from-other">今日头条</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">8</span>
+        <div class="item-title">
+          <a href="https://www.toutiao.com/article/7680781321387459106/" target="_blank">🧠 清华3D打印可降解多功能颅骨器件，登Science Advances</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">清华大学尹斓团队联合北大口腔、中山大学，利用直接墨水书写3D打印构建可降解多功能颅骨修复器件，将矿化胶原/PCL支架、可降解锌-钼电池与钼/PLCL阻抗电极集成一体，可自主产生局部电刺激促进骨再生并连续评估愈合，完成后逐步降解，成果8月21日在线发表于《Science Advances》。</div>
+      <div class="item-source">来源：<a href="https://www.toutiao.com/article/7680781321387459106/" target="_blank">今日头条/清华大学</a><span class="from-tag from-other">今日头条</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">9</span>
+        <div class="item-title">
+          <a href="https://new.qq.com/rain/a/20260904A02VMT00" target="_blank">🚀 智神星一号首飞成功，度维科技3D打印热端构件通过太空验证</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">9月1日星河动力中大型可重复使用液体火箭智神星一号（遥一）首飞成功，沈阳度维科技依托SLM金属3D打印研制的CQ-50发动机推力室、涡轮泵、燃气发生器等核心热端构件随箭出征并通过太空飞行验证；80%构件采用自研3D打印方案，攻克高温合金稳定成型与复杂流道精度控制，填补国内相关技术空白。</div>
+      <div class="item-source">来源：<a href="https://new.qq.com/rain/a/20260904A02VMT00" target="_blank">腾讯新闻/南极熊</a><span class="from-tag from-tencent">腾讯/南极熊</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">10</span>
+        <div class="item-title">
+          <a href="https://3dprint.com/332082/3d-printing-news-briefs-9-5-2026/" target="_blank">🦾 3DPrint.com简报：电子皮肤假肢/软骨微支架/µBites塑料饼干</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">3DPrint.com 9月5日简报：研究人员以"扫描-建模-打印"框架造出空间分辨率约为商用手套传感器10倍的模块化电子皮肤假肢；TU Wien用BIO INX可降解树脂多点光子光刻打印0.3mm微支架，在兔软骨缺损中实现再生；南伊利诺伊大学将PET塑料经酵母转化、3D打印成可食用蛋白饼干µBites，服务深空食品。</div>
+      <div class="item-source">来源：<a href="https://3dprint.com/332082/3d-printing-news-briefs-9-5-2026/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+    </div>
+</div>
+<div class="section-title consumer" id="consumer">
+  <span class="icon"></span>消费级赛道（品牌/模型/生态）</div>
+<div class="consumer-zone">
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">11</span>
+        <div class="item-title">
+          <a href="https://new.qq.com/rain/a/20260907A0AM2300" target="_blank">🆕 创想三维IFA 2026：SPARKX i8全球首秀、K3斩获双奖</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">柏林IFA 2026上创想三维完成多色新品SPARKX i8全球首秀，并重点呈现即将上市的旗舰K3；K3搭载自研KliTek多喷嘴技术，换喷嘴<5秒、换料≤15秒，多色效率提升近50%、耗材浪费减少约85%，支持80A-95A TPU。展会期间K3与耗材生成系统M1&R1同获IFA创新奖，K3再获GADGETY AWARDS"BEST OF IFA-HONOREE"。</div>
+      <div class="item-source">来源：<a href="https://new.qq.com/rain/a/20260907A0AM2300" target="_blank">腾讯新闻/南极熊</a><span class="from-tag from-tencent">腾讯/南极熊</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">12</span>
+        <div class="item-title">
+          <a href="https://www.zgswcn.com/news.html?aid=367949" target="_blank">🆕 原子重塑IFA携三款产品：Palette 300/M1/Glow 1亮相</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">成立仅一年半的原子重塑在IFA 2026首次体系化展示三款产品：旗舰Palette 300实现最高36色12材料一体打印、换料提速50%废料减90%；首次公开的四喷头M1面向家庭多色创作，5秒切换、零废料、H12级HEPA+活性炭过滤；UV打印机Glow 1双喷头白彩同步、速度提升1.5-6倍，主打"从工具到创作伙伴"生态。</div>
+      <div class="item-source">来源：<a href="https://www.zgswcn.com/news.html?aid=367949" target="_blank">中国商报网</a><span class="from-tag from-other">中国商报网</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">13</span>
+        <div class="item-title">
+          <a href="https://www.nybusinesstimes.com/creality-unveils-k3-sparkx-i8-and-expanded-creative-ecosystem-at-ifa-2026" target="_blank">🌐 Creality IFA 2026全生态：K3/SPARKX i8/HALOT-X1/Pika扫描仪</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">NY Business Times报道，Creality在IFA 2026发布覆盖多通道多材料打印、耗材回收、光固化、扫描与激光的完整生态：K3（KliTek多喷嘴，打印时间最多缩短80%、废料减85%）、M1 Filament Maker获IFA创新奖、SPARKX i8四色创作、Ender-3 V3 Mega大尺寸、HALOT-X1 Max/Neo光固化、Pika便携3D扫描仪与Nexbie 3D打印鞋，AI协同生态延展。</div>
+      <div class="item-source">来源：<a href="https://www.nybusinesstimes.com/creality-unveils-k3-sparkx-i8-and-expanded-creative-ecosystem-at-ifa-2026" target="_blank">NY Business Times</a><span class="from-tag from-other">NY Business Times</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">14</span>
+        <div class="item-title">
+          <a href="https://3dprint.com/331654/the-final-countdown-more-value-for-g1x-series-backers/" target="_blank">💰 HeyGears G1X全彩3D&UV打印机Kickstarter破1500万美元</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">HeyGears G1X Series全球首款桌面全彩3D&UV打印机在Kickstarter突破1500万美元，获全球创作者、艺术家与制造商社区支持；G1X在材料、色彩与易用性上延续HeyGears牙科与家用光固化积累，标志消费级全彩+UV一体设备进入量产兑现期。</div>
+      <div class="item-source">来源：<a href="https://3dprint.com/331654/the-final-countdown-more-value-for-g1x-series-backers/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">15</span>
+        <div class="item-title">
+          <a href="https://3dprint.com/331710/prusaslicer-3-0-gets-a-major-overhaul/" target="_blank">🔧 PrusaSlicer 3.0大改版：切片软件迎重大重写</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">Prusa Research对PrusaSlicer实施3.0重大更新，并非微调而是大幅重写，Alpha版在启动速度、UI与现代内核上实现代际提升；作为消费级开源切片生态核心工具，3.0将影响Bambu/Prusa/创想等整机用户的后处理工作流，进一步抬高软件体验竞争门槛。</div>
+      <div class="item-source">来源：<a href="https://3dprint.com/331710/prusaslicer-3-0-gets-a-major-overhaul/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+    </div>
+</div>
+<div class="section-title niche" id="niche">
+  <span class="icon"></span>细分市场 Niche（价格段/应用场景/区域市场）</div>
+<div class="niche-zone">
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">16</span>
+        <div class="item-title">
+          <a href="https://www.3dnatives.com/en/3d-printed-student-housing-denmark-07092026/" target="_blank">🏘️ 欧洲最大3D打印学生公寓丹麦完工，36套入住</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">3Dnatives 9月7日报道，丹麦3DCP Group在Holstebro以COBOD设备建成Skovsporet项目36套3D打印学生公寓，总面积1650平方米、单套38-50平方米，交付价格低于丹麦补贴住房标准，被称为欧洲最大3D打印住房项目，为建筑AM在严格成本管制下开辟可负担住房路径。</div>
+      <div class="item-source">来源：<a href="https://www.3dnatives.com/en/3d-printed-student-housing-denmark-07092026/" target="_blank">3Dnatives</a><span class="from-tag from-3dprint">3Dnatives</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">17</span>
+        <div class="item-title">
+          <a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_9996a98d3eb66352" target="_blank">📈 前7月我国金属3D打印设备出口845台，同比增长37.6%</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">据国家统计局数据，2026年前7个月我国出口"用金属材料的增材制造设备"845台，同比增长约37.6%；上半年金属3D打印机出口金额同比增长76%，欧洲与东南亚两大区域合计贡献出口总额87%，成为主要海外市场，金属AM出海持续提速。</div>
+      <div class="item-source">来源：<a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_9996a98d3eb66352" target="_blank">腾讯新闻/南极熊</a><span class="from-tag from-tencent">腾讯/南极熊</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">18</span>
+        <div class="item-title">
+          <a href="https://3dprint.com/331487/3devo-releases-filament-maker-x10/" target="_blank">♻️ 3devo发布Filament Maker X10桌面级耗材再生设备</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">荷兰3devo发布新款桌面级耗材制造设备Filament Maker X10，面向 filament公司、聚合物企业与本地制造场景，将回收料/定制料直接再造成可用线材，降低材料成本与浪费，呼应消费级市场"设备+材料+回收"生态化竞争与可持续制造趋势。</div>
+      <div class="item-source">来源：<a href="https://3dprint.com/331487/3devo-releases-filament-maker-x10/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">19</span>
+        <div class="item-title">
+          <a href="https://www.szlhq.gov.cn/lhkjcxj/gkmlpt/content/12/12828/post_12828087.html" target="_blank">🌍 深圳龙华：创想三维上市，消费级3D打印千亿赛道成型</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">深圳市龙华区科技创新局披露，创想三维成功上市既是十二年创业里程碑，也是深圳3D打印走向资本化、高端化的开端；商务部等八部门将桌面级3D打印纳入数字产品消费重点方向，设备价格下探千元级，机构预测未来五年全球消费级年出货从400万台增至2000万台，千亿赛道成长空间释放。</div>
+      <div class="item-source">来源：<a href="https://www.szlhq.gov.cn/lhkjcxj/gkmlpt/content/12/12828/post_12828087.html" target="_blank">深圳市龙华区科技创新局</a><span class="from-tag from-gov">龙华区科创局</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">20</span>
+        <div class="item-title">
+          <a href="https://www.toutiao.com/article/7679605752180245018/" target="_blank">👟 3D打印鞋与机器人灵巧手成展会C位，加速进家庭</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">深圳特区报报道，Formnext Asia Shenzhen展上3D打印鞋霸占C位、机器人灵巧手成核心展品：蓝芯"云步·晶格跑鞋"、博理NeoFlex定制健步系列、StrideLab AI足压+48小时闪打，弹性体TPU-Graphene拉伸率破450%；金属3D打印进入人形机器人灵巧手/外壳，复杂曲面一体化减重，应用场景加速走向千家万户。</div>
+      <div class="item-source">来源：<a href="https://www.toutiao.com/article/7679605752180245018/" target="_blank">今日头条/深圳特区报</a><span class="from-tag from-other">今日头条</span></div>
+    </div>
+</div>
+<div class="section-title scenario" id="scenario">
+  <span class="icon"></span>场景×3D打印（教育/文创/家居/食品）</div>
+<div class="scenario-zone">
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">21</span>
+        <div class="item-title">
+          <a href="https://www.toutiao.com/article/7652867177812378118" target="_blank">🛠️ 3D打印技术：从原型到未来的制造革命</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">今日头条科普长文梳理3D打印应用场景：古迹修复（文物缺失部位精准复原）、消费品与时尚（定制鞋垫/珠宝/灯具）、教育科研（分子/地形/器官模型、STEM培养）、食品（巧克力/面团个性化营养），并指出优势为设计无极限、零模具、材料零浪费、快速响应与分布式制造，挑战在速度/材料/后处理成本。</div>
+      <div class="item-source">来源：<a href="https://www.toutiao.com/article/7652867177812378118" target="_blank">今日头条</a><span class="from-tag from-other">今日头条</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">22</span>
+        <div class="item-title">
+          <a href="https://www.sohu.com/a/1029213663_120191675" target="_blank">📦 齐思印：3D打印都能打印哪些产品？应用全景盘点</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">搜狐/齐思印梳理3D打印产品图谱：医疗（手术导板/牙科植入物/矫形器/生物打印器官）、航空航天汽车（发动机件/车身结构件/原型夹具）、消费品（手机壳/鞋/珠宝/家居）、电子（电路板/天线）、教育（教学模型/实验器材）、食品（巧克力/糖果定制），印证个性化、高效化优势持续凸显。</div>
+      <div class="item-source">来源：<a href="https://www.sohu.com/a/1029213663_120191675" target="_blank">搜狐</a><span class="from-tag from-sohu">搜狐</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">23</span>
+        <div class="item-title">
+          <a href="https://www.toutiao.com/a7650432234365485620" target="_blank">🏥 一文科普：3D打印适合哪些行业？2026主流应用领域全梳理</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">今日头条梳理2026主流应用：医疗（术前模型/植入耗材/康复辅具/医用器械，多家三甲常态化使用）、工业机械与模具（随形冷却模具降温均匀、效率提升30%）、文创珠宝+消费电子（蜡模首饰/折叠屏铰链）、建筑食品教育（混凝土房屋/可食打印/创客教学），并指出大批量平价件仍不适合3D打印，二者互补赋能。</div>
+      <div class="item-source">来源：<a href="https://www.toutiao.com/a7650432234365485620" target="_blank">今日头条</a><span class="from-tag from-other">今日头条</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">24</span>
+        <div class="item-title">
+          <a href="https://zh.mfgrobots.com/equipment/cnc/1005053519.html" target="_blank">🌐 3D打印：14个行业、36个用例与增材制造未来</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">亿迅智能制造网整理14行业36用例：眼镜（3D面部扫描镜框集成铰链）、助听器（临床扫描按需生产）、教育（STEM课程/教具/员工培训）、食品（巧克力/面团/植物蛋白挤出）、机器人（定制外壳/软执行器）、电子（导电丝功能电路）、艺术与文化遗产（文物复制/雕塑修复），展现从工业到日常的全场景渗透。</div>
+      <div class="item-source">来源：<a href="https://zh.mfgrobots.com/equipment/cnc/1005053519.html" target="_blank">亿迅智能制造网</a><span class="from-tag from-other">亿迅智能制造网</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">25</span>
+        <div class="item-title">
+          <a href="https://www.toutiao.com/article/7588723604817216038/" target="_blank">🍰 信阳博物馆3D打印复原文物，上海第一食品3D打印月饼走红</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">今日头条盘点文创/食品/教育场景：信阳博物馆用3D打印复原《文昭皇后礼佛图》吸引游客；上海第一食品商店3D打印月饼可制20多种形态满足定制；哈尔滨工业大学录取通知书含太空金属3D打印"金"钥匙；生物3D打印肝脏组织/软骨进入科研，显示技术从小众向大众应用转型。</div>
+      <div class="item-source">来源：<a href="https://www.toutiao.com/article/7588723604817216038/" target="_blank">今日头条</a><span class="from-tag from-other">今日头条</span></div>
+    </div>
+</div>
+<div class="section-title global" id="global">
+  <span class="icon"></span>海外资讯（国际/3Dnatives/3DPrint.com）</div>
+<div class="global-zone">
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">26</span>
+        <div class="item-title">
+          <a href="https://3dprint.com/331808/quickparts-builds-a-four-country-3d-printing-network-for-space-and-defense/" target="_blank">🛰️ Quickparts搭建四国3D打印网络，服务航天与国防</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">3DPrint.com 9月4日报道，Quickparts构建覆盖四国的3D打印网络服务航天与国防客户，解决的不仅是"加打印机"，更是跨地域按同一标准制造同类零件、满足ITAR与供应链韧性要求；反映增材制造正成为国防与航天外包制造的关键基础设施。</div>
+      <div class="item-source">来源：<a href="https://3dprint.com/331808/quickparts-builds-a-four-country-3d-printing-network-for-space-and-defense/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">27</span>
+        <div class="item-title">
+          <a href="https://3dprint.com/331785/3d-printing-financials-aml3d-revenue-jumps-70-as-u-s-defense-business-grows/" target="_blank">📊 AML3D营收增70%，美国国防业务拉动金属AM增长</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">3DPrint.com 9月3日财务盘点：澳大利亚金属3D打印企业AML3D（ASX: AL3）截至2026年6月的财年营收创纪录，同比增长70%，增长主要由美国国防业务驱动；Wire Arc Additive Manufacturing在舰船与国防构件上的订单放量，印证军工需求重塑全球金属AM产能与投资逻辑。</div>
+      <div class="item-source">来源：<a href="https://3dprint.com/331785/3d-printing-financials-aml3d-revenue-jumps-70-as-u-s-defense-business-grows/" target="_blank">3DPrint.com</a><span class="from-tag from-3dprint">3DPrint.com</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">28</span>
+        <div class="item-title">
+          <a href="https://www.3dnatives.com/en/tripo-ai-raises-3-billion-yuan-04092026/" target="_blank">💵 Tripo AI完成30亿元B/B+轮融资，3D模型生成加速</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">3Dnatives 9月4日报道，3D模型生成器Tripo AI（VAST三启万物）完成约30亿元B轮及B+轮融资，不到半年累计融资约50亿元；同期发布Tripo P2.0原生四边面拓扑模型，AI 3D内容生产从"能生成"走向"可制造"，资本持续涌入AI+3D赛道。</div>
+      <div class="item-source">来源：<a href="https://www.3dnatives.com/en/tripo-ai-raises-3-billion-yuan-04092026/" target="_blank">3Dnatives</a><span class="from-tag from-3dprint">3Dnatives</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">29</span>
+        <div class="item-title">
+          <a href="https://www.3dnatives.com/en/3d-printed-plastic-cookies-02092026/" target="_blank">🍪 NASA支持项目µBites：塑料废料3D打印成太空饼干</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">3Dnatives 9月2日报道，NASA支持的项目µBites将PET塑料经微生物转化、3D打印成蛋白饼干，源头为深空食物保障，亦对地球粮食安全和塑料污染有启示；酵母将PET分子转化为维生素、蛋白与风味物，混合物挤出为µBites蛋白饼干，展示升级回收式食品打印路径。</div>
+      <div class="item-source">来源：<a href="https://www.3dnatives.com/en/3d-printed-plastic-cookies-02092026/" target="_blank">3Dnatives</a><span class="from-tag from-3dprint">3Dnatives</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">30</span>
+        <div class="item-title">
+          <a href="https://www.3dnatives.com/en/stl-vs-3mf-280620224/" target="_blank">📐 3Dnatives指南：STL vs 3MF 该选哪种3D模型格式</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">3Dnatives 9月3日发布格式选择指南，对比STL与3MF：STL通用但仅存几何、丢失颜色与元数据；3MF支持颜色、材质、多实体与制造信息，正随生态普及；配合9月1日实施的GB/T 47196数据接口规范，模型与切片数据交换标准化成为行业共识。</div>
+      <div class="item-source">来源：<a href="https://www.3dnatives.com/en/stl-vs-3mf-280620224/" target="_blank">3Dnatives</a><span class="from-tag from-3dprint">3Dnatives</span></div>
+    </div>
+</div>
+<div class="section-title feedback" id="feedback">
+  <span class="icon"></span>用户口碑（国外评测/国内实测）</div>
+<div class="feedback-zone">
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">31</span>
+        <div class="item-title">
+          <a href="https://beets3d.cn/blog/2026/08/3d-printer-brand-ranking-2026" target="_blank">⭐ Beets3D 2026十大品牌实测：拓竹9.5居首，创想8.8</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">Beets3D以打印质量/易用性/软件生态/售后/性价比5维度实测评分：Bambu Lab 9.5（开箱即用、AMS多色、MakerWorld生态最强）、Creality 8.8（性价比+开源改装）、Prusa 8.5、Anycubic 8.3、ELEGOO 8.3、Flashforge 7.8；用户评价指拓竹封闭生态改装空间小、创想社区资源最丰富。</div>
+      <div class="item-source">来源：<a href="https://beets3d.cn/blog/2026/08/3d-printer-brand-ranking-2026" target="_blank">Beets3D</a><span class="from-tag from-other">Beets3D</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">32</span>
+        <div class="item-title">
+          <a href="https://www.liandongob.com/archives/279038.html" target="_blank">⭐ 吉林省全场景实测：拓竹A1 Mini/X1 Carbon/X1E横向对比</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">链动洞察吉林地区实测：中小学创客空间拓竹A1 Mini开箱即用、零基础3步首打、全封闭表面≤45℃符合安全标准；文创工作室X1 Carbon配AMS多色速度达600mm/s、为传统8倍、层厚0.05mm；企业研发X1E AI激光雷达自动调平、精度±0.02mm、周期由7天缩至1天，创想Ender-3 S1 Pro次之。</div>
+      <div class="item-source">来源：<a href="https://www.liandongob.com/archives/279038.html" target="_blank">链动洞察</a><span class="from-tag from-other">链动洞察</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">33</span>
+        <div class="item-title">
+          <a href="https://www.techradar.com/in/news/best-3d-printer" target="_blank">⭐ TechRadar 2026最佳3D打印机：Bambu H2D/ Creality Hi/ Kobra X</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">TechRadar 2026年度评选：综合最佳Bambu Lab H2D（双喷嘴+激光一体、五料起步最多16料、减废料）；性价比最佳Creality Hi；入门最佳Anycubic Kobra X（快、准、易用）；教育最佳Creality K1C（AI相机、结构稳固）；商务最佳Bambu X1C；综合最佳Prusa Core One，覆盖从入门到专业的完整选型。</div>
+      <div class="item-source">来源：<a href="https://www.techradar.com/in/news/best-3d-printer" target="_blank">TechRadar</a><span class="from-tag from-other">TechRadar</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">34</span>
+        <div class="item-title">
+          <a href="https://www.pcmag.com/reviews/categories/3d-printers" target="_blank">⭐ PCMag评测：HeyGears Reflex RS Turbo与Bambu X2D获编辑选择</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">PCMag最新3D打印机评测：HeyGears Reflex RS Turbo（树脂，4.5编辑选择， exceptional易用与抛光流程），$799；Bambu Lab X2D（多材料新基准，4.5，加热舱+双喷嘴减废料），$899.97；Elegoo Centauri Carbon 2 Combo（四色，4.0，$399.99）；Creality Sparkx i7（入门多色，4.0，$198.99）；Snapmaker U1（多色，4.5），覆盖树脂/多色/入门多档。</div>
+      <div class="item-source">来源：<a href="https://www.pcmag.com/reviews/categories/3d-printers" target="_blank">PCMag</a><span class="from-tag from-other">PCMag</span></div>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <span class="num-dot">35</span>
+        <div class="item-title">
+          <a href="https://www.3dnatives.com/en/3d-natives-lab-snapmaker-u1-26032026/" target="_blank">🎯 3Dnatives Lab实测：Snapmaker U1多色3D打印机</a>
+          <span class="score-badge score-badge-a">✅ A级</span>
+        </div>
+      </div>
+      <div class="item-summary">3Dnatives Lab对Snapmaker U1进行实测，评价其为"爱好级多色3D打印新标杆"：功能集丰富、耗材支持广、易用性出色，获4.5编辑选择；$849。评测覆盖打印质量、换色效率、软件与工作流，验证U1在四色/多材料桌面机的竞争力，为海外用户选购提供一手参考。</div>
+      <div class="item-source">来源：<a href="https://www.3dnatives.com/en/3d-natives-lab-snapmaker-u1-26032026/" target="_blank">3Dnatives</a><span class="from-tag from-3dprint">3Dnatives</span></div>
+    </div>
+</div>
+<div class="footer">
+  数据来源公开网络，由 <a href="https://cruise-ling.github.io/3d-printing-daily/" target="_blank">3D打印每日资讯</a> 整理 · <a href="index.html">返回首页</a>
+</div>
+</div>
+</body>
+</html>
