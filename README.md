@@ -30,6 +30,7 @@
 ## 归档 / Archive
 
 | 日期 Date | 简报 Briefing |
+| 2026-09-11 (Fri) | [briefing_20260911.html](briefing_20260911.html) |
 | 2026-09-10 (Thu) | [briefing_20260910.html](briefing_20260910.html) |
 | 2026-09-08 (Tue) | [briefing_20260908.html](briefing_20260908.html) |
 | 2026-09-03 (Thu) | [briefing_20260903.html](briefing_20260903.html) |
