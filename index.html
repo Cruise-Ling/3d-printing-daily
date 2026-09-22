@@ -1,1775 +1,3549 @@
 <!DOCTYPE html>
+
 <html lang="zh-CN">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>3D打印每日速递 - 归档</title>
+
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖨️</text></svg>">
+
 <style>
+
 * { margin:0; padding:0; box-sizing:border-box; }
+
 html { scroll-behavior:smooth; }
+
 body {
+
   background:#f0f2f5;
+
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+
   min-height:100vh;
+
 }
+
+
 
 /* ===== 左侧导航栏 ===== */
+
 .sidebar {
+
   position:fixed; left:0; top:0; bottom:0;
+
   width:200px;
+
   background:linear-gradient(180deg,#0d1b2a,#1b2838,#1a237e);
+
   color:#fff;
+
   display:flex; flex-direction:column;
+
   z-index:160;
+
   box-shadow:2px 0 20px rgba(0,0,0,.15);
+
 }
+
 .sidebar-logo { padding:28px 20px 20px; border-bottom:1px solid rgba(255,255,255,.08); }
+
 .sidebar-logo .logo-icon { font-size:32px; margin-bottom:8px; display:block; }
+
 .sidebar-logo .logo-title { font-size:16px; font-weight:700; letter-spacing:.5px; line-height:1.4; }
+
 .sidebar-logo .logo-sub { font-size:11px; opacity:.5; margin-top:4px; }
+
 .sidebar-nav { flex:1; padding:16px 0; overflow-y:auto; }
+
 .nav-section-label { padding:10px 20px 6px; font-size:10px; text-transform:uppercase; letter-spacing:2px; color:rgba(255,255,255,.35); font-weight:600; }
+
 .nav-item { display:flex; align-items:center; gap:10px; padding:11px 20px; color:rgba(255,255,255,.7); text-decoration:none; font-size:13.5px; font-weight:500; transition:all .2s; border-left:3px solid transparent; cursor:pointer; }
+
 .nav-item:hover { background:rgba(255,255,255,.06); color:#fff; }
+
 .nav-item.active { background:rgba(255,255,255,.1); color:#fff; border-left-color:#42a5f5; }
+
 .nav-item .nav-icon { font-size:17px; width:24px; text-align:center; flex-shrink:0; }
+
 .nav-item .nav-badge { margin-left:auto; font-size:10px; font-weight:700; background:rgba(66,165,245,.25); color:#64b5f6; padding:2px 7px; border-radius:10px; }
+
 .nav-item.coming-soon { opacity:.4; cursor:default; }
+
 .nav-item.coming-soon:hover { background:transparent; color:rgba(255,255,255,.4); }
+
 .sidebar-footer { padding:16px 20px; border-top:1px solid rgba(255,255,255,.08); font-size:11px; color:rgba(255,255,255,.35); line-height:1.6; }
+
 .sidebar-footer a { color:#64b5f6; text-decoration:none; }
+
 .sidebar-footer a:hover { text-decoration:underline; }
 
+
+
 /* ===== 主内容区 ===== */
+
 .main { margin-left:200px; padding:20px 24px 40px; }
+
 .top-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; }
+
 .brand { display:flex; align-items:center; gap:10px; }
+
 .brand .brand-icon { font-size:30px; }
+
 .brand .brand-text h1 { font-size:26px; font-weight:800; color:#1a237e; letter-spacing:.5px; }
+
 .brand .brand-text .author-line { font-size:13px; color:#888; margin-top:2px; }
+
 .brand .brand-text .author-line a { color:#1e88e5; text-decoration:none; font-weight:600; }
+
 .brand .brand-text .author-line a:hover { text-decoration:underline; }
 
+
+
 /* ===== 紧凑统计栏 ===== */
+
 .stats-row { display:flex; gap:8px; margin-bottom:20px; }
+
 .stat-card {
+
   background:#fff; border-radius:8px; padding:10px 16px; flex:1;
+
   box-shadow:0 1px 6px rgba(0,0,0,.04);
+
 }
+
 .stat-card .stat-label { font-size:12px; color:#888; margin-bottom:2px; }
+
 .stat-card .stat-value { font-size:20px; font-weight:700; color:#1a237e; }
 
+
+
 /* ===== 分区标签条 ===== */
+
 .tags-row { display:flex; gap:6px; margin-bottom:16px; overflow-x:auto; padding-bottom:4px; }
+
 .tags-row .tag-label { font-size:12px; color:#999; flex-shrink:0; padding:4px 0; }
+
 .tags-row .tag-item {
+
   padding:4px 10px; border-radius:20px; border:1px solid #e0e0e0;
+
   font-size:11px; color:#555; white-space:nowrap; flex-shrink:0; background:#fff;
+
 }
+
 .tags-row .tag-item .tag-dot { display:inline-block; width:6px; height:6px; border-radius:50%; margin-right:4px; }
 
+
+
 /* ===== 日历头部 ===== */
+
 .cal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+
 .cal-nav { display:flex; align-items:center; gap:8px; }
+
 .cal-nav button {
+
   width:30px; height:30px; border-radius:8px; border:1px solid #e0e0e0; background:#fff;
+
   cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:14px; color:#555;
+
 }
+
 .cal-nav button:hover { background:#f5f5f5; border-color:#999; }
+
 .cal-nav .cal-month { font-size:16px; font-weight:600; color:#1a237e; }
+
 .cal-nav .cal-en { font-size:12px; color:#888; }
 
+
+
 .view-toggle { display:flex; gap:0; border:1px solid #e0e0e0; border-radius:8px; overflow:hidden; }
+
 .view-toggle button { padding:5px 12px; border:none; background:#fff; cursor:pointer; font-size:12px; color:#555; }
+
 .view-toggle button.active { background:#1a237e; color:#fff; font-weight:500; }
 
+
+
 /* ===== 日历网格 ===== */
+
 .cal-grid { background:#fff; border:1px solid #e0e0e0; border-radius:12px; overflow:hidden; }
+
 .cal-weekdays {
+
   display:grid; grid-template-columns:repeat(7,1fr);
+
   background:#f8f9ff; border-bottom:1px solid #e0e0e0;
+
 }
+
 .cal-weekdays div { padding:8px 4px; text-align:center; font-size:12px; color:#888; font-weight:500; }
+
 .cal-days {
+
   display:grid; grid-template-columns:repeat(7,1fr);
+
   grid-template-rows:repeat(6,1fr);
+
   height:660px;
+
 }
+
 .cal-cell {
+
   display:flex; flex-direction:column; border-right:1px solid #f0f0f0; border-bottom:1px solid #f0f0f0;
+
   cursor:default; transition:background .1s; position:relative;
+
 }
+
 .cal-cell:nth-child(7n) { border-right:none; }
+
 .cal-cell:nth-last-child(-n+7) { border-bottom:none; }
+
 .cal-cell:hover { background:#f8f9ff; }
+
 .cal-cell.off { background:#fafafa; }
+
 .cal-cell.off .cal-num { color:#ccc; }
+
 .cal-cell.has-briefing { cursor:pointer; }
+
 .cal-cell.today { background:rgba(26,115,232,.03); }
 
+
+
 .cal-num { font-size:12px; font-weight:500; color:#333; padding:6px 8px 0; line-height:1; }
+
 .cal-cell.today .cal-num-wrap {
+
   display:flex; align-items:center; gap:5px; padding:6px 8px 0;
+
 }
+
 .cal-cell.today .cal-num-circle {
+
   width:22px; height:22px; border-radius:50%; background:#1a237e; color:#fff;
+
   display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:500;
+
 }
+
 .cal-cell.today .cal-today-tag { font-size:9px; color:#fff; background:#1a237e; padding:0 5px; border-radius:8px; line-height:16px; }
+
 .cal-cell.off .cal-num { color:#ccc; }
 
+
+
 .cal-body { flex:1; padding:2px 6px 6px; display:flex; flex-direction:column; }
+
 .cal-body .cal-title {
+
   font-size:11px; color:#1a237e; font-weight:500; line-height:1.35;
+
   display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+
 }
+
 .cal-body .cal-footer { margin-top:auto; display:flex; align-items:center; gap:6px; font-size:10px; color:#999; }
+
 .cal-body .cal-footer .cal-weekday { color:#1a73e8; }
+
 .cal-body .cal-footer .cal-dots { display:flex; gap:2px; margin-left:auto; }
+
 .cal-body .cal-footer .cal-dots span { width:5px; height:5px; border-radius:50%; }
 
+
+
 /* ===== 底部统计条 ===== */
+
 .cal-stats {
+
   display:flex; align-items:center; gap:12px; margin-top:12px; font-size:11px; color:#999;
+
 }
 
+
+
 /* ===== 列表视图 ===== */
+
 .date-badge { width:56px; height:56px; border-radius:14px; background:linear-gradient(135deg,#1a237e,#3949ab); display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff; flex-shrink:0; margin-right:16px; }
+
 .date-badge .day { font-size:22px; font-weight:800; line-height:1; }
+
 .date-badge .month { font-size:10px; opacity:.75; margin-top:2px; letter-spacing:.5px; }
+
 .briefing-item { display:flex; align-items:center; padding:16px 24px; border-bottom:1px solid #f5f5f5; cursor:pointer; text-decoration:none; color:inherit; transition:all .15s; }
+
 .briefing-item:hover { background:#f8f9ff; transform:translateX(2px); }
+
 .briefing-item:last-child { border-bottom:none; }
+
 .briefing-info { flex:1; }
+
 .briefing-info .title-line { font-size:15px; font-weight:600; color:#212121; margin-bottom:3px; }
+
 .briefing-info .meta-line { font-size:12px; color:#9e9e9e; }
+
 .briefing-info .meta-line .weekday { margin-left:8px; color:#1e88e5; font-weight:500; }
+
 .arrow { color:#ccc; font-size:20px; flex-shrink:0; margin-left:10px; transition:transform .15s; }
+
 .briefing-item:hover .arrow { transform:translateX(3px); color:#1e88e5; }
+
+
 
 .section-label { padding:18px 24px 10px; font-size:13px; font-weight:600; color:#999; letter-spacing:1.5px; text-transform:uppercase; }
 
+
+
 /* ===== 搜索 ===== */
+
 .search-wrap { position:relative; margin-bottom:16px; }
+
 .search-input-row { display:flex; align-items:center; background:#fff; border:2px solid #e0e6ff; border-radius:12px; padding:0 14px; gap:8px; transition:border-color .2s, box-shadow .2s; }
+
 .search-input-row:focus-within { border-color:#1a73e8; box-shadow:0 0 0 3px rgba(26,115,232,.12); }
+
 .search-icon { font-size:18px; flex-shrink:0; color:#888; }
+
 .search-input { flex:1; border:none; outline:none; font-size:14.5px; padding:11px 0; background:transparent; color:#212121; font-family:inherit; }
+
 .search-input::placeholder { color:#bbb; }
+
 .search-clear { background:none; border:none; font-size:16px; color:#ccc; cursor:pointer; padding:4px; line-height:1; flex-shrink:0; }
+
 .search-clear:hover { color:#888; }
+
 .search-dropdown { position:absolute; top:calc(100% + 6px); left:0; right:0; background:#fff; border-radius:12px; box-shadow:0 8px 32px rgba(0,0,0,.14); z-index:500; overflow:hidden; display:none; max-height:420px; overflow-y:auto; }
+
 .search-dropdown.show { display:block; }
+
 .search-result-item { display:flex; align-items:flex-start; padding:12px 16px; border-bottom:1px solid #f5f5f5; cursor:pointer; transition:background .15s; text-decoration:none; color:inherit; }
+
 .search-result-item:hover { background:#f8f9ff; }
+
 .search-result-item .result-date { font-size:11px; font-weight:700; color:#fff; background:linear-gradient(135deg,#1a237e,#3949ab); border-radius:6px; padding:3px 7px; flex-shrink:0; margin-right:10px; margin-top:1px; }
+
 .search-result-item .result-section { display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:600; padding:2px 8px; border-radius:10px; margin-right:8px; flex-shrink:0; }
+
 .search-result-item .result-title { font-size:13.5px; font-weight:500; color:#212121; line-height:1.4; flex:1; }
+
 .search-result-item .result-title em { font-style:normal; background:#fff176; border-radius:2px; padding:0 1px; }
+
 .search-result-item .result-arrow { font-size:16px; color:#ccc; flex-shrink:0; margin-left:8px; }
+
 .search-empty { padding:20px 16px; text-align:center; color:#bbb; font-size:13px; }
+
 .search-footer { padding:8px 16px; background:#fafbff; border-top:1px solid #f0f0f0; font-size:11px; color:#bbb; display:flex; justify-content:space-between; }
+
 .search-count { color:#888; font-weight:600; }
+
 .search-tip { color:#bbb; }
 
+
+
 .content-card { background:#fff; border-radius:14px; box-shadow:0 2px 16px rgba(0,0,0,.05); overflow:hidden; }
+
 #listView { display:none; }
+
 #calendarView { display:block; }
 
+
+
 .footer { text-align:center; padding:24px; font-size:11.5px; color:#bbb; margin-top:24px; }
+
 .footer a { color:#1e88e5; text-decoration:none; }
+
 .footer a:hover { text-decoration:underline; }
 
+
+
 /* 移动端 */
+
 .mobile-header { display:none; position:fixed; top:0; left:0; right:0; height:52px; background:linear-gradient(135deg,#0d1b2a,#1a237e); color:#fff; align-items:center; padding:0 16px; z-index:200; box-shadow:0 2px 12px rgba(0,0,0,.15); }
+
 .mobile-header .menu-btn { font-size:22px; cursor:pointer; padding:4px; }
+
 .mobile-header .mobile-title { font-size:15px; font-weight:700; margin-left:12px; flex:1; }
+
 .mobile-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:150; }
 
+
+
 @media (max-width:768px) {
+
   .sidebar { transform:translateX(-100%); transition:transform .3s ease; }
+
   .sidebar.open { transform:translateX(0); }
+
   .mobile-header { display:flex; }
+
   .mobile-overlay.show { display:block; }
+
   .main { margin-left:0; padding:68px 12px 40px; }
+
   .brand .brand-text h1 { font-size:20px; }
+
   .stats-row { flex-wrap:wrap; }
+
   .stat-card { min-width:100px; }
+
   .cal-days { height:450px; }
+
   .cal-cell .cal-title { font-size:10px; -webkit-line-clamp:1; }
+
   .cal-cell .cal-dots { display:none; }
+
   .tags-row { gap:4px; }
+
   .briefing-item { padding:14px 16px; }
+
 }
+
 @media (max-width:480px) {
+
   .cal-days { height:360px; }
+
   .cal-cell .cal-footer .cal-dots { display:none; }
+
 }
+
 </style>
+
 </head>
+
 <body>
 
+
+
 <div class="mobile-header">
+
   <span class="menu-btn" onclick="toggleSidebar()">&#9776;</span>
+
   <span class="mobile-title">3D打印每日速递</span>
+
 </div>
+
 <div class="mobile-overlay" id="mobileOverlay" onclick="toggleSidebar()"></div>
 
+
+
 <div class="sidebar" id="sidebar">
+
   <div class="sidebar-logo">
+
     <span class="logo-icon">🖨️</span>
+
     <div class="logo-title">3D打印每日速递</div>
+
     <div class="logo-sub">Daily 3D Printing Express</div>
+
   </div>
+
   <div class="sidebar-nav">
+
     <div class="nav-section-label">内容模块</div>
+
     <a class="nav-item active" href="index.html"><span class="nav-icon">🔥</span><span>最新资讯</span><span class="nav-badge">今日</span></a>
+
     <a class="nav-item" href="lifecycle.html"><span class="nav-icon">🔄</span><span>产品生命周期</span><span class="nav-badge">5阶段</span></a>
+
     <a class="nav-item" href="3d_printer_brands_v2.html"><span class="nav-icon">🏭</span><span>品牌总览</span><span class="nav-badge">29个</span></a>
+
     <a class="nav-item" href="user-complaints.html"><span class="nav-icon">💬</span><span>用户点评</span><span class="nav-badge">海外用户</span></a>
+
     <a class="nav-item coming-soon"><span class="nav-icon">📊</span><span>数据分析</span><span class="nav-badge" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.35)">敬请期待</span></a>
+
     <div class="nav-section-label" style="margin-top:16px">工具</div>
+
     <a class="nav-item" href="slicing-params.html" target="_blank"><span class="nav-icon">⚙️</span><span>切片参数速查</span><span class="nav-badge">v2.2</span></a>
+
   </div>
+
   <div class="sidebar-footer">
+
     Author: <a href="https://github.com/Cruise-Ling" target="_blank">Cruise</a><br>
+
     Powered by WorkBuddy
+
   </div>
+
 </div>
 
+
+
 <div class="main">
+
   <div class="top-bar">
+
     <div class="brand">
+
       <span class="brand-icon">🚀</span>
+
       <div class="brand-text">
+
         <h1>3D打印每日速递</h1>
+
         <div class="author-line">by <a href="https://github.com/Cruise-Ling" target="_blank">Cruise</a> &nbsp;|&nbsp; 3D Printing Daily Express</div>
+
       </div>
+
     </div>
+
   </div>
+
+
 
   <div class="stats-row">
+
     <div class="stat-card"><div class="stat-label">本月简报</div><div class="stat-value">60 期</div></div>
+
     <div class="stat-card"><div class="stat-label">累计资讯</div><div class="stat-value">1470 条</div></div>
+
     <div class="stat-card"><div class="stat-label">分区覆盖</div><div class="stat-value">7 大</div></div>
+
   </div>
+
+
 
   <div class="tags-row">
+
     <span class="tag-label">主题：</span>
+
     <span class="tag-item"><span class="tag-dot" style="background:#1a73e8;"></span>泛行业</span>
+
     <span class="tag-item"><span class="tag-dot" style="background:#e65100;"></span>细分领域</span>
+
     <span class="tag-item"><span class="tag-dot" style="background:#2e7d32;"></span>消费级</span>
+
     <span class="tag-item"><span class="tag-dot" style="background:#bf360c;"></span>细分市场</span>
+
     <span class="tag-item"><span class="tag-dot" style="background:#00695c;"></span>场景打印</span>
+
     <span class="tag-item"><span class="tag-dot" style="background:#7b1fa2;"></span>海外资讯</span>
+
     <span class="tag-item"><span class="tag-dot" style="background:#00838f;"></span>用户口碑</span>
+
   </div>
+
+
 
   <div id="calendarView">
+
     <div class="cal-header">
+
       <div class="cal-nav">
+
         <button onclick="changeMonth(-1)">←</button>
+
         <div>
+
           <span class="cal-month" id="calMonthYear">2026 年 7 月</span>
+
           <span class="cal-en" id="calMonthEn">July</span>
+
         </div>
+
         <button onclick="changeMonth(1)">→</button>
+
       </div>
+
       <div class="view-toggle">
+
         <button onclick="switchView('list')">列表</button>
+
         <button onclick="switchView('calendar')" class="active">日历</button>
+
       </div>
+
     </div>
+
+
 
     <div class="cal-grid">
+
       <div class="cal-weekdays">
+
         <div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div>
+
       </div>
+
       <div class="cal-days" id="calDays">
+
         <!-- JS generated -->
+
       </div>
+
     </div>
+
+
 
     <div class="cal-stats">
+
       <span>本月 <b>60</b> 期简报 · <b>1470</b> 条资讯</span>
+
       <span style="margin-left:auto;">7 分区全覆盖 · 今日 10 JUL</span>
+
     </div>
+
   </div>
 
+
+
   <div class="content-card" id="listView">
+
     <div class="cal-header" style="margin-bottom:14px;">
+
       <div><span class="cal-month">历史简报列表</span></div>
+
       <div class="view-toggle">
+
         <button onclick="switchView('list')" class="active">列表</button>
+
         <button onclick="switchView('calendar')">日历</button>
+
       </div>
+
     </div>
+
     <div class="section-label">全部简报</div>
+
     <div id="listContainer">
+
         <a class="briefing-item" href="briefing_20260922.html">
+
     <div class="date-badge">
+
         <span class="day">21</span>
+
         <span class="month">SEP</span>
+
     </div>
+
     <div class="briefing-info">
+
         <div class="title-line">🏭 金杨精密设1亿增材控股子公司；铂力特三期D区封顶；十部门医药"十五五"规划纳入3D打印；通用汽车20+工厂用Stratasys FDM；铬莱铂近2亿A轮💉 UltiMaker携手Bioactivx 3D打印合成皮肤伤口护理；LLNL开发AI视觉实时捕捉DIW缺陷；SprintRay推FDA许可Midas Restore陶瓷牙科树脂；Photocentric JENI挑战注塑；Tesseract线性电机入局3D打印🤖 启元机器人Q1/T1开售并推PrimeFLOW外壳定制平台；拓竹联合七家无障碍组织发起全球辅助设计挑战赛；Snapmaker U1四工具头近零废料多材料；Anycubic Kobra X原生7色；Bambu X2D获Tom's Hardware年度综合第一🚗 中国一汽"超级打印工厂"揭牌年打印约1.9万件；西安维度生物完成个性化3D打印膝关节假体植入；工业级爆单+消费级出圈双线行情；十五五将桌面3D打印列重点推广终端；医疗植入物注册证同比+42%🥮 北京日报天坛"点亮月亮"、良渚文物"跃然饼面"中秋文创；歙县许国石坊/鱼灯浮雕文创月饼；高中劳动技术3D打印月饼模具教学设计；嘉立创全品类工艺材料落地指南；白令三维文创赋能文物活态传承📱 苹果iPhone Duo折叠屏铰链由3D打印制造；trinckle发布Additive App Suite；AMAsia Pulse亚太AM投资升温；SWISSto12携手三菱电机扩RF载荷；Selle Italia推3D打印Unica自适应鞍座💷 Print2WebCorp/Bambu P2S与Creality K2领衔；ModelRec/Bambu A1最省心；SpreadingSantorum/Creality K2 Combo编辑之选；Print Technology/Bambu P1S家用最佳；3DMag/Creality HALOT-ONE入门树脂</div>
+
         <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+
     </div>
+
 </a>
+
         <a class="briefing-item" href="briefing_20260921.html">
+
     <div class="date-badge">
+
         <span class="day">18</span>
+
         <span class="month">SEP</span>
+
     </div>
+
     <div class="briefing-info">
+
         <div class="title-line">📦 1-8月我国3D打印机出口502万台、总额超131亿元💰 本周四企同获新融资近5.7亿元，铬莱铂A轮/公大激光C轮在列📈 江西上半年3D打印设备产量暴增90.8%🏆 第48届世界技能大赛9月22日上海开赛，联泰科技助力增材制造赛项🏭 易加增材5.58亿元金属3D打印扩产项目落成投产🦴 天衍医疗"金属增材制造长段骨缺损修复体"获三类医疗器械注册证🔬 万华化学尼龙12全链条技术获山东省技术发明一等奖，实现国产化⚙️ IMDEA研发可3D打印金属玻璃，提升电机能效📷 Creality HALOT-X1树脂双机+Pika 3D扫描仪 IFA亮相🌊 华曙高科金属3D打印助力平陆运河攻克船闸缓冲难题🔬 摩方精密发布microArch S330A，2μm精度拓展精密制造🔆 Bambu Lab首款独立激光雕刻/切割机R1于9月发布🔧 Creality K3/SPARKX i8 IFA 2026亮相，KliTek 4.8秒换喷嘴🖨️ Phrozen发布Sonic Mighty Revo MAX 16K大尺寸光固化旗舰🌐 爱乐酷发布Nexprint协作平台，上线5万+免费模型👟 Formnext深圳2026：鞋履3D打印成最大亮点🤖 Formnext深圳：AI建模工具从概念走向展台，Tripo/Meshy参展📱 金属3D打印进入OPPO折叠屏量产，BLT铰链轴盖已装机🤖 Tripo AI完成约30亿元B/B+轮融资❄️ Formnext深圳新前沿：AI服务器冷却+消费电子金属AM🥮 邹城博物馆中秋研学：3D打印一枚会发光的月饼🏛️ 多地文博景区推出中秋文创月饼，文物纹样跃然饼面🏫 南昌县文旅中秋文博月饼手作+研学活动密集上线🎓 襄阳职大"智造未来·襄印童心"3D打印研学课堂进中学🔬 荔湾增材科普进校园：千名青少年体验3D打印造物⚖️ Stratasys赢得对Bambu Lab的$27.6M专利诉讼🪙 IperionX准备扩大钛粉产能，强化关键矿物自主🇨🇳 TCT Shenzhen 2026预览：80+边会揭示中国AM市场走向📊 增材制造市场Q2达$4.48B，连续六季度增长✈️ Alloyed助英国制造3D打印涡轮喷气发动机💷 LayerMath 2026成本横评：Bambu/Prusa/Creality两年持有成本🏆 ProductsForOurLives 2026：三品牌各自该买谁🥇 iTechDeals 2026最值得买5款：Bambu P1S综合第一🥈 CNET 2026最佳3D打印机选购指南🌈 PCMag 2026最佳3D打印机：Bambu H2D综合第一</div>
+
         <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
+
     </div>
+
 </a>
+
         <a class="briefing-item" href="briefing_20260918.html">
+
     <div class="date-badge">
+
         <span class="day">17</span>
+
         <span class="month">SEP</span>
+
     </div>
+
     <div class="briefing-info">
+
         <div class="title-line">🏭 巨头跨界、工业下沉：得力/联想/小米集体入局3D打印💰 创材深造完成近亿元A+轮，AI+金属新材料研发加速🏗️ 杭州江南科学城落地20亿元3D打印产业基地🔩 西安诺高镁完成A轮融资，主攻镁合金增材制造🌍 首届全球增材制造中心峰会巴塞罗那落幕，欧洲枢纽联盟(Add)liance成立🌊 华曙高科金属3D打印助力平陆运河攻克船闸缓冲难题🪖 信息支援部队用3D打印实现边防装备现场快速维修🔬 摩方精密发布microArch S330A，2μm精度拓展精密制造⚡ Fronius推出Additive Cell交钥匙WAAM金属3D打印单元🧪 Freemelt获Intalus订单并加入普渡PCAM电子束联盟🔆 Bambu Lab首款独立激光切割/雕刻机R1于9月发布🔧 Creality KliTek K3五秒换喷嘴，多色多材料免清料塔🔄 Prusa二代全线升级：CORE One+/XL+配喷嘴擦拭与腔体加热🌐 爱乐酷发布Nexprint协作平台，上线5万+免费模型👟 耐克×Zellerfeld双色一体3D打印鞋Air Max 1000量产🏭 宁夏共享集团技改：铸造3D打印砂芯年产1万→2万吨🖨️ 惠普MJF 1200亚太首发：把工业级MJF搬进办公室👟 华曙高科鞋模装机破百台，规模交付提速🤖 Tripo AI年营收破1200万美元，合作伙伴达4万家📦 盈普全球首发CF250 PPS紧凑型专业SLS系统🍬 科艺融合研学展：3D糖画打印机赋能非遗美育课堂🌕 太原中秋非遗月饼引入3D打印模具，晋阳地标跃然饼面🥮 中国地域特色月饼带城市IP"出圈"，带火文创月饼模具🛰️ 东极哨所运用3D打印实现无人机当日抢修🎨 传统糖画3D智能打印机研发，非遗数字化有了新路径⚛️ Rosatom宣布完成核电领域增材制造全链条布局🦷 HeyGears Reflex RS Turbo：高速牙科/珠宝3D打印新机🤝 Nano Dimension收购Desktop Metal，增材行业再整合🏭 Stratasys IMTS 2026主打"生产级"，GM 20+工厂规模部署🛡️ 欧洲增材制造国防网络AMDefNet正式成立📊 LayerMath 2026三大品牌横评：Bambu易用、Creality性价比、Prusa可修🏆 How-To Geek：三品牌各自真正胜出的场景🔍 ADP Industries 2026 definitive对比：基于千小时实测🥇 PCMag 2026最佳3D打印机选购指南🌈 TechRadar 2026最佳3D打印机：Bambu H2D综合第一</div>
+
         <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+
     </div>
+
 </a>
+
 <a class="briefing-item" href="briefing_20260917.html">
+
     <div class="date-badge">
+
         <span class="day">16</span>
+
         <span class="month">SEP</span>
+
     </div>
+
     <div class="briefing-info">
+
         <div class="title-line">UGV 无人地面车辆成 3D 打印新机会SWISSto12 与三菱电机签署 MoU，拓展亚洲射频载荷制造3D2GO 案例揭示东南亚 3D 打印增长路径Specter Aerospace 与 VulcanForms 建专用高超声速 3D 打印工厂Printing Money 第42期：Q2 2026 3D 打印上市公司财报解读Tesseract 将直线电机引入 3D 打印机Apple iPhone Duo 折叠屏钛合金铰链由 3D 打印制造Photocentric JENI 以 3D 打印挑战工业级注塑量产Hyper3D Rodin Gen2.5 将 AI 带入打印准备环节3D 打印支架的商业案例桌面金属 3D 打印机开始真正像桌面产品Impossible Objects 募资4000万美元推动工业级增材六个体积 3D 打印项目值得关注（2026）OpenAI GPT-6 宣传片出现拓竹 P1S 3D 打印机Meshy 7：覆盖手指与脚趾的 AI 建模3D 打印橄榄球头盔成 NFL 商业新热点现代汽车安装两台 ExOne VX1000 HSS 打印大型车门面板欧洲最大 3D 打印学生公寓迎丹麦学生入住跨境 3D 打印正在缩小与本地制造的速度差距Printflation：当预期增长快于商业落地创想三维助力全国青少年信息素养大赛，3D打印渗透科创教育NASA支持µBites项目：3D打印塑料衍生太空饼干太原非遗文创月饼引入3D打印模具，晋阳地标跃然饼面众智信赢推3D打印中秋月球灯与月饼指尖陀螺文创中国日报「当月饼遇上中式美学」：3D打印饼模复刻玉器造型SPEE3D任命新全球CEO，强化美国市场布局瑞典Hemavan滑雪缆车基础采用3D打印英国导盲犬协会3D打印盲人父母超声波模型The Exploration Company融资4.5亿美元对标SpaceX，含3D打印航天构件FibreSeek连续纤维桌面机FibreSeeker 3开启全球预售TechRadar 2026最佳3D打印机：Bambu H2D综合第一Tom's Hardware 2026榜：X2D综合最佳、SparkX i7入门最佳CNET 2026最佳3D打印机选购指南All3DP 2026最佳3D打印机全面横评Tom's Hardware多色3D打印机榜：H2D/Prusa XL/Snapmaker U1</div>
+
         <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+
     </div>
+
 </a>
+
 <a class="briefing-item" href="briefing_20260916.html">
+
     <div class="date-badge">
+
         <span class="day">15</span>
+
         <span class="month">SEP</span>
+
     </div>
+
     <div class="briefing-info">
+
         <div class="title-line">Impossible Objects 完成4000万美元B轮，CBAM 技术迈向工业量产SWISSto12 与三菱电机签署 MoU，拓展亚洲射频载荷制造3D2GO 案例揭示东南亚 3D 打印增长路径IFA 2026 指明多色 3D 打印演进方向Printing Money 第42期：Q2 2026 3D 打印上市公司财报解读Apple iPhone Duo 折叠屏钛合金铰链由 3D 打印制造Photocentric JENI 以 3D 打印挑战工业级注塑量产Hyper3D Rodin Gen2.5 将 AI 带入打印准备环节消音器市场将检验金属增材的量产就绪度3DPOD 314：脱脂、烧结与金属粘结剂喷射HeyGears Reflex RS Turbo 树立树脂 3D 打印新基准桌面金属 3D 打印机开始真正像桌面产品六个体积 3D 打印项目值得关注（2026）创想三维现身联想门店，中国渠道加速下沉Meshy 7：覆盖手指与脚趾的 AI 建模3D 打印橄榄球头盔成 NFL 商业新热点欧洲最大 3D 打印学生公寓迎丹麦学生入住跨境 3D 打印正在缩小与本地制造的速度差距3D 打印新闻简报（9月12日）：品牌重塑、网络安全等现代汽车安装两台 ExOne VX1000 HSS 打印大型车门面板创想三维助力全国青少年信息素养大赛，3D打印渗透科创教育NASA支持µBites项目：3D打印塑料衍生太空饼干太原非遗文创月饼引入3D打印模具，晋阳地标跃然饼面众智信赢推3D打印中秋月球灯与月饼指尖陀螺文创中国日报「当月饼遇上中式美学」：3D打印饼模复刻玉器造型SPEE3D任命新全球CEO，强化美国市场布局瑞典Hemavan滑雪缆车基础采用3D打印英国导盲犬协会3D打印盲人父母超声波模型The Exploration Company融资4.5亿美元对标SpaceX，含3D打印航天构件FibreSeek连续纤维桌面机FibreSeeker 3开启全球预售TechRadar 2026最佳3D打印机：Bambu H2D综合第一Tom's Hardware 2026榜：X2D综合最佳、SparkX i7入门最佳CNET 2026最佳3D打印机选购指南All3DP 2026最佳3D打印机全面横评Tom's Hardware多色3D打印机榜：H2D/Prusa XL/Snapmaker U1</div>
+
         <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+
     </div>
+
 </a>
+
 <a class="briefing-item" href="briefing_20260915.html">
+
         <div class="date-badge">
+
             <span class="day">15</span>
+
             <span class="month">SEP</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">得力入局3D打印招聘儿童机研发人才创想三维纳入恒生综合指数有望入港股通鑫精合数亿元融资CMC资本与中集资本联合领投安洁科技15亿建金属3D打印产业基地深圳造3D打印机全球近九成份额1-7月出口95.5亿元苹果iPhone Duo折叠屏铰链3D打印钛合金港科大火星住房材料大族激光500W绿光激光器主攻铜3D打印Stratasys F870获Toyota/Rivian采用SprintRay牙科树脂获FDA许可创想IFA全矩阵K3/SPARKX i8/M1斩双奖HALOT-X1+Pika扫描仪+Ender-3 V3 Mega 2026新机盘点X2D/SPARKX i7/Creator 5 Pro/Centauri 2 Bambu X2D获PCMag编辑之选Snapmaker U1获3Dnatives Lab评测创想M1 Filament Maker闭环回收+Nexbie 3D打印鞋加州AB2047 3D打印枪支监管法案过审上海市场监管局提示儿童3D打印笔风险前7月金属设备出口845台增37.6%欧洲最大3D打印学生公寓完工鲲智增材日产5000颗义齿创想助力青少年信息素养大赛NASA µBites 3D打印太空饼干太原非遗文创月饼引入3D打印模具众智信赢3D打印中秋文创中国日报当月饼遇上中式美学3D打印饼模SPEE3D新全球CEO强化美国布局瑞典滑雪缆车基础3D打印英国导盲犬协会3D打印盲人超声波The Exploration Company融资4.5亿美元FibreSeek连续纤维桌面机预售TechRadar H2D综合第一Tom's Hardware X2D最佳CNET/All3DP 2026实测横评Tom's Hardware多色专项榜H2D/Prusa XL/Snapmaker U1</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+
         </div>
+
     </a>
+
     <a class="briefing-item" href="briefing_20260914.html">
+
         <div class="date-badge">
+
             <span class="day">14</span>
+
             <span class="month">SEP</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">鑫精合完成数亿元融资CMC资本与中集资本联合领投Tripo AI累计30亿KIRI获华为哈勃A轮现代汽车加码工业3D打印苹果折叠屏iPhone Duo钛合金铰链Arridex扩张3D打印网络至加纳麦吉尔大学蚊子口器喷嘴获搞笑诺贝尔港科大火星住房材料宝马2027推WAAM汽车结构件体积3D打印六大项目盘点南加州大学10分钟打印婴儿MRI传感器科威特首次3D打印辅助髋关节重建缅因大学推出30英尺3D打印船舶创想三维×联想100家门店计划Phrozen 16K大面阵Bambu R1独立激光Snapmaker U1四工具头换色Creality K3/SPARKX i8/M1获IFA双奖Beets3D 2026品牌排名Bambu 9.5尼日利亚建金属增材制造中心Formnext 2026新增Defence Summit缅因大学30英尺3D打印船国产金属设备出口增76%央视时装周3D打印跨界饰品丹麦Skovsporet学生公寓首批入住偏乡3D列印校舍湾区3D打印宠物动物园Meltio在铂金内培育红宝石Continuous Composites获海军SBIR无人机合同VMP欲成领先AM金属粉末商Meshy 7生成式AI建模FibreSeek连续纤维桌面机Tom's Hardware评X2D综合最佳best3dprinter.org Top12CNET/TechRadar/All3DP 2026实测横评</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+
         </div>
+
     </a>
+
     <a class="briefing-item" href="briefing_20260911.html">
+
         <div class="date-badge">
+
             <span class="day">11</span>
+
             <span class="month">SEP</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">三绿科技IPO进入问询拟募18.29亿Stratasys 4250万美元收购Markforged中烨增材1亿华东总部落户太仓HeyGears G1X众筹破1500万美元SprintRay发布FDA认证Midas Restore牙科树脂华盛顿州立大学3D打印电子皮肤赋予假肢触觉Hyper3D Rodin Gen 2.5将AI引入打印准备创想IFA 2026全矩阵K3/SPARKX i8/M1回收机/Pika/Nexbie鞋拓竹A2L/X2D/H2D新品矩阵Bambu H2D 4-in-1成TechRadar综合第一NYU 3D打印可降解血管支架商业案例Quickparts四国网络服务航天国防新华社视点上半年产量增51.6%潮玩食品颅骨模型金钥匙信阳博物馆复原上海3D打印月饼伊朗俘获Anduril 3D打印水下无人机3D Systems被判侵犯Intrepid商业秘密Alibaba 200美元光纤军用无人机Newtechzy/3DPrintedDecor/iTechDeals/Digitura/OfZen 2026实测Bambu A1/H2D FlashForge 5M Prusa CORE One Anycubic Kobra</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
+
         </div>
+
     </a>
+
     <a class="briefing-item" href="briefing_20260910.html">
+
         <div class="date-badge">
+
             <span class="day">10</span>
+
             <span class="month">SEP</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">VAST完成约30亿元B轮及B+轮融资繁昌区出台增材制造产业扶持政策3D打印产业从单机走向设备+材料+软件+中试+认证体系Auxilium国际空间站造出肝/肾/软骨组织昆工X射线穿透实现体内无创原位3D成型清华可降解多功能颅骨器件登Science AdvancesGKN UAV搭载3D打印发动机规避ITAR创想HALOT-X1光固化双机9月9日上线Phrozen 16K发布拓竹R1独立激光创想K3五秒换喷嘴Prusa二代升级PrusaSlicer 3.0重大重写欧洲最大3D打印学生公寓丹麦完工Tripo AI完成30亿元融资SUNLU无热除湿柜NASA µBites太空饼干Formnext深圳落幕新华社视点3D打印如何影响生产生活上半年产量增51.6%创想助力青少年信息素养大赛信阳博物馆上海月饼3D打印宠物动物园Quantum Cyber康涅狄格无人机农场装80台3D打印机QTREX将Nano Dimension AME引入以色列国防Mastrex美国制造金属LPBF3D Alliances谈人才招聘OfZen/PrinterTech/ModelRec/SaltOlive九月实测榜FlashForge Adventurer 5M、Bambu A1/P1S、Prusa MK4S/CORE One+、Anycubic Kobra X、QIDI Max4</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+
         </div>
+
     </a>
+
     <a class="briefing-item" href="briefing_20260908.html">
+
         <div class="date-badge">
+
             <span class="day">08</span>
+
             <span class="month">SEP</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">商务部等7部门扩大3D打印产品消费三绿科技IPO问询拟募18.29亿，安洁科技15亿建金属3D打印基地得力入局3D打印大量招聘，两项增材制造国标9月1日实施空间站生物打印首造肝/肾组织，智神星一号首飞度维3D打印构件通过验证创想三维IFA首秀SPARKX i8 K3双获奖，原子重塑携Palette 300/M1/Glow 1出海欧洲最大3D打印学生公寓丹麦完工，前7月金属设备出口845台Tripo AI融资30亿元，阿迪达斯Futurecool一体打印鞋3DPrint Quickparts四国航天国防网络，AML3D营收增70%Beets3D 2026品牌排名拓竹9.5居首，PCMag/TechRadar评测HeyGears Reflex RS Turbo与Bambu X2D</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+
         </div>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260903.html">
+
         <div class="date-badge">
+
             <span class="day">03</span>
+
             <span class="month">SEP</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">中烨增材1亿元华东总部落户太仓，中国船级社增材制造指南GD019正式实施VAST完成约30亿元B轮及B+轮融资央行扩大科技创新与设备更新贷款3D打印受益，泸州将建亚洲最大3D打印单体工厂Savannah River国家实验室与3D Systems签署核领域CRADA，IperionX获美军11.5M造钛紧固件AM Pulse Asia盘点亚太金属AM新进展，创想三维Formnext亮出K3多喷嘴HALOT-X1消费级答案Bambu进军消费级激光切割推R1，Prusa二代XL+与CORE One+焕新芜湖春谷60+企业3D打印出海170国，深圳光明拓竹年产能超300万台宝辰鑫发布300W紧凑激光器，深圳四小龙占全球2500美元以下94%3D打印鞋与机器人灵巧手加速进家庭，信阳博物馆3D打印复原文物3DPrint医疗工业AI 3D新融资涌动，JPG携手Sculpteo登陆高定周Beets3D 2026十大品牌实测拓竹9.5居首，IT168 3000至5000元横评P2S K1C Kobra S1</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+
         </div>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260902.html">
+
         <div class="date-badge">
+
             <span class="day">02</span>
+
             <span class="month">SEP</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">商务部等7部门扩大3D打印消费两项国标正式实施，威拉里铜粉激光吸收率提升5-6倍鑫精合10.87亿建金属打印基地，XDA/Fast3DPrinters双评测力捧Bambu A2L LightMake L4四喷头线性电机发布，Formnext深圳39万台打印机进农场创想三维增收不增利，杭州小学生圈3D打印爆火创想K3预告社区反响两极300美元实测榜更新</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+
         </div>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260901.html">
+
         <div class="date-badge">
+
             <span class="day">01</span>
+
             <span class="month">SEP</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">商务部等7部门发文扩大3D打印产品消费，威拉里铜粉激光吸收率提升5-6倍铬莱铂AI桌面金属机4888美元，adidas全3D打印鞋限量400双新疆泰州浙江开学第一课玩转3D打印，Formnext深圳揭示中国AM全产业链Anycubic Photon P1 Max大尺寸实测，$400/$1000以下最佳榜单出炉</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+
         </div>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260831.html">
+
         <div class="date-badge">
+
             <span class="day">31</span>
+
             <span class="month">AUG</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">3D打印设备产量增48.5%出口增90.2%江苏27家企业组团参展Formnext，NASA AI锁定GRCop-42火箭合金方案奇遇陶瓷人工骨设备扩产至4台，创想K3四喷嘴首秀Formnext拓竹创想线下门店抢占高端商圈，消费级市场2034年预计52亿美元LightForce 3D打印正畸金属支架落地，滁州新乡西电渭南暑期科普研学轮番登场，Materialise二季度航空防务带动反弹Phase3D挺进北美防务市场，Bambu X2D获KhanList 9/10 HeyGears Reflex RS Turbo获编辑选择</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+
         </div>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260828.html">
+
         <div class="date-badge">
+
             <span class="day">28</span>
+
             <span class="month">AUG</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">快造科技完成C轮融资6K Additive上半年营收增73%，Othisis全3D打印液氧甲烷发动机热试车海正生材3D打印耗材销量增169%，Morpho UV打印机众筹48小时破900万美元Bambu确认开发UV打印机，金属增材2033年预计达191亿美元航空航天3D打印2034年达204亿美元，西安秦弩柞水未来教室东莞开学3D打印体验轮番登场，Ursa Major 23亿美元SPAC上市美海军PPD为潜艇AM零件开快速通道，Bambu X2D评测刷屏Toms TechRadar Fast3DPrinters 250小时零失败</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
+
         </div>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260827.html">
+
         <div class="date-badge">
+
             <span class="day">27</span>
+
             <span class="month">AUG</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">Formnext Asia深圳开幕330家企业创想三维5.5亿建总部，升华三维PEP白皮书发布中铝400/600MPa铝粉攻克热裂纹，Creality SPARKX i7 Nano四色机上市黑格G1众筹破1400万，3D食品打印2035年前年增31%消费级市场2032年达466亿美元，广州南京嘉兴多地青少年3D打印研学3D打印鞋履大奖首发，Formnext Asia史上最大届KIT陶瓷金属多材料突破，Bambu X2D评测出炉2026入门选购指南更新</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+
         </div>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260826.html">
+
         <div class="date-badge">
+
             <span class="day">26</span>
+
             <span class="month">AUG</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">嘉立创3D打印江苏基地投产双基地布局，央视聚焦金属3D打印设备订单排到年底上半年出口+76%，国务院批复十五五消费规划桌面级3D打印机首入列，碳索者三号21900元连续碳纤维桌面机开售，GKN为瑞典Project Otto打造ITAR-free 3D打印涡喷发动机，Formnext Asia深圳展今日开幕350+企业</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+
         </div>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260825.html">
+
         <div class="date-badge">
+
             <span class="day">25</span>
+
             <span class="month">AUG</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">拓竹否认2027年IPO传闻消息不实，央视聚焦国产工业级3D打印设备出海订单排到年底，2026上半年金属3D打印设备出口+76%海外订单首超国内，铂力特人形机器人金属部件肩支架减重46%，海天增材绿光纯铜液冷板流道0.1mm，赛纳三维×趣丸科技AI建模+全彩打印战略合作，Berkeley开源人形机器人3D打印降本</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+
         </div>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260824.html">
+
         <div class="date-badge">
+
             <span class="day">24</span>
+
             <span class="month">AUG</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">3D打印概念股震荡回升南风股份涨超15%，键凯科技20CM涨停前7月产量+52.3%跑赢锂电机器人，深蓝航天雷霆-RS 130吨发动机100秒热试车85%金属3D打印，拓竹启动消费级UV打印机项目，诺思贝瑞近亿元融资KEXCELLED扩容，铂力特近20天中标5200万，创想三维K3将亮相Formnext深圳展</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+
         </div>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260821.html">
+
         <div class="date-badge">
+
             <span class="day">21</span>
+
             <span class="month">AUG</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">前7月3D打印设备产量+52.3%华曙高科涨停，Hadrian完成13.7亿美元D轮估值78.7亿，GB/T 47195-2026铝合金LPBF国标9-1实施，朱雀三号着陆腿整体3D打印钛合金，拓竹启动消费级UV打印机项目光速切入UV与激光双赛道，温州3D打印鞋三步成鞋全球鞋履市场破49.5亿美元，RIMPAC军演首现SPEE3D远征增材制造Prusa升级CORE One+/L+/XL+</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
+
         </div>
+
     </a>
 
+
+
     <a class="briefing-item" href="briefing_20260820.html">
+
         <div class="date-badge">
+
             <span class="day">20</span>
+
             <span class="month">AUG</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">融速科技近亿元A+轮融资探雪科技进军消费级桌面金属3D打印，佛州大西洋大学3D打印海藻结构治理藻华，创想三维开售AI扫描仪Pika与激光雕刻机Falcon A1C，华峰窟窿鞋高温走红极限2天交付，成都金石友志让3D打印走进生活三星堆文创复刻，金属3D打印企业3DEO清算工厂行业整合加剧，PCMag评Bambu P2S为2026最佳3D打印机</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+
         </div>
+
     </a>
+
+
+
 
 
                 <a class="briefing-item" href="briefing_20260819.html">
+
         <div class="date-badge">
+
             <span class="day">19</span>
+
             <span class="month">AUG</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">华泰证券研报3D打印延续高增PLA供需改善，清华亚体素定向纤维3D打印登Nature引导肌管再生，拓竹进驻64家山姆纯净PLA发布并上时装周，Formnext Asia设首届3D打印鞋履设计大奖，万物有型设计展长沙落幕超1万人次，Stratasys扩展Limbitless合作12年累计为儿童提供义肢，TechRadar评Bambu H2D为2026综合最佳</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+
         </div>
+
     </a>
+
+
 
 <a class="briefing-item" href="briefing_20260817.html">
+
         <div class="date-badge">
+
             <span class="day">17</span>
+
             <span class="month">AUG</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">拓竹官宣R1进军消费级激光加工，Hadrian完成14亿美元D轮估值79亿，Formlabs董事会重组冲刺IPO，Stratasys/Velo3D财报航防需求强劲，全国首届万物有型3D打印设计展长沙开幕</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+
         </div>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260814.html">
+
         <div class="date-badge">
+
             <span class="day">14</span>
+
             <span class="month">AUG</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">华曙高科39.1亿定增获上交所受理，拓竹R1/智小白Explorer 7新品双发，iAM3D推2米级L-DED航空系统，现代起亚AMSC启用，库周报前7月3D打印机出口112亿增110%</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
+
         </div>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260813.html">
+
         <div class="date-badge">
+
             <span class="day">13</span>
+
             <span class="month">AUG</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">华曙高科39.1亿定增获上交所受理，拓竹入驻超60家Apple授权店，汕大一附院3D打印导板辅助全踝关节置换，温州3D打印鞋规模化售价800-1000元，3D Systems获美军900万美元金属3D打印项目</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+
         </div>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260812.html">
+
         <div class="date-badge">
+
             <span class="day">12</span>
+
             <span class="month">AUG</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">前7个月3D打印机出口112亿元增1.1倍深圳占86%，清华亚体素定向纤维3D打印登Nature，朱雀三号遥二8月11日发射天鹊发动机全3D打印，现代汽车启用首个3D打印中心AMSC，拓竹首曝3D生成大模型SegviGen</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+
         </div>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260811.html">
+
         <div class="date-badge">
+
             <span class="day">11</span>
+
             <span class="month">AUG</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">泸州AM集群产值2.33亿增191%，卢秉恒院士推进3D打印大飞机路线，QIDI Plus5发布$749起售，LightMake独立四喷头众筹启动，Formlabs冲刺IPO募5亿美元</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+
         </div>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260810.html">
+
         <div class="date-badge">
+
             <span class="day">10</span>
+
             <span class="month">AUG</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">南方日报聚焦深圳3D打印产业带全球9成消费级产能，德悟科技Pre-A轮微米级SLM后处理成本降70%，拓竹A2L正式进军印度，海目星2000万成立增材子公司，黑格G1X众筹超7000万</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+
         </div>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260807.html">
+
         <div class="date-badge">
+
             <span class="day">7</span>
+
             <span class="month">AUG</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">人民日报聚焦深圳3D打印出口占全国86%，卢秉恒披露3D打印大飞机路线图，拓竹首次对外投资布局激光器，希禾增材绿光金属基地投产，嘉立创在线3D打印标准化</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
+
         </div>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260806.html">
+
         <div class="date-badge">
+
             <span class="day">6</span>
+
             <span class="month">AUG</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">嘉立创A股上市市值破千亿3D打印成第三增长曲线，陕西智拓4.75亿基地封顶，QIDI Plus5全球发布，温州3D打印鞋三步成鞋订单排满，3D Systems CEO卸任</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+
         </div>
+
     </a>
+
 <a class="briefing-item" href="briefing_20260805.html">
+
         <div class="date-badge">
+
             <span class="day">05</span>
+
             <span class="month">AUG</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">创想三维单日大涨17.72%市值破百亿，黑格G1众筹10天破1100万美元，商业火箭发动机3D打印渗透率超70%，瑞金海南儿童骨肿瘤3D打印保肢，宝马3D打印量产</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+
         </div>
+
     </a>
+
     <a class="briefing-item" href="briefing_20260804.html">
+
         <div class="date-badge">
+
             <span class="day">04</span>
+
             <span class="month">AUG</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">创想三维单日大涨17.72%，国际空间站首次在轨生物打印肾脏肝脏组织，FDA首批准医院院内3D打印植入物，轻量智造融资2500万，6项3D打印国标实施</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+
         </div>
+
     </a>
+
     <a class="briefing-item" href="briefing_20260803.html">
+
         <div class="date-badge">
+
             <span class="day">03</span>
+
             <span class="month">AUG</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">黑格G1X众筹一周破千万美元，拓竹北京国贸首店将开，FDA首次放行院内3D打印植入物，惠普首款工业FFF机600HT，Sovol M1D首日众筹近2000万</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+
         </div>
+
     </a>
+
     <a class="briefing-item" href="briefing_20260730.html">
+
         <div class="date-badge">
+
             <span class="day">30</span>
+
             <span class="month">JUL</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">黑格G1X全彩3D/UV打印机众筹破千万美元，拓竹4年卖出100万台入驻Apple店，Fusion3破产清算，UCLA锌离子电池7倍储能，西安3.5亿项目投产</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+
         </div>
+
     </a>
+
     <a class="briefing-item" href="briefing_20260729.html">
+
         <div class="date-badge">
+
             <span class="day">29</span>
+
             <span class="month">JUL</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">商务部官宣3D打印出口暴增109%成外贸新名片，Meshy近4亿美元B轮融资，UT Austin生物材料登Nature，Alpine×Lacoste赛车座椅3D打印晶格</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+
         </div>
+
     </a>
+
     <a class="briefing-item" href="briefing_20260727.html">
+
         <div class="date-badge">
+
             <span class="day">27</span>
+
             <span class="month">JUL</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">超卓航科10亿元控股权转让，黑格G1众筹24小时破722万美元，拓竹300万台产能基地，GKN×Pratt合作F135发动机</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+
         </div>
+
     </a>
+
     <a class="briefing-item" href="briefing_20260724.html">
+
         <div class="date-badge">
+
             <span class="day">24</span>
+
             <span class="month">JUL</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">快造科技10亿元C轮融资估值近70亿，黑格G1众筹$1999起，拓竹全系降价，创想三维V3 Mega 420mm大尺寸发布</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
+
         </div>
+
     </a>
+
     <a class="briefing-item" href="briefing_20260723.html">
+
         <div class="date-badge">
+
             <span class="day">23</span>
+
             <span class="month">JUL</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">大族激光半年营收134亿增76%，MIT可复用树脂支撑，贵阳3D打印鞋牵手FIFA出口海外</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+
         </div>
+
     </a>
+
     <a class="briefing-item" href="briefing_20260722.html">
+
         <div class="date-badge">
+
             <span class="day">22</span>
+
             <span class="month">JUL</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">Meshy近4亿美元B轮估值超100亿，阿奈索7.6亿项目落地淮南，嘉立创IPO募资42亿</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+
         </div>
+
     </a>
+
     <a class="briefing-item" href="briefing_20260721.html">
+
         <div class="date-badge">
+
             <span class="day">21</span>
+
             <span class="month">JUL</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">上半年3D打印机出口362万台增90%，meland×拓竹10余城联名，Q1市场43.5亿美元</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+
         </div>
+
     </a>
+
     <a class="briefing-item" href="briefing_20260720.html">
+
         <div class="date-badge">
+
             <span class="day">20</span>
+
             <span class="month">JUL</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">3D打印家电化破局，快造科技10亿C轮融资，新华每日电讯深度解读普及意义</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+
         </div>
+
     </a>
+
     <a class="briefing-item" href="briefing_20260717.html">
+
         <div class="date-badge">
+
             <span class="day">17</span>
+
             <span class="month">JUL</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">太空首次打印肾脏肝脏组织，友基Funbox儿童机$269发布，长十乙3D打印挂锁接头实战考核</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
     <a class="briefing-item" href="briefing_20260715.html">
+
         <div class="date-badge">
+
             <span class="day">15</span>
+
             <span class="month">JUL</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">国务院"十五五"规划纳入桌面3D打印机，Venus Aerospace$91M B轮，出口同比增90%</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260714.html">
+
         <div class="date-badge">
+
             <span class="day">14</span>
+
             <span class="month">JUL</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">三迭纪战略融资推进，中国火箭一子级回收成功，七号科技FullColor Pro¥26,800全彩FDM</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260713.html">
+
         <div class="date-badge">
+
             <span class="day">13</span>
+
             <span class="month">JUL</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">Venus Aerospace$91M获B轮，嘉立创IPO注册落地，影石×拓竹开源合作</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260710.html">
+
         <div class="date-badge">
+
             <span class="day">10</span>
+
             <span class="month">JUL</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">嘉立创IPO获准注册42亿，BellaSeno乳腺支架完成临床，美海军3D打印修复F/A-18</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260709.html">
+
         <div class="date-badge">
+
             <span class="day">09</span>
+
             <span class="month">JUL</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">快造科技10亿C轮融资，魔芯科技近10亿A轮，创想三维300万年薪抢人</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260708.html">
+
         <div class="date-badge">
+
             <span class="day">08</span>
+
             <span class="month">JUL</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">Ampera展示全球首个全3D打印钍基微型核反应堆，30兆瓦可连运行30年</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260707.html">
+
         <div class="date-badge">
+
             <span class="day">07</span>
+
             <span class="month">JUL</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">拓竹科技1.412亿深圳光明拿地：拟建全球最大3D打印智造基地，年产能超…</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260706.html">
+
         <div class="date-badge">
+
             <span class="day">06</span>
+
             <span class="month">JUL</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">2026上半年3D打印赛道52家公司融资73亿元，AI 3D大模型+工业…</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260703.html">
+
         <div class="date-badge">
+
             <span class="day">03</span>
+
             <span class="month">JUL</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">Vilory T70X钛合金粉末耐700°C：中国高端3D打印粉体获关键突破</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260702.html">
+
         <div class="date-badge">
+
             <span class="day">02</span>
+
             <span class="month">JUL</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">拓竹1.41亿元光明拿地，建300万台3D打印机智造总部基地——产能扩大十倍</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260701.html">
+
         <div class="date-badge">
+
             <span class="day">01</span>
+
             <span class="month">JUL</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">正雅齿科创业板IPO获受理，拟募资9亿元——3D打印隐形正畸龙头冲刺A股</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260630.html">
+
         <div class="date-badge">
+
             <span class="day">30</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">Rocket Lab以80亿美元收购铱星公司，对标SpaceX——3D打…</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260629.html">
+
         <div class="date-badge">
+
             <span class="day">29</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">联泰科技递表港交所主板：工业级3D打印出货量中国第一，冲击港股工业级AM…</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260626.html">
+
         <div class="date-badge">
+
             <span class="day">26</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">先临三维推出AccuFab-Aris椅旁牙科打印机：19分钟完成修复体，…</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260625.html">
+
         <div class="date-badge">
+
             <span class="day">25</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">煜鼎增材（王华明院士创办）科创板IPO获受理，拟募资18.02亿元</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260624.html">
+
         <div class="date-badge">
+
             <span class="day">24</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">三绿科技递交创业板IPO申请：年营收12.8亿，拟募资18.3亿扩产可降…</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260623.html">
+
         <div class="date-badge">
+
             <span class="day">23</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">拓竹科技国内累计销量突破100万台，618耗材销量同比增长198%</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260622.html">
+
         <div class="date-badge">
+
             <span class="day">22</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">Foundation Alloy完成2200万美元A轮融资，固态钼合金材…</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260619.html">
+
         <div class="date-badge">
+
             <span class="day">19</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">惠通科技新增&quot;3D打印&quot;概念，高韧性PLA专用料完成初期验证</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260618.html">
+
         <div class="date-badge">
+
             <span class="day">18</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">纵维立方Anycubic完成数亿元B轮融资，达晨/国泰海通领投</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260617.html">
+
         <div class="date-badge">
+
             <span class="day">17</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">5月3D打印设备产量增长54.4%，国家统计局数据确认行业高景气</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260616.html">
+
         <div class="date-badge">
+
             <span class="day">16</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">多家3D打印企业冲刺IPO：三绿科技/煜鼎增材/摩方精密齐头并进</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260615.html">
+
         <div class="date-badge">
+
             <span class="day">15</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">SpaceX纳斯达克上市：Wall Street最大3D打印巨头登陆资本市场</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260612.html">
+
         <div class="date-badge">
+
             <span class="day">12</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">中国四个月出口246万台3D打印机，同比增44.7%，全球消费级市场占90%</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260611.html">
+
         <div class="date-badge">
+
             <span class="day">11</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">纵维立方获数亿元融资，达晨财智/挑战者创投领投，消费级&quot;四小龙&quot;格局稳固</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260610.html">
+
         <div class="date-badge">
+
             <span class="day">10</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">三大风口送钱：AI数据中心/人形机器人/商业航天，3D打印成本砍83%</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260609.html">
+
         <div class="date-badge">
+
             <span class="day">09</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">锐科激光绿光3D打印技术突破：解决AI芯片散热难题，拿下算力时代隐形赛道</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260608.html">
+
         <div class="date-badge">
+
             <span class="day">08</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">央视《新闻联播》近2分钟聚焦：我国3D打印产业进入快速发展新阶段</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260605.html">
+
         <div class="date-badge">
+
             <span class="day">05</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">创想三维IPO领衔亚太3D打印市场双周综述，募资12.7亿港元</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260604.html">
+
         <div class="date-badge">
+
             <span class="day">04</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">比亚迪电子建超40万㎡金属3D打印工厂，入局3C领域</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260603.html">
+
         <div class="date-badge">
+
             <span class="day">03</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">3D打印板块6月2日涨2.25%，宏昌电子领涨，主力资金净流入2.62亿元</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260602.html">
+
         <div class="date-badge">
+
             <span class="day">02</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">拓竹科技(Bambu Lab)6月1日正式发布A2L 3D打印机：330…</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260601.html">
+
         <div class="date-badge">
+
             <span class="day">01</span>
+
             <span class="month">JUN</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">创想三维(03388.HK)5月29日港交所上市，首日高开80%，市值超…</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260529.html">
+
         <div class="date-badge">
+
             <span class="day">29</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">创想三维(03388.HK)正式挂牌港交所，公开招股获3829倍认购创纪…</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260528.html">
+
         <div class="date-badge">
+
             <span class="day">28</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">央视近6分钟专题报道：中国3D打印产业迎来&quot;量产转折&quot;，出口246万台翻…</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260527.html">
+
         <div class="date-badge">
+
             <span class="day">27</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">央视近6分钟专题报道：中国3D打印产业迎来&quot;量产转折&quot;，出口246万台翻…</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260526.html">
+
         <div class="date-badge">
+
             <span class="day">26</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">黑格科技完成超3亿元C轮融资，齿科3D打印出海龙头切入桌面全彩造物新赛道</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260525.html">
+
         <div class="date-badge">
+
             <span class="day">25</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">西门子5000万美元战略投资Xometry，AI打通设计到制造全链路</div>
+
             <div class="meta-line">0条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260522.html">
+
         <div class="date-badge">
+
             <span class="day">22</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">创想三维港股募资13.8亿港元，认购启动，&quot;消费级3D打印第一股&quot;出炉</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260521.html">
+
         <div class="date-badge">
+
             <span class="day">21</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">创想三维5月20日启动招股，募资13.8亿港元，引入泰康人寿等基石投资者</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260520.html">
+
         <div class="date-badge">
+
             <span class="day">20</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">深圳1-4月消费级3D打印机产量爆发，全国2026年预计超700万台</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260519.html">
+
         <div class="date-badge">
+
             <span class="day">19</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">国家统计局：1-4月3D打印设备产量同比增长50.9%，延续高增长态势</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260518.html">
+
         <div class="date-badge">
+
             <span class="day">18</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">Rocket Lab第1000台3D打印卢瑟福火箭发动机下线，仅2个月从…</div>
+
             <div class="meta-line">35条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260517.html">
+
         <div class="date-badge">
+
             <span class="day">17</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">✅ A级Mint集团收购Generation 3D，将大幅面3D打印纳入…</div>
+
             <div class="meta-line">0条资讯 &middot; 7分区<span class="weekday">周日 Sunday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260516.html">
+
         <div class="date-badge">
+
             <span class="day">16</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">✅ A级创想三维PK拓竹：消费级3D打印&quot;冠军之争&quot;引发行业热议</div>
+
             <div class="meta-line">0条资讯 &middot; 7分区<span class="weekday">周六 Saturday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260515.html">
+
         <div class="date-badge">
+
             <span class="day">15</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">✅ A级多家A股公司加码3D打印赛道，覆盖材料、设备、配套服务全环节</div>
+
             <div class="meta-line">0条资讯 &middot; 7分区<span class="weekday">周五 Friday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260514.html">
+
         <div class="date-badge">
+
             <span class="day">14</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">✅ A级创想三维通过港交所聆讯：31亿营收难掩1.8亿亏损，5月内港股上市</div>
+
             <div class="meta-line">0条资讯 &middot; 7分区<span class="weekday">周四 Thursday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260513.html">
+
         <div class="date-badge">
+
             <span class="day">13</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">✅ A级创想三维港股IPO聆讯通过，5月12日正式启动PDIE，预计5月…</div>
+
             <div class="meta-line">0条资讯 &middot; 7分区<span class="weekday">周三 Wednesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260512.html">
+
         <div class="date-badge">
+
             <span class="day">12</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">⚠️ B级&quot;消费级3D打印第一股&quot;真的来了！创想三维港股IPO聆讯通过</div>
+
             <div class="meta-line">0条资讯 &middot; 7分区<span class="weekday">周二 Tuesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260511.html">
+
         <div class="date-badge">
+
             <span class="day">11</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">2026年Q1 3D打印融资22起约12亿元，金属打印占64%</div>
+
             <div class="meta-line">0条资讯 &middot; 7分区<span class="weekday">周一 Monday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260510.html">
+
         <div class="date-badge">
+
             <span class="day">10</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">3D打印每日速递</div>
+
             <div class="meta-line">0条资讯 &middot; 7分区<span class="weekday">周日 Sunday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260509.html">
+
         <div class="date-badge">
+
             <span class="day">09</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">3D打印每日速递</div>
+
             <div class="meta-line">0条资讯 &middot; 7分区<span class="weekday">周六 Saturday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260508.html">
+
         <div class="date-badge">
+
             <span class="day">08</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">3D打印每日速递</div>
+
             <div class="meta-line">0条资讯 &middot; 5分区<span class="weekday">周五 Friday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260507.html">
+
         <div class="date-badge">
+
             <span class="day">07</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">3D打印每日速递</div>
+
             <div class="meta-line">0条资讯 &middot; 5分区<span class="weekday">周四 Thursday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260506.html">
+
         <div class="date-badge">
+
             <span class="day">06</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">3D打印每日速递</div>
+
             <div class="meta-line">0条资讯 &middot; 1分区<span class="weekday">周三 Wednesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260505.html">
+
         <div class="date-badge">
+
             <span class="day">05</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">3D打印每日速递</div>
+
             <div class="meta-line">0条资讯 &middot; 1分区<span class="weekday">周二 Tuesday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260504.html">
+
         <div class="date-badge">
+
             <span class="day">04</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">3D打印每日速递</div>
+
             <div class="meta-line">0条资讯 &middot; 1分区<span class="weekday">周一 Monday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260503.html">
+
         <div class="date-badge">
+
             <span class="day">03</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">3D打印每日速递</div>
+
             <div class="meta-line">0条资讯 &middot; 1分区<span class="weekday">周日 Sunday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
+
+
 
     <a class="briefing-item" href="briefing_20260502.html">
+
         <div class="date-badge">
+
             <span class="day">02</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">3D打印每日速递</div>
+
             <div class="meta-line">0条资讯 &middot; 1分区<span class="weekday">周六 Saturday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a>
 
+
+
     <a class="briefing-item" href="briefing_20260501.html">
+
         <div class="date-badge">
+
             <span class="day">01</span>
+
             <span class="month">MAY</span>
+
         </div>
+
         <div class="briefing-info">
+
             <div class="title-line">3D打印每日速递</div>
+
             <div class="meta-line">0条资讯 &middot; 1分区<span class="weekday">周五 Friday</span></div>
+
         </div>
+
         <span class="arrow">&rsaquo;</span>
+
     </a></div>
+
   </div>
+
+
 
   <div class="footer">
+
     © 2026 3D打印每日速递 · 基于公开网络资讯整理 · <a href="https://github.com/Cruise-Ling/3d-printing-daily" target="_blank">GitHub</a>
+
   </div>
+
 </div>
 
+
+
 <script>
+
 const BRIEFING_DATA = [
-  {date:'2026-09-22',href:'briefing_20260922.html',title:'🏭 金杨精密设1亿增材控股子公司；铂力特三期D区封顶；十部门医药"十五五"规划纳入3D打印；通用汽车20+工厂用Stratasys FDM；铬莱铂近2亿A轮💉 UltiMaker携手Bioactivx 3D打印合成皮肤伤口护理；LLNL开发AI视觉实时捕捉DIW缺陷；SprintRay推FDA许可Midas Restore陶瓷牙科树脂；Photocentric JENI挑战注塑；Tesseract线性电机入局3D打印🤖 启元机器人Q1/T1开售并推PrimeFLOW外壳定制平台；拓竹联合七家无障碍组织发起全球辅助设计挑战赛；Snapmaker U1四工具头近零废料多材料；Anycubic Kobra X原生7色；Bambu X2D获Tom's Hardware年度综合第一🚗 中国一汽"超级打印工厂"揭牌年打印约1.9万件；西安维度生物完成个性化3D打印膝关节假体植入；工业级爆单+消费级出圈双线行情；十五五将桌面3D打印列重点推广终端；医疗植入物注册证同比+42%🥮 北京日报天坛"点亮月亮"、良渚文物"跃然饼面"中秋文创；歙县许国石坊/鱼灯浮雕文创月饼；高中劳动技术3D打印月饼模具教学设计；嘉立创全品类工艺材料落地指南；白令三维文创赋能文物活态传承📱 苹果iPhone Duo折叠屏铰链由3D打印制造；trinckle发布Additive App Suite；AMAsia Pulse亚太AM投资升温；SWISSto12携手三菱电机扩RF载荷；Selle Italia推3D打印Unica自适应鞍座💷 Print2WebCorp/Bambu P2S与Creality K2领衔；ModelRec/Bambu A1最省心；SpreadingSantorum/Creality K2 Combo编辑之选；Print Technology/Bambu P1S家用最佳；3DMag/Creality HALOT-ONE入门树脂',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+
+  {date:'2026-09-22',href:'briefing_20260922.html',title:'🏭 金杨精密设1亿增材控股子公司；铂力特三期D区封顶；十部门医药"十五五"规划纳入3D打印；通用汽车20+工厂用Stratasys FDM；铬莱铂近2亿A轮💉 UltiMaker携手Bioactivx 3D打印合成皮肤伤口护理；LLNL开发AI视觉实时捕捉DIW缺陷；SprintRay推FDA许可Midas Restore陶瓷牙科树脂；Photocentric JENI挑战注塑；Tesseract线性电机入局3D打印🤖 启元机器人Q1/T1开售并推PrimeFLOW外壳定制平台；拓竹联合七家无障碍组织发起全球辅助设计挑战赛；Snapmaker U1四工具头近零废料多材料；Anycubic Kobra X原生7色；Bambu X2D获Tom\'s Hardware年度综合第一🚗 中国一汽"超级打印工厂"揭牌年打印约1.9万件；西安维度生物完成个性化3D打印膝关节假体植入；工业级爆单+消费级出圈双线行情；十五五将桌面3D打印列重点推广终端；医疗植入物注册证同比+42%🥮 北京日报天坛"点亮月亮"、良渚文物"跃然饼面"中秋文创；歙县许国石坊/鱼灯浮雕文创月饼；高中劳动技术3D打印月饼模具教学设计；嘉立创全品类工艺材料落地指南；白令三维文创赋能文物活态传承📱 苹果iPhone Duo折叠屏铰链由3D打印制造；trinckle发布Additive App Suite；AMAsia Pulse亚太AM投资升温；SWISSto12携手三菱电机扩RF载荷；Selle Italia推3D打印Unica自适应鞍座💷 Print2WebCorp/Bambu P2S与Creality K2领衔；ModelRec/Bambu A1最省心；SpreadingSantorum/Creality K2 Combo编辑之选；Print Technology/Bambu P1S家用最佳；3DMag/Creality HALOT-ONE入门树脂',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+
   {date:'2026-09-21',href:'briefing_20260921.html',title:'📦 1-8月我国3D打印机出口502万台、总额超131亿元💰 本周四企同获新融资近5.7亿元，铬莱铂A轮/公大激光C轮在列📈 江西上半年3D打印设备产量暴增90.8%🏆 第48届世界技能大赛9月22日上海开赛，联泰科技助力增材制造赛项🏭 易加增材5.58亿元金属3D打印扩产项目落成投产🦴 天衍医疗"金属增材制造长段骨缺损修复体"获三类医疗器械注册证🔬 万华化学尼龙12全链条技术获山东省技术发明一等奖，实现国产化⚙️ IMDEA研发可3D打印金属玻璃，提升电机能效📷 Creality HALOT-X1树脂双机+Pika 3D扫描仪 IFA亮相🌊 华曙高科金属3D打印助力平陆运河攻克船闸缓冲难题🔬 摩方精密发布microArch S330A，2μm精度拓展精密制造🔆 Bambu Lab首款独立激光雕刻/切割机R1于9月发布🔧 Creality K3/SPARKX i8 IFA 2026亮相，KliTek 4.8秒换喷嘴🖨️ Phrozen发布Sonic Mighty Revo MAX 16K大尺寸光固化旗舰🌐 爱乐酷发布Nexprint协作平台，上线5万+免费模型👟 Formnext深圳2026：鞋履3D打印成最大亮点🤖 Formnext深圳：AI建模工具从概念走向展台，Tripo/Meshy参展📱 金属3D打印进入OPPO折叠屏量产，BLT铰链轴盖已装机🤖 Tripo AI完成约30亿元B/B+轮融资❄️ Formnext深圳新前沿：AI服务器冷却+消费电子金属AM🥮 邹城博物馆中秋研学：3D打印一枚会发光的月饼🏛️ 多地文博景区推出中秋文创月饼，文物纹样跃然饼面🏫 南昌县文旅中秋文博月饼手作+研学活动密集上线🎓 襄阳职大"智造未来·襄印童心"3D打印研学课堂进中学🔬 荔湾增材科普进校园：千名青少年体验3D打印造物⚖️ Stratasys赢得对Bambu Lab的$27.6M专利诉讼🪙 IperionX准备扩大钛粉产能，强化关键矿物自主🇨🇳 TCT Shenzhen 2026预览：80+边会揭示中国AM市场走向📊 增材制造市场Q2达$4.48B，连续六季度增长✈️ Alloyed助英国制造3D打印涡轮喷气发动机💷 LayerMath 2026成本横评：Bambu/Prusa/Creality两年持有成本🏆 ProductsForOurLives 2026：三品牌各自该买谁🥇 iTechDeals 2026最值得买5款：Bambu P1S综合第一🥈 CNET 2026最佳3D打印机选购指南🌈 PCMag 2026最佳3D打印机：Bambu H2D综合第一',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+
   {date:'2026-09-18',href:'briefing_20260918.html',title:'🏭 巨头跨界、工业下沉：得力/联想/小米集体入局3D打印💰 创材深造完成近亿元A+轮，AI+金属新材料研发加速🏗️ 杭州江南科学城落地20亿元3D打印产业基地🔩 西安诺高镁完成A轮融资，主攻镁合金增材制造🌍 首届全球增材制造中心峰会巴塞罗那落幕，欧洲枢纽联盟(Add)liance成立🌊 华曙高科金属3D打印助力平陆运河攻克船闸缓冲难题🪖 信息支援部队用3D打印实现边防装备现场快速维修🔬 摩方精密发布microArch S330A，2μm精度拓展精密制造⚡ Fronius推出Additive Cell交钥匙WAAM金属3D打印单元🧪 Freemelt获Intalus订单并加入普渡PCAM电子束联盟🔆 Bambu Lab首款独立激光切割/雕刻机R1于9月发布🔧 Creality KliTek K3五秒换喷嘴，多色多材料免清料塔🔄 Prusa二代全线升级：CORE One+/XL+配喷嘴擦拭与腔体加热🌐 爱乐酷发布Nexprint协作平台，上线5万+免费模型👟 耐克×Zellerfeld双色一体3D打印鞋Air Max 1000量产🏭 宁夏共享集团技改：铸造3D打印砂芯年产1万→2万吨🖨️ 惠普MJF 1200亚太首发：把工业级MJF搬进办公室👟 华曙高科鞋模装机破百台，规模交付提速🤖 Tripo AI年营收破1200万美元，合作伙伴达4万家📦 盈普全球首发CF250 PPS紧凑型专业SLS系统🍬 科艺融合研学展：3D糖画打印机赋能非遗美育课堂🌕 太原中秋非遗月饼引入3D打印模具，晋阳地标跃然饼面🥮 中国地域特色月饼带城市IP"出圈"，带火文创月饼模具🛰️ 东极哨所运用3D打印实现无人机当日抢修🎨 传统糖画3D智能打印机研发，非遗数字化有了新路径⚛️ Rosatom宣布完成核电领域增材制造全链条布局🦷 HeyGears Reflex RS Turbo：高速牙科/珠宝3D打印新机🤝 Nano Dimension收购Desktop Metal，增材行业再整合🏭 Stratasys IMTS 2026主打"生产级"，GM 20+工厂规模部署🛡️ 欧洲增材制造国防网络AMDefNet正式成立📊 LayerMath 2026三大品牌横评：Bambu易用、Creality性价比、Prusa可修🏆 How-To Geek：三品牌各自真正胜出的场景🔍 ADP Industries 2026 definitive对比：基于千小时实测🥇 PCMag 2026最佳3D打印机选购指南🌈 TechRadar 2026最佳3D打印机：Bambu H2D综合第一',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
 
-  {date:'2026-09-15',href:'briefing_20260915.html',title:'得力入局3D打印招聘儿童机研发人才创想三维纳入恒生综合指数有望入港股通鑫精合数亿元融资CMC资本与中集资本联合领投安洁科技15亿建金属3D打印产业基地深圳造3D打印机全球近九成份额1-7月出口95.5亿元苹果iPhone Duo折叠屏铰链3D打印钛合金港科大火星住房材料大族激光500W绿光激光器主攻铜3D打印Stratasys F870获Toyota/Rivian采用SprintRay牙科树脂获FDA许可创想IFA全矩阵K3/SPARKX i8/M1斩双奖HALOT-X1+Pika扫描仪+Ender-3 V3 Mega 2026新机盘点X2D/SPARKX i7/Creator 5 Pro/Centauri 2 Bambu X2D获PCMag编辑之选Snapmaker U1获3Dnatives Lab评测创想M1 Filament Maker闭环回收+Nexbie 3D打印鞋加州AB2047 3D打印枪支监管法案过审上海市场监管局提示儿童3D打印笔风险前7月金属设备出口845台增37.6%欧洲最大3D打印学生公寓完工鲲智增材日产5000颗义齿创想助力青少年信息素养大赛NASA µBites 3D打印太空饼干太原非遗文创月饼引入3D打印模具众智信赢3D打印中秋文创中国日报当月饼遇上中式美学3D打印饼模SPEE3D新全球CEO强化美国布局瑞典滑雪缆车基础3D打印英国导盲犬协会3D打印盲人超声波The Exploration Company融资4.5亿美元FibreSeek连续纤维桌面机预售TechRadar H2D综合第一Tom's Hardware X2D最佳CNET/All3DP 2026实测横评Tom's Hardware多色专项榜H2D/Prusa XL/Snapmaker U1',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
-  {date:'2026-09-14',href:'briefing_20260914.html',title:'鑫精合完成数亿元融资CMC资本与中集资本联合领投Tripo AI累计30亿KIRI获华为哈勃A轮现代汽车加码工业3D打印苹果折叠屏iPhone Duo钛合金铰链Arridex扩张3D打印网络至加纳麦吉尔大学蚊子口器喷嘴获搞笑诺贝尔港科大火星住房材料宝马2027推WAAM汽车结构件体积3D打印六大项目盘点南加州大学10分钟打印婴儿MRI传感器科威特首次3D打印辅助髋关节重建缅因大学推出30英尺3D打印船舶创想三维×联想100家门店计划Phrozen 16K大面阵Bambu R1独立激光Snapmaker U1四工具头换色Creality K3/SPARKX i8/M1获IFA双奖Beets3D 2026品牌排名Bambu 9.5尼日利亚建金属增材制造中心Formnext 2026新增Defence Summit缅因大学30英尺3D打印船国产金属设备出口增76%央视时装周3D打印跨界饰品丹麦Skovsporet学生公寓首批入住偏乡3D列印校舍湾区3D打印宠物动物园Meltio在铂金内培育红宝石Continuous Composites获海军SBIR无人机合同VMP欲成领先AM金属粉末商Meshy 7生成式AI建模FibreSeek连续纤维桌面机Tom's Hardware评X2D综合最佳best3dprinter.org Top12CNET/TechRadar/All3DP 2026实测横评',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+
+
+  {date:'2026-09-15',href:'briefing_20260915.html',title:'得力入局3D打印招聘儿童机研发人才创想三维纳入恒生综合指数有望入港股通鑫精合数亿元融资CMC资本与中集资本联合领投安洁科技15亿建金属3D打印产业基地深圳造3D打印机全球近九成份额1-7月出口95.5亿元苹果iPhone Duo折叠屏铰链3D打印钛合金港科大火星住房材料大族激光500W绿光激光器主攻铜3D打印Stratasys F870获Toyota/Rivian采用SprintRay牙科树脂获FDA许可创想IFA全矩阵K3/SPARKX i8/M1斩双奖HALOT-X1+Pika扫描仪+Ender-3 V3 Mega 2026新机盘点X2D/SPARKX i7/Creator 5 Pro/Centauri 2 Bambu X2D获PCMag编辑之选Snapmaker U1获3Dnatives Lab评测创想M1 Filament Maker闭环回收+Nexbie 3D打印鞋加州AB2047 3D打印枪支监管法案过审上海市场监管局提示儿童3D打印笔风险前7月金属设备出口845台增37.6%欧洲最大3D打印学生公寓完工鲲智增材日产5000颗义齿创想助力青少年信息素养大赛NASA µBites 3D打印太空饼干太原非遗文创月饼引入3D打印模具众智信赢3D打印中秋文创中国日报当月饼遇上中式美学3D打印饼模SPEE3D新全球CEO强化美国布局瑞典滑雪缆车基础3D打印英国导盲犬协会3D打印盲人超声波The Exploration Company融资4.5亿美元FibreSeek连续纤维桌面机预售TechRadar H2D综合第一Tom\'s Hardware X2D最佳CNET/All3DP 2026实测横评Tom\'s Hardware多色专项榜H2D/Prusa XL/Snapmaker U1',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+
+  {date:'2026-09-14',href:'briefing_20260914.html',title:'鑫精合完成数亿元融资CMC资本与中集资本联合领投Tripo AI累计30亿KIRI获华为哈勃A轮现代汽车加码工业3D打印苹果折叠屏iPhone Duo钛合金铰链Arridex扩张3D打印网络至加纳麦吉尔大学蚊子口器喷嘴获搞笑诺贝尔港科大火星住房材料宝马2027推WAAM汽车结构件体积3D打印六大项目盘点南加州大学10分钟打印婴儿MRI传感器科威特首次3D打印辅助髋关节重建缅因大学推出30英尺3D打印船舶创想三维×联想100家门店计划Phrozen 16K大面阵Bambu R1独立激光Snapmaker U1四工具头换色Creality K3/SPARKX i8/M1获IFA双奖Beets3D 2026品牌排名Bambu 9.5尼日利亚建金属增材制造中心Formnext 2026新增Defence Summit缅因大学30英尺3D打印船国产金属设备出口增76%央视时装周3D打印跨界饰品丹麦Skovsporet学生公寓首批入住偏乡3D列印校舍湾区3D打印宠物动物园Meltio在铂金内培育红宝石Continuous Composites获海军SBIR无人机合同VMP欲成领先AM金属粉末商Meshy 7生成式AI建模FibreSeek连续纤维桌面机Tom\'s Hardware评X2D综合最佳best3dprinter.org Top12CNET/TechRadar/All3DP 2026实测横评',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+
   {date:'2026-09-11',href:'briefing_20260911.html',title:'三绿科技IPO进入问询拟募18.29亿Stratasys 4250万美元收购Markforged中烨增材1亿华东总部落户太仓HeyGears G1X众筹破1500万美元SprintRay发布FDA认证Midas Restore牙科树脂华盛顿州立大学3D打印电子皮肤赋予假肢触觉Hyper3D Rodin Gen 2.5将AI引入打印准备创想IFA 2026全矩阵K3/SPARKX i8/M1回收机/Pika/Nexbie鞋拓竹A2L/X2D/H2D新品矩阵Bambu H2D 4-in-1成TechRadar综合第一NYU 3D打印可降解血管支架商业案例Quickparts四国网络服务航天国防新华社视点上半年产量增51.6%潮玩食品颅骨模型金钥匙信阳博物馆复原上海3D打印月饼伊朗俘获Anduril 3D打印水下无人机3D Systems被判侵犯Intrepid商业秘密Alibaba 200美元光纤军用无人机Newtechzy/3DPrintedDecor/iTechDeals/Digitura/OfZen 2026实测Bambu A1/H2D FlashForge 5M Prusa CORE One Anycubic Kobra',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+
   {date:'2026-09-10',href:'briefing_20260910.html',title:'VAST完成约30亿元B轮及B+轮融资繁昌区出台增材制造产业扶持政策3D打印产业从单机走向设备+材料+软件+中试+认证体系Auxilium国际空间站造出肝/肾/软骨组织昆工X射线穿透实现体内无创原位3D成型清华可降解多功能颅骨器件登Science AdvancesGKN UAV搭载3D打印发动机规避ITAR创想HALOT-X1光固化双机9月9日上线Phrozen 16K发布拓竹R1独立激光创想K3五秒换喷嘴Prusa二代升级PrusaSlicer 3.0重大重写欧洲最大3D打印学生公寓丹麦完工Tripo AI完成30亿元融资SUNLU无热除湿柜NASA µBites太空饼干Formnext深圳落幕新华社视点3D打印如何影响生产生活上半年产量增51.6%创想助力青少年信息素养大赛信阳博物馆上海月饼3D打印宠物动物园Quantum Cyber康涅狄格无人机农场装80台3D打印机QTREX将Nano Dimension AME引入以色列国防Mastrex美国制造金属LPBF3D Alliances谈人才招聘OfZen/PrinterTech/ModelRec/SaltOlive九月实测榜FlashForge Adventurer 5M、Bambu A1/P1S、Prusa MK4S/CORE One+、Anycubic Kobra X、QIDI Max4',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+
   {date:'2026-09-08',href:'briefing_20260908.html',title:'商务部等7部门扩大3D打印产品消费三绿科技IPO问询拟募18.29亿，安洁科技15亿建金属3D打印基地得力入局3D打印大量招聘，两项增材制造国标9月1日实施空间站生物打印首造肝/肾组织，智神星一号首飞度维3D打印构件通过验证创想三维IFA首秀SPARKX i8 K3双获奖，原子重塑携Palette 300/M1/Glow 1出海欧洲最大3D打印学生公寓丹麦完工，前7月金属设备出口845台Tripo AI融资30亿元，阿迪达斯Futurecool一体打印鞋3DPrint Quickparts四国航天国防网络，AML3D营收增70%Beets3D 2026品牌排名拓竹9.5居首，PCMag/TechRadar评测HeyGears Reflex RS Turbo与Bambu X2D',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+
   {date:'2026-09-03',href:'briefing_20260903.html',title:'中烨增材1亿元华东总部落户太仓，中国船级社增材制造指南GD019正式实施VAST完成约30亿元B轮及B+轮融资央行扩大科技创新与设备更新贷款3D打印受益，泸州将建亚洲最大3D打印单体工厂Savannah River国家实验室与3D Systems签署核领域CRADA，IperionX获美军11.5M造钛紧固件AM Pulse Asia盘点亚太金属AM新进展，创想三维Formnext亮出K3多喷嘴HALOT-X1消费级答案Bambu进军消费级激光切割推R1，Prusa二代XL+与CORE One+焕新芜湖春谷60+企业3D打印出海170国，深圳光明拓竹年产能超300万台宝辰鑫发布300W紧凑激光器，深圳四小龙占全球2500美元以下94%3D打印鞋与机器人灵巧手加速进家庭，信阳博物馆3D打印复原文物3DPrint医疗工业AI 3D新融资涌动，JPG携手Sculpteo登陆高定周Beets3D 2026十大品牌实测拓竹9.5居首，IT168 3000至5000元横评P2S K1C Kobra S1',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+
   {date:'2026-09-02',href:'briefing_20260902.html',title:'商务部等7部门扩大3D打印消费两项国标正式实施，威拉里铜粉激光吸收率提升5-6倍鑫精合10.87亿建金属打印基地，XDA/Fast3DPrinters双评测力捧Bambu A2L LightMake L4四喷头线性电机发布，Formnext深圳39万台打印机进农场创想三维增收不增利，杭州小学生圈3D打印爆火创想K3预告社区反响两极300美元实测榜更新',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+
   {date:'2026-09-01',href:'briefing_20260901.html',title:'商务部等7部门发文扩大3D打印产品消费，威拉里铜粉激光吸收率提升5-6倍铬莱铂AI桌面金属机4888美元，adidas全3D打印鞋限量400双新疆泰州浙江开学第一课玩转3D打印，Formnext深圳揭示中国AM全产业链Anycubic Photon P1 Max大尺寸实测，$400/$1000以下最佳榜单出炉',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
 
+
+
   {date:'2026-08-31',href:'briefing_20260831.html',title:'3D打印设备产量增48.5%出口增90.2%江苏27家企业组团参展Formnext，NASA AI锁定GRCop-42火箭合金方案奇遇陶瓷人工骨设备扩产至4台，创想K3四喷嘴首秀Formnext拓竹创想线下门店抢占高端商圈，消费级市场2034年预计52亿美元LightForce 3D打印正畸金属支架落地，滁州新乡西电渭南暑期科普研学轮番登场，Materialise二季度航空防务带动反弹Phase3D挺进北美防务市场，Bambu X2D获KhanList 9/10 HeyGears Reflex RS Turbo获编辑选择',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+
   {date:'2026-08-28',href:'briefing_20260828.html',title:'快造科技完成C轮融资6K Additive上半年营收增73%，Othisis全3D打印液氧甲烷发动机热试车海正生材3D打印耗材销量增169%，Morpho UV打印机众筹48小时破900万美元Bambu确认开发UV打印机，金属增材2033年预计达191亿美元航空航天3D打印2034年达204亿美元，西安秦弩柞水未来教室东莞开学3D打印体验轮番登场，Ursa Major 23亿美元SPAC上市美海军PPD为潜艇AM零件开快速通道，Bambu X2D评测刷屏Toms TechRadar Fast3DPrinters 250小时零失败',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+
   {date:'2026-08-27',href:'briefing_20260827.html',title:'Formnext Asia深圳开幕330家企业创想三维5.5亿建总部，升华三维PEP白皮书发布中铝400/600MPa铝粉攻克热裂纹，Creality SPARKX i7 Nano四色机上市黑格G1众筹破1400万，3D食品打印2035年前年增31%消费级市场2032年达466亿美元，广州南京嘉兴多地青少年3D打印研学3D打印鞋履大奖首发，Formnext Asia史上最大届KIT陶瓷金属多材料突破，Bambu X2D评测出炉2026入门选购指南更新',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+
+
 
   {date:'2026-08-26',href:'briefing_20260826.html',title:'嘉立创3D打印江苏基地投产双基地布局，央视聚焦金属3D打印设备订单排到年底上半年出口+76%，国务院批复十五五消费规划桌面级3D打印机首入列，碳索者三号21900元连续碳纤维桌面机开售，GKN为瑞典Project Otto打造ITAR-free 3D打印涡喷发动机，Formnext Asia深圳展今日开幕350+企业',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
 
+
+
   {date:'2026-08-25',href:'briefing_20260825.html',title:'拓竹否认2027年IPO传闻消息不实，央视聚焦国产工业级3D打印设备出海订单排到年底，2026上半年金属3D打印设备出口+76%海外订单首超国内，铂力特人形机器人金属部件肩支架减重46%，海天增材绿光纯铜液冷板流道0.1mm，赛纳三维×趣丸科技AI建模+全彩打印战略合作，Berkeley开源人形机器人3D打印降本',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+
+
 
   {date:'2026-08-24',href:'briefing_20260824.html',title:'3D打印概念股震荡回升南风股份涨超15%，键凯科技20CM涨停前7月产量+52.3%跑赢锂电机器人，深蓝航天雷霆-RS 130吨发动机100秒热试车85%金属3D打印，拓竹启动消费级UV打印机项目，诺思贝瑞近亿元融资KEXCELLED扩容，铂力特近20天中标5200万，创想三维K3将亮相Formnext深圳展',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
 
+
+
   {date:'2026-08-18',href:'briefing_20260818.html',title:'统计局7月3D打印设备产量+65.7%含智量提升，浙江天雄航天3D打印项目开工总投资超10亿，前7月3D打印机出口112亿元增1.1倍，海目星成立增材子公司LightMake L4登Kickstarter，eSUN推出PLA-Revive再生线材，3D Systems启动CEO换帅，PCMag/TechRadar/CNET评2026最佳机型',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+
+
 
   {date:'2026-08-21',href:'briefing_20260821.html',title:'前7月3D打印设备产量+52.3%华曙高科涨停，Hadrian完成13.7亿美元D轮估值78.7亿，GB/T 47195-2026铝合金LPBF国标9-1实施，朱雀三号着陆腿整体3D打印钛合金，拓竹启动消费级UV打印机项目光速切入UV与激光双赛道，温州3D打印鞋三步成鞋全球鞋履市场破49.5亿美元，RIMPAC军演首现SPEE3D远征增材制造Prusa升级CORE One+/L+/XL+',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
 
+
+
   {date:'2026-08-20',href:'briefing_20260820.html',title:'融速科技近亿元A+轮融资探雪科技进军消费级桌面金属3D打印，佛州大西洋大学3D打印海藻结构治理藻华，创想三维开售AI扫描仪Pika与激光雕刻机Falcon A1C，华峰窟窿鞋高温走红极限2天交付，成都金石友志让3D打印走进生活三星堆文创复刻，金属3D打印企业3DEO清算工厂行业整合加剧，PCMag评Bambu P2S为2026最佳3D打印机',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+
+
 
   {date:'2026-08-19',href:'briefing_20260819.html',title:'华泰证券研报3D打印延续高增PLA供需改善，清华亚体素定向纤维3D打印登Nature引导肌管再生，拓竹进驻64家山姆纯净PLA发布并上时装周，Formnext Asia设首届3D打印鞋履设计大奖，万物有型设计展长沙落幕超1万人次，Stratasys扩展Limbitless合作12年累计为儿童提供义肢，TechRadar评Bambu H2D为2026综合最佳',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
 
+
+
   {date:'2026-08-17',href:'briefing_20260817.html',title:'拓竹官宣R1进军消费级激光加工，Hadrian完成14亿美元D轮估值79亿，Formlabs董事会重组冲刺IPO，Stratasys/Velo3D财报航防需求强劲，全国首届万物有型3D打印设计展长沙开幕',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+
   {date:'2026-08-14',href:'briefing_20260814.html',title:'华曙高科39.1亿定增获上交所受理，拓竹R1/智小白Explorer 7新品双发，iAM3D推2米级L-DED航空系统，现代起亚AMSC启用，库周报前7月3D打印机出口112亿增110%',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+
   {date:'2026-08-11',href:'briefing_20260811.html',title:'泸州AM集群产值2.33亿增191%，卢秉恒院士推进3D打印大飞机路线，QIDI Plus5发布$749起售，LightMake独立四喷头众筹启动，Formlabs冲刺IPO募5亿美元',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+
   {date:'2026-08-13',href:'briefing_20260813.html',title:'华曙高科39.1亿定增获上交所受理，拓竹入驻超60家Apple授权店，汕大一附院3D打印导板辅助全踝关节置换，温州3D打印鞋规模化售价800-1000元，3D Systems获美军900万美元金属3D打印项目',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+
   {date:'2026-08-12',href:'briefing_20260812.html',title:'前7个月3D打印机出口112亿元增1.1倍深圳占86%，清华亚体素定向纤维3D打印登Nature，朱雀三号遥二8月11日发射天鹊发动机全3D打印，现代汽车启用首个3D打印中心AMSC，拓竹首曝3D生成大模型SegviGen',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+
   {date:'2026-08-10',href:'briefing_20260810.html',title:'南方日报聚焦深圳3D打印产业带全球9成消费级产能，德悟科技Pre-A轮微米级SLM后处理成本降70%，拓竹A2L正式进军印度，海目星2000万成立增材子公司，黑格G1X众筹超7000万',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
 
+
+
   {date:'2026-08-07',href:'briefing_20260807.html',title:'人民日报聚焦深圳3D打印出口占全国86%，卢秉恒披露3D打印大飞机路线图，拓竹首次对外投资布局激光器，希禾增材绿光金属基地投产，嘉立创在线3D打印标准化',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+
   {date:'2026-08-06',href:'briefing_20260806.html',title:'嘉立创A股上市市值破千亿3D打印成第三增长曲线，陕西智拓4.75亿基地封顶，QIDI Plus5全球发布，温州3D打印鞋三步成鞋订单排满，3D Systems CEO卸任',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+
   {date:'2026-08-05',href:'briefing_20260805.html',title:'创想三维单日大涨17.72%市值破百亿，黑格G1众筹10天破1100万美元，商业火箭发动机3D打印渗透率超70%，瑞金海南儿童骨肿瘤3D打印保肢，宝马3D打印量产',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+
   {date:'2026-08-04',href:'briefing_20260804.html',title:'创想三维单日大涨17.72%，国际空间站首次在轨生物打印肾脏肝脏组织，FDA首批准医院院内3D打印植入物，轻量智造融资2500万，6项3D打印国标实施',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+
   {date:'2026-08-03',href:'briefing_20260803.html',title:'黑格G1X众筹一周破千万美元，拓竹北京国贸首店将开，FDA首次放行院内3D打印植入物，惠普首款工业FFF机600HT，Sovol M1D首日众筹近2000万',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+
   {date:'2026-07-31',href:'briefing_20260731.html',title:'中国3D打印出口暴涨90%占全球九成市场，黑格G1X众筹破千万美元，拓竹年产能规划300万台，深圳全屋3D打印样板间，AML3D创纪录财年',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+
   {date:'2026-07-30',href:'briefing_20260730.html',title:'黑格G1X全彩3D/UV打印机众筹破千万美元，拓竹4年卖出100万台入驻Apple店，Fusion3破产清算，UCLA锌离子电池7倍储能，西安3.5亿项目投产',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+
   {date:'2026-07-29',href:'briefing_20260729.html',title:'商务部官宣3D打印出口暴增109%成外贸新名片，Meshy近4亿美元B轮融资，UT Austin生物材料登Nature，Alpine×Lacoste赛车座椅3D打印晶格',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+
   {date:'2026-07-27',href:'briefing_20260727.html',title:'超卓航科10亿元控股权转让，黑格G1众筹24小时破722万美元，拓竹300万台产能基地，GKN×Pratt合作F135发动机',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+
   {date:'2026-07-24',href:'briefing_20260724.html',title:'快造科技10亿元C轮融资估值近70亿，黑格G1众筹$1999起，拓竹全系降价，创想三维V3 Mega 420mm大尺寸发布',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+
   {date:'2026-07-23',href:'briefing_20260723.html',title:'大族激光半年营收134亿增76%，MIT可复用树脂支撑，贵阳3D打印鞋牵手FIFA���口海外',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+
   {date:'2026-07-22',href:'briefing_20260722.html',title:'Meshy近4亿美元B轮估值超100亿，阿奈索7.6亿项目落地淮南，嘉立创IPO募资42亿',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+
   {date:'2026-07-21',href:'briefing_20260721.html',title:'上半年3D打印机出口362万台增90%，meland×拓竹10余城联名，Q1市场43.5亿美元',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+
   {date:'2026-07-20',href:'briefing_20260720.html',title:'3D打印家电化破局，快造科技10亿C轮融资，新华每日电讯深度解读普及意义',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+
   {date:'2026-07-17',href:'briefing_20260717.html',title:'太空首次打印肾脏肝脏组织，友基Funbox儿童机$269发布，长十乙3D打印挂锁接头实战考核',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+
   {date:'2026-07-15',href:'briefing_20260715.html',title:'国务院"十五五"规划纳入桌面3D打印机，Venus Aerospace$91M B轮，出口同比增90%',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+
   {date:'2026-07-14',href:'briefing_20260714.html',title:'三迭纪战略融资推进，中国火箭一子级回收成功，七号科技FullColor Pro¥26,800全彩FDM',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+
   {date:'2026-07-13',href:'briefing_20260713.html',title:'Venus Aerospace$91M获B轮，嘉立创IPO注册落地，影石×拓竹开源合作',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+
   {date:'2026-07-10',href:'briefing_20260710.html',title:'嘉立创IPO获准注册42亿，BellaSeno乳腺支架完成临床，美海军3D打印修复F/A-18',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+
   {date:'2026-07-09',href:'briefing_20260709.html',title:'快造科技10亿C轮融资，魔芯科技近10亿A轮，创想三维300万年薪抢人',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+
   {date:'2026-07-08',href:'briefing_20260708.html',title:'Ampera展示全球首个全3D打印钍基微型核反应堆，30兆瓦可连运行30年',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+
   {date:'2026-07-07',href:'briefing_20260707.html',title:'拓竹科技1.412亿深圳光明拿地：拟建全球最大3D打印智造基地，年产能超…',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+
   {date:'2026-07-06',href:'briefing_20260706.html',title:'2026上半年3D打印赛道52家公司融资73亿元，AI 3D大模型+工业…',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+
   {date:'2026-07-03',href:'briefing_20260703.html',title:'Vilory T70X钛合金粉末耐700°C：中国高端3D打印粉体获关键突破',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+
   {date:'2026-07-02',href:'briefing_20260702.html',title:'拓竹1.41亿元光明拿地，建300万台3D打印机智造总部基地——产能扩大十倍',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+
   {date:'2026-07-01',href:'briefing_20260701.html',title:'正雅齿科创业板IPO获受理，拟募资9亿元——3D打印隐形正畸龙头冲刺A股',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+
   {date:'2026-06-30',href:'briefing_20260630.html',title:'Rocket Lab以80亿美元收购铱星公司，对标SpaceX——3D打…',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+
   {date:'2026-06-29',href:'briefing_20260629.html',title:'联泰科技递表港交所主板：工业级3D打印出货量中国第一，冲击港股工业级AM…',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+
   {date:'2026-06-26',href:'briefing_20260626.html',title:'先临三维推出AccuFab-Aris椅旁牙科打印机：19分钟完成修复体，…',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+
   {date:'2026-06-25',href:'briefing_20260625.html',title:'煜鼎增材（王华明院士创办）科创板IPO获受理，拟募资18.02亿元',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+
   {date:'2026-06-24',href:'briefing_20260624.html',title:'三绿科技递交创业板IPO申请：年营收12.8亿，拟募资18.3亿扩产可降…',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+
   {date:'2026-06-23',href:'briefing_20260623.html',title:'拓竹科技国内累计销量突破100万台，618耗材销量同比增长198%',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+
   {date:'2026-06-22',href:'briefing_20260622.html',title:'Foundation Alloy完成2200万美元A轮融资，固态钼合金材…',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+
   {date:'2026-06-19',href:'briefing_20260619.html',title:'惠通科技新增\"3D打印\"概念，高韧性PLA专用料完成初期验证',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+
   {date:'2026-06-18',href:'briefing_20260618.html',title:'纵维立方Anycubic完成数亿元B轮融资，达晨/国泰海通领投',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+
   {date:'2026-06-17',href:'briefing_20260617.html',title:'5月3D打印设备产量增长54.4%，国家统计局数据确认行业高景气',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+
   {date:'2026-06-16',href:'briefing_20260616.html',title:'多家3D打印企业冲刺IPO：三绿科技/煜鼎增材/摩方精密齐头并进',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+
   {date:'2026-06-15',href:'briefing_20260615.html',title:'SpaceX纳斯达克上市：Wall Street最大3D打印巨头登陆资本市场',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+
   {date:'2026-06-12',href:'briefing_20260612.html',title:'中国四个月出口246万台3D打印机，同比增44.7%，全球消费级市场占90%',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+
   {date:'2026-06-11',href:'briefing_20260611.html',title:'纵维立方获数亿元融资，达晨财智/挑战者创投领投，消费级\"四小龙\"格局稳固',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+
   {date:'2026-06-10',href:'briefing_20260610.html',title:'三大风口送钱：AI数据中心/人形机器人/商业航天，3D打印成本砍83%',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+
   {date:'2026-06-09',href:'briefing_20260609.html',title:'锐科激光绿光3D打印技术突破：解决AI芯片散热难题，拿下算力时代隐形赛道',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+
   {date:'2026-06-08',href:'briefing_20260608.html',title:'央视《新闻联播》近2分钟聚焦：我国3D打印产业进入快速发展新阶段',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+
   {date:'2026-06-05',href:'briefing_20260605.html',title:'创想三维IPO领衔亚太3D打印市场双周综述，募资12.7亿港元',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+
   {date:'2026-06-04',href:'briefing_20260604.html',title:'比亚迪电子建超40万㎡金属3D打印工厂，入局3C领域',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+
   {date:'2026-06-03',href:'briefing_20260603.html',title:'3D打印板块6月2日涨2.25%，宏昌电子领涨，主力资金净流入2.62亿元',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+
   {date:'2026-06-02',href:'briefing_20260602.html',title:'拓竹科技(Bambu Lab)6月1日正式发布A2L 3D打印机：330…',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+
   {date:'2026-06-01',href:'briefing_20260601.html',title:'创想三维(03388.HK)5月29日港交所上市，首日高开80%，市值超…',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+
   {date:'2026-05-29',href:'briefing_20260529.html',title:'创想三维(03388.HK)正式挂牌港交所，公开招股获3829倍认购创纪…',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+
   {date:'2026-05-28',href:'briefing_20260528.html',title:'央视近6分钟专题报道：中国3D打印产业迎来\"量产转折\"，出口246万台翻…',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+
   {date:'2026-05-27',href:'briefing_20260527.html',title:'央视近6分钟专题报道：中国3D打印产业迎来\"量产转折\"，出口246万台翻…',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+
   {date:'2026-05-26',href:'briefing_20260526.html',title:'黑格科技完成超3亿元C轮融资，齿科3D打印出海龙头切入桌面全彩造物新赛道',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+
   {date:'2026-05-25',href:'briefing_20260525.html',title:'西门子5000万美元战略投资Xometry，AI打通设计到制造全链路',count:0,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+
   {date:'2026-05-22',href:'briefing_20260522.html',title:'创想三维港股募资13.8亿港元，认购启动，\"消费级3D打印第一股\"出炉',count:35,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+
   {date:'2026-05-21',href:'briefing_20260521.html',title:'创想三维5月20日启动招股，募资13.8亿港元，引入泰康人寿等基石投资者',count:35,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+
   {date:'2026-05-20',href:'briefing_20260520.html',title:'深圳1-4月消费级3D打印机产量爆发，全国2026年预计超700万台',count:35,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+
   {date:'2026-05-19',href:'briefing_20260519.html',title:'国家统计局：1-4月3D打印设备产量同比增长50.9%，延续高增长态势',count:35,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+
   {date:'2026-05-18',href:'briefing_20260518.html',title:'Rocket Lab第1000台3D打印卢瑟福火箭发动机下线，仅2个月从…',count:35,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+
   {date:'2026-05-17',href:'briefing_20260517.html',title:'✅ A级Mint集团收购Generation 3D，将大幅面3D打印纳入…',count:0,sections:7,weekdayCn:'周日',weekdayEn:'Sunday'},
+
   {date:'2026-05-16',href:'briefing_20260516.html',title:'✅ A级创想三维PK拓竹：消费级3D打印\"冠军之争\"引发行业热议',count:0,sections:7,weekdayCn:'周六',weekdayEn:'Saturday'},
+
   {date:'2026-05-15',href:'briefing_20260515.html',title:'✅ A级多家A股公司加码3D打印赛道，覆盖材料、设备、配套服务全环节',count:0,sections:7,weekdayCn:'周五',weekdayEn:'Friday'},
+
   {date:'2026-05-14',href:'briefing_20260514.html',title:'✅ A级创想三维通过港交所聆讯：31亿营收难掩1.8亿亏损，5月内港股上市',count:0,sections:7,weekdayCn:'周四',weekdayEn:'Thursday'},
+
   {date:'2026-05-13',href:'briefing_20260513.html',title:'✅ A级创想三维港股IPO聆讯通过，5月12日正式启动PDIE，预计5月…',count:0,sections:7,weekdayCn:'周三',weekdayEn:'Wednesday'},
+
   {date:'2026-05-12',href:'briefing_20260512.html',title:'⚠️ B级\"消费级3D打印第一股\"真的来了！创想三维港股IPO聆讯通过',count:0,sections:7,weekdayCn:'周二',weekdayEn:'Tuesday'},
+
   {date:'2026-05-11',href:'briefing_20260511.html',title:'2026年Q1 3D打印融资22起约12亿元，金属打印占64%',count:0,sections:7,weekdayCn:'周一',weekdayEn:'Monday'},
+
   {date:'2026-05-10',href:'briefing_20260510.html',title:'3D打印每日速递',count:0,sections:7,weekdayCn:'周日',weekdayEn:'Sunday'},
+
   {date:'2026-05-09',href:'briefing_20260509.html',title:'3D打印每日速递',count:0,sections:7,weekdayCn:'周六',weekdayEn:'Saturday'},
+
   {date:'2026-05-08',href:'briefing_20260508.html',title:'3D打印每日速递',count:0,sections:5,weekdayCn:'周五',weekdayEn:'Friday'},
+
   {date:'2026-05-07',href:'briefing_20260507.html',title:'3D打印每日速递',count:0,sections:5,weekdayCn:'周四',weekdayEn:'Thursday'},
+
   {date:'2026-05-06',href:'briefing_20260506.html',title:'3D打印每日速递',count:0,sections:1,weekdayCn:'周三',weekdayEn:'Wednesday'},
+
   {date:'2026-05-05',href:'briefing_20260505.html',title:'3D打印每日速递',count:0,sections:1,weekdayCn:'周二',weekdayEn:'Tuesday'},
+
   {date:'2026-05-04',href:'briefing_20260504.html',title:'3D打印每日速递',count:0,sections:1,weekdayCn:'周一',weekdayEn:'Monday'},
+
   {date:'2026-05-03',href:'briefing_20260503.html',title:'3D打印每日速递',count:0,sections:1,weekdayCn:'周日',weekdayEn:'Sunday'},
+
   {date:'2026-05-02',href:'briefing_20260502.html',title:'3D打印每日速递',count:0,sections:1,weekdayCn:'周六',weekdayEn:'Saturday'},
+
   {date:'2026-05-01',href:'briefing_20260501.html',title:'3D打印每日速递',count:0,sections:1,weekdayCn:'周五',weekdayEn:'Friday'}
+
 ];
+
 const SECTION_COLORS = ['#1a73e8','#e65100','#2e7d32','#bf360c','#00695c','#7b1fa2','#00838f'];
+
 const MONTHS_CN = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+
 const MONTHS_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+
 
 let currentDate = new Date();
 
+
+
 function g(d) { return BRIEFING_DATA.find(function(b) { return b.date === d; }); }
+
 function f(y,m,d) { return y+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0'); }
+
 function isT(y,m,d) { var t=new Date(); return t.getFullYear()===y && t.getMonth()+1===m && t.getDate()===d; }
 
+
+
 function renderCalendar() {
+
   var y = currentDate.getFullYear(), m = currentDate.getMonth() + 1;
+
   document.getElementById('calMonthYear').textContent = y + ' 年 ' + MONTHS_CN[m-1];
+
   document.getElementById('calMonthEn').textContent = MONTHS_EN[m-1];
 
+
+
   var firstDay = new Date(y, m-1, 1);
+
   var lastDay = new Date(y, m, 0);
+
   var startW = firstDay.getDay();
+
   var daysInMonth = lastDay.getDate();
+
   var prevM = new Date(y, m-1, 0);
+
   var prevDays = prevM.getDate();
 
+
+
   var grid = document.getElementById('calDays');
+
   grid.innerHTML = '';
 
+
+
   function cell(dayNum, dateStr, isOff, hasData, isToday, data) {
+
     var div = document.createElement('div');
+
     div.className = 'cal-cell';
+
     if (isOff) div.className += ' off';
+
     if (hasData) div.className += ' has-briefing';
+
     if (isToday) div.className += ' today';
 
+
+
     var html = '';
+
     if (isToday) {
+
       html += '<div class="cal-num-wrap"><div class="cal-num-circle">'+dayNum+'</div><span class="cal-today-tag">今天</span></div>';
+
     } else {
+
       html += '<div class="cal-num">'+String(dayNum).padStart(2,'0')+'</div>';
+
     }
+
+
 
     if (hasData && data) {
+
       var dots = SECTION_COLORS.slice(0, data.sections).map(function(c){return '<span style="background:'+c+';"></span>';}).join('');
+
       html += '<div class="cal-body"><div class="cal-title">'+data.title+'</div>' +
+
         '<div class="cal-footer"><span>'+data.count+' 条</span>' +
+
         '<span class="cal-weekday">'+data.weekdayCn+'</span>' +
+
         '<span class="cal-dots">'+dots+'</span></div></div>';
+
       div.setAttribute('onclick', "window.location='"+data.href+"'");
+
     }
 
+
+
     div.innerHTML = html;
+
     grid.appendChild(div);
+
   }
+
+
 
   // Previous month padding
+
   for (var i = startW - 1; i >= 0; i--) {
+
     cell(prevDays - i, null, true, false, false, null);
+
   }
+
+
 
   // Current month
+
   for (var d = 1; d <= daysInMonth; d++) {
+
     var dateStr = f(y, m, d);
+
     var b = g(dateStr);
+
     cell(d, dateStr, false, !!b, isT(y,m,d), b);
+
   }
 
+
+
   // Next month padding
+
   var total = startW + daysInMonth;
+
   var rem = total <= 35 ? 35 - total : 42 - total;
+
   for (var d = 1; d <= rem; d++) {
+
     cell(d, null, true, false, false, null);
+
   }
+
 }
+
+
 
 function changeMonth(delta) { currentDate.setMonth(currentDate.getMonth() + delta); renderCalendar(); }
 
+
+
 function switchView(view) {
+
   var cal = document.getElementById('calendarView');
+
   var list = document.getElementById('listView');
+
   ['calendarToggleBtn','listToggleBtn','calendarToggleBtn2','listToggleBtn2'].forEach(function(id){var e=document.getElementById(id);if(e)e.classList.remove('active');});
 
+
+
   if (view === 'calendar') {
+
     cal.style.display = 'block'; list.style.display = 'none';
+
     var a = document.getElementById('calendarToggleBtn'), a2 = document.getElementById('calendarToggleBtn2');
+
     if (a) a.classList.add('active'); if (a2) a2.classList.add('active');
+
   } else {
+
     cal.style.display = 'none'; list.style.display = 'block';
+
     var a = document.getElementById('listToggleBtn'), a2 = document.getElementById('listToggleBtn2');
+
     if (a) a.classList.add('active'); if (a2) a2.classList.add('active');
+
   }
+
   try { localStorage.setItem('3dp_view', view); } catch(e) {}
+
 }
+
+
 
 function initView() {
+
   var saved = 'calendar';
+
   try { saved = localStorage.getItem('3dp_view') || 'calendar'; } catch(e) {}
+
   if (window.innerWidth <= 768) { switchView('list'); } else { switchView(saved); }
+
 }
+
+
 
 function toggleSidebar() {
+
   document.getElementById('sidebar').classList.toggle('open');
+
   document.getElementById('mobileOverlay').classList.toggle('show');
+
 }
 
+
+
 renderCalendar();
+
 initView();
+
 window.addEventListener('resize', function() { if (window.innerWidth <= 768) switchView('list'); });
+
 </script>
+
+
 
 <!-- 搜索索引 -->
+
 <script src="search_index.js"></script>
+
 <script>
+
 (function() {
+
   var input = document.getElementById('searchInput');
+
   var dropdown = document.getElementById('searchDropdown');
+
   var clearBtn = document.getElementById('searchClear');
 
+
+
   function fmtDate(dateStr) {
+
     var m = dateStr.match(/^(\d{4})(\d{2})(\d{2})$/);
+
     if (!m) return dateStr;
+
     return parseInt(m[2]) + '月' + parseInt(m[3]) + '日';
+
   }
+
+
 
   function highlight(text, term) {
+
     if (!term) return text;
+
     var q = term.trim().toLowerCase();
+
     var regex = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+
     return text.replace(regex, '<em>$1</em>');
+
   }
+
+
 
   function renderResults(results, term) {
+
     if (results.length === 0) {
+
       dropdown.innerHTML = '<div class="search-empty">没有找到包含「' + term + '」的资讯</div>';
+
       dropdown.classList.add('show');
+
       return;
+
     }
+
     var html = '';
+
     for (var i = 0; i < results.length; i++) {
+
       var r = results[i];
+
       html += '<a class="search-result-item" href="' + r.href + '?h=' + encodeURIComponent(term) + '">' +
+
         '<span class="result-date">' + fmtDate(r.date) + '</span>' +
+
         '<span class="result-section" style="background:' + r.sectionColor + '1a;color:' + r.sectionColor + '">' +
+
         '● ' + r.sectionName + '</span>' +
+
         '<span class="result-title">' + highlight(r.title, term) + '</span>' +
+
         '<span class="result-arrow">›</span></a>';
+
     }
+
     html += '<div class="search-footer"><span class="search-count">共 ' + results.length + ' 条结果（总计 ' + SEARCH_INDEX.totalItems + ' 条）</span></div>';
+
     dropdown.innerHTML = html;
+
     dropdown.classList.add('show');
+
   }
+
+
 
   var debounceTimer = null;
+
   function debounce(fn, delay) { clearTimeout(debounceTimer); debounceTimer = setTimeout(fn, delay); }
 
+
+
   input.addEventListener('input', function() {
+
     var q = this.value.trim();
+
     clearBtn.style.display = q ? 'block' : 'none';
+
     if (q.length < 2) { dropdown.classList.remove('show'); return; }
+
     debounce(function() { renderResults(searchNews(q, 20), q); }, 200);
+
   });
+
+
 
   input.addEventListener('keydown', function(e) {
+
     var items = dropdown.querySelectorAll('.search-result-item');
+
     if (!items.length) return;
+
     if (e.key === 'Enter' && items[0]) items[0].click();
+
     if (e.key === 'Escape') { dropdown.classList.remove('show'); input.blur(); }
+
   });
+
+
 
   clearBtn.addEventListener('click', function() {
+
     input.value = ''; clearBtn.style.display = 'none'; dropdown.classList.remove('show'); input.focus();
+
   });
+
+
 
   document.addEventListener('click', function(e) {
+
     if (!document.getElementById('searchWrap').contains(e.target)) dropdown.classList.remove('show');
+
   });
 
+
+
   if (SEARCH_INDEX && SEARCH_INDEX.totalItems) {
+
     var countEl = document.getElementById('totalNewsCount');
+
     if (countEl) countEl.textContent = SEARCH_INDEX.totalItems;
+
   }
+
 })();
+
 </script>
+
 </body>
+
 </html>
