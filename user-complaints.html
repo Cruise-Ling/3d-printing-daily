@@ -618,6 +618,13 @@ function applyFilters() {
   if (activeFilters.brand !== 'all') items = items.filter(function(i){ return i.brand === activeFilters.brand; });
   if (range.from) items = items.filter(function(i){ return i.date >= range.from; });
   if (range.to) items = items.filter(function(i){ return i.date <= range.to; });
+  // 显示排序：日期倒序（最新优先），同日按 id 升序，保证补录批次与常规批次混排后顺序一致
+  items = items.slice().sort(function(a, b){
+    var da = a.date || '', db = b.date || '';
+    if (da !== db) return da < db ? 1 : -1;
+    var ia = a.id || '', ib = b.id || '';
+    return ia < ib ? -1 : (ia > ib ? 1 : 0);
+  });
   return items;
 }
 
