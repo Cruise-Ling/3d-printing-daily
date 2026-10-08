@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D打印行业每日资讯 - 2026年9月28日</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖨️</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f0f2f5;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;display:flex;justify-content:center;padding:12px 0}
+.card{width:375px;background:#fff;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.06);overflow:clip}
+.header{background:linear-gradient(135deg,#1a237e,#283593,#3949ab);padding:24px 20px 18px;color:#fff;position:relative}
+.header-back{position:absolute;left:16px;top:28px;transform:translateY(-50%);display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.95);font-size:14px;font-weight:600;text-decoration:none;padding:7px 16px 7px 3px;border-radius:20px;border:1.5px solid rgba(255,255,255,.35)}
+.header-back:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.6)}
+.header h1{font-size:19px;font-weight:700;letter-spacing:1px;margin-bottom:6px;padding-left:90px}
+.header .date{font-size:13px;opacity:.85;font-weight:400}
+.header .source-note{font-size:11px;opacity:.7;margin-top:4px}
+.stats-bar{display:flex;gap:8px;flex-wrap:wrap;padding:14px 20px;background:#fafbff;border-bottom:1px solid #f0f0f0}
+.stats-pill{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;color:#555;background:#f0f4ff;border-radius:20px;padding:5px 11px;border:1px solid #e8edff}
+.stats-pill b{color:#1a73e8;font-weight:700}
+.stats-pill.warn{background:#fff8e1;border-color:#ffe082}
+.stats-pill.warn b{color:#e65100}
+.section-title{display:flex;align-items:center;padding:18px 20px 12px;font-size:16px;font-weight:800;color:#0d47a1;background:linear-gradient(90deg,rgba(26,115,232,.08),transparent);border-bottom:2px solid #1a73e8}
+.section-title .icon{width:4px;height:16px;border-radius:2px;margin-right:8px}
+.section-title.general .icon{background:linear-gradient(180deg,#42a5f5,#1e88e5)}
+.section-title.specific .icon{background:linear-gradient(180deg,#ffa726,#fb8c00)}
+.section-title.consumer .icon{background:linear-gradient(180deg,#66bb6a,#43a047)}
+.section-title.global .icon{background:linear-gradient(180deg,#ab47bc,#7b1fa2)}
+.section-title.feedback .icon{background:linear-gradient(180deg,#26c6da,#00838f)}
+.section-title.niche .icon{background:linear-gradient(180deg,#e64a19,#d84315)}
+.section-title.scenario .icon{background:linear-gradient(180deg,#00796b,#00695c)}
+.item{padding:12px 20px 14px;border-bottom:1px solid #f5f5f5}
+.item:last-child{border-bottom:none}
+.item-head{display:flex;align-items:flex-start;margin-bottom:6px}
+.num-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;flex-shrink:0;margin-right:10px;margin-top:1px}
+.general-zone .num-dot{background:linear-gradient(135deg,#42a5f5,#1e88e5)}
+.specific-zone .num-dot{background:linear-gradient(135deg,#ffa726,#fb8c00)}
+.consumer-zone .num-dot{background:linear-gradient(135deg,#66bb6a,#43a047)}
+.global-zone .num-dot{background:linear-gradient(135deg,#ab47bc,#7b1fa2)}
+.feedback-zone .num-dot{background:linear-gradient(180deg,#26c6da,#00838f)}
+.niche-zone .num-dot{background:linear-gradient(135deg,#e64a19,#d84315)}
+.scenario-zone .num-dot{background:linear-gradient(135deg,#00796b,#00695c)}
+.item-title{font-size:14.5px;font-weight:600;line-height:1.45;color:#212121;flex:1}
+.item-title a{color:#212121;text-decoration:none}
+.item-title a:hover{color:#1a73e8}
+.item-summary{font-size:12.8px;line-height:1.7;color:#616161;padding-left:32px;word-break:break-all}
+.item-source{font-size:11px;color:#9e9e9e;padding-left:32px;margin-top:4px}
+.item-source a{color:#1e88e5;text-decoration:none}
+.item-source a:hover{text-decoration:underline}
+.from-tag{font-size:10px;padding:1px 6px;border-radius:6px;margin-left:6px;opacity:.75}
+.from-qq{background:#fce4ec;color:#880e4f}
+.from-sina{background:#fff3e0;color:#e65100}
+.from-163{background:#e8f5e9;color:#2e7d32}
+.from-sohu{background:#fff3e0;color:#bf360c}
+.from-36kr{background:#e8eaf6;color:#283593}
+.from-3dprint{background:#e0f7fa;color:#006064}
+.from-3dprinting{background:#e0f7fa;color:#006064}
+.from-dayinpai{background:#e8f5e9;color:#1b5e20}
+.from-cgtn{background:#e3f2fd;color:#0d47a1}
+.from-xinhua{background:#ffebee;color:#b71c1c}
+.from-cnstock{background:#fff3e0;color:#e65100}
+.from-eastmoney{background:#fff3e0;color:#bf360c}
+.from-ithome{background:#e3f2fd;color:#1565c0}
+.from-cctv{background:#ffebee;color:#b71c1c}
+.from-other{background:#eceff1;color:#37474f}
+.from-tencent{background:#e3f2fd;color:#0d47a1}
+.from-gov{background:#e8eaf6;color:#283593}
+.from-10jqka{background:#fff3e0;color:#e65100}
+.side-nav{position:fixed;left:max(0px,calc((100vw - 375px)/2 - 90px));top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;z-index:200}
+.side-nav-item{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;font-size:12px;color:#555;background:rgba(255,255,255,.95);box-shadow:0 1px 6px rgba(0,0,0,.08);cursor:pointer;transition:all .2s;text-decoration:none;white-space:nowrap;border:1px solid rgba(0,0,0,.06)}
+.side-nav-item:hover{box-shadow:0 2px 12px rgba(0,0,0,.15);transform:translateX(-2px)}
+.side-nav-item .nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.score-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:8px;margin-left:6px;font-weight:600}
+.score-badge-a{background:#e8f5e9;color:#2e7d32}
+.hot-summary{padding:14px 20px;background:linear-gradient(135deg,#fff8e1,#fff3e0);border-bottom:1px solid #ffe082}
+.hot-summary h3{font-size:14px;font-weight:700;color:#e65100;margin-bottom:8px}
+.hot-summary ul{list-style:none;padding:0}
+.hot-summary li{font-size:12.5px;color:#5d4037;padding:3px 0;padding-left:16px;position:relative;line-height:1.5}
+.hot-summary li::before{content:"";position:absolute;left:0;top:10px;width:6px;height:6px;border-radius:50%;background:#ff9800}
+.footer{padding:16px 20px;background:#f8f9fa;text-align:center;font-size:11px;color:#9e9e9e;border-top:1px solid #f0f0f0}
+.footer a{color:#1e88e5;text-decoration:none}
+@media(max-width:767px){.side-nav{position:fixed;left:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;padding-left:4px;z-index:200}.side-nav .side-nav-item{padding:5px 8px;font-size:11px;border-radius:16px;box-shadow:0 1px 6px rgba(0,0,0,.1)}.card{margin-left:52px;width:calc(100vw - 60px);max-width:375px}body{justify-content:flex-start;padding:12px 0 12px 4px}}
+@media(min-width:768px){.section-nav{display:none}.side-nav{left:max(0px,calc((100vw - 375px)/2 - 90px))}}
+</style>
+</head>
+<body>
+<nav class='side-nav' id="sideNav">
+  <a class='side-nav-item' href="index.html"><span class='nav-dot' style="background:#1a237e"></span>🏠 首页</a>
+  <a class='side-nav-item' onclick="scrollToSection('general')"><span class='nav-dot' style="background:#1a73e8"></span>泛行业</a>
+  <a class='side-nav-item' onclick="scrollToSection('specific')"><span class='nav-dot' style="background:#e65100"></span>细分领域</a>
+  <a class='side-nav-item' onclick="scrollToSection('consumer')"><span class='nav-dot' style="background:#2e7d32"></span>消费级</a>
+  <a class='side-nav-item' onclick="scrollToSection('niche')"><span class='nav-dot' style="background:#d84315"></span>细分市场</a>
+  <a class='side-nav-item' onclick="scrollToSection('scenario')"><span class='nav-dot' style="background:#00695c"></span>场景打印</a>
+  <a class='side-nav-item' onclick="scrollToSection('global')"><span class='nav-dot' style="background:#7b1fa2"></span>海外资讯</a>
+  <a class='side-nav-item' onclick="scrollToSection('feedback')"><span class='nav-dot' style="background:#00838f"></span>用户口碑</a>
+</nav>
+<script>
+function scrollToSection(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+</script>
+<div class='card'>
+
+<div class='header'>
+  <a class='header-back' href="index.html">← 首页</a>
+  <h1>3D打印行业每日资讯</h1>
+  <div class='date'>2026年9月28日 · 星期一</div>
+  <div class='source-note'>内容来源：3D打印资源库、库周报、库早报、3DPrint.com、3Dnatives、TCT 等</div>
+</div>
+<div class='stats-bar'>
+  <span class='stats-pill'>资讯 <b>6</b> 条</span>
+  <span class='stats-pill'>分区 <b>5</b> 大</span>
+  <span class='stats-pill warn'>内容日期 <b>9月25日至27日（中秋假期）</b></span>
+  <span class='stats-pill'>补录版</span>
+</div>
+<div class='hot-summary'>
+  <h3>🔥 今日热点速递</h3>
+    <ul><li>库周报（9月27日）：拓竹专利案判赔2760万美元并将上诉；纵维立方获行业首张海关AEO高级认证；世赛增材制造赛项在上海举行</li>
+<li>3DPrint.com：AM服务二季度收入近25亿美元，增材制造市场正从硬件销售转向服务驱动</li>
+<li>Carbon在欧洲专利局上诉程序中保住双固化3D打印核心专利（EP 3158400）</li>
+<li>Bambu Lab与设计师方苏珊合作，3D打印人字拖与蕾丝登上伦敦时装周；Arridex在拉各斯安装CEAD大型挤出系统</li>
+<li>TCT：ADDMAN宣布再增81台HP Jet Fusion 5620 Pro，MJF机群规模将超125台</li>
+  </ul>
+  </div>
+<div class='section-title general' id="general">
+  <span class='icon'></span>泛行业资讯（工业/资本/政策）</div>
+<div class='general-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>1</span>
+        <div class='item-title'>
+          <a href='https://www.3dzyk.cn/thread-39829-1-1.html' target='_blank'>📰 库周报（9月27日）：拓竹判赔2760万美元将上诉，纵维立方获行业首张AEO认证</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3D打印资源库周报：9月17日美国得州东区联邦法院陪审团认定拓竹侵犯Stratasys四项专利并裁定赔偿约2760万美元，9月18日法院驳回提高赔偿额与永久禁售令请求，拓竹相关产品仍可在美销售，公司表示将申请审后复核并上诉；同族欧洲专利EP2964450已在此前被欧洲统一专利法院海牙地方分院认定不构成侵权。纵维立方通过海关AEO高级认证，为全国3D打印行业首张。第48届世界技能大赛增材制造赛项9月22至27日在上海举行。</div>
+      <div class='item-source'>来源：<a href='https://www.3dzyk.cn/thread-39829-1-1.html' target='_blank'>3D打印资源库</a><span class='from-tag from-other'>库周报</span></div>
+    </div>
+</div>
+<div class='section-title specific' id="specific">
+  <span class='icon'></span>细分领域动态（医疗/航天/材料）</div>
+<div class='specific-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>2</span>
+        <div class='item-title'>
+          <a href='https://t.cn/AXWXGzzT' target='_blank'>⚖️ 谁在挑战Carbon？这场3D打印专利战结果出炉</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3D打印资源库：Carbon在欧洲专利局上诉程序中成功保住其双固化（dual-cure）3D打印核心专利EP 3158400，该专利2022年授权，覆盖“使用具有多种固化机制的材料生产三维物体的方法”，此前遭竞争对手多年挑战，9月28日公告裁决结果。该案与Stratasys对拓竹的专利诉讼同期受到关注，反映增材制造进入规模应用后，专利成为竞争焦点。</div>
+      <div class='item-source'>来源：<a href='https://t.cn/AXWXGzzT' target='_blank'>3D打印资源库</a><span class='from-tag from-other'>资源库</span></div>
+    </div>
+</div>
+<div class='section-title consumer' id="consumer">
+  <span class='icon'></span>消费级（新品/评测/品牌）</div>
+<div class='consumer-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>3</span>
+        <div class='item-title'>
+          <a href='https://www.3dnatives.com/3D-compare/en/manufacturer/flashforge-technology-en/' target='_blank'>🖨️ 3Dnatives：可自映射裂纹的点阵结构、AI助力的易打印金属合金</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3Dnatives：近期栏目更新多条研究与应用动态——悉尼与格拉斯哥团队打印出能够映射自身裂纹的点阵结构，为结构健康监测提供新思路；一篇研究介绍借助AI筛选出的更易3D打印的金属合金；此外还有3D打印白金中培育红宝石与蓝宝石、为初学者制作尺八竹笛指法辅助件、以及可回收材料的循环打印测试等内容，覆盖材料、监测与文创等多个方向。</div>
+      <div class='item-source'>来源：<a href='https://www.3dnatives.com/3D-compare/en/manufacturer/flashforge-technology-en/' target='_blank'>3Dnatives</a><span class='from-tag from-other'>3Dnatives</span></div>
+    </div>
+</div>
+<div class='section-title niche' id="niche">
+  <span class='icon'></span>细分市场（汽车/建筑/医疗等）</div>
+<div class='niche-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>4</span>
+        <div class='item-title'>
+          <a href='https://www.3dzyk.cn/xcmoveinfo-xcmoveinfoshow.html?page=2' target='_blank'>🏭 快讯：邯郸拓维智造200余台打印机构成“打印农场”，专做小宠用品</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3D打印资源库快讯：邯郸拓维智造今年5月进入3D打印小宠用品市场，批量采购200余台3D打印机组成打印农场，生产仓鼠跑轮、鸟屋、饮水器等定制产品；通过小批量、非标生产，从建模到成品成本不足百元，其中一款3D打印训鸟食盒上线3个月已销售五六千件。该案例显示打印农场在细分品类中可通过差异化选品跑通盈利模型。同期，美国发明人申请FFF 3D打印皮带驱动挤出系统专利，把挤出机电机从打印头移至机架。</div>
+      <div class='item-source'>来源：<a href='https://www.3dzyk.cn/xcmoveinfo-xcmoveinfoshow.html?page=2' target='_blank'>3D打印资源库</a><span class='from-tag from-other'>资源库</span></div>
+    </div>
+</div>
+<div class='section-title global' id="global">
+  <span class='icon'></span>海外资讯（国际/3Dnatives/3DPrint.com）</div>
+<div class='global-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>5</span>
+        <div class='item-title'>
+          <a href='https://stratified.in/3d-printing-blog/?query-16-page=2&reloaded=true' target='_blank'>🌐 3DPrint.com：AM服务季度收入近25亿美元，市场正从硬件转向服务</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3DPrint.com（镜像索引）：AM Research数据显示2026年第二季度增材制造服务收入接近25亿美元，高于上年同期的21.9亿美元，成为AM市场复苏中最值得关注的数字之一；同期刊出的文章还包括AM如何推动轨道交通部件进入生产、AM服务市场的画像研究、金属AM在PBF与DED路线上的2035展望，以及为什么3D打印需要完整的数字线程等。</div>
+      <div class='item-source'>来源：<a href='https://stratified.in/3d-printing-blog/?query-16-page=2&reloaded=true' target='_blank'>3DPrint.com</a><span class='from-tag from-other'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>6</span>
+        <div class='item-title'>
+          <a href='https://stratified.in/3d-printing-blog/?reloaded=true&query-31-page=2' target='_blank'>🌐 3DPrint.com：Bambu Lab与SUSAN FANG的3D打印作品登上伦敦时装周</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3DPrint.com：中国设计师方苏珊在伦敦巴比肯中心发布2027春夏Air-Illusion系列，31套造型中包括3D打印人字拖与蕾丝，以及机切醋酸纤维花饰礼服，拓竹科技提供技术支持。同期栏目还报道了拉各斯企业Arridex采购并安装CEAD Flexcube大型挤出系统以拓展大型材料挤出业务、以及美国制造业生产率增长停滞与增材制造竞争力的话题。</div>
+      <div class='item-source'>来源：<a href='https://stratified.in/3d-printing-blog/?reloaded=true&query-31-page=2' target='_blank'>3DPrint.com</a><span class='from-tag from-other'>3DPrint.com</span></div>
+    </div>
+</div>
+
+<div class='footer'>
+  <p>3D打印行业每日资讯 · 2026年9月28日 （星期一）· 内容日期 9月25日至27日（中秋假期）</p>
+  <p>数据来源见各条目标注 · <a href="index.html">返回首页</a></p>
+</div>
+</div>
+</body>
+</html>
