@@ -30,6 +30,12 @@
 ## 归档 / Archive
 
 | 日期 Date | 简报 Briefing |
+| 2026-10-08 (Thu) | [briefing_20261008.html](briefing_20261008.html) |
+| 2026-09-30 (Wed) | [briefing_20260930.html](briefing_20260930.html) |
+| 2026-09-29 (Tue) | [briefing_20260929.html](briefing_20260929.html) |
+| 2026-09-28 (Mon) | [briefing_20260928.html](briefing_20260928.html) |
+| 2026-09-24 (Thu) | [briefing_20260924.html](briefing_20260924.html) |
+| 2026-09-23 (Wed) | [briefing_20260923.html](briefing_20260923.html) |
 | 2026-09-22 (Tue) | [briefing_20260922.html](briefing_20260922.html) |
 | 2026-09-21 (Mon) | [briefing_20260921.html](briefing_20260921.html) |
 | 2026-09-18 (Fri) | [briefing_20260918.html](briefing_20260918.html) |
@@ -39,7 +45,10 @@
 | 2026-09-14 (Mon) | [briefing_20260914.html](briefing_20260914.html) |
 | 2026-09-11 (Fri) | [briefing_20260911.html](briefing_20260911.html) |
 | 2026-09-10 (Thu) | [briefing_20260910.html](briefing_20260910.html) |
+| 2026-09-09 (Wed) | [briefing_20260909.html](briefing_20260909.html) |
 | 2026-09-08 (Tue) | [briefing_20260908.html](briefing_20260908.html) |
+| 2026-09-07 (Mon) | [briefing_20260907.html](briefing_20260907.html) |
+| 2026-09-04 (Fri) | [briefing_20260904.html](briefing_20260904.html) |
 | 2026-09-03 (Thu) | [briefing_20260903.html](briefing_20260903.html) |
 | 2026-09-02 (Wed) | [briefing_20260902.html](briefing_20260902.html) |
 | 2026-09-01 (Tue) | [briefing_20260901.html](briefing_20260901.html) |
@@ -51,14 +60,13 @@
 | 2026-08-24 (Mon) | [briefing_20260824.html](briefing_20260824.html) |
 | 2026-08-21 (Fri) | [briefing_20260821.html](briefing_20260821.html) |
 | 2026-08-20 (Thu) | [briefing_20260820.html](briefing_20260820.html) |
-|-----------|--------------|
 | 2026-08-19 (Wed) | [briefing_20260819.html](briefing_20260819.html) |
 | 2026-08-18 (Tue) | [briefing_20260818.html](briefing_20260818.html) |
 | 2026-08-17 (Mon) | [briefing_20260817.html](briefing_20260817.html) |
 | 2026-08-14 (Fri) | [briefing_20260814.html](briefing_20260814.html) |
-| 2026-08-11 (Tue) | [briefing_20260811.html](briefing_20260811.html) |
 | 2026-08-13 (Thu) | [briefing_20260813.html](briefing_20260813.html) |
 | 2026-08-12 (Wed) | [briefing_20260812.html](briefing_20260812.html) |
+| 2026-08-11 (Tue) | [briefing_20260811.html](briefing_20260811.html) |
 | 2026-08-10 (Mon) | [briefing_20260810.html](briefing_20260810.html) |
 | 2026-08-07 (Fri) | [briefing_20260807.html](briefing_20260807.html) |
 | 2026-08-06 (Thu) | [briefing_20260806.html](briefing_20260806.html) |
@@ -132,6 +140,8 @@
 | 2026-05-03 (Sun) | [briefing_20260503.html](briefing_20260503.html) |
 | 2026-05-02 (Sat) | [briefing_20260502.html](briefing_20260502.html) |
 | 2026-05-01 (Fri) | [briefing_20260501.html](briefing_20260501.html) |
+
+|-----------|--------------|
 
 ---
 
