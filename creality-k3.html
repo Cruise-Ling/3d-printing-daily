@@ -74,6 +74,30 @@ a:hover { text-decoration:underline; }
 .topic.pending-topic { border-style:dashed; cursor:default; }
 .topic.pending-topic:hover { border-color:#30363d; background:#11161f; }
 .t-flag { font-size:10.5px; color:#d29922; background:rgba(210,153,34,.12); border:1px solid rgba(210,153,34,.32); border-radius:8px; padding:1.5px 7px; font-weight:600; }
+/* 渠道覆盖清单 */
+.chgroup { margin-top:14px; }
+.chgroup:first-child { margin-top:0; }
+.chgroup-h { font-size:11.5px; color:#8b949e; font-weight:600; margin-bottom:7px; display:flex; align-items:center; gap:7px; }
+.chgroup-h i { width:8px; height:8px; border-radius:2px; display:inline-block; }
+.chgroup-h .cgn { font-size:10.5px; color:#6e7681; font-weight:400; }
+.chrow { display:flex; align-items:center; gap:10px; padding:6px 8px; margin:0 -8px; border-radius:6px; font-size:12.5px; }
+.chrow.clk { cursor:pointer; }
+.chrow.clk:hover { background:rgba(255,255,255,.05); }
+.chrow.on { background:#132339; outline:1px solid #1f6feb; }
+.chsite { flex:0 0 150px; width:150px; color:#c9d1d9; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.chrow.zero .chsite { color:#6e7681; }
+.chm { flex:0 0 52px; font-size:10.5px; text-align:center; border-radius:8px; padding:1.5px 0; font-weight:600; }
+.chm.auto { color:#3fb950; background:rgba(46,160,67,.14); border:1px solid rgba(46,160,67,.35); }
+.chm.manual { color:#d29922; background:rgba(210,153,34,.12); border:1px solid rgba(210,153,34,.32); }
+.chst { flex:0 0 62px; font-size:10.5px; text-align:center; padding:1.5px 0; }
+.chst.ok { color:#3fb950; }
+.chst.todo { color:#58a6ff; }
+.chst.partial { color:#d29922; }
+.chst.blocked { color:#6e7681; }
+.chst.unknown { color:#484f58; }
+.chnum { flex:0 0 48px; text-align:right; font-variant-numeric:tabular-nums; color:#c9d1d9; font-weight:600; }
+.chrow.zero .chnum { color:#6e7681; font-weight:400; }
+.chnote { flex:1; font-size:11px; color:#6e7681; line-height:1.45; min-width:0; }
 
 .topic-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; }
 .topic { background:#11161f; border:1px solid #21262d; border-radius:9px; padding:11px 13px; cursor:pointer; transition:all .16s; }
@@ -243,6 +267,10 @@ select { background:#0d1117; border:1px solid #21262d; color:#e6edf3; font-size:
     <h3>渠道来源占比<span class="note">一级 = 渠道组，二级 = 具体平台 · 点击图例或平台行可筛选明细</span></h3>
     <div id="channelBody"></div>
   </div>
+  <div class="panel mt12">
+    <h3>渠道覆盖清单<span class="note">目标渠道 × 采集方式 × 当前覆盖 · 条数为 0 即缺口；「不可自动」= 需人工投喂</span></h3>
+    <div id="chanListBody"></div>
+  </div>
   <div class="grid-2">
     <div class="panel"><h3>渠道 × 情感矩阵</h3><div id="matrixBody"></div></div>
     <div class="panel"><h3>被提及的竞品 / 对标机型</h3><div id="compareBody"></div></div>
@@ -291,7 +319,7 @@ const K3_FEEDBACK_DATA = {
     {"id":"K3-20261013-028","date":"2026-10-13","publishedAt":"2026-10-12","channel":"国内","sourceType":"用户","platform":"什么值得买","sourceLink":"https://post.smzdm.com/p/a6zd8l0e","country":"CN","language":"ZH","sentiment":"非常负面","topics":["support"],"dimensions":["售后服务与社区","品牌信任"],"problemPoints":["售后 72 小时不回复","保修期内不足 600 小时即故障","海外故障要求带回国内维修","配件差价质疑"],"originalText":"2025 年 11 月：尊敬的创想三维售后，您已经 72 小时没理我了。2026 年 8 月：保修期内的机器用了不到 600 小时就打不了，除了抱歉啥也不会说；有工程师还想赚差价。9 月 2 日更新：新机带去国外出差，当地判为硬件故障，官方要求带回来维修，出差一个月回来被告知不能退货。","translation":"2025 年 11 月：「尊敬的创想三维售后，您已经 72 小时没理我了。」2026 年 8 月：保修期内的机器用了不到 600 小时就无法打印，「除了抱歉啥也不会说」，还有工程师被指赚配件差价。9 月 2 日更新：新机带到国外出差，当地判定硬件故障，官方要求带回国维修，出差一个月回来被告知不能退货。","summaryCn":"公开可查的售后投诉流水账：72 小时不回复、保修期内不足 600 小时故障、海外故障被要求带回国内维修、工程师配件差价质疑；被评价为「机器越卖越便宜、服务越摊越薄」。","competitorMentioned":"Bambu Lab","heat":"跨平台公开投诉帖按时间归并（2025-10 至 2026-09）","isP0":true},
     {"id":"K3-20261013-029","date":"2026-10-13","publishedAt":"2026-10-11","channel":"国内","sourceType":"用户","platform":"什么值得买","sourceLink":"https://post.smzdm.com/p/apqm4qp9","country":"CN","language":"ZH","sentiment":"负面","topics":["price"],"dimensions":["市场与定价","品牌信任"],"problemPoints":["首发价被当营销锚点","K2 Pro 跳水先例影响蹲首发信心","价保条款存疑"],"originalText":"一派是套路说：他一开始公布这个价，就压根就不打算卖，先将羊头挂出来……然后几天之后就开始双十一了，直接给你端上来 3200 或 3300。还有人记得当时 k2pro 卖 6k 没人买跳水到 3k 就好评如潮了。","translation":"一派认为是套路：「一开始公布这个价就压根不打算卖，先把羊头挂出来……几天后就是双十一，直接端上 3200 或 3300。」也有人记得 K2 Pro 当年卖 6000 无人问津、跳水到 3000 后就好评如潮。","summaryCn":"4599 被部分用户解读为营销锚点，K2 Pro 跳水先例让蹲首发的人信心不足；用户建议盯开闸后实际叠价、价保条款与是否出现到手价倒挂。","competitorMentioned":"Bambu Lab","heat":"307 赞 131 评讨论帖","isP0":false},
     {"id":"K3-20261013-030","date":"2026-10-13","publishedAt":"2026-10-09","channel":"国内","sourceType":"媒体","platform":"网易 / 3D打印资源库","sourceLink":"https://www.163.com/dy/article/L8PO9T020538J1KQ.html","country":"CN","language":"ZH","sentiment":"正面","topics":["kliTek","multicolor"],"dimensions":["硬件性能 - 多色系统","日常使用体验 - 开箱装配"],"problemPoints":[],"originalText":"我们第一时间拿到了机器，从开箱、设置到首次打印，整个过程都很顺畅，值得点个赞。经过半个月的体验，我们对 K3 换头过程的直观感受是：顺畅。","translation":"我们第一时间拿到了机器，从开箱、设置到首次打印，整个过程都很顺畅，值得点个赞。经过半个月的体验，我们对 K3 换头过程的直观感受是：顺畅。","summaryCn":"拿到工程机实测半个月的媒体评价：开箱到首打顺畅、换头过程顺畅；给出泰坦巨龙奖杯 42h26m／240g 废料，对比单头多色 168h39m／2417g。","competitorMentioned":"Snapmaker U1","heat":"3D打印资源库（10-09 发布）","isP0":false},
-    {"id":"K3-20261013-031","date":"2026-10-13","publishedAt":"2026-10-08","channel":"国内","sourceType":"电商","platform":"京东（独家首发）","sourceLink":"https://caifuhao.eastmoney.com/news/20261008212829081129370","country":"CN","language":"ZH","sentiment":"中性","topics":["price"],"dimensions":["市场与定价","电商渠道"],"problemPoints":["到手价口径混乱 5399 / 4899 / 4589.15","商品页好评率显示 0% 待复核"],"originalText":"10 月 8 日，创想三维重磅新品 K3 正式在京东上线。作为京东独家新品，K3 以独立四通道四喷嘴架构为核心……京东同步推出 6 期白条免息、原装耗材赠送等购机权益。","translation":"10 月 8 日，创想三维新品 K3 正式在京东上线，为京东独家新品，搭载 KliTek 四喷嘴更换技术，京东同步推出 6 期白条免息、原装耗材赠送等权益。","summaryCn":"京东独家首发：标价 5399 元，叠加 15% 补贴与 PLUS 后到手 4589.15 元，权益包另需 18.8 元；商品页显示评论数 500 但好评率 0%，价格与评价口径均需澄清。","competitorMentioned":"","heat":"京东独家首发 + 品牌通稿（10-08）","isP0":false},
+    {"id":"K3-20261013-031","date":"2026-10-13","publishedAt":"2026-10-08","channel":"国内","sourceType":"媒体","platform":"东方财富财富号","sourceLink":"https://caifuhao.eastmoney.com/news/20261008212829081129370","country":"CN","language":"ZH","sentiment":"中性","topics":["price"],"dimensions":["市场与定价","电商渠道"],"problemPoints":["到手价口径混乱 5399 / 4899 / 4589.15","商品页好评率显示 0% 待复核"],"originalText":"10 月 8 日，创想三维重磅新品 K3 正式在京东上线。作为京东独家新品，K3 以独立四通道四喷嘴架构为核心……京东同步推出 6 期白条免息、原装耗材赠送等购机权益。","translation":"10 月 8 日，创想三维新品 K3 正式在京东上线，为京东独家新品，搭载 KliTek 四喷嘴更换技术，京东同步推出 6 期白条免息、原装耗材赠送等权益。","summaryCn":"京东独家首发：标价 5399 元，叠加 15% 补贴与 PLUS 后到手 4589.15 元，权益包另需 18.8 元；商品页显示评论数 500 但好评率 0%，价格与评价口径均需澄清。","competitorMentioned":"","heat":"东方财富财富号 · 京东首发通稿（10-08）","isP0":false},
     {"id":"K3-20261013-032","date":"2026-10-13","publishedAt":"2026-10-12","channel":"国内","sourceType":"用户","platform":"什么值得买","sourceLink":"https://www.smzdm.com/p/183610612","country":"CN","language":"ZH","sentiment":"负面","topics":["price"],"dimensions":["市场与定价","使用成本与兼容性"],"problemPoints":["单色为主用户认为不如买 K2 加手动换料","创想品控历史阴影"],"originalText":"四喷嘴多色一步到位确实省换色时间，不过 4 千 5 的价位，玩单色为主的值友选 K2 加手动换料是不是更划算？就修不完的修——看来你是经历过创想三维的捶打的。","translation":"「四喷嘴多色一步到位确实省换色时间，不过 4 千 5 的价位，玩单色为主的值友选 K2 加手动换料是不是更划算？」评论区另一条回复：「就修不完的修——看来你是经历过创想三维的捶打的。」","summaryCn":"商品评论区出现价格质疑：以单色为主的用户认为买 K2 加手动换料更划算；并伴随对创想品控与维修体验的历史吐槽。","competitorMentioned":"Creality K2","heat":"京东新品评论区","isP0":false},
     {"id":"K3-20261013-033","date":"2026-10-13","publishedAt":"2026-08-27","channel":"国内","sourceType":"用户","platform":"什么值得买","sourceLink":"https://post.m.smzdm.com/p/a267lg5d/","country":"CN","language":"ZH","sentiment":"正面","topics":["multicolor","ai"],"dimensions":["硬件性能 - 打印质量","硬件性能 - AI检测"],"problemPoints":[],"originalText":"从社区反馈来看，打印出来的多色模型颜色边界干净，接缝控制不错，多喷嘴协同的打印质量得到了不少认可。AI 能力贯穿打印全流程：RFID 耗材识别、切片参数自动匹配、意面与堵头实时检测，腔体摄像头持续监控并可自动暂停。","translation":"从社区反馈来看，打印出的多色模型颜色边界干净、接缝控制不错，多喷嘴协同的打印质量得到不少认可。AI 能力贯穿打印全流程：RFID 耗材识别、切片参数自动匹配、意面与堵头实时检测，腔体摄像头持续监控并可自动暂停问题打印。","summaryCn":"展会现场正面反馈：多色边界干净、接缝控制好；AI 全流程（RFID 识别、参数匹配、意面/堵头检测、自动暂停）获认可。","competitorMentioned":"","heat":"什么值得买展会首秀帖（评论有奖）","isP0":false},
     {"id":"K3-20261013-034","date":"2026-10-13","publishedAt":"2026-08-27","channel":"国内","sourceType":"用户","platform":"什么值得买","sourceLink":"https://post.m.smzdm.com/p/a267lg5d/","country":"CN","language":"ZH","sentiment":"中性","topics":["kliTek","noise"],"dimensions":["硬件性能 - 多色系统","日常使用体验 - 效率"],"problemPoints":["换头冷却等待与擦料塔流程尚有优化空间"],"originalText":"作为一项新架构的首次公开展示，也有玩家关注到换头过程中的冷却等待、擦料塔流程等细节，认为整体流畅度还有优化空间。创想方面也表示后续会通过固件更新持续优化体验。","translation":"作为新架构的首次公开展示，也有玩家注意到换头过程中的冷却等待、擦料塔流程等细节，认为整体流畅度仍有优化空间。创想方面表示后续会通过固件更新持续优化体验。","summaryCn":"玩家认可新架构方向，但指出换头冷却等待与擦料塔流程仍有优化空间；官方回应将以固件更新持续优化。","competitorMentioned":"","heat":"展会首秀帖 + 官方回应","isP0":false},
@@ -322,23 +350,51 @@ const TOPIC_META = {
 const GROUP_META = {
   cnCommunity:   { name:"国内社区",      color:"#1f6feb" },
   cnEcom:        { name:"国内电商",      color:"#2ea043" },
+  cnMedia:       { name:"国内媒体",      color:"#e3b341" },
   overseaDirect: { name:"海外一手社区",  color:"#f85149", expect:true },
-  overseaEcom:   { name:"海外电商/视频", color:"#58a6ff", expect:true },
+  overseaVideo:  { name:"海外视频",      color:"#58a6ff", expect:true },
+  overseaEcom:   { name:"海外电商",      color:"#3fb950", expect:true },
   overseaAgg:    { name:"海外聚合站",    color:"#8957e5" },
-  media:         { name:"行业媒体",      color:"#d29922" },
+  overseaMedia:  { name:"海外媒体",      color:"#d29922" },
   official:      { name:"厂商官方",      color:"#8b949e" },
   other:         { name:"其他",          color:"#484f58" }
 };
-const GROUP_ORDER = ["cnCommunity","cnEcom","overseaDirect","overseaEcom","overseaAgg","media","official","other"];
+const GROUP_ORDER = ["cnCommunity","cnEcom","cnMedia","overseaDirect","overseaVideo","overseaEcom","overseaAgg","overseaMedia","official","other"];
+
+// 渠道覆盖清单（2026-10-14 可达性实测）：auto = 接口实测可自动采集；manual = 只能人工投喂
+// state: ok 已有数据 / todo 实测可自动但尚未接入 / partial 仅能拿量级 / blocked 不可自动 / unknown 可行性待探
+const CHANNEL_MATRIX = [
+  { site:"什么值得买",          group:"cnCommunity",   method:"auto",   state:"ok",      re:/什么值得买|smzdm/i,                                        note:"归并帖：一帖承载多条，不可当独立来源计数" },
+  { site:"B 站",               group:"cnCommunity",   method:"auto",   state:"todo",    re:/B\s?站|bilibili/i,                                        note:"search/all/v2 实测 200，实取「KliTek 四喷嘴快换系统」等真实视频" },
+  { site:"小红书",              group:"cnCommunity",   method:"manual", state:"blocked", re:/小红书/i,                                                  note:"SPA 空壳 + x-s 签名 + 登录墙，不可自动" },
+  { site:"抖音",               group:"cnCommunity",   method:"manual", state:"blocked", re:/抖音/i,                                                    note:"搜索接口返回空数组，需 a_bogus 签名" },
+  { site:"知乎",               group:"cnCommunity",   method:"manual", state:"blocked", re:/知乎/i,                                                    note:"api 400 / 网页 403" },
+  { site:"贴吧",               group:"cnCommunity",   method:"manual", state:"blocked", re:/贴吧/i,                                                    note:"403" },
+  { site:"微博",               group:"cnCommunity",   method:"manual", state:"blocked", re:/微博/i,                                                    note:"登录墙" },
+  { site:"京东 / 天猫 / 淘宝",   group:"cnEcom",        method:"manual", state:"blocked", re:/京东|淘宝|天猫|拼多多/,                                      note:"站内评价反爬；K3 为京东独家首发，此处缺口最大" },
+  { site:"网易 / 3D打印资源库",  group:"cnMedia",       method:"auto",   state:"ok",      re:/网易|3D打印资源库/i,                                        note:"第三方通稿口径，非用户声量" },
+  { site:"Reddit",             group:"overseaDirect", method:"auto",   state:"todo",    re:/Reddit|r\//i,                                              note:"search.rss 实测 200，实取「K3 First Look! Smash Hit or Rage Quit?」；需限速退避（连续请求 429）" },
+  { site:"X (Twitter)",        group:"overseaDirect", method:"manual", state:"blocked", re:/Twitter|\bX\b|推特/i,                                       note:"syndication 仅返回空壳；api v2 需付费 Bearer" },
+  { site:"Facebook",           group:"overseaDirect", method:"manual", state:"blocked", re:/Facebook/i,                                                note:"400" },
+  { site:"Instagram",          group:"overseaDirect", method:"manual", state:"blocked", re:/Instagram|\bIG\b/i,                                        note:"429 / 登录墙" },
+  { site:"YouTube",            group:"overseaVideo",  method:"auto",   state:"unknown", re:/YouTube/i,                                                 note:"本轮未实测通，可行性待探" },
+  { site:"TikTok",             group:"overseaVideo",  method:"manual", state:"partial", re:/TikTok/i,                                                  note:"仅可取话题量级（#crealityk3 238 视频 / 1217 万播放），拿不到明细" },
+  { site:"Amazon",             group:"overseaEcom",   method:"manual", state:"unknown", re:/Amazon/i,                                                  note:"评价页需登录，可行性待探" },
+  { site:"Makers101",          group:"overseaAgg",    method:"auto",   state:"ok",      re:/Makers101|聚合|综述/i,                                      note:"8 条同源于 1 个 URL，为聚合转述非一手" },
+  { site:"海外媒体 5 家",       group:"overseaMedia",  method:"auto",   state:"ok",      re:/Notebookcheck|Fast3DPrinters|Slice Lab|Tech Dads|Stuff/i,  note:"" },
+  { site:"Creality 官网",       group:"official",      method:"auto",   state:"ok",      re:/Creality|创想/i,                                            note:"厂商口径，不计入用户声量" }
+];
 
 function groupOf(p) {
   p = p || "";
   if (/Makers101|聚合|综述/i.test(p)) return "overseaAgg";
-  if (/什么值得买|smzdm|B\s?站|bilibili|知乎|贴吧|小红书|微博|抖音/i.test(p)) return "cnCommunity";
+  if (/什么值得买|smzdm|B\s?站|bilibili|知乎|贴吧|小红书|抖音|微博/i.test(p)) return "cnCommunity";
   if (/京东|淘宝|天猫|拼多多/.test(p)) return "cnEcom";
-  if (/Reddit|r\/|Prusa|3DPrintBoard|Facebook/i.test(p)) return "overseaDirect";
-  if (/YouTube|Amazon/i.test(p)) return "overseaEcom";
-  if (/Notebookcheck|Fast3DPrinters|Slice Lab|Tech Dads|Stuff|网易|3D打印资源库|3DPrint|Tom's|PCMag|AppMaxx|All3DP|3Druck/i.test(p)) return "media";
+  if (/网易|3D打印资源库|腾讯新闻|新浪|搜狐|凤凰|百家号|东方财富|caifuhao|36氪|钛媒体/.test(p)) return "cnMedia";
+  if (/Reddit|r\/|Prusa|3DPrintBoard|Facebook|Instagram|Twitter|\bX\b|推特/i.test(p)) return "overseaDirect";
+  if (/YouTube|TikTok|Vimeo|Twitch/i.test(p)) return "overseaVideo";
+  if (/Amazon|eBay|Etsy|AliExpress|速卖通/i.test(p)) return "overseaEcom";
+  if (/Notebookcheck|Fast3DPrinters|Slice Lab|Tech Dads|Stuff|3DPrint|Tom's|PCMag|AppMaxx|All3DP|3Druck|Hackaday/i.test(p)) return "overseaMedia";
   if (/Creality|创想/i.test(p)) return "official";
   return "other";
 }
@@ -650,7 +706,7 @@ function renderChannels() {
     foot += '<div class="foldrow">另有 <b>' + tail.length + '</b> 个平台各仅 1 条（' + tail.map(function(r){ return r.k; }).join(' / ') + '），已折叠</div>';
   }
   if (zeroGroups.length) {
-    foot += '<div class="foldrow"><b style="color:#f85149">采集覆盖缺口：' + zeroGroups.join(' / ') + ' 当前 0 条</b> —— K3 的海外原声目前全部来自聚合站转述，尚无一手采集。L1/L2 上线后须补齐 Reddit / YouTube / Amazon 直采。</div>';
+    foot += '<div class="foldrow"><b style="color:#f85149">采集覆盖缺口：' + zeroGroups.join(' / ') + ' 当前 0 条</b> —— K3 海外原声目前全部来自聚合站转述，尚无一手采集。可达性实测结论：<b>Reddit 的 .rss 端点已打通</b>（B 站同样可通），X / Facebook / Instagram 均受登录墙限制，TikTok 仅能取话题量级 —— 明细见下方渠道覆盖清单。</div>';
   }
   const cnb = plats.filter(function(r){ return /什么值得买/.test(r.k); })[0];
   if (cnb && cnb.n >= 8) {
@@ -662,6 +718,40 @@ function renderChannels() {
     '<div class="stack-legend">' + legend + '</div>' +
     '<div style="margin-top:16px;padding-top:13px;border-top:1px solid #1c2128"></div>' +
     rows + foot;
+}
+
+function renderChanList() {
+  const all = K3_FEEDBACK_DATA.items;
+  const byGroup = {};
+  CHANNEL_MATRIX.forEach(function(c){ (byGroup[c.group] = byGroup[c.group] || []).push(c); });
+  const STATE_TXT = { ok:"已有数据", todo:"待接入", partial:"仅量级", blocked:"不可自动", unknown:"待探" };
+  let html = "";
+  GROUP_ORDER.forEach(function(g){
+    const list = byGroup[g];
+    if (!list || !list.length) return;
+    const meta = GROUP_META[g];
+    const gn = all.filter(function(x){ return groupOf(x.platform) === g; }).length;
+    html += '<div class="chgroup"><div class="chgroup-h"><i style="background:' + meta.color + '"></i>' + meta.name +
+            ' <span class="cgn">当前 ' + gn + ' 条' + ((meta.expect && !gn) ? ' · 缺口' : '') + '</span></div>';
+    list.forEach(function(c){
+      const n = all.filter(function(x){ return c.re.test(x.platform || ""); }).length;
+      html += '<div class="chrow' + (n ? '' : ' zero') + '">' +
+              '<span class="chsite" title="' + c.site + '">' + c.site + '</span>' +
+              '<span class="chm ' + c.method + '">' + (c.method === "auto" ? "自动" : "人工") + '</span>' +
+              '<span class="chst ' + c.state + '">' + STATE_TXT[c.state] + '</span>' +
+              '<span class="chnum">' + (n || "—") + '</span>' +
+              '<span class="chnote">' + (c.note || "") + '</span>' +
+              '</div>';
+    });
+    html += '</div>';
+  });
+  const autoN = CHANNEL_MATRIX.filter(function(c){ return c.method === "auto"; }).length;
+  const okN = CHANNEL_MATRIX.filter(function(c){ return c.state === "ok"; }).length;
+  html += '<div class="foldrow">清单共 <b>' + CHANNEL_MATRIX.length + '</b> 个目标渠道：<b>' + autoN + '</b> 个可自动采集，其中 <b>' +
+          okN + '</b> 个已有数据、<b>' + (autoN - okN) + '</b> 个实测可通但尚未接入；其余 <b>' + (CHANNEL_MATRIX.length - autoN) +
+          '</b> 个受登录墙 / 签名 / 反爬限制，只能人工投喂并标注 <b>collectMethod=manual</b>。' +
+          '注意：条数多 ≠ 来源广，请配合上方占比条与集中度指标一起读。</div>';
+  document.getElementById("chanListBody").innerHTML = html;
 }
 
 function setGroup(g) { activeFilters.group = (activeFilters.group === g ? "all" : g); renderChannels(); renderFilters(); renderPanels(); renderCards(); }
@@ -835,7 +925,7 @@ function renderAll() {
   console.log("boot start: K3 专栏 records =", (window.DATA && window.DATA.items ? window.DATA.items.length : 0));
   try {
     renderKPI(); renderStack(); renderProblems(); renderSource(); renderDims();
-    renderTopics(); renderChannels(); renderMatrix(); renderCompare(); renderTrend();
+    renderTopics(); renderChannels(); renderChanList(); renderMatrix(); renderCompare(); renderTrend();
     renderFilters(); renderCards();
     console.log("renderAll done, cards =", applyFilters().length);
   } catch (e) {
