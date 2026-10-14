@@ -95,6 +95,12 @@ a:hover { text-decoration:underline; }
 .tbar.p0 { background:#f85149; }
 .t-lab { font-size:10.5px; color:#6e7681; white-space:nowrap; }
 .t-num { font-size:11px; color:#8b949e; font-variant-numeric:tabular-nums; }
+.tcol { cursor:pointer; border-radius:6px 6px 0 0; }
+.tcol:hover .tbar { background:#58a6ff; }
+.tcol.on .tbar { background:#58a6ff; }
+.tcol.on .t-lab, .tcol.on .t-num { color:#58a6ff; }
+.tcol.on { background:rgba(88,166,255,.08); }
+.empty .empty-hint { font-size:12px; color:#8b949e; margin-top:8px; line-height:1.7; }
 
 .filters { display:flex; flex-wrap:wrap; gap:9px; align-items:center; background:#161b22; border:1px solid #21262d; border-radius:10px; padding:12px 14px; margin-bottom:14px; }
 .filter-label { font-size:11.5px; color:#8b949e; margin-right:2px; }
@@ -104,6 +110,9 @@ a:hover { text-decoration:underline; }
 .filter-sep { width:1px; height:20px; background:#21262d; margin:0 4px; }
 input[type=text] { background:#0d1117; border:1px solid #21262d; color:#e6edf3; font-size:12.5px; padding:7px 12px; border-radius:16px; outline:none; font-family:inherit; min-width:190px; }
 input[type=text]:focus { border-color:#58a6ff; }
+input[type=date] { background:#0d1117; border:1px solid #21262d; color:#e6edf3; font-size:12px; padding:6px 9px; border-radius:14px; outline:none; font-family:inherit; color-scheme:dark; }
+input[type=date]:focus { border-color:#58a6ff; }
+.filters .break { flex-basis:100%; height:0; margin:0; }
 select { background:#0d1117; border:1px solid #21262d; color:#e6edf3; font-size:12.5px; padding:7px 10px; border-radius:16px; outline:none; font-family:inherit; cursor:pointer; }
 .export-btn { margin-left:auto; background:#132339; border:1px solid #1f6feb; color:#58a6ff; font-size:12px; padding:7px 14px; border-radius:16px; cursor:pointer; font-family:inherit; font-weight:600; }
 .export-btn:hover { background:#1a2f4d; }
@@ -130,6 +139,10 @@ select { background:#0d1117; border:1px solid #21262d; color:#e6edf3; font-size:
 .c-quote { font-size:11.5px; line-height:1.6; color:#8b949e; border-left:2px solid #21262d; padding-left:9px; margin-bottom:9px; }
 .c-tags { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:9px; }
 .tag { font-size:10.5px; color:#8b949e; background:#11161f; border:1px solid #21262d; border-radius:9px; padding:2px 8px; }
+.tag.topic-tag { color:#79c0ff; background:rgba(31,111,235,.12); border-color:rgba(31,111,235,.35); cursor:pointer; transition:all .16s; }
+.tag.topic-tag:hover { background:rgba(31,111,235,.26); }
+.tag.topic-tag.on { background:#1f6feb; border-color:#1f6feb; color:#fff; font-weight:600; }
+.c-tags .tag-split { color:#30363d; padding:0 2px; user-select:none; }
 .c-foot { display:flex; justify-content:space-between; align-items:center; gap:10px; font-size:11px; color:#6e7681; border-top:1px solid #1c2128; padding-top:9px; }
 .empty { text-align:center; color:#6e7681; font-size:13px; padding:50px 0; }
 
@@ -211,7 +224,7 @@ select { background:#0d1117; border:1px solid #21262d; color:#e6edf3; font-size:
     <div class="panel"><h3>渠道 × 情感矩阵</h3><div id="matrixBody"></div></div>
     <div class="panel"><h3>被提及的竞品 / 对标机型</h3><div id="compareBody"></div></div>
   </div>
-  <div class="panel mt12"><h3>声量时间趋势（按发布日期）</h3><div id="trendBody"></div></div>
+  <div class="panel mt12"><h3>声量时间趋势（按发布日期）<span class="note">点击柱子可筛到该日</span></h3><div id="trendBody"></div></div>
 
   <h2 class="sec-title">明细反馈流</h2>
   <div class="filters" id="filters"></div>
@@ -296,9 +309,38 @@ const PROBLEM_MERGE = [
   ["抄袭与法律争议", ["抄袭","克隆","copycat","INDX","专利"]]
 ];
 
-let activeFilters = { sentiment:"all", channel:"all", sourceType:"all", topic:"all", q:"" };
+let activeFilters = { sentiment:"all", channel:"all", sourceType:"all", topic:"all", q:"",
+                      dateKey:"all", dateMode:"published", dateFrom:"", dateTo:"" };
 
 function items() { return K3_FEEDBACK_DATA.items; }
+
+function pad2(n) { return (n < 10 ? "0" : "") + n; }
+function ymd(d) { return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate()); }
+function todayStr() { return ymd(new Date()); }
+function shiftDays(s, n) { const d = new Date(s + "T00:00:00"); d.setDate(d.getDate() + n); return ymd(d); }
+
+function dateRangeOf() {
+  const k = activeFilters.dateKey;
+  if (k === "all") return null;
+  if (k === "custom") {
+    const f = activeFilters.dateFrom, t = activeFilters.dateTo;
+    if (!f && !t) return null;
+    return [f || "0000-01-01", t || "9999-12-31"];
+  }
+  const t = todayStr();
+  if (k === "today") return [t, t];
+  if (k === "yesterday") { const y = shiftDays(t, -1); return [y, y]; }
+  if (k === "d7") return [shiftDays(t, -6), t];
+  if (k === "d30") return [shiftDays(t, -29), t];
+  return null;
+}
+
+function dateOf(it) { return activeFilters.dateMode === "published" ? it.publishedAt : it.date; }
+
+function nearestPublished() {
+  const ds = items().map(function(x){ return x.publishedAt; }).sort();
+  return ds.length ? ds[ds.length - 1] : "";
+}
 
 function normProblem(p) {
   for (const [label, keys] of PROBLEM_MERGE) {
@@ -314,6 +356,8 @@ function applyFilters() {
     if (activeFilters.channel !== "all" && it.channel !== activeFilters.channel) return false;
     if (activeFilters.sourceType !== "all" && it.sourceType !== activeFilters.sourceType) return false;
     if (activeFilters.topic !== "all" && (it.topics || []).indexOf(activeFilters.topic) < 0) return false;
+    const rng = dateRangeOf();
+    if (rng) { const d = dateOf(it); if (d < rng[0] || d > rng[1]) return false; }
     if (q) {
       const hay = [it.summaryCn, it.translation, it.originalText, it.platform, it.competitorMentioned, (it.problemPoints||[]).join(" "), (it.dimensions||[]).join(" ")].join(" ").toLowerCase();
       if (hay.indexOf(q) < 0) return false;
@@ -485,17 +529,42 @@ function renderTrend() {
   items().forEach(function(it){ const d = it.publishedAt; cnt[d] = (cnt[d] || 0) + 1; });
   const dates = Object.keys(cnt).sort();
   const max = Math.max.apply(null, dates.map(function(d){ return cnt[d]; }).concat([1]));
+  const rng = dateRangeOf();
   document.getElementById("trendBody").innerHTML = '<div class="trend">' + dates.map(function(d){
     const n = cnt[d];
     const h = Math.max(8, Math.round(n / max * 84));
     const lab = d.slice(5).replace("-", ".");
-    return '<div class="tcol" title="' + d + ' 新增 ' + n + ' 条"><div class="t-num">' + n + '</div><div class="tbar" style="height:' + h + 'px"></div><div class="t-lab">' + lab + '</div></div>';
+    const on = !!(rng && d >= rng[0] && d <= rng[1]);
+    return '<div class="tcol' + (on ? " on" : "") + '" onclick="pickDay(\'' + d + '\')" title="' + d + ' 新增 ' + n + ' 条 · 点击只看该日"><div class="t-num">' + n + '</div><div class="tbar" style="height:' + h + 'px"></div><div class="t-lab">' + lab + '</div></div>';
   }).join("") + '</div>';
 }
 
 function renderFilters() {
   const allSent = items().length;
-  let html = '<span class="filter-label">情感</span>';
+  const t = todayStr();
+  const presets = [
+    ["all", "全部", null],
+    ["today", "今天", [t, t]],
+    ["yesterday", "昨天", [shiftDays(t, -1), shiftDays(t, -1)]],
+    ["d7", "近 7 天", [shiftDays(t, -6), t]],
+    ["d30", "近 30 天", [shiftDays(t, -29), t]]
+  ];
+  let html = '<span class="filter-label">时间</span>';
+  presets.forEach(function(p){
+    const n = p[2] ? items().filter(function(x){ const d = dateOf(x); return d >= p[2][0] && d <= p[2][1]; }).length : items().length;
+    html += '<button class="filter-btn ' + (activeFilters.dateKey === p[0] ? "active" : "") + '" onclick="setDatePreset(\'' + p[0] + '\')">' + p[1] + ' ' + n + '</button>';
+  });
+  html += '<span class="filter-sep"></span>' +
+    '<input type="date" value="' + activeFilters.dateFrom + '" onchange="setDateBound(\'dateFrom\',this.value)" title="起始日期">' +
+    '<span class="filter-label">至</span>' +
+    '<input type="date" value="' + activeFilters.dateTo + '" onchange="setDateBound(\'dateTo\',this.value)" title="结束日期">';
+  if (activeFilters.dateKey === "custom") html += '<button class="filter-btn" onclick="clearDate()" title="清除自定义区间">清除 ✕</button>';
+  html += '<span class="filter-sep"></span><span class="filter-label">口径</span>' +
+    '<button class="filter-btn ' + (activeFilters.dateMode === "published" ? "active" : "") + '" onclick="setDateMode(\'published\')" title="按内容发布日期筛选：回答「今天有什么新反馈」">按发布日</button>' +
+    '<button class="filter-btn ' + (activeFilters.dateMode === "collection" ? "active" : "") + '" onclick="setDateMode(\'collection\')" title="按采集入库日期筛选：回答「今天抓到了几条」">按采集日</button>' +
+    '<div class="break"></div>';
+
+  html += '<span class="filter-label">情感</span>';
   html += '<button class="filter-btn ' + (activeFilters.sentiment === "all" ? "active" : "") + '" onclick="setF(\'sentiment\',\'all\')">全部 ' + allSent + '</button>';
   SENT_ORDER.forEach(function(s){
     const n = items().filter(function(x){ return x.sentiment === s; }).length;
@@ -523,10 +592,35 @@ function renderFilters() {
 
 function renderCards() {
   const list = applyFilters();
-  document.getElementById("countLine").innerHTML = '当前显示 <b>' + list.length + '</b> / ' + items().length + ' 条反馈 · 数据更新至 ' + K3_FEEDBACK_DATA.updated;
-  if (!list.length) { document.getElementById("cardGrid").innerHTML = '<div class="empty">没有匹配的反馈，试试清空筛选条件</div>'; return; }
+  const rng = dateRangeOf();
+  let cl = '当前显示 <b>' + list.length + '</b> / ' + items().length + ' 条反馈 · 数据更新至 ' + K3_FEEDBACK_DATA.updated;
+  if (rng) cl += ' · 时间区间 <b>' + rng[0] + ' ~ ' + rng[1] + '</b>（按' + (activeFilters.dateMode === "published" ? "发布日" : "采集日") + '）';
+  document.getElementById("countLine").innerHTML = cl;
+
+  if (!list.length) {
+    const near = nearestPublished();
+    let msg = '没有匹配的反馈，试试清空筛选条件';
+    let act = '';
+    if (rng) {
+      msg = '该时间区间（' + rng[0] + ' ~ ' + rng[1] + '，按' + (activeFilters.dateMode === "published" ? "发布日" : "采集日") + '）暂无反馈';
+      if (near) {
+        act = '<div class="empty-hint">数据集中最近一条发布于 <b style="color:#c9d1d9">' + near + '</b></div>' +
+              '<div style="margin-top:14px"><button class="filter-btn" onclick="pickDay(\'' + near + '\')">跳到最近有数据的日期 ' + near + '</button></div>';
+      }
+    }
+    document.getElementById("cardGrid").innerHTML = '<div class="empty">' + msg + act + '</div>';
+    return;
+  }
+
   document.getElementById("cardGrid").innerHTML = list.map(function(it){
-    const tags = (it.problemPoints || []).map(function(p){ return '<span class="tag">' + p + '</span>'; }).join("");
+    const ttags = (it.topics || []).map(function(t){
+      const meta = TOPIC_META[t] || { name:t, desc:"" };
+      return '<span class="tag topic-tag' + (activeFilters.topic === t ? " on" : "") + '" title="' + meta.name + '：' + meta.desc + ' · 点击只看该特性" onclick="toggleTopic(\'' + t + '\')">' + meta.name + '</span>';
+    }).join("");
+    const ptags = (it.problemPoints || []).map(function(p){ return '<span class="tag">' + p + '</span>'; }).join("");
+    const tagRow = (ttags || ptags)
+      ? '<div class="c-tags">' + ttags + (ttags && ptags ? '<span class="tag-split">|</span>' : '') + ptags + '</div>'
+      : "";
     return '<div class="card' + (it.isP0 ? " p0" : "") + '">' +
       '<div class="c-head">' +
         '<span class="chip s-' + it.sentiment + '">' + it.sentiment + '</span>' +
@@ -537,7 +631,7 @@ function renderCards() {
       '<div class="c-src">' + it.platform + ' · ' + it.country + ' · 发布 ' + it.publishedAt + ' · 采集 ' + it.date + '</div>' +
       '<div class="c-sum">' + it.summaryCn + '</div>' +
       '<div class="c-quote">原文/摘录：' + (it.originalText.length > 170 ? it.originalText.slice(0,170) + "…" : it.originalText) + '</div>' +
-      (tags ? '<div class="c-tags">' + tags + '</div>' : '') +
+      tagRow +
       '<div class="c-foot"><span>' + it.heat + '</span><a href="' + it.sourceLink + '" target="_blank" rel="noopener">查看原文 ↗</a></div>' +
     '</div>';
   }).join("");
@@ -560,6 +654,33 @@ function renderAll() {
 function setF(key, val) { activeFilters[key] = val; renderFilters(); renderCards(); }
 function setQ(v) { activeFilters.q = v; renderCards(); }
 function toggleTopic(t) { activeFilters.topic = (activeFilters.topic === t ? "all" : t); renderTopics(); renderFilters(); renderCards(); }
+
+function setDatePreset(k) {
+  activeFilters.dateKey = (activeFilters.dateKey === k ? "all" : k);
+  renderFilters(); renderCards(); renderTrend();
+}
+function setDateBound(k, v) {
+  activeFilters[k] = v || "";
+  activeFilters.dateKey = (activeFilters.dateFrom || activeFilters.dateTo) ? "custom" : "all";
+  renderFilters(); renderCards(); renderTrend();
+}
+function clearDate() {
+  activeFilters.dateFrom = ""; activeFilters.dateTo = ""; activeFilters.dateKey = "all";
+  renderFilters(); renderCards(); renderTrend();
+}
+function setDateMode(m) {
+  if (activeFilters.dateMode === m) return;
+  activeFilters.dateMode = m;
+  renderFilters(); renderCards(); renderTrend();
+}
+function pickDay(d) {
+  activeFilters.dateMode = "published";
+  activeFilters.dateKey = "custom";
+  activeFilters.dateFrom = d; activeFilters.dateTo = d;
+  renderFilters(); renderCards(); renderTrend();
+  const el = document.getElementById("countLine");
+  if (el && el.scrollIntoView) el.scrollIntoView({ behavior:"smooth", block:"center" });
+}
 
 function setStatus(msg) {
   const el = document.getElementById("countLine");
