@@ -123,13 +123,12 @@ a:hover { text-decoration:underline; }
 
 .trend { display:flex; align-items:flex-end; gap:6px; height:118px; padding-top:6px; }
 .tcol { flex:1; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; gap:6px; min-width:0; }
-.tbar { width:100%; max-width:40px; border-radius:4px 4px 0 0; background:#1f6feb; }
-.tbar.p0 { background:#f85149; }
+.tbar { width:100%; max-width:40px; display:flex; flex-direction:column; border-radius:4px 4px 0 0; overflow:hidden; }
+.tseg { width:100%; display:block; }
 .t-lab { font-size:10.5px; color:#6e7681; white-space:nowrap; }
 .t-num { font-size:11px; color:#8b949e; font-variant-numeric:tabular-nums; }
 .tcol { cursor:pointer; border-radius:6px 6px 0 0; }
-.tcol:hover .tbar { background:#58a6ff; }
-.tcol.on .tbar { background:#58a6ff; }
+.tcol:hover .tbar { opacity:.8; }
 .tcol.on .t-lab, .tcol.on .t-num { color:#58a6ff; }
 .tcol.on { background:rgba(88,166,255,.08); }
 .empty .empty-hint { font-size:12px; color:#8b949e; margin-top:8px; line-height:1.7; }
@@ -149,8 +148,11 @@ select { background:#0d1117; border:1px solid #21262d; color:#e6edf3; font-size:
 .export-btn { margin-left:auto; background:#132339; border:1px solid #1f6feb; color:#58a6ff; font-size:12px; padding:7px 14px; border-radius:16px; cursor:pointer; font-family:inherit; font-weight:600; }
 .export-btn:hover { background:#1a2f4d; }
 
-.count-line { font-size:12.5px; color:#8b949e; margin-bottom:12px; }
+.count-line { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; font-size:12.5px; color:#8b949e; margin-bottom:12px; }
 .count-line b { color:#e6edf3; }
+.page-nav { display:flex; align-items:center; gap:8px; }
+.page-info { font-size:12px; white-space:nowrap; }
+.filter-btn:disabled { opacity:.4; cursor:not-allowed; }
 
 .card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:12px; }
 .card { background:#161b22; border:1px solid #21262d; border-radius:10px; padding:14px 15px; transition:border-color .16s; }
@@ -283,7 +285,7 @@ select { background:#0d1117; border:1px solid #21262d; color:#e6edf3; font-size:
     <div class="panel"><h3>渠道 × 情感矩阵</h3><div id="matrixBody"></div></div>
     <div class="panel"><h3>被提及的竞品 / 对标机型</h3><div id="compareBody"></div></div>
   </div>
-  <div class="panel mt12"><h3>声量时间趋势（按发布日期）<span class="note">点击柱子可筛到该日</span></h3><div id="trendBody"></div></div>
+  <div class="panel mt12"><h3>声量 × 情感趋势（按发布日）<span class="note">柱内三档：负面 / 中性 / 正面 · 点击柱子可筛到该日</span></h3><div id="trendBody"></div></div>
 
   <h2 class="sec-title">明细反馈流</h2>
   <div class="filters" id="filters"></div>
@@ -506,6 +508,10 @@ let activeFilters = { sentiment:"all", channel:"all", sourceType:"all", topic:"a
                       dateKey:"all", dateMode:"published", dateFrom:"", dateTo:"" };
 
 let tailOpen = { problem:false, dim:false, source:false };
+
+const PAGE_SIZE = 20;
+let activePage = 1;
+let lastFilterKey = "";
 
 function items() { return K3_FEEDBACK_DATA.items; }
 
@@ -925,16 +931,29 @@ function renderCompare() {
 
 function renderTrend() {
   const cnt = {};
-  items().forEach(function(it){ const d = it.publishedAt; cnt[d] = (cnt[d] || 0) + 1; });
+  items().forEach(function(it){
+    const d = it.publishedAt;
+    cnt[d] = cnt[d] || { n:0, neg:0, neu:0, pos:0 };
+    cnt[d].n++;
+    if (it.sentiment === "非常负面" || it.sentiment === "负面") cnt[d].neg++;
+    else if (it.sentiment === "非常正面" || it.sentiment === "正面") cnt[d].pos++;
+    else cnt[d].neu++;
+  });
   const dates = Object.keys(cnt).sort();
-  const max = Math.max.apply(null, dates.map(function(d){ return cnt[d]; }).concat([1]));
+  const max = Math.max.apply(null, dates.map(function(d){ return cnt[d].n; }).concat([1]));
   const rng = dateRangeOf();
   document.getElementById("trendBody").innerHTML = '<div class="trend">' + dates.map(function(d){
-    const n = cnt[d];
-    const h = Math.max(8, Math.round(n / max * 84));
+    const o = cnt[d];
+    const hNeg = Math.round(o.neg / max * 84);
+    const hNeu = Math.round(o.neu / max * 84);
+    const hPos = Math.round(o.pos / max * 84);
     const lab = d.slice(5).replace("-", ".");
     const on = !!(rng && d >= rng[0] && d <= rng[1]);
-    return '<div class="tcol' + (on ? " on" : "") + '" onclick="pickDay(\'' + d + '\')" title="' + d + ' 新增 ' + n + ' 条 · 点击只看该日"><div class="t-num">' + n + '</div><div class="tbar" style="height:' + h + 'px"></div><div class="t-lab">' + lab + '</div></div>';
+    const tip = d + ' 共 ' + o.n + ' 条 · 负面 ' + o.neg + ' / 中性 ' + o.neu + ' / 正面 ' + o.pos + ' · 点击只看该日';
+    const segs = (o.pos ? '<div class="tseg" style="height:' + hPos + 'px;background:#3fb950"></div>' : '') +
+                 (o.neu ? '<div class="tseg" style="height:' + hNeu + 'px;background:#8b949e"></div>' : '') +
+                 (o.neg ? '<div class="tseg" style="height:' + hNeg + 'px;background:#f85149"></div>' : '');
+    return '<div class="tcol' + (on ? " on" : "") + '" onclick="pickDay(\'' + d + '\')" title="' + tip + '"><div class="t-num">' + o.n + '</div><div class="tbar">' + segs + '</div><div class="t-lab">' + lab + '</div></div>';
   }).join("") + '</div>';
 }
 
@@ -1002,11 +1021,35 @@ function renderFilters() {
 }
 
 function renderCards() {
-  const list = applyFilters();
+  const all = applyFilters();
+  const list = all.slice().sort(function(a, b){
+    const d = (b.publishedAt || "").localeCompare(a.publishedAt || "");
+    if (d) return d;
+    return (b.date || "").localeCompare(a.date || "");
+  });
+  const key = JSON.stringify([activeFilters.sentiment, activeFilters.channel, activeFilters.sourceType, activeFilters.topic,
+    activeFilters.q, activeFilters.group, activeFilters.platform, activeFilters.problem, activeFilters.dim,
+    activeFilters.dateKey, activeFilters.dateMode, activeFilters.dateFrom, activeFilters.dateTo]);
+  if (key !== lastFilterKey) { activePage = 1; lastFilterKey = key; }
+  const totalPages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+  if (activePage > totalPages) activePage = totalPages;
+  const start = (activePage - 1) * PAGE_SIZE;
+  const pageList = list.slice(start, start + PAGE_SIZE);
+  const end = Math.min(start + PAGE_SIZE, list.length);
+
   const rng = dateRangeOf();
-  let cl = '当前显示 <b>' + list.length + '</b> / ' + items().length + ' 条反馈 · 数据更新至 ' + K3_FEEDBACK_DATA.updated;
+  let cl = list.length ? '当前显示 <b>' + (start + 1) + '–' + end + '</b> / <b>' + list.length + '</b> 条' : '当前显示 <b>0</b> 条';
+  cl += '（总样本 ' + items().length + '）· 数据更新至 ' + K3_FEEDBACK_DATA.updated;
   if (rng) cl += ' · 时间区间 <b>' + rng[0] + ' ~ ' + rng[1] + '</b>（按' + (activeFilters.dateMode === "published" ? "发布日" : "采集日") + '）';
-  document.getElementById("countLine").innerHTML = cl;
+  let pager = '';
+  if (totalPages > 1) {
+    pager = '<span class="page-nav">' +
+      '<button class="filter-btn" onclick="gotoPage(' + (activePage - 1) + ')"' + (activePage <= 1 ? ' disabled' : '') + '>上一页</button>' +
+      '<span class="page-info">第 <b>' + activePage + '</b> / ' + totalPages + ' 页</span>' +
+      '<button class="filter-btn" onclick="gotoPage(' + (activePage + 1) + ')"' + (activePage >= totalPages ? ' disabled' : '') + '>下一页</button>' +
+      '</span>';
+  }
+  document.getElementById("countLine").innerHTML = '<span>' + cl + '</span>' + pager;
 
   if (!list.length) {
     const near = nearestPublished();
@@ -1029,7 +1072,7 @@ function renderCards() {
     return;
   }
 
-  document.getElementById("cardGrid").innerHTML = list.map(function(it){
+  document.getElementById("cardGrid").innerHTML = pageList.map(function(it){
     const ttags = (it.topics || []).map(function(t){
       const meta = TOPIC_META[t] || { name:t, desc:"" };
       return '<span class="tag topic-tag' + (activeFilters.topic === t ? " on" : "") + '" title="' + meta.name + '：' + meta.desc + ' · 点击只看该特性" onclick="toggleTopic(\'' + t + '\')">' + meta.name + '</span>';
@@ -1127,6 +1170,13 @@ function clearAllFilters() {
   activeFilters.dateKey = "all"; activeFilters.dateMode = "published";
   activeFilters.dateFrom = ""; activeFilters.dateTo = "";
   renderAll();
+}
+
+function gotoPage(p) {
+  const total = Math.max(1, Math.ceil(applyFilters().length / PAGE_SIZE));
+  if (p < 1 || p > total) return;
+  activePage = p;
+  renderCards();
 }
 
 function setDatePreset(k) {
