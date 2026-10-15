@@ -450,7 +450,7 @@ let activeFilters = { sentiment:"all", channel:"all", sourceType:"all", topic:"a
                       group:"all", platform:"all", problem:"all", dim:"all",
                       dateKey:"all", dateMode:"published", dateFrom:"", dateTo:"" };
 
-let tailOpen = { problem:false, dim:false };
+let tailOpen = { problem:false, dim:false, source:false };
 
 function items() { return K3_FEEDBACK_DATA.items; }
 
@@ -512,7 +512,7 @@ function applyFilters(skip) {
     if (activeFilters.sourceType !== "all" && it.sourceType !== activeFilters.sourceType) return false;
     if (activeFilters.topic !== "all" && (it.topics || []).indexOf(activeFilters.topic) < 0) return false;
     if (activeFilters.group !== "all" && groupOf(it.platform) !== activeFilters.group) return false;
-    if (activeFilters.platform !== "all" && it.platform !== activeFilters.platform) return false;
+    if (activeFilters.platform !== "all" && (it.site || it.platform) !== activeFilters.platform) return false;
     if (skip !== "problem" && activeFilters.problem !== "all") {
       if ((it.problemPoints || []).map(normProblem).indexOf(activeFilters.problem) < 0) return false;
     }
@@ -715,29 +715,38 @@ function renderChannels() {
     return '<span class="sl legend-clk' + (on ? ' on' : '') + '" onclick="setGroup(\'' + g + '\')" title="' + meta.name + ' · 点击只看该渠道组"><i style="background:' + meta.color + '"></i>' + meta.name + ' <b>' + n + '</b>' + (n ? ' · ' + Math.round(n / total * 100) + '%' : ' · 0%') + flag + '</span>';
   }).join("");
 
+  // 站点级口径：同站多平台（如 Makers101 与 Makers101（引 r/Creality））合并为一行，
+  // 与集中度（Top1 / HHI）口径统一。site 缺失时回退 platform。
   const pcnt = {};
-  all.forEach(function(x){ pcnt[x.platform] = (pcnt[x.platform] || 0) + 1; });
+  all.forEach(function(x){ const k = x.site || x.platform; pcnt[k] = (pcnt[k] || 0) + 1; });
   const plats = Object.keys(pcnt).map(function(k){ return { k:k, n:pcnt[k] }; })
     .sort(function(a,b){ return b.n - a.n || (a.k < b.k ? -1 : 1); });
   const top = plats.filter(function(r){ return r.n >= 2; });
   const tail = plats.filter(function(r){ return r.n < 2; });
   const max = top.length ? top[0].n : 1;
 
-  const rows = top.map(function(r){
+  const hrow = function(r){
     const g = groupOf(r.k);
     const on = activeFilters.platform === r.k;
-    return '<div class="hbar clk' + (on ? ' on' : '') + '" onclick="setPlatform(this.getAttribute(\'data-p\'))" data-p="' + r.k.replace(/"/g, "&quot;") + '" title="' + r.k + ' · 点击只看该平台">' +
+    return '<div class="hbar clk' + (on ? ' on' : '') + '" onclick="setPlatform(this.getAttribute(\'data-p\'))" data-p="' + r.k.replace(/"/g, "&quot;") + '" title="' + r.k + ' · 点击只看该站点的全部条目">' +
       '<span class="hname" style="flex:0 0 158px;width:158px">' + r.k + '</span>' +
       '<span class="htrack"><span class="hfill" style="width:' + (r.n / max * 100) + '%;background:' + GROUP_META[g].color + '"></span></span>' +
       '<span class="hnum">' + r.n + ' · ' + Math.round(r.n / total * 100) + '%</span></div>';
-  }).join("");
+  };
+  const rows = top.map(hrow).join("");
+  const tailRows = tail.map(hrow).join("");
 
   const zeroGroups = GROUP_ORDER.filter(function(g){ return !gcnt[g] && GROUP_META[g].expect; })
     .map(function(g){ return GROUP_META[g].name; });
 
   let foot = '';
   if (tail.length) {
-    foot += '<div class="foldrow">另有 <b>' + tail.length + '</b> 个平台各仅 1 条（' + tail.map(function(r){ return r.k; }).join(' / ') + '），已折叠</div>';
+    if (tailOpen.source) {
+      foot += tailRows;
+      foot += '<div class="foldrow flink" onclick="toggleTail(\'source\')">收起各仅 1 条的 ' + tail.length + ' 个站点 ▲</div>';
+    } else {
+      foot += '<div class="foldrow flink" onclick="toggleTail(\'source\')">另有 <b>' + tail.length + '</b> 个站点各仅 1 条（' + tail.map(function(r){ return r.k; }).join(' / ') + '），已折叠 —— <span style="color:#58a6ff">展开全部 ▾</span></div>';
+    }
   }
   if (zeroGroups.length) {
     foot += '<div class="foldrow"><b style="color:#f85149">采集覆盖缺口：' + zeroGroups.join(' / ') + ' 当前 0 条</b> —— B 站与 Reddit 已于 2026-10-14 接入，海外一手社区与国内社区首次有一手内容；仍未覆盖的是<b>海外视频</b>与<b>海外电商</b>：TikTok 只取得到话题量级、Amazon 评价页需登录，X / Facebook / Instagram 受登录墙与签名限制 —— 明细见下方渠道覆盖清单。</div>';
@@ -901,7 +910,7 @@ function renderFilters() {
     html += '<button class="filter-btn active" onclick="setGroup(\'' + activeFilters.group + '\')">渠道组：' + GROUP_META[activeFilters.group].name + ' ✕</button>';
   }
   if (activeFilters.platform !== "all") {
-    html += '<button class="filter-btn active" onclick="setPlatform(this.getAttribute(\'data-p\'))" data-p="' + activeFilters.platform.replace(/"/g, "&quot;") + '">平台：' + activeFilters.platform + ' ✕</button>';
+    html += '<button class="filter-btn active" onclick="setPlatform(this.getAttribute(\'data-p\'))" data-p="' + activeFilters.platform.replace(/"/g, "&quot;") + '">站点：' + activeFilters.platform + ' ✕</button>';
   }
   if (activeFilters.problem !== "all") {
     html += '<button class="filter-btn active" onclick="setProblem(this.getAttribute(\'data-p\'))" data-p="' + esc(activeFilters.problem) + '" title="来自「问题点 Top」面板">问题点：' + esc(activeFilters.problem) + ' ✕</button>';
@@ -1008,7 +1017,7 @@ function setDim(d) {
 }
 function toggleTail(which) {
   tailOpen[which] = !tailOpen[which];
-  if (which === "problem") renderProblems(); else renderDims();
+  if (which === "problem") renderProblems(); else if (which === "dim") renderDims(); else renderChannels();
 }
 
 /** 平滑滚动到明细流并闪一下高亮，让用户确认「跳过去了」。 */
