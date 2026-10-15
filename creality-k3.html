@@ -602,8 +602,8 @@ function renderProblems() {
   if (tail.length) {
     const sum = tail.reduce(function(a,b){ return a + b.n; }, 0);
     if (tailOpen.problem) {
-      html += '<div class="fold-sep"></div>' + tail.map(function(r){ return row(r, true); }).join("");
       html += '<div class="foldrow flink" onclick="toggleTail(\'problem\')">收起仅被提及 1 次的 ' + tail.length + ' 类问题点 ▲</div>';
+      html += '<div class="fold-sep"></div>' + tail.map(function(r){ return row(r, true); }).join("");
     } else {
       html += '<div class="foldrow flink" onclick="toggleTail(\'problem\')">另有 <b>' + tail.length + '</b> 类问题仅被提及 1 次（合计 <b>' + sum + '</b> 次），已折叠不占榜单 —— <span style="color:#58a6ff">展开全部 ▾</span></div>';
     }
@@ -666,8 +666,8 @@ function renderDims() {
   let html = main.map(function(r){ return row(r, false); }).join("");
   if (tail.length) {
     if (tailOpen.dim) {
-      html += '<div class="fold-sep"></div>' + tail.map(function(r){ return row(r, true); }).join("");
       html += '<div class="foldrow flink" onclick="toggleTail(\'dim\')">收起其余 ' + tail.length + ' 个维度 ▲</div>';
+      html += '<div class="fold-sep"></div>' + tail.map(function(r){ return row(r, true); }).join("");
     } else {
       html += '<div class="foldrow flink" onclick="toggleTail(\'dim\')">另有 <b>' + tail.length + '</b> 个维度未进榜 —— <span style="color:#58a6ff">展开全部 ▾</span></div>';
     }
@@ -742,8 +742,8 @@ function renderChannels() {
   let foot = '';
   if (tail.length) {
     if (tailOpen.source) {
-      foot += tailRows;
       foot += '<div class="foldrow flink" onclick="toggleTail(\'source\')">收起各仅 1 条的 ' + tail.length + ' 个站点 ▲</div>';
+      foot += tailRows;
     } else {
       foot += '<div class="foldrow flink" onclick="toggleTail(\'source\')">另有 <b>' + tail.length + '</b> 个站点各仅 1 条（' + tail.map(function(r){ return r.k; }).join(' / ') + '），已折叠 —— <span style="color:#58a6ff">展开全部 ▾</span></div>';
     }
