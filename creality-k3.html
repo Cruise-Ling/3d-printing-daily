@@ -121,16 +121,18 @@ a:hover { text-decoration:underline; }
 .matrix tbody tr.mrow.zero td { color:#484f58; }
 .matrix tbody tr.mrow.zero td:first-child { color:#6e7681; }
 
-.trend { display:flex; align-items:flex-end; gap:6px; height:118px; padding-top:6px; }
+.trend { display:flex; align-items:flex-end; gap:6px; height:150px; padding-top:6px; }
 .tcol { flex:1; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; gap:6px; min-width:0; }
 .tbar { width:100%; max-width:40px; display:flex; flex-direction:column; border-radius:4px 4px 0 0; overflow:hidden; }
 .tseg { width:100%; display:block; }
 .t-lab { font-size:10.5px; color:#6e7681; white-space:nowrap; }
 .t-num { font-size:11px; color:#8b949e; font-variant-numeric:tabular-nums; }
+.t-num.t-hide { visibility:hidden; }
+.tcol:hover .t-num.t-hide { visibility:visible; color:#c9d1d9; }
 .tcol { cursor:pointer; border-radius:6px 6px 0 0; }
 .tcol:hover .tbar { opacity:.8; }
 .tcol.on .t-lab, .tcol.on .t-num { color:#58a6ff; }
-.tcol.on { background:rgba(88,166,255,.08); }
+.tcol.on { background:rgba(88,166,255,.08); outline:1px solid #58a6ff; outline-offset:1px; }
 .empty .empty-hint { font-size:12px; color:#8b949e; margin-top:8px; line-height:1.7; }
 
 .filters { display:flex; flex-wrap:wrap; gap:9px; align-items:center; background:#161b22; border:1px solid #21262d; border-radius:10px; padding:12px 14px; margin-bottom:14px; }
@@ -152,6 +154,7 @@ select { background:#0d1117; border:1px solid #21262d; color:#e6edf3; font-size:
 .count-line b { color:#e6edf3; }
 .page-nav { display:flex; align-items:center; gap:8px; }
 .page-info { font-size:12px; white-space:nowrap; }
+.page-select { background:#21262d; border:1px solid #30363d; border-radius:6px; padding:4px 8px; color:#c9d1d9; font-size:12px; cursor:pointer; font-family:var(--font-sans); }
 .filter-btn:disabled { opacity:.4; cursor:not-allowed; }
 
 .card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:12px; }
@@ -937,6 +940,7 @@ function renderCompare() {
   }).join("") + '<div class="legend"><span>被 K3 反馈主动点名的对标机型与竞品；Snapmaker U1 是最常被引用的价格与体验标尺</span></div>';
 }
 
+const TREND_MIN_NUM = 9;
 function renderTrend() {
   const cnt = {};
   items().forEach(function(it){
@@ -950,19 +954,36 @@ function renderTrend() {
   const dates = Object.keys(cnt).sort();
   const max = Math.max.apply(null, dates.map(function(d){ return cnt[d].n; }).concat([1]));
   const rng = dateRangeOf();
-  document.getElementById("trendBody").innerHTML = '<div class="trend">' + dates.map(function(d){
+  const cols = dates.map(function(d){
     const o = cnt[d];
-    const hNeg = Math.round(o.neg / max * 84);
-    const hNeu = Math.round(o.neu / max * 84);
-    const hPos = Math.round(o.pos / max * 84);
+    const barH = Math.max(8, Math.round(o.n / max * 100));
+    const hPos = o.pos ? Math.max(3, Math.round(o.pos / o.n * barH)) : 0;
+    const hNeu = o.neu ? Math.max(3, Math.round(o.neu / o.n * barH)) : 0;
+    const hNeg = o.neg ? Math.max(3, Math.round(o.neg / o.n * barH)) : 0;
     const lab = d.slice(5).replace("-", ".");
     const on = !!(rng && d >= rng[0] && d <= rng[1]);
     const tip = d + ' 共 ' + o.n + ' 条 · 负面 ' + o.neg + ' / 中性 ' + o.neu + ' / 正面 ' + o.pos + ' · 点击只看该日';
     const segs = (o.pos ? '<div class="tseg" style="height:' + hPos + 'px;background:#3fb950"></div>' : '') +
                  (o.neu ? '<div class="tseg" style="height:' + hNeu + 'px;background:#8b949e"></div>' : '') +
                  (o.neg ? '<div class="tseg" style="height:' + hNeg + 'px;background:#f85149"></div>' : '');
-    return '<div class="tcol' + (on ? " on" : "") + '" onclick="pickDay(\'' + d + '\')" title="' + tip + '"><div class="t-num">' + o.n + '</div><div class="tbar">' + segs + '</div><div class="t-lab">' + lab + '</div></div>';
-  }).join("") + '</div>';
+    const numCls = 't-num' + (o.n >= TREND_MIN_NUM ? '' : ' t-hide');
+    return '<div class="tcol' + (on ? " on" : "") + '" onclick="pickDay(\'' + d + '\')" title="' + tip + '">' +
+      '<div class="' + numCls + '">' + o.n + '</div>' +
+      '<div class="tbar">' + segs + '</div>' +
+      '<div class="t-lab">' + lab + '</div></div>';
+  }).join("");
+  const tc = { neg:0, neu:0, pos:0 };
+  items().forEach(function(it){
+    if (it.sentiment === "非常负面" || it.sentiment === "负面") tc.neg++;
+    else if (it.sentiment === "非常正面" || it.sentiment === "正面") tc.pos++;
+    else tc.neu++;
+  });
+  const legend = '<div class="stack-legend" style="margin-top:10px">' +
+    '<span class="sl"><i style="background:#f85149"></i>负面 <b>' + tc.neg + '</b></span>' +
+    '<span class="sl"><i style="background:#8b949e"></i>中性 <b>' + tc.neu + '</b></span>' +
+    '<span class="sl"><i style="background:#3fb950"></i>正面 <b>' + tc.pos + '</b></span>' +
+    '<span style="color:#6e7681">· 柱高 = 当日声量 · 悬浮看三档明细（非常负面并入负面、非常正面并入正面）</span></div>';
+  document.getElementById("trendBody").innerHTML = '<div class="trend">' + cols + '</div>' + legend;
 }
 
 function renderFilters() {
@@ -1051,9 +1072,14 @@ function renderCards() {
   if (rng) cl += ' · 时间区间 <b>' + rng[0] + ' ~ ' + rng[1] + '</b>（按' + (activeFilters.dateMode === "published" ? "发布日" : "采集日") + '）';
   let pager = '';
   if (totalPages > 1) {
+    let opts = '';
+    for (let i = 1; i <= totalPages; i++) {
+      opts += '<option value="' + i + '"' + (i === activePage ? ' selected' : '') + '>第 ' + i + ' 页</option>';
+    }
     pager = '<span class="page-nav">' +
       '<button class="filter-btn" onclick="gotoPage(' + (activePage - 1) + ')"' + (activePage <= 1 ? ' disabled' : '') + '>上一页</button>' +
-      '<span class="page-info">第 <b>' + activePage + '</b> / ' + totalPages + ' 页</span>' +
+      '<select class="page-select" onchange="gotoPage(this.value)" title="选择页码直接跳转">' + opts + '</select>' +
+      '<span class="page-info">共 ' + totalPages + ' 页</span>' +
       '<button class="filter-btn" onclick="gotoPage(' + (activePage + 1) + ')"' + (activePage >= totalPages ? ' disabled' : '') + '>下一页</button>' +
       '</span>';
   }
@@ -1181,8 +1207,9 @@ function clearAllFilters() {
 }
 
 function gotoPage(p) {
+  p = Number(p);
   const total = Math.max(1, Math.ceil(applyFilters().length / PAGE_SIZE));
-  if (p < 1 || p > total) return;
+  if (!p || p < 1 || p > total) return;
   activePage = p;
   renderCards();
 }
