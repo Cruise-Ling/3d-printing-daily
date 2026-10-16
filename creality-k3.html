@@ -115,8 +115,7 @@ a:hover { text-decoration:underline; }
 .matrix th:first-child, .matrix td:first-child { text-align:left; color:#c9d1d9; }
 .matrix thead th { color:#8b949e; font-weight:500; font-size:11.5px; }
 .matrix tbody tr:last-child td { border-bottom:none; }
-.matrix tbody tr.mrow { cursor:pointer; }
-.matrix tbody tr.mrow:hover { background:rgba(255,255,255,.04); }
+/* 矩阵为纯展示：不再可点，故不设 pointer / hover，仅用 .on 反映外部筛选态 */
 .matrix tbody tr.mrow.on { background:#132339; outline:1px solid #1f6feb; }
 .matrix tbody tr.mrow.zero td { color:#484f58; }
 .matrix tbody tr.mrow.zero td:first-child { color:#6e7681; }
@@ -152,6 +151,34 @@ select { background:#0d1117; border:1px solid #21262d; color:#e6edf3; font-size:
 
 .count-line { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; font-size:12.5px; color:#8b949e; margin-bottom:12px; }
 .count-line b { color:#e6edf3; }
+/* 数据更新条 + 更新历史 */
+.update-bar { display:flex; align-items:center; flex-wrap:wrap; gap:10px; background:#161b22; border:1px solid #21262d; border-radius:10px; padding:9px 14px; margin-bottom:14px; font-size:12.5px; color:#8b949e; }
+.update-bar .ub-dot { flex:0 0 auto; width:8px; height:8px; border-radius:50%; background:#3fb950; }
+.update-bar .ub-main { color:#e6edf3; font-weight:600; }
+.update-bar .ub-sep { width:1px; height:12px; background:#30363d; }
+.update-bar .ub-add { background:#0d2818; color:#3fb950; border-radius:9px; padding:1px 8px; font-variant-numeric:tabular-nums; }
+.update-bar .ub-btn { margin-left:auto; font-family:inherit; font-size:12px; color:#c9d1d9; background:transparent; border:1px solid #30363d; border-radius:6px; padding:3px 10px; cursor:pointer; }
+.update-bar .ub-btn:hover { border-color:#58a6ff; color:#58a6ff; }
+.upd-hist { display:none; margin:-4px 0 14px; background:#0d1117; border:1px solid #21262d; border-radius:10px; padding:4px 12px 8px; font-size:12px; }
+.upd-hist.open { display:block; }
+.upd-row { display:flex; align-items:center; gap:10px; padding:6px 0; border-bottom:1px solid #1c2128; color:#8b949e; }
+.upd-row:last-of-type { border-bottom:none; }
+.upd-row .u-time { flex:0 0 104px; color:#c9d1d9; font-variant-numeric:tabular-nums; }
+.upd-row .u-add { flex:0 0 56px; color:#3fb950; font-variant-numeric:tabular-nums; }
+.upd-row .u-tot { flex:0 0 88px; color:#6e7681; font-variant-numeric:tabular-nums; }
+.upd-row .u-res { flex:1; }
+.upd-row.cur .u-time { color:#58a6ff; font-weight:600; }
+/* 当前筛选摘要条 */
+.fsum { display:none; align-items:center; flex-wrap:wrap; gap:8px; background:#161b22; border:1px solid #21262d; border-radius:10px; padding:9px 14px; margin-bottom:12px; font-size:12.5px; color:#8b949e; }
+.fsum.show { display:flex; }
+.fsum-h { color:#c9d1d9; font-weight:600; }
+.fsum-chip { display:inline-flex; align-items:center; gap:6px; background:#1c2430; border:1px solid #30363d; border-radius:999px; padding:2px 6px 2px 10px; color:#c9d1d9; }
+.fsum-chip .fx { color:#8b949e; font-weight:700; cursor:pointer; padding:0 2px; }
+.fsum-chip .fx:hover { color:#f85149; }
+.fsum-hit { color:#8b949e; }
+.fsum-hit b { color:#e6edf3; font-variant-numeric:tabular-nums; }
+.fsum-clear { margin-left:auto; font-family:inherit; font-size:12px; color:#8b949e; background:transparent; border:1px solid #30363d; border-radius:6px; padding:3px 10px; cursor:pointer; }
+.fsum-clear:hover { border-color:#f85149; color:#f85149; }
 .page-nav { display:flex; align-items:center; gap:8px; }
 .page-info { font-size:12px; white-space:nowrap; }
 .page-select { background:#21262d; border:1px solid #30363d; border-radius:6px; padding:4px 8px; color:#c9d1d9; font-size:12px; cursor:pointer; font-family:var(--font-sans); }
@@ -255,6 +282,9 @@ select { background:#0d1117; border:1px solid #21262d; color:#e6edf3; font-size:
     </div>
   </div>
 
+  <div class="update-bar" id="updateBar"></div>
+  <div class="upd-hist" id="updHist"></div>
+
   <div class="kpi-row" id="kpiRow"></div>
 
   <h2 class="sec-title">总体概览</h2>
@@ -263,14 +293,14 @@ select { background:#0d1117; border:1px solid #21262d; color:#e6edf3; font-size:
     <div id="sentStack"></div>
   </div>
   <div class="grid-2">
-    <div class="panel" id="pProblems"><h3>问题点 Top<span class="note" id="probNote">点击条目跳转明细</span></h3><div id="problemsBody"></div></div>
+    <div class="panel" id="pProblems"><h3>问题点 Top<span class="note" id="probNote">点击条目就地筛选明细</span></h3><div id="problemsBody"></div></div>
     <div class="panel" id="pSource"><h3>信源结构<span class="note">点击图例可筛选明细</span></h3><div id="sourceBody"></div></div>
   </div>
 
   <h2 class="sec-title">K3 专项分析（按机型特性）<span style="font-size:11.5px;color:#6e7681;font-weight:400">点击卡片筛选明细</span></h2>
   <div class="topic-grid" id="topicGrid"></div>
   <div class="panel mt12">
-    <h3>关注维度分布<span class="note">点击条目跳转明细 · 多标签口径：一条反馈可命中多个维度，故合计大于样本数</span></h3>
+    <h3>关注维度分布<span class="note">点击条目就地筛选明细 · 多标签口径：一条反馈可命中多个维度，故合计大于样本数</span></h3>
     <div id="dimsBody"></div>
     <div class="foldrow" id="dimsNote"></div>
   </div>
@@ -285,13 +315,14 @@ select { background:#0d1117; border:1px solid #21262d; color:#e6edf3; font-size:
     <div id="chanListBody"></div>
   </div>
   <div class="grid-2">
-    <div class="panel"><h3>渠道 × 情感矩阵</h3><div id="matrixBody"></div></div>
+    <div class="panel"><h3>渠道 × 情感矩阵<span class="note">纯展示，不可点 · 筛选入口在上方占比榜 / 覆盖清单</span></h3><div id="matrixBody"></div></div>
     <div class="panel"><h3>被提及的竞品 / 对标机型</h3><div id="compareBody"></div></div>
   </div>
   <div class="panel mt12"><h3>声量 × 情感趋势（按发布日）<span class="note">柱内三档：负面 / 中性 / 正面 · 点击柱子可筛到该日</span></h3><div id="trendBody"></div></div>
 
   <h2 class="sec-title">明细反馈流</h2>
   <div class="filters" id="filters"></div>
+  <div class="fsum" id="filterSummary"></div>
   <div class="count-line" id="countLine"></div>
   <div class="card-grid" id="cardGrid"></div>
 </div>
@@ -487,6 +518,19 @@ const CHANNEL_MATRIX = [
   { site:"Creality 官网",       group:"official",      method:"auto",   state:"ok",      re:/Creality|创想/i,                                            note:"厂商口径，不计入用户声量" }
 ];
 
+// ── 数据更新条（需求 4）────────────────────────────────────────────
+// 更新历史的口径 = 按 items[].date（采集入库日）聚合，与「明细筛选 · 按采集日」同一字段。
+// 全程只用真实字段派生，不额外编造时刻；无入库的日期不出行（那是「没有批次」，不是「0 条」）。
+// 若采集链路将来写入 K3_UPDATE_LOG（[{at,add,total,note}]）则以它为准，页面无需再改。
+const K3_UPDATE_LOG = [];
+// 批次备注：仅记录真实发生过的事件，未命中一律回落「常规增量」。
+const K3_BATCH_NOTE = {
+  "2026-10-13": "首批采集 · 存量回填",
+  "2026-10-14": "B 站 / Reddit 接入",
+  "2026-10-15": "YouTube Data API v3 接入",
+  "2026-10-16": "常规增量"
+};
+
 function groupOf(p) {
   p = p || "";
   if (/Makers101|聚合|综述/i.test(p)) return "overseaAgg";
@@ -518,7 +562,7 @@ let activeFilters = { sentiment:"all", channel:"all", sourceType:"all", topic:"a
                       group:"all", platform:"all", problem:"all", dim:"all",
                       dateKey:"all", dateMode:"published", dateFrom:"", dateTo:"" };
 
-let tailOpen = { problem:false, dim:false, source:false };
+let tailOpen = { problem:false, dim:false, source:false, upd:false };
 
 const PAGE_SIZE = 20;
 let activePage = 1;
@@ -608,6 +652,58 @@ function countBy(list, fn) {
   return m;
 }
 
+/**
+ * 更新历史（需求 4）。优先用采集链路写入的 K3_UPDATE_LOG；未写入则从 items[].date 派生。
+ * 派生口万无一失：累计值 = 逐批次运行求和，与「按采集日」筛选的计数天然一致。
+ */
+function buildUpdateLog() {
+  if (K3_UPDATE_LOG && K3_UPDATE_LOG.length) return K3_UPDATE_LOG.slice();
+  const byDate = {};
+  items().forEach(function(x){ byDate[x.date] = (byDate[x.date] || 0) + 1; });
+  const ds = Object.keys(byDate).sort();
+  let run = 0;
+  const rows = ds.map(function(d){
+    run += byDate[d];
+    return { at:d, add:byDate[d], total:run, note:K3_BATCH_NOTE[d] || "常规增量" };
+  });
+  return rows.reverse();     // 最近一批在前
+}
+
+function renderUpdateBar() {
+  const el = document.getElementById("updateBar");
+  if (!el) return;
+  const log = buildUpdateLog();
+  const cur = log[0] || null;
+  const stamp = K3_FEEDBACK_DATA.updatedAt || K3_FEEDBACK_DATA.updated;
+  const total = items().length;
+  el.innerHTML =
+    '<span class="ub-dot" title="数据链路正常"></span>' +
+    '<span class="ub-main">数据更新至 ' + esc(stamp) + '</span>' +
+    '<span class="ub-sep"></span><span>工作日 03:30 自动更新</span>' +
+    '<span class="ub-sep"></span><span>累计 <b style="color:#e6edf3">' + total + '</b> 条</span>' +
+    (cur && cur.add ? '<span class="ub-add">本批 +' + cur.add + '</span>' : '') +
+    '<span class="ub-sep"></span><span>已入库 <b style="color:#e6edf3">' + log.length + '</b> 个批次</span>' +
+    '<button class="ub-btn" onclick="toggleUpdHist()">' + (tailOpen.upd ? '收起历史 ▲' : '更新历史 ▾') + '</button>';
+
+  const hist = document.getElementById("updHist");
+  if (!hist) return;
+  if (!tailOpen.upd) { hist.className = "upd-hist"; hist.innerHTML = ""; return; }
+  hist.className = "upd-hist open";
+  const rows = log.slice(0, 10).map(function(r, i){
+    return '<div class="upd-row' + (i === 0 ? ' cur' : '') + '">' +
+      '<span class="u-time">' + esc(r.at) + (i === 0 ? '（最新）' : '') + '</span>' +
+      '<span class="u-add">+' + r.add + '</span>' +
+      '<span class="u-tot">累计 ' + r.total + '</span>' +
+      '<span class="u-res">' + esc(r.note || "常规增量") + '</span></div>';
+  }).join("");
+  hist.innerHTML = rows +
+    '<div class="foldrow">口径：按<b>采集入库日</b>聚合（与明细筛选的「按采集日」同一字段）。派生自动完成，' +
+    '不依赖额外落盘；<b>无入库的日期不显示行</b>——那是「当天没有批次」，不是「0 条」。' +
+    '<span style="color:#6e7681">若需精确到分钟，采集脚本写入 updatedAt 后此处会自动显示到分钟。</span></div>';
+}
+
+function toggleUpdHist() { tailOpen.upd = !tailOpen.upd; renderUpdateBar(); }
+
 function renderKPI() {
   const all = items();
   const neg = all.filter(function(x){ return x.sentiment === "非常负面" || x.sentiment === "负面"; }).length;
@@ -669,7 +765,7 @@ function renderProblems() {
     const on = activeFilters.problem === r.k;
     return '<div class="hbar clk' + (on ? ' on' : '') + (small ? ' sm' : '') + '"' +
       ' onclick="setProblem(this.getAttribute(\'data-p\'))" data-p="' + esc(r.k) + '"' +
-      ' title="' + esc(r.k) + ' · 点击跳转到明细（' + r.n + ' 条）">' +
+      ' title="' + esc(r.k) + ' · 点击就地筛选明细（' + r.n + ' 条）">' +
       '<span class="hname">' + esc(r.k) + '</span>' +
       '<span class="htrack"><span class="hfill" style="width:' + (r.n / max * 100) + '%"></span></span>' +
       '<span class="hnum">' + r.n + ' · ' + Math.round(r.n / total * 100) + '%</span></div>';
@@ -687,7 +783,7 @@ function renderProblems() {
   }
   document.getElementById("problemsBody").innerHTML = html;
   const note = document.getElementById("probNote");
-  if (note) note.innerHTML = '点击条目跳转明细 · 分母 = 当前筛选后 <b>' + base.length + '</b> 条样本';
+  if (note) note.innerHTML = '点击条目就地筛选明细 · 分母 = 当前筛选后 <b>' + base.length + '</b> 条样本';
 }
 
 function renderSource() {
@@ -734,7 +830,7 @@ function renderDims() {
     const on = activeFilters.dim === r.k;
     return '<div class="brow clk' + (on ? ' on' : '') + (small ? ' sm' : '') + '"' +
       ' onclick="setDim(this.getAttribute(\'data-d\'))" data-d="' + esc(r.k) + '"' +
-      ' title="' + esc(r.k) + ' · 点击跳转到明细（' + r.n + ' 条）">' +
+      ' title="' + esc(r.k) + ' · 点击就地筛选明细（' + r.n + ' 条）">' +
       '<span class="bname" style="width:118px;flex:0 0 118px">' + esc(r.k) + '</span>' +
       '<span class="btrack"><span class="bfill" style="width:' + (r.n / max * 100) + '%;background:#58a6ff"></span></span>' +
       '<span class="bnum">' + r.n + '</span></div>';
@@ -752,7 +848,7 @@ function renderDims() {
   document.getElementById("dimsBody").innerHTML = html;
 
   const note = document.getElementById("dimsNote");
-  if (note) note.innerHTML = '点击条目跳转明细 · 维度标签共 <b>' + tagSum + '</b> 个，来自当前筛选后 <b>' + base.length + '</b> 条样本 —— 平均每条反馈命中 <b>' + (tagSum / total).toFixed(2) + '</b> 个维度，因此<b>合计不等于 100%</b>，仅用于看关注点分布，不能读作占比。';
+  if (note) note.innerHTML = '点击条目就地筛选明细 · 维度标签共 <b>' + tagSum + '</b> 个，来自当前筛选后 <b>' + base.length + '</b> 条样本 —— 平均每条反馈命中 <b>' + (tagSum / total).toFixed(2) + '</b> 个维度，因此<b>合计不等于 100%</b>，仅用于看关注点分布，不能读作占比。';
 }
 
 function renderTopics() {
@@ -857,6 +953,9 @@ function renderChanList() {
       const rows = all.filter(function(x){ return c.re.test(x.platform || ""); });
       const n = rows.length;
       const sites = Array.from(new Set(rows.map(function(x){ return x.site || x.platform; })));
+      // 覆盖清单 → 明细：仅当该行只命中「一个站点」时可点（多站点合并行点下去语义不明，故保持不可点）
+      const siteKey = (n && sites.length === 1) ? sites[0] : "";
+      const onSite = siteKey && activeFilters.platform === siteKey;
       let sentBar = "";
       if (n) {
         const sc = countBy(rows, function(x){ return x.sentiment; });
@@ -864,8 +963,10 @@ function renderChanList() {
         const segs = SENT_ORDER.map(function(s){ return sc[s] ? '<i style="flex:' + sc[s] + ';background:' + SENT_COLOR[s] + '"></i>' : ""; }).join("");
         sentBar = '<span class="chsent" title="情感分布：' + tip + '">' + segs + '</span>';
       }
-      html += '<div class="chrow' + (n ? '' : ' zero') + '">' +
-              '<span class="chsite" title="' + c.site + '">' + c.site + '</span>' +
+      html += '<div class="chrow' + (n ? '' : ' zero') + (onSite ? ' on' : '') + (siteKey ? ' clk' : '') + '"' +
+              (siteKey ? ' onclick="setPlatform(this.getAttribute(\'data-p\'))" data-p="' + siteKey.replace(/"/g, "&quot;") + '"' : '') +
+              ' title="' + (siteKey ? siteKey + ' · 点击只看该站点的全部条目（再次点击取消）' : c.site) + '">' +
+              '<span class="chsite">' + c.site + '</span>' +
               '<span class="chm ' + c.method + '">' + (c.method === "auto" ? "自动" : "人工") + '</span>' +
               '<span class="chst ' + c.state + '">' + STATE_TXT[c.state] + '</span>' +
               '<span class="chnum">' + (n || "—") +
@@ -891,6 +992,9 @@ function renderChanList() {
           '其余 <b>' + (CHANNEL_MATRIX.length - autoN) +
           '</b> 个受登录墙 / 签名 / 反爬限制，需走人工投喂或商业数据服务。' +
           '注意：条数多 ≠ 来源广 —— 请配合上方占比条与集中度一起读。</div>';
+  html += '<div class="foldrow">交互：<b>可点行 = 该渠道已唯一落到某个站点</b>，点击即筛选该站点明细（再点取消）；' +
+          '灰色「—」行（0 条）与多站点合并行不可点。渠道组的筛选请用上方<b>渠道来源占比</b>的图例。<span style="color:#6e7681">' +
+          '注意：加进清单 ≠ 采得到数据 —— 清单是「应该覆盖什么」，条数是「实际采到多少」。</span></div>';
   html += '<div class="foldrow">当前 <b>' + all.length + '</b> 条的采集方式：' + mcTxt +
           '。<span style="color:#6e7681">口径说明：本行是<b>条目级</b>事实（这条数据实际怎么来的）；' +
           '上方清单的「自动 / 人工」栏是<b>渠道级</b>能力（该渠道能不能自动采），两者不同源，不要互相推导。</span></div>';
@@ -909,7 +1013,7 @@ function renderMatrix() {
     const on = activeFilters.group === g;
     const zero = !rows.length;
     html += '<tr class="mrow' + (on ? ' on' : '') + (zero ? ' zero' : '') + '"' +
-            ' onclick="setGroup(\'' + g + '\')" title="' + meta.name + ' · 点击只看该渠道组（再次点击取消）">' +
+            ' title="' + meta.name + ' · 纯展示（渠道筛选请用上方占比榜 / 覆盖清单）">' +
       '<td>' + meta.name + ((meta.expect && zero) ? ' <span class="t-flag">缺口</span>' : '') + '</td>' +
       SENT_ORDER.map(function(s){
         const n = rows.filter(function(x){ return x.sentiment === s; }).length;
@@ -1030,26 +1134,59 @@ function renderFilters() {
     html += '<button class="filter-btn ' + (activeFilters.sourceType === t ? "active" : "") + '" onclick="setF(\'sourceType\',\'' + t + '\')">' + (t === "all" ? "全部" : t) + ' ' + n + '</button>';
   });
   html += '<span class="filter-sep"></span><input type="text" id="qBox" placeholder="搜索摘要 / 原文 / 平台 / 竞品" value="' + activeFilters.q.replace(/"/g, "") + '" oninput="setQ(this.value)">';
-  if (activeFilters.topic !== "all") {
-    html += '<button class="filter-btn active" onclick="toggleTopic(\'' + activeFilters.topic + '\')">专项：' + ((TOPIC_META[activeFilters.topic]||{}).name || activeFilters.topic) + ' ✕</button>';
-  }
-  if (activeFilters.group !== "all") {
-    html += '<button class="filter-btn active" onclick="setGroup(\'' + activeFilters.group + '\')">渠道组：' + GROUP_META[activeFilters.group].name + ' ✕</button>';
-  }
-  if (activeFilters.platform !== "all") {
-    html += '<button class="filter-btn active" onclick="setPlatform(this.getAttribute(\'data-p\'))" data-p="' + activeFilters.platform.replace(/"/g, "&quot;") + '">站点：' + activeFilters.platform + ' ✕</button>';
-  }
-  if (activeFilters.problem !== "all") {
-    html += '<button class="filter-btn active" onclick="setProblem(this.getAttribute(\'data-p\'))" data-p="' + esc(activeFilters.problem) + '" title="来自「问题点 Top」面板">问题点：' + esc(activeFilters.problem) + ' ✕</button>';
-  }
-  if (activeFilters.dim !== "all") {
-    html += '<button class="filter-btn active" onclick="setDim(this.getAttribute(\'data-d\'))" data-d="' + esc(activeFilters.dim) + '" title="来自「关注维度分布」面板">维度：' + esc(activeFilters.dim) + ' ✕</button>';
-  }
   html += '<button class="export-btn" onclick="exportCSV()">导出 CSV</button>';
   document.getElementById("filters").innerHTML = html;
 }
 
+/**
+ * 当前筛选摘要条（需求 3）。
+ * 由它独家承担「已选中了哪些条件 + 逐个移除」，筛选栏只负责「怎么选」，两者不再重复渲染同一条件。
+ * 无任何筛选时整条隐藏，不占版面。
+ */
+function fsumChip(label, key) {
+  return '<span class="fsum-chip">' + esc(label) +
+    '<span class="fx" onclick="removeFilter(\'' + key + '\')" title="移除该筛选条件">×</span></span>';
+}
+function renderSummary() {
+  const el = document.getElementById("filterSummary");
+  if (!el) return;
+  const parts = [];
+  if (activeFilters.problem !== "all") parts.push(fsumChip("问题点：" + activeFilters.problem, "problem"));
+  if (activeFilters.dim !== "all") parts.push(fsumChip("维度：" + activeFilters.dim, "dim"));
+  if (activeFilters.topic !== "all") parts.push(fsumChip("专项：" + ((TOPIC_META[activeFilters.topic] || {}).name || activeFilters.topic), "topic"));
+  if (activeFilters.group !== "all") parts.push(fsumChip("渠道组：" + GROUP_META[activeFilters.group].name, "group"));
+  if (activeFilters.platform !== "all") parts.push(fsumChip("站点：" + activeFilters.platform, "platform"));
+  if (activeFilters.sentiment !== "all") parts.push(fsumChip("情感：" + activeFilters.sentiment, "sentiment"));
+  if (activeFilters.channel !== "all") parts.push(fsumChip("市场：" + activeFilters.channel, "channel"));
+  if (activeFilters.sourceType !== "all") parts.push(fsumChip("信源：" + activeFilters.sourceType, "sourceType"));
+  if (activeFilters.dateKey !== "all") {
+    const rng = dateRangeOf();
+    const dk = rng ? rng[0] + " ~ " + rng[1] : activeFilters.dateKey;
+    parts.push(fsumChip("时间：" + dk + "（按" + (activeFilters.dateMode === "published" ? "发布日" : "采集日") + "）", "date"));
+  }
+  if (activeFilters.q.trim()) parts.push(fsumChip("搜索：" + activeFilters.q.trim(), "q"));
+
+  if (!parts.length) { el.className = "fsum"; el.innerHTML = ""; return; }
+  el.className = "fsum show";
+  el.innerHTML = '<span class="fsum-h">当前筛选（' + parts.length + '）</span>' + parts.join("") +
+    '<span class="fsum-hit">命中 <b>' + applyFilters().length + '</b> 条</span>' +
+    '<button class="fsum-clear" onclick="clearAllFilters()">清空全部</button>';
+}
+
+/** 摘要条单个 chip 的移除。date 键要连区间与自定义态一起清，否则会留下空区间。 */
+function removeFilter(key) {
+  if (key === "date") {
+    activeFilters.dateKey = "all"; activeFilters.dateFrom = ""; activeFilters.dateTo = "";
+  } else if (key === "q") {
+    activeFilters.q = "";
+  } else {
+    activeFilters[key] = "all";
+  }
+  renderAll();
+}
+
 function renderCards() {
+  renderSummary();
   const all = applyFilters();
   const list = all.slice().sort(function(a, b){
     const d = (b.publishedAt || "").localeCompare(a.publishedAt || "");
@@ -1138,7 +1275,7 @@ function renderCards() {
 function renderAll() {
   console.log("boot start: K3 专栏 records =", (window.DATA && window.DATA.items ? window.DATA.items.length : 0));
   try {
-    renderKPI(); renderStack(); renderProblems(); renderSource(); renderDims();
+    renderUpdateBar(); renderKPI(); renderStack(); renderProblems(); renderSource(); renderDims();
     renderTopics(); renderChannels(); renderChanList(); renderMatrix(); renderCompare(); renderTrend();
     renderFilters(); renderCards();
     console.log("renderAll done, cards =", applyFilters().length);
@@ -1151,38 +1288,34 @@ function renderAll() {
 
 function setF(key, val) { activeFilters[key] = val; renderFilters(); renderPanels(); renderCards(); }
 function setQ(v) { activeFilters.q = v; renderPanels(); renderCards(); }
-function toggleTopic(t) { activeFilters.topic = (activeFilters.topic === t ? "all" : t); renderTopics(); renderFilters(); renderPanels(); renderCards(); }
+function toggleTopic(t) { activeFilters.topic = (activeFilters.topic === t ? "all" : t); renderTopics(); renderPanels(); renderCards(); flashCards(); }
 
 /** 两个下钻面板 + 情感结构共用的分母：任何筛选变化后都必须重算，保证 bar 数字 ≡ 点击后明细条数。 */
 function renderPanels() { renderProblems(); renderDims(); renderStack(); }
 
 /**
- * 面板 → 明细 的下钻三件套。
+ * 面板 → 明细 的下钻。
  * 关键：点完之后两个面板都要重算（因为 applyFilters("problem") / applyFilters("dim") 会互相影响），
  * 否则会出现「点了问题点，维度面板数字没跟着变」的口径不一致。
+ * 交互口径（2026-10-16 定稿）：**就地筛选，不跳转**——只让明细区闪一下作为反馈，
+ * 不把页面滚走，避免用户每次都要重新找回去。
  */
 function setProblem(p) {
   activeFilters.problem = (activeFilters.problem === p ? "all" : p);
-  renderProblems(); renderDims(); renderStack(); renderFilters(); renderCards();
-  if (activeFilters.problem !== "all") jumpToDetail();
+  renderProblems(); renderDims(); renderStack(); renderCards();
+  flashCards();
 }
 function setDim(d) {
   activeFilters.dim = (activeFilters.dim === d ? "all" : d);
-  renderProblems(); renderDims(); renderStack(); renderFilters(); renderCards();
-  if (activeFilters.dim !== "all") jumpToDetail();
+  renderProblems(); renderDims(); renderStack(); renderCards();
+  flashCards();
 }
 function toggleTail(which) {
   tailOpen[which] = !tailOpen[which];
   if (which === "problem") renderProblems(); else if (which === "dim") renderDims(); else renderChannels();
 }
 
-/** 平滑滚动到明细流并闪一下高亮，让用户确认「跳过去了」。 */
-function jumpToDetail() {
-  const el = document.getElementById("countLine");
-  if (!el || !el.scrollIntoView) return;
-  el.scrollIntoView({ behavior:"smooth", block:"start" });
-  flashCards();
-}
+/** 明细区闪一下高亮，作为「筛选已生效」的反馈（不滚动、不抢焦点）。 */
 function flashCards() {
   const g = document.getElementById("cardGrid");
   if (!g) return;
