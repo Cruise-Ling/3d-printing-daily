@@ -27,6 +27,20 @@
 
 ---
 
+## 专题专栏 / Columns
+
+| 专栏 Column | 页面 Page | 口径 Scope |
+|-------------|-----------|-----------|
+| K3 专栏 | [creality-k3.html](creality-k3.html) | K3 单机型用户声音 · 国内 + 海外，含评论评价与译文 |
+| 软件专栏 | [software-columns.html](software-columns.html) | 3D 打印软件用户使用内容 · Creality Print / Cloud+APP / Park / 固件与 Klipper / 第三方切片兼容，按**版本 × 问题类型**组织 |
+| mBox 专栏 | [creality-mbox.html](creality-mbox.html) | mBox 公开声量与上市动态 · **预热期**（产品尚未发布，公开声量为真实采集值，未做填充） |
+
+> 三个专栏各有独立采集器与口径，不做同一份数据换皮：
+> `_k3_*`（K3）、`_col_collect_sw.py` + `_sw_rules.py`（软件）、`_col_collect_mbox.py`（mBox）。
+> 软件与 mBox 两页由同一个模板 `_col_template.html` + `_build_column.py` 生成，**源码共用、产物自包含**。
+
+---
+
 ## 归档 / Archive
 
 | 日期 Date | 简报 Briefing |

@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Creality mBox 用户声音专栏</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1117;--card:#161b22;--card2:#1c2128;--bd:#21262d;--bd2:#30363d;
+  --tx:#e6edf3;--tx2:#c9d1d9;--mu:#8b949e;--mu2:#6e7681;
+  --blue:#58a6ff;--blue2:#1f6feb;--green:#3fb950;--red:#f85149;--yellow:#d29922;--purple:#bc8cff;
+}
+body{background:var(--bg);color:var(--tx);font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;padding:0 0 64px}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* 预热期条 */
+.prewarm{background:linear-gradient(90deg,#2d2410,#1a1607);border-bottom:1px solid #4d3b00;padding:9px 24px;font-size:12.5px;color:#e3b341;text-align:center}
+.prewarm b{color:#ffd666}
+
+header{padding:28px 0 16px;border-bottom:1px solid var(--bd)}
+.htop{display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+h1{font-size:25px;font-weight:700;letter-spacing:-.3px}
+.badge{font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.b-blue{background:rgba(88,166,255,.12);color:var(--blue);border:1px solid rgba(88,166,255,.3)}
+.b-yel{background:rgba(210,153,34,.13);color:var(--yellow);border:1px solid rgba(210,153,34,.4)}
+.b-red{background:rgba(248,81,73,.12);color:var(--red);border:1px solid rgba(248,81,73,.32)}
+.b-grn{background:rgba(63,185,80,.12);color:var(--green);border:1px solid rgba(63,185,80,.32)}
+.sub{color:var(--mu);font-size:13px;margin-top:8px;line-height:1.7}
+.sub b{color:var(--tx2);font-weight:600}
+
+.upd{display:flex;align-items:center;gap:9px;margin-top:15px;padding:9px 14px;background:var(--card);border:1px solid var(--bd);border-radius:8px;font-size:12.5px;color:var(--mu);flex-wrap:wrap}
+.upd b{color:var(--tx2)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(63,185,80,.15);flex:none}
+.dot.y{background:var(--yellow);box-shadow:0 0 0 3px rgba(210,153,34,.15)}
+.upd .hist{margin-left:auto;color:var(--mu2);cursor:pointer;border-bottom:1px dashed var(--bd2)}
+.upd .hist:hover{color:var(--blue)}
+#updHist{display:none;margin-top:8px;padding:10px 14px;background:var(--card);border:1px solid var(--bd);border-radius:8px;font-size:12px;color:var(--mu)}
+#updHist.on{display:block}
+#updHist div{padding:3px 0}
+
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0 0}
+.kpi{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:15px 16px}
+.kpi .l{font-size:12px;color:var(--mu);margin-bottom:7px}
+.kpi .v{font-size:27px;font-weight:700;line-height:1.1;letter-spacing:-.5px}
+.kpi .v small{font-size:14px;color:var(--mu2);font-weight:600}
+.kpi .d{font-size:11.5px;color:var(--mu2);margin-top:6px;line-height:1.5}
+.kpi .v.rd{color:var(--red)}
+.kpi .v.ye{color:var(--yellow)}
+
+/* 区块 */
+section{margin-top:28px}
+.sh{display:flex;align-items:baseline;gap:9px;margin-bottom:12px;flex-wrap:wrap}
+.sh h2{font-size:15.5px;font-weight:650}
+.sh .tag{font-size:11px;color:var(--mu2);border:1px solid var(--bd2);border-radius:4px;padding:1px 6px}
+.sh .note{font-size:12px;color:var(--mu2);margin-left:auto}
+
+/* 版本矩阵 */
+.mxwrap{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:16px 16px 12px;overflow-x:auto}
+.mx{display:grid;gap:4px;min-width:720px}
+.mx .hd{font-size:10.5px;color:var(--mu);text-align:center;padding:0 2px 7px;line-height:1.35;align-self:end}
+.mx .hd.rh{text-align:right;padding-right:6px}
+.mx .rl{font-size:11.5px;color:var(--tx2);text-align:right;padding-right:6px;display:flex;align-items:center;justify-content:flex-end;gap:5px;font-variant-numeric:tabular-nums}
+.mx .rl .ver{font-weight:600;cursor:pointer}
+.mx .rl .ver:hover{color:var(--blue)}
+.mx .rl .cnt{color:var(--mu2);font-size:10.5px}
+.cell{height:42px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:600;cursor:pointer;transition:.13s;position:relative;font-variant-numeric:tabular-nums}
+.cell:hover{transform:scale(1.06);box-shadow:0 0 0 1.5px var(--blue);z-index:3}
+.cell.on{box-shadow:0 0 0 2px var(--blue)}
+.c0{background:rgba(255,255,255,.025);color:#30363d;cursor:default}
+.c1{background:rgba(88,166,255,.13);color:#8fbcff}
+.c2{background:rgba(88,166,255,.27);color:#b6d5ff}
+.c3{background:rgba(210,153,34,.28);color:#f0c860}
+.c4{background:rgba(248,81,73,.3);color:#ffa39a}
+.c5{background:rgba(248,81,73,.52);color:#ffd6d2}
+.cell.regress{box-shadow:0 0 0 2px var(--red)}
+.cell .flag{position:absolute;top:-6px;right:-4px;font-size:9px;background:var(--red);color:#fff;border-radius:3px;padding:0 4px;font-weight:700}
+.legend{display:flex;align-items:center;gap:6px;margin-top:12px;padding-top:11px;border-top:1px solid var(--bd);font-size:11px;color:var(--mu2);flex-wrap:wrap}
+.lg{width:19px;height:10px;border-radius:2px;display:inline-block}
+.legend .sp{margin-left:auto;display:flex;align-items:center;gap:6px}
+.legend .sp i{width:11px;height:11px;border-radius:3px;box-shadow:0 0 0 2px var(--red) inset;display:inline-block}
+
+/* 双栏 + 条 */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.panel{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:15px 17px}
+.panel .ph{font-size:13px;font-weight:650;color:var(--tx2);margin-bottom:13px;display:flex;align-items:center;gap:8px}
+.panel .ph span{font-size:11px;color:var(--mu2);font-weight:400;margin-left:auto}
+.bar{display:flex;align-items:center;gap:9px;margin-bottom:10px;cursor:pointer}
+.bar:last-child{margin-bottom:0}
+.bar.on .nm{color:var(--blue);font-weight:600}
+.bar .nm{width:126px;font-size:12px;color:var(--tx2);flex:none;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar .tr{flex:1;height:19px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden}
+.bar .fl{display:block;height:100%;border-radius:3px;transition:.2s;background:linear-gradient(90deg,#1f6feb,#58a6ff)}
+.bar:hover .fl{filter:brightness(1.25)}
+.bar .vv{width:40px;font-size:12px;font-weight:600;color:var(--tx2);text-align:right;flex:none;font-variant-numeric:tabular-nums}
+.bar .pc{width:38px;font-size:11px;color:var(--mu2);text-align:right;flex:none;font-variant-numeric:tabular-nums}
+.tip{font-size:11.5px;color:var(--mu2);margin-top:11px;padding-top:10px;border-top:1px dashed var(--bd);line-height:1.65}
+
+/* 筛选 */
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:22px 0 0;padding:13px 15px;background:var(--card);border:1px solid var(--bd);border-radius:10px}
+.fg{display:flex;align-items:center;gap:6px}
+.fg label{font-size:11.5px;color:var(--mu2)}
+select,.fbtn{background:var(--card2);color:var(--tx2);border:1px solid var(--bd2);border-radius:6px;padding:5px 9px;font-size:12px;font-family:inherit;cursor:pointer;outline:none}
+select:hover,.fbtn:hover{border-color:#484f58}
+select:focus{border-color:var(--blue)}
+.fbtn.on{background:rgba(88,166,255,.14);color:var(--blue);border-color:rgba(88,166,255,.45)}
+.filters .sp{margin-left:auto;display:flex;gap:7px}
+#searchBox{background:var(--card2);border:1px solid var(--bd2);border-radius:6px;color:var(--tx);padding:5px 10px;font-size:12px;font-family:inherit;width:170px;outline:none}
+#searchBox:focus{border-color:var(--blue)}
+
+/* 摘要 */
+#filterSummary{display:none;margin-top:12px;padding:11px 14px;background:rgba(88,166,255,.055);border:1px solid rgba(88,166,255,.22);border-radius:9px;font-size:12.5px;color:var(--tx2)}
+#filterSummary.on{display:block}
+#filterSummary .lbl{color:var(--mu2);font-size:11.5px;margin-right:4px}
+.chipx{display:inline-flex;align-items:center;gap:6px;background:rgba(88,166,255,.13);border:1px solid rgba(88,166,255,.3);color:var(--blue);border-radius:20px;padding:2px 5px 2px 10px;font-size:11.5px;margin:3px 5px 3px 0}
+.chipx b{color:var(--tx);font-weight:600}
+.chipx i{cursor:pointer;font-style:normal;opacity:.7;padding:0 4px;border-radius:50%}
+.chipx i:hover{opacity:1;background:rgba(248,81,73,.2);color:var(--red)}
+#filterSummary .cnt{color:var(--mu2);font-size:11.5px;margin-left:6px}
+#filterSummary .clr{margin-left:10px;color:var(--mu2);cursor:pointer;font-size:11.5px;border-bottom:1px dashed var(--bd2)}
+#filterSummary .clr:hover{color:var(--red)}
+
+/* 明细卡 */
+.flow{display:flex;flex-direction:column;gap:9px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:9px;padding:13px 15px;transition:.13s}
+.card:hover{border-color:var(--bd2);background:var(--card2)}
+.card.flash{animation:fl .9s ease}
+@keyframes fl{0%,100%{background:var(--card)}30%{background:rgba(88,166,255,.1);border-color:rgba(88,166,255,.4)}}
+.card .top{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.chip{font-size:10.5px;font-weight:700;padding:1.5px 7px;border-radius:4px;letter-spacing:.2px}
+.ch-ver{background:rgba(188,140,255,.14);color:var(--purple);border:1px solid rgba(188,140,255,.32)}
+.ch-prod{background:rgba(88,166,255,.12);color:var(--blue);border:1px solid rgba(88,166,255,.3)}
+.ch-pb{background:rgba(248,81,73,.12);color:var(--red);border:1px solid rgba(248,81,73,.3)}
+.ch-ok{background:rgba(63,185,80,.1);color:var(--green);border:1px solid rgba(63,185,80,.28)}
+.ch-mu{background:rgba(139,148,158,.1);color:var(--mu);border:1px solid var(--bd2)}
+.ch-ye{background:rgba(210,153,34,.12);color:var(--yellow);border:1px solid rgba(210,153,34,.3)}
+.card .tm{margin-left:auto;font-size:11px;color:var(--mu2);white-space:nowrap}
+.card .ti{font-size:13.5px;font-weight:600;color:var(--tx);margin-bottom:6px;line-height:1.45}
+.card .ti a{color:var(--tx)}
+.card .ti a:hover{color:var(--blue)}
+.card .bd{font-size:12.5px;color:var(--mu);line-height:1.68;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card .bd .lang{color:var(--mu2);font-size:10.5px;border:1px solid var(--bd2);border-radius:3px;padding:0 4px;margin-right:5px}
+.card .tr2{margin-top:7px;padding-left:9px;border-left:2px solid rgba(88,166,255,.28);font-size:12.5px;color:var(--tx2);line-height:1.68;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card .tr2 .ml{color:var(--mu2);font-size:10.5px;margin-right:5px}
+.card .mt{display:flex;gap:13px;margin-top:8px;font-size:11px;color:var(--mu2);flex-wrap:wrap}
+.card .mt b{color:var(--mu);font-weight:500}
+
+/* 分页 */
+.pager{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:16px;font-size:12px;color:var(--mu)}
+.pager button{background:var(--card);border:1px solid var(--bd2);color:var(--tx2);border-radius:6px;padding:4px 11px;cursor:pointer;font-size:12px;font-family:inherit}
+.pager button:hover:not(:disabled){border-color:var(--blue);color:var(--blue)}
+.pager button:disabled{opacity:.35;cursor:default}
+.pager .pg{min-width:96px;text-align:center}
+
+.empty{border:1px dashed var(--bd2);border-radius:10px;padding:34px 22px;text-align:center;color:var(--mu2);font-size:12.5px;line-height:1.8}
+.empty b{color:var(--tx2);font-size:14px;display:block;margin-bottom:7px}
+.foot{margin-top:34px;padding-top:15px;border-top:1px solid var(--bd);font-size:11.5px;color:var(--mu2);line-height:1.95}
+.foot b{color:var(--mu)}
+
+@media(max-width:860px){
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .cols{grid-template-columns:1fr}
+  .bar .nm{width:96px}
+  .filters{gap:6px}
+  #searchBox{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="prewarm"><b>预热期</b> · 该机型尚未上市，公开渠道可采内容极少。本页所有数字均为<b>真实采集值</b>，未做任何填充；上市后按同一口径自动扩容，不会出现断档。</div>
+<div class="wrap">
+<header>
+  <div class="htop">
+    <h1>Creality mBox 用户声音专栏</h1>
+    <span class="badge b-yel">未发布 · 预热期</span><span class="badge b-blue">公开声量 3 条</span><span class="badge b-grn">独立信源 2 家</span><span class="badge b-blue">官方动作 1 条</span>
+  </div>
+  <div class="sub">面向家庭的紧凑型 3D 打印机 · 构建体积 <b>153 × 153 × 153 mm</b> · 配套应用 <b>Creality Park</b>（Google Play，2026-08-14 上架）。<b>产品尚未正式发布</b>——本页口径与 K3 专栏一致，页面结构已完整，数据随上市自动累积。</div>
+  <div class="upd" id="updateBar"></div>
+  <div id="updHist"></div>
+</header>
+
+<div class="kpis" id="kpis"></div>
+<div id="panels"></div>
+
+<div class="filters" id="filters"></div>
+<div id="filterSummary"></div>
+
+<section>
+  <div class="sh">
+    <h2 id="flowTitle">明细</h2>
+    <span class="tag" id="flowCount"></span>
+    <span class="note">
+      <button class="fbtn" id="csvBtn">导出 CSV</button>
+    </span>
+  </div>
+  <div class="flow" id="cards"></div>
+  <div class="pager" id="pager"></div>
+</section>
+
+<div class="foot" id="foot"></div>
+</div>
+
+<script>
+var COL = {"meta":{"columnType":"mbox","fileStem":"creality-mbox","launchMode":"pre","scope":"mBox 公开声量与上市动态","updatedDate":"2026-10-01","batch":"工作日 03:30 批次","sources":"Creality 官方论坛 search=mbox / creality.com 官网 / YouTube / 3druck / Google Play","updateLog":[{"date":"2026-10-01","text":"首次采集 · 公开声量 3 条（官方论坛 0 条、官网无产品页、媒体 1 个信源 × 2 语区、官方视频 1 条）"}],"foot":"<b>采集覆盖盘点（截至 2026-10-01）<\/b><br>① <b>Creality 官方论坛<\/b>：search=mbox 返回 <b>0 主题 0 帖<\/b>——不是采集失败，是真实零讨论。<br>② <b>官网 creality.com<\/b>：无 mBox 产品页与 Park 页（产品页 /pages/creality-park 均 404）。<br>③ <b>媒体<\/b>：目前仅 3druck 一家报道，EN / DE 两个语区为<b>同一篇稿<\/b>，页面按 2 条计入但对<b>独立信源数只记 1 家<\/b>。<br>④ <b>YouTube<\/b>：官方频道 <b>creality park<\/b> 于 <b>2026-08-14<\/b>（与 Play 上架同日）发布「Creality Park app 添加 mBox iOS 海外」，这是官方首次公开把 mBox 与 Park 绑定。<br>⑤ <b>Google Play<\/b>：Creality Park 包名 <code>com.creality.f038App.global<\/code>，Creality Park 尚无评分（500+ 下载，— 上架）。<br>⑥ <b>Reddit / X<\/b>：出口 IP 被封锁（403），属已知限制，<b>不作为页面数据来源<\/b>，也不当失败告警。<br>⑦ 本页<b>不提供预测、不做规格推测<\/b>；未公布的价格与上市日期在页面上不显示，而不是填一个「预计」。"},"items":[{"platform":"3druck","site":"3druck.com","channel":"海外媒体","country":"DE","language":"EN","date":"2026-10-01","title":"Creality mBox: Slicer Update Reveals Compact 3D Printer for Families","originalText":"Creality appears to be working on a small 3D printer for families. Version 7.3.0.6141 of Creality Print shows a previously unknown device called Creality mBox in the printer selection. The image shows a white, cube-shaped enclosure with a solid front panel, a viewing window and a handle; a small display sits in the upper right. Build volume 153 x 153 x 153. No specs, price or release date are provided. The companion app Creality Park was released on August 14, 2026 as v1.0.0 on Google Play (Android 7.0+, PEGI 3, 100+ downloads).","url":"https://3druck.com/en/printers-and-products/creality-mbox-slicer-update-verraet-kompakten-3d-drucker-fuer-familien-42163402","sourceType":"媒体","signal":"high","uid":"60059a1ac669d9a6"},{"platform":"3druck","site":"3druck.com","channel":"海外媒体","country":"DE","language":"DE","date":"2026-10-01","title":"Creality mBox: Slicer-Update verrät kompakten 3D-Drucker für Familien","originalText":"Hinweise darauf stecken in Version 7.3.0.6141 des hauseigenen Slicers Creality Print. Dort erscheint in der Druckerauswahl ein bisher unbekanntes Gerät namens Creality mBox.","url":"https://3druck.com/drucker-und-produkte/creality-mbox-slicer-update-verraet-kompakten-3d-drucker-fuer-familien-42163402","sourceType":"媒体","signal":"high","mirrorOf":"3druck-EN","uid":"ed7d2732fbefa405"},{"platform":"YouTube","site":"YouTube","channel":"厂商官方","country":"US","language":"EN","date":"2026-08-14","title":"Creality Park app 添加 mBox iOS 海外","originalText":"Creality Park app 添加 mBox iOS 海外","url":"https://www.youtube.com/watch?v=30APkyfueHw","uid":"7830d6a4c725a855","sourceType":"官方","author":"creality park","views":224,"signal":"high"}],"extra":{"probes":[{"source":"Creality 官方论坛 search=mbox","url":"https://forum.creality.com/search.json?q=mbox","status":"empty","count":0},{"source":"官网产品页","url":"https://www.creality.com/products/creality-mbox","status":"absent","err":"HTTP 404","count":0},{"source":"官网Park 页","url":"https://www.creality.com/pages/creality-park","status":"absent","err":"HTTP 404","count":0},{"source":"官网产品页 alt","url":"https://www.creality.com/products/mbox","status":"absent","err":"HTTP 404","count":0},{"source":"YouTube 搜索 creality mbox","url":"https://www.youtube.com/results?search_query=creality%20mbox","status":"ok","count":1},{"source":"YouTube 搜索 creality park app","url":"https://www.youtube.com/results?search_query=creality%20park%20app","status":"ok","count":0},{"source":"YouTube 搜索 mbox 3d printer","url":"https://www.youtube.com/results?search_query=mbox%203d%20printer","status":"ok","count":0},{"source":"Google Play Creality Park","url":"https://play.google.com/store/apps/details?id=com.creality.f038App.global&hl=en&gl=US","status":"ok","count":1},{"source":"Google Play Creality Cloud","url":"https://play.google.com/store/apps/details?id=com.cxsw.sdprinter&hl=en&gl=US","status":"ok","count":1}],"apps":{"com.creality.f038App.global":{"label":"Creality Park","package":"com.creality.f038App.global","rating":null,"ratingCount":0,"version":"","published":"","downloads":"500+","url":"https://play.google.com/store/apps/details?id=com.creality.f038App.global&hl=en&gl=US"},"com.cxsw.sdprinter":{"label":"Creality Cloud - 3D Printing","package":"com.cxsw.sdprinter","rating":4.34,"ratingCount":36446,"version":"","published":"","downloads":"5M+","url":"https://play.google.com/store/apps/details?id=com.cxsw.sdprinter&hl=en&gl=US"}},"generatedAt":"2026-10-19 18:00","park":{"label":"Creality Park","package":"com.creality.f038App.global","rating":null,"ratingCount":0,"version":"","published":"","downloads":"500+","url":"https://play.google.com/store/apps/details?id=com.creality.f038App.global&hl=en&gl=US"}}};
+</script>
+<script>
+(function(){
+"use strict";
+
+var META   = COL.meta || {};
+var ITEMS  = COL.items || [];
+var EXTRA  = COL.extra || {};
+var TYPE   = META.columnType || "sw";
+var PAGE_SZ = 20;
+
+var PROBLEM_NAME = {"crash":"崩溃 / 无法启动","slice":"切片错误 / 卡死","quality":"打印质量回归",
+                    "ui":"界面 / 显示缺陷","feature":"功能缺失 / 需求","compat":"兼容性"};
+var PRODUCT_NAME = {"print":"Creality Print","cloud":"Creality Cloud + APP","park":"Creality Park",
+                    "firmware":"固件与 Klipper","thirdparty":"第三方切片兼容"};
+var PRODUCT_COLOR= {"print":"#58a6ff","cloud":"#3fb950","park":"#bc8cff","firmware":"#d29922","thirdparty":"#f85149"};
+var CHANNEL_ORDER = ["官方论坛","厂商官方","海外视频","海外媒体","国内媒体","社区","其他"];
+
+var S = {product:"",version:"",problem:"",model:"",channel:"",grade:"",source:"",range:"all",q:"",page:1};
+var lastKey = "";
+
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function pad2(n){return n<10?"0"+n:""+n;}
+function dateOf(it){return (it.date||"").slice(0,10);}
+function uniq(a){var o={},r=[];a.forEach(function(x){if(x&&!o[x]){o[x]=1;r.push(x);}});return r;}
+function countBy(list,fn){var m={};list.forEach(function(x){var k=fn(x);if(k){m[k]=(m[k]||0)+1;}});return m;}
+
+/* ---------- 时间范围 ---------- */
+function daysAgo(n){
+  var d=new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate()-n);
+  return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate());
+}
+function inRange(it){
+  if(S.range==="all") return true;
+  var n={"7":7,"30":30,"90":90}[S.range]||0;
+  if(!n) return true;
+  return dateOf(it) >= daysAgo(n);
+}
+
+/* ---------- 过滤核心：skip 用于 facet 自身不参与自身计数 ---------- */
+function match(it,skip){
+  if(skip!=="product" && S.product && it.productLine!==S.product) return false;
+  if(skip!=="version" && S.version){
+    var v=(it.version||"");
+    if(S.version==="__none__"){ if(v) return false; }
+    else if(v!==S.version) return false;
+  }
+  if(skip!=="problem" && S.problem){
+    if(S.problem==="__none__"){ if(it.problemType) return false; }
+    else if(it.problemType!==S.problem) return false;
+  }
+  if(skip!=="model" && S.model && (it.model||"未标注")!==S.model) return false;
+  if(skip!=="channel" && S.channel && it.channel!==S.channel) return false;
+  if(skip!=="grade" && S.grade && it.grade!==S.grade) return false;
+  if(skip!=="source" && S.source && it.sourceType!==S.source) return false;
+  if(!inRange(it)) return false;
+  if(S.q){
+    var q=S.q.toLowerCase();
+    var hay=((it.title||"")+" "+(it.originalText||"")+" "+(it.model||"")+" "+(it.site||"")).toLowerCase();
+    if(hay.indexOf(q)<0) return false;
+  }
+  return true;
+}
+function applyFilters(skip){ return ITEMS.filter(function(it){return match(it,skip);}); }
+
+/* ---------- 更新条 ---------- */
+function renderUpdateBar(){
+  var el=document.getElementById("updateBar");
+  var mode = META.launchMode==="pre";
+  el.innerHTML = '<span class="dot'+(mode?" y":"")+'"></span>'+
+    '<span>口径：<b>'+(META.scope||"用户反馈")+'</b> · 更新至 <b>'+(META.updatedDate||"—")+'</b>'+
+    '（'+(META.batch||"")+'） · 信源 <b>'+(META.sources||"")+'</b></span>'+
+    '<span class="hist" id="updToggle">更新历史</span>';
+  var h=document.getElementById("updHist");
+  var log=META.updateLog||[];
+  h.innerHTML = log.length
+    ? log.map(function(x){return "<div>· "+esc(x.date)+" · "+esc(x.text)+"</div>";}).join("")
+    : "<div>· 暂无历史记录（首版发布）</div>";
+  document.getElementById("updToggle").onclick=function(){ h.className = h.className==="on"?"":"on"; };
+}
+
+/* ---------- KPI ---------- */
+function renderKPIs(){
+  var all=applyFilters(), el=document.getElementById("kpis");
+  if(TYPE==="mbox"){
+    var srcs=uniq(all.map(function(x){return x.site;}));
+    var official=all.filter(function(x){return x.sourceType==="官方";}).length;
+    var apps=EXTRA.apps||{};
+    var park=null; for(var k in apps){ if(/park/i.test(apps[k].label||"")) park=apps[k]; }
+    el.innerHTML =
+      kpi("公开声量", all.length, "条 · 去重后全部内容", "") +
+      kpi("独立信源", srcs.length, srcs.slice(0,3).join(" / ")||"—", "") +
+      kpi("官方动作", official, "条 · 厂商官方发布", "") +
+      kpi("配套应用评分", park&&park.rating?park.rating:"—",
+          park?("Creality Park · "+park.ratingCount+" 人评分 · "+park.downloads+" 下载"):"未获取", "ye");
+    return;
+  }
+  var valid=all.filter(function(x){return x.grade==="有效";}).length;
+  var withPb=all.filter(function(x){return !!x.problemType;}).length;
+  var vers=uniq(all.map(function(x){return x.version;}).filter(Boolean));
+  var week=all.filter(function(x){return dateOf(x)>=daysAgo(7);}).length;
+  el.innerHTML =
+    kpi("软件反馈总量", all.length, "条 · 覆盖 "+vers.length+" 个版本", "") +
+    kpi("问题反馈占比", all.length?((withPb/all.length*100).toFixed(1)+"%"):"—",
+        withPb+" 条明确指向具体问题类型", "rd") +
+    kpi("涉及版本", vers.length, vers.slice(0,4).join(" · ")||"未标注", "") +
+    kpi("近 7 日新增", week, "条 · 持续增量", "");
+}
+function kpi(l,v,d,cls){
+  return '<div class="kpi"><div class="l">'+l+'</div><div class="v '+(cls||"")+'">'+v+
+         '</div><div class="d">'+esc(d)+'</div></div>';
+}
+
+/* ---------- 面板 ---------- */
+function renderPanels(){
+  var el=document.getElementById("panels");
+  el.innerHTML = (TYPE==="mbox") ? panelsMbox() : panelsSw();
+}
+
+/* --- 软件：版本回归矩阵 --- */
+function panelsSw(){
+  var html="";
+  var base=applyFilters("version").filter(function(x){return !!x.version;});
+  var allV=countBy(base,function(x){return x.version;});
+  var vers=Object.keys(allV).map(function(k){return {k:k,n:allV[k]};})
+             .sort(function(a,b){return b.n-a.n;}).slice(0,6).map(function(x){return x.k;});
+  var probs=["crash","slice","quality","ui","feature","compat"];
+
+  if(vers.length){
+    // 回归判定：本版本某类 >= max(3, 上一主版本同类 * 1.8)
+    var prevOf={};
+    vers.forEach(function(v,i){
+      var maj=parseInt(v,10);
+      for(var j=i+1;j<vers.length;j++){
+        if(parseInt(vers[j],10)===maj-1){ prevOf[v]=vers[j]; break; }
+      }
+    });
+    html += '<section><div class="sh"><h2>版本回归雷达</h2>'+
+      '<span class="tag">核心视图</span>'+
+      '<span class="note">行 = 版本 · 列 = 问题类型 · 数字 = 提及条数 · 点格子就地筛选</span></div>'+
+      '<div class="mxwrap"><div class="mx" style="grid-template-columns:112px repeat('+probs.length+',1fr)">'+
+      '<div class="hd rh">版本 / 问题</div>'+
+      probs.map(function(p){return '<div class="hd">'+esc(PROBLEM_NAME[p]).replace(" / ","<br>")+'</div>';}).join("");
+
+    vers.forEach(function(v){
+      var rowTot=base.filter(function(x){return x.version===v;}).length;
+      html += '<div class="rl"><span class="ver" data-v="'+esc(v)+'">'+esc(v)+'</span>'+
+              '<span class="cnt">'+rowTot+'</span></div>';
+      probs.forEach(function(p){
+        var n=base.filter(function(x){return x.version===v && x.problemType===p;}).length;
+        var reg=false;
+        if(n>=3 && prevOf[v]){
+          var pn=base.filter(function(x){return x.version===prevOf[v] && x.problemType===p;}).length;
+          if(n >= Math.max(3, Math.round(pn*1.8))) reg=true;
+        }
+        var lvl = n===0?0 : n<=1?1 : n<=3?2 : n<=6?3 : n<=12?4 : 5;
+        var on = (S.version===v && S.problem===p)?" on":"";
+        html += '<div class="cell c'+lvl+(reg?" regress":"")+on+'" data-v="'+esc(v)+'" data-p="'+p+'"'+
+                (n?'':' style="cursor:default"')+'>'+
+                (reg?'<span class="flag">回归</span>':'')+(n||"")+'</div>';
+      });
+    });
+    html += '</div><div class="legend"><span>低</span>'+
+      '<span class="lg" style="background:rgba(255,255,255,.025)"></span>'+
+      '<span class="lg" style="background:rgba(88,166,255,.13)"></span>'+
+      '<span class="lg" style="background:rgba(88,166,255,.27)"></span>'+
+      '<span class="lg" style="background:rgba(210,153,34,.28)"></span>'+
+      '<span class="lg" style="background:rgba(248,81,73,.3)"></span>'+
+      '<span class="lg" style="background:rgba(248,81,73,.52)"></span>'+
+      '<span>高</span><span class="sp"><i></i>回归信号：该版本此类问题 ≥ 上一主版本 1.8 倍且 ≥ 3 条</span>'+
+      '</div></div></section>';
+  }
+
+  // 双栏：产品线 + 问题类型
+  html += '<section><div class="cols">';
+  html += panelBars("产品线分布","按条数",
+    buildBars(applyFilters("product"),function(x){return x.productLine;},PRODUCT_NAME,PRODUCT_COLOR,"product"));
+  html += panelBars("问题类型分布","按条数",
+    buildBars(applyFilters("problem"),function(x){return x.problemType;},PROBLEM_NAME,null,"problem"));
+  html += '</div>';
+
+  var noPb=applyFilters("problem").filter(function(x){return !x.problemType;}).length;
+  html += '<div class="tip" style="border:none;padding-top:10px">'+
+    '另有 <b style="color:var(--mu)">'+noPb+'</b> 条未指向具体问题类型（使用提问 / 教程 / 泛讨论），只计入总量，不进问题榜。'+
+    '</div>';
+  html += '</section>';
+  return html;
+}
+function buildBars(list,getter,names,colors,key){
+  var m=countBy(list,getter), tot=0;
+  Object.keys(m).forEach(function(k){tot+=m[k];});
+  var rows=Object.keys(m).map(function(k){return {k:k,n:m[k]};})
+            .sort(function(a,b){return b.n-a.n;}).slice(0,8);
+  if(!rows.length) return '<div class="tip">当前筛选下无数据。</div>';
+  return rows.map(function(r){
+    var pct= tot?(r.n/tot*100):0;
+    var nm= names&&names[r.k] ? names[r.k] : (r.k==="__none__"?"未归类":r.k);
+    var on= (S[key]===r.k)?" on":"";
+    var col= colors&&colors[r.k] ? colors[r.k] : null;
+    var bg= col ? "background:"+col : "";
+    return '<div class="bar'+on+'" data-k="'+esc(key)+'" data-v="'+esc(r.k)+'">'+
+      '<span class="nm" title="'+esc(nm)+'">'+esc(nm)+'</span>'+
+      '<span class="tr"><span class="fl" style="width:'+pct.toFixed(1)+'%;'+bg+'"></span></span>'+
+      '<span class="vv">'+r.n+'</span><span class="pc">'+pct.toFixed(0)+'%</span></div>';
+  }).join("");
+}
+function panelBars(title,note,inner){
+  return '<div class="panel"><div class="ph">'+title+' <span>'+note+'</span></div>'+inner+'</div>';
+}
+
+/* --- mbox：渠道 + 来源 + 预热说明 --- */
+function panelsMbox(){
+  var html="";
+  html += '<section><div class="cols">';
+  html += panelBars("渠道分布","按条数",
+    buildBars(applyFilters("channel"),function(x){return x.channel;},null,null,"channel"));
+  html += panelBars("来源结构","按条数",
+    buildBars(applyFilters("source"),function(x){return x.sourceType;},null,null,"source"));
+  html += '</div>';
+
+  // 采集探针如实呈现
+  var probes=EXTRA.probes||[];
+  if(probes.length){
+    html += '<section style="margin-top:13px"><div class="panel"><div class="ph">采集覆盖盘点'+
+      ' <span>哪些源有货、哪些没有，如实标注</span></div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px">'+
+      probes.map(function(p){
+        var st=p.status, col = st==="ok"?"var(--green)": st==="empty"?"var(--mu2)": st==="absent"?"var(--mu2)":"var(--red)";
+        var txt = st==="ok"?"可采": st==="empty"?"零声量": st==="absent"?"未上线":"不可达";
+        return '<div style="display:flex;gap:8px;align-items:center;font-size:12px;padding:7px 10px;background:var(--card2);border-radius:6px">'+
+          '<span style="color:'+col+';font-weight:700;flex:none">'+txt+'</span>'+
+          '<span style="color:var(--mu);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(p.source)+'</span></div>';
+      }).join("")+'</div></div></section>';
+  }
+  return html;
+}
+
+/* ---------- 筛选栏（已选条件不在这里渲染，见 renderSummary） ---------- */
+function renderFilters(){
+  var el=document.getElementById("filters");
+  var h="";
+  function sel(key,label,opts){
+    var o='<div class="fg"><label>'+label+'</label><select data-k="'+key+'">'+
+      '<option value="">全部</option>';
+    opts.forEach(function(x){
+      o+='<option value="'+esc(x.v)+'"'+(S[key]===x.v?" selected":"")+'>'+esc(x.t)+' ('+x.n+')</option>';
+    });
+    return o+'</select></div>';
+  }
+  var all=applyFilters();
+  var base=applyFilters("");
+  if(TYPE!=="mbox"){
+    var pl=countBy(applyFilters("product"),function(x){return x.productLine;});
+    h+=sel("product","产品线",Object.keys(pl).sort(function(a,b){return pl[b]-pl[a];})
+      .map(function(k){return {v:k,t:PRODUCT_NAME[k]||k,n:pl[k]};}));
+    var vs=countBy(applyFilters("version"),function(x){return x.version;});
+    var vitems=Object.keys(vs).filter(function(k){return k;}).sort(function(a,b){return vs[b]-vs[a];})
+      .map(function(k){return {v:k,t:"v"+k,n:vs[k]};});
+    if(base.filter(function(x){return !x.version;}).length)
+      vitems.push({v:"__none__",t:"未标注版本",n:base.filter(function(x){return !x.version;}).length});
+    h+=sel("version","版本",vitems);
+    var pb=countBy(applyFilters("problem"),function(x){return x.problemType;});
+    h+=sel("problem","问题类型",Object.keys(pb).sort(function(a,b){return pb[b]-pb[a];})
+      .map(function(k){return {v:k,t:PROBLEM_NAME[k]||k,n:pb[k]};}));
+    var md=countBy(applyFilters("model"),function(x){return x.model||"未标注";});
+    h+=sel("model","机型",Object.keys(md).sort(function(a,b){return md[b]-md[a];}).slice(0,12)
+      .map(function(k){return {v:k,t:k,n:md[k]};}));
+  }
+  var ch=countBy(applyFilters("channel"),function(x){return x.channel;});
+  h+=sel("channel","渠道",Object.keys(ch).sort(function(a,b){return ch[b]-ch[a];})
+    .map(function(k){return {v:k,t:k,n:ch[k]};}));
+  if(TYPE!=="mbox"){
+    var gr=countBy(applyFilters("grade"),function(x){return x.grade;});
+    h+=sel("grade","审核",Object.keys(gr).map(function(k){return {v:k,t:k,n:gr[k]};}));
+  }
+
+  h+='<div class="fg">';
+  [["7","近7天"],["30","近30天"],["90","近90天"],["all","全部"]].forEach(function(r){
+    h+='<button class="fbtn'+(S.range===r[0]?" on":"")+'" data-range="'+r[0]+'">'+r[1]+'</button>';
+  });
+  h+='</div>';
+
+  h+='<div class="sp"><input id="searchBox" placeholder="搜索标题 / 正文 / 机型" value="'+esc(S.q)+'">'+
+     '<button class="fbtn" id="resetBtn">重置</button></div>';
+
+  el.innerHTML=h;
+
+  el.querySelectorAll("select").forEach(function(s){
+    s.onchange=function(){ setFilter(s.getAttribute("data-k"), s.value); };
+  });
+  el.querySelectorAll("[data-range]").forEach(function(b){
+    b.onclick=function(){ S.range=b.getAttribute("data-range"); S.page=1; renderAll(); };
+  });
+  var sb=document.getElementById("searchBox");
+  if(sb){
+    var t=null;
+    sb.oninput=function(){ clearTimeout(t); var v=sb.value;
+      t=setTimeout(function(){ S.q=v; S.page=1; renderAll(); },260); };
+  }
+  var rb=document.getElementById("resetBtn");
+  if(rb) rb.onclick=clearAllFilters;
+}
+
+/* ---------- 摘要（唯一一处展示已选条件） ---------- */
+var FILTER_LABEL={product:"产品线",version:"版本",problem:"问题类型",model:"机型",
+                  channel:"渠道",grade:"审核",source:"来源",range:"时间"};
+function filterValText(k,v){
+  if(k==="product") return PRODUCT_NAME[v]||v;
+  if(k==="problem") return PROBLEM_NAME[v]||v;
+  if(k==="version") return v==="__none__"?"未标注版本":"v"+v;
+  if(k==="problem"&&v==="__none__") return "未归类";
+  if(k==="range") return {"7":"近 7 天","30":"近 30 天","90":"近 90 天","all":"全部"}[v]||v;
+  return v;
+}
+function activeKeys(){
+  var ks=[];
+  ["product","version","problem","model","channel","grade","source"].forEach(function(k){
+    if(S[k]) ks.push(k);
+  });
+  if(S.range!=="all") ks.push("range");
+  if(S.q) ks.push("q");
+  return ks;
+}
+function renderSummary(){
+  var el=document.getElementById("filterSummary"), ks=activeKeys();
+  if(!ks.length){ el.className=""; el.innerHTML=""; return; }
+  var n=applyFilters().length, h='<span class="lbl">已选</span>';
+  ks.forEach(function(k){
+    var v = k==="q" ? S.q : (k==="range"?S.range:S[k]);
+    h+='<span class="chipx">'+FILTER_LABEL[k]+' <b>'+esc(filterValText(k,v))+'</b>'+
+       '<i data-rm="'+k+'">✕</i></span>';
+  });
+  h+='<span class="cnt">命中 '+n+' / '+ITEMS.length+' 条</span>';
+  h+='<span class="clr" id="clrAll">清空全部</span>';
+  el.className="on"; el.innerHTML=h;
+  el.querySelectorAll("[data-rm]").forEach(function(i){
+    i.onclick=function(){ removeFilter(i.getAttribute("data-rm")); };
+  });
+  var c=document.getElementById("clrAll");
+  if(c) c.onclick=clearAllFilters;
+}
+function setFilter(k,v){
+  if(k==="range"){ S.range=v||"all"; }
+  else S[k]=v||"";
+  S.page=1; lastKey=k; renderAll();
+}
+function removeFilter(k){
+  if(k==="range") S.range="all";
+  else if(k==="q"){ S.q=""; }
+  else S[k]="";
+  S.page=1; lastKey=k; renderAll();
+}
+function clearAllFilters(){
+  ["product","version","problem","model","channel","grade","source","q"].forEach(function(k){S[k]="";});
+  S.range="all"; S.page=1; lastKey=""; renderAll();
+}
+
+/* ---------- 明细卡 ---------- */
+function renderCards(){
+  var all=applyFilters();
+  var el=document.getElementById("cards");
+  document.getElementById("flowCount").textContent = all.length+" 条";
+  if(!all.length){
+    el.innerHTML='<div class="empty"><b>当前条件下没有内容</b>'+
+      '请放宽筛选，或点「重置」查看全部。</div>';
+    document.getElementById("pager").innerHTML="";
+    return;
+  }
+  var total=Math.ceil(all.length/PAGE_SZ);
+  if(S.page>total) S.page=total;
+  var start=(S.page-1)*PAGE_SZ;
+  var page=all.slice(start,start+PAGE_SZ);
+
+  el.innerHTML = page.map(function(it){
+    var top="";
+    if(it.version) top+='<span class="chip ch-ver">v'+esc(it.version)+'</span>';
+    if(it.productLine) top+='<span class="chip ch-prod" style="'+
+      (TYPE==="mbox"?'':'color:'+(PRODUCT_COLOR[it.productLine]||"#58a6ff"))+'">'+
+      esc(PRODUCT_NAME[it.productLine]||it.productLine)+'</span>';
+    if(it.problemType) top+='<span class="chip ch-pb">'+esc(PROBLEM_NAME[it.problemType]||it.problemType)+'</span>';
+    if(it.grade) top+='<span class="chip '+(it.grade==="有效"?"ch-ok":"ch-mu")+'">'+esc(it.grade)+'</span>';
+    if(it.sourceType==="官方") top+='<span class="chip ch-ye">官方</span>';
+    top+='<span class="tm">'+esc(dateOf(it)||"—")+'</span>';
+
+    var body='';
+    var txt=(it.originalText||"").replace(/\s+/g," ").trim();
+    if(txt && txt!==it.title){
+      body='<div class="bd">'+(it.language&&it.language!=="ZH"?'<span class="lang">'+esc(it.language)+'</span>':'')+
+           esc(txt.slice(0,320))+'</div>';
+    }
+    var tr="";
+    if(it.textCn){
+      tr='<div class="tr2"><span class="ml">译文 · 机器翻译</span>'+esc(it.textCn.slice(0,320))+'</div>';
+    }
+    var mt=[];
+    if(it.model && it.model!=="未标注") mt.push("机型 <b>"+esc(it.model)+"</b>");
+    if(it.site) mt.push("信源 <b>"+esc(it.site)+"</b>");
+    if(it.replyCount) mt.push("回复 <b>"+it.replyCount+"</b>");
+    if(it.views) mt.push("浏览 <b>"+it.views+"</b>");
+    if(it.author) mt.push("作者 <b>"+esc(it.author)+"</b>");
+
+    return '<div class="card"><div class="top">'+top+'</div>'+
+      '<div class="ti"><a href="'+esc(it.url||"#")+'" target="_blank" rel="noopener">'+esc(it.title)+'</a></div>'+
+      body+tr+
+      (mt.length?'<div class="mt">'+mt.map(function(x){return "<span>"+x+"</span>";}).join("")+'</div>':'')+
+      '</div>';
+  }).join("");
+
+  document.getElementById("pager").innerHTML =
+    '<button '+(S.page<=1?"disabled":"")+' data-pd="-1">上一页</button>'+
+    '<span class="pg">'+S.page+' / '+total+'</span>'+
+    '<button '+(S.page>=total?"disabled":"")+' data-pd="1">下一页</button>';
+  document.querySelectorAll("[data-pd]").forEach(function(b){
+    b.onclick=function(){ S.page += parseInt(b.getAttribute("data-pd"),10); renderCards(); window.scrollTo({top:document.getElementById("cards").offsetTop-90,behavior:"smooth"}); };
+  });
+}
+
+/* ---------- CSV ---------- */
+function exportCSV(){
+  var all=applyFilters();
+  var head=["日期","渠道","站点","产品线","版本","问题类型","机型","审核","标题","原文","链接"];
+  var rows=[head].concat(all.map(function(it){
+    return [dateOf(it), it.channel||"", it.site||"", PRODUCT_NAME[it.productLine]||it.productLine||"",
+            it.version||"", PROBLEM_NAME[it.problemType]||it.problemType||"", it.model||"",
+            it.grade||"", it.title||"", (it.originalText||"").replace(/\s+/g," "), it.url||""];
+  }));
+  var csv=rows.map(function(r){return r.map(function(c){
+    var s=String(c==null?"":c);
+    return '"'+s.replace(/"/g,'""')+'"';
+  }).join(",");}).join("\r\n");
+  var blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"});
+  var a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download=(META.fileStem||"column")+"_"+new Date().toISOString().slice(0,10)+".csv";
+  a.click(); URL.revokeObjectURL(a.href);
+}
+
+/* ---------- 事件绑定 ---------- */
+function bindPanels(){
+  document.querySelectorAll(".bar[data-k]").forEach(function(b){
+    b.onclick=function(){ setFilter(b.getAttribute("data-k"), b.getAttribute("data-v")); };
+  });
+  document.querySelectorAll(".cell[data-p]").forEach(function(c){
+    c.onclick=function(){
+      var v=c.getAttribute("data-v"), p=c.getAttribute("data-p");
+      if(!c.textContent.replace("回归","").trim()) return;
+      // 就地筛选：版本 + 问题类型 同时生效，不跳转
+      S.version=v; S.problem=p; S.page=1; lastKey="problem"; renderAll();
+    };
+  });
+  document.querySelectorAll(".rl .ver").forEach(function(v){
+    v.onclick=function(){ setFilter("version", v.getAttribute("data-v")); };
+  });
+}
+
+function flashCards(){
+  var el=document.getElementById("cards");
+  if(!el) return;
+  var first=el.firstElementChild;
+  if(first){ first.classList.remove("flash"); void first.offsetWidth; first.classList.add("flash"); }
+}
+
+function renderAll(){
+  renderKPIs();
+  renderPanels();
+  renderFilters();
+  renderSummary();
+  renderCards();
+  bindPanels();
+  if(lastKey) flashCards();
+}
+
+/* ---------- 页脚 ---------- */
+function renderFoot(){
+  document.getElementById("foot").innerHTML = META.foot || "";
+}
+
+renderUpdateBar();
+renderFoot();
+renderAll();
+document.getElementById("csvBtn").onclick=exportCSV;
+
+// 调试与校验钩子
+window.__COL = {items:ITEMS, meta:META, S:S, applyFilters:applyFilters,
+                setFilter:setFilter, removeFilter:removeFilter,
+                clearAllFilters:clearAllFilters, renderAll:renderAll};
+})();
+</script>
+</body>
+</html>
