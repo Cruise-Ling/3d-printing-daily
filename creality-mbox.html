@@ -80,6 +80,14 @@ a:hover{text-decoration:underline}
 .tsub .titem{white-space:nowrap}
 .tsub .titem b{color:#c9d1d9;font-weight:600;font-variant-numeric:tabular-nums;margin-left:2px}
 .tsub .more{color:#6e7681;cursor:help;border-bottom:1px dotted #30363d}
+/* 归属色点：蓝=自家、紫=竞品（归属已不占一级行，只在这里标注） */
+.tsub .dot,.pnote .dot{display:inline-block;width:5px;height:5px;border-radius:50%;
+      margin-right:4px;vertical-align:1px}
+.dot.self{background:#58a6ff}
+.dot.comp{background:#bc8cff}
+.brow.zero{cursor:pointer;opacity:.72}
+.brow .gapm{font-style:normal;font-size:10px;color:#d29922;background:rgba(210,153,34,.13);
+      border-radius:3px;padding:1px 4px;margin-left:5px}
 
 table.mx{width:100%;border-collapse:collapse;font-size:12px}
 table.mx th{font-size:11px;color:#8b949e;font-weight:500;padding:7px 3px;text-align:center;border-bottom:1px solid #21262d;white-space:nowrap}
@@ -251,7 +259,7 @@ var PROBLEM_NAME = {"crash":"崩溃 / 无法启动","slice":"切片错误 / 卡�
 var PROBLEM_COLOR = {"crash":"#f85149","slice":"#79c0ff","quality":"#3fb950",
                      "ui":"#58a6ff","feature":"#bc8cff","compat":"#d29922","other":"#8b949e"};
 
-// ⚠️ 以下两张表与 _col_normalize.py 的 STAGE_META / TOOL_NAME 必须保持一致（改一处同步另一处）
+// ⚠️ 以下两张表与 _col_normalize.py 的 STAGE_META / TOOL_TYPE 必须保持一致（改一处同步另一处）
 // 2026-10-20 用户定稿：软件专栏按「用户实现路径」组织，不再按产品线 ——
 // 原来 productLine=thirdparty 那 47 条混装固件帖 / Creality Print bug / OrcaSlicer 对比，
 // 它不是产品线，只是"不是我们的"。改看工具结构：自家 vs 竞品。
@@ -263,15 +271,25 @@ var STAGE_LOOK = {"S1":"定位 / 下载 3MF·STL","S2":"文生 3D / 图生 3D","
                   "S4":"层高 / 支撑 / 材料 / 多色","S5":"固件 / 故障 / 联网","S6":"上传 / 积分 / 佣金"};
 var STAGE_COLOR = {"S1":"#7ea6d8","S2":"#bc8cff","S3":"#5fd39a",
                    "S4":"#58a6ff","S5":"#d29922","S6":"#f0883e"};
-var TOOL_NAME = {"self":"自家工具","competitor":"竞品工具","none":"未提具体工具"};
-var TOOL_COLOR = {"self":"#58a6ff","competitor":"#bc8cff","none":"#8b949e"};var PRODUCT_NAME = {"print":"Creality Print","firmware":"固件与 Klipper","cloud":"Cloud + APP",
+// 工具结构：按「功能类型」分（用户 2026-10-20：取消自家/竞品这类归属分类，改成建模的、切片的）。
+// 归属（自家/竞品）降级为二级色点，仍能一眼看出这一层里有多少是竞品带来的比较压力。
+var TOOLTYPE_ORDER = ["slice","model","cloud","multicolor","firmware","hardware",""];
+var TOOLTYPE_NAME = {"slice":"切片软件","model":"建模软件","cloud":"云平台 / App",
+                     "multicolor":"多色与耗材","firmware":"固件与主机控制",
+                     "hardware":"激光 / 扫描","":"未提具体工具"};
+var TOOLTYPE_COLOR = {"slice":"#58a6ff","model":"#5fd39a","cloud":"#3fb950",
+                      "multicolor":"#d29922","firmware":"#bc8cff",
+                      "hardware":"#f0883e","":"#8b949e"};
+var TOOL_OWNER = {"self":"自家","competitor":"竞品"};
+
+var PRODUCT_NAME = {"print":"Creality Print","firmware":"固件与 Klipper","cloud":"Cloud + APP",
                     "thirdparty":"第三方切片","park":"Creality Park"};
 var PRODUCT_COLOR = {"print":"#58a6ff","firmware":"#d29922","cloud":"#3fb950",
                      "thirdparty":"#f85149","park":"#bc8cff"};
 var VER_COLOR = {"7":"#58a6ff","6":"#bc8cff","5":"#3fb950","4":"#d29922","12":"#f85149","9":"#79c0ff","10":"#8b949e"};
 
 var S = {product:"",major:"",version:"",problem:"",model:"",grade:"",channel:"",source:"",lang:"",
-         stage:"",tool:"",range:"all",q:"",page:1};
+         stage:"",toolType:"",range:"all",q:"",page:1};
 
 // 「分析口径」= 有效档。泛讨论（提问 / 教程 / 公告）只计声量，不进情感与问题结构 ——
 // 用户 2026-10-20：泛讨论不计入情感，只在明细里可以看到。
@@ -285,18 +303,25 @@ function pad2(n){return n<10?"0"+n:""+n;}
 function uniq(a){var o={},r=[];a.forEach(function(x){if(x&&!o[x]){o[x]=1;r.push(x);}});return r;}
 function countBy(list,fn){var m={};list.forEach(function(x){var k=fn(x);if(k){m[k]=(m[k]||0)+1;}});return m;}
 
-// 工具结构二级行：把「自家工具 337」拆到具体工具名（Creality Print 248 / Cloud 40 …）。
-// 纯展示不挂 data-pick —— 筛选入口只保留一级三类，否则同一维度会出现两层筛选状态。
-// 超过 10 个工具才折叠为「其他 N 项」—— 实测自家 8 个 / 竞品 6 个，正常情况全列，不留悬念。
-function toolSubHTML(cat, list){
-  if(cat==="none") return "";
-  var c={};
-  list.forEach(function(x){ if((x.tool||"none")===cat && x.toolName) c[x.toolName]=(c[x.toolName]||0)+1; });
+// 工具结构二级行：把「切片软件 304」拆到具体工具名（Creality Print 248 / OrcaSlicer 34 …）。
+// 前缀色点标归属：蓝=自家、紫=竞品 —— 归属不再占一级行，但仍能看出这层里竞品的份量。
+// 纯展示不挂 data-pick —— 筛选入口只保留一级类型，否则同一维度会出现两层筛选状态。
+// 超过 10 个工具才折叠为「其他 N 项」，正常情况全列，不留悬念。
+function toolSubHTML(type, list){
+  if(type==="") return "";
+  var c={}, own={};
+  list.forEach(function(x){
+    if((x.toolType||"")!==type || !x.toolName) return;
+    c[x.toolName]=(c[x.toolName]||0)+1;
+    if(!own[x.toolName]) own[x.toolName]=x.tool==="competitor"?"competitor":"self";
+  });
   var arr=Object.keys(c).map(function(k){return [k,c[k]];}).sort(function(a,b){return b[1]-a[1];});
   if(!arr.length) return "";
   var TOPN=10, show=arr.slice(0,TOPN), rest=arr.slice(TOPN);
   var html=show.map(function(r){
-    return '<span class="titem">'+esc(r[0])+'<b>'+r[1]+'</b></span>';
+    return '<span class="titem" title="'+esc(TOOL_OWNER[own[r[0]]]||"自家")+'">'+
+           '<i class="dot '+(own[r[0]]==="competitor"?"comp":"self")+'"></i>'+
+           esc(r[0])+'<b>'+r[1]+'</b></span>';
   }).join("");
   if(rest.length){
     var rn=rest.reduce(function(s,r){return s+r[1];},0);
@@ -334,7 +359,8 @@ function match(it,skip){
   if(skip!=="source" && S.source && (it.sourceType||"未知")!==S.source) return false;
   if(skip!=="lang" && S.lang && langOf(it)!==S.lang) return false;
   if(skip!=="stage" && S.stage && (it.stage||"跨环节")!==S.stage) return false;
-  if(skip!=="tool" && S.tool && (it.tool||"none")!==S.tool) return false;
+  // toolType 的空串代表「未提具体工具」，与「全部」冲突，故用 __none__ 哨兵区分
+  if(skip!=="toolType" && S.toolType && (it.toolType || "__none__") !== S.toolType) return false;
   if(!inRange(it)) return false;
   if(S.q){
     var q=S.q.toLowerCase();
@@ -513,23 +539,38 @@ function renderPanels(){
     // ① 实现路径六段（全宽）
     A.innerHTML = panel("用户实现路径", "六段 · 全量口径 · 点击可筛选", stagePanel(), true);
 
-    // ② 工具结构：替代失效的「产品线」（thirdparty 混装固件/bug/竞品对比，不是产品线）
-    //    一级行 = 类别（可点筛选）；二级行 = 具体工具名（纯展示）。
-    //    toolName 由 _col_toolname_fix.py 在「已定类别」的候选里取值，故二级之和恒等于一级。
-    var pT = apply("tool");
-    var arrT = Object.keys(countBy(pT, function(x){ return x.tool||"none"; }))
-      .map(function(k){ return [k, countBy(pT, function(x){ return x.tool||"none"; })[k]]; })
-      .sort(function(a,b){ return b[1]-a[1]; });
-    A.innerHTML += panel("工具结构","自家 vs 竞品 · 点击行可筛选",
+    // ② 工具结构：按「功能类型」分（用户 2026-10-20）。一级行 = 类型（可点筛选），
+    //    二级行 = 具体工具名 + 归属色点。toolType 由 _col_toolname_fix.py 落库，
+    //    每条只归一个类型（按主工具），故各类型之和恒等于总数、点击行数 ≡ 明细条数。
+    var pT = apply("toolType");
+    var tc = countBy(pT, function(x){ return x.toolType || "__none__"; });
+    var arrT = Object.keys(tc).map(function(k){ return [k, tc[k]]; })
+      .sort(function(a,b){
+        // 「未提具体工具」不是一种类型，永远沉底
+        if(a[0]==="__none__") return 1;
+        if(b[0]==="__none__") return -1;
+        return b[1]-a[1];
+      });
+    // 建模软件本轮为 0 条，但它正是用户点名要看的维度 —— 0 也要占一行并标缺口，否则会被读成「没这个分类」
+    if(!tc["model"] && S.toolType!=="model") arrT.splice(arrT.length-1, 0, ["model", 0]);
+    var mxT = Math.max.apply(null, arrT.map(function(z){ return z[1]; })) || 1;
+    A.innerHTML += panel("工具结构","按功能类型 · 点击行可筛选",
       arrT.length? arrT.map(function(r){
-        var mx = Math.max.apply(null, arrT.map(function(z){ return z[1]; }));
-        var on = S.tool===r[0]? " on":"";
-        return '<div class="brow'+on+'" data-pick="tool" data-val="'+esc(r[0])+'">'+
-          '<span class="nm">'+esc(TOOL_NAME[r[0]]||r[0])+'</span>'+
-          '<span class="track"><i class="fill" style="width:'+(r[1]/mx*100).toFixed(1)+'%;background:'+(TOOL_COLOR[r[0]]||"#8b949e")+'"></i></span>'+
+        var key = r[0]==="__none__"? "" : r[0];
+        var val = r[0]==="__none__"? "__none__" : r[0];
+        var zero = r[1]===0;
+        var on = S.toolType===val? " on":"";
+        return '<div class="brow'+on+(zero?" zero":"")+'" data-pick="toolType" data-val="'+esc(val)+'">'+
+          '<span class="nm">'+esc(TOOLTYPE_NAME[key]||key)+(zero?' <em class="gapm">缺口</em>':'')+'</span>'+
+          '<span class="track"><i class="fill" style="width:'+(r[1]/mxT*100).toFixed(1)+'%;background:'+(TOOLTYPE_COLOR[key]||"#8b949e")+'"></i></span>'+
           '<span class="vl">'+r[1]+' · '+(r[1]/pT.length*100).toFixed(1)+'%</span></div>'+
-          toolSubHTML(r[0], pT);
-      }).join("") : '<div class="empty">暂无数据</div>');
+          toolSubHTML(key, pT);
+      }).join("")+
+      '<div class="pnote"><i class="dot self"></i>自家 <i class="dot comp" style="margin-left:10px"></i>竞品'+
+      ' —— 归属只做色点标识。每条只归一个类型（按主工具），所以点击任一行的条数与明细完全一致。<br>'+
+      '建模软件 0 条：论坛里 7 条提到 CAD 工具的帖子，主体都在说切片器（「CAD 里好好的，切片后出问题」），'+
+      '建模工具本身没人在这讨论。</div>'
+      : '<div class="empty">暂无数据</div>');
 
     // ③ 问题类型构成：只算有效档（泛讨论 0 条带问题点，本就不参与）
     var p1 = applyValid("problem");
@@ -599,7 +640,8 @@ function renderFilters(){
       .map(function(k){return [k, (labelFn?labelFn(k):k)+" ("+m[k]+")"];});
   }
   if(KIND==="sw"){
-    h += selHTML("tool","工具", opts(function(x){return x.tool||"none";},function(k){return TOOL_NAME[k]||k;},"tool"));
+    h += selHTML("toolType","工具类型", opts(function(x){return x.toolType||"__none__";},
+      function(k){return TOOLTYPE_NAME[k==="__none__"?"":k]||k;},"toolType"));
     h += selHTML("stage","环节", opts(function(x){return x.stage||"跨环节";},function(k){return STAGE_NAME[k]||k;},"stage"));
     h += selHTML("major","主版本", opts(function(x){return majorOf(x.version);},null,"major"));
     h += selHTML("problem","问题类型", opts(function(x){return x.problemType||"未分类";},function(k){return PROBLEM_NAME[k]||k;},"problem"));
@@ -623,13 +665,13 @@ function renderFilters(){
 /* ---------------- 已选条件摘要（唯一一处） ---------------- */
 var LABELS = {product:"产品线",major:"主版本",version:"版本",problem:"问题类型",model:"机型",
               grade:"审核",channel:"渠道",source:"信源",lang:"语种",range:"时间",
-              stage:"环节",tool:"工具"};
+              stage:"环节",toolType:"工具类型"};
 var CHIP_VALUE = function(k, v){
   if(k==="range") return ({"7":"近 7 天","30":"近 30 天","90":"近 90 天"})[v]||v;
   if(k==="product") return PRODUCT_NAME[v]||v;
   if(k==="problem") return PROBLEM_NAME[v]||v;
   if(k==="stage") return STAGE_NAME[v]||v;
-  if(k==="tool") return TOOL_NAME[v]||v;
+  if(k==="toolType") return TOOLTYPE_NAME[v==="__none__"?"":v]||v;
   return v;
 };
 function renderSummary(hits){
@@ -735,7 +777,7 @@ function pick(k,v){
 }
 function clearAll(){
   ["product","major","version","problem","model","grade","channel","source","lang",
-   "stage","tool"].forEach(function(k){S[k]="";});
+   "stage","toolType"].forEach(function(k){S[k]="";});
   S.range="all"; S.q=""; S.page=1; renderAll();
 }
 
