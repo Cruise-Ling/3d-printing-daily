@@ -74,6 +74,12 @@ a:hover{text-decoration:underline}
 .brow .track{flex:1;height:8px;background:#21262d;border-radius:4px;overflow:hidden}
 .brow .fill{display:block;height:100%;border-radius:4px;transition:width .3s}
 .brow .vl{width:76px;flex:none;text-align:right;color:#8b949e;font-variant-numeric:tabular-nums;font-size:11.5px}
+/* 工具结构二级行：具体工具名（纯展示，不可点 —— 筛选入口只保留一级行的三类） */
+.tsub{display:flex;flex-wrap:wrap;gap:3px 12px;margin:-4px 0 10px;padding:0 4px 0 6px;
+      border-left:2px solid #21262d;font-size:11px;color:#8b949e;line-height:1.55}
+.tsub .titem{white-space:nowrap}
+.tsub .titem b{color:#c9d1d9;font-weight:600;font-variant-numeric:tabular-nums;margin-left:2px}
+.tsub .more{color:#6e7681;cursor:help;border-bottom:1px dotted #30363d}
 
 table.mx{width:100%;border-collapse:collapse;font-size:12px}
 table.mx th{font-size:11px;color:#8b949e;font-weight:500;padding:7px 3px;text-align:center;border-bottom:1px solid #21262d;white-space:nowrap}
@@ -81,6 +87,27 @@ table.mx th:first-child{text-align:left}
 table.mx td{padding:6px 3px;text-align:center;color:#c9d1d9;font-variant-numeric:tabular-nums}
 table.mx td:first-child{text-align:left;color:#e6edf3;font-weight:600}
 table.mx tbody tr:hover{background:rgba(255,255,255,.03)}
+table.mx td.cov0{color:#484f58}
+table.mx td.gap{color:#d29922;font-size:10.5px}
+
+/* 实现路径六段 */
+.stgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.stcard{background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:10px 10px 9px;cursor:pointer;transition:all .15s}
+.stcard:hover{border-color:#30363d;background:#11161d}
+.stcard.on{border-color:#58a6ff;background:rgba(88,166,255,.08)}
+.stcard.zero{opacity:.45}
+.stcard .sno{font-size:10px;color:#6e7681;font-variant-numeric:tabular-nums}
+.stcard .snm{font-size:12px;font-weight:600;color:#e6edf3;margin:2px 0 7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stcard .scnt{font-size:19px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.stcard .sunit{font-size:10px;color:#6e7681;font-weight:400;margin-left:2px}
+.stcard .sval{font-size:10px;color:#6e7681;margin-top:5px}
+.stcard .sbar{height:3px;background:#21262d;border-radius:2px;margin-top:7px;overflow:hidden}
+.stcard .sbar i{display:block;height:100%;border-radius:2px}
+.stgap{display:flex;align-items:center;gap:10px;margin-top:9px;padding:7px 10px;border:1px dashed #30363d;border-radius:7px;font-size:11.5px;color:#8b949e;cursor:pointer;transition:all .15s}
+.stgap:hover{border-color:#8b949e;color:#c9d1d9}
+.stgap.on{border-color:#58a6ff;color:#79c0ff;background:rgba(88,166,255,.07)}
+.stgap .gv{margin-left:auto;font-variant-numeric:tabular-nums;color:#c9d1d9}
+.stnote{font-size:10.5px;color:#6e7681;margin-top:9px;line-height:1.7}
 
 .filters{display:flex;flex-wrap:wrap;gap:10px;background:#161b22;border:1px solid #21262d;border-radius:10px;padding:12px 14px;align-items:center}
 .fg{display:flex;align-items:center;gap:6px;font-size:12px;color:#8b949e}
@@ -111,6 +138,11 @@ table.mx tbody tr:hover{background:rgba(255,255,255,.03)}
 .t-model{background:rgba(188,140,255,.13);color:#bc8cff}
 .t-ok{background:rgba(63,185,80,.13);color:#3fb950}
 .t-gen{background:rgba(139,148,158,.14);color:#8b949e}
+.t-gh{background:rgba(63,185,80,.14);color:#3fb950}
+.t-stage{background:rgba(88,166,255,.10);color:#79c0ff}
+.t-tool{background:rgba(188,140,255,.12);color:#bc8cff}
+.ghcard{border-style:dashed;border-color:#2d3b31}
+.gencard{background:#14181d}
 .c-date{color:#6e7681;font-variant-numeric:tabular-nums}
 .c-src{color:#6e7681}
 .c-link{margin-left:auto;font-size:11.5px}
@@ -132,6 +164,7 @@ table.mx tbody tr:hover{background:rgba(255,255,255,.03)}
 @media(max-width:1100px){
   .kpi-row{grid-template-columns:repeat(2,1fr)}
   .grid-2{grid-template-columns:1fr}
+  .stgrid{grid-template-columns:repeat(3,1fr)}
 }
 @media(max-width:820px){
   .sidebar{transform:translateX(-100%);transition:transform .25s}
@@ -217,19 +250,61 @@ var PROBLEM_NAME = {"crash":"崩溃 / 无法启动","slice":"切片错误 / 卡�
                     "ui":"界面 / 显示缺陷","feature":"功能缺失 / 需求","compat":"兼容性","other":"其他缺陷"};
 var PROBLEM_COLOR = {"crash":"#f85149","slice":"#79c0ff","quality":"#3fb950",
                      "ui":"#58a6ff","feature":"#bc8cff","compat":"#d29922","other":"#8b949e"};
-var PRODUCT_NAME = {"print":"Creality Print","firmware":"固件与 Klipper","cloud":"Cloud + APP",
+
+// ⚠️ 以下两张表与 _col_normalize.py 的 STAGE_META / TOOL_NAME 必须保持一致（改一处同步另一处）
+// 2026-10-20 用户定稿：软件专栏按「用户实现路径」组织，不再按产品线 ——
+// 原来 productLine=thirdparty 那 47 条混装固件帖 / Creality Print bug / OrcaSlicer 对比，
+// 它不是产品线，只是"不是我们的"。改看工具结构：自家 vs 竞品。
+var STAGE_META = [["S1","找模型"],["S2","AI 生成"],["S3","建模改模"],
+                  ["S4","切片"],["S5","打印运维"],["S6","分享变现"]];
+var STAGE_NAME = {"S1":"找模型","S2":"AI 生成","S3":"建模改模",
+                  "S4":"切片","S5":"打印运维","S6":"分享变现"};
+var STAGE_LOOK = {"S1":"定位 / 下载 3MF·STL","S2":"文生 3D / 图生 3D","S3":"CAD / 布尔 / 修网格",
+                  "S4":"层高 / 支撑 / 材料 / 多色","S5":"固件 / 故障 / 联网","S6":"上传 / 积分 / 佣金"};
+var STAGE_COLOR = {"S1":"#7ea6d8","S2":"#bc8cff","S3":"#5fd39a",
+                   "S4":"#58a6ff","S5":"#d29922","S6":"#f0883e"};
+var TOOL_NAME = {"self":"自家工具","competitor":"竞品工具","none":"未提具体工具"};
+var TOOL_COLOR = {"self":"#58a6ff","competitor":"#bc8cff","none":"#8b949e"};var PRODUCT_NAME = {"print":"Creality Print","firmware":"固件与 Klipper","cloud":"Cloud + APP",
                     "thirdparty":"第三方切片","park":"Creality Park"};
 var PRODUCT_COLOR = {"print":"#58a6ff","firmware":"#d29922","cloud":"#3fb950",
                      "thirdparty":"#f85149","park":"#bc8cff"};
 var VER_COLOR = {"7":"#58a6ff","6":"#bc8cff","5":"#3fb950","4":"#d29922","12":"#f85149","9":"#79c0ff","10":"#8b949e"};
 
-var S = {product:"",major:"",version:"",problem:"",model:"",grade:"",channel:"",source:"",lang:"",range:"all",q:"",page:1};
+var S = {product:"",major:"",version:"",problem:"",model:"",grade:"",channel:"",source:"",lang:"",
+         stage:"",tool:"",range:"all",q:"",page:1};
+
+// 「分析口径」= 有效档。泛讨论（提问 / 教程 / 公告）只计声量，不进情感与问题结构 ——
+// 用户 2026-10-20：泛讨论不计入情感，只在明细里可以看到。
+// 所以明细默认不过滤审核档（全部可见），分析面板只算有效档，卡片上用虚线 + 不计情感标区分。
+function inVolume(it){ return it.countInVolume !== false; }
+function isValid(it){ return it.grade === "有效"; }
 
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){
   return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
 function pad2(n){return n<10?"0"+n:""+n;}
 function uniq(a){var o={},r=[];a.forEach(function(x){if(x&&!o[x]){o[x]=1;r.push(x);}});return r;}
 function countBy(list,fn){var m={};list.forEach(function(x){var k=fn(x);if(k){m[k]=(m[k]||0)+1;}});return m;}
+
+// 工具结构二级行：把「自家工具 337」拆到具体工具名（Creality Print 248 / Cloud 40 …）。
+// 纯展示不挂 data-pick —— 筛选入口只保留一级三类，否则同一维度会出现两层筛选状态。
+// 超过 10 个工具才折叠为「其他 N 项」—— 实测自家 8 个 / 竞品 6 个，正常情况全列，不留悬念。
+function toolSubHTML(cat, list){
+  if(cat==="none") return "";
+  var c={};
+  list.forEach(function(x){ if((x.tool||"none")===cat && x.toolName) c[x.toolName]=(c[x.toolName]||0)+1; });
+  var arr=Object.keys(c).map(function(k){return [k,c[k]];}).sort(function(a,b){return b[1]-a[1];});
+  if(!arr.length) return "";
+  var TOPN=10, show=arr.slice(0,TOPN), rest=arr.slice(TOPN);
+  var html=show.map(function(r){
+    return '<span class="titem">'+esc(r[0])+'<b>'+r[1]+'</b></span>';
+  }).join("");
+  if(rest.length){
+    var rn=rest.reduce(function(s,r){return s+r[1];},0);
+    var tip=rest.map(function(r){return r[0]+" "+r[1];}).join(" · ");
+    html+='<span class="titem more" title="'+esc(tip)+'">其他 '+rest.length+' 项<b>'+rn+'</b></span>';
+  }
+  return '<div class="tsub">'+html+'</div>';
+}
 function majorOf(v){ var m=String(v||"").match(/^(\d{1,2})/); return m? m[1]+".x" : ""; }
 function isCN(it){ return /[\u4e00-\u9fff]/.test((it.titleCn||"")+(it.textCn||"")); }
 function langOf(it){
@@ -258,6 +333,8 @@ function match(it,skip){
   if(skip!=="channel" && S.channel && (it.channel||"未知")!==S.channel) return false;
   if(skip!=="source" && S.source && (it.sourceType||"未知")!==S.source) return false;
   if(skip!=="lang" && S.lang && langOf(it)!==S.lang) return false;
+  if(skip!=="stage" && S.stage && (it.stage||"跨环节")!==S.stage) return false;
+  if(skip!=="tool" && S.tool && (it.tool||"none")!==S.tool) return false;
   if(!inRange(it)) return false;
   if(S.q){
     var q=S.q.toLowerCase();
@@ -267,18 +344,20 @@ function match(it,skip){
   return true;
 }
 function apply(skip){ return ITEMS.filter(function(x){ return match(x,skip); }); }
+/** 分析口径：先过筛选，再只看有效档。所有「结构类」面板都走它。 */
+function applyValid(skip){ return apply(skip).filter(isValid); }
 
 /* ---------------- 数据更新条 ---------------- */
 function renderUpdateBar(){
-  var users = apply();
+  var vol = ITEMS.filter(inVolume).length, gh = ITEMS.length - vol;
   var extra = KIND==="sw"
-    ? '<span>有效问题 <b>'+ITEMS.filter(function(x){return x.grade==="有效";}).length+'</b></span>'
+    ? '<span>有效问题 <b>'+ITEMS.filter(function(x){return isValid(x) && inVolume(x);}).length+'</b></span>'
     : '<span>独立信源 <b>'+uniq(ITEMS.map(function(x){return x.site;})).length+'</b> 家</span>';
   var logs = M.updateLog||[];
   document.getElementById("updateBar").innerHTML =
     '<span><span class="live"></span>数据更新至 <b>'+esc(M.updatedDate||REF)+'</b></span>'+
     '<span>批次时刻 <b>'+esc(M.batch||"工作日 03:30")+'</b></span>'+
-    '<span>总条数 <b>'+ITEMS.length+'</b></span>'+ extra +
+    '<span>总条数 <b>'+ITEMS.length+'</b>'+(gh? '（含 GitHub 缺陷单 '+gh+' 条单列）':'')+'</span>'+ extra +
     (logs.length? '<button class="hbtn" onclick="document.getElementById(\'updHist\').classList.toggle(\'on\')">更新历史 ▾</button>':'');
   if(logs.length){
     document.getElementById("updHist").innerHTML = logs.map(function(l){
@@ -296,24 +375,28 @@ function kpiCard(c){
 function renderKPI(){
   var cards = [];
   if(KIND==="sw"){
-    var valid = ITEMS.filter(function(x){return x.grade==="有效";}).length;
-    var vers = ITEMS.filter(function(x){return x.version;});
-    var models = uniq(ITEMS.map(function(x){return x.model;}).filter(function(m){return m && m!=="未标注";}));
-    var m30 = ITEMS.filter(function(x){ return (x.date||"") >= daysAgo(30); }).length;
-    var m7 = ITEMS.filter(function(x){ return (x.date||"") >= daysAgo(7); }).length;
+    // 声量口径 = 官方论坛（用户声量）。GitHub 缺陷单是「可复现的缺陷单」，
+    // 性质不同，单列不计声量 —— 混进去会把论坛可比基线打乱（用户 4A）。
+    var vol = ITEMS.filter(inVolume);
+    var gh = ITEMS.length - vol.length;
+    var valid = vol.filter(isValid).length;
+    var vers = vol.filter(function(x){return x.version;});
+    var models = uniq(vol.map(function(x){return x.model;}).filter(function(m){return m && m!=="未标注";}));
+    var m30 = vol.filter(function(x){ return (x.date||"") >= daysAgo(30); }).length;
+    var m7 = vol.filter(function(x){ return (x.date||"") >= daysAgo(7); }).length;
+    var byTool = countBy(vol,function(x){return x.tool||"";});
     cards = [
-      {l:"总声量", v:ITEMS.length, s:"Creality Print "+ITEMS.filter(function(x){return x.productLine==="print";}).length+
-        " · 固件 "+ITEMS.filter(function(x){return x.productLine==="firmware";}).length+
-        " · 云+APP "+ITEMS.filter(function(x){return x.productLine==="cloud";}).length+
-        " · 第三方 "+ITEMS.filter(function(x){return x.productLine==="thirdparty";}).length, c:"#e6edf3"},
-      {l:"有效问题率", v:(valid/ITEMS.length*100).toFixed(1)+"%",
-        s:valid+" / "+ITEMS.length+" · 泛讨论 "+(ITEMS.length-valid)+" 条只计声量", c:"#f85149"},
+      {l:"总声量", v:vol.length, s:"自家工具 "+(byTool.self||0)+" · 竞品工具 "+(byTool.competitor||0)+
+        " · 未提 "+(byTool[""]||0)+(gh? "<br>另有 GitHub 缺陷单 "+gh+" 条单列，不计入声量":"")+"",
+        c:"#e6edf3"},
+      {l:"有效问题率", v:(valid/vol.length*100).toFixed(1)+"%",
+        s:valid+" / "+vol.length+" · 泛讨论 "+(vol.length-valid)+" 条只计声量、不进问题结构", c:"#f85149"},
       {l:"覆盖版本", v:uniq(vers.map(function(x){return x.version;})).length,
         s:"已归一为主.次 · 7.x "+vers.filter(function(x){return majorOf(x.version)==="7.x";}).length+
           " · 6.x "+vers.filter(function(x){return majorOf(x.version)==="6.x";}).length, c:"#58a6ff"},
       {l:"覆盖机型", v:models.length,
-        s:"未标注 "+ITEMS.filter(function(x){return !x.model||x.model==="未标注";}).length+" 条（原帖未提机型）", c:"#e6edf3"},
-      {l:"近 30 日新增", v:m30, s:"近 7 日 "+m7+" 条 · 按发帖日计入", c:"#d29922"}
+        s:"未标注 "+vol.filter(function(x){return !x.model||x.model==="未标注";}).length+" 条（原帖未提机型）", c:"#e6edf3"},
+      {l:"近 30 日新增", v:m30, s:"近 7 日 "+m7+" 条 · 按发帖日计入（不含 GitHub）", c:"#d29922"}
     ];
   }else{
     var sites = uniq(ITEMS.map(function(x){return x.site;}));
@@ -359,79 +442,129 @@ function matrixTable(){
       if(n>mx) mx=n;
     });
   });
-  var head = '<tr><th>主版本</th>'+keys.map(function(k){return '<th>'+PROBLEM_NAME[k]+'</th>';}).join("")+'<th>合计</th><th>月均</th></tr>';
+  var head = '<tr><th>主版本</th>'+keys.map(function(k){return '<th>'+PROBLEM_NAME[k]+'</th>';}).join("")+'<th>合计</th></tr>';
   var body = majors.map(function(mv){
     var sub = valid.filter(function(x){return majorOf(x.version)===mv;});
-    var dates = sub.map(function(x){return x.date;}).sort();
-    var span = 1, tot = sub.length;
-    if(dates.length){ span = Math.max(1, Math.round((new Date(dates[dates.length-1])-new Date(dates[0]))/(1000*60*60*24*30))); }
     var tds = keys.map(function(k){
       var n = sub.filter(function(x){return x.problemType===k;}).length;
       var bg = n? 'background:rgba(88,166,255,'+(0.10+0.55*(n/mx)).toFixed(2)+')' : 'color:#484f58';
       return '<td style="'+bg+'">'+(n||"—")+'</td>';
     }).join("");
-    return '<tr><td>'+mv+'</td>'+tds+'<td style="font-weight:700">'+tot+'</td>'+
-      '<td style="color:#8b949e">'+(tot/span).toFixed(1)+'</td></tr>';
+    return '<tr><td>'+mv+'</td>'+tds+'<td style="font-weight:700">'+sub.length+'</td></tr>';
   }).join("");
   return '<table class="mx"><thead>'+head+'</thead><tbody>'+body+'</tbody></table>';
 }
+
+/** 实现路径六段：按用户从「找模型」到「分享变现」的实际顺序排，点任一格即筛明细 */
+function stagePanel(){
+  var base = apply("stage");
+  var total = base.length || 1;
+  var cnt = countBy(base, function(x){ return x.stage || "跨环节"; });
+  var val = countBy(base.filter(isValid), function(x){ return x.stage || "跨环节"; });
+  var mx = Math.max.apply(null, STAGE_META.map(function(s){ return cnt[s[0]]||0; }).concat([1]));
+  var gap = cnt["跨环节"]||0;
+  var grid = STAGE_META.map(function(s){
+    var k=s[0], n=cnt[k]||0, v=val[k]||0;
+    var on = S.stage===k? " on":"", zero = n? "":" zero";
+    return '<div class="stcard'+on+zero+'" data-pick="stage" data-val="'+k+'" title="'+esc(STAGE_LOOK[k])+'">'+
+      '<div class="sno">'+k+'</div>'+
+      '<div class="snm">'+esc(s[1])+'</div>'+
+      '<div class="scnt" style="color:'+STAGE_COLOR[k]+'">'+n+'<span class="sunit">条</span></div>'+
+      '<div class="sval">有效 '+v+' · 泛 '+(n-v)+'</div>'+
+      '<div class="sbar"><i style="width:'+(n/mx*100)+'%;background:'+STAGE_COLOR[k]+'"></i></div>'+
+    '</div>';
+  }).join("");
+  return '<div class="stgrid">'+grid+'</div>'+
+    '<div class="stgap'+(S.stage==="跨环节"?" on":"")+'" data-pick="stage" data-val="跨环节">'+
+      '<span>跨环节 · 软件自身 UI / 安装 / 升级 / 文件管理（不对应路径某一环，不硬塞进段里）</span>'+
+      '<span class="gv">'+gap+' 条</span></div>'+
+    '<div class="stnote">路径覆盖 '+((base.length-gap)/total*100).toFixed(1)+'% · '+
+      '六段 = 用户从「找模型」到「分享变现」的实际顺序，不是产品线 · 点任一格即筛下方明细</div>';
+}
+
+/** 段 × 信源覆盖矩阵：哪一段在哪个信源有内容、哪一段是缺口 —— 这是「要不要补信源」的判断依据 */
+function covMatrix(){
+  var base = apply();
+  var isGh = function(x){ return x.sourceType === "GitHub"; };
+  var rows = STAGE_META.map(function(s){ return [s[0], s[1]]; }).concat([["跨环节","跨环节（软件自身）"]]);
+  var body = rows.map(function(r){
+    var k = r[0];
+    var sub = base.filter(function(x){ return (x.stage||"跨环节")===k; });
+    var f = sub.filter(function(x){ return !isGh(x); }).length;
+    var g = sub.filter(isGh).length;
+    var both = (f>0?1:0)+(g>0?1:0);
+    var flag = both===2? '<span style="color:#3fb950">双源</span>'
+             : both===1? '<span style="color:#8b949e">单源</span>'
+             : '<span style="color:#d29922">缺口</span>';
+    return '<tr><td>'+esc(r[1])+'</td>'+
+      '<td class="'+(f?"":"cov0")+'">'+(f||"—")+'</td>'+
+      '<td class="'+(g?"":"cov0")+'">'+(g||"—")+'</td>'+
+      '<td class="gap">'+flag+'</td></tr>';
+  }).join("");
+  return '<table class="mx"><thead><tr><th>环节</th><th>官方论坛</th><th>GitHub</th><th>覆盖</th></tr></thead>'+
+    '<tbody>'+body+'</tbody></table>'+
+    '<div class="pnote">「单源」不等于缺口 —— 只说明该环节目前只有一个渠道有内容。'+
+    '双源都没有的行才是真缺口（当前 S2 AI 生成）。</div>';
+}
+
 function renderPanels(){
   var A=document.getElementById("panelsA"), B=document.getElementById("panelsB");
   if(KIND==="sw"){
-    var p1 = apply("problem");
-    var rows1 = Object.keys(countBy(p1,function(x){return x.problemType||"未分类";}))
-      .map(function(k){return [k, countBy(p1,function(x){return x.problemType||"未分类";})[k]];})
-      .sort(function(a,b){return b[1]-a[1];})
-      .map(function(r){return [r[0]==="未分类"?"未分类（泛讨论）":PROBLEM_NAME[r[0]]||r[0], r[1], r[0]];});
-    var rows1raw = rows1.map(function(r){return r;});
-    var html1 = rows1raw.length? rows1raw.map(function(r){
-      return null;
-    }).join("") : "";
-    // 直接用原始 key 生成，label 与 key 分开
-    var p1map = countBy(p1,function(x){return x.problemType||"未分类";});
-    var arr1 = Object.keys(p1map).map(function(k){return [k,p1map[k]];}).sort(function(a,b){return b[1]-a[1];});
-    A.innerHTML = panel("问题类型构成","共 "+p1.length+" 条 · 点击可筛选",
-      arr1.map(function(r){
-        var lab = r[0]==="未分类"? "未分类（泛讨论）" : (PROBLEM_NAME[r[0]]||r[0]);
-        var on = S.problem===r[0]?" on":"";
+    // ① 实现路径六段（全宽）
+    A.innerHTML = panel("用户实现路径", "六段 · 全量口径 · 点击可筛选", stagePanel(), true);
+
+    // ② 工具结构：替代失效的「产品线」（thirdparty 混装固件/bug/竞品对比，不是产品线）
+    //    一级行 = 类别（可点筛选）；二级行 = 具体工具名（纯展示）。
+    //    toolName 由 _col_toolname_fix.py 在「已定类别」的候选里取值，故二级之和恒等于一级。
+    var pT = apply("tool");
+    var arrT = Object.keys(countBy(pT, function(x){ return x.tool||"none"; }))
+      .map(function(k){ return [k, countBy(pT, function(x){ return x.tool||"none"; })[k]]; })
+      .sort(function(a,b){ return b[1]-a[1]; });
+    A.innerHTML += panel("工具结构","自家 vs 竞品 · 点击行可筛选",
+      arrT.length? arrT.map(function(r){
+        var mx = Math.max.apply(null, arrT.map(function(z){ return z[1]; }));
+        var on = S.tool===r[0]? " on":"";
+        return '<div class="brow'+on+'" data-pick="tool" data-val="'+esc(r[0])+'">'+
+          '<span class="nm">'+esc(TOOL_NAME[r[0]]||r[0])+'</span>'+
+          '<span class="track"><i class="fill" style="width:'+(r[1]/mx*100).toFixed(1)+'%;background:'+(TOOL_COLOR[r[0]]||"#8b949e")+'"></i></span>'+
+          '<span class="vl">'+r[1]+' · '+(r[1]/pT.length*100).toFixed(1)+'%</span></div>'+
+          toolSubHTML(r[0], pT);
+      }).join("") : '<div class="empty">暂无数据</div>');
+
+    // ③ 问题类型构成：只算有效档（泛讨论 0 条带问题点，本就不参与）
+    var p1 = applyValid("problem");
+    var arr1 = Object.keys(countBy(p1,function(x){return x.problemType||"未分类";}))
+      .map(function(k){return [k,countBy(p1,function(x){return x.problemType||"未分类";})[k]];})
+      .sort(function(a,b){return b[1]-a[1];});
+    A.innerHTML += panel("问题类型构成","分析口径 · 有效 "+p1.length+" 条",
+      arr1.length? arr1.map(function(r){
+        var lab = PROBLEM_NAME[r[0]]||r[0];
         var mx = Math.max.apply(null,arr1.map(function(z){return z[1];}));
+        var on = S.problem===r[0]?" on":"";
         return '<div class="brow'+on+'" data-pick="problem" data-val="'+esc(r[0])+'">'+
           '<span class="nm" title="'+esc(lab)+'">'+esc(lab)+'</span>'+
           '<span class="track"><i class="fill" style="width:'+(r[1]/mx*100)+'%;background:'+(PROBLEM_COLOR[r[0]]||"#8b949e")+'"></i></span>'+
           '<span class="vl">'+r[1]+' · '+(r[1]/p1.length*100).toFixed(1)+'%</span></div>';
-      }).join(""));
+      }).join("") : '<div class="empty">当前筛选下无有效档条目</div>');
 
-    var p2 = apply("product");
-    var arr2 = Object.keys(countBy(p2,function(x){return x.productLine||"未标注";}))
-      .map(function(k){return [k,countBy(p2,function(x){return x.productLine||"未标注";})[k]];})
-      .sort(function(a,b){return b[1]-a[1];});
-    A.innerHTML += panel("产品线结构","按条数 · 点击可筛选",
-      arr2.map(function(r){
-        var lab=PRODUCT_NAME[r[0]]||r[0];
-        var mx = Math.max.apply(null,arr2.map(function(z){return z[1];}));
-        var on = S.product===r[0]?" on":"";
-        return '<div class="brow'+on+'" data-pick="product" data-val="'+esc(r[0])+'">'+
-          '<span class="nm">'+esc(lab)+'</span><span class="track"><i class="fill" style="width:'+(r[1]/mx*100)+'%;background:'+(PRODUCT_COLOR[r[0]]||"#8b949e")+'"></i></span>'+
-          '<span class="vl">'+r[1]+' · '+(r[1]/p2.length*100).toFixed(1)+'%</span></div>';
-      }).join("")+
-      '<div class="pnote">单一信源：全部条目来自 Creality 官方论坛 Software 板块，暂不含电商评价与第三方社区。</div>');
+    // ④ 段 × 信源覆盖（替代原「版本 × 问题类型」矩阵）
+    B.innerHTML = panel("段 × 信源覆盖", "全量口径 · 纯展示", covMatrix());
 
+    // ⑤ 主版本热度
     var p3 = apply("major");
     var arr3 = Object.keys(countBy(p3,function(x){return majorOf(x.version);}))
       .map(function(k){return [k,countBy(p3,function(x){return majorOf(x.version);})[k]];})
       .sort(function(a,b){return parseFloat(b[0])-parseFloat(a[0]);});
-    B.innerHTML = panel("主版本热度","条数 · 点击可筛选",
+    B.innerHTML += panel("主版本热度","条数 · 点击可筛选",
       arr3.length? arr3.map(function(r){
         var mx = Math.max.apply(null,arr3.map(function(z){return z[1];}));
-        var mv = r[0].replace(".x","");
         var on = S.major===r[0]?" on":"";
         return '<div class="brow'+on+'" data-pick="major" data-val="'+esc(r[0])+'">'+
-          '<span class="nm">'+esc(r[0])+'</span><span class="track"><i class="fill" style="width:'+(r[1]/mx*100)+'%;background:'+(VER_COLOR[mv]||"#8b949e")+'"></i></span>'+
+          '<span class="nm">'+esc(r[0])+'</span><span class="track"><i class="fill" style="width:'+(r[1]/mx*100)+'%;background:'+(VER_COLOR[r[0].replace(".x","")]||"#8b949e")+'"></i></span>'+
           '<span class="vl">'+r[1]+' 条</span></div>';
-      }).join("") : '<div class="empty">当前筛选下无版本数据</div>');
-    B.innerHTML += panel("版本 × 问题类型","仅有效档 · 纯展示",
-      matrixTable()+
-      '<div class="pnote">版本已归一为「主.次」；月均 = 该主版本条数 ÷ 其时间跨度月数。绝对条数受历史存量影响，跨版本比较请看月均列。</div>');
+      }).join("")+
+      '<div class="pnote">原「版本 × 问题类型」矩阵已删除：35 格里多数只有 1–2 条，且 237 条泛讨论进不去，读不出规律。'+
+      '版本间差异请看这里 + 明细里的版本标签。</div>' : '<div class="empty">当前筛选下无版本数据</div>');
   }else{
     var pA = apply("channel");
     var arrA = Object.keys(countBy(pA,function(x){return x.channel;})).map(function(k){return [k,countBy(pA,function(x){return x.channel;})[k]];});
@@ -466,11 +599,13 @@ function renderFilters(){
       .map(function(k){return [k, (labelFn?labelFn(k):k)+" ("+m[k]+")"];});
   }
   if(KIND==="sw"){
-    h += selHTML("product","产品线", opts(function(x){return x.productLine||"未标注";},function(k){return PRODUCT_NAME[k]||k;},"product"));
+    h += selHTML("tool","工具", opts(function(x){return x.tool||"none";},function(k){return TOOL_NAME[k]||k;},"tool"));
+    h += selHTML("stage","环节", opts(function(x){return x.stage||"跨环节";},function(k){return STAGE_NAME[k]||k;},"stage"));
     h += selHTML("major","主版本", opts(function(x){return majorOf(x.version);},null,"major"));
-    h += selHTML("problem","问题类型", opts(function(x){return x.problemType||"未分类";},function(k){return k==="未分类"?"未分类":(PROBLEM_NAME[k]||k);},"problem"));
+    h += selHTML("problem","问题类型", opts(function(x){return x.problemType||"未分类";},function(k){return PROBLEM_NAME[k]||k;},"problem"));
     h += selHTML("model","机型", opts(function(x){return x.model||"未标注";},null,"model"));
-    h += selHTML("grade","审核档", opts(function(x){return x.grade||"未审核";},null,"grade"));
+    h += selHTML("source","信源", opts(function(x){return x.sourceType||"未知";},null,"source"));
+    h += selHTML("grade","审核", opts(function(x){return x.grade||"未审核";},null,"grade"));
   }else{
     h += selHTML("channel","渠道", opts(function(x){return x.channel;},null,"channel"));
     h += selHTML("source","来源类型", opts(function(x){return x.sourceType;},null,"source"));
@@ -487,16 +622,21 @@ function renderFilters(){
 
 /* ---------------- 已选条件摘要（唯一一处） ---------------- */
 var LABELS = {product:"产品线",major:"主版本",version:"版本",problem:"问题类型",model:"机型",
-              grade:"审核档",channel:"渠道",source:"来源类型",lang:"语种",range:"时间"};
+              grade:"审核",channel:"渠道",source:"信源",lang:"语种",range:"时间",
+              stage:"环节",tool:"工具"};
+var CHIP_VALUE = function(k, v){
+  if(k==="range") return ({"7":"近 7 天","30":"近 30 天","90":"近 90 天"})[v]||v;
+  if(k==="product") return PRODUCT_NAME[v]||v;
+  if(k==="problem") return PROBLEM_NAME[v]||v;
+  if(k==="stage") return STAGE_NAME[v]||v;
+  if(k==="tool") return TOOL_NAME[v]||v;
+  return v;
+};
 function renderSummary(hits){
   var el = document.getElementById("filterSummary"), chips = [];
   Object.keys(LABELS).forEach(function(k){
     if(S[k] && !(k==="range"&&S.range==="all")){
-      var v = S[k];
-      if(k==="range") v = ({"7":"近 7 天","30":"近 30 天","90":"近 90 天"})[S[k]]||S[k];
-      if(k==="product") v = PRODUCT_NAME[v]||v;
-      if(k==="problem" && v!=="未分类") v = PROBLEM_NAME[v]||v;
-      chips.push('<span class="chip">'+LABELS[k]+'：'+esc(v)+' <i data-clr="'+k+'">✕</i></span>');
+      chips.push('<span class="chip">'+LABELS[k]+'：'+esc(CHIP_VALUE(k,S[k]))+' <i data-clr="'+k+'">✕</i></span>');
     }
   });
   if(S.q) chips.push('<span class="chip">关键词：'+esc(S.q)+' <i data-clr="q">✕</i></span>');
@@ -509,7 +649,10 @@ function renderSummary(hits){
 /* ---------------- 明细卡片 ---------------- */
 function tagsOf(it){
   var t = [];
+  if(it.sourceType==="GitHub") t.push('<span class="tag t-gh">GitHub 缺陷单</span>');
+  if(it.stage) t.push('<span class="tag t-stage">'+esc(STAGE_NAME[it.stage]||it.stage)+'</span>');
   if(it.problemType) t.push('<span class="tag t-'+it.problemType+'">'+esc(PROBLEM_NAME[it.problemType]||it.problemType)+'</span>');
+  if(it.tool==="competitor") t.push('<span class="tag t-tool">竞品对比</span>');
   if(it.grade) t.push('<span class="tag '+(it.grade==="有效"?"t-ok":"t-gen")+'">'+esc(it.grade)+'</span>');
   if(KIND==="sw" && it.productLine) t.push('<span class="tag">'+esc(PRODUCT_NAME[it.productLine]||it.productLine)+'</span>');
   if(it.versionRaw) t.push('<span class="tag t-ver">v'+esc(it.versionRaw)+'</span>');
@@ -521,7 +664,7 @@ function tagsOf(it){
 function cardHTML(it){
   var cnT = it.titleCn || "", cnB = it.textCn || "";
   var showCn = !!(cnT || cnB);
-  return '<div class="card" data-uid="'+esc(it.uid)+'">'+
+  return '<div class="card'+(it.countInVolume===false?" ghcard":"")+(it.grade==="泛讨论"?" gencard":"")+'" data-uid="'+esc(it.uid)+'">'+
     '<div class="c-top">'+tagsOf(it)+
       '<span class="c-date">'+esc(it.date)+'</span>'+
       '<span class="c-src">'+esc(it.platform)+'</span>'+
@@ -546,10 +689,12 @@ function renderCards(){
     ? slice.map(cardHTML).join("")
     : '<div class="panel"><div class="empty">当前筛选条件下没有条目。<br>试着清空条件，或把时间范围放宽。</div></div>';
 
+  var ghN = list.filter(function(x){ return x.countInVolume===false; }).length;
   document.getElementById("countLine").textContent =
-    "共 "+list.length+" 条 · 第 "+S.page+" / "+pages+" 页 · 每页 "+PAGE_SZ+" 条";
+    "共 "+list.length+" 条"+(ghN? "（含 GitHub 缺陷单 "+ghN+" 条）":"")+
+    " · 第 "+S.page+" / "+pages+" 页 · 每页 "+PAGE_SZ+" 条";
   document.getElementById("flowHint").textContent =
-    "原文 + 译文双段 · 点击上方面板可就地筛选";
+    "原文 + 译文双段 · 上下面板与这里下拉同源，选一个立即定位";
 
   var p = document.getElementById("pager"), h = "";
   h += '<button data-pg="'+(S.page-1)+'"'+(S.page<=1?" disabled":"")+'>上一页</button>';
@@ -589,7 +734,8 @@ function pick(k,v){
   S.page=1; renderAll(); flash();
 }
 function clearAll(){
-  ["product","major","version","problem","model","grade","channel","source","lang"].forEach(function(k){S[k]="";});
+  ["product","major","version","problem","model","grade","channel","source","lang",
+   "stage","tool"].forEach(function(k){S[k]="";});
   S.range="all"; S.q=""; S.page=1; renderAll();
 }
 
