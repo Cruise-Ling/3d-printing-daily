@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D打印行业每日资讯 - 2026年10月26日</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖨️</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f0f2f5;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;display:flex;justify-content:center;padding:12px 0}
+.card{width:375px;background:#fff;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.06);overflow:clip}
+.header{background:linear-gradient(135deg,#1a237e,#283593,#3949ab);padding:24px 20px 18px;color:#fff;position:relative}
+.header-back{position:absolute;left:16px;top:28px;transform:translateY(-50%);display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.95);font-size:14px;font-weight:600;text-decoration:none;padding:7px 16px 7px 3px;border-radius:20px;border:1.5px solid rgba(255,255,255,.35)}
+.header-back:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.6)}
+.header h1{font-size:19px;font-weight:700;letter-spacing:1px;margin-bottom:6px;padding-left:90px}
+.header .date{font-size:13px;opacity:.85;font-weight:400}
+.header .source-note{font-size:11px;opacity:.7;margin-top:4px}
+.stats-bar{display:flex;gap:8px;flex-wrap:wrap;padding:14px 20px;background:#fafbff;border-bottom:1px solid #f0f0f0}
+.stats-pill{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;color:#555;background:#f0f4ff;border-radius:20px;padding:5px 11px;border:1px solid #e8edff}
+.stats-pill b{color:#1a73e8;font-weight:700}
+.stats-pill.warn{background:#fff8e1;border-color:#ffe082}
+.stats-pill.warn b{color:#e65100}
+.section-title{display:flex;align-items:center;padding:18px 20px 12px;font-size:16px;font-weight:800;color:#0d47a1;background:linear-gradient(90deg,rgba(26,115,232,.08),transparent);border-bottom:2px solid #1a73e8}
+.section-title .icon{width:4px;height:16px;border-radius:2px;margin-right:8px}
+.section-title.general .icon{background:linear-gradient(180deg,#42a5f5,#1e88e5)}
+.section-title.specific .icon{background:linear-gradient(180deg,#ffa726,#fb8c00)}
+.section-title.consumer .icon{background:linear-gradient(180deg,#66bb6a,#43a047)}
+.section-title.global .icon{background:linear-gradient(180deg,#ab47bc,#7b1fa2)}
+.section-title.feedback .icon{background:linear-gradient(180deg,#26c6da,#00838f)}
+.section-title.niche .icon{background:linear-gradient(180deg,#e64a19,#d84315)}
+.section-title.scenario .icon{background:linear-gradient(180deg,#00796b,#00695c)}
+.item{padding:12px 20px 14px;border-bottom:1px solid #f5f5f5}
+.item:last-child{border-bottom:none}
+.item-head{display:flex;align-items:flex-start;margin-bottom:6px}
+.num-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;flex-shrink:0;margin-right:10px;margin-top:1px}
+.general-zone .num-dot{background:linear-gradient(135deg,#42a5f5,#1e88e5)}
+.specific-zone .num-dot{background:linear-gradient(135deg,#ffa726,#fb8c00)}
+.consumer-zone .num-dot{background:linear-gradient(135deg,#66bb6a,#43a047)}
+.global-zone .num-dot{background:linear-gradient(135deg,#ab47bc,#7b1fa2)}
+.feedback-zone .num-dot{background:linear-gradient(180deg,#26c6da,#00838f)}
+.niche-zone .num-dot{background:linear-gradient(135deg,#e64a19,#d84315)}
+.scenario-zone .num-dot{background:linear-gradient(135deg,#00796b,#00695c)}
+.item-title{font-size:14.5px;font-weight:600;line-height:1.45;color:#212121;flex:1}
+.item-title a{color:#212121;text-decoration:none}
+.item-title a:hover{color:#1a73e8}
+.item-summary{font-size:12.8px;line-height:1.7;color:#616161;padding-left:32px;word-break:break-all}
+.item-source{font-size:11px;color:#9e9e9e;padding-left:32px;margin-top:4px}
+.item-source a{color:#1e88e5;text-decoration:none}
+.item-source a:hover{text-decoration:underline}
+.from-tag{font-size:10px;padding:1px 6px;border-radius:6px;margin-left:6px;opacity:.75}
+.from-qq{background:#fce4ec;color:#880e4f}
+.from-sina{background:#fff3e0;color:#e65100}
+.from-163{background:#e8f5e9;color:#2e7d32}
+.from-sohu{background:#fff3e0;color:#bf360c}
+.from-36kr{background:#e8eaf6;color:#283593}
+.from-3dprint{background:#e0f7fa;color:#006064}
+.from-3dprinting{background:#e0f7fa;color:#006064}
+.from-dayinpai{background:#e8f5e9;color:#1b5e20}
+.from-cgtn{background:#e3f2fd;color:#0d47a1}
+.from-xinhua{background:#ffebee;color:#b71c1c}
+.from-cnstock{background:#fff3e0;color:#e65100}
+.from-eastmoney{background:#fff3e0;color:#bf360c}
+.from-ithome{background:#e3f2fd;color:#1565c0}
+.from-cctv{background:#ffebee;color:#b71c1c}
+.from-other{background:#eceff1;color:#37474f}
+.from-tencent{background:#e3f2fd;color:#0d47a1}
+.from-gov{background:#e8eaf6;color:#283593}
+.from-10jqka{background:#fff3e0;color:#e65100}
+.side-nav{position:fixed;left:max(0px,calc((100vw - 375px)/2 - 90px));top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;z-index:200}
+.side-nav-item{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;font-size:12px;color:#555;background:rgba(255,255,255,.95);box-shadow:0 1px 6px rgba(0,0,0,.08);cursor:pointer;transition:all .2s;text-decoration:none;white-space:nowrap;border:1px solid rgba(0,0,0,.06)}
+.side-nav-item:hover{box-shadow:0 2px 12px rgba(0,0,0,.15);transform:translateX(-2px)}
+.side-nav-item .nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.score-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:8px;margin-left:6px;font-weight:600}
+.score-badge-a{background:#e8f5e9;color:#2e7d32}
+.hot-summary{padding:14px 20px;background:linear-gradient(135deg,#fff8e1,#fff3e0);border-bottom:1px solid #ffe082}
+.hot-summary h3{font-size:14px;font-weight:700;color:#e65100;margin-bottom:8px}
+.hot-summary ul{list-style:none;padding:0}
+.hot-summary li{font-size:12.5px;color:#5d4037;padding:3px 0;padding-left:16px;position:relative;line-height:1.5}
+.hot-summary li::before{content:"";position:absolute;left:0;top:10px;width:6px;height:6px;border-radius:50%;background:#ff9800}
+.footer{padding:16px 20px;background:#f8f9fa;text-align:center;font-size:11px;color:#9e9e9e;border-top:1px solid #f0f0f0}
+.footer a{color:#1e88e5;text-decoration:none}
+@media(max-width:767px){.side-nav{position:fixed;left:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;padding-left:4px;z-index:200}.side-nav .side-nav-item{padding:5px 8px;font-size:11px;border-radius:16px;box-shadow:0 1px 6px rgba(0,0,0,.1)}.card{margin-left:52px;width:calc(100vw - 60px);max-width:375px}body{justify-content:flex-start;padding:12px 0 12px 4px}}
+@media(min-width:768px){.section-nav{display:none}.side-nav{left:max(0px,calc((100vw - 375px)/2 - 90px))}}
+</style>
+</head>
+<body>
+<nav class='side-nav' id="sideNav">
+  <a class='side-nav-item' href="index.html"><span class='nav-dot' style="background:#1a237e"></span>🏠 首页</a>
+  <a class='side-nav-item' onclick="scrollToSection('general')"><span class='nav-dot' style="background:#1a73e8"></span>泛行业</a>
+  <a class='side-nav-item' onclick="scrollToSection('specific')"><span class='nav-dot' style="background:#e65100"></span>细分领域</a>
+  <a class='side-nav-item' onclick="scrollToSection('consumer')"><span class='nav-dot' style="background:#2e7d32"></span>消费级</a>
+  <a class='side-nav-item' onclick="scrollToSection('niche')"><span class='nav-dot' style="background:#d84315"></span>细分市场</a>
+  <a class='side-nav-item' onclick="scrollToSection('scenario')"><span class='nav-dot' style="background:#00695c"></span>场景打印</a>
+  <a class='side-nav-item' onclick="scrollToSection('global')"><span class='nav-dot' style="background:#7b1fa2"></span>海外资讯</a>
+  <a class='side-nav-item' onclick="scrollToSection('feedback')"><span class='nav-dot' style="background:#00838f"></span>用户口碑</a>
+</nav>
+<script>
+function scrollToSection(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+</script>
+<div class='card'>
+
+<div class='header'>
+  <a class='header-back' href="index.html">← 首页</a>
+  <h1>3D打印行业每日资讯</h1>
+  <div class='date'>2026年10月26日 · 星期一</div>
+  <div class='source-note'>内容来源：3D打印资源库 / 3DPrint.com / 3Dnatives / 证券日报 / 中国经济网 等</div>
+</div>
+<div class='stats-bar'>
+  <span class='stats-pill'>资讯 <b>35</b> 条</span>
+  <span class='stats-pill'>分区 <b>7</b> 大</span>
+  <span class='stats-pill warn'>内容日期 <b>2026年10月23日</b></span>
+</div>
+<div class='hot-summary'>
+  <h3>🔥 今日热点速递</h3>
+    <ul>
+      <li>ICON完成2亿美元D轮融资，已3D打印超270座建筑，Titan系统2027年初交付</li>
+      <li>Creality K3工具换型FDM深圳首发：5秒换喷嘴、预售849美元</li>
+      <li>Formlabs Form Studio 1以4999元杀入消费级树脂市场，获UL绿卫士金级认证</li>
+      <li>捷克开建全球最大3D打印教堂之一，870个打印构件、2028年开放</li>
+      <li>上游收紧：中国PLA价格年内三轮提价，从1.7万涨至1.85万元/吨</li>
+    </ul>
+  </div>
+    <div class='section-title general' id="general">
+      <span class='icon'></span>泛行业资讯（工业/资本/政策）</div>
+    <div class='general-zone'>
+    <div class='general-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>1</span>
+        <div class='item-title'>
+          <a href='https://www.industrialbriefs.com/icon-funding-3d-printing-construction' target='_blank'>美国建筑3D打印企业ICON完成2亿美元D轮融资，已打印超270座建筑</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>美国建筑3D打印企业ICON宣布完成2亿美元D轮融资，由Baillie Gifford与贝莱德管理的基金共同领投，资金用于机器人建造系统的制造部署、研发及市场拓展。公司已建造超过270座住宅及其他建筑，其Titan系统支持多层墙体3D打印，首批系统预计2027年初交付；此前还获美国陆军6280万美元军营建设合同，并与NASA合作月球建造技术。</div>
+      <div class='item-source'>来源：<a href='https://www.industrialbriefs.com/icon-funding-3d-printing-construction' target='_blank'>IndustrialBriefs</a><span class='from-tag from-other'>IndustrialBriefs</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>2</span>
+        <div class='item-title'>
+          <a href='https://www.actusnews.com/fr/prodways-groupe/cp/2026/10/20/stable-revenue-in-the-third-quarter-2026' target='_blank'>Prodways三季度打印机收入同比+130%，MOVINGLight陶瓷机获美航天下单</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>法国工业级3D打印企业Prodways（EPA:ALPWG）公布2026年三季度财报：集团营收720万欧元，同比基本持平；系统部门（现仅剩打印机业务）营收120万欧元，同比大增130%，主要由面向陶瓷应用的MOVINGLight打印机驱动，并获一家美国航空航天客户约10台订单、2027年交付。产品部门营收600万欧元，同比下降9%，集团确认维持2026年营收稳定或微增目标。</div>
+      <div class='item-source'>来源：<a href='https://www.actusnews.com/fr/prodways-groupe/cp/2026/10/20/stable-revenue-in-the-third-quarter-2026' target='_blank'>Actusnews</a><span class='from-tag from-other'>Actusnews</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>3</span>
+        <div class='item-title'>
+          <a href='https://www.163.com/dy/article/L9R63GLT0538J1KQ.html' target='_blank'>砂型3D打印代表企业峰华卓立破产清算，11月19日终止新三板挂牌</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>10月21日砂型3D打印代表企业峰华卓立（834914）公告，因未在2026年6月30日前披露2025年年报，全国股转公司决定终止其股票挂牌，公司将于11月19日终止挂牌，期间证券简称变更为“摘牌卓立”。公司目前已资不抵债，并被债权人申请破产清算，与同期头部企业扩产形成对照，行业分化进一步显性化。</div>
+      <div class='item-source'>来源：<a href='https://www.163.com/dy/article/L9R63GLT0538J1KQ.html' target='_blank'>网易</a><span class='from-tag from-163'>网易</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>4</span>
+        <div class='item-title'>
+          <a href='https://www.sohu.com/a/1089409721_100034932' target='_blank'>行业周报：ICON融资、Formlabs发新机、央视提醒儿童3D打印笔风险</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>10月中下旬行业动态：ICON完成2亿美元D轮融资并已3D打印超270座建筑；Formlabs发布桌面树脂机Form Studio 1（4999元起）；Polymaker推出G-Flex PETG弹性线材；升华三维发布米级PEP金属/陶瓷机UPS-1000S；必趣推出AMS干燥模块；央视提醒儿童3D打印笔存在烫伤与化学挥发风险，不论温度高低均被贴“儿童适用”标签。</div>
+      <div class='item-source'>来源：<a href='https://www.sohu.com/a/1089409721_100034932' target='_blank'>搜狐网</a><span class='from-tag from-sohu'>搜狐网</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>5</span>
+        <div class='item-title'>
+          <a href='https://www.jawstec.com/?p=78862' target='_blank'>NASA测试3D打印铝制火箭喷管与旋转爆震发动机燃烧室（试车251秒）</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>NASA马歇尔航天中心测试3D打印铝制火箭喷管（采用可焊耐热铝合金，较传统更轻）与旋转爆震发动机燃烧室（试车251秒、推力超5800磅），并推进GRCop铜合金体系；商业侧Relativity Space的Terran R部分由3D打印制造，瞄准2026年首飞。增材制造持续支撑深空与国防推进。</div>
+      <div class='item-source'>来源：<a href='https://www.jawstec.com/?p=78862' target='_blank'>JawsTec</a><span class='from-tag from-other'>JawsTec</span></div>
+    </div>
+    </div>
+    <div class='section-title specific' id="specific">
+      <span class='icon'></span>细分领域动态（医疗/航天/材料）</div>
+    <div class='specific-zone'>
+    <div class='specific-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>6</span>
+        <div class='item-title'>
+          <a href='https://www.borntoengineer.com/floating-titanium-metamaterial' target='_blank'>RMIT造出可漂浮钛超材料，比同密度不锈钢强70%</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>RMIT大学工程师在《Advanced Materials》（2026年10月）发表研究，用激光粉末床熔融制造钛合金（Ti-6Al-4V）点阵结构，再向空心支柱注入闭孔聚氨酯泡沫，得到密度低于1 g/cm³、却比同密度不锈钢强70%的可漂浮钛超材料；样品在海水浸泡两个月仅失重0.15%，有望用于海洋结构、航天部件与生物医学植入物。</div>
+      <div class='item-source'>来源：<a href='https://www.borntoengineer.com/floating-titanium-metamaterial' target='_blank'>BornToEngineer</a><span class='from-tag from-other'>BornToEngineer</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>7</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/334771/3d-printing-news-briefs-10-14-2026/' target='_blank'>3DPrint周报：Myrava获FDA许可、AML3D推进航工装、Mears购Velo3D</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3DPrint.com 10月14日简报：Myrava（原Ricoh 3D for Healthcare）获FDA 510(k)许可，其患者特异性3D打印放疗bolus可直接贴合皮肤、优化放疗剂量；AML3D加入某全球航空航天主机厂三年期工装研发项目，推进电弧增材（WAM）用于合格航工装；Mears机械采购Velo3D Sapphire XC，专用于铜镍（CuNi）打印。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/334771/3d-printing-news-briefs-10-14-2026/' target='_blank'>3DPrint.com</a><span class='from-tag from-3dprint'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>8</span>
+        <div class='item-title'>
+          <a href='https://www.cenews.com.cn/news.html?aid=1817107' target='_blank'>豆渣变可3D打印生物活性材料，PCL复合可实现活性肽缓释</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>意大利米兰大学、米兰理工大学与尼瓜尔达医院团队将豆腐/豆奶生产副产物豆渣转化为可生物降解、可3D打印的生物活性材料，论文发表于《通讯材料》。将从豆渣提取的活性肽掺入PCL后，材料保持主要性能且肽可随时间缓释，打印后仍有抗氧化、抗炎与促再生特性，下一步拟构建模拟乳腺皮肤组织模型。</div>
+      <div class='item-source'>来源：<a href='https://www.cenews.com.cn/news.html?aid=1817107' target='_blank'>中国环境网</a><span class='from-tag from-other'>中国环境网</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>9</span>
+        <div class='item-title'>
+          <a href='https://bioengineer.org/auxetic-3d-printed-lattices-show-geometry-is-destiny-under-compression/' target='_blank'>SLA打印拉胀点阵对比：星形三角构型更适合航天夹层与吸能</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>Scientific Reports（2026）发表SLA 3D打印拉胀（负泊松比）点阵结构对比研究：六边形内凹与星形三角两种构型中，星形三角因内部三角构件像“内支撑”抵抗壁面转动、通过支柱承重，更适合航天夹层、汽车吸能与防护装备；研究为设计者提供实验数据，证明同一树脂同一设备即可按架构区分性能。</div>
+      <div class='item-source'>来源：<a href='https://bioengineer.org/auxetic-3d-printed-lattices-show-geometry-is-destiny-under-compression/' target='_blank'>Bioengineer</a><span class='from-tag from-other'>Bioengineer</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>10</span>
+        <div class='item-title'>
+          <a href='https://mechanism.me/ornl-researchers-revolutionize-manufacturing-with-mold-free-foldable-hybrid-3d-printing' target='_blank'>ORNL无模具可折叠混合3D打印：折纸结构+连续纤维，已申请专利</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>美国橡树岭国家实验室（ORNL）开发无模具、可折叠混合3D打印工艺，把折纸原理与连续纤维增强增材制造结合，使复杂复合材料构件可在平板态打印后折叠成形，省去大型模具与工装，面向航空航天轻量化、汽车定制件与国防现场快速部署；ORNL已提交专利申请并推进许可。</div>
+      <div class='item-source'>来源：<a href='https://mechanism.me/ornl-researchers-revolutionize-manufacturing-with-mold-free-foldable-hybrid-3d-printing' target='_blank'>Mechanism Me</a><span class='from-tag from-other'>Mechanism Me</span></div>
+    </div>
+    </div>
+    <div class='section-title consumer' id="consumer">
+      <span class='icon'></span>消费级（新品/评测/品牌）</div>
+    <div class='consumer-zone'>
+    <div class='consumer-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>11</span>
+        <div class='item-title'>
+          <a href='https://www.3dprint.com/category/sponsored' target='_blank'>Creality K3工具换型FDM深圳首发：5秒换喷嘴、预售849美元</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>TCT深圳2026（10月14–16日）上，Creality展出K3——一款工具换型FDM系统，主打多色多材料、减少冲洗浪费：喷嘴更换最快5秒、颜色/材料切换15秒内；同场首发的还有SPARKX i8。K3已开启预售（美国起价849美元），被视作创想在多色高速赛道的旗舰之作。</div>
+      <div class='item-source'>来源：<a href='https://www.3dprint.com/category/sponsored' target='_blank'>3DPrint.com</a><span class='from-tag from-3dprint'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>12</span>
+        <div class='item-title'>
+          <a href='https://www.163.com/dy/article/L9MS8MAN05509EKV.html' target='_blank'>Formlabs发布Form Studio 1桌面树脂机，4999元起、11月16日发货</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>Formlabs于10月14日全球发布桌面树脂3D打印机Form Studio 1，起售价4999元（约699美元），同步推出Wash+Cure清洗固化一体机（199美元），计划11月16日起发货。新机采用LFD引擎、35微米像素、成型尺寸200×125×235毫米，多数零件两小时内完成；配备自动供料、树脂加热与开放材料模式，搭配Alpha树脂及VOC净化器获UL绿卫士金级认证。</div>
+      <div class='item-source'>来源：<a href='https://www.163.com/dy/article/L9MS8MAN05509EKV.html' target='_blank'>网易</a><span class='from-tag from-163'>网易</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>13</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/334652/uniformation-s10-heads-to-kickstarter-with-an-integrated-resin-printing-and-post-processing-system/' target='_blank'>UniFormation S10全自动化树脂机登Kickstarter，999美元起</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>UniFormation将于10月22日在Kickstarter推出S10桌面树脂机（起价999美元，VIP有效价899美元），号称全球首款全自动桌面树脂机：打印完成后平台旋转沥干、滑入9升清洗仓双循环清洗、35–45℃暖风烘干，16K LCD、成型223×126×200毫米、C5级滚珠丝杠±0.005毫米，预计2027年3月交付。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/334652/uniformation-s10-heads-to-kickstarter-with-an-integrated-resin-printing-and-post-processing-system/' target='_blank'>3DPrint.com</a><span class='from-tag from-3dprint'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>14</span>
+        <div class='item-title'>
+          <a href='https://bambulab.com' target='_blank'>拓竹2026新品矩阵：A1/A2L/P2S/H2C/H2D覆盖入门到专业</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>拓竹（Bambu Lab）2026年新品矩阵持续扩张：R1（敬请期待）、A2L（大尺寸）、X2D（大尺寸多色）、H2C/H2S（多色高速）、P2S（封闭全能）、H2D（旗舰）等覆盖入门到专业；其中A1以全自校与多色标配成为入门首选，P2S以封闭腔体胜任ABS/ASA/PA等工程料，H2C/H2D面向大幅面与高速多材料。</div>
+      <div class='item-source'>来源：<a href='https://bambulab.com' target='_blank'>Bambu Lab</a><span class='from-tag from-other'>Bambu Lab</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>15</span>
+        <div class='item-title'>
+          <a href='https://3dprinterradar.com/compare/anycubic-kobra-3-max-vs-bambu-p2s' target='_blank'>对比：Anycubic Kobra 3 Max vs Bambu P2S，4倍体积 vs 封闭多材料</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3DPrinterRadar对比Anycubic Kobra 3 Max与Bambu P2S：Kobra 3 Max起价459美元，成型420×420×500毫米（约为P2S的4倍体积）、4色多色、无封闭；P2S起价549美元，封闭CoreXY、256毫米腔体、4色多色，是唯一可打印ABS/ASA/PA等需封闭材料的机型。两者生态不互通，需综合耗材与服务成本。</div>
+      <div class='item-source'>来源：<a href='https://3dprinterradar.com/compare/anycubic-kobra-3-max-vs-bambu-p2s' target='_blank'>3DPrinterRadar</a><span class='from-tag from-other'>3DPrinterRadar</span></div>
+    </div>
+    </div>
+    <div class='section-title niche' id="niche">
+      <span class='icon'></span>细分市场（汽车/建筑/医疗等）</div>
+    <div class='niche-zone'>
+    <div class='niche-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>16</span>
+        <div class='item-title'>
+          <a href='https://datacenter.news/story/3d-printer-hardware-revenue-surges-31-as-demand-rises' target='_blank'>CONTEXT：二季度全球3D打印机硬件收入同比+31%，中国占工业出货37%</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>市场研究机构CONTEXT数据显示，2026年二季度全球3D打印机硬件系统收入同比增长31%：工业机收入+40%、入门机+36%；按台数看入门机（2500美元以下）出货+23%、10万美元以上工业机+25%。滚动12个月中国占全球工业出货37%（北美29%、西欧21%），金属设备占工业出货53%、收入75%，粉末床熔融占金属出货77%。</div>
+      <div class='item-source'>来源：<a href='https://datacenter.news/story/3d-printer-hardware-revenue-surges-31-as-demand-rises' target='_blank'>DataCenterNews</a><span class='from-tag from-other'>DataCenterNews</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>17</span>
+        <div class='item-title'>
+          <a href='https://news.qq.com/rain/a/20261021A0D8MH00' target='_blank'>上游收紧：PLA价格年内三轮提价，从1.7万涨至1.85万元/吨</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>研报测算，2026年前三季度我国3D打印设备产量同比+62.5%，累计出口592.5万台、+94%，出口额153.5亿元、+105%。耗材端PLA占FDM耗材约七成，主流定价30–55元/公斤；因高光纯PLA树脂产能偏紧，PLA价格从年初1.7万元/吨涨至10月中旬1.85万元/吨，上游乳酸厂商年内已三轮提价，成熟耗材厂线材毛利率普遍30%–40%。</div>
+      <div class='item-source'>来源：<a href='https://news.qq.com/rain/a/20261021A0D8MH00' target='_blank'>腾讯新闻</a><span class='from-tag from-qq'>腾讯新闻</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>18</span>
+        <div class='item-title'>
+          <a href='https://m.10jqka.com.cn/20261022/c680973373.shtml' target='_blank'>国内3D打印市场冲刺860亿元，服务收入占比首超硬件</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>《2026–2030年中国3D打印行业市场全景调研》指出，国内市场规模正稳步向860亿元冲刺，增速持续高于全球。三大驱动力：政策红利（增材制造纳入“十五五”智能制造顶层设计）、国产替代与出海双轮（高功率光纤激光器国产化带动设备成本下探，工业级金属机出货占全球近半）、商业逻辑质变（从“卖设备”转向“设备利用率+工艺良率+终端零件交付”，服务收入占比首超硬件）。</div>
+      <div class='item-source'>来源：<a href='https://m.10jqka.com.cn/20261022/c680973373.shtml' target='_blank'>同花顺财经</a><span class='from-tag from-other'>同花顺财经</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>19</span>
+        <div class='item-title'>
+          <a href='https://www.nanhai.gov.cn/fsnhq/zwgk/zwdt/zjyw/content/post_7333771.html' target='_blank'>广东占美98亩落子佛山狮山，拟投10亿建金属粉末与增材全链条基地</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>10月20日狮山5宗产业用地集中摘牌（267亩、总投23.3亿元），增材制造为其中一条赛道。老牌铝材龙头占美新材料由旗下永基兆业在桃园西路南侧拿下98亩，打造全链条增材制造基地，布局3D打印金属粉体、工艺研发与高端构件制造，瞄准低空经济、机器人、新能源汽车与医疗装备等高附加值场景。</div>
+      <div class='item-source'>来源：<a href='https://www.nanhai.gov.cn/fsnhq/zwgk/zwdt/zjyw/content/post_7333771.html' target='_blank'>佛山市南海区人民政府</a><span class='from-tag from-gov'>佛山市南海区人民政府</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>20</span>
+        <div class='item-title'>
+          <a href='https://en.tctasia.cn/blogs/2655.shtml' target='_blank'>TCT深圳：入门级（<2500美元）占全球系统收入54%，四品牌占入门级88%</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>TCT深圳2026（10月14–16日，深圳宝安）汇聚250+展商、2万㎡；2026年一季度单价2500美元以下桌面机贡献全球3D打印系统收入54%（超过其他价格段总和），出货+39%、收入+54%；Bambu Lab、Creality、Elegoo、Anycubic四品牌占全球入门级出货88%，2025全年中国供应商占全球入门级出货超90%。深圳占全球消费级市场近90%，前4月3D打印机出口52.4亿元（占全国85.8%，同比+128.6%）。</div>
+      <div class='item-source'>来源：<a href='https://en.tctasia.cn/blogs/2655.shtml' target='_blank'>TCT Asia</a><span class='from-tag from-other'>TCT Asia</span></div>
+    </div>
+    </div>
+    <div class='section-title scenario' id="scenario">
+      <span class='icon'></span>场景×3D打印 Scenario（教育/文创/家居/食品）</div>
+    <div class='scenario-zone'>
+    <div class='scenario-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>21</span>
+        <div class='item-title'>
+          <a href='https://www.3dnatives.com/en/3d-printed-church-neratovice-23102026/amp' target='_blank'>捷克开建全球最大3D打印教堂之一，870个打印构件、2028年开放</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>捷克Neratovice正在建设全球规模最大的3D打印教堂之一——圣三一教堂与Beran枢机社区中心，预计2028年开放。项目采用混凝土3D打印三种模式：为nave打印870个独特永久模板构件、塔楼打印填充混凝土的砌块、以及用建筑机器人现场打印rectory；建筑师Zdenek Franek的有机曲面因此无需定制模板即可实现，兼具声学纹理。</div>
+      <div class='item-source'>来源：<a href='https://www.3dnatives.com/en/3d-printed-church-neratovice-23102026/amp' target='_blank'>3Dnatives</a><span class='from-tag from-3dprinting'>3Dnatives</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>22</span>
+        <div class='item-title'>
+          <a href='https://www.3dnatives.com/en' target='_blank'>Susan Fang伦敦时装周用Bambu Lab打印，3D打印再登T台</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3Dnatives报道，设计师Susan Fang在伦敦时装周（9月18日）发布2027春夏系列“Air-Illusion”，使用Bambu Lab打印机与社区模型制作秀场装置与服装构件，延续3D打印登上T台的潮流，显示消费级设备正进入高定与艺术表达场景。</div>
+      <div class='item-source'>来源：<a href='https://www.3dnatives.com/en' target='_blank'>3Dnatives</a><span class='from-tag from-3dprinting'>3Dnatives</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>23</span>
+        <div class='item-title'>
+          <a href='https://3dptimes.com/article/q8vX78crzXQbwUBU' target='_blank'>Protopasta自2013年内部建制线，强调材料一致性与供应链</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3Dnatives专访Protopasta联合创始人Alexander Dick：这家自2013年起自建制线设备的华盛顿州企业，将材料开发与一致的化学配方、定制线材结合，强调在打印机舰队普及下，材料可得性与一致性仍是用户约束；文章未发布新品，侧重工艺与供应链视角。</div>
+      <div class='item-source'>来源：<a href='https://3dptimes.com/article/q8vX78crzXQbwUBU' target='_blank'>3DPTimes</a><span class='from-tag from-other'>3DPTimes</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>24</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/334981/eth-zurich-uses-bacteria-to-3d-print-facade-elements/' target='_blank'>ETH苏黎世用细菌建造立面构件，生物矿化结合增材制造</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3DPrint.com报道，ETH苏黎世用细菌建造立面构件：活体细菌通过沉淀方解石、形成碳酸钙将砂粒粘结；该技术把生物矿化与增材制造结合，为低碳、就地成形的建筑构件提供新路径，适用于对纹理与几何自由的立面设计。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/334981/eth-zurich-uses-bacteria-to-3d-print-facade-elements/' target='_blank'>3DPrint.com</a><span class='from-tag from-3dprint'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>25</span>
+        <div class='item-title'>
+          <a href='https://heylookitseric.com?p=2394/' target='_blank'>建筑3D打印已规模化：混凝土打印机48小时建成整屋，成本降30%–50%</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>行业趋势综述指出，建筑3D打印已显著规模化：混凝土打印机可在48小时内建成整屋，德州、墨西哥与欧洲的项目将可负担住房成本较传统降低30%–50%，并缓解建筑劳力短缺；基础设施侧亦用于桥梁、海堤与公用构件，体现设计自由度带来的结构优化。</div>
+      <div class='item-source'>来源：<a href='https://heylookitseric.com?p=2394/' target='_blank'>HeyLookItsEric</a><span class='from-tag from-other'>HeyLookItsEric</span></div>
+    </div>
+    </div>
+    <div class='section-title global' id="global">
+      <span class='icon'></span>海外资讯（国际/3Dnatives/3DPrint.com）</div>
+    <div class='global-zone'>
+    <div class='global-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>26</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/335390/china-am-market-about-to-get-even-more-competitive/' target='_blank'>中国增材制造市场竞争将更激烈，欧美承压</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3DPrint.com（10月23日）分析，中国增材制造企业正得益于本土供应链与“不得不”的自主创新，国内激光企业HG Laser金属增材聚焦便是例证；伴随产能扩张与出海，全球增材制造市场的竞争将进一步加剧，欧美企业面临更陡的成本与交付压力。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/335390/china-am-market-about-to-get-even-more-competitive/' target='_blank'>3DPrint.com</a><span class='from-tag from-3dprint'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>27</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/335396/what-are-failed-3d-printing-companies-actually-worth/' target='_blank'>反思：2026年多家3D打印公司倒闭后留下了什么</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3DPrint.com（10月23日）反思2026年多家3D打印公司关闭、出售资产或重组（如峰华卓立摘牌、部分企业破产清算）：文章探讨“一家3D打印公司倒闭后究竟留下什么”——知识产权、产线、客户与人才如何流转，行业洗牌下的资产价值重估。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/335396/what-are-failed-3d-printing-companies-actually-worth/' target='_blank'>3DPrint.com</a><span class='from-tag from-3dprint'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>28</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/335341/the-pentagon-turns-to-nikon-advanced-manufacturing-to-ramp-up-tomahawk-production/' target='_blank'>五角大楼转向Nikon扩大战斧导弹增材制造产能</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3DPrint.com（10月22日）披露，五角大楼转向Nikon以扩大战斧（Tomahawk）导弹的增材制造产能，将固体火箭发动机视为3D打印在真实生产环境中首个规模化挑战；文章延续其对“国防部AM从技术转向后勤”的判断，强调供应链与节拍能力。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/335341/the-pentagon-turns-to-nikon-advanced-manufacturing-to-ramp-up-tomahawk-production/' target='_blank'>3DPrint.com</a><span class='from-tag from-3dprint'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>29</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/335146/amazemet-signs-mou-with-f4e/' target='_blank'>AMAZEMET与F4E签MOU，将增材制造用于聚变能部件</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3DPrint.com（10月22日）报道，AMAZEMET与F4E（Fusion for Energy，欧盟聚变组织）签署谅解备忘录，将增材制造用于聚变能相关部件；AMAZEMET以wire arc增材（WAAM）与纳米粉体专长，参与ITER等聚变供应链的本地化制造。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/335146/amazemet-signs-mou-with-f4e/' target='_blank'>3DPrint.com</a><span class='from-tag from-3dprint'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>30</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/335139/caracol-and-gadc-want-to-print-in-greenland/' target='_blank'>Caracol获格陵兰订单，增材制造向极地现场部署延伸</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3DPrint.com（10月21日）报道，格陵兰北极开发公司（GADC）购入Caracol Heron 400轨道式六轴以上机器人3D打印机，用于在当地生产大型聚合物与复合材料构件；项目契合格陵兰基础设施与资源开发，显示增材制造向极地与离岸现场部署延伸。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/335139/caracol-and-gadc-want-to-print-in-greenland/' target='_blank'>3DPrint.com</a><span class='from-tag from-3dprint'>3DPrint.com</span></div>
+    </div>
+    </div>
+    <div class='section-title feedback' id="feedback">
+      <span class='icon'></span>用户口碑（国外评测/国内实测）</div>
+    <div class='feedback-zone'>
+    <div class='feedback-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>31</span>
+        <div class='item-title'>
+          <a href='https://planet3dp.com/best-3d-printers' target='_blank'>Planet3DP《2026最佳3D打印机》按预算分级推荐</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>Planet3DP《2026最佳3D打印机》按预算分级推荐：新手首选Bambu Lab A1（299美元，15分钟上手、全自校）；封闭全能选P2S（549美元，胜任ABS/ASA/PA）；大尺寸选A2L（469美元）；最少浪费选Snapmaker U1（工具换型几乎零冲洗）；最低价Bambu A1 Combo一步升级多色。</div>
+      <div class='item-source'>来源：<a href='https://planet3dp.com/best-3d-printers' target='_blank'>Planet3DP</a><span class='from-tag from-other'>Planet3DP</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>32</span>
+        <div class='item-title'>
+          <a href='https://print2webcorp.com/?p=41083' target='_blank'>实测：Bambu A1最易用、Creality K1C高速、Anycubic Photon Mono 4入门树脂</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>print2webcorp《2026年10月最佳3D打印机》评测：Bambu Lab A1为最易用入门机（15–18分钟自校、可靠打印PLA/PETG/TPU）；Creality K1C为高速与AI监控的次选；树脂入门选Anycubic Photon Mono 4（<250美元），高精细选Elegoo Saturn 4 Ultra 16K；年成本约400–800美元。</div>
+      <div class='item-source'>来源：<a href='https://print2webcorp.com/?p=41083' target='_blank'>Print2WebCorp</a><span class='from-tag from-other'>Print2WebCorp</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>33</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/331353/prusa-core-one-gen-2-indx-a-match-made-in-heaven/' target='_blank'>评测：Prusa CORE One+（Gen 2）配INDX工具换型“天作之合”</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3DPrint.com评测Prusa CORE One+（Gen 2）与INDX工具换型升级：在封闭CoreXY机身上加入多工具快换，评测者认为二者“天作之合”——INDX让单设备多材料/多色更顺滑，兼顾Prusa的开源生态与打印可靠性，适合进阶玩家与小型工作室。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/331353/prusa-core-one-gen-2-indx-a-match-made-in-heaven/' target='_blank'>3DPrint.com</a><span class='from-tag from-3dprint'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>34</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/335440/the-first-millions-the-hardest-carbons-achievement-with-3d-printed-bike-saddles/' target='_blank'>回顾：Carbon的3D打印自行车坐垫“第一百万最难”</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3DPrint.com回顾Carbon的3D打印自行车坐垫“第一百万最难”：Carbon以弹性体树脂与DLS工艺将坐垫从原型推向规模生产，标志增材制造在消费品领域的成熟案例；文章强调从首件到第一百万件，材料一致性、产线与认证才是真正门槛。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/335440/the-first-millions-the-hardest-carbons-achievement-with-3d-printed-bike-saddles/' target='_blank'>3DPrint.com</a><span class='from-tag from-3dprint'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>35</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/335375/formlabs-enters-the-699-resin-3d-printer-market-taking-on-chinese-competitors/' target='_blank'>评测：Formlabs以699美元Form Studio 1杀入消费级树脂市场</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3DPrint.com（10月22日）评测Formlabs以699美元Form Studio 1杀入消费级树脂市场，正面迎战中国厂商：机器搭载LFD引擎、35微米像素、开放材料模式与自动供料/加热，配合Alpha树脂获UL绿卫士金级认证，被视为专业树脂能力下沉的关键一步。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/335375/formlabs-enters-the-699-resin-3d-printer-market-taking-on-chinese-competitors/' target='_blank'>3DPrint.com</a><span class='from-tag from-3dprint'>3DPrint.com</span></div>
+    </div>
+    </div>
+    <div class='footer'>
+  <p>3D打印行业每日资讯 · 2026年10月26日 （星期一）· 内容日期 2026年10月23日</p>
+  <p>数据来源见各条目标注 · <a href="index.html">返回首页</a></p>
+</div>
+</div>
+</body>
+</html>
