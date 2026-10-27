@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>K3 评价审核规则与原文/译文展示 · 样式稿 2026-10-19</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d1117;color:#c9d1d9;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;font-size:14px;line-height:1.6;padding:28px 22px 60px}
+.wrap{max-width:1000px;margin:0 auto}
+.banner{background:rgba(210,153,34,.1);border:1px solid rgba(210,153,34,.4);border-radius:8px;padding:11px 14px;font-size:12.5px;color:#e3b341;margin-bottom:22px}
+h1{font-size:20px;color:#e6edf3;font-weight:600;margin-bottom:6px}
+.sub{font-size:12.5px;color:#6e7681;margin-bottom:26px}
+h2{font-size:15px;color:#e6edf3;font-weight:600;margin:30px 0 12px;padding-left:9px;border-left:3px solid #1f6feb}
+h2 span{font-size:11.5px;color:#6e7681;font-weight:400;margin-left:8px}
+.panel{background:#11161f;border:1px solid #21262d;border-radius:10px;padding:18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:820px){.grid2,.grid3{grid-template-columns:1fr}}
+
+/* 流水线 */
+.flow{display:flex;align-items:stretch;gap:0;margin:4px 0 16px}
+.step{flex:1;background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:13px 14px;position:relative}
+.step+.step{margin-left:26px}
+.step+.step:before{content:"›";position:absolute;left:-19px;top:50%;transform:translateY(-50%);color:#30363d;font-size:22px;font-weight:700}
+.step .n{font-size:10.5px;color:#58a6ff;letter-spacing:.5px;font-weight:600}
+.step .t{font-size:13px;color:#e6edf3;font-weight:600;margin:3px 0 5px}
+.step .d{font-size:11.5px;color:#8b949e;line-height:1.55}
+@media(max-width:820px){.flow{flex-direction:column}.step+.step{margin:12px 0 0}.step+.step:before{display:none}}
+
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;color:#8b949e;font-weight:500;padding:8px 10px;border-bottom:1px solid #21262d;background:#0d1117;font-size:11.5px}
+td{padding:9px 10px;border-bottom:1px solid #1c2128;vertical-align:top;color:#c9d1d9}
+td.num{font-variant-numeric:tabular-nums}
+.gA{color:#3fb950;font-weight:600}.gB{color:#58a6ff;font-weight:600}.gC{color:#6e7681;font-weight:600}
+
+/* 卡片 */
+.card{background:#11161f;border:1px solid #21262d;border-radius:9px;padding:13px 15px;margin-bottom:12px}
+.card.a{border-left:3px solid #3fb950}
+.card.b{border-left:3px solid #58a6ff}
+.card.c{border-left:3px solid #30363d;opacity:.62}
+.c-head{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:9px}
+.chip{font-size:10.5px;padding:2px 8px;border-radius:9px;border:1px solid #21262d;background:#0d1117;color:#8b949e;white-space:nowrap}
+.chip.k{background:rgba(95,211,154,.14);color:#5fd39a;border-color:rgba(95,211,154,.36)}
+.chip.gA{background:rgba(63,185,80,.14);color:#3fb950;border-color:rgba(63,185,80,.4)}
+.chip.gB{background:rgba(88,166,255,.12);color:#58a6ff;border-color:rgba(88,166,255,.32)}
+.chip.gC{background:#161b22;color:#6e7681;border-color:#21262d}
+.chip.auto{background:rgba(227,179,65,.14);color:#e3b341;border-color:rgba(227,179,65,.4)}
+.c-parent{font-size:11.5px;color:#8b949e;background:#0d1117;border-left:2px solid #2f5177;border-radius:0 5px 5px 0;padding:6px 10px;margin-bottom:10px}
+.c-parent b{color:#a8b9c9;font-weight:600}
+.blk{margin-bottom:9px}
+.blk .lab{font-size:10.5px;color:#6e7681;letter-spacing:.3px;margin-bottom:3px;display:flex;gap:6px;align-items:center}
+.blk .lab .mt{font-size:9.5px;color:#e3b341;border:1px solid rgba(227,179,65,.35);border-radius:7px;padding:0 5px}
+.orig{font-size:13px;line-height:1.62;color:#e6edf3}
+.trans{font-size:13px;line-height:1.62;color:#a8b9c9;background:rgba(88,166,255,.05);border-left:2px solid rgba(88,166,255,.3);border-radius:0 5px 5px 0;padding:7px 10px}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin:9px 0}
+.tag{font-size:10.5px;color:#8b949e;background:#11161f;border:1px solid #21262d;border-radius:9px;padding:2px 8px}
+.tag.p{color:#79c0ff;background:rgba(31,111,235,.12);border-color:rgba(31,111,235,.35)}
+.tag.off{color:#484f58;background:#0d1117;border-color:#1c2128;text-decoration:line-through}
+.c-foot{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#6e7681;border-top:1px solid #1c2128;padding-top:8px;margin-top:2px}
+.c-foot a{color:#58a6ff;text-decoration:none}
+.reason{font-size:11.5px;color:#8b949e;background:#0d1117;border:1px dashed #30363d;border-radius:5px;padding:6px 10px;margin-bottom:9px}
+.reason b{color:#d29922;font-weight:600}
+
+/* 筛选示意 */
+.fbar{display:flex;flex-wrap:wrap;gap:7px;align-items:center;background:#11161f;border:1px solid #21262d;border-radius:8px;padding:10px 12px;margin-bottom:14px}
+.fbar .lb{font-size:11.5px;color:#6e7681;margin-right:2px}
+.fbtn{font-size:11.5px;padding:4px 11px;border-radius:6px;border:1px solid #21262d;background:#0d1117;color:#8b949e;cursor:pointer;transition:.15s}
+.fbtn:hover{border-color:#30363d;color:#c9d1d9}
+.fbtn.on{background:#1f6feb;border-color:#1f6feb;color:#fff;font-weight:600}
+.fbtn .n{opacity:.65;margin-left:4px;font-size:10.5px}
+.sep{width:1px;height:16px;background:#21262d;margin:0 4px}
+.note{font-size:11.5px;color:#8b949e;line-height:1.7}
+.note b{color:#e6edf3}
+.kv{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.kvbox{flex:1;min-width:130px;background:#0d1117;border:1px solid #21262d;border-radius:7px;padding:10px 12px}
+.kvbox .l{font-size:11px;color:#6e7681}
+.kvbox .v{font-size:19px;color:#e6edf3;font-weight:600;font-variant-numeric:tabular-nums;margin-top:2px}
+.kvbox .s{font-size:10.5px;color:#6e7681;margin-top:1px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="banner">
+<b>样式稿</b>：分档数字来自当前 453 条评价的真实回算，卡片文案为真实样本。译文为示例译法，用于确认展示形态与措辞，尚未批量生成。
+</div>
+
+<h1>评价审核规则 &amp; 原文/译文展示</h1>
+<div class="sub">K3 用户反馈看板 · 2026-10-19 · 待确认稿</div>
+
+<h2>一、审核流水线<span>回答「什么评价算有价值」</span></h2>
+<div class="flow">
+  <div class="step">
+    <div class="n">STEP 1 · 相关性</div>
+    <div class="t">在不在说这台机器</div>
+    <div class="d">命中机器本体 / 部件 / 交易词（喷嘴、封箱、换色、价格、发货…）为强相关；只提「3D 打印」为弱相关；都没命中为无关。</div>
+  </div>
+  <div class="step">
+    <div class="n">STEP 2 · 信息量</div>
+    <div class="t">有没有说清一件事</div>
+    <div class="d">数值规格、使用经验、明确对比、指向具体功能的提问、故障描述，各计分。<b style="color:#d29922">型号里的数字不算</b>（K3 / U1 / C5）。</div>
+  </div>
+  <div class="step">
+    <div class="n">STEP 3 · 定档</div>
+    <div class="t">决定它能被怎么用</div>
+    <div class="d">强相关 + 有信息 → 有效；相关但无信息 → 泛讨论；无相关信号 → 无效。</div>
+  </div>
+</div>
+
+<table>
+<thead><tr><th style="width:110px">档位</th><th style="width:74px">条数</th><th style="width:64px">占比</th><th>判定条件</th><th>用途边界</th></tr></thead>
+<tbody>
+<tr><td class="gA">A 有效</td><td class="num">139</td><td class="num">30.7%</td><td>与机器强相关，且有数字 / 经验 / 对比 / 故障 / 明确表态</td><td>计入问题点榜、情感分析，可作为结论引用</td></tr>
+<tr><td class="gB">B 泛讨论</td><td class="num">107</td><td class="num">23.6%</td><td>与机器相关，但只有提问、期待、泛评，无具体信息</td><td>计入总声量，<b>不进问题点榜</b>（避免冲淡真实议题）</td></tr>
+<tr><td class="gC">C 无效</td><td class="num">207</td><td class="num">45.7%</td><td>与本机无关（如聊视频剪辑、聊别的东西）或纯情绪无信息</td><td><b>默认不进任何聚合面板</b>，可单独筛出复核</td></tr>
+</tbody>
+</table>
+
+<div class="note" style="margin-top:14px">
+两个必须说清的事实：<br>
+① <b>有 86 条评价挂着专题标签，但被判为 C</b>。这些标签是关键词巧合（`informative` 命中 `rma`、`absolutely` 命中 `abs`），属于假专题，本轮会一并清掉。<br>
+② <b>剔除 C 之后，评价类负面率从 6.6% 升到 9.8%</b>。也就是说，无效内容一直在<b>稀释</b>负面率，现在的 6.6% 是被拉低后的数字。
+</div>
+
+<h2>二、卡片形态<span>A / B / C 三态 + 原文与译文</span></h2>
+
+<div class="card a">
+  <div class="c-head">
+    <span class="chip k">评价</span><span class="chip gA">有效</span>
+    <span class="chip">YouTube</span><span class="chip auto">自动标注</span>
+  </div>
+  <div class="c-parent">来自：<b>谁更快？Snapmaker U1 vs Creality K3 速度测试！</b></div>
+
+  <div class="blk">
+    <div class="lab">原文 · EN</div>
+    <div class="orig">I big flaw in k3 design... the hotends can't be cooled when detatched due to lack of cooling fan. In U1 case the toolhead includes everything to be able to function even while detached.</div>
+  </div>
+  <div class="blk">
+    <div class="lab">译文 <span class="mt">机器翻译</span></div>
+    <div class="trans">K3 的设计有个大缺陷：热端拆下来后无法冷却，因为缺少散热风扇。U1 的工具头拆下来后自身还是完整可用的。</div>
+  </div>
+
+  <div class="tags"><span class="tag p">竞品对比与定位</span><span class="tag p">喷嘴与耗材规格</span></div>
+  <div class="c-foot"><span>点赞 3</span><a href="#">查看原文 ↗</a></div>
+</div>
+
+<div class="card a">
+  <div class="c-head">
+    <span class="chip k">评价</span><span class="chip gA">有效</span>
+    <span class="chip">YouTube</span><span class="chip auto">自动标注</span>
+  </div>
+  <div class="c-parent">来自：<b>Creality K3 正在改变多色 3D 打印的游戏规则！更快、更智能</b></div>
+
+  <div class="blk">
+    <div class="lab">原文 · EN</div>
+    <div class="orig">Longer than 5 seconds as purge makes it 11 to 15 seconds, also sick of tiny print beds</div>
+  </div>
+  <div class="blk">
+    <div class="lab">译文 <span class="mt">机器翻译</span></div>
+    <div class="trans">不止 5 秒。因为要冲刷，实际是 11 到 15 秒。另外我实在受够小打印床了。</div>
+  </div>
+
+  <div class="tags"><span class="tag p">换色/换头实际耗时长</span></div>
+  <div class="c-foot"><span>点赞 0</span><a href="#">查看原文 ↗</a></div>
+</div>
+
+<div class="card b">
+  <div class="c-head">
+    <span class="chip k">评价</span><span class="chip gB">泛讨论</span>
+    <span class="chip">YouTube</span><span class="chip auto">自动标注</span>
+  </div>
+  <div class="c-parent">来自：<b>谁更快？Snapmaker U1 vs Creality K3 速度测试！</b></div>
+
+  <div class="blk">
+    <div class="lab">原文 · EN</div>
+    <div class="orig">Nice review, the most interesting for me is that k3 is bigger (higher) and has a smaller print volume.</div>
+  </div>
+  <div class="blk">
+    <div class="lab">译文 <span class="mt">机器翻译</span></div>
+    <div class="trans">测评不错。对我来说最有意思的是 K3 更高，但打印体积反而更小。</div>
+  </div>
+
+  <div class="tags"><span class="tag off">不计入问题点榜</span></div>
+  <div class="c-foot"><span>点赞 17</span><a href="#">查看原文 ↗</a></div>
+</div>
+
+<div class="card c">
+  <div class="c-head">
+    <span class="chip k" style="opacity:.6">评价</span><span class="chip gC">无效</span>
+    <span class="chip">YouTube</span>
+  </div>
+  <div class="reason">排除原因：<b>与本机无关</b> · 该评论在讨论视频里的糖果机落糖结构，不涉及打印机</div>
+
+  <div class="blk">
+    <div class="lab">原文 · EN</div>
+    <div class="orig">It should have a way to break the fall so the candy doesn't break</div>
+  </div>
+  <div class="blk">
+    <div class="lab">译文 <span class="mt">机器翻译</span></div>
+    <div class="trans">应该加个缓冲落下的结构，不然糖果会摔碎。</div>
+  </div>
+
+  <div class="c-foot"><span>点赞 39</span><a href="#">查看原文 ↗</a></div>
+</div>
+
+<div class="note">
+中文原文的评价（B 站 33 条）只显示一段，标注为「原文 · 中文」，不再重复输出译文。筛选逻辑：<b>凡不是中文的都出双段</b>。
+</div>
+
+<h2>三、页面落点<span>只加一个筛选项，不动总览口径</span></h2>
+
+<div class="fbar">
+  <span class="lb">审核</span>
+  <button class="fbtn on">全部<span class="n">453</span></button>
+  <button class="fbtn">有效<span class="n">139</span></button>
+  <button class="fbtn">泛讨论<span class="n">107</span></button>
+  <button class="fbtn">无效<span class="n">207</span></button>
+  <div class="sep"></div>
+  <span class="lb">载体</span>
+  <button class="fbtn on">全部</button>
+  <button class="fbtn">视频</button>
+  <button class="fbtn">图文</button>
+  <button class="fbtn">评价</button>
+</div>
+
+<div class="note" style="margin-bottom:12px">
+「审核」成为筛选栏第 12 个条件，和「载体」并列，同样进摘要条、可单独撤销。<b>总览口径保持「全部」不变</b>，但它不再计入任何聚合。
+</div>
+
+<div class="kv">
+  <div class="kvbox"><div class="l">评价总数</div><div class="v">453</div><div class="s">已全部过审</div></div>
+  <div class="kvbox"><div class="l">有效</div><div class="v" style="color:#3fb950">139</div><div class="s">可进问题点榜</div></div>
+  <div class="kvbox"><div class="l">泛讨论</div><div class="v" style="color:#58a6ff">107</div><div class="s">只计声量</div></div>
+  <div class="kvbox"><div class="l">无效</div><div class="v" style="color:#6e7681">207</div><div class="s">默认不聚合</div></div>
+  <div class="kvbox"><div class="l">待译</div><div class="v" style="color:#d29922">246</div><div class="s">A+B 档非中文</div></div>
+</div>
+
+<h2>四、翻译怎么办<span>分批生成，可人工改，全程标「机器翻译」</span></h2>
+<table>
+<thead><tr><th style="width:150px">项</th><th>做法</th></tr></thead>
+<tbody>
+<tr><td>范围</td><td>只翻 <b>A + B 档</b>（246 条）。C 档默认不展示，不浪费翻译。</td></tr>
+<tr><td>语言</td><td>实测不止英文：<b>EN 375 / DE 23 / FR 10 / 其它</b>。现有 `language` 字段把它们全标成 EN，本轮按字符集重判后修正。</td></tr>
+<tr><td>产出</td><td>写入 <code>_k3_translations.json</code>，键为条目 uid，可增量补、可逐条手改，不覆盖已有。</td></tr>
+<tr><td>标识</td><td>译文段固定带「机器翻译」标，人工复核过的改标「已校对」。<b>不冒充人工译文。</b></td></tr>
+<tr><td>不改原文</td><td>`originalText` 一个字符都不动，译文独立字段，随时可丢弃重做。</td></tr>
+</tbody>
+</table>
+
+<h2>五、需要你定的三件事</h2>
+<div class="panel">
+<div class="note">
+<b>① C 档 207 条（45.7%）默认怎么处理？</b><br>
+&nbsp;&nbsp;A：默认不进任何聚合面板，只可单独筛出查看（我倾向这个）<br>
+&nbsp;&nbsp;B：仍计入总声量，只是不进问题点榜<br><br>
+<b>② 翻译范围？</b><br>
+&nbsp;&nbsp;A：只翻 A+B 档 246 条（我倾向这个）&nbsp;&nbsp;B：连 C 档一起翻 453 条<br><br>
+<b>③ 档位叫法？</b><br>
+&nbsp;&nbsp;A：有效 / 泛讨论 / 无效（我倾向这个）<br>
+&nbsp;&nbsp;B：可用 / 参考 / 排除&nbsp;&nbsp;C：高价值 / 一般 / 无价值
+</div>
+</div>
+
+</div>
+</body>
+</html>

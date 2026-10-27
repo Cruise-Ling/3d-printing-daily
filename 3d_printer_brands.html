@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D打印机品牌全球分布图</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;background:#061525;color:#e2e8f0;line-height:1.6;overflow-x:hidden}
+.hero{text-align:center;padding:36px 20px 24px;background:linear-gradient(135deg,#1a73e8 0%,#0d47a1 50%,#1558b3 100%);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(255,255,255,.04),transparent 60%)}
+.hero h1{font-size:2rem;font-weight:700;color:#fff;margin-bottom:6px;position:relative}
+.hero p{color:rgba(255,255,255,.8);font-size:.9rem;position:relative}
+.filters{display:flex;align-items:center;gap:12px;padding:16px 24px;background:rgba(15,23,42,.8);border-bottom:1px solid #1e293b;flex-wrap:wrap;position:sticky;top:0;z-index:50;backdrop-filter:blur(12px)}
+.filter-group{display:flex;align-items:center;gap:6px}
+.filter-label{font-size:.78rem;color:#64748b;font-weight:500;margin-right:2px}
+.filter-btn{padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:500;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer;transition:all .2s}
+.filter-btn:hover{border-color:#475569;color:#e2e8f0}
+.filter-btn.active{background:rgba(26,115,232,.2);border-color:#1a73e8;color:#60a5fa}
+.filter-divider{width:1px;height:20px;background:#1e293b}
+.view-toggle{display:flex;gap:4px;margin-left:auto}
+.view-btn{padding:5px 14px;border-radius:8px;font-size:.78rem;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer;transition:all .2s}
+.view-btn.active{background:#1a73e8;border-color:#1a73e8;color:#fff}
+.view-btn:hover{border-color:#475569}
+.map-view{position:relative;width:100%;min-height:calc(100vh - 200px)}
+.map-container{width:100%;max-width:1400px;margin:0 auto;position:relative;padding:20px}
+#mapCanvas{width:100%;height:auto;display:block;border-radius:12px}
+.loading-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(6,21,37,.92);z-index:5;border-radius:12px;flex-direction:column;gap:16px}
+.loading-spinner{width:40px;height:40px;border:3px solid #1e293b;border-top-color:#1a73e8;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{color:#64748b;font-size:.9rem}
+.tooltip{position:absolute;background:rgba(15,23,42,.95);border:1px solid #334155;border-radius:10px;padding:12px 16px;pointer-events:none;opacity:0;transition:opacity .15s;z-index:60;backdrop-filter:blur(8px);max-width:260px;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+.tooltip.show{opacity:1}
+.tooltip-name{font-weight:600;color:#f1f5f9;font-size:.9rem}
+.tooltip-city{color:#94a3b8;font-size:.78rem;margin-top:2px}
+.tooltip-tags{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
+.tooltip-tag{padding:2px 8px;border-radius:4px;font-size:.7rem;font-weight:500}
+.tooltip-tag.cn{background:rgba(245,158,11,.15);color:#fbbf24}
+.tooltip-tag.us{background:rgba(59,130,246,.15);color:#60a5fa}
+.tooltip-tag.eu{background:rgba(34,197,94,.15);color:#4ade80}
+.tooltip-tag.consumer{background:rgba(34,197,94,.15);color:#4ade80}
+.tooltip-tag.pro{background:rgba(59,130,246,.15);color:#60a5fa}
+.tooltip-tag.industrial{background:rgba(239,68,68,.15);color:#f87171}
+.panel-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(2px)}
+.panel-overlay.show{opacity:1;pointer-events:all}
+.detail-panel{position:fixed;top:0;right:-520px;width:500px;max-width:92vw;height:100vh;background:#0f172a;border-left:1px solid #1e293b;z-index:101;transition:right .4s cubic-bezier(.16,1,.3,1);overflow-y:auto;box-shadow:-8px 0 30px rgba(0,0,0,.4)}
+.detail-panel.show{right:0}
+.panel-header{padding:24px;background:linear-gradient(135deg,#1a73e8,#0d47a1);position:relative}
+.panel-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:8px;border:none;background:rgba(255,255,255,.15);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.panel-close:hover{background:rgba(255,255,255,.3)}
+.panel-brand-name{font-size:1.5rem;font-weight:700;color:#fff}
+.panel-brand-en{font-size:.85rem;color:rgba(255,255,255,.7);margin-top:2px}
+.panel-brand-city{font-size:.85rem;color:rgba(255,255,255,.8);margin-top:8px;display:flex;align-items:center;gap:6px}
+.panel-body{padding:24px}
+.panel-section{margin-bottom:20px}
+.panel-section-title{font-size:.8rem;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.panel-section-title::after{content:'';flex:1;height:1px;background:#1e293b}
+.panel-tags{display:flex;flex-wrap:wrap;gap:6px}
+.panel-tag{padding:4px 12px;border-radius:6px;font-size:.8rem;font-weight:500}
+.panel-tag.consumer{background:rgba(34,197,94,.15);color:#4ade80;border:1px solid rgba(34,197,94,.25)}
+.panel-tag.pro{background:rgba(59,130,246,.15);color:#60a5fa;border:1px solid rgba(59,130,246,.25)}
+.panel-tag.industrial{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.25)}
+.panel-tag.tech{background:rgba(168,85,247,.12);color:#c084fc;border:1px solid rgba(168,85,247,.2)}
+.panel-desc{font-size:.9rem;color:#cbd5e1;line-height:1.7}
+.product-card{padding:14px 16px;background:#1e293b;border-radius:12px;border:1px solid #2d3a4d;margin-bottom:8px;transition:all .2s}
+.product-card:hover{border-color:#475569;background:#283548}
+.product-card-name{font-weight:600;color:#f1f5f9;font-size:.9rem}
+.product-card-desc{font-size:.8rem;color:#94a3b8;margin-top:4px}
+.table-view{display:none;max-width:1400px;margin:0 auto;padding:20px}
+.table-view.show{display:block}
+.table-wrap{overflow-x:auto;border-radius:16px;border:1px solid #1e293b;background:#1e293b}
+table{width:100%;border-collapse:collapse;min-width:900px}
+thead{background:#334155}
+thead th{padding:14px 16px;text-align:left;font-size:.85rem;font-weight:600;color:#94a3b8;white-space:nowrap;letter-spacing:.5px;border-bottom:2px solid #475569}
+tbody tr{transition:background .2s;cursor:pointer}
+tbody tr:hover{background:#283548}
+tbody tr.highlight{background:rgba(26,115,232,.1)}
+tbody td{padding:14px 16px;font-size:.9rem;border-bottom:1px solid #2d3a4d;vertical-align:top}
+.brand-cell{display:flex;align-items:center;gap:10px;min-width:140px}
+.brand-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.brand-name{font-weight:600;color:#f1f5f9}
+.brand-en{font-size:.75rem;color:#64748b}
+.tag{padding:3px 10px;border-radius:6px;font-size:.78rem;font-weight:500;white-space:nowrap;display:inline-block}
+.tag-fff{background:rgba(34,197,94,.12);color:#4ade80;border:1px solid rgba(34,197,94,.2)}
+.tag-sla{background:rgba(168,85,247,.12);color:#c084fc;border:1px solid rgba(168,85,247,.2)}
+.tag-slm{background:rgba(239,68,68,.12);color:#f87171;border:1px solid rgba(239,68,68,.2)}
+.tag-sls{background:rgba(251,191,36,.12);color:#fbbf24;border:1px solid rgba(251,191,36,.2)}
+.tag-pj{background:rgba(6,182,212,.12);color:#22d3ee;border:1px solid rgba(6,182,212,.2)}
+.tag-fdm{background:rgba(59,130,246,.12);color:#60a5fa;border:1px solid rgba(59,130,246,.2)}
+.tag-dlp{background:rgba(244,114,182,.12);color:#f472b6;border:1px solid rgba(244,114,182,.2)}
+.product-list{margin-top:6px;line-height:1.8}
+.product-item{display:inline;padding:2px 0}
+.product-item::before{content:'';display:inline-block;width:3px;height:3px;border-radius:50%;background:#475569;margin-right:6px;vertical-align:middle}
+.city{color:#94a3b8;font-size:.85rem}
+.level{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.72rem;font-weight:600}
+.level-consumer{background:rgba(34,197,94,.1);color:#4ade80}
+.level-pro{background:rgba(59,130,246,.1);color:#60a5fa}
+.level-industrial{background:rgba(239,68,68,.1);color:#f87171}
+.footer{text-align:center;padding:20px;color:#475569;font-size:.78rem;border-top:1px solid #1e293b;margin-top:20px}
+@media(max-width:768px){.hero h1{font-size:1.4rem}.filters{padding:12px 16px;gap:8px}.detail-panel{width:100vw;max-width:100vw}.filter-divider{display:none}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <h1>3D打印机品牌全球分布图</h1>
+  <p>30+ 主流品牌 · 20+ 城市 · 点击地图标记查看品牌详情</p>
+</div>
+<div class="filters">
+  <div class="filter-group">
+    <span class="filter-label">地区：</span>
+    <button class="filter-btn active" data-filter="region" data-value="all">全部</button>
+    <button class="filter-btn" data-filter="region" data-value="cn">中国</button>
+    <button class="filter-btn" data-filter="region" data-value="us">北美</button>
+    <button class="filter-btn" data-filter="region" data-value="eu">欧洲</button>
+  </div>
+  <div class="filter-divider"></div>
+  <div class="filter-group">
+    <span class="filter-label">级别：</span>
+    <button class="filter-btn active" data-filter="level" data-value="all">全部</button>
+    <button class="filter-btn" data-filter="level" data-value="consumer">消费级</button>
+    <button class="filter-btn" data-filter="level" data-value="pro">专业级</button>
+    <button class="filter-btn" data-filter="level" data-value="industrial">工业级</button>
+  </div>
+  <div class="view-toggle">
+    <button class="view-btn active" data-view="map">地图</button>
+    <button class="view-btn" data-view="table">列表</button>
+  </div>
+</div>
+<div class="map-view" id="mapView">
+  <div class="map-container" style="position:relative">
+    <canvas id="mapCanvas" width="1400" height="720"></canvas>
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Loading world map...</div>
+    </div>
+    <div class="tooltip" id="tooltip"></div>
+  </div>
+</div>
+<div class="table-view" id="tableView"><div id="tableContent"></div></div>
+<div class="panel-overlay" id="panelOverlay"></div>
+<div class="detail-panel" id="detailPanel">
+  <div class="panel-header" id="panelHeader">
+    <button class="panel-close" id="panelClose">&times;</button>
+    <div class="panel-brand-name" id="panelName"></div>
+    <div class="panel-brand-en" id="panelEn"></div>
+    <div class="panel-brand-city" id="panelCity"></div>
+  </div>
+  <div class="panel-body" id="panelBody"></div>
+</div>
+<div class="footer">
+  <p>数据来源：各品牌官网、行业报告、公开资料 | 更新时间：2026年5月</p>
+  <p>排名不分先后 · 仅收录主流品牌 · 点击地图标记查看详情</p>
+</div>
+<script>
+// ===== Brand Data =====
+const brands=[
+{id:"bambu",name:"拓竹 Bambu Lab",en:"Bambu Lab",city:"广东 深圳",region:"cn",levels:["consumer","pro"],techs:["FFF"],color:"#ff6b35",desc:"全球消费级3D打印市场领导者，前大疆/阿里/字节工程师创立。以\"开箱即用\"体验闻名全球，2025年Q1全球入门级市场份额第一。",products:[{name:"H2D",d:"旗舰机型，融合激光雕刻/切割"},{name:"X2D",d:"双喷嘴系统，AI智能分配"},{name:"P2S",d:"中端主力，AI视觉识别"},{name:"P1S / P1P",d:"中高端闭壳机型"},{name:"A1 Mini / A1 / A1C",d:"入门级系列"},{name:"AMS Lite",d:"多色耗材管理"}],lat:22.5,lng:114.1},
+{id:"creality",name:"创想三维 Creality",en:"Creality 3D",city:"广东 深圳",region:"cn",levels:["consumer","pro"],techs:["FFF","SLA"],color:"#2563eb",desc:"全球3D打印出货量龙头之一，已递交IPO申请。Ender系列累计销量超千万台。",products:[{name:"K2 Pro / K2 Plus",d:"旗舰K2系列"},{name:"Ender 3 V3 系列",d:"入门爆款CoreXZ"},{name:"HALOT-MAGE",d:"光固化系列"},{name:"Creabot",d:"3D扫描仪"}],lat:22.5,lng:114.1},
+{id:"anycubic",name:"纵维立方 Anycubic",en:"Anycubic",city:"广东 深圳",region:"cn",levels:["consumer","pro"],techs:["FFF","SLA"],color:"#7c3aed",desc:"深圳四大天王之一，光固化打印机累计销量超百万台。",products:[{name:"Kobra 3 系列",d:"FDM多色打印"},{name:"Photon Mono M7",d:"LCD光固化"},{name:"Mega 8K",d:"大幅面FDM"}],lat:22.5,lng:114.1},
+{id:"elegoo",name:"智能派 ELEGOO",en:"ELEGOO",city:"广东 深圳",region:"cn",levels:["consumer"],techs:["FFF","SLA","DLP"],color:"#0891b2",desc:"深圳四大天王之一，2024年完成7亿美元B+轮融资。",products:[{name:"OrangeStorm Giga",d:"大幅面FDM"},{name:"Centauri Carbon",d:"高速CoreXY"},{name:"Saturn 4 Ultra",d:"LCD光固化"}],lat:22.5,lng:114.1},
+{id:"longer",name:"长朗三维 Longer3D",en:"LONGER",city:"广东 深圳",region:"cn",levels:["consumer"],techs:["FFF","SLA"],color:"#65a30d",desc:"2016年收购英国3D打印先驱RepRapPro。",products:[{name:"LONGER ePrint",d:"双喷头UV纹理"},{name:"LK4 Pro",d:"FDM桌面级"}],lat:22.5,lng:114.1},
+{id:"sovol",name:"Sovol",en:"Sovol 3D",city:"广东 深圳",region:"cn",levels:["consumer"],techs:["FFF"],color:"#ca8a04",desc:"高性价比FDM 3D打印机品牌。",products:[{name:"SV08",d:"高速CoreXY"},{name:"Sv07 Plus",d:"多色FDM"}],lat:22.5,lng:114.1},
+{id:"kingroon",name:"坤联 Kingroon",en:"Kingroon",city:"广东 深圳",region:"cn",levels:["consumer"],techs:["FFF","SLA"],color:"#7e22ce",desc:"消费级3D打印品牌。",products:[{name:"KP3S 3.0",d:"入门级FDM"},{name:"Sidewinder X3 Plus",d:"大型CoreXY"}],lat:22.5,lng:114.1},
+{id:"biqu",name:"BIQU / BigTreeTech",en:"BIQU",city:"广东 深圳",region:"cn",levels:["consumer"],techs:["FFF"],color:"#0891b2",desc:"SKR系列主板全球创客社区首选。",products:[{name:"B1 SE",d:"CoreXY FDM"},{name:"SKR系列主板",d:"核心配件"}],lat:22.5,lng:114.1},
+{id:"flashforge",name:"闪铸科技 Flashforge",en:"Flashforge",city:"浙江 金华",region:"cn",levels:["consumer","pro"],techs:["FDM","DLP"],color:"#dc2626",desc:"拥有FDM、DLP、MJP三大技术，远销70多个国家。",products:[{name:"Adventurer 5M",d:"入门CoreXY"},{name:"Creator 4",d:"双喷头FDM"},{name:"Foto 8.9",d:"DLP光固化"}],lat:29.1,lng:119.6},
+{id:"qidi",name:"起迪 QIDI Tech",en:"QIDI Technology",city:"安徽 芜湖",region:"cn",levels:["consumer","pro"],techs:["FFF"],color:"#059669",desc:"首家与亚马逊直接合作的中国3D打印机供应商。",products:[{name:"Q1 Pro",d:"主动腔室加热"},{name:"X-Max 3",d:"大尺寸旗舰"}],lat:31.3,lng:118.4},
+{id:"raise3d",name:"复志科技 Raise3D",en:"Raise3D",city:"上海",region:"cn",levels:["pro","industrial"],techs:["FFF"],color:"#d97706",desc:"服务50000+企业客户，ideaMaker切片软件口碑极佳。",products:[{name:"E3",d:"IDEX双喷头"},{name:"E2CF",d:"碳纤材料兼容"},{name:"DF2",d:"大尺寸工业级"}],lat:31.2,lng:121.5},
+{id:"uniontech",name:"联泰科技 UnionTech",en:"UnionTech",city:"上海",region:"cn",levels:["industrial"],techs:["SLA","SLS","SLM"],color:"#0284c7",desc:"国内工业级光固化龙头，掌握SLA/SLS/SLM/DLP四大技术。",products:[{name:"RSPro 800",d:"工业级SLA"},{name:"LiteSolid",d:"SLS设备"}],lat:31.0,lng:121.2},
+{id:"shining3d",name:"先临三维 SHINING 3D",en:"SHINING 3D",city:"浙江 杭州",region:"cn",levels:["pro","industrial"],techs:["SLA","3D扫描"],color:"#4f46e5",desc:"专注高精度3D扫描和齿科数字化。",products:[{name:"FreeScan Combo",d:"计量级扫描仪"},{name:"AccuFab-L4D",d:"齿科3D打印机"}],lat:30.3,lng:120.2},
+{id:"eplus3d",name:"易加三维 Eplus3D",en:"Eplus3D",city:"北京",region:"cn",levels:["industrial"],techs:["SLM","SLS"],color:"#0369a1",desc:"专业金属增材制造设备制造商。",products:[{name:"EP-M260",d:"金属粉末床融合"},{name:"EP-C750",d:"聚合物SLS"}],lat:39.9,lng:116.4},
+{id:"farsoon",name:"华曙高科 Farsoon",en:"Farsoon",city:"湖南 长沙",region:"cn",levels:["industrial"],techs:["SLS","SLM"],color:"#be185d",desc:"全球领先的工业级3D打印解决方案提供商。",products:[{name:"HT252P",d:"尼龙SLS烧结"},{name:"FS271M",d:"金属SLM"}],lat:28.2,lng:113.0},
+{id:"blt",name:"铂力特 BLT",en:"BLT",city:"陕西 西安",region:"cn",levels:["industrial"],techs:["SLM"],color:"#b91c1c",desc:"A股上市公司(688333)，航空航天核心供应商。",products:[{name:"BLT-S400",d:"4激光金属平台"},{name:"BLT-C600",d:"超大幅面"}],lat:34.3,lng:108.9},
+{id:"stratasys",name:"Stratasys",en:"Stratasys",city:"美国 明尼苏达",region:"us",levels:["pro","industrial"],techs:["FDM","PolyJet"],color:"#dc2626",desc:"全球3D打印行业先驱，FDM专利持有者，600+增材制造专利。",products:[{name:"F900",d:"工业级FDM"},{name:"J850",d:"全彩PolyJet"},{name:"H350",d:"SAF粉末热熔合"}],lat:44.9,lng:-93.3},
+{id:"3dsystems",name:"3D Systems",en:"3D Systems",city:"美国 南卡罗来纳",region:"us",levels:["pro","industrial"],techs:["SLA","SLS","SLM"],color:"#2563eb",desc:"3D打印行业奠基者（Chuck Hull发明SLA技术）。",products:[{name:"DMP Factory",d:"金属SLM"},{name:"Figure 4",d:"高速SLA"},{name:"ProJet",d:"MJP全彩"}],lat:34.0,lng:-81.0},
+{id:"formlabs",name:"Formlabs",en:"Formlabs",city:"美国 波士顿",region:"us",levels:["pro"],techs:["SLA","SLS"],color:"#0891b2",desc:"专业级3D打印标杆，Form 4系列速度数倍提升。",products:[{name:"Form 4",d:"高速掩模SLA"},{name:"Form 4L",d:"大幅面SLA"},{name:"Fuse 1+",d:"桌面级SLS"}],lat:42.4,lng:-71.1},
+{id:"desktopmetal",name:"Desktop Metal",en:"Desktop Metal",city:"美国 波士顿",region:"us",levels:["pro","industrial"],techs:["BFP","SLM"],color:"#65a30d",desc:"推动金属3D打印向办公环境普及。",products:[{name:"Studio System 2",d:"办公级金属打印"},{name:"ShopSystem",d:"粘结剂喷射"}],lat:42.4,lng:-71.1},
+{id:"velo3d",name:"Velo3D",en:"Velo3D",city:"美国 加利福尼亚",region:"us",levels:["industrial"],techs:["SLM"],color:"#0891b2",desc:"\"无需支撑\"金属3D打印，SpaceX供应商。",products:[{name:"Sapphire XC",d:"大幅面金属"},{name:"Assure",d:"质量保证软件"}],lat:37.4,lng:-122.1},
+{id:"geadditive",name:"GE Additive",en:"GE Additive",city:"美国 辛辛那提",region:"us",levels:["industrial"],techs:["SLM","EBM"],color:"#0369a1",desc:"GE集团旗下，航空航天发动机核心部件供应商。",products:[{name:"X LINE 2000R",d:"超大幅面SLM"},{name:"Arcam Q20plus",d:"电子束熔化"}],lat:39.1,lng:-84.5},
+{id:"markforged",name:"Markforged",en:"Markforged",city:"美国 马萨诸塞",region:"us",levels:["pro"],techs:["CFF","FFF"],color:"#ca8a04",desc:"连续纤维3D打印开创者。",products:[{name:"FX20",d:"大型连续纤维"},{name:"Metal X",d:"金属挤出打印"}],lat:42.4,lng:-71.4},
+{id:"peopoly",name:"Peopoly",en:"Peopoly",city:"美国 旧金山",region:"us",levels:["consumer","pro"],techs:["SLA","FFF"],color:"#0284c7",desc:"超大尺寸LCD光固化著称。",products:[{name:"Phenom XXXL",d:"超大LCD"},{name:"Magneto X",d:"高速FDM"}],lat:37.8,lng:-122.4},
+{id:"eos",name:"EOS",en:"EOS GmbH",city:"德国 慕尼黑",region:"eu",levels:["industrial"],techs:["SLM","SLS"],color:"#4f46e5",desc:"SLS技术先驱，工业级3D打印奠基企业。",products:[{name:"EOS M 400-4",d:"金属SLM"},{name:"EOS P 500",d:"尼龙SLS"}],lat:48.1,lng:11.6},
+{id:"slmsolutions",name:"SLM Solutions",en:"SLM Solutions",city:"德国 吕贝克",region:"eu",levels:["industrial"],techs:["SLM"],color:"#0369a1",desc:"12激光超大幅面金属3D打印。",products:[{name:"NXG XII 600",d:"12激光"},{name:"SLM 500",d:"多激光"}],lat:53.9,lng:10.7},
+{id:"trumpf",name:"通快 TRUMPF",en:"TRUMPF",city:"德国 迪琴根",region:"eu",levels:["industrial"],techs:["SLM"],color:"#be185d",desc:"全球激光技术巨头。",products:[{name:"TruPrint 5000",d:"三激光高速"},{name:"TruPrint 6000",d:"大幅面"}],lat:48.7,lng:9.2},
+{id:"prusa",name:"Prusa Research",en:"Prusa Research",city:"捷克 布拉格",region:"eu",levels:["consumer","pro"],techs:["FFF"],color:"#ea580c",desc:"开源3D打印守护者，MK3系列售出35万台。",products:[{name:"MK4 / MK4S",d:"开源旗舰"},{name:"Prusa XL",d:"多色模块化"},{name:"Core One",d:"新CoreXY"}],lat:50.1,lng:14.4},
+{id:"ultimaker",name:"UltiMaker",en:"UltiMaker",city:"荷兰 乌得勒支",region:"eu",levels:["pro"],techs:["FFF"],color:"#dc2626",desc:"全球桌面3D打印领导者。",products:[{name:"S7",d:"旗舰机型"},{name:"S5",d:"经典双喷头"},{name:"Method XL",d:"工程级"}],lat:52.1,lng:5.1},
+{id:"renishaw",name:"雷尼绍 Renishaw",en:"Renishaw",city:"英国 格洛斯特",region:"eu",levels:["industrial"],techs:["SLM"],color:"#7e22ce",desc:"精密测量与金属3D打印双领域领导者。",products:[{name:"RenAM 500Q",d:"四激光"},{name:"RenAM Flex",d:"柔性生产"}],lat:51.8,lng:-2.2},
+];
+
+// ===== Canvas =====
+const canvas=document.getElementById('mapCanvas');
+const ctx=canvas.getContext('2d');
+const W=canvas.width,H=canvas.height;
+let landPolygons=[]; // array of [lng,lat][] polygons
+let mapLoaded=false;
+
+// Mercator
+function geoToCanvas(lat,lng){
+  const x=(lng+180)/360*W;
+  const lr=lat*Math.PI/180;
+  const mn=Math.log(Math.tan(Math.PI/4+lr/2));
+  const y=H/2-(mn/Math.PI)*H/2;
+  return[x,y];
+}
+
+// Load world map from Natural Earth 110m TopoJSON
+async function loadMap(){
+  try{
+    const resp=await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json');
+    const topo=await resp.json();
+    // Decode TopoJSON arcs
+    const {arcs,transform}=topo;
+    const objects=topo.objects;
+    // Find the land geometry
+    const landObj=objects.land||Object.values(objects)[0];
+    
+    // Decode arcs to absolute coordinates
+    function decodeArc(arc){
+      const points=[];
+      let x=0,y=0;
+      for(const [dx,dy] of arc){
+        x+=dx; y+=dy;
+        points.push([x,y]);
+      }
+      return points;
+    }
+    
+    function arcToGeo(arc){
+      const decoded=decodeArc(arc);
+      return decoded.map(([px,py])=>{
+        if(transform){
+          return[px*transform.scale[0]+transform.translate[0], py*transform.scale[1]+transform.translate[1]];
+        }
+        return[px/10,py/10]; // fallback
+      });
+    }
+    
+    // Convert TopoJSON geometry to polygons
+    function toPolygons(geom){
+      const polys=[];
+      function stitchRing(arcIndices){
+        const pts=[];
+        arcIndices.forEach(idx=>{
+          const arcPts=decodeArc(arcs[idx<0?~idx:idx]);
+          if(idx<0) arcPts.reverse();
+          // Deduplicate shared point with previous arc
+          if(pts.length>0&&arcPts.length>0){
+            const last=pts[pts.length-1],first=arcPts[0];
+            if(Math.abs(last[0]-first[0])<0.01&&Math.abs(last[1]-first[1])<0.01) arcPts.shift();
+          }
+          pts.push(...arcPts);
+        });
+        return arcToGeo(pts);
+      }
+      if(geom.type==='Polygon'){
+        geom.arcs.forEach(ring=>polys.push(stitchRing(ring)));
+      }else if(geom.type==='MultiPolygon'){
+        geom.arcs.forEach(polygon=>polygon.forEach(ring=>polys.push(stitchRing(ring))));
+      }
+      return polys;
+    }
+    
+    landPolygons=toPolygons(landObj);
+    mapLoaded=true;
+    document.getElementById('loadingOverlay').style.display='none';
+    draw();
+  }catch(e){
+    console.error('Failed to load map:',e);
+    // Fallback: use simplified hand-drawn polygons
+    useFallback();
+  }
+}
+
+// Simplified fallback polygons
+function useFallback(){
+  landPolygons=[
+  [[-130,50],[-125,55],[-123,58],[-130,60],[-140,60],[-150,62],[-160,60],[-168,58],[-165,62],[-155,65],[-140,70],[-120,75],[-100,73],[-85,70],[-78,65],[-70,58],[-68,52],[-67,45],[-72,42],[-75,38],[-78,34],[-82,28],[-83,26],[-88,30],[-92,30],[-97,28],[-100,30],[-105,32],[-112,32],[-118,35],[-122,38],[-124,48],[-130,50]],
+  [[-55,60],[-45,62],[-35,68],[-20,75],[-20,80],[-35,83],[-50,82],[-55,73],[-55,60]],
+  [[-80,10],[-75,8],[-70,5],[-62,0],[-52,-5],[-45,-12],[-38,-22],[-37,-28],[-40,-35],[-50,-48],[-58,-55],[-68,-55],[-74,-45],[-75,-35],[-70,-22],[-72,-12],[-78,-2],[-80,5],[-80,10]],
+  [[-10,36],[-5,38],[-2,44],[3,46],[8,48],[14,50],[18,54],[25,58],[30,62],[25,66],[15,68],[8,65],[10,58],[18,54],[22,52],[28,48],[30,42],[25,36],[18,40],[12,44],[5,42],[0,36],[-10,36]],
+  [[-6,50],[-3,56],[-2,58],[1,54],[1,50],[-3,50],[-6,50]],
+  [[5,58],[12,64],[18,68],[28,70],[28,65],[20,60],[10,58],[5,58]],
+  [[-17,15],[-15,28],[-8,35],[10,37],[20,28],[40,22],[50,10],[48,2],[38,-10],[30,-28],[20,-35],[8,-10],[-5,8],[-17,15]],
+  [[28,42],[40,45],[55,50],[65,55],[80,55],[100,55],[120,55],[140,55],[150,62],[170,70],[180,72],[180,65],[155,55],[145,48],[130,48],[120,50],[110,42],[100,38],[85,40],[75,48],[65,52],[50,50],[40,46],[28,42]],
+  [[30,35],[40,28],[50,18],[60,25],[68,30],[72,25],[80,28],[85,22],[90,22],[100,30],[108,20],[115,5],[125,18],[130,30],[125,40],[115,42],[105,38],[90,42],[80,45],[75,42],[68,38],[55,38],[50,38],[42,38],[35,37],[30,35]],
+  [[130,31],[138,38],[143,45],[142,43],[138,34],[131,30],[130,31]],
+  [[115,-15],[130,-25],[138,-35],[148,-38],[150,-32],[148,-18],[138,-12],[128,-14],[115,-15]],
+  [[96,-2],[110,-6],[120,-8],[120,-4],[112,2],[104,2],[96,-2]],
+  ];
+  mapLoaded=true;
+  document.getElementById('loadingOverlay').style.display='none';
+  draw();
+}
+
+// ===== State =====
+let activeFilters={region:'all',level:'all'};
+let selectedBrand=null;
+let hoveredBrand=null;
+let markerPositions=[];
+
+function getLevelColor(b){
+  if(b.levels.includes('industrial'))return'#ef4444';
+  if(b.levels.includes('pro'))return'#3b82f6';
+  return'#22c55e';
+}
+function isVisible(b){
+  if(activeFilters.region!=='all'&&b.region!==activeFilters.region)return false;
+  if(activeFilters.level!=='all'&&!b.levels.includes(activeFilters.level))return false;
+  return true;
+}
+function getClusterPositions(){
+  const c={};
+  brands.forEach(b=>{const k=`${b.lat.toFixed(1)},${b.lng.toFixed(1)}`;if(!c[k])c[k]={lat:b.lat,lng:b.lng,brands:[]};c[k].brands.push(b);});
+  return Object.values(c);
+}
+
+// ===== Draw =====
+function draw(){
+  ctx.clearRect(0,0,W,H);
+
+  // Ocean background gradient
+  const oceanGrad=ctx.createLinearGradient(0,0,0,H);
+  oceanGrad.addColorStop(0,'#0c4a6e');
+  oceanGrad.addColorStop(0.5,'#075985');
+  oceanGrad.addColorStop(1,'#0c4a6e');
+  ctx.fillStyle=oceanGrad;ctx.fillRect(0,0,W,H);
+
+  // Graticule
+  ctx.strokeStyle='rgba(255,255,255,0.08)';ctx.lineWidth=0.5;
+  for(let lat=-60;lat<=80;lat+=20){ctx.beginPath();for(let lng=-180;lng<=180;lng+=2){const[x,y]=geoToCanvas(lat,lng);lng===-180?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.stroke();}
+  for(let lng=-180;lng<=180;lng+=30){ctx.beginPath();for(let lat=-80;lat<=84;lat+=2){const[x,y]=geoToCanvas(lat,lng);lat===-80?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.stroke();}
+
+  // Land fill
+  landPolygons.forEach(poly=>{
+    if(poly.length<3)return;
+    ctx.beginPath();
+    poly.forEach(([lng,lat],i)=>{const[x,y]=geoToCanvas(lat,lng);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+    ctx.closePath();
+    ctx.fillStyle='#0f2847';ctx.fill();
+  });
+  // Subtle inner glow for depth
+  landPolygons.forEach(poly=>{
+    if(poly.length<3)return;
+    ctx.beginPath();
+    poly.forEach(([lng,lat],i)=>{const[x,y]=geoToCanvas(lat,lng);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+    ctx.closePath();
+    ctx.strokeStyle='#1e3a5f';ctx.lineWidth=0.4;ctx.stroke();
+  });
+  // Coastline highlight
+  landPolygons.forEach(poly=>{
+    if(poly.length<3)return;
+    ctx.beginPath();
+    poly.forEach(([lng,lat],i)=>{const[x,y]=geoToCanvas(lat,lng);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+    ctx.closePath();
+    ctx.strokeStyle='#4a7ab5';ctx.lineWidth=1.5;ctx.stroke();
+  });
+
+  // Brand markers
+  markerPositions=[];
+  const clusters=getClusterPositions();
+  clusters.forEach(cl=>{
+    const[cx,cy]=geoToCanvas(cl.lat,cl.lng);
+    const vis=cl.brands.some(b=>isVisible(b));
+    const isCN=cl.brands[0].region==='cn';
+    if(cl.brands.length>1){
+      cl.brands.forEach((b,i)=>{
+        const angle=(i/cl.brands.length)*Math.PI*2-Math.PI/2;
+        const bx=cx+Math.cos(angle)*20,by=cy+Math.sin(angle)*20;
+        const bv=isVisible(b);
+        ctx.globalAlpha=bv?1:0.12;
+        const lc=isCN?'#f59e0b':getLevelColor(b);
+        // Glow
+        const g=ctx.createRadialGradient(bx,by,0,bx,by,14);g.addColorStop(0,lc+'50');g.addColorStop(1,lc+'00');
+        ctx.fillStyle=g;ctx.beginPath();ctx.arc(bx,by,14,0,Math.PI*2);ctx.fill();
+        // Dot
+        const isH=hoveredBrand&&hoveredBrand.id===b.id;
+        ctx.fillStyle=lc;ctx.strokeStyle='#fff';ctx.lineWidth=1.5;
+        ctx.beginPath();ctx.arc(bx,by,isH?6:4,0,Math.PI*2);ctx.fill();ctx.stroke();
+        // Label on hover
+        if(isH){ctx.fillStyle='#e2e8f0';ctx.font='600 11px -apple-system,sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillText(b.name.split(' ')[0],bx,by-10);}
+        markerPositions.push({brand:b,x:bx,y:by,r:10});
+        ctx.globalAlpha=1;
+      });
+      // Badge
+      ctx.globalAlpha=vis?1:0.12;
+      const br=cl.brands.length>=6?18:15;
+      ctx.fillStyle=isCN?'#f59e0b':'#1a73e8';ctx.strokeStyle='#fff';ctx.lineWidth=2;
+      ctx.beginPath();ctx.arc(cx,cy,br,0,Math.PI*2);ctx.fill();ctx.stroke();
+      ctx.fillStyle='#fff';ctx.font=`bold ${br>=18?13:11}px -apple-system,sans-serif`;
+      ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(cl.brands.length.toString(),cx,cy);
+      ctx.fillStyle='#64748b';ctx.font='500 10px -apple-system,sans-serif';ctx.fillText(cl.brands[0].city,cx,cy-br-8);
+      markerPositions.push({brand:null,cluster:cl,x:cx,y:cy,r:br+4});
+      ctx.globalAlpha=1;
+    }else{
+      const b=cl.brands[0],bv=isVisible(b),sel=selectedBrand&&selectedBrand.id===b.id,hov=hoveredBrand&&hoveredBrand.id===b.id;
+      ctx.globalAlpha=bv?1:0.12;
+      const dc=isCN?'#f59e0b':getLevelColor(b);
+      const gr=sel?24:hov?20:14;
+      const g=ctx.createRadialGradient(cx,cy,0,cx,cy,gr);g.addColorStop(0,dc+(sel?'80':'50'));g.addColorStop(1,dc+'00');
+      ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,gr,0,Math.PI*2);ctx.fill();
+      const dr=sel?8:hov?7:5;
+      ctx.fillStyle=dc;ctx.strokeStyle='#fff';ctx.lineWidth=sel?2.5:1.5;
+      ctx.beginPath();ctx.arc(cx,cy,dr,0,Math.PI*2);ctx.fill();ctx.stroke();
+      if(sel){ctx.strokeStyle=dc+'60';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(cx,cy,16,0,Math.PI*2);ctx.stroke();}
+      if(sel||hov){ctx.fillStyle='#e2e8f0';ctx.font='600 12px -apple-system,sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillText(b.name.split(' ')[0],cx,cy-12);}
+      markerPositions.push({brand:b,x:cx,y:cy,r:dr+4});
+      ctx.globalAlpha=1;
+    }
+  });
+}
+
+// ===== Mouse =====
+function getMousePos(e){const r=canvas.getBoundingClientRect();return{x:(e.clientX-r.left)*(W/r.width),y:(e.clientY-r.top)*(H/r.height)};}
+function findHit(mx,my){for(let i=markerPositions.length-1;i>=0;i--){const m=markerPositions[i],dx=mx-m.x,dy=my-m.y;if(dx*dx+dy*dy<m.r*m.r)return m;}return null;}
+
+canvas.addEventListener('mousemove',e=>{
+  const p=getMousePos(e),hit=findHit(p.x,p.y),tip=document.getElementById('tooltip');
+  if(hit){
+    canvas.style.cursor='pointer';
+    if(hit.cluster){const bs=hit.cluster.brands;
+      tip.innerHTML=`<div class="tooltip-name">${hit.cluster.brands[0].city}</div><div class="tooltip-city">${bs.length} 个品牌</div><div class="tooltip-tags">${bs.map(b=>`<span class="tooltip-tag ${b.region}">${b.name.split(' ')[0]}</span>`).join('')}</div>`;
+      hoveredBrand=null;
+    }else if(hit.brand){const b=hit.brand;
+      tip.innerHTML=`<div class="tooltip-name">${b.name.split(' ')[0]}</div><div class="tooltip-city">${b.city} · ${b.en}</div><div class="tooltip-tags"><span class="tooltip-tag ${b.region}">${b.region==='cn'?'中国':b.region==='us'?'北美':'欧洲'}</span>${b.levels.map(l=>`<span class="tooltip-tag ${l}">${l==='consumer'?'消费级':l==='pro'?'专业级':'工业级'}</span>`).join('')}</div>`;
+      hoveredBrand=b;
+    }
+    const r=canvas.getBoundingClientRect(),sx=r.width/W,sy=r.height/H;
+    let tx=hit.x*sx+15,ty=hit.y*sy-10;
+    if(tx+260>r.width)tx=hit.x*sx-275;
+    tip.style.left=tx+'px';tip.style.top=ty+'px';tip.classList.add('show');
+  }else{canvas.style.cursor='default';hoveredBrand=null;tip.classList.remove('show');}
+  draw();
+});
+canvas.addEventListener('mouseleave',()=>{hoveredBrand=null;document.getElementById('tooltip').classList.remove('show');draw();});
+canvas.addEventListener('click',e=>{const p=getMousePos(e),hit=findHit(p.x,p.y);if(hit){if(hit.brand)showDetail(hit.brand);else if(hit.cluster&&hit.cluster.brands.length)showDetail(hit.cluster.brands[0]);}});
+
+// ===== Panel =====
+function showDetail(b){
+  selectedBrand=b;
+  const isCN=b.region==='cn';
+  document.getElementById('panelHeader').style.background=`linear-gradient(135deg,${b.color},${isCN?'#d97706':'#1d4ed8'})`;
+  document.getElementById('panelName').textContent=b.name;
+  document.getElementById('panelEn').textContent=b.en;
+  document.getElementById('panelCity').innerHTML=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> ${b.city}`;
+  const lt=b.levels.map(l=>`<span class="panel-tag ${l}">${l==='consumer'?'消费级':l==='pro'?'专业级':'工业级'}</span>`).join('');
+  const tt=b.techs.map(t=>`<span class="panel-tag tech">${t}</span>`).join('');
+  document.getElementById('panelBody').innerHTML=`<div class="panel-section"><div class="panel-section-title">品牌简介</div><div class="panel-desc">${b.desc}</div></div><div class="panel-section"><div class="panel-section-title">市场级别</div><div class="panel-tags">${lt}</div></div><div class="panel-section"><div class="panel-section-title">核心技术</div><div class="panel-tags">${tt}</div></div><div class="panel-section"><div class="panel-section-title">核心产品 (${b.products.length})</div>${b.products.map(p=>`<div class="product-card"><div class="product-card-name">${p.name}</div><div class="product-card-desc">${p.d}</div></div>`).join('')}</div>`;
+  document.getElementById('detailPanel').classList.add('show');
+  document.getElementById('panelOverlay').classList.add('show');
+  draw();
+}
+function closePanel(){document.getElementById('detailPanel').classList.remove('show');document.getElementById('panelOverlay').classList.remove('show');selectedBrand=null;draw();}
+
+// ===== Table =====
+function renderTable(){
+  const cn=brands.filter(b=>b.region==='cn'&&isVisible(b)),intl=brands.filter(b=>b.region!=='cn'&&isVisible(b));
+  function row(b){
+    const lt=b.levels.map(l=>`<span class="level level-${l}">${l==='consumer'?'消费级':l==='pro'?'专业级':'工业级'}</span>`).join(' ');
+    const tt=b.techs.map(t=>{const c=t.toLowerCase().replace(/\s/g,'');if(['fff','fdm','cff','bfp','lfm','ebm','3d扫描','uv'].includes(c))return`<span class="tag tag-fff">${t}</span>`;if(['sla','mjp'].includes(c))return`<span class="tag tag-sla">${t}</span>`;if(['slm'].includes(c))return`<span class="tag tag-slm">${t}</span>`;if(['sls','saf','bmd'].includes(c))return`<span class="tag tag-sls">${t}</span>`;if(['polyjet'].includes(c))return`<span class="tag tag-pj">${t}</span>`;if(['dlp'].includes(c))return`<span class="tag tag-dlp">${t}</span>`;return`<span class="tag tag-fdm">${t}</span>`;}).join('');
+    const pi=b.products.map(p=>`<span class="product-item">${p.name}</span>`).join('');
+    return`<tr data-id="${b.id}"><td><div class="brand-cell"><div class="brand-icon" style="background:linear-gradient(135deg,${b.color},${b.color}dd)">&#9679;</div><div><div class="brand-name">${b.name}</div><div class="brand-en">${b.en}</div></div></div></td><td><div class="city">${b.city}</div></td><td>${lt}</td><td><div style="display:flex;flex-wrap:wrap;gap:6px">${tt}</div></td><td><div class="product-list">${pi}</div></td></tr>`;
+  }
+  document.getElementById('tableContent').innerHTML=`<div class="section" style="margin-bottom:36px"><div style="font-size:1.3rem;font-weight:600;margin-bottom:16px;padding-left:14px;border-left:4px solid #f59e0b">China Domestic Brands <span style="font-size:.7rem;padding:2px 10px;border-radius:20px;background:rgba(245,158,11,.15);color:#fbbf24;font-weight:500">${cn.length} brands</span></div><div class="table-wrap"><table><thead><tr><th>Brand</th><th>Location</th><th>Level</th><th>Technology</th><th>Core Products</th></tr></thead><tbody>${cn.map(row).join('')}</tbody></table></div></div><div class="section"><div style="font-size:1.3rem;font-weight:600;margin-bottom:16px;padding-left:14px;border-left:4px solid #3b82f6">International Brands <span style="font-size:.7rem;padding:2px 10px;border-radius:20px;background:rgba(59,130,246,.15);color:#60a5fa;font-weight:500">${intl.length} brands</span></div><div class="table-wrap"><table><thead><tr><th>Brand</th><th>Location</th><th>Level</th><th>Technology</th><th>Core Products</th></tr></thead><tbody>${intl.map(row).join('')}</tbody></table></div></div>`;
+  document.querySelectorAll('#tableContent tbody tr').forEach(tr=>{tr.addEventListener('click',()=>{const b=brands.find(x=>x.id===tr.dataset.id);if(b)showDetail(b);});});
+}
+
+// ===== Filters =====
+document.querySelectorAll('.filter-btn').forEach(btn=>{btn.addEventListener('click',()=>{
+  const f=btn.dataset.filter,v=btn.dataset.value;activeFilters[f]=v;
+  document.querySelectorAll(`.filter-btn[data-filter="${f}"]`).forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  draw();renderTable();
+});});
+
+// ===== View Toggle =====
+document.querySelectorAll('.view-btn').forEach(btn=>{btn.addEventListener('click',()=>{
+  document.querySelectorAll('.view-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  const v=btn.dataset.view;document.getElementById('mapView').style.display=v==='map'?'block':'none';
+  document.getElementById('tableView').classList.toggle('show',v==='table');
+});});
+
+document.getElementById('panelClose').addEventListener('click',closePanel);
+document.getElementById('panelOverlay').addEventListener('click',closePanel);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePanel();});
+
+// ===== Init =====
+loadMap();
+renderTable();
+</script>
+</body>
+</html>

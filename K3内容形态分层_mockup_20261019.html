@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K3 专栏 · 内容形态分层 样式稿（示意）</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d1117; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; color:#e6edf3; }
+.wrap { max-width:1180px; margin:0 auto; padding:24px 20px 60px; }
+a { color:#58a6ff; text-decoration:none; }
+
+.demo-banner { background:#3d2a00; border:1px solid #9e6a03; color:#e3b341; border-radius:8px; padding:10px 14px; font-size:12.5px; margin-bottom:18px; line-height:1.6; }
+.demo-banner b { color:#f0c75e; }
+
+.top-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.brand-icon { font-size:26px; margin-right:10px; }
+h1 { font-size:19px; font-weight:600; display:inline; }
+.author-line { font-size:12px; color:#8b949e; margin-top:4px; }
+
+.sec-title { font-size:14px; font-weight:600; color:#e6edf3; margin:26px 0 12px; padding-left:2px; border-left:3px solid #1f6feb; padding-left:10px; }
+
+/* ===== 新增：形态切换器 ===== */
+.kind-bar { display:flex; align-items:center; gap:10px; background:#161b22; border:1px solid #21262d; border-radius:10px; padding:10px 12px; margin-bottom:14px; }
+.kind-bar .kb-label { font-size:12px; color:#8b949e; margin-right:2px; white-space:nowrap; }
+.seg { display:flex; background:#0d1117; border:1px solid #21262d; border-radius:8px; padding:3px; gap:2px; }
+.seg button { border:none; background:transparent; color:#8b949e; font-size:12.5px; font-family:inherit; padding:7px 14px; border-radius:6px; cursor:pointer; display:flex; align-items:center; gap:7px; transition:all .12s; }
+.seg button:hover { color:#e6edf3; background:#1c2128; }
+.seg button.on { background:#1f6feb; color:#fff; font-weight:600; }
+.seg button .n { font-size:11px; opacity:.85; font-variant-numeric:tabular-nums; }
+.seg button.off { opacity:.45; cursor:not-allowed; }
+.kind-bar .kb-hint { font-size:11.5px; color:#6e7681; margin-left:auto; }
+
+/* ===== KPI ===== */
+.kpi-row { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; }
+.kpi { background:#161b22; border:1px solid #21262d; border-radius:10px; padding:14px 16px; position:relative; }
+.kpi .k-label { font-size:11.5px; color:#8b949e; margin-bottom:8px; }
+.kpi .k-value { font-size:24px; font-weight:700; line-height:1.1; font-variant-numeric:tabular-nums; }
+.kpi .k-sub { font-size:11px; color:#6e7681; margin-top:6px; line-height:1.5; }
+.kpi .k-tag { position:absolute; top:12px; right:12px; font-size:10px; padding:2px 7px; border-radius:20px; }
+
+.panel { background:#161b22; border:1px solid #21262d; border-radius:10px; padding:16px; }
+.panel h3 { font-size:13px; font-weight:600; color:#c9d1d9; margin-bottom:4px; }
+.panel .note { font-size:11.5px; color:#6e7681; font-weight:400; margin-left:8px; }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; }
+
+/* ===== 情感条 ===== */
+.sent { display:flex; height:26px; border-radius:5px; overflow:hidden; margin-top:12px; }
+.sent i { display:block; height:100%; font-size:10.5px; line-height:26px; text-align:center; color:#0d1117; font-style:normal; font-weight:600; }
+
+/* ===== 明细卡片 ===== */
+.card-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; }
+.card { background:#161b22; border:1px solid #21262d; border-radius:10px; padding:14px 16px; }
+.card .c-top { display:flex; align-items:center; gap:8px; margin-bottom:9px; flex-wrap:wrap; }
+.badge { font-size:10.5px; padding:2px 7px; border-radius:4px; font-weight:600; }
+.b-post   { background:#1f2a3a; color:#7ea6d8; border:1px solid #26405e; }
+.b-video  { background:#2a1f3a; color:#a98ed8; border:1px solid #40305e; }
+.b-comment{ background:#1a3329; color:#5fd39a; border:1px solid #22543d; }
+.b-review { background:#3a2a1a; color:#d8a86e; border:1px solid #5e4026; }
+.c-meta { font-size:11.5px; color:#6e7681; }
+.c-title { font-size:13.5px; font-weight:600; line-height:1.5; margin-bottom:6px; color:#e6edf3; }
+.c-text { font-size:12.5px; color:#b9c2cc; line-height:1.65; }
+.c-foot { display:flex; align-items:center; gap:10px; margin-top:10px; font-size:11.5px; color:#6e7681; flex-wrap:wrap; }
+.c-foot .neg { color:#f85149; }
+.c-foot .pos { color:#3fb950; }
+.parent { margin-top:10px; padding:8px 10px; background:#0d1117; border-left:2px solid #2f5177; border-radius:0 5px 5px 0; font-size:11.5px; color:#8b949e; line-height:1.55; }
+.parent b { color:#a8b9c9; font-weight:600; }
+
+/* ===== 渠道清单 ===== */
+.chan-row { display:grid; grid-template-columns:1.4fr .9fr .8fr .8fr 1.6fr; gap:10px; align-items:center; padding:9px 4px; border-bottom:1px solid #1c2128; font-size:12px; }
+.chan-row.hd { color:#6e7681; font-size:11px; border-bottom:1px solid #21262d; }
+.chan-row .st { font-size:10.5px; padding:2px 7px; border-radius:4px; display:inline-block; }
+.st-ok { background:#1a3329; color:#5fd39a; }
+.st-no { background:#2d1a1a; color:#d07a7a; }
+.st-p  { background:#3a2a1a; color:#d8a86e; }
+.mini { font-size:11px; color:#6e7681; }
+
+.foot-note { font-size:11.5px; color:#6e7681; margin-top:22px; line-height:1.8; border-top:1px solid #21262d; padding-top:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="demo-banner">
+    <b>这是样式稿，不是真实数据。</b>所有数字均为占位示意 —— 评论区<b>尚未采集</b>（当前 136 条里评论正文为 0 条）。
+    本稿只用于确认「分层结构 / 切换位置 / 卡片形态」三件事，确认后我再接数据。
+  </div>
+
+  <div class="top-bar">
+    <div>
+      <div class="brand-icon" style="float:left">🖨️</div>
+      <div style="display:inline-block">
+        <h1>Creality K3 用户反馈专栏</h1>
+        <div class="author-line">首款 KliTek 四喷嘴换嘴机型 · 国内 + 海外全渠道 · 每日增量</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 现有：数据更新条 -->
+  <div style="background:#161b22;border:1px solid #21262d;border-radius:10px;padding:11px 16px;font-size:12px;color:#8b949e;margin-bottom:12px;">
+    <b style="color:#e6edf3">数据更新至 2026-10-19</b><span style="margin:0 8px;color:#30363d">|</span>
+    最近采集：工作日 03:30 批次<span style="margin:0 8px;color:#30363d">|</span>
+    共 4 批新增 · 10-13 +36 / 10-14 +31 / 10-15 +50 / 10-16 +8
+    <span style="color:#58a6ff;margin-left:10px;cursor:pointer">更新历史 ▾</span>
+  </div>
+
+  <!-- ★ 新增：形态切换器 -->
+  <div class="kind-bar">
+    <span class="kb-label">内容形态</span>
+    <div class="seg" id="seg">
+      <button data-k="all">全部 <span class="n">192</span></button>
+      <button data-k="post" class="on">主体内容 <span class="n">136</span></button>
+      <button data-k="comment">评论 <span class="n">56</span></button>
+      <button data-k="review" class="off" title="京东 / Amazon 评价尚未接入">电商评价 <span class="n">0</span></button>
+    </div>
+    <span class="kb-hint">默认停在「主体内容」，历史口径不变 · 评论单列统计，不并入主口径</span>
+  </div>
+
+  <h2 class="sec-title">总体概览</h2>
+
+  <div class="kpi-row" id="kpiRow"></div>
+
+  <div class="panel" style="margin-top:12px;">
+    <h3>情感结构<span class="note" id="sentNote">分母 = 136 条主体内容，五档按占比铺满</span></h3>
+    <div class="sent" id="sentBar"></div>
+    <div style="display:flex;gap:16px;margin-top:10px;font-size:11px;color:#8b949e;" id="sentLegend"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel"><h3>问题点 Top<span class="note">点击条目就地筛选明细 · 归并 16 类</span></h3>
+      <div style="font-size:11.5px;color:#8b949e;margin-top:12px;line-height:2;">
+        <div>① 无封箱 / 腔体敞口 &nbsp;<span style="color:#6e7681">— 提及 31</span></div>
+        <div>② 换色耗时与废料 &nbsp;<span style="color:#6e7681">— 提及 24</span></div>
+        <div>③ 多色混色精度 &nbsp;<span style="color:#6e7681">— 提及 19</span></div>
+        <div>④ 交付与履约 &nbsp;<span style="color:#6e7681">— 提及 8</span></div>
+        <div style="color:#6e7681;font-size:11px;margin-top:8px;">（评论模式下同一套 16 类；覆盖率待评论入库后实测）</div>
+      </div>
+    </div>
+    <div class="panel"><h3>信源集中度<span class="note" id="hhiNote">按站点算 · 集中度 Top1 = YouTube 44.1%</span></h3>
+      <div style="font-size:11.5px;color:#8b949e;margin-top:12px;line-height:2;">
+        <div>Top1 站点 &nbsp;<b style="color:#e6edf3">YouTube</b> &nbsp;44.1%</div>
+        <div>Top2 站点 &nbsp;<b style="color:#e6edf3">Reddit</b> &nbsp;16.9%</div>
+        <div>HHI &nbsp;<b style="color:#e6edf3">0.246</b> &nbsp;<span style="color:#6e7681">（中等集中）</span></div>
+        <div style="color:#6e7681;font-size:11px;margin-top:8px;">评论模式改按「主体视频数」算，不按评论条数 —— 否则 1 个视频 200 条评论会让 HHI 直接爆表</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sec-title">明细反馈流<span style="font-size:11.5px;color:#6e7681;font-weight:400;margin-left:8px" id="cardHint">当前：主体内容</span></h2>
+  <div class="card-grid" id="cardGrid"></div>
+
+  <h2 class="sec-title">渠道覆盖清单<span style="font-size:11.5px;color:#6e7681;font-weight:400;margin-left:8px">新增「评论」列，一眼看出哪个渠道的评论还没接</span></h2>
+  <div class="panel">
+    <div class="chan-row hd"><div>渠道</div><div>主体内容</div><div>评论</div><div>电商评价</div><div>说明</div></div>
+    <div class="chan-row"><div>YouTube</div><div><span class="st st-ok">60 条</span></div><div><span class="st st-p">本轮接入</span></div><div><span class="mini">—</span></div><div class="mini">commentThreads API · 已有 Key</div></div>
+    <div class="chan-row"><div>Reddit</div><div><span class="st st-ok">23 条</span></div><div><span class="st st-no">不可达</span></div><div><span class="mini">—</span></div><div class="mini">出口 IP 403，OAuth 待干净出口</div></div>
+    <div class="chan-row"><div>B 站</div><div><span class="st st-ok">17 条</span></div><div><span class="st st-p">待试</span></div><div><span class="mini">—</span></div><div class="mini">reply 接口需 wbi 签名</div></div>
+    <div class="chan-row"><div>什么值得买</div><div><span class="st st-ok">19 条</span></div><div><span class="st st-p">待试</span></div><div><span class="mini">—</span></div><div class="mini">评论需登录态；归并帖是主力信源</div></div>
+    <div class="chan-row"><div>Creality 官方论坛</div><div><span class="st st-ok">0–3 条/周</span></div><div><span class="st st-p">本轮接入</span></div><div><span class="mini">—</span></div><div class="mini">Discourse posts.json · 已有采集器</div></div>
+    <div class="chan-row"><div>京东</div><div><span class="st st-ok">1 条</span></div><div><span class="mini">—</span></div><div><span class="st st-no">阻塞</span></div><div class="mini">需商家资质 / 开放平台</div></div>
+    <div class="chan-row" style="border-bottom:none"><div>Amazon</div><div><span class="st st-ok">0 条</span></div><div><span class="mini">—</span></div><div><span class="st st-no">阻塞</span></div><div class="mini">登录墙</div></div>
+  </div>
+
+  <div class="foot-note">
+    <b style="color:#c9d1d9">待确认的三件事：</b><br>
+    ① 切换器放在「数据更新条」下方、KPI 上方，是否合适？（它决定全局口径，所以没放进筛选栏）<br>
+    ② 默认选中「主体内容」，评论要看才切 —— 这样保证历史口径与现在完全一致，是否认可？<br>
+    ③ 「全部」模式下 KPI 是显示总数 192 还是分层显示「主体 136 / 评论 56」？
+  </div>
+
+</div>
+
+<script>
+var MODE = {
+  all: {
+    kpi: [
+      { l:'总声量', v:'192', s:'主体 136 · 评论 56 · 官方 9 单列', tag:'', c:'' },
+      { l:'负面占比', v:'—', s:'分层模式下不合并计算', tag:'', c:'' },
+      { l:'近 7 日新增', v:'42', s:'主体 8 · 评论 34', tag:'', c:'' },
+      { l:'覆盖渠道', v:'13', s:'个站点', tag:'', c:'' },
+      { l:'问题点覆盖', v:'待测', s:'评论需单独验证', tag:'', c:'' }
+    ],
+    sent: [['非常负面',7,'#8b2c26'],['负面',20,'#f85149'],['中性',53,'#484f58'],['正面',17,'#3fb950'],['非常正面',3,'#2ea043']],
+    sentNote: '分母 = 192 条（主体 + 评论），仅供参考 —— 两类样本基准线不同，不建议合并看',
+    hint: '当前：全部（口径混合，仅作总览）'
+  },
+  post: {
+    kpi: [
+      { l:'用户声量', v:'135', s:'另有厂商官方 9 条单列', tag:'主体', c:'#7ea6d8' },
+      { l:'负面占比', v:'27.4%', s:'37 / 135 条', tag:'', c:'' },
+      { l:'近 7 日新增', v:'8', s:'10-13 ~ 10-16', tag:'', c:'' },
+      { l:'覆盖渠道', v:'13', s:'个站点 · Top1 YouTube 44.1%', tag:'', c:'' },
+      { l:'问题点覆盖', v:'95.2%', s:'归并 16 类 · 长尾 6 条', tag:'', c:'' }
+    ],
+    sent: [['非常负面',5,'#8b2c26'],['负面',22,'#f85149'],['中性',52,'#484f58'],['正面',18,'#3fb950'],['非常正面',3,'#2ea043']],
+    sentNote: '分母 = 135 条主体内容（用户声量），五档按占比铺满',
+    hint: '当前：主体内容'
+  },
+  comment: {
+    kpi: [
+      { l:'评论条数', v:'56', s:'来自 12 个主体视频 / 帖子', tag:'评论', c:'#5fd39a' },
+      { l:'负面占比', v:'19.6%', s:'11 / 56 条（低于主体内容）', tag:'', c:'' },
+      { l:'近 7 日新增', v:'34', s:'采集深度 Top 20/视频', tag:'', c:'' },
+      { l:'涉及主体', v:'12', s:'个视频 · Top1 单视频 18 条', tag:'', c:'' },
+      { l:'待标注', v:'0', s:'已翻译 + 补 6 字段', tag:'', c:'' }
+    ],
+    sent: [['非常负面',2,'#8b2c26'],['负面',18,'#f85149'],['中性',61,'#484f58'],['正面',17,'#3fb950'],['非常正面',2,'#2ea043']],
+    sentNote: '分母 = 56 条评论 · 评论多为即时反应，中性占比高于主体内容属正常',
+    hint: '当前：评论（依附型内容，单独统计）'
+  }
+};
+
+function render(k) {
+  var m = MODE[k] || MODE.post;
+  document.getElementById('kpiRow').innerHTML = m.kpi.map(function(x){
+    return '<div class="kpi">'
+      + (x.tag ? '<span class="k-tag" style="color:'+x.c+';border:1px solid '+x.c+'44;background:'+x.c+'18">'+x.tag+'</span>' : '')
+      + '<div class="k-label">'+x.l+'</div>'
+      + '<div class="k-value">'+x.v+'</div>'
+      + '<div class="k-sub">'+x.s+'</div></div>';
+  }).join('');
+
+  document.getElementById('sentBar').innerHTML = m.sent.map(function(x){
+    return '<i style="width:'+x[1]+'%;background:'+x[2]+'">'+x[1]+'%</i>';
+  }).join('');
+
+  document.getElementById('sentLegend').innerHTML = m.sent.map(function(x){
+    return '<span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:'+x[2]+';margin-right:5px"></span>'+x[0]+' '+x[1]+'%</span>';
+  }).join('');
+
+  document.getElementById('sentNote').textContent = m.sentNote;
+  document.getElementById('cardHint').textContent = m.hint;
+
+  document.getElementById('hhiNote').textContent = (k === 'comment')
+    ? '评论模式按「主体视频数」算 · Top1 = @AF Inv 3 个视频'
+    : '按站点算 · 集中度 Top1 = YouTube 44.1%';
+
+  renderCards(k);
+}
+
+var CARDS = {
+  post: [
+    { b:'视频', bc:'b-video', meta:'2026-10-18 · YouTube · @AF Inv', t:'K3 四喷嘴首发开箱：换嘴到底快不快', x:'四个喷嘴切换的时候会滴料，第一层就毁了。整体结构很扎实，但换色流程还需要优化。', f:['播放 310.3万','点赞 4.2万','评论 231','中性'] },
+    { b:'帖子', bc:'b-post', meta:'2026-10-17 · Reddit · r/Creality_k2', t:'K3 multi-color print keeps failing at first layer', x:'换到第四个颜色的时候 consistently 失败，怀疑是切刀位置或者加热仓温度问题。有谁遇到过？', f:['负面','isP0'] }
+  ],
+  comment: [
+    { b:'评论', bc:'b-comment', meta:'2026-10-18 · YouTube · @AF Inv', t:'', x:'我的也是一样，切换的时候会滴一小坨，第一层就毁了。后来把回抽加长了一点好一些。', f:['赞 18','负面'], p:'来自：K3 四喷嘴首发开箱：换嘴到底快不快（播放 310.3万 · 评论 231 条）' },
+    { b:'评论', bc:'b-comment', meta:'2026-10-18 · YouTube · @Main Cave', t:'', x:'用了两周，换色确实快，就是废料有点多。每个颜色切换大概要浪费一小段。', f:['赞 7','中性'], p:'来自：K3 两周使用体验（播放 3.4万 · 评论 135 条）' }
+  ]
+};
+
+function renderCards(k) {
+  var list = CARDS[k === 'comment' ? 'comment' : 'post'];
+  document.getElementById('cardGrid').innerHTML = list.map(function(c){
+    return '<div class="card">'
+      + '<div class="c-top"><span class="badge '+c.bc+'">'+c.b+'</span><span class="c-meta">'+c.meta+'</span></div>'
+      + (c.t ? '<div class="c-title">'+c.t+'</div>' : '')
+      + '<div class="c-text">'+c.x+'</div>'
+      + '<div class="c-foot">'+c.f.map(function(v,i){
+          var cls = v === '负面' ? 'neg' : (v === '中性' ? '' : '');
+          return '<span class="'+cls+'">'+v+'</span>';
+        }).join('<span style="color:#30363d">·</span>')+'</div>'
+      + (c.p ? '<div class="parent">↳ <b>'+c.p.replace('来自：','')+'</b></div>' : '')
+      + '</div>';
+  }).join('');
+}
+
+document.getElementById('seg').addEventListener('click', function(e){
+  var btn = e.target.closest('button');
+  if (!btn || btn.classList.contains('off')) return;
+  [].forEach.call(this.querySelectorAll('button'), function(b){ b.classList.remove('on'); });
+  btn.classList.add('on');
+  render(btn.dataset.k);
+});
+
+render('post');
+</script>
+</body>
+</html>
