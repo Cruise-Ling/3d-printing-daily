@@ -267,7 +267,7 @@ table.mx td.gap{color:#d29922;font-size:10.5px}
     <a class="nav-item sub " href="creality-k3.html"><span class="nav-icon">🖨️</span>K3 专栏<span style="margin-left:auto;font-size:10px;color:#6e7681;font-variant-numeric:tabular-nums">437</span></a>
     <a class="nav-item sub " href="creality-mbox.html"><span class="nav-icon">📦</span>mBox 专栏<span style="margin-left:auto;font-size:10px;color:#6e7681;font-variant-numeric:tabular-nums">19</span></a>
     <a class="nav-item sub active" href="software-columns.html"><span class="nav-icon">🧩</span>软件专栏<span style="margin-left:auto;font-size:10px;color:#6e7681;font-variant-numeric:tabular-nums">623</span></a>
-    <a class="nav-item sub " href="fullcolor-columns.html"><span class="nav-icon">🎨</span>全彩专栏<span style="margin-left:auto;font-size:10px;color:#6e7681;font-variant-numeric:tabular-nums">84</span></a>
+    <a class="nav-item sub " href="fullcolor-columns.html"><span class="nav-icon">🎨</span>全彩专栏<span style="margin-left:auto;font-size:10px;color:#6e7681;font-variant-numeric:tabular-nums">102</span></a>
     <a class="nav-item" href="slicing-params.html"><span class="nav-icon">⚙️</span>切片参数速查</a>
   </div>
   <div class="sidebar-footer">
@@ -410,9 +410,16 @@ function toolSubHTML(type, list){
   return '<div class="tsub">'+html+'</div>';
 }
 function isCN(it){ return /[\u4e00-\u9fff]/.test((it.titleCn||"")+(it.textCn||"")); }
+// 语种标签：优先用采集/归一化算好的 language 字段。
+// 2026-10-27 修：原来靠「标题或正文是否含中文」现猜，结果一条英文 YouTube 视频
+// 因为正文里混了中文评论，被标成「原文 · 中文」—— 展开后全是英文，自相矛盾。
+var LANG_LABEL = {EN:"EN",ZH:"中文",JA:"日文",KO:"韩文",DE:"德文",ES:"西文",
+                  FR:"法文",PT:"葡文",RU:"俄文",TR:"土文",IT:"意文",PL:"波文"};
 function langOf(it){
+  var l = it.language || "";
+  if(LANG_LABEL[l]) return LANG_LABEL[l];
   if(/[\u4e00-\u9fff]/.test((it.title||"")+(it.originalText||""))) return "中文";
-  return it.language || "EN";
+  return l || "EN";
 }
 function daysAgo(n){
   var d=new Date(REF||new Date()); d.setHours(0,0,0,0); d.setDate(d.getDate()-n);
