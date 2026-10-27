@@ -51,6 +51,7 @@
 ## 归档 / Archive
 
 | 日期 Date | 简报 Briefing |
+| 2026-10-27 (Tue) | [briefing_20261027.html](briefing_20261027.html) |
 | 2026-10-26 (Mon) | [briefing_20261026.html](briefing_20261026.html) |
 | 2026-10-23 (Fri) | [briefing_20261023.html](briefing_20261023.html) |
 | 2026-10-22 (Thu) | [briefing_20261022.html](briefing_20261022.html) |
