@@ -1,0 +1,198 @@
+{
+"GH-CrealityPrint-590": {
+"t": "便携版",
+"b": "【你的功能请求是否与某个问题有关？】\n请求提供便携版。\n【哪些机型会受益于该功能？】\n全部"
+},
+"GH-CrealityPrint-602": {
+"t": "添加下一个条目时我的收藏列表消失",
+"b": "【CrealityPrint 版本】\n7.2.1.5476\n【操作系统（OS）】\nWindows\n【操作系统版本】\n11 25H2\n【打印机】\nCreality V3 KE\n【如何复现】\n1. 将该模型添加到收藏\n2. 查看我的收藏\n【实际结果】\n添加模型后网格消失，删除模型后又重新出现。\n【预期结果】\n网格应显示全部条目\n【项目文件与调试日志上传】\n无项目\n【其他补充？】\n添加后\n移除后\n该作者的其他模型显示正常"
+},
+"GH-CrealityPrint-639": {
+"t": "在「预览」窗口中利用 3D 打印机数据实时更新层（layer）的功能",
+"b": "【你的功能请求是否与某个问题有关？】\n我希望把模型发送到打印机后，能在软件内实时查看正在打印的层（layer）。但遗憾的是，目前我必须切换到「设备」标签页才能看到打印机打到第几层，然后在「预览」标签页中手动设置到同一层。\n【哪些机型会受益于该功能？】\n全部\n【描述你期望的解决方案】\n我希望有一个按钮，能把已发送的打印机型号作为「预览」数据源，并在新的模型窗口中根据 3D 打印机回传的数据自动更新当前层。"
+},
+"GH-CrealityPrint-635": {
+"t": "无法修改打印机名称",
+"b": "【CrealityPrint 版本】\n7.3.0\n【操作系统（OS）】\nWindows\n【操作系统版本】\n所有版本\n【附加系统信息】\n我无法更新打印机名称。它始终显示默认打印机名称，每次修改后重启 Creality Print 应用，名称都会变回默认值。\n【打印机】\nCreality Hi、Creality Ender 5 max\n【如何复现】\n1. 进入「设备」标签页。\n2. 点击打印机名称后的编辑图标\n3. 弹出「重命名设备名称」窗口，修改打印机名称并保存。\n4. 重启 Creality Print 应用。\n5. 返回「设备」标签页，发现打印机名称没有改变。\n【实际结果】\n重启 Creality Print 应用后名称变回默认打印机名称\n【预期结果】\n重命名打印机后，Creality Print 应用应保留该名称。\n【项目文件与调试日志上传】\n缺陷如上所述。"
+},
+"GH-CrealityPrint-622": {
+"t": "打印开始时未从 CFS 加载耗材",
+"b": "【CrealityPrint 版本】\n7.2.2.5483\n【操作系统（OS）】\nWindows\n【操作系统版本】\nWindows 10\n【打印机】\nK2 Plus\n【如何复现】\n1. 为本次打印选择一种耗材（filament）。\n2. 切片（slice）并发送到打印机\n3. 观察发现打印机在打印前并不总是加载耗材，会在未加载耗材的情况下尝试打印。\n【实际结果】\n打印机未从 CFS 加载耗材就开始打印\n【预期结果】\n打印机应在开始打印前从 CFS 加载耗材。\n【项目文件与调试日志上传】\n任意 STL 文件均可复现\n【其他补充？】\n如果我先通过打印机面板加载耗材再开始打印，则打印成功。\n在打印机屏幕上第二次尝试打印时可以复现该问题。\nCreality 论坛该帖中的用户 MaGra59 找到了根本原因。"
+},
+"GH-CrealityPrint-594": {
+"t": "优化换色时间",
+"b": "【你的功能请求是否与某个问题有关？】\n我认为我们找到了 Creality K2/CFS 在换耗材/换色过程中一个显著的不必要延迟来源。\n问题似乎不在 CFS 本身的机械速度，而在于**固件在换料过程中处理喷嘴温度的顺序**。\n【当前的现象】\n换色时，工具头移动到左侧切刀（filament cutter）附近，并在实际执行切断前停留数秒。在我的机器上，仅这一项就约有 10 秒的时间窗口。\n然而，打印机并没有利用这段时间开始把喷嘴加热到擦料（purge）温度，而是先执行了大部分机械换料流程：\n切断 → 回抽旧耗材（retraction）→ CFS 移动 → 加载新耗材 → 温度管理 → 擦料。\n实际运行中，喷嘴在这些操作期间可能保持在较低温度，甚至被降回较低温度。只有在此之后，机器才加热到正常挤出温度，最后再把目标温度提高到更高的擦料温度。…"
+},
+"GH-CrealityPrint-615": {
+"t": "WebKitWebProcess 在退出 CrealityPrint 时因 SIGABRT 中止（glibc 堆损坏）—— Flatpak 与 AUR",
+"b": "【CrealityPrint 版本】\n7.2.1.5477（Flatpak，`io.github.crealityofficial.CrealityPrint`，分支 `master` —— 注意：Flatpak 自身的 AppStream/manifest 元数据报告为「6.2.0」，这看起来是过期的打包元数据；实际的 `CrealityPrint` 二进制文件报告为 7.2.1.5477）\n【操作系统（OS）】\nLinux\n【操作系统版本】\nArch Linux（Omarchy），内核 7.2.4-arch1，运行时 `org.gnome.Platform//50`\n【打印机】\n不适用 —— 与打印机无关，崩溃发生在内嵌的 WebKit UI 进程中\n【如何复现】\n1. 通过 Flatpak 运行 CrealityPrint。\n2. 正常使用该应用（内嵌的 WebKitWebProcess 会为部分界面保持活动）。\n3. 退出程序。\n4. `WebKitWebProcess`（子渲染进程）在自身关闭过程中因 SIGABRT 中止，而不是正常退出。\n【实际结果】\n退出时 `WebKitWebProcess` 因 SIGABRT 崩溃。通过 `systemd-coredump` 捕获，并针对 Flatpak 运行时自带的 libc/WebKit 库（`org.gnome.Platform//50`，webkit2gtk 4.1.0.21.9，javascriptcoregtk 4.1.0.10.13）完成符号化。…"
+},
+"GH-CrealityPrint-607": {
+"t": "CrealityPrint Linux AppImage 每次启动都在 wxLocale 初始化后立即因 std::terminate 中止 —— 在 7.0.0、7.1.1 和 7.2.1 上均可复现",
+"b": "【环境】\n- 操作系统：Arch Linux（Omarchy），内核 7.1.8-arch1-3\n- 桌面环境：Hyprland（Wayland）\n- 在**三个不同的 CrealityPrint 版本**上表现完全一致，可排除单一版本的回归问题：\n- `CrealityPrint-V7.0.0.4127-x86_64-Release.AppImage` —— 于 2026-08-31 崩溃 1 次，2026-09-03 崩溃 9 次\n- `CrealityPrint-V7.1.1.4472-x86_64-Release.AppImage`（sha256 `cf9daa14dda8168c131f504c875ec089b498db3a034dcb7789ce5c05b73f98f0`）—— 于 2026-09-05 崩溃\n- `CrealityPrint-V7.2.1.5476-x86_64-Release.AppImage`，即当前最新版本（sha256 `b28f66c25d0c6652ed6ae49d0766780f46a5b839b93ce1968e639823e1f6e2f3`）—— 于 2026-09-05 崩溃\n- 无论是双击 Nautilus 中的 `.gcode` 文件启动，还是完全不带文件参数启动，结果都没有区别\n【现象】\n每次启动 AppImage 都会在开始后约 3 秒内中止（SIGABRT），主窗口从未出现。这可 100% 复现 —— 三个不同日期（2026-08-31、2026-09-03 九次、2026-09-05 三次）和三个不同应用版本共记录 13 次崩溃，没有一次成功启动。…"
+},
+"GH-CrealityPrint-599": {
+"t": "流量显示错误",
+"b": "【CrealityPrint 版本】\n7.2.1\n【操作系统（OS）】\nWindows\n【操作系统版本】\nWindows 11\n【附加系统信息】\n我配置了多个用于测试的零件，唯一差别是顶面流量（flow）比例。差异非常明显。但在「预览」标签页的流量分类下查看时，切片器（slicer）为所有零件显示相同的流量体积。我将文件另存为 G-code 并上传给 ChatGPT，其确认文件中确实记录了不同的流量值。因此我认为缺陷出在切片器的「预览」中。\n【打印机】\nK2 Combo\n【如何复现】\n创建一个基础模型并在上面添加文字。复制粘贴出多个零件实例。将每个实例上的文字调整为使用不同的顶面流量模式。切片模型后进入「流量」标签页。用进度条（progress bar）检查流量数值。流量值在\n零件内部会发生变化，但在不同零件之间保持一致，尽管它们的流量模式并不相同。…"
+},
+"GH-CrealityPrint-600": {
+"t": "Creality Print 7.2.1.5476 —— 在 2560x1440 显示器上最大化时右侧被裁切",
+"b": "【CrealityPrint 版本】\n7.2.1.5476\n【操作系统（OS）】\nWindows\n【操作系统版本】\nWindows 11\n【打印机】\nK1C\n【如何复现】\n主题：Creality Print 7.2.1.5476 —— 在 2560x1440 显示器上最大化时右侧被裁切\n我报告 Creality Print 7.2.1.5476 版本中的一个显示/窗口管理问题。\n**系统/环境**\n* Windows 11 笔记本\n* 通过 Windows 远程桌面（RDP）连接该笔记本\n* RDP 会话使用我三台物理显示器中的两台\n* 左侧显示器：1920 × 1080\n* 右侧显示器：2560 × 1440\n* 左侧显示器缩放设置为 100%\n* 右侧显示器原本设置为 125% 缩放；我也在 100% 下测试过\n**问题**\n当 Creality Print 7.2.1.5476 在**右侧 2560 × 1440 显示器**上最大化时，**Creality Print 应用的右侧被裁切，无法看到**。\n**左侧 1920 × 1080 显示器工作正常**。在该显示器上最大化时，Creality Print 显示正常。\n如果我还原 Creality Print 窗口并在右侧显示器上手动调整大小，整个应用就都能看到。\n**已执行的测试**\n1. …"
+},
+"GH-CrealityPrint-598": {
+"t": "Creality Hi 读取的是 default_flush_multiplier，而不是所选的 flush_multiplier",
+"b": "【CrealityPrint 版本】\n6.3.0.3420\n【操作系统（OS）】\nLinux\n【操作系统版本】\nLinux x86_64（官方 AppImage）\n【打印机】\nCreality Hi + CFS\n【如何复现】\n1. 选择带 CFS 的 Creality Hi，并准备一个多色模型。\n2. 将擦料量（flushing volume）倍数设为 `0.20`，切片，并直接把任务发送到打印机。\n3. 用同一项目分别在 `0.10` 和 `0.05` 下重复。\n4. 比较 CFS 的擦料情况，并检查生成的 G-code 与打印机日志。\n生成的 G-code 中正确包含「擦料量」对话框中所选的值。例如：\n然而，Creality Hi 的日志对这三个任务都报告：\n【实际结果】\nCreality Hi 似乎在搜索子串 `flush_multiplier` 时先匹配到了 `default_flush_multiplier`。因此它使用的是配置默认值（`0.5`），而不是用户选择的确切 `flush_multiplier` 值。\n在 `0.20`、`0.10` 和 `0.05` 下进行的直接发送测试产生了相同的 CFS 擦料结果。修改机器配置中隐藏的 `default_flush_multiplier` 会改变打印机实际使用的擦料量，由此确认了被读取的是哪一个字段。…"
+},
+"GH-CrealityPrint-603": {
+"t": "[7.2.1.5476] 向旧款 Creality Box（CR-10 Smart Pro）局域网发送失败，报 Upload Failed(1000) —— 传输根本未开始（在 7.2.0.5226 上正常）",
+"b": "【CrealityPrint 版本】\n7.2.1.5476\n【操作系统（OS）】\nmacOS\n【操作系统版本】\nmacOS 26.5.2（25F84）\n【附加系统信息】\n打印机固件：CR-FDM-v2.5.S1_100，打印机软件版本 1.0.14，DWIN UI22 / DWIN2021\nWi-Fi 模块：Creality Box V3.04b06，MediaTek RT2880，WISP / AP-Client 模式\nCreality Print 中的设备条目（deviceInfo.json）：\"connectType\": 3, \"oldPrinter\": true, moonrakerPort/fluiddPort/mainsailPort 均为 0\nCreality Print 数据目录：~/Library/Application Support/Creality/Creality Print/7.0/\n连接情况：打印机在局域网内可访问，状态轮询与控制指令全程正常。\n【打印机】\nCreality CR-10 Smart Pro（旧款 Creality Box，局域网）\n【如何复现】\n第 1 步：把 CR-10 Smart Pro 添加为局域网设备（旧款 Creality Box，connectType 3）。设备可正常连接：实时状态、温度、摄像头画面和控制指令都正常。\n第 2 步：加载任意模型。已用项目 .3mf、二进制 .stl 以及新建的基本体立方体复现。\n第 3 步：切片。\n第 4 步：点击该设备的发送/打印按钮。\n【实际结果】\n立即出现 `Upload Failed(1000)`。…"
+},
+"GH-K2_Series_Klipper-10": {
+"t": "K2：打印暂停超过 1 小时（例如耗材耗尽）后无法恢复 —— idle_timeout 的 M84 丢失 Z 轴归零，RESUME 执行擦料后报「Must home axis first」失败，重试时加热到 0 [固件 1.1.6.7.2]",
+"b": "【概述】\n如果打印暂停超过一小时（典型情况是夜间耗材耗尽），任务就无法再恢复。`idle_timeout` 会在任务暂停期间执行其默认的 `TURN_OFF_HEATERS` + `M84`。`M84` 会清除 Z 轴归零状态，而热床（build plate）上有零件时无法安全地重新对 Z 轴归零。之后用户按下恢复（Resume）时，打印机重新加热、对 X/Y 归零、在擦料位置排出约 82 mm 耗材，然后在返回零件之前因 `Must home axis first` 中止。任务保持暂停状态。\n第二次按下恢复会更糟。第一次尝试已把 `PRINTER_PARAM.hotend_temp` 置为 0，因此 `RESUME_EXTERNAL` 现在执行 `M109 S0` / `M104 S0`，并试图通过冷喷嘴挤出 82 mm 擦料。从用户角度看，打印机「关掉了加热器还在试图挤出」。\n【环境】\n- 打印机：K2，硬件 `CR0CN200400C10`\n- 系统固件：`1.1.6.7.2`\n- 原厂 `printer.cfg`：`[idle_timeout] timeout: 3600`，没有 `gcode:` 选项，因此适用 Klipper 默认的 `TURN_OFF_HEATERS` / `M84`\n- 原厂 `gcode_macro.cfg` 中的 PAUSE / RESUME / RESUME_EXTERNAL 调用链\n【复现（在一次真实的 22 小时 TPU 打印任务中观察到）】\n1. 耗材耗尽，`filament_switch_sensor` 暂停任务（`key358`）。…"
+},
+"GH-CrealityPrint-620": {
+"t": "Windows：默认不添加桌面快捷方式（图标）",
+"b": "【你的功能请求是否与某个问题相关？】\n请不要在 Windows 上默认创建桌面快捷方式。它很碍事，我每次更新后都得把它删掉。\n我相信有些人确实需要它。请把它做成一个可选项。\n【哪些打印机将受益于此功能？】\n全部\n【描述你期望的解决方案】\n在安装程序中将其设为可选项，让需要桌面快捷方式的用户自行勾选。"
+},
+"GH-K1_Series_Klipper-9": {
+"t": "本仓库包含仅以二进制形式提供的扩展，违反 Klipper 许可证（GPL V3）",
+"b": "你好！\n我目前正在为促使 Creality 按要求提供 K2 打印机的**全部**源代码而努力，这也促使我去查看 Creality 的其他产品。\n具体来说：\n-\n-\n这些是通过 cython 编译出的共享对象文件，明显派生自底层的 Klipper 系统。\n这意味着 Creality **必须**向任何购买了 K1 的用户提供上述文件的源代码。\n请提供相应文件。\n还有其他 issue 也在索要这些源文件 [1]，但据我所知，没有一个明确指出这是对 GPL 的实质性违反，而且看起来是刻意为之（否则为什么要做成 cython 文件？）。\n[1] ："
+},
+"GH-CrealityPrint-628": {
+"t": "开发一个 OrcaSlicer 插件",
+"b": "【你的功能请求是否与某个问题相关？】\nOrcaSlicer 已经非常好用，我用它配合我其他的所有打印机。Creality 打印机（比如我全新的 K2 SE combo）不支持它，这实在太糟糕了。更糟的是，Creality 并没有说明除自家切片软件外，其他切片软件不支持局域网（LAN）模式。\n【哪些打印机将受益于此功能？】\n全部\n【描述你期望的解决方案】\n请开发与 OrcaSlicer 的最低限度局域网（LAN）兼容能力：\n- 能够通过独立的 Web 界面与打印机交互（顺带一提，即使用普通浏览器访问，也显示不出可用的页面）\n- 能够发送并开始打印\n- 能够在 OrcaSlicer 中使用 AMS\n【描述你考虑过的替代方案】\n- 把打印机退回去\n- 哭"
+},
+"GH-CrealityPrint-614": {
+"t": "桥接密度",
+"b": "【你的功能请求是否与某个问题相关？】\n不确定\n【哪些打印机将受益于此功能？】\n全部\n【描述你期望的解决方案】\n你好。我买了一台 K2 3D 打印机，在此之前我的旧打印机一直用 Orca，后来新机器就改用 Cr Print 了。不过打印桥接（bridge）时我注意到线间距太大。在 Orca 中我可以提高桥接密度来解决这个问题，但自从开始用 Cr Print 就不行了。我无法把该值提高到 100% 以上。我试过拉取仓库、调大最大值变量并在我的 Mac 上编译，但编译不通过。过去 Orca 也不允许超过 100% 的值，但他们解决了这个问题。\n【描述你考虑过的替代方案】\n我试过拉取仓库、调大最大值变量并在我的 Mac 上编译，但编译不通过。\n【其他背景信息】\n谢谢"
+},
+"GH-CrealityPrint-631": {
+"t": "重命名 EXE 文件后 Creality Slicer 无法安装",
+"b": "【CrealityPrint 版本】\n7.3.0.6151\n【操作系统（OS）】\nWindows\n【操作系统版本】\nWindows 11 25H2\n【打印机】\n-\n【复现步骤】\n你好，\n我在工作中为 Creality Print 制作了一个软件安装包，但用我的脚本怎么也装不上。得到的始终是一个空白对话框，只显示 \"YES/NO\" 两个选项，但选完其中任何一个之后都没有任何反应。我完全没有收到任何安装错误。\n后来我重新下载了安装程序，这次没有修改 .exe 的文件名，安装就顺利完成，也没有弹出任何窗口。\n我会附上那个白色对话框的截图。\n我把安装程序重命名成了 CrealityPrint.exe。\n【预期结果】\n安装过程应该按预期正常工作吧？;D\n【项目文件与调试日志上传】\n-"
+},
+"GH-CrealityPrint-617": {
+"t": "手动绘制的裙边耳朵未保存到项目文件中",
+"b": "【CrealityPrint 版本】\n7.2.2.5483\n【操作系统（OS）】\nWindows\n【操作系统版本】\nWindows 11 25H2 26200.9445\n【其他系统信息】\nCPU: Intel Core Ultra 9 285K\nRAM: 96 GB\nGPU: 2x Nvidia 5060\n【打印机】\nK2 Plus\n【复现步骤】\n1. 载入任意模型。\n2. 将裙边（brim）类型设为 \"Painted\"。\n3. 打开裙边耳朵（brim ears）工具并绘制几个耳朵。\n4. 切片（slice）。耳朵在预览和 G-code 中都能正常显示。\n5. File -> Save project as...，保存 3MF。\n6. 关闭项目，然后重新打开同一个 3MF。\n7. 再次切片。\n【实际结果】\n耳朵消失了。裙边类型仍显示为 \"Painted\"，但裙边耳朵工具是空的，切片结果也完全没有裙边。没有任何警告提示，所以如果你重新打开项目并发送到打印机，就会在一个明明绘制了耳朵的打印平台上得到一个没有裙边的零件。\n这些点从未被写入文件。解压一个保存的 3MF，里面没有 Metadata/brim_ear_points.txt。Metadata/project_settings.config 中仍然是 \"brim_type\": \"painted\"，也就是说模式被保存了，但该模式所需的数据没有保存。…"
+},
+"GH-K2_Series_Klipper-7": {
+"t": "K2 Pro：CFS 耗材冲刷移动被判定为 \"Move out of range\"（key586）——原厂 variable_max_y_position（302）对冲刷区域过于紧张 [固件 1.1.6.3]",
+"b": "【概要】\n在 K2 Pro 上，每次 CFS（多材料）打印都会在打印开始阶段、工具装载（tool-load）的耗材冲刷过程中止，报 Klipper 的 \"Move out of range\"（`key586`）。由 master-server 组装的冲刷移动目标 Y 值刚好超出当前 Y 限位。冲突的这两个值都是 Creality 原厂值，且该问题是在一次固件更新之后出现的——这是原厂 `variable_max_y_position` 对冲刷区域过于紧张的回归问题。\n【环境】\n- 打印机：K2 Pro\n- 系统固件：`1.1.6.3`\n- 主板 / 硬件：`CR0CN200400C10`（F021）\n- CFS 盒固件：`1.4.2`\n- 喷嘴：0.6 mm；切片软件 OrcaSlicer 2.4.1；四色 CFS 打印\n- 2026 年 6 月之前的固件可正常工作；具体旧版本未记录。更新到 `1.1.6.3` 后出现。\n【现象】\n打印开始、回零、网格校准、加热，然后在 CFS 工具装载的冲刷阶段中止，报：\n可确定性复现——每次 CFS 打印都在同一阶段出现。\n【根本原因（已追踪）】\nCFS 工具装载的耗材冲刷由 master-server 在约 `X204-206 Y302.2-303.1 Z3.4-4.2` 处组装。…"
+},
+"GH-CrealityPrint-637": {
+"t": "（Linux AppImage）在 Fedora 40+ / 混合显卡上的启动与运行时修复",
+"b": "【CrealityPrint 版本】\n7.3.0.6157\n【操作系统（OS）】\nLinux\n【操作系统版本】\nFedora 44 x86_64（内核 7.2.10-200.fc44.x86_64），GNOME Wayland\n【其他系统信息】\nCPU: 13th Gen Intel(R) Core(TM) i7-13650HX\n内存: 24 GB\n显卡: Intel(R) UHD Graphics (RPL-S) + NVIDIA GeForce RTX 4060 Laptop GPU（驱动 615.78.08）\n显示服务器: Wayland / Xwayland\n软件包类型: 官方 AppImage\n【打印机】\nCreality K1 / Ender-3 V3（所有打印机）\n【复现步骤】\n1. 在较新的 Fedora / GNOME Wayland 上下载并运行 Creality Print AppImage（v7.3.0.6157）。\n2. 应用立即以代码 127 失败，原因是缺少 SONAME（libbz2.so.1.0、libx264.so.164）。\n3. 如果补上符号链接，应用会在启动时因可变字体处理（Adwaita Sans）立即崩溃，并弹出 Breakpad 的 \"Error Report\" 对话框。\n4. 如果绕过字体崩溃，操作 / 调整面板或 3D 画布尺寸会触发 Wayland 协议断开，并在 Mesa Zink 的 SwapBuffers 中陷入无限 futex 等待死锁（\"Not Responding\"）。\n【实际结果】\n应用开箱即无法运行：\n1. …"
+},
+"GH-CrealityPrint-634": {
+"t": "命令行（CLI）`--slice` 只打开图形界面而什么都不做（无输出、不退出）：argv 在进入 wxEntry() 之前被截断",
+"b": "【CrealityPrint 版本】\n7.3.0（build 7.3.0.6151）\n【操作系统（OS）】\nWindows\n【操作系统版本】\nWindows 11 Pro 10.0.26200\n【打印机】\nCreality K2 Plus 0.4 喷嘴\n【复现步骤】\n1. 在 Creality Print 7.3.0 中创建一个项目（单个立方体即可，见附件 `Cube.3mf`），打印机选择 Creality K2 Plus 0.4 喷嘴，然后保存。\n2. 关闭 Creality Print，在终端中运行：\n`\"C:\\Program Files\\Creality\\Creality Print 7.0\\CrealityPrint.exe\" --slice 0 --outputdir \"C:\\out\" \"C:\\in\\Cube.3mf\"`\n（7.3.0 安装程序复用了已有的安装目录，目录名仍为 \"Creality Print 7.0\"；该 exe 是 build 7.3.0.6151。）\n3. 加上 `--debug 5` 或 `--allow_newer_file` 后结果相同。\n【实际结果】\n- 主图形界面窗口打开并载入了项目。\n- 没有进行任何切片，`C:\\out` 中也没有写入任何内容。\n- 进程不会自行退出（我在 45 秒后手动终止了它）。手动执行该命令结果相同。\n- stdout 只显示图形界面的启动信息（`OpenGL probe ...`、字体加载、`crealityprint_main start`）。…"
+},
+"GH-CrealityPrint-595": {
+"t": "Linux/K2 Pro+CFS：稳定版 7.2.0 / 社区分支的热床温度仍然错误；#575 仅在预发布版 7.2.1 中修复",
+"b": "【该问题是否已有对应的 issue？】\n相关：\n- **#575** —— 热床（build plate）温度模式使用项目中的第一个耗材，而不是打印平台实际用到的耗材（已标记为在 **7.2.1** 中修复，但 7.2.1 仍是 **GitHub 预发布版**）\n- **#576** / **#552** —— Linux 预设界面只读（这也是许多 Linux 用户改用社区 AppImage 的原因）\n【CrealityPrint 版本】\n- 官方**稳定版**：**v7.2.0**（仍是最新的非预发布标签）\n- 正在使用的社区 Linux 构建：**Arm4g3ddon `v7.2.1.5226`** —— 这是 **7.2.0 + Linux 界面/退出修复**，**并非** Creality 官方的 **7.2.1.5476**\n- 声称包含该热床修复的官方**预发布版**：**v7.2.1.5476**（发布说明第 17 项 → #575）\n【操作系统（OS）】\nLinux（Ubuntu 24.04）\n【打印机】\nCreality **K2 Pro + CFS**\n---\n【问题概要】\n在**稳定版 7.2.0**（以及基于 7.2.0 的常见 Linux 社区分支）上，`START_PRINT` / 首层（first layer）的热床温度仍然遵循：\n`bed_temperature_mode = use_first_material`\n使用**项目耗材列表中的第一个耗材**，而不是分配给对象 / 实际使用的挤出机（`T[n]`）的耗材。\n这与 **#575** 一致。Creality 声称已在 **7.2.1** 中修复，但是：\n1. …"
+},
+"GH-CrealityPrint-638": {
+"t": "Creality Print 从 7.2.2 升级到 7.3.0.6157 后，K2 Pro 出现严重的打印质量退化",
+"b": "【CrealityPrint 版本】\n7.3.0.6157\n【操作系统（OS）】\nWindows\n【操作系统版本】\nWindows 11 pro\n【其他系统信息】\n在把 Creality Print 从 7.2.2 升级到 7.3.0.6157 之后，我的 Creality K2 Pro 打印质量急剧恶化。\n此前所有打印件表面都光滑均匀。软件更新之后，同样的零件立刻开始出现极其粗糙、不规则的表面，看起来像严重的挤出不足（under-extrusion）。\n系统信息：\n* 打印机: Creality K2 Pro\n* 耗材: Creality Hyper PLA\n* 正常工作的软件版本: Creality Print 7.2.2\n* 有问题的软件版本: Creality Print 7.3.0.6157\n* 打印机固件: 本次测试期间未更新\n已做的排查：\n* 检查了打印设置和配置档。\n* 确认没有启用 Fuzzy Skin 之类的异常设置。\n* 使用了相同的打印机、耗材和模型。\n* 在没有刻意修改打印参数的情况下回退到 7.2.2。\n* 确认打印质量恢复正常。\n【打印机】\nCreality K2 pro\n【复现步骤】\n载入同一个 3D 模型（STL）。…"
+},
+"GH-CrealityPrint-604": {
+"t": "Linux：在 Intel 核显（Mesa 26.0.x）上每次切片后出现 GPU 挂起 / 黑色 \"Not Responding\" 窗口——分析与规避方案",
+"b": "【环境】\n- Creality Print 7.2.1（原版 `CrealityPrint-V7.2.1.5476-x86_64-Release.AppImage`）\n- Kubuntu 26.04，Plasma 6（Wayland 会话，应用通过 XWayland 运行），内核 7.0.0-30\n- Intel Core 5 120U 核显（8086:a7ac，驱动 i915），Mesa **26.0.8**\n【现象】\n切片完成后约 7 秒，窗口变黑，标题变为 `… (Not Responding)`。进程仍然存活（主线程空闲）。**每次**切片都能复现，哪怕只是一个 950 个三角形的 STL。`journalctl -k`：\n主线程的核心回溯：\n应用日志在 `load_toolpaths … send vertices data to gpu end` 之后立即结束——也就是说，挂起发生在工具路径预览的第一次绘制。载入一个已经包含 G-code 的项目同样会触发，且无需切片。\n【A/B 对照结果（脚本化：启动 → 点击 *Slice plate* → 检查内核日志）】\n| 变体 | 结果 |\n|---|---|\n| 原版 | GPU 挂起 |\n| `INTEL_DEBUG=noccs` | **正常** —— 预览正常渲染，导出完成，GPU 加速保留 |\n| `INTEL_DEBUG=nohiz` | GPU 挂起 |\n| `LIBGL_DRI3_DISABLE=1` | GPU 挂起 |\n| `MESA_GL_VERSION_OVERRIDE=2.1`（GL 1.10 着色器路径） | GPU 挂起 |\n| `gcode_preview_lite_mode` | GPU 挂起 |\n| `LIBGL_ALWAYS_SOFTWARE=1`（llvmpipe） | 正常 |\n所以颜色 …"
+},
+"GH-CrealityPrint-630": {
+"t": "机器时间成本未计入",
+"b": "【CrealityPrint 版本】\n7.3.0.6144\n【操作系统（OS）】\nLinux\n【OS 版本】\nFedora 44\n【打印机】\n任意\n【复现步骤】\n1. 在机器设置中设置“时间成本（Time Cost）”\n2. 对任意文件进行切片（slice）\n3. 只显示耗材成本\n【实际结果】\n无法获得与机器相关的时间成本信息\n【预期结果】\nG-code 预览应提供机器时间成本\n【项目文件与调试日志上传】\n不需要"
+},
+"GH-CrealityPrint-627": {
+"t": "7.3.0.6151 版本在某些情况下导致树状支撑（tree support）失效",
+"b": "【CrealityPrint 版本】\n7.3.0.6151\n【操作系统（OS）】\nWindows\n【OS 版本】\nWindows 11 26H2\n【附加系统信息】\nIntel I7-14700KF\n32GB ram\nNvidia RTX 4070\n【打印机】\nK2\n【复现步骤】\n打开 Creality Print。\n打开本工单附带的 3mf 文件。\n对模型进行切片（slice）。\n【实际结果】\n模型切片后仅生成极少的树状支撑，部分区域悬空、完全没有支撑\n上一版本可正常生成支撑。\n【预期结果】\n预期：树状支撑应能正确支撑模型。\n【项目文件与调试日志上传】\n10.1inch+multitouch+LCD+case+for+RasPi+5.zip"
+},
+"GH-CrealityPrint-612": {
+"t": "K2 Pro 的实时摄像头画面问题",
+"b": "【CrealityPrint 版本】\n7.2.2.5483\n【操作系统（OS）】\nmacOS\n【OS 版本】\nTahoe 26.2.2\n【附加系统信息】\nCPU: Apple M5 Pro\nRAM: 64GB\n【打印机】\nK2 Pro\n【复现步骤】\n1. 打开 Creality Print。\n2. 进入“准备（Prepare）”选项卡并选择打印机\n3. 进入“设备（Device）”选项卡\n【实际结果】\n实时预览要么无法加载，要么需要极长时间\n【预期结果】\n实时预览应能加载并显示打印机内置摄像头的画面。\n【项目文件与调试日志上传】\nlog.zip\n【其他说明？】\n我从事 IT 行业，因此已确认打印机 Wi-Fi 连接良好、Wi-Fi 网络正常，且我的笔记本电脑没有问题。我已将问题范围缩小到 Creality Print 或打印机本身。"
+},
+"GH-CrealityPrint-618": {
+"t": "[BUG] CFS 强制反复执行擦料（purge）循环（浪费 80%），忽略切片软件的零擦料设置",
+"b": "【问题描述】\n使用 Creality K1 与 CFS 进行多色打印、Creality Print V7.2.2 中将冲洗量（Flushing Volume）设为 0.00 mm3 并禁用擦料塔（Prime Tower）时，打印机/CFS 固件完全忽略切片软件设置，在废料槽上进入自主的 5 次擦料重试循环。\n【测试数据（Klipper 遥测）】\n- 模型所需耗材：240 mm（0.7g）\n- 换料 1（黑色 -> 白色）：连续 5 次擦料，3m 45s，浪费 375.5 mm\n- 换料 2（白色 -> 金色）：2m 21s，浪费 215.2 mm\n- 废料槽中的总浪费：760 mm（挤出耗材总量的 80% 被丢弃！）\n【硬件与固件】\n- 打印机：Creality K1（固件 2.3.5.34 / 主板 CR4CU220812S11）\n- 多材料：Creality CFS（固件 1.1.3 / SN: 10000895915B625FNWA）\n- 切片软件：Creality Print V7.2.2\n【视频证据与遥测】\n- YouTube 技术视频：\n- 完整证据材料（日志、G-code、box.cfg）："
+},
+"GH-CrealityPrint-591": {
+"t": "切换选项卡后，“AI 填充”中的稀疏填充图案（Spare infill pattern）被重置",
+"b": "【CrealityPrint 版本】\n7.2.0\n【操作系统（OS）】\nLinux\n【OS 版本】\nLinux Mint 22.3 (Ubuntu 24.04)\n【打印机】\nCreality Hi\n【复现步骤】\n1. 进入“强度（Strength）”选项卡\n2. 勾选“AI 填充（AI infill）”\n3. 在“稀疏填充图案（Spare infill pattern）”中选择“直线（Rectilinear）”\n4. 进入“质量（Quality）”选项卡\n5. 返回“强度（Strength）”选项卡\n6. “稀疏填充图案”中已选中“网格（Grid）”\n如果未切换选项卡就直接切片，填充（infill）是正确的（直线）。如果切换过选项卡，切片后的填充会变为网格。\n该行为自 6 系列早期版本起一直如此。\n【实际结果】\n“稀疏填充图案”在下拉框中从“直线”重置为“网格”。\n切片后的模型也随之重置。\n【预期结果】\n“稀疏填充图案”不应在下拉框中从“直线”重置为“网格”。\n切片后的模型设置应被保存。\n【项目文件与调试日志上传】\n."
+},
+"GH-CrealityPrint-589": {
+"t": "CrealityPrint 7.2.0 的图形界面（GUI）在 Linux 上无法正常工作",
+"b": "【CrealityPrint 版本】\n7.2.0\n【操作系统（OS）】\nLinux\n【OS 版本】\nopenSUSE Tumbleweed 20260716\n【附加系统信息】\nGnome + Wayland\n【打印机】\nSparkx i7\n【复现步骤】\n从 7.2.0 发布页面下载 AppImage 并运行。\n从 7.2.9 发布页面下载 Flatpak 包，运行后检查温度校准（temperature calibration）与耗材设置。\n【实际结果】\nAppImage 崩溃并触发核心转储（core dump）。\nFlatpak 版本未崩溃，但弹窗尺寸错误，导致温度校准窗口的“ok”按钮缺失，我无法生成这些模型。耗材下拉弹窗完全缺失，我无法以任何方式更改温度等耗材设置。\n【预期结果】\nAppImage 不应崩溃，Flatpak 版本应以正确布局显示内容。\n【项目文件与调试日志上传】\n崩溃：\n弹窗布局问题："
+},
+"GH-CrealityPrint-625": {
+"t": "cr_FillTensor 与 cr_tpms 的源代码（AGPL-3.0 第 6 条）",
+"b": "CrealityPrint 基于 OrcaSlicer，并以 AGPL-3.0 许可发布。你们的发布构建链接了两个源代码不在本仓库中的库：\n- `deps/CR_CLOSED/CR_FILLTENSOR`（cr_FillTensor_library），由 `src/libslic3r/Fill/FillField.cpp` 和 `PrintObject.cpp` 调用，用于 Adaptive TPMS\n- `deps/CR_TPMS`（cr_tpms_library），由 `src/libslic3r/Fill/FillTpmsGradual.cpp` 调用，用于 Gradual TPMS\n仓库中只有头文件和预编译的 .lib/.a/.dll 文件。根据 FillTensor 的 README，它们由内部 Jenkins 任务构建（CR_Close_library build #6，源代码修订 a2b46ff4278bca9f6eb1c0862ac48cf5d1775a2a）。该任务运行在私有网络地址 172.20.180.14 上。\n这两个库均链接进 libslic3r，并由切片软件直接调用，因此属于第 1 条所定义的对应源代码（Corresponding Source）。根据第 6 条，该源代码必须提供给任何获得目标代码（object code）的人。我是从你们的 GitHub releases 下载的 V7.3.0。\n请以 AGPL-3.0 许可发布这两个库在 V7.3.0 中所用修订版本的源代码，包括其构建脚本。放在本仓库或任何公开位置均可。\n相关：#340"
+},
+"GH-CrealityPrint-610": {
+"t": "7.2.1 的 AppImage 更新在 Linux Mint 上无法运行，此前版本同样如此。需要像 7.2.0 那样提供“Ubuntu”AppImage",
+"b": "【CrealityPrint 版本】\n7.2.1\n【操作系统（OS）】\nLinux\n【OS 版本】\nLinux Mint 21.3\n【附加系统信息】\nCreality Print 会从上一版本请求更新，但下载的是错误的版本。普通 Linux AppImage 在 Linux Mint 上无法运行，而 Ubuntu 版本可以。我在 7.2.0 时通过手动下载解决了这个问题，但这次更新到 7.2.1 又出现同样情况，且发布页面上没有可用的 Ubuntu AppImage。\n在 7.2.0 中 LiteMode 无法关闭。\n【打印机】\nCreality Ender 3 V3 SE\n【复现步骤】\n当 7.2.0 提示更新时，尝试更新到 7.2.1。\n【实际结果】\n会下载错误的版本。\n【预期结果】\n用户期望更新到兼容 Ubuntu 的版本。实际更新到了通用 Linux 版本，可能是不兼容 Debian 或 Ubuntu 的版本。Mint 属于兼容 Ubuntu 的发行版。\n【项目文件与调试日志上传】\n该缺陷是普遍性问题，与项目或文件无关。"
+},
+"GH-CrealityPrint-609": {
+"t": "[macOS] wxWidgets 3.3.2 过早调用 `NSApplicationLoad()`，导致 `crealityprintlink://` URL 处理程序无法注册",
+"b": "【CrealityPrint 版本】\nV7.2.2.5483 Release\n【操作系统（OS）】\nmacOS\n【OS 版本】\n26.5.1 (25F80)\n【打印机】\nK2Pro\n【复现步骤】\n1. 打开并选择任意模型\n2. 点击“使用 CrealityPrint 打开（Open use CrealityPrint）”\n3. CrealityPrint 启动，但未打开该模型\n【实际结果】\n无法从 Creality Cloud 打开模型 URL\n【预期结果】\n可从 Creality Cloud 打开模型 URL\n【描述】\n在 macOS 上，打开 `crealityprintlink://` URL 会启动或激活 CrealityPrint，但应用程序不处理该 URL。\n示例：\n观察到的行为：\n- 如果 CrealityPrint 未运行，它会启动，但不处理该 URL。\n- 如果 CrealityPrint 已完全初始化，它会被激活，但仍不处理该 URL。\n- 将同一 URL 作为命令行参数传给可执行文件则可以正常工作。\n因此，这不仅是 `plater_ == nullptr` 导致的冷启动问题。\n【受影响版本】\n已确认：\n- CrealityPrint 7.2.2.5483\n- 该回归很可能在 v7.2.1 引入。…"
+},
+"GH-K2_Series_Klipper-3": {
+"t": "含外部料盘架在内共 17 个耗材槽位时 master-server 发生段错误",
+"b": "【产品信息】\n| 字段 | 值 |\n|---|---|\n| **打印机** | Creality K2 Plus（Model F008） |\n| **固件版本** | 1.1.3.13 |\n| **切片软件** | Creality Print V7.0.0.4127 |\n| **严重程度** | 高 |\n【概述】\n当打印机上的某个 gcode 文件在其元数据中包含 17 个耗材条目，且其中至少一个条目映射到外部料盘架（external spool holder）时，`master-server` 服务会发生段错误（`SIGSEGV`，信号 11）崩溃，并进入无限崩溃循环。这会使触摸屏、Creality Print 局域网控制以及 Creality Cloud 移动端 App 完全无法使用。唯一的恢复方法是删除有问题的 gcode 文件。\n【背景】\nK2 Plus 支持两种耗材来源：\n- **CFS（Continuous Filament System，连续耗材系统）：** 4 个料盒 × 4 个槽位 = 16 个槽位\n- **外部料盘架：** 1 个槽位\n打印机自身的内部配置（`box_config.json`）存储全部 17 个耗材条目（T1–T4 料盒 + `rackMaterial`）。在 Creality Print 中，用户理论上可以配置任意多于 16 个的切片耗材槽位，其前提是假定这些槽位全部映射到某个 CFS 槽位，因为文档说明不要在同一次任务中混用 CFS 与外部料盘。…"
+},
+"GH-CrealityPrint-596": {
+"t": "Windows 智能应用控制（Smart App Control）在 7.2.1.5476 中阻止 TKG3d.dll（0xC0E90002 / 事件 3077）",
+"b": "【CrealityPrint 版本】\n7.2.1.5476\n【操作系统（OS）】\nWindows\n【OS 版本】\n11\n【附加系统信息】\n已启用 Smart App Control（VerifiedAndReputablePolicyState = 1 / 强制模式）\n【打印机】\nCreality K1 Max\n【复现步骤】\n1. 安装官方 CrealityPrint_7.2.1.5476_Release.exe 安装包。\n2. 启动 Creality Print。\n3. Windows 立即对 TKG3d.dll 报 Bad Image 错误，Creality Print 无法启动。\n4. 使用官方完整安装程序重新安装 7.2.1.5476，结果相同。\n5. 在同一 Windows 系统上，Creality Print 7.2.0.5226 运行正常。\n6. Windows 代码完整性日志记录了 TKG3d.dll 的事件 ID 3077。\n【实际结果】\nCreality Print 7.2.1.5476 启动失败并报：\nTKG3d.dll - Bad Image\nError status 0xC0E90002\nWindows 代码完整性日志显示事件 ID 3077：\nCode Integrity determined that CrealityPrint.exe attempted to load TKG3d.dll that did not meet the Enterprise signing level requirements or violated code integrity policy.\nPolicy ID:\n{0283ac0f-fff1-49ae-ada1-8a933130cad6}\n从官方完整安装程序重新安装 7.2.1.5476 后仍出现同样的错误。…"
+},
+"GH-CrealityPrint-623": {
+"t": "Linux/Ubuntu：内嵌 WebKit 首页/云面板失效（Cloudflare 验证挑战）——自 2026-09-28 起界面空白且 WebKitWebProcess 空转占用 CPU",
+"b": "【版本】\nUbuntu 上的 Creality Print AppImage（本地安装在 `~/apps/creality-print`，当前为 7.x AppImage 构建）\n【操作系统】\nUbuntu 24.04.5 LTS，X11\n【硬件】\n- Intel Meteor Lake-P\n- WebKitGTK 4.1（`libwebkit2gtk-4.1-0` 2.52.6-0ubuntu0.24.04.1）\n【缺陷描述】\n**2026-09-28**，Creality Print 的内嵌网页面板（首页 / 在线 / 登录相关界面）在 Ubuntu 上突然停止工作：\n- 上午：正常\n- 下午：面板空白/全黑，切片软件的 WebView 中出现 Cloudflare 风格的安全验证中间页行为，大量 `WebKitWebProcess` 进程占用高 CPU\n- 同一台 PC 上 **Bambu Studio、Orca Slicer、Anycubic Slicer Next** 也同时出现相同的多应用失效（共用 WebKitGTK 架构）\n- **Windows 双系统（同一机器、同一网络）：正常**\n- **Ubuntu 上的 Chrome：MakerWorld 与普通浏览均正常**\n证据表明 MakerWorld（由 Cloudflare 前置）拒绝来自该主机的非浏览器客户端：\n【预期行为】\n首页/云/登录 WebView 应在官方 Linux 构建上正常工作，或者 Creality Print 不应依赖无法通过当前 Cloudflare 验证挑战的 WebView——并且不得因 WebKit 进程失控而冻结系统。\n【请求的修复 / 缓解措施】\n1. …"
+},
+"GH-CrealityPrint-587": {
+"t": "Creality Print v7 在 Windows W10 或 W11 休眠唤醒后，Process 下拉菜单被锁定",
+"b": "【CrealityPrint 版本】\nV7\n【操作系统（OS）】\nWindows\n【OS 版本】\nWindows W10 / W11\n【打印机】\nK1\n【复现方法】\n从休眠状态恢复已打开的 CrealityPrint 窗口\n【实际结果】\nCrealityPrint 窗口：\nProcess 下拉菜单被锁定，无法进行任何选择\n【预期结果】\n--\n【项目文件与调试日志上传】\n--\n【其他补充？】\n--"
+},
+"GH-CrealityPrint-592": {
+"t": "部分对象缺失 QuarterCubic 填充（infill）",
+"b": "【CrealityPrint 版本】\nCreality Print V7.1.1.4472 Release\n【操作系统（OS）】\nWindows\n【OS 版本】\nOS: Windows 11\n【打印机】\nCreality K1Max\n【复现方法】\n使用给定参数对随附项目执行切片（slice）。\n【实际结果】\n右下方对象为空心。左侧两个对象的填充（infill）正常。右上方的对象填充非常粗糙——不确定那里发生了什么。\n【预期结果】\n对象应能正确切片并打印。\n【项目文件与调试日志上传】\nTool-Fail.zip"
+},
+"GH-CrealityPrint-611": {
+"t": "将 3mf 保存到任意 OneDrive 目录会导致文件损坏",
+"b": "【CrealityPrint 版本】\nCrealityPrint_7.2.2.5483_Release.exe\n【操作系统（OS）】\nWindows\n【OS 版本】\nWindows 11 Build 26100.9168\n【附加系统信息】\n将 3mf 文件保存到任意 OneDrive 目录后再打开该文件，Creality Print 会提示文件中没有几何体，因此你已丢失全部自定义设置和打印文件。\n【打印机】\nK2 Pro\n【复现方法】\n1. 通过导出或保存项目的方式保存任意 3mf\n2. 将其保存到任意 OneDrive 目录，然后关闭应用\n3. 双击你创建的 3mf，或通过应用打开\n【实际结果】\n如附件所示的错误\n【预期结果】\n文件应能按预期打开，在此版本之前它确实可以。"
+},
+"GH-K1_Series_Klipper-14": {
+"t": "[BUG] CFS 强制进入重复擦料（purge）循环（浪费 80%），忽略切片软件中的零擦料设置",
+"b": "【问题描述】\n使用 Creality K1 与 CFS，通过 Creality Print V7.2.2 进行多色打印时，将冲洗量（Flushing Volume）设为 0.00 mm3 并禁用擦料塔（prime tower）后，打印机/CFS 固件完全忽略切片软件设置，在废料槽上进入自主的 5 次擦料重试循环。\n【测试数据（Klipper 遥测）】\n- 模型所需耗材：240 mm（0.7 g）\n- 换料 1（黑色 -> 白色）：连续 5 次擦料，3 分 45 秒，浪费 375.5 mm\n- 换料 2（白色 -> 金色）：2 分 21 秒，浪费 215.2 mm\n- 废料槽内总浪费：760 mm（被丢弃的耗材占挤出总量的 80%！）\n【硬件与固件】\n- 打印机：Creality K1（固件 2.3.5.34 / 主板 CR4CU220812S11）\n- 多材料：Creality CFS（固件 1.1.3 / SN: 10000895915B625FNWA）\n- 切片软件：Creality Print V7.2.2\n【视频证据与遥测】\n- YouTube 技术视频：\n- 完整证据材料（日志、G-code、box.cfg）："
+},
+"GH-CrealityPrint-606": {
+"t": "通过云端发送打印任务时出现热床（build plate）尺寸错误",
+"b": "【CrealityPrint 版本】\n7.2.2.5483\n【操作系统（OS）】\nWindows\n【OS 版本】\n11 Pro\n【附加系统信息】\n通过云端发送打印任务会导致热床尺寸错误。当我在 PC（K2 Combo）上切片文件并通过云端发送到打印机时，打印不会启动。尝试从桌面端界面或移动 App 发送都会触发热床尺寸错误。确实，文件中的热床尺寸数据不正确。\n【打印机】\nK2 Combo\n【复现方法】\n1. 对任意模型进行切片。\n2. 从与打印机不在同一网络的 PC 发送打印。\n3. 出现热床尺寸错误提示。\n【预期结果】\n无法打印"
+},
+"GH-CrealityPrint-626": {
+"t": "version.inc 中的 CREALITYPRINT_VERSION 未更新，导致从源码构建时内部更新检查与二进制文件命名方案失效",
+"b": "【CrealityPrint 版本】\n7.2.1\n【操作系统（OS）】\nLinux\n【OS 版本】\nGentoo Linux x86_64\n【附加系统信息】\nN/A\n【打印机】\nN/A\n【复现方法】\n1. 使用项目根目录下的 `Docker*.sh` 脚本构建 CrealityPrint\n2. 观察二进制文件的版本命名错误，例如构建 v7.2.1 时得到 `CrealityPrint-V7.0.0.0-x86_64-Alpha.AppImage`\n3. 帮助 > “检查更新”\n【实际结果】\n“检查更新”显示以下信息：\n第一句在技术上成立，但当前版本实际上并非 7.0.0.0，而是 7.2.1。\n【预期结果】\n编译例如 v7.2.1 时，预期命名应为 `CrealityPrint-V7.2.1-x86_64-Alpha.AppImage`。并且 帮助 > “检查更新”应显示：\n【项目文件与调试日志上传】\nversion.inc\n需要修改/修复的行："
+},
+"GH-K2_Series_Klipper-9": {
+"t": "GPL v3 源码与配置请求：Ender-3 V3、Ender-3 V3 Plus、Ender-5 Max、K2 SE",
+"b": "Creality 的产品页面称这些打印机运行“基于 Klipper 的开源 Creality OS”，而固件下载页面以受密码保护的压缩包形式分发其 OTA 镜像：\n- Ender-3 V3（其固件页面上的 F001 镜像）\n- Ender-3 V3 Plus（其固件页面上的 F001_ota_img_V1.2.3.8.img）\n- Ender-5 Max（F004_ota_img_V1.2.0.09.img 和 V1.2.0.10）\n- K2 SE（CR4CU220812S11_ota_img_V2.3.6.43.img 和 V2.3.6.49）\nKlipper 采用 GNU GPL v3 许可。分发基于 Klipper 的固件二进制文件，意味着有义务向接收者提供对应源码；而机器配置（printer.cfg 及 config 目录）正是第三方软件按固件预期方式完成回零（home）与停靠（park）所必需的。该组织已为 K1 系列、K2 系列、Hi、Ender-3 V3 KE 和 CR-10 SE 发布了 Klipper 仓库；这四款机型则没有任何发布。\n能否以同样方式发布这四款机器的源码和配置目录，或将它们加入现有仓库？我已于 2026-09-17 向 cs@ 发送了同样的请求。"
+},
+"GH-CrealityPrint-621": {
+"t": "Linux：使用 Adwaita Sans 字体时 Creality Print 无法启动",
+"b": "【CrealityPrint 版本】\n7.2.1\n【操作系统（OS）】\nLinux\n【OS 版本】\nArch Linux / Gnome 50\n【环境】\n* OS: Arch Linux\n* 桌面环境: GNOME 50\n* 会话: Wayland\n* GPU: AMD Radeon RX 5700 XT / Mesa\n* Creality Print: AppImage\n* 架构: x86_64\n【打印机】\nK2 Combo\n【描述】\n当桌面界面字体设置为 **Adwaita Sans** 时，Creality Print 在 Linux 上启动即崩溃。\n我最初以为这与 GNOME/Wayland 有关，因为 Creality Print 在 KDE Plasma 和 Hyprland 下运行正常，而在 GNOME 下则持续崩溃。\n经过进一步测试，我将问题定位到所配置的界面字体。\n使用 **Noto Sans** 时 Creality Print 能正常启动，而使用 **Adwaita Sans** 时则崩溃。\n因此，这看起来并不是 Wayland、GNOME、OpenGL 或 XWayland 特有的问题。\n该问题可通过 GSettings 更改界面字体来复现。\n【Adwaita Sans — Creality Print 崩溃】\n然后启动 Creality Print。\nCreality Print 立即中止。……"
+},
+"GH-CrealityPrint-597": {
+"t": "导出 .json 文件用于批量报价",
+"b": "【你的功能请求是否与某个问题相关？】\n在进行多热床（multi-bed）报价时，必须手动计算项目内每张热床的打印时间和耗材用量。\n【哪些打印机会从该功能中受益？】\n全部\n【请描述你期望的解决方案】\n我希望有一个按钮，点击后打开一个表单，用于填写客户信息和项目名称，并允许导出 .json 文件，其中包含每张热床的示例打印数据：{\n\"project_name\": \"Architectural Production Batch\",\n\"client\": \"Metropolitan Design Studio\",\n\"date\": \"2026-08-11\",\n\"creality_printers\": [\n{\n\"printer_model\": \"Creality Ender 3 V3 KE\",\n\"print_beds\": {\n\"1\": {\n\"material\": \"Matte Black Pro PLA\",\n\"print_time_hours\": 6.5,\n\"filament_used_grams\": 145.2\n},\n\"2\": {\n\"print_time_hours\": 4.2,\n\"filament_used_grams\": 92.8\n},\n\"3\": {\n\"material\": \"Matte White PLA\",\n\"print_time_hours\": 8.0,\n\"filament_used_grams\": 180.5\n},\n\"4\": {\n\"material\": \"Gray PETG\",\n\"print_time_hours\": 5.7,\n\"filament_used_grams\": 120.0\n},\n\"5\": {\n\"print_time_hours\": 3.5,\n\"filament_used_grams\": 75.4\n}\n}\n},\n{\n\"printer_model\": \"Creality Ender 5 MAX\",\n\"print_beds\": {\n\"1\": {\n\"ma ……"
+},
+"GH-CrealityPrint-629": {
+"t": "CrealityPrint 现在可从 Flatpak 仓库（FlatPark）安装",
+"b": "你好 @hemiao2023 —— 感谢 CrealityPrint。我维护 **FlatPark**，这是一个为未上架 Flathub 的应用提供 Flatpak 安装方式的小型集散站，我已在那里打包了 CrealityPrint，以回应 #472。\n它使用 Flatpak 的 **extra-data** 机制，因此在安装时从你的 GitHub release 原样下载 **官方 `CrealityPrint-V -x86_64-Release.AppImage`**，并自动跟踪新版本——我不会重新托管或修改任何内容。AppImage 在安装时离线解包，因此不需要 FUSE。\n安装：\n应用页面：\n打包说明，或许对你有用：\n- 应用 id：`io.github.crealityofficial.CrealityPrint`，与你们源码树内 Flatpak manifest 相同，因此是同一个应用。它可在 GNOME 51 上运行。启动器设置 AppImage 自带的库路径，并加上你们 `flatpak/entrypoint` 中的两项设置（`LC_ALL=C.UTF-8`，以及在 NVIDIA 上启用 WebKit 的 DMA-BUF 开关）。\n- 权限遵循你们 manifest 的 `finish-args`：网络、`--device=all`、主目录、可移动介质、spacenav 套接字以及 UDisks2。\n- 有两个库来自 AppImage 之外：来自 Debian 的 `libdeflate.so.0`，以及指向运行时 `libbz2.so.1` 的 `libbz2.so.1.0` 链接。……"
+},
+"GH-CrealityPrint-616": {
+"t": "Z 抬升（Z-hop）忽略“仅高于此高度才抬升”/ retract_lift_above 设置，并在首层（first layer）生效",
+"b": "【CrealityPrint 版本】\n7.2.2.5\n【操作系统（OS）】\nWindows\n【OS 版本】\nWindows 11 Pro\n【附加系统信息】\nInter I5、16GB、SSD 1TB、RTX 5050\n【打印机】\nK2 Combo\n【复现方法】\n复现步骤\n选择配备 0.4 mm 喷嘴的 Creality K2。\n启用 Z 抬升（Z-hop）。\n将 Z 抬升高度设为 0.4 mm。\n将“仅高于此高度才抬升 Z”/ retract_lift_above 设为 1.0 mm。\n使用 Normal Lift（普通抬升）。\n对首层高度为 0.20 mm 的模型进行切片。\n在预览中检查首层空驶（travel）移动，或导出 G-code。\n在正常的首层空驶移动过程中仍会生成 Z 抬升。\n本次测试使用的打印机/配置：\n打印机：Creality K2\n喷嘴：0.4 mm\n配置：0.12mm Standard @Creality K2 0.4 nozzle\n【实际结果】\nCreality Print 忽略了“仅高于此高度才抬升 Z”（retract_lift_above）设置。\n我将 Z 抬升配置为仅在超过特定 Z 高度时发生。例如：\nZ 抬升：0.4 mm\n仅高于此高度才抬升 Z：1.0 mm\nZ 抬升类型：Normal Lift\n首层高度：0.20 mm\n生成的 G-code 正确记录了：\nretract_lift_above = 1\nz_hop = 0.4\nz_hop_types = Normal Lift\nfirst_layer_height = 0.200\n然而，Creality Print 仍会生成 Z 抬升移动……"
+},
+"GH-CrealityPrint-608": {
+"t": "K1C 搭配 CFS：打印机报错 CY2586 - “Y 轴打印坐标超出范围”",
+"b": "【CrealityPrint 版本】\n7.2.2.5483\n【操作系统（OS）】\nmacOS\n【OS 版本】\nMacOS 27.0 beta\n【附加系统信息】\nMacBook Pro M1 与 MacBook Pro M4 Pro\n【打印机】\nCreality K1C 搭配 CFS\n【复现方法】\n获取 K1C_CFS-C 0.4 喷嘴的打印机预设（Printer-Preferences）\n加载模型“Würfel.3mf”\n第一个耗材使用 Generic PLA\n第二个耗材使用 Creality PLA Carbon（模型的右侧部分）\n执行切片\n会得到一个极大的擦料塔（Cleantower），X 轴尺寸超标 :-(\n将多耗材设置中的擦料塔使用项从开改为关\n擦料塔的尺寸就会恢复正常\n打印该模型\n【实际结果】\n- 打印从第一个耗材开始，打印第一个长方体\n- 打印第一个长方体\n- 打印擦料塔\n- 切换到第二个耗材，用于第二个长方体\n- 打印机报错 CY2586 - “Y 轴打印坐标超出范围”\n【预期结果】\n在整个模型上切换耗材并完成打印\n【项目文件与调试日志上传】\nlog.zip\nWürfel.3mf.zip\nCR-PLA Carbon @Creality K1C_CFS-C 0.4 nozzle.json.zip\n截图见……"
+}
+}
