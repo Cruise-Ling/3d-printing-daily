@@ -32,7 +32,7 @@ a:hover { text-decoration:underline; }
 .brand h1 { font-size:22px; font-weight:700; letter-spacing:.3px; }
 .author-line { font-size:12px; color:#8b949e; margin-top:4px; }
 
-.sec-title { font-size:15px; font-weight:600; margin:22px 0 12px; color:#e6edf3; display:flex; align-items:center; gap:8px; }
+.sec-title { font-size:15px; font-weight:600; margin:24px 0 12px; color:#e6edf3; display:flex; align-items:center; gap:8px; }
 .sec-title::before { content:''; width:3px; height:15px; background:#58a6ff; border-radius:2px; }
 
 .kpi-row { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-bottom:6px; }
@@ -153,6 +153,9 @@ input[type=text]:focus { border-color:#58a6ff; }
 input[type=date] { background:#0d1117; border:1px solid #21262d; color:#e6edf3; font-size:12px; padding:6px 9px; border-radius:14px; outline:none; font-family:inherit; color-scheme:dark; }
 input[type=date]:focus { border-color:#58a6ff; }
 .filters .break { flex-basis:100%; height:0; margin:0; }
+/* 渠道筛选器新增的「其他渠道」下拉：与 filter-btn 同一套视觉，避免浏览器默认样式破坏整行节奏 */
+.filters select { background:#11161f; border:1px solid #21262d; color:#8b949e; font-size:12px; padding:6px 10px; border-radius:16px; font-family:inherit; cursor:pointer; outline:none; }
+.filters select:hover { border-color:#30475e; color:#e6edf3; }
 select { background:#0d1117; border:1px solid #21262d; color:#e6edf3; font-size:12.5px; padding:7px 10px; border-radius:16px; outline:none; font-family:inherit; cursor:pointer; }
 .export-btn { margin-left:auto; background:#132339; border:1px solid #1f6feb; color:#58a6ff; font-size:12px; padding:7px 14px; border-radius:16px; cursor:pointer; font-family:inherit; font-weight:600; }
 .export-btn:hover { background:#1a2f4d; }
@@ -292,8 +295,9 @@ select { background:#0d1117; border:1px solid #21262d; color:#e6edf3; font-size:
     <a class="nav-item" href="3d_printer_brands_v2.html"><span class="nav-icon">🏭</span>品牌总览</a>
     <a class="nav-item" href="user-complaints.html"><span class="nav-icon">💬</span>用户反馈</a>
     <a class="nav-item sub active" href="creality-k3.html"><span class="nav-icon">🖨️</span>K3 专栏<span style="margin-left:auto;font-size:10px;color:#6e7681;font-variant-numeric:tabular-nums">437</span></a>
-    <a class="nav-item sub " href="creality-mbox.html"><span class="nav-icon">📦</span>mBox 专栏<span style="margin-left:auto;font-size:10px;color:#6e7681;font-variant-numeric:tabular-nums">10</span></a>
-    <a class="nav-item sub " href="software-columns.html"><span class="nav-icon">🧩</span>软件专栏<span style="margin-left:auto;font-size:10px;color:#6e7681;font-variant-numeric:tabular-nums">507</span></a>
+    <a class="nav-item sub " href="creality-mbox.html"><span class="nav-icon">📦</span>mBox 专栏<span style="margin-left:auto;font-size:10px;color:#6e7681;font-variant-numeric:tabular-nums">19</span></a>
+    <a class="nav-item sub " href="software-columns.html"><span class="nav-icon">🧩</span>软件专栏<span style="margin-left:auto;font-size:10px;color:#6e7681;font-variant-numeric:tabular-nums">623</span></a>
+    <a class="nav-item sub " href="fullcolor-columns.html"><span class="nav-icon">🎨</span>全彩专栏<span style="margin-left:auto;font-size:10px;color:#6e7681;font-variant-numeric:tabular-nums">32</span></a>
     <a class="nav-item" href="slicing-params.html"><span class="nav-icon">⚙️</span>切片参数速查</a>
   </div>
   <div class="sidebar-footer">
@@ -1665,6 +1669,40 @@ function renderFilters() {
     const n = c === "all" ? items().length : items().filter(function(x){ return x.channel === c; }).length;
     html += '<button class="filter-btn ' + (activeFilters.channel === c ? "active" : "") + '" onclick="setF(\'channel\',\'' + c + '\')">' + (c === "all" ? "全部" : c) + ' ' + n + '</button>';
   });
+  // ---------- 渠道（平台级）：用户 2026-10-27 要求明细流能直接按 YouTube / Reddit 这类具体渠道筛 ----------
+  // 用按钮组而不是下拉：一眼看到各渠道条数，单击即筛、再点取消。
+  // 平台超过 8 个时只把「≥5 条」的前 8 个做成按钮，长尾收进「其他渠道」下拉（K3 有 14 个平台，
+  // 其中 4 个占 96%，长尾全是 1–2 条的小站，铺开会把筛选栏撑成两屏）。
+  html += '<span class="filter-sep"></span><span class="filter-label">渠道</span>';
+  (function(){
+    const base = applyFilters("platform");
+    const cnt = {}, rawOf = {};
+    base.forEach(function(x){
+      const raw = x.platform || "未标注";
+      // 「B 站」与「B站」中间空格不同，不归一会变成两个渠道
+      const nm = String(raw).replace(/\s+/g, "") === "B站" ? "B站" : raw;
+      cnt[nm] = (cnt[nm] || 0) + 1;
+      if (!(nm in rawOf)) rawOf[nm] = raw;
+    });
+    const names = Object.keys(cnt).sort(function(a, b){ return cnt[b] - cnt[a]; });
+    const shown = names.length <= 8 ? names : names.filter(function(k){ return cnt[k] >= 5; }).slice(0, 8);
+    html += '<button class="filter-btn ' + (activeFilters.platform === "all" ? "active" : "") +
+      '" onclick="setF(\'platform\',\'all\')">全部 ' + base.length + '</button>';
+    shown.forEach(function(nm){
+      const v = String(rawOf[nm]).replace(/'/g, "\\'");
+      html += '<button class="filter-btn ' + (activeFilters.platform === rawOf[nm] ? "active" : "") +
+        '" onclick="setF(\'platform\',\'' + v + '\')" title="只看 ' + esc(nm) + ' 的内容">' +
+        esc(nm) + ' ' + cnt[nm] + '</button>';
+    });
+    const rest = names.filter(function(k){ return shown.indexOf(k) < 0; });
+    if (rest.length) {
+      html += '<select onchange="if(this.value)setF(\'platform\',this.value)">' +
+        '<option value="">其他渠道 ' + rest.length + ' 个</option>' +
+        rest.map(function(nm){
+          return '<option value="' + esc(rawOf[nm]) + '">' + esc(nm) + ' ' + cnt[nm] + '</option>';
+        }).join("") + '</select>';
+    }
+  })();
   html += '<span class="filter-sep"></span><span class="filter-label">信源</span>';
   ["all","用户","媒体","社区综述","电商","官方"].forEach(function(t){
     const n = t === "all" ? items().length : items().filter(function(x){ return x.sourceType === t; }).length;
@@ -1712,7 +1750,10 @@ function renderSummary() {
   if (activeFilters.dim !== "all") parts.push(fsumChip("维度：" + activeFilters.dim, "dim"));
   if (activeFilters.topic !== "all") parts.push(fsumChip("专项：" + ((TOPIC_META[activeFilters.topic] || {}).name || activeFilters.topic), "topic"));
   if (activeFilters.group !== "all") parts.push(fsumChip("渠道组：" + GROUP_META[activeFilters.group].name, "group"));
-  if (activeFilters.platform !== "all") parts.push(fsumChip("站点：" + activeFilters.platform, "platform"));
+  if (activeFilters.platform !== "all") {
+    const pn = String(activeFilters.platform).replace(/\s+/g, "") === "B站" ? "B站" : activeFilters.platform;
+    parts.push(fsumChip("渠道：" + pn, "platform"));
+  }
   if (activeFilters.kind !== "all") parts.push(fsumChip("载体：" + activeFilters.kind, "kind"));
   if (activeFilters.review !== "all") parts.push(fsumChip("审核：" + activeFilters.review, "review"));
   if (activeFilters.sentiment !== "all") parts.push(fsumChip("情感：" + activeFilters.sentiment, "sentiment"));
