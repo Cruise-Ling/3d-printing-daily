@@ -81,8 +81,9 @@ OFFICIAL_CH = re.compile(
 # 它带着 706 条评论混进全彩 high 档 —— 词边界写窄了就是这种后果。
 FDM_HINT = re.compile(
     r"\b(filaments?|spools?|tool\s?changers?|ams\b|bambu\s*lab|bambu|snapmaker|"
-    r"prusa|ender|voron|multicolou?r\s+fdm|multi-color\s+fdm|colour\s+mixing|"
-    r"color\s+mixing|snapmaker\s+u1|h2c)\b", re.I)
+    r"prusa|ender|voron|x1c|p1s|p1p|a1\s*mini|h2d|h2c|fdg|fdm|fdm3d|fdm\s*3d|"
+    r"multicolou?r\s+fdm|multi-color\s+fdm|colour\s+mixing|"
+    r"color\s+mixing|snapmaker\s+u1|idex|phrozen|arco)\b", re.I)
 MJP_MODEL = re.compile(r"g1x|cj270|mj270|qc2a|stratasys|j850|j55|mimaki|3duj|polyjet|material\s+jetting", re.I)
 
 # 只做 2D 平面的 UV 平板机：相邻品类，不是本专栏的机型
@@ -185,6 +186,13 @@ def api(path, params, timeout=25, retries=2):
                 reason = m.group(1)
             if e.code == 403 and reason == "quotaExceeded":
                 return None, "quotaExceeded"
+            # 429 rateLimitExceeded 是「短时速率限制」，和 403 quotaExceeded（日配额耗尽）
+            # 完全是两回事：前者退避几秒就好，后者当天无解。首次没区分，
+            # 连续跑批时 4 个关键词被直接判失败，白丢样本。
+            if e.code == 429 and i < retries:
+                time.sleep(9 * (i + 1))
+                last = "HTTP 429 rateLimit"
+                continue
             if e.code in (500, 503) and i < retries:
                 time.sleep(3 * (i + 1))
                 last = "HTTP %d" % e.code
@@ -274,7 +282,8 @@ def collect(sources, errors):
             got += 1
         sources.append({"channel": "YouTube", "query": kw, "code": 200,
                         "status": "ok", "accepted": got, "note": order + " · " + why})
-        time.sleep(0.4)
+        # 关键词之间留够间隔：search.list 是重接口，0.4s 连发会触发 429 rateLimitExceeded
+        time.sleep(2.0)
 
     if not seen:
         return []
