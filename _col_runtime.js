@@ -229,9 +229,19 @@ ok(cards > 0 && cards <= 20, "首页卡片数在 1..20", String(cards));
 ok(grid.indexOf("原文 ·") >= 0, "卡片有原文段");
 
 const page1 = ITEMS.slice(0, cards);
-const needCn = page1.filter(x => x.textCn && x.originalText).length;
+// 译文段只在「可折叠」的卡里渲染（正文超过折叠阈值才出 <div class="fold">）。
+// 正文极短的卡（如 Reddit RSS 只给 submitted by /u/xxx 的链接帖）不折叠，
+// 整段内容已在摘要里可见，不该再期望一个译文段 —— 原断言按 textCn 全量计数会误报。
+const cardHtml = grid.split(/<div class="card[ "]/).slice(1);
+const folded = cardHtml.map(h => h.indexOf('class="fold"') >= 0);
+ok(folded.length === cards, "卡片切分与卡片数一致", folded.length + " / " + cards);
+const needCn = page1.filter((x, i) => x.textCn && x.originalText && folded[i]).length;
 const gotCn = (grid.match(/class="seg-tx cn"/g) || []).length;
-ok(gotCn === needCn, "译文段数量与 textCn 一致", "期望 " + needCn + " 实得 " + gotCn);
+ok(gotCn === needCn, "折叠卡只要带 textCn 就有译文段", "期望 " + needCn + " 实得 " + gotCn);
+// 反向：不折叠的卡不应出现译文段
+const flatCn = page1.filter((x, i) => x.textCn && !folded[i]
+  && (cardHtml[i] || "").indexOf('class="seg-tx cn"') >= 0).length;
+ok(flatCn === 0, "不折叠的卡不渲染译文段", String(flatCn));
 ok(/原文 · [A-Z]{2}/.test(grid) || grid.indexOf("原文 · 中文") >= 0, "原文段按语种标注");
 ok(els.filterSummary.innerHTML === "", "初始无已选条件（摘要条为空）");
 ok(els.countLine.textContent.indexOf("共 " + ITEMS.length + " 条") >= 0, "命中数等于总数", els.countLine.textContent);
