@@ -42,6 +42,9 @@ import urllib.request
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "_fc_rd_candidates.json")
 
+# 样板正文剥离与软件专栏同源，避免两条链各写一套正则
+from _reddit_search import strip_boiler  # noqa: E402
+
 TODAY = datetime.date.today()
 UA = "python:creality-fc-research:v1.0 (by /u/creality_data)"
 
@@ -236,11 +239,17 @@ def collect(sources, errors):
 
     # ---- 过滤与成型 ----
     out = []
+    shell = 0
     for r in seen.values():
         # 纯图帖的正文只剩模板尾巴 "submitted by /u/x [link] [comments]"，
         # 不清掉的话它会同时污染摘要展示和正文长度判定。
-        body = re.sub(r"submitted by\s*/u/\S+[\s\S]*$", "", r["body"], flags=re.I)
-        body = re.sub(r"\[(link|comments)\]\s*", "", body).strip()
+        # 2026-10-28：改用 _reddit_search.strip_boiler 统一剥离（与软件专栏同源），
+        # 剥完为空即整条丢弃 —— 卡片只剩标题 + 外链，没有讨论内容可读。
+        body = strip_boiler(r["body"])
+        body = re.sub(r"\s+", " ", body).strip()
+        if not body:
+            shell += 1
+            continue
         head = r["title"] + " " + body[:200]
         model, tier = model_of(r["title"], body)
 
@@ -330,6 +339,8 @@ def main():
     print("Reddit：%d 条（high %d / mid %d / low %d）→ %s" % (
         len(items), lv.get("high", 0), lv.get("mid", 0), lv.get("low", 0),
         os.path.basename(OUT)))
+    if shell:
+        print("  丢弃无正文纯图/纯链接帖：%d 条（只有 RSS 模板尾巴，无讨论内容）" % shell)
     for s in sources:
         print("  %s %-28s %s %s" % ("✓" if s.get("status") == "ok" else "×",
                                     s.get("query"), s.get("accepted"), s.get("note") or ""))

@@ -248,13 +248,27 @@ def sync_nav():
 
 
 # ---------------------------------------------------------------- 数据装配
+# Reddit RSS 尾巴在译文里的残留。原文侧已由 _col_normalize / 采集器剥离，
+# 但历史译文是按「带尾巴的原文」翻的，中译末尾会挂一句「由 /u/xxx 提交 [链接] [评论]」。
+# 这里在注入时统一剪掉，避免为一句模板话重翻。
+_RE_CN_TAIL = re.compile(
+    r"(?:由\s*)?/?u/\S*\s*(?:提交|发布|submitted)[\s\S]*$"
+    r"|submitted\s+by[\s\S]*$", re.I)
+
+
+def clean_tr_text(s):
+    s = _RE_CN_TAIL.sub(" ", s or "")
+    s = re.sub(r"\[(?:链接|评论|link|comments)\]\s*", " ", s)
+    return re.sub(r"[ \t]{2,}", " ", s).strip()
+
+
 def merge_tr(items, tr):
     miss = 0
     for it in items:
         t = tr.get(it["uid"])
         if t:
-            it["titleCn"] = t.get("t", "")
-            it["textCn"] = t.get("b", "")
+            it["titleCn"] = clean_tr_text(t.get("t", ""))
+            it["textCn"] = clean_tr_text(t.get("b", ""))
         elif it["originalText"] and not re.search(r"[\u4e00-\u9fff]", it["originalText"]):
             miss += 1
     return miss
@@ -393,6 +407,10 @@ def build(kind):
         forum_n = len(items)
         items = items + gh
         items.sort(key=lambda x: (x.get("date") or "", x.get("uid") or ""), reverse=True)
+        # 稳定二次排序：把「不进声量 + 导购」条目沉到末尾，使 ITEMS 原始顺序与
+        # 引擎 apply()（按 isShop 把导购沉底）渲染出的首页一致，
+        # 否则 _col_runtime.js 的 needCn(ITEMS.slice(0,cards)) 与 gotCn(渲染 span 数) 会错位。
+        items.sort(key=lambda x: 1 if (x.get("countInVolume") is False and x.get("sourceType") == "导购") else 0)
 
         valid = sum(1 for x in items if x.get("grade") == "有效" and x.get("countInVolume") is not False)
         vers = {x["version"] for x in items if x.get("version")}
@@ -466,6 +484,8 @@ def build(kind):
         items = load_json(MBOX_ITEMS)
         tr = load_json(MBOX_TR) if os.path.exists(MBOX_TR) else {}
         merge_tr(items, tr)
+        # 与软件专栏一致：把「不进声量 + 导购」沉底，对齐引擎 apply() 渲染首页顺序
+        items.sort(key=lambda x: 1 if (x.get("countInVolume") is False and x.get("sourceType") == "导购") else 0)
         sites = {x["site"] for x in items}
         ref = max(x["date"] for x in items)
         through = ref

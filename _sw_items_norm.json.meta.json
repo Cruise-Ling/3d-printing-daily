@@ -1,65 +1,64 @@
 {
- "fetchedAt": "2026-10-27 16:44",
+ "fetchedAt": "2026-10-28 09:02",
  "probes": [],
  "stats": {
-  "topics": 454,
-  "kept": 623,
+  "topics": 512,
+  "kept": 627,
   "dropped": {
    "off-topic": 4,
-   "excluded": 1,
-   "grade-void": 2
+   "excluded": 1
   },
   "dupUid": 0,
-  "errors": 8,
+  "errors": 10,
   "external": {
    "enabled": true,
-   "items": 176,
+   "items": 120,
    "sources": [
     {
      "source": "Reddit OrcaSlicer",
      "status": "ok",
-     "count": 66
+     "count": 68
     },
     {
      "source": "Reddit BambuLab",
      "status": "ok",
-     "count": 10
+     "count": 12
     },
     {
      "source": "Reddit 3Dprinting",
      "status": "ok",
-     "count": 13
+     "count": 16
     },
     {
      "source": "B站 搜索",
      "status": "ok",
-     "count": 9,
+     "count": 12,
      "scanned": 9
     },
     {
      "source": "YouTube Orca Slicer settings guide",
-     "status": "ok",
-     "count": 22
+     "status": "error",
+     "count": 0
     },
     {
      "source": "YouTube Bambu Studio slicer tutorial",
-     "status": "ok",
-     "count": 19
+     "status": "error",
+     "count": 0
     },
     {
      "source": "YouTube Cura 3d print settings",
-     "status": "ok",
-     "count": 8
+     "status": "error",
+     "count": 0
     },
     {
      "source": "YouTube 3d print stringing fix slicer",
-     "status": "ok",
-     "count": 8
+     "status": "error",
+     "count": 0
     },
     {
      "source": "YouTube Creality Print slicer",
-     "status": "ok",
-     "count": 9
+     "status": "error",
+     "count": 0
     },
     {
      "source": "YouTube 3d printing layer shift fix",
@@ -75,9 +74,19 @@
    ],
    "errors": [
     {
+     "sub": "OrcaSlicer",
+     "status": 429,
+     "note": "20s 后重试"
+    },
+    {
      "sub": "BambuLab",
      "status": 429,
      "note": "20s 后重试"
+    },
+    {
+     "sub": "BambuLab",
+     "status": 429,
+     "note": "45s 后重试"
     },
     {
      "sub": "3Dprinting",
@@ -88,6 +97,31 @@
      "sub": "3Dprinting",
      "status": 429,
      "note": "45s 后重试"
+    },
+    {
+     "site": "YouTube",
+     "query": "Orca Slicer settings guide",
+     "err": "HTTP 429"
+    },
+    {
+     "site": "YouTube",
+     "query": "Bambu Studio slicer tutorial",
+     "err": "HTTP 429"
+    },
+    {
+     "site": "YouTube",
+     "query": "Cura 3d print settings",
+     "err": "HTTP 429"
+    },
+    {
+     "site": "YouTube",
+     "query": "3d print stringing fix slicer",
+     "err": "HTTP 429"
+    },
+    {
+     "site": "YouTube",
+     "query": "Creality Print slicer",
+     "err": "HTTP 429"
     }
    ]
   },

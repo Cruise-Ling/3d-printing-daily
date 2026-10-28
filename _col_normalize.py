@@ -34,10 +34,28 @@ _RE_BARE_DOMAIN = re.compile(r"(?<![\w.])(?:www\.)?[a-z0-9-]+\.(?:com|net|org|io
 _RE_WS = re.compile(r"[ \t\u00a0]+")
 
 
+# Reddit RSS 每条 content 末尾都带 "submitted by /u/x [link] [comments]"。
+# 纯图 / 纯链接帖没有正文，清洗后只剩这句模板尾巴 —— 采集端（_reddit_search /
+# _col_collect_rd）已剥离并整条丢弃，这里再兜一层：历史数据里还有这类空壳条目，
+# 重新归一时必须剔除，否则重建页面会把它们带回来。
+_RE_RD_BOILER = re.compile(r"submitted\s+by\s*(?:/u/|u/)\S*|\[(?:link|comments)\]",
+                           re.I)
+# 同一句话在正文「末尾」出现时是 RSS 尾巴，从那里到结尾整段都要砍掉 ——
+# 有真实正文的帖子也会带这句，不砍会让卡片最后挂一行「由 /u/xxx 提交 [链接] [评论]」。
+_RE_RD_TAIL = re.compile(r"submitted\s+by\s*(?:/u/|u/)\S*[\s\S]*$", re.I)
+
+
+def is_placeholder_body(body):
+    """正文去掉 RSS 模板尾巴后为空 → 纯图 / 纯链接帖，没有可读内容。"""
+    s = _RE_RD_BOILER.sub(" ", body or "")
+    return not re.sub(r"[\s\W_]+", "", s)
+
+
 def clean_body(s):
     """去掉论坛正文里混进来的页面导航、图片占位、链接残留。"""
     s = s or ""
     s = s.replace("\r\n", "\n").replace("\r", "\n")
+    s = _RE_RD_TAIL.sub(" ", s)      # Reddit RSS 尾巴（含真实正文的帖子也带）
     s = _RE_IMG_MD.sub(" ", s)
     s = _RE_MD_LINK.sub(r"\1", s)
     s = _RE_URL.sub(" ", s)
@@ -196,8 +214,12 @@ def tool_of(it):
 # ---------------------------------------------------------------- 主流程
 def norm_sw(items):
     out = []
+    dropped = 0
     for it in items:
         body = clean_body(it.get("originalText") or "")
+        if is_placeholder_body(body):
+            dropped += 1
+            continue
         body, cut = truncate(body)
         raw = it.get("version") or ""
         out.append({
@@ -235,6 +257,8 @@ def norm_sw(items):
             "flair": it.get("flair") or "",
         })
     out.sort(key=lambda x: (x["date"], x["uid"]), reverse=True)
+    if dropped:
+        print("  剔除无正文条目（RSS 模板尾巴）: %d" % dropped)
     return out
 
 
@@ -296,8 +320,12 @@ def norm_fc(items):
                               默认排序按它降序，不按日期
     """
     out = []
+    dropped = 0
     for it in items:
         body = clean_body(it.get("originalText") or "")
+        if is_placeholder_body(body):
+            dropped += 1
+            continue
         body, cut = truncate(body)
         title = (it.get("title") or "").strip()
         lang = (it.get("language") or "").upper()
@@ -337,6 +365,8 @@ def norm_fc(items):
             "grade": "",
         })
     out.sort(key=lambda x: (-(x.get("heatScore") or 0), x.get("date") or ""))
+    if dropped:
+        print("  剔除无正文条目（RSS 模板尾巴）: %d" % dropped)
     return out
 
 

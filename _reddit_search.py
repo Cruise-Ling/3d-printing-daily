@@ -107,6 +107,20 @@ _RE_RID = re.compile(r"/comments/([a-z0-9]+)/", re.I)
 _TAG = re.compile(r"<[^>]+>")
 
 
+# RSS 每条 content 的末尾都会带一句模板尾巴 "submitted by /u/xxx [link] [comments]"。
+# 纯图帖 / 纯链接帖没有正文，清洗后就只剩这句尾巴 —— 会被当成"有正文"混进卡片，
+# 页面上表现为只有英文标题、正文是"由 /u/xxx 提交 [链接] [评论]"，翻译表也会跟着翻这句废话。
+# 2026-10-28：从采集端统一剥掉，并在 search() 里整条丢弃（用户决策：不要这类空壳条目）。
+_RE_BOILER = re.compile(
+    r"submitted\s+by\s*(?:/u/|u/)\S*[\s\S]*$"
+    r"|\[(?:link|comments)\]\s*", re.I)
+
+
+def strip_boiler(s):
+    """剥掉 Reddit RSS 的模板尾巴，返回真正的正文（可能为空串）。"""
+    return _RE_BOILER.sub(" ", s or "").strip()
+
+
 def clean_html(s):
     """Reddit RSS 的 content 是一段被转义的 HTML 表格（图片预览 + 正文）。
     这里只保留可读文本：去掉 table/tr/td/img/a 的壳，保留文字。"""
@@ -120,7 +134,7 @@ def clean_html(s):
     s = _html.unescape(s)
     s = re.sub(r"[ \t\u00a0]+", " ", s)
     s = re.sub(r"\n{3,}", "\n\n", s)
-    return s.strip()
+    return strip_boiler(s)
 
 
 def parse_feed(xml, sub):
@@ -227,10 +241,16 @@ def search(subs, gate=None, days=90, label="Reddit", limit=100,
             continue
         rows = parse_feed(xml, sub)
         kept = 0
+        shell = 0
         for r in rows:
             if cutoff and r["date"] and r["date"] < cutoff:
                 continue
             if gate and not gate(r["title"], r["body"]):
+                continue
+            # 纯图 / 纯链接帖清洗后正文为空：卡片只剩英文标题 + 外链，翻译也只是把
+            # "由 /u/x 提交" 翻一遍 —— 没有信息量，整条丢弃（2026-10-28 用户决策）。
+            if keep_body and not (r["body"] or "").strip():
+                shell += 1
                 continue
             items.append({
                 "uid": "rd_%s" % (r["id"] or re.sub(r"\W+", "", r["title"])[:16]),
@@ -250,7 +270,7 @@ def search(subs, gate=None, days=90, label="Reddit", limit=100,
             })
             kept += 1
         sources.append({"source": "Reddit %s" % disp, "status": "ok" if kept else "empty",
-                        "count": kept})
+                        "count": kept, "droppedShell": shell})
     return items, sources, errors
 
 
