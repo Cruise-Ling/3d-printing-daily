@@ -68,21 +68,26 @@ TARGETS = [
     ("3DDruck",              "Vollfarbe",               "top",       "德语版 · 欧洲价格锚"),
     ("3Dprinting",           "full color vs painting",  "relevance", "决策讨论 · 买机 vs 代打/手涂"),
     ("3Dprinting",           "material jetting",        "relevance", "主版 · 技术路线讨论"),
+    ("3Dprinting",           "Sailner",                 "relevance", "赛纳 · 品牌精确（2026-10-28 接入）"),
 ]
 
 MODELS = [
+    ("Sailner", ["sailner", "seine 3d", "赛纳三维", "wjp"]),
     ("G1X", ["g1x", "g1 x", "heygears g1", r"\bg1\b", "黑格 g1"]),
     ("CJ270", ["cj270", "cj 270", "mj270"]),
     ("QC2A", ["qc2a", "qc-2a", "qc 2a", "inew3d", "simba3d"]),
     ("J850/J55", ["stratasys", "j850", "j55", "polyjet"]),
     ("3DUJ", ["mimaki", "3duj"]),
 ]
+# 三档：赛纳 D450 桌面形态 + $70k 工业价位，单列「专业」（2026-10-28）
+TIER = {"J850/J55": "工业", "3DUJ": "工业", "Sailner": "专业"}
 INDUSTRIAL = {"J850/J55", "3DUJ"}
 
 CTX_FC = ("full color", "full-color", "full-colour", "fullcolour", "full colored",
           "full coloured", "multicolor resin", "multi-color resin", "material jetting",
           "polyjet", "mjp", "uv print", "color 3d print", "colour 3d print",
-          "multi color", "multi-color", "multicolor", "multicolour", "彩色", "全彩", "vollfarbe")
+          "multi color", "multi-color", "multicolor", "multicolour", "彩色", "全彩", "vollfarbe",
+          "wjp", "voxel")
 
 # 护栏 B：多色 FDM 是同属用户决策的「替代方案」，但不是一条技术路线。
 # Reddit 上这条线声量极大（r/FDMminiatures / r/BambuLab），不打标会直接
@@ -93,11 +98,13 @@ FDM_HINT = re.compile(
     r"multicolou?r\s+fdm|multi-color\s+fdm|colour\s+mixing|color\s+mixing|"
     r"snapmaker\s+u1|idex)\b", re.I)
 MJP_MODEL = re.compile(
-    r"g1x|cj270|mj270|qc2a|stratasys|j850|j55|j8\d\d|mimaki|3duj|polyjet|material\s+jetting", re.I)
+    r"g1x|cj270|mj270|qc2a|stratasys|j850|j55|j8\d\d|mimaki|3duj|polyjet|material\s+jetting"
+    r"|sailner|赛纳|wjp", re.I)
 
 # 厂商自有账号：makers101 那篇拆解里提到「七个最热帖里四个来自厂商和单一博主」。
 # 不标出来，官方口径会被当成用户声量。
-OFFICIAL_USER = re.compile(r"^(heygears|flashforge|inew3d|simba3d|stratasys|mimaki)(_|$|\d)", re.I)
+OFFICIAL_USER = re.compile(
+    r"^(heygears|flashforge|inew3d|simba3d|stratasys|mimaki|sailner)(_|$|\d)", re.I)
 
 # 卖货/招租/纯展示等非讨论帖：留着会污染情感结构
 NOISE = re.compile(
@@ -180,7 +187,7 @@ def model_of(title, body=""):
                 else:
                     hit = re.search(r"\b" + re.escape(k), t)
                 if hit:
-                    return name, ("工业" if name in INDUSTRIAL else "桌面")
+                    return name, TIER.get(name, "桌面")
     return "", ""
 
 
@@ -264,7 +271,7 @@ def collect(sources, errors):
             continue
 
         # 护栏 B：多色 FDM 走独立技术路线，不进全彩情感分母
-        tech = "MJP 喷墨"
+        tech = "WJP 体素喷墨" if model == "Sailner" else "MJP 喷墨"
         if not MJP_MODEL.search(head) and FDM_HINT.search(head):
             tech, tier = "FDM-multicolor", "对照"
 

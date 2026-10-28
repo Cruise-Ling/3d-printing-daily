@@ -78,6 +78,14 @@ ENG.clear_proxy()
 # 2026-10-27 用户决策：桌面三台 + 工业两台各建一张卡（S3 共 5 张机型卡）
 # 机型识别优先级：越具体的放前面，避免 G1 抢走 G1X
 MODELS = [
+    # 赛纳三维（2026-10-28 接入）：WJP 体素级全彩多材料喷墨，纳思达/奔图同集团。
+    # 归「专业」档：桌面机型 D450 实价约 $70k —— **形态是桌面、价位是工业**，
+    # 压进「桌面」会破坏 $3.6k–10k 的价格带口径，压进「工业」又会与 Stratasys/Mimaki
+    # 真正的产线设备混为一谈，故单列一档（用户 2026-10-28 决策）。
+    # 卡片按品牌命中（用户只会说「赛纳」），型号在此一并归一，仍覆盖 J401/J501/D450 等。
+    ("Sailner", "专业", r"赛纳(?![克])|sailner|seine\s*3\s*d|珠海赛纳"
+                        r"|(?<![a-z0-9])j\s*40[012](?![0-9])|(?<![a-z0-9])j\s*50[01](?![0-9])"
+                        r"|(?<![a-z0-9])d\s*45[02](?![0-9])"),
     ("G1X", "桌面", r"(?<![a-z0-9])g\s*1\s*-?\s*x(?![a-z0-9])|黑格\s*g\s*1|heygears?\s*g\s*1"),
     ("CJ270", "桌面", r"(?<![a-z0-9])c\s*j\s*-?\s*270(?![a-z0-9])|闪铸\s*c\s*j"),
     ("QC2A", "桌面", r"(?<![a-z0-9])q\s*c\s*-?\s*2\s*a(?![a-z0-9])|inew\s*3?\s*d|simbа?\s*3d|拓远"),
@@ -91,9 +99,17 @@ MODEL_ALIAS = {"MJ270": "CJ270", "G1": "G1X", "QC-2A": "QC2A"}
 # 相关性闸门：必须命中机型，且命中全彩语境词 —— 挡住「G1X 是指别的东西」这类误收
 CTX_FC = ("全彩", "彩色", "多色", "color", "colour", "喷墨", "jetting", "mjp", "polyjet",
           "uv", "手办", "上色", "涂装", "3d打印", "3d 打印", "打印机", "printer", "printing",
-          "光固化", "树脂")
-# 噪音：只挡归并帖陷阱（拼团/加微信），**不挡导购** —— 值得买的长帖正是本专栏最优质样本
-NOISE_RE = re.compile(r"开团|拼团|优惠码|领券|返现|加微信|招代理|加盟|二手|转让|闲置", re.I)
+          "光固化", "树脂", "wjp", "体素", "voxel")
+# 噪音：只挡归并帖陷阱（拼团/加微信）+ 定制服务商软文，**不挡导购、也不挡「代打」讨论**
+# 2026-10-28 赛纳接入时发现：能搜到的赛纳内容大量是「元/克」「源头厂家」「gtp4代」这类
+# 代打营销软文，混进池子会把「代打价格」读成「设备口碑」。故只拦软文特征词。
+# 刻意**不拦「代打」本身** —— 它是 biz 议题（买机 vs 代打）的正常讨论词，拦了会杀议题样本。
+NOISE_RE = re.compile(r"开团|拼团|优惠码|领券|返现|加微信|招代理|加盟|二手|转让|闲置"
+                      r"|元\s*/\s*克|源头厂家|来图定制|图片定制|定制厂家|gtp4|免费检查|包邮", re.I)
+
+# B站 UP 主是厂商自有号：官方实测片的播放量会被读成用户口碑，必须降档
+OFFICIAL_UP = re.compile(r"heygears|黑格|flashforge|闪铸|inew\s*3?\s*d|拓远|sailner|赛纳|"
+                         r"stratasys|mimaki|官方", re.I)
 
 BILI_KEYWORDS = [
     "黑格 G1X",
@@ -106,16 +122,51 @@ BILI_KEYWORDS = [
     "全彩喷墨 3D打印",
     "UV打印机 浮雕",
     "全彩光固化",
+    "赛纳 全彩3D打印",
+    "赛纳三维 手办",
 ]
 
 
-def model_of(text):
-    """返回 (机型, 档次)。识别不到返回 ("", "")—— 未标注也必须如实留空，不得猜。"""
-    s = (text or "").lower()
+def model_of(text, title=""):
+    """返回 (机型, 档次)。识别不到返回 ("", "")—— 未标注也必须如实留空，不得猜。
+
+    判定分两级（2026-10-28 加赛纳当天踩坑后重写）：
+      ① 标题命中即定主机型。标题是作者自己声明的主题，最可信。
+      ② 标题没有可识别型号时，只有**全文只出现一家品牌**才认它；
+         出现两家以上一律留空（未标注）。多机型对比帖、行业周报都属于这一类，
+         硬归给「正文里第一个提到的品牌」等于把对比帖读成单机型口碑。
+
+    踩坑现场：什么值得买三条黑格/闪铸对比长帖，标题写「黑格」但没写 G1X，
+    于是掉进全文匹配，被正文里顺带提的赛纳抢走 —— 专业档凭空多 3 条假样本。
+    """
+    t = (title or "").strip()
+    if t:
+        s = t.lower()
+        for name, tier, pat in MODELS:
+            if re.search(pat, s, re.I):
+                return name, tier
+    body = (text or "").lower()
+    hits = []
     for name, tier, pat in MODELS:
-        if re.search(pat, s, re.I):
-            return name, tier
+        if re.search(pat, body, re.I):
+            hits.append((name, tier))
+    if len(hits) == 1:
+        return hits[0]
     return "", ""
+
+
+def tech_route_of(model):
+    """技术路线按厂商判，不搞一刀切。
+
+    全彩桌面这一层其实有两条路线：MJP（爱普生 i3200 系喷头，黑格/闪铸/inew3d）
+    与 WJP（赛纳自研体素级多材料喷墨）。2026-10-28 前页面统一写「MJP 喷墨」，
+    赛纳进来后这句话就错了 —— 它既不是 MJP 也不是 7 头结构。
+    """
+    if model == "Sailner":
+        return "WJP 体素喷墨"
+    if not model:
+        return ""          # 未标注机型就不猜路线 —— 猜出来的「MJP」会变成假口径
+    return "MJP 喷墨"
 
 
 # ---------------------------------------------------------------- 网络
@@ -153,6 +204,13 @@ def get(url, referer="", timeout=25, retries=2, backoff=4.0):
                 h["Referer"] = referer
             r = _OP.open(urllib.request.Request(url, headers=h), timeout=timeout)
             raw = r.read()
+            # 3dzyk.cn 这类站点回 gzip 而 urllib 不会自动解压，不解出来正文就是乱码
+            if (r.headers.get("Content-Encoding") or "").lower() == "gzip":
+                try:
+                    import gzip
+                    raw = gzip.decompress(raw)
+                except Exception:
+                    pass
             enc = "utf-8"
             ct = (r.headers.get("Content-Type") or "").lower()
             if "gbk" in ct or "gb2312" in ct:
@@ -330,7 +388,7 @@ def collect_bili(days, sources, errors):
 
     def gate(title, desc):
         s = ("%s %s" % (title or "", desc or "")).lower()
-        if not model_of(s)[0]:
+        if not model_of(s, title)[0]:
             return False
         return any(k in s for k in CTX_FC)
 
@@ -344,8 +402,9 @@ def collect_bili(days, sources, errors):
 
     out = []
     for it in raw:
-        text = "%s %s" % (it.get("title") or "", it.get("originalText") or "")
-        model, tier = model_of(text)
+        title = it.get("title") or ""
+        text = "%s %s" % (title, it.get("originalText") or "")
+        model, tier = model_of(text, title)
         # 本专栏的热度门槛与 K3 不同（3000/20 而非 1000/30），必须重算，不能沿用 signal
         v = int(it.get("views") or 0)
         m = re.search(r"评论\s*([\d.]+万?)", it.get("heat") or "")
@@ -356,11 +415,14 @@ def collect_bili(days, sources, errors):
             except ValueError:
                 review = 0
         lvl, score, hsrc = heat_of("B站", v, review, 0, 0, 0)
+        # UP 主就是厂商自己时标官方 —— 官方实测片的播放量不能当用户口碑
+        up = it.get("author") or ""
+        official = bool(OFFICIAL_UP.search(up))
         it.update({
-            "model": model, "tier": tier, "techRoute": "MJP 喷墨",
+            "model": model, "tier": tier, "techRoute": tech_route_of(model),
             "heatRaw": {"views": v, "review": review},
             "heatScore": score, "discussLevel": lvl, "heatSource": hsrc,
-            "sourceType": it.get("sourceType") or "用户",
+            "sourceType": "官方" if official else (it.get("sourceType") or "用户"),
             "countInVolume": True,
         })
         out.append(it)
@@ -401,7 +463,7 @@ def collect_seed(sources, errors):
         title = clean_title(row.get("title") or title_of(html))
         body = extract_main_text(html)
         text = "%s %s" % (title, body)
-        model, tier = model_of(text)
+        model, tier = model_of(text, title)
         if not model and not row.get("force"):
             # 不含任何机型 → 可能是行业综述，保留但标未标注，由页面「机型」筛选兜住
             model, tier = "", ""
@@ -426,7 +488,7 @@ def collect_seed(sources, errors):
             "url": url, "sourceLink": url,
             "author": row.get("author") or "",
             "sourceType": row.get("sourceType") or "媒体",
-            "model": model, "tier": tier, "techRoute": "MJP 喷墨",
+            "model": model, "tier": tier, "techRoute": tech_route_of(model),
             "heatRaw": {k: v for k, v in c.items() if v is not None},
             "heatScore": score, "discussLevel": lvl, "heatSource": hsrc,
             "heat": " · ".join("%s %s" % ({"views": "浏览", "review": "评论", "like": "点赞",

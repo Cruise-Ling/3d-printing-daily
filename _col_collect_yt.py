@@ -53,18 +53,21 @@ WINDOW_START = "2026-01-01T00:00:00Z"
 
 # 机型识别与 B 站/种子通道共用同一张表（口径漂移会让 S3 卡数字打架）
 MODELS = [
+    ("Sailner", ["sailner", "seine 3d", "赛纳", "赛纳三维", "wjp"]),
     ("G1X", ["g1x", "g1 x", "heygears g1", r"\bg1\b", "黑格 g1"]),
     ("CJ270", ["cj270", "cj 270", "mj270"]),
     ("QC2A", ["qc2a", "qc-2a", "qc 2a", "inew3d", "simba3d"]),
     ("J850/J55", ["stratasys", "j850", "j55", "polyjet"]),
     ("3DUJ", ["mimaki", "3duj", "3d uj"]),
 ]
+# 三档，不是两档：赛纳 D450 是桌面形态但 $70k 工业价位（2026-10-28 用户决策）
+TIER = {"J850/J55": "工业", "3DUJ": "工业", "Sailner": "专业"}
 INDUSTRIAL = {"J850/J55", "3DUJ"}
 
 # 全彩上下文：标题/描述必须命中其一，否则是普通 3D 打印视频（会灌偏情感结构）
 CTX_FC = ("full color", "full-colour", "full colour", "fullcolor", "multicolor resin",
           "multi-color resin", "material jetting", "polyjet", "mjp", "uv print",
-          "color 3d print", "colour 3d print", "彩色", "全彩")
+          "color 3d print", "colour 3d print", "彩色", "全彩", "wjp", "voxel", "体素")
 
 NOISE = re.compile(r"\b(shorts?|asmr|unboxing only|giveaway|promo code|coupon)\b", re.I)
 
@@ -72,7 +75,7 @@ NOISE = re.compile(r"\b(shorts?|asmr|unboxing only|giveaway|promo code|coupon)\b
 # 不标出来的后果很直接 —— 官方宣传片的播放量会把「用户讨论」的排序顶掉，
 # 情感结构也会被厂商口径污染。标 sourceType=官方 后由生成的护栏排除在情感分母外。
 OFFICIAL_CH = re.compile(
-    r"heygears|flashforge|inew3d|iNEW3D|stratasys|mimaki|pr\s*mimaki|"
+    r"heygears|flashforge|inew3d|iNEW3D|stratasys|mimaki|pr\s*mimaki|sailner|赛纳三维|"
     r"黑格|闪铸|官方|official", re.I)
 
 # 护栏 B：多色 FDM 是「替代方案」，同属用户真实决策，但不是同一条技术路线。
@@ -84,7 +87,8 @@ FDM_HINT = re.compile(
     r"prusa|ender|voron|x1c|p1s|p1p|a1\s*mini|h2d|h2c|fdg|fdm|fdm3d|fdm\s*3d|"
     r"multicolou?r\s+fdm|multi-color\s+fdm|colour\s+mixing|"
     r"color\s+mixing|snapmaker\s+u1|idex|phrozen|arco)\b", re.I)
-MJP_MODEL = re.compile(r"g1x|cj270|mj270|qc2a|stratasys|j850|j55|mimaki|3duj|polyjet|material\s+jetting", re.I)
+MJP_MODEL = re.compile(r"g1x|cj270|mj270|qc2a|stratasys|j850|j55|mimaki|3duj|polyjet|"
+                       r"material\s+jetting|sailner|赛纳|wjp", re.I)
 
 # 只做 2D 平面的 UV 平板机：相邻品类，不是本专栏的机型
 UV_FLAT = re.compile(r"eufymake|x\s?tool\s*o1|uv\s+printer|uv\s+flatbed|flatbed\s+uv", re.I)
@@ -137,6 +141,8 @@ KEYWORDS = [
     ("full color 3D printing material jetting", "relevance", "技术路线讨论"),
     ("Stratasys J850 full color",        "relevance", "工业对标"),
     ("Mimaki 3DUJ full color",           "relevance", "工业对标"),
+    ("Sailner full color 3D printer",    "relevance", "赛纳 · WJP 路线（2026-10-28 接入）"),
+    ("Sailner D450 full color",          "relevance", "赛纳 · 桌面机型实测"),
     ("full color 3D print vs painting",  "relevance", "替代方案（护栏 B 议题）"),
     ("multicolor FDM vs full color resin", "relevance", "替代方案（护栏 B 议题）"),
     ("HeyGears G1X problems ink printhead", "relevance", "负面/故障（喷头与耗材）"),
@@ -233,7 +239,7 @@ def model_of(title, body=""):
                 else:
                     hit = re.search(r"\b" + re.escape(k), t)
                 if hit:
-                    return name, ("工业" if name in INDUSTRIAL else "桌面")
+                    return name, TIER.get(name, "桌面")
     return "", ""
 
 
@@ -322,7 +328,7 @@ def collect(sources, errors):
         # 机型没命中时，全彩上下文也能收；两者都不中就是无关视频，直接丢
         if not model and not has_ctx(blob):
             continue
-        if not has_ctx(blob) and model in ("G1X", "CJ270", "QC2A"):
+        if not has_ctx(blob) and model in ("G1X", "CJ270", "QC2A", "Sailner"):
             pass                           # 机型明确命中，即使没写 full color 也收
         elif not has_ctx(blob):
             continue
@@ -337,7 +343,8 @@ def collect(sources, errors):
             continue
 
         # 护栏 B：多色 FDM 打独立 techRoute，生成器据此把它排除在全彩情感分母外
-        tech = "MJP 喷墨"
+        # 赛纳走 WJP（自研体素级多材料喷墨），不能一律写 MJP —— 那是另一条路线
+        tech = "WJP 体素喷墨" if model == "Sailner" else "MJP 喷墨"
         if not MJP_MODEL.search(blob) and FDM_HINT.search(blob):
             tech, tier = "FDM-multicolor", "对照"
         elif FDM_HINT.search(title) and not MJP_MODEL.search(title):

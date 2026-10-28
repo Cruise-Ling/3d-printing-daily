@@ -314,7 +314,9 @@ def norm_mbox(items):
 def norm_fc(items):
     """全彩专栏（P7）。契约在规范 §四 之上多四个字段：
 
-    model / tier / techRoute  机型与技术档次 —— 用户 2026-10-27 决策：桌面三台 + 工业两台各建卡，
+    model / tier / techRoute  机型与技术档次 —— 桌面三台 + 专业一台 + 工业两台各建卡
+                              （2026-10-27 定桌面/工业两档；2026-10-28 加赛纳，其 D450 是
+                              桌面形态但 $70k 工业价位，故单列「专业」档），
                               所以「档次」必须落成字段，否则护栏 A（分档呈现、不出全彩平均）没有依据
     discussLevel / heatScore  讨论度分档与排序权重 —— 用户要求「主要集中于讨论度比较高的帖子」，
                               默认排序按它降序，不按日期
@@ -355,7 +357,9 @@ def norm_fc(items):
             "countInVolume": it.get("countInVolume", True),
             "model": it.get("model") or "",
             "tier": it.get("tier") or "",
-            "techRoute": it.get("techRoute") or "MJP 喷墨",
+            # 技术路线按机型兜底，不搞一刀切 MJP —— 赛纳走的是 WJP 体素喷墨（2026-10-28 接入）
+            "techRoute": it.get("techRoute") or ("WJP 体素喷墨" if (it.get("model") == "Sailner") else
+                                                ("" if not it.get("model") else "MJP 喷墨")),
             "heat": it.get("heat") or "",
             "heatRaw": it.get("heatRaw") or {},
             "heatScore": int(it.get("heatScore") or 0),

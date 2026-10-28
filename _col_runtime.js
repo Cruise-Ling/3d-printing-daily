@@ -117,10 +117,11 @@ if (KIND === "fc") {
   ok(P_A.innerHTML.indexOf("情感结构") >= 0, "全彩 S2 有情感结构面板");
   ok(P_A.innerHTML.indexOf("信源结构") >= 0, "全彩 S2 有信源结构面板");
 
-  /* 护栏 A：档次不混算 —— 桌面级与工业级价差 5-10 倍，不出现跨档位均值 */
+  /* 护栏 A：档次不混算 —— 桌面级 / 专业级 / 工业级价差可达 10 倍，不出现跨档位均值 */
   ok(P_A.innerHTML.indexOf("不做跨档位平均") >= 0, "护栏A：机型声量标注不做跨档位平均");
   ok(P_A.innerHTML.indexOf("桌面级") >= 0 && P_A.innerHTML.indexOf("工业级") >= 0,
     "护栏A：桌面级 / 工业级分档呈现");
+  ok(P_A.innerHTML.indexOf("专业级") >= 0, "护栏A：专业级（赛纳 $60k–150k 桌面形态）单独成档");
   ok(P_A.innerHTML.indexOf("全彩平均") < 0, "护栏A：S2 不出现「全彩平均」字样");
 
   /* 情感准入：覆盖率 <60% 时必须显式说明「准入未达」，不能留白让人误读成 0 负面 */
@@ -132,13 +133,25 @@ if (KIND === "fc") {
     ok(true, "情感结构：覆盖率已达门槛，出结构图");
   }
 
-  /* S3 议题卡：5 机型 + 10 议题，0 条标「待样本」 */
+  /* S3 议题卡：6 机型 + 10 议题，0 条标「待样本」 */
   ok(P_B.innerHTML.indexOf('data-pick="topic"') >= 0, "议题卡可点击筛选明细");
   ok(P_B.innerHTML.indexOf("机型视角") >= 0 && P_B.innerHTML.indexOf("议题视角") >= 0,
     "议题卡分机型 / 议题两组");
   ok(P_B.innerHTML.indexOf("10 维") >= 0, "议题视角标明 10 维");
   const tcards = (P_B.innerHTML.match(/class="tcard/g) || []).length;
-  ok(tcards === 15, "机型 5 + 议题 10 = 15 张卡", String(tcards));
+  ok(tcards === 16, "机型 6 + 议题 10 = 16 张卡", String(tcards));
+  ok(P_B.innerHTML.indexOf("赛纳三维") >= 0, "机型卡含赛纳三维（2026-10-28 接入）");
+  ok(P_B.innerHTML.indexOf("6 台") >= 0, "机型分组头标注 6 台");
+  /* 品牌组匹配：卡片 key 是品牌、字段是型号，粒度不一致会让卡永久空着。
+     2026-10-28 实测 Stratasys 卡显示 0 条，而池里有 J850/J55 —— 这条断言就是防它复发。 */
+  const stratPool = ITEMS.filter(x => /^(stratasys|j\s*8\d\d|j\s*55|j\s*35|j\s*826|polyjet)/i.test(x.model || "")).length;
+  if (stratPool > 0) {
+    const seg = P_B.innerHTML.split("Stratasys PolyJet")[1] || "";
+    ok(!/^[\s\S]{0,60}?待样本/.test(seg),
+      "Stratasys 品牌组兜住型号别名（池内 " + stratPool + " 条，卡片不为空）");
+  } else {
+    ok(true, "Stratasys 池内 0 条，跳过别名兜底校验");
+  }
   ok(P_B.innerHTML.indexOf("待样本") >= 0 || ITEMS.every(x => x.sentiment),
     "0 条维度标「待样本」而非隐藏");
 
@@ -148,9 +161,14 @@ if (KIND === "fc") {
   ok(html.indexOf("多色 FDM") >= 0, "护栏B：页面标明多色 FDM 单列不计情感分母");
   ok(ITEMS.every(x => x.techRoute !== "FDM-multicolor" || x.tier === "对照"),
     "护栏B：多色 FDM 全部落「对照」档，未混进全彩对标");
+  /* 技术路线不混称：赛纳是 WJP，不是 MJP。混写的后果是「喷头/耗材」类结论被套到两条不同工艺上。 */
+  const sn = ITEMS.filter(x => x.model === "Sailner");
+  ok(sn.every(x => x.techRoute === "WJP 体素喷墨"),
+    "赛纳条目技术路线标 WJP 体素喷墨（非 MJP）", String(sn.length));
 
   /* S4 渠道：覆盖清单是「要不要补信源」的依据，必须渲染 */
   ok(els.chanCover.innerHTML.indexOf("渠道覆盖清单") >= 0, "渠道覆盖清单渲染");
+  ok(els.chanCover.innerHTML.indexOf("赛纳官网") >= 0, "渠道清单含赛纳官网（官方源 · 降档）");
   ok(els.chanHint.textContent.indexOf("覆盖") >= 0, "渠道覆盖数已标注");
   ok(els.chanShare.innerHTML.length > 50, "渠道占比区已渲染（达标出图 / 未达标显式说明）");
 } else if (KIND === "sw") {

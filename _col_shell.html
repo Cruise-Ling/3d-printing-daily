@@ -498,8 +498,12 @@ function renderKPI(){
     var mid = vol.filter(function(x){ return x.discussLevel==="mid"; }).length;
     var plats = uniq(vol.map(function(x){ return x.platform; }));
     var mAll = uniq(vol.map(function(x){ return x.model; }).filter(Boolean));
-    var mDesk = mAll.filter(function(k){ return ["G1X","CJ270","QC2A"].indexOf(k)>=0; });
-    var mInd = mAll.filter(function(k){ return ["Stratasys","Mimaki"].indexOf(k)>=0; });
+    // 覆盖率按「品牌」计，不按型号字符串 —— 池里 Stratasys 条目的 model 是 "J850/J55"，
+    // 直接比对 "Stratasys" 会漏，KPI 会显示「工业 0」而机型卡显示 2 条
+    var mBrand = uniq(mAll.map(brandOf));
+    var mDesk = mBrand.filter(function(k){ return ["G1X","CJ270","QC2A"].indexOf(k)>=0; });
+    var mPro  = mBrand.filter(function(k){ return ["Sailner"].indexOf(k)>=0; });
+    var mInd = mBrand.filter(function(k){ return ["Stratasys","Mimaki"].indexOf(k)>=0; });
     var m30 = vol.filter(function(x){ return (x.date||"")>=daysAgo(30); }).length;
     function hitN(key){
       var d = null; TOPIC_FC.forEach(function(t){ if(t[0]===key) d=t; });
@@ -516,9 +520,9 @@ function renderKPI(){
       {l:"覆盖平台", v:plats.length,
         s:(plats.length>=CH_MIN_PLAT? "已达占比门槛（≥"+CH_MIN_PLAT+" 平台）"
                                     : "未达占比门槛 · 不出分布图"), c:"#58a6ff"},
-      {l:"覆盖机型", v:mDesk.length,
-        s:"桌面 "+mDesk.length+" / 3 · 工业 "+mInd.length+" / 2"+
-          (mInd.length? "" : "（待样本）"), c:"#e6edf3"},
+      {l:"覆盖机型", v:(mDesk.length+mPro.length+mInd.length),
+        s:"桌面 "+mDesk.length+" / 3 · 专业 "+mPro.length+" / 1 · 工业 "+mInd.length+" / 2"+
+          (mInd.length? "" : "（工业待样本）"), c:"#e6edf3"},
       {l:"成本类讨论占比", v:(costN/vol.length*100).toFixed(0)+"%",
         s:"喷头 "+headN+" 条 · 耗材 "+inkN+" 条 · 规则预标注", c:"#f85149"},
       {l:"近 30 日新增", v:m30, s:"按发布日计入 · 窗口 2026 年起", c:"#d29922"}
@@ -717,7 +721,10 @@ function renderOverview(){
       arrA.length? barRows(arrA, pA.length, "channel", null) : '<div class="empty">暂无数据</div>');
 
     // 护栏 A：机型声量按档次分组呈现，页面不出现「全彩平均」这种跨档位数字
-    var tiers = [["桌面","桌面级（$3.6k–10k）"],["工业","工业级（数万美元起）"]];
+    // 「专业」档 2026-10-28 新增：赛纳 D450 是桌面形态 + $70k 工业价位，
+    // 压进桌面会破坏 $3.6k–10k 的口径，压进工业又会与真正的产线设备混算。
+    var tiers = [["桌面","桌面级（$3.6k–10k）"],["专业","专业级（$60k–150k · 桌面形态）"],
+                 ["工业","工业级（数万美元起）"]];
     var mRows = [];
     tiers.forEach(function(t){
       var sub = ITEMS.filter(function(x){ return (x.tier||"")===t[0]; });
@@ -728,14 +735,14 @@ function renderOverview(){
         mRows.push('<div class="empty" style="margin:0 0 6px">该档次本轮 0 条样本 · 空白 ≠ 无问题</div>');
         return;
       }
-      var mc = countBy(sub, function(x){ return x.model || "未标注"; });
+      var mc = countBy(sub, function(x){ return brandOf(x.model) || "未标注"; });
       var arrM = Object.keys(mc).map(function(k){ return [k, mc[k]]; })
         .sort(function(a,b){ return b[1]-a[1]; });
       mRows.push(barRows(arrM, sub.length, "model", function(){ return "#3fb950"; }));
     });
     hB += panel("机型声量","按技术档次分组 · 不做跨档位平均",
-      mRows.join("") + '<div class="pnote">桌面级与工业级价差约 5–10 倍，'+
-      '混算均值没有意义，因此本页所有计数与占比都在档次内呈现。</div>');
+      mRows.join("") + '<div class="pnote">桌面级（$3.6k–10k）、专业级（$60k–150k）与工业级（数万美元起）'+
+      '价差可达 10 倍以上，混算均值没有意义，因此本页所有计数与占比都在档次内呈现。</div>');
 
     var arrB = Object.keys(countBy(ITEMS, function(x){ return x.sourceType || "未知"; }))
       .map(function(k){ return [k, countBy(ITEMS, function(x){ return x.sourceType || "未知"; })[k]]; })
@@ -806,10 +813,11 @@ function topicText(it){ return [it.title,it.titleCn,it.originalText,it.textCn].j
    议题卡的关键词全部来自 2026-10-27 实测评论区原话，不是凭空设的维度。
    rule 规则预标注，卡片上必须写明 —— 不冒充人工结论。 */
 var TOPIC_FC = [
+  ["Sailner","赛纳三维 Sailner","WJP 体素喷墨 · 桌面形态 / 工业价位 · $70k 起",null,"model"],
   ["G1X","黑格 G1X","MJP + UV + DTF 三合一 · 早鸟 $3,599",null,"model"],
   ["CJ270","闪铸 CJ270","7 头 MJP · 7μm · ¥34,999",null,"model"],
   ["QC2A","Inew3d QC2A","50 万色 · 720×2880dpi · MSRP $9,999",null,"model"],
-  ["Stratasys","Stratasys PolyJet","工业级对照锚 · J55 / J35 / J826",null,"model"],
+  ["Stratasys","Stratasys PolyJet","工业级对照锚 · J55 / J35 / J850",null,"model"],
   ["Mimaki","Mimaki 3DUJ","工业级对照锚 · 3DUJ-2207 / 553",null,"model"],
 
   ["head","喷头可靠性与成本","寿命 · 堵塞 · 换头价格 · 国产替代",/(喷头|喷嘴|打印头|i\s*3200|i\s*1600|爱普生|epson|堵头|斜喷|head|nozzle)/i],
@@ -828,6 +836,36 @@ function topicDefs(){
   if(KIND==="sw") return [];
   return TOPIC_MBOX;
 }
+/* 机型卡品牌组：卡片 key 是「品牌」，字段 model 是采集器识别到的具体机型。
+   两边粒度不一致会造成空卡 —— 2026-10-28 实测 Stratasys 卡显示 0 条，
+   而池里实际有 2 条 model="J850/J55"（YouTube/Reddit 通道按型号打的标），
+   等于工业对照锚一直是空的。故用品牌组兜住型号别名。 */
+var MODEL_GROUP = {
+  "Stratasys": /^(stratasys|j\s*8\d\d|j\s*55|j\s*35|j\s*826|polyjet)/i,
+  "Mimaki":    /^(mimaki|3\s*duj)/i,
+  "Sailner":   /^(sailner|赛纳|seine|j\s*40[012]|j\s*50[01]|d\s*45[0-2])/i
+};
+/* 型号 → 品牌。KPI 的「覆盖机型」与 S3 机型卡必须走同一套映射，
+   否则会出现「卡片 2 条、KPI 说工业 0」这种自相矛盾（2026-10-28 实测踩到）。 */
+var MODEL_BRAND = [
+  ["Sailner",   /^(sailner|赛纳|seine|j\s*40[012]|j\s*50[01]|d\s*45[0-2])/i],
+  ["G1X",       /^(g1x|黑格)/i],
+  ["CJ270",     /^(cj270|mj270|闪铸)/i],
+  ["QC2A",      /^(qc2a|qc-2a|inew|simba)/i],
+  ["Stratasys", /^(stratasys|j\s*8\d\d|j\s*55|j\s*35|j\s*826|polyjet)/i],
+  ["Mimaki",    /^(mimaki|3\s*duj)/i]
+];
+function brandOf(m){
+  for(var i=0;i<MODEL_BRAND.length;i++){
+    if(MODEL_BRAND[i][1].test(m||"")) return MODEL_BRAND[i][0];
+  }
+  return m||"";
+}
+/* 型号 → 展示名。字段值保持英文短标识（筛选、断言都按它比对），
+   只在卡片标签与筛选器标签上换成人读得懂的名字。 */
+var MODEL_NAME = {"Sailner":"赛纳三维 Sailner","G1X":"黑格 G1X","CJ270":"闪铸 CJ270",
+                  "QC2A":"Inew3d QC2A","Stratasys":"Stratasys","J850/J55":"Stratasys J850/J55",
+                  "Mimaki":"Mimaki","3DUJ":"Mimaki 3DUJ"};
 function topicHit(it,key){
   if(!key) return true;
   var def = null;
@@ -835,7 +873,11 @@ function topicHit(it,key){
   if(!def) return true;
   if(KIND==="sw") return (it.stage||"跨环节")===key;
   // 机型卡按字段命中；议题卡按规则预标注
-  if(def[4]==="model") return (it.model||"")===key;
+  if(def[4]==="model"){
+    var mv = it.model||"";
+    if(MODEL_GROUP[key]) return MODEL_GROUP[key].test(mv);
+    return mv===key;
+  }
   return def[3].test(topicText(it));
 }
 function renderTopics(){
@@ -874,7 +916,7 @@ function renderTopics(){
     return;
   }
   if(KIND==="fc"){
-    hint.textContent = "主维度：5 机型 + 10 议题 · 机型卡按字段命中，议题卡为规则预标注 · 点卡片筛明细";
+    hint.textContent = "主维度：6 机型 + 10 议题 · 机型卡按字段命中，议题卡为规则预标注 · 点卡片筛明细";
     var gModel = TOPIC_FC.filter(function(t){ return t[4]==="model"; });
     var gTopic = TOPIC_FC.filter(function(t){ return t[4]!=="model"; });
     function groupHTML(title, sub){
@@ -903,7 +945,7 @@ function renderTopics(){
       return {html: live.join("") + pend.join(""), cnt: cnt};
     }
     var m = cardsHTML(gModel), t = cardsHTML(gTopic);
-    grid.innerHTML = groupHTML("机型视角", "5 台 · 桌面 3 + 工业 2") + m.html +
+    grid.innerHTML = groupHTML("机型视角", "6 台 · 桌面 3 + 专业 1 + 工业 2") + m.html +
                      groupHTML("议题视角", "10 维 · 规则预标注（关键词，未经人工复核）") + t.html;
 
     var arr = gTopic.map(function(d){ return [d[0], t.cnt[d[0]]||0, d[1]]; })
@@ -998,6 +1040,7 @@ var CH_TARGET = {
     ["腾讯新闻","ok","中文媒体转载"],
     ["南方+","ok","中文媒体 · 众筹报道"],
     ["众筹评论区","blocked","Kickstarter / Indiegogo 直连 403 · 需换出口或 Agent 兜底"],
+    ["赛纳官网","ok","厂商官方源 · 2026-10-28 接入 · 官方口径降档，不进用户声量"],
     ["官网 / 商城","todo","首页非文章页 · 只采公告与交付说明"],
     ["知乎","todo","需登录态 Cookie"],
     ["小红书 / 抖音","blocked","需签名 · 只探不采"]
@@ -1118,7 +1161,8 @@ function renderFilters(){
       .map(function(k){return [k, (labelFn?labelFn(k):k)+" ("+m[k]+")"];});
   }
   if(KIND==="fc"){
-    h += selHTML("model","机型", opts(function(x){return x.model||"未标注";},null,"model"));
+    h += selHTML("model","机型", opts(function(x){return x.model||"未标注";},
+      function(k){return MODEL_NAME[k]||k;},"model"));
     h += selHTML("topic","议题 / 机型卡", TOPIC_FC.map(function(t){
         return [t[0], t[1]+" ("+ITEMS.filter(function(it){return topicHit(it,t[0]);}).length+")"];
       }),"topic");
@@ -1193,7 +1237,7 @@ function tagsOf(it){
   if(KIND==="sw" && it.productLine) t.push('<span class="tag">'+esc(PRODUCT_NAME[it.productLine]||it.productLine)+'</span>');
   // 版本标签已随版本维度一起下线（本专栏是全行业通用，跨工具版本号不可比）
   if(it.sourceType==="导购" && it.price) t.push('<span class="tag t-shop" title="抓取时的到手价">'+esc(String(it.price).replace(/（.*$/,""))+'</span>');
-  if(it.model && it.model!=="未标注") t.push('<span class="tag t-model">'+esc(it.model)+'</span>');
+  if(it.model && it.model!=="未标注") t.push('<span class="tag t-model">'+esc(MODEL_NAME[it.model]||it.model)+'</span>');
   if(KIND==="mbox" && it.sourceType) t.push('<span class="tag '+(it.sourceType==="官方"?"t-ok":"")+'">'+esc(it.sourceType)+'</span>');
   if(KIND==="fc"){
     if(it.discussLevel) t.push('<span class="tag '+(it.discussLevel==="high"?"t-ok":"t-gen")+'">'+
