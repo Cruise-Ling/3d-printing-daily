@@ -16,10 +16,40 @@
 import argparse
 import io
 import json
+import os
 import re
 import sys
 import time
 from collections import Counter
+
+
+def _merge_hub_pending(kind, items):
+    """并入豆包投喂的常驻池（_hub/pending_<kind>.json）。
+
+    2026-10-31 接入：豆包负责抓登录墙平台（小红书/抖音/知乎/X/IG），本函数把它们
+    并进归一入口，页面自然带上 —— 不需要改主链顺序，也不需要在 prompt 里加步骤。
+
+    只对 fc 自动并入：全彩的机型/档次判定已规则化，能被页面校验兜住。
+    sw / mbox / k3 的 problemType / sentiment / topics 属语义判定，必须由 Agent 逐条
+    标注后再入库，**不能自动并**，否则会出现「机器猜的结论写进页面」。
+    池文件不存在 → 原样返回，零影响。
+    """
+    if kind != "fc":
+        return items
+    p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_hub", "pending_%s.json" % kind)
+    if not os.path.exists(p):
+        return items
+    try:
+        d = json.load(io.open(p, encoding="utf-8"))
+        extra = d.get("items", []) if isinstance(d, dict) else d
+    except Exception as e:
+        print("  [hub] 待并池读取失败，跳过: %s" % e)
+        return items
+    have = {x.get("uid") for x in items if isinstance(x, dict)}
+    add = [x for x in (extra or []) if isinstance(x, dict) and x.get("uid") not in have]
+    if add:
+        print("  [hub] 并入豆包投喂 %d 条（池内共 %d）" % (len(add), len(extra)))
+    return items + add
 
 BODY_LIMIT = 1200
 
@@ -383,6 +413,7 @@ def main():
 
     d = json.load(io.open(a.inp, encoding="utf-8"))
     items = d.get("items") if isinstance(d, dict) else d
+    items = _merge_hub_pending(a.kind, items or [])
     fn = {"sw": norm_sw, "mbox": norm_mbox, "fc": norm_fc}[a.kind]
     out = fn(items)
 

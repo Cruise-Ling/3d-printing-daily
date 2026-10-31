@@ -96,7 +96,12 @@ def main():
         if not os.path.exists(p):
             print("local file missing: %s" % f)
             return 2
-        names.append(os.path.basename(p))
+        # 2026-10-31：保留子目录（原实现只取 basename，`_hub/x.md` 会被推成根目录 `x.md`）
+        rel = os.path.relpath(p, D).replace("\\", "/")
+        if rel.startswith("../"):
+            print("file outside repo root: %s" % f)
+            return 2
+        names.append(rel)
     files = names
 
     if hasattr(gh, "_clear_proxy"):
