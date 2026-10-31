@@ -34,11 +34,12 @@
 | K3 专栏 | [creality-k3.html](creality-k3.html) | K3 单机型用户声音 · 国内 + 海外，含评论评价与译文；情感与问题结构按**有效档**统计（泛讨论只计声量） |
 | mBox 专栏 | [creality-mbox.html](creality-mbox.html) | mBox 公开声量 · 媒体 / 官方 / 渠道覆盖如实呈现，不做填充 |
 | 软件专栏 | [software-columns.html](software-columns.html) | 3D 打印软件用户使用内容 · 按**用户实现路径**组织：找模型 → AI 生成 → 建模改模 → 切片 → 打印运维 → 分享变现；信源 = 官方论坛 + GitHub 缺陷单 |
+| 全彩专栏 | [fullcolor-columns.html](fullcolor-columns.html) | 桌面全彩 3D 打印用户声音 · MJP / WJP 体素喷墨路线（≠ 多色 FDM），桌面 / 专业 / 工业分档；国内 + 海外；信源 = B站 / YouTube / Reddit / 什么值得买 / 国内外媒体 / 赛纳官网（官方降档不计入用户声量） |
 
-> 三个专栏统一归在「用户反馈」下，侧栏同源（`_nav.html`），任意两页之间可整页跳转。
-> 三者各有独立采集器与口径，不做同一份数据换皮：
-> `_k3_*`（K3）、`_col_collect_sw.py` + `_col_stage_fix.py` + `_col_collect_github.py`（软件）、`_col_collect_mbox.py`（mBox）。
-> 软件与 mBox 两页由同一个壳 `_col_shell.html` + `_build_column.py` 生成（版式与 K3 同构），**源码共用、产物自包含**。
+> 四个专栏统一归在「用户反馈」下，侧栏同源（`_nav.html`），任意两页之间可整页跳转。
+> 四者各有独立采集器与口径，不做同一份数据换皮：
+> `_k3_*`（K3）、`_col_collect_sw.py` + `_col_stage_fix.py` + `_col_collect_github.py`（软件）、`_col_collect_mbox.py`（mBox）、`_col_collect_fc.py`（全彩）。
+> 软件、mBox 与全彩三页由同一个壳 `_col_shell.html` + `_build_column.py` 生成（版式与 K3 同构），**源码共用、产物自包含**。
 > 全部条目统一「原文 + 机翻」双段：译文写独立字段 `titleCn` / `textCn`，原文零改动。
 
 **两处口径约定（2026-10-20 定）**
