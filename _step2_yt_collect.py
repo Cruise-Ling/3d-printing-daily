@@ -26,8 +26,10 @@ QUERIES = [
     "Bambu Lab multicolor printer",
 ]
 MIN_LEN = 60          # 少于这个字符的评论信息量不足，直接丢
-BATCH = datetime.date(2026, 11, 2)
-WIN = (datetime.datetime(2026, 10, 30), datetime.datetime(2026, 11, 2, 23, 59))
+BATCH = datetime.date.today()
+# 时间窗：T-3 00:00 ~ T 23:59（首发期主窗口放宽到 T-3，与 k3-feedback.md 口径一致）
+WIN = (datetime.datetime.combine(BATCH - datetime.timedelta(days=3), datetime.time.min),
+       datetime.datetime.combine(BATCH, datetime.time(23, 59)))
 
 
 def _get(path, **params):
