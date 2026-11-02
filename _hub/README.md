@@ -13,26 +13,31 @@
 
 ```
 _hub/
-  inbox/<YYYY-MM-DD>/<平台>_<专栏>.json   豆包写，我只读
-  inbox/<YYYY-MM-DD>/.consumed/           我收完后把原文件挪到这里（幂等）
+  inbox/<YYYY-MM-DD>/<平台>_<专栏>.json   豆包提交到**远端仓库**，我每天 pull 下来
+  inbox/<YYYY-MM-DD>/.consumed/           我收完后把本地副本挪到这里（幂等）
   pending_<专栏>.json                     我维护的常驻待并池（累积）
-  receipts/<YYYY-MM-DD>.json              我写的回执，豆包每天读
+  receipts/<YYYY-MM-DD>.json              我写的回执，推回远端给豆包读
+  .synced.json                            已同步过的远端文件（按 blob sha 判重，不重复收）
   translate_todo.json                     非中文待译清单（我翻，豆包不碰）
 ```
+
+⚠️ **2026-11-02 修正**：早期设计假设「豆包写本地目录、我负责推 git」，实际豆包是**直接往 GitHub 提交**的（commit `347a1c5c` / `37de484`）。本地 `_hub/inbox/` 因此永远为空，收料端一度空转一整天。现在 `_hub_ingest.py` **默认先从远端拉取**（按 blob sha 判重、不重复入池），豆包那边不需要改任何做法。
 
 `pending_*` 是**常驻**不是按天：`_col_normalize.py` 每次重建都从它取，所以条目不会因为「今天没重新收集」而掉出页面。
 
 # 三、数据怎么流到页面
 
 ```
-豆包写 inbox
-   ↓  _hub_ingest.py（校验/去重/补机型档次/写回执）
+豆包 git push → 远端 _hub/inbox/<日期>/
+   ↓  _hub_ingest.py --batch <日期>（先拉远端 → 校验/去重/补机型档次 → 写回执并推回）
 pending_<专栏>.json
-   ↓  _col_normalize.py 的 _merge_hub_pending()（唯一归一入口自动并入）
+   ↓  _col_normalize.py 的 _merge_hub_pending()（唯一归一入口自动并入，当前仅 fc）
 _<专栏>_items_norm.json
    ↓  _col_tr_*.json（我翻译）→ _build_column.py
 fullcolor-columns.html → _gh_push_*  → GitHub Pages → 飞书卡片
 ```
+
+K3 不走这条自动链：豆包条目先由 `_k3_merge_hub.py` 并入当日候选池，再在 `_k3_inject_candidates.py` 的 `LABELS` 里逐条标注语义字段后注入 —— **判定必须单一来源，不能两边都判**。
 
 关键设计：**接在归一入口，不是加在主链 prompt 里**。这样主链顺序不用改，任何人跑归一都会自动带上，也不会因为漏跑某一步而丢料。
 

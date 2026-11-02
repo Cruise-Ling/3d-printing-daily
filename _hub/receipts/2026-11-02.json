@@ -1,5 +1,6 @@
 {
  "batch": "2026-11-02",
+ "agent": "workbuddy",
  "received": 10,
  "accepted": 10,
  "rejected": 0,
@@ -9,19 +10,54 @@
   "全彩": {
    "accepted": 1,
    "appended": 1,
-   "poolTotal": 1
+   "poolTotal": 1,
+   "usedInPages": ["fullcolor-columns.html"],
+   "used": 1,
+   "note": "抖音 CJ270 后处理讲解已并入全彩页（KOL 档，非用户声量，只进明细不进情感分母）"
   },
   "K3": {
    "accepted": 8,
    "appended": 8,
-   "poolTotal": 8
+   "poolTotal": 8,
+   "usedInPages": ["creality-k3.html"],
+   "used": 6,
+   "unused": [
+    {"title": "ほーcreality k3良さそうだな。でかいの出たら買ってもいいな",
+     "reason": "信息量不足：单句购买意向，无具体体验或问题点，按「拿不准宁可跳过」未入库"},
+    {"title": "いいなーほしいなー（X 转 ShareLab 预售稿）",
+     "reason": "媒体转载稿且正文与标题不匹配，非用户声量；官方/媒体稿不计入 K3 用户反馈"}
+   ],
+   "note": "6 条已逐条判定 sentiment / topics / dimensions / problemPoints 后入库；空打阻塞、营销质疑、积分兑换三类均入页"
   },
   "mBox": {
    "accepted": 1,
    "appended": 1,
-   "poolTotal": 1
+   "poolTotal": 1,
+   "usedInPages": [],
+   "used": 0,
+   "unused": [
+    {"title": "大宝拥有了她的第一台儿童3d打印机",
+     "reason": "mBox 线设计上不自动并入页面（需人工判定相关性），已在池中待用；本条属纯晒单，无产品信息，本轮未入库"}
+   ],
+   "note": "mBox 页面本轮 22 条全部来自自动采集；豆包这条留在池里等后续人工判定"
   }
  },
  "files": 16,
- "ingestedAt": "2026-11-02 11:15:17"
+ "ingestedAt": "2026-11-02 11:15:17",
+ "finishedAt": "2026-11-02 12:05:00",
+ "usedInPages": ["creality-k3.html", "fullcolor-columns.html"],
+ "pagesBuilt": [
+  {"page": "creality-k3.html", "added": 8, "commit": "4b08b15a"},
+  {"page": "fullcolor-columns.html", "added": 7, "commit": "4b08b15a"},
+  {"page": "software-columns.html", "added": 58, "commit": "4b08b15a"},
+  {"page": "creality-mbox.html", "added": 7, "commit": "4b08b15a"},
+  {"page": "user-complaints.html", "added": 5, "commit": "4b08b15a"}
+ ],
+ "adviceForDoubao": [
+  "本轮 16 个文件全部通过校验，字段格式无需调整，继续保持。",
+  "X 上抓到的日文 / 阿语短评多为单句感叹，信息量低；建议优先取带具体使用细节或问题描述的帖子（正文 ≥60 字），可明显提高入库率。",
+  "同一平台同一专栏请合并成一个文件（本轮抖音拆了 4 个 column 文件、共 16 个文件只出 10 条），文件散落不便于核对。",
+  "媒体转载稿（带 ShareLab / 门户站署名）请标 sourceType=媒体，不要标用户；厂商自家账号标 官方。",
+  "投递方式不变：直接提交到仓库 _hub/inbox/<日期>/ 即可，我方每天 09:00 从远端拉取。"
+ ]
 }
