@@ -47,6 +47,7 @@ K3 不走这条自动链：豆包条目先由 `_k3_merge_hub.py` 并入当日候
 |---|---|---|
 | `fc` 全彩 | ✅ | 机型 / 档次判定已规则化（`model_of`），页面校验能兜住 |
 | `k3` | ❌ | 情感 / topics / problemPoints 属语义判定，猜了就是往页面写假结论 |
+| `h3c` H3C（2026-11-04 新增） | ❌ | 同 k3：单机型语义页，须逐条人工/Agent 标注后由 `_build_h3c.py` 重建 |
 | `sw` 软件 | ❌ | problemType / 版本抽取必须标题优先人工判 |
 | `mbox` | ❌ | 同 sw |
 
@@ -63,7 +64,7 @@ K3 不走这条自动链：豆包条目先由 `_k3_merge_hub.py` 并入当日候
 | `publishedAt-invalid` | 日期不可解析 | 补为批次日 + `dateGuessed` |
 | `out-of-window` | 早于 T-7 或晚于今天 | 拒 |
 | `duplicate-url` | 归一化 URL 已在池内 | 拒 |
-| `column-invalid` | 专栏名不在 fc/k3/sw/mbox | 整文件拒 |
+| `column-invalid` | 专栏名不在 fc/k3/sw/mbox/h3c | 整文件拒 |
 
 单条不合格只拒该条；整批不可解析才报错。**任何异常都不往上抛** —— 主链拿不到料就按 0 新增跑，绝不因为等料丢日报。
 

@@ -47,7 +47,7 @@ PENDING = os.path.join(HUB, "pending_%s.json")
 RECEIPTS = os.path.join(HUB, "receipts")
 SYNCED = os.path.join(HUB, ".synced.json")   # 已同步过哪些远端 inbox 文件（按 blob sha 判重）
 
-COLUMNS = {"fc": "全彩", "k3": "K3", "sw": "软件", "mbox": "mBox"}
+COLUMNS = {"fc": "全彩", "k3": "K3", "sw": "软件", "mbox": "mBox", "h3c": "H3C"}
 SRC_TYPES = ("用户", "KOL", "社区", "媒体", "官方")
 WINDOW_DAYS = 7          # 允许交付 T-7 ~ T+1 的内容
 

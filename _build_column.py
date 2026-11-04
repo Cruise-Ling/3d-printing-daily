@@ -21,6 +21,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 SHELL = os.path.join(ROOT, "_col_shell.html")
 NAVT = os.path.join(ROOT, "_nav.html")
 K3_PAGE = os.path.join(ROOT, "creality-k3.html")
+H3C_PAGE = os.path.join(ROOT, "bambu-h3c.html")
 INDEX = os.path.join(ROOT, "index.html")
 
 SW_ITEMS = os.path.join(ROOT, "_sw_items_norm.json")
@@ -165,9 +166,12 @@ def status_of(delta, stats):
 
 # ---------------------------------------------------------------- 侧栏
 def counts():
-    out = {"k3": 0, "mbox": 0, "sw": 0, "fc": 0}
+    out = {"k3": 0, "mbox": 0, "sw": 0, "fc": 0, "h3c": 0}
     if os.path.exists(K3_PAGE):
         out["k3"] = len(re.findall(r'\{id:"K3-', read(K3_PAGE)))
+    if os.path.exists(H3C_PAGE):
+        # H3C 页由 _build_h3c.py 生成，数据是 JSON 形态（"id":"H3C-..."），与 K3 的 JS 字面量不同
+        out["h3c"] = len(re.findall(r'"id":"H3C-', read(H3C_PAGE)))
     if os.path.exists(MBOX_ITEMS):
         out["mbox"] = len(load_json(MBOX_ITEMS))
     if os.path.exists(SW_ITEMS):
@@ -184,10 +188,12 @@ def render_nav(active):
     nav = nav.replace("__C_MBOX__", str(c["mbox"]))
     nav = nav.replace("__C_SW__", str(c["sw"]))
     nav = nav.replace("__C_FC__", str(c["fc"]))
+    nav = nav.replace("__C_H3C__", str(c["h3c"]))
     nav = nav.replace("__ON_K3__", "active" if active == "k3" else "")
     nav = nav.replace("__ON_MBOX__", "active" if active == "mbox" else "")
     nav = nav.replace("__ON_SW__", "active" if active == "sw" else "")
     nav = nav.replace("__ON_FC__", "active" if active == "fc" else "")
+    nav = nav.replace("__ON_H3C__", "active" if active == "h3c" else "")
     return nav
 
 
@@ -216,6 +222,7 @@ def _patch_sidebar(path, kind):
 def sync_nav():
     """把三个专栏页与首页的导航同步（只替换侧栏块，其余零改动）。"""
     _patch_sidebar(K3_PAGE, "k3")
+    _patch_sidebar(H3C_PAGE, "h3c")
     _patch_sidebar(OUT_MBOX, "mbox")
     _patch_sidebar(OUT_SW, "sw")
 
@@ -238,6 +245,10 @@ def sync_nav():
         # 2026-10-27：全彩专栏同 mBox 一样按位置替换，避免徽标写死后越跑越偏
         h = re.sub(r'(全彩专栏</span><span class="nav-badge"[^>]*>)[^<]*(</span>)',
                    lambda m: "%s%d 条%s" % (m.group(1), counts()["fc"], m.group(2)),
+                   h, count=1)
+        # 2026-11-04：H3C 专栏同法按位置替换，避免徽标写死后越跑越偏
+        h = re.sub(r'(H3C 专栏</span><span class="nav-badge"[^>]*>)[^<]*(</span>)',
+                   lambda m: "%s%d 条%s" % (m.group(1), counts()["h3c"], m.group(2)),
                    h, count=1)
         if h != n0:
             write_lf(INDEX, h)
@@ -345,7 +356,7 @@ def build(kind):
             "deltaToday": today_added,
             "status": st,
             "refDate": through,
-            "batch": "工作日 03:30",
+            "batch": "工作日 09:00",
             "updateLog": hist,
             "sources": ("信源：① B站（国内用户口碑主源）· ② YouTube（Data API 采评测与实机）· "
                         "③ Reddit（RSS 采公开讨论）· ④ 什么值得买（深度长帖）· "
@@ -447,7 +458,7 @@ def build(kind):
             "deltaToday": today_added,
             "status": st,
             "refDate": through,
-            "batch": "工作日 03:30",
+            "batch": "工作日 09:00",
             "updateLog": hist,
             "sources": ("信源：① Creality 官方论坛 Software 板块（%d 条）· ② GitHub CrealityOfficial 仓库 open issue"
                         "（%d 条，CrealityPrint / K1·K2 Klipper）· 每日增量采集" % (forum_n, len(gh))),
@@ -511,7 +522,7 @@ def build(kind):
             "deltaToday": today_added,
             "status": st,
             "refDate": through,
-            "batch": "工作日 03:30",
+            "batch": "工作日 09:00",
             "updateLog": hist,
             "sources": ("信源：B站（国内主源 · 2026-10-26 接入）· Creality 官方论坛 · creality.com 官网 · "
                         "YouTube · Google Play · 3druck · 知乎（待登录态）· 每日增量采集"),
