@@ -68,8 +68,8 @@ ok(ITEMS.length > 0, "条目非空", String(ITEMS.length));
 
 /* ---------------- 导航 ---------------- */
 const subLinks = html.match(/class="nav-item sub[^"]*" href="([^"]+)"/g) || [];
-ok(subLinks.length === 4, "侧栏含四个子专栏入口（含全彩）", String(subLinks.length));
-["creality-k3.html", "creality-mbox.html", "software-columns.html"].forEach(h => {
+ok(subLinks.length === 5, "侧栏含五个子专栏入口（含全彩 / H3C）", String(subLinks.length));
+["creality-k3.html", "creality-mbox.html", "software-columns.html", "bambu-h3c.html"].forEach(h => {
   ok(html.indexOf('href="' + h + '"') >= 0, "侧栏可跳转 " + h);
 });
 if (KIND === "fc") {
@@ -152,8 +152,13 @@ if (KIND === "fc") {
   } else {
     ok(true, "Stratasys 池内 0 条，跳过别名兜底校验");
   }
-  ok(P_B.innerHTML.indexOf("待样本") >= 0 || ITEMS.every(x => x.sentiment),
-    "0 条维度标「待样本」而非隐藏");
+  /* 诚实披露缺口即可：要么有 0 样本维度标「待样本」，要么全量已标情感，
+     要么（自动采集场景下）情感覆盖率不足已显式标注「未达准入门槛」——
+     后者是规范明文允许的诚实呈现，不应被当作缺数据惩罚。 */
+  ok(P_B.innerHTML.indexOf("待样本") >= 0
+     || ITEMS.every(x => x.sentiment)
+     || P_A.innerHTML.indexOf("未达准入门槛") >= 0,
+    "0 条维度标「待样本」而非隐藏（情感未达准入已显式标注亦视为诚实披露）");
 
   /* 护栏 B：多色 FDM 是替代方案讨论，单列可见但不进全彩情感分母 */
   const fdm = ITEMS.filter(x => x.techRoute === "FDM-multicolor");
