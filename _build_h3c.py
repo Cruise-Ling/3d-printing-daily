@@ -40,7 +40,7 @@ ITEMS = os.path.join(ROOT, "_h3c_items.json")
 # ============================================================================
 # CONFIG — 机型级配置，改这里
 # ============================================================================
-REF_DATE = "2026-11-04"          # 近 7 日基准日 / 数据更新日
+REF_DATE = "2026-11-06"          # 近 7 日基准日 / 数据更新日
 PAGE_TITLE = "Bambu Lab H3C 用户反馈专栏 · 用户口碑"
 H1 = "Bambu Lab H3C 用户反馈专栏"
 AUTHOR_LINE = ("拓竹第三代旗舰 · Swaptek 九头闪切 / 顶置 AMS 3H / 可变线径 75A TPU · "
@@ -90,14 +90,14 @@ PROBLEM_MERGE = """const PROBLEM_MERGE = [
 CHANNEL_MATRIX = """const CHANNEL_MATRIX = [
   { site:"什么值得买",          group:"cnCommunity",   method:"auto",   state:"ok",      re:/什么值得买|smzdm/i,                                        note:"首版主源：发布夜实测汇总与购买决策帖，含 AMS 3H / 8 号头等具体边界" },
   { site:"B 站",               group:"cnCommunity",   method:"auto",   state:"ok",      re:/B\\s?站|bilibili/i,                                        note:"发布夜开箱与实机视频密集，接口有波动；需 cookie 预热后按 3s 间隔请求" },
-  { site:"小红书",              group:"cnCommunity",   method:"manual", state:"blocked", re:/小红书/i,                                                  note:"SPA 空壳 + x-s 签名 + 登录墙，不可自动 · 首发实测主阵地，缺口最大" },
+  { site:"小红书",              group:"cnCommunity",   method:"manual", state:"blocked", re:/小红书/i,                                                  note:"SPA 空壳 + x-s 签名 + 登录墙，不可自动 · Chrome/Edge 实测均未登录，扫码后仍需逐屏抄录 · 首发实测主阵地，缺口最大" },
   { site:"抖音",               group:"cnCommunity",   method:"manual", state:"blocked", re:/抖音/i,                                                    note:"搜索接口返回空数组，需 a_bogus 签名" },
-  { site:"知乎",               group:"cnCommunity",   method:"manual", state:"blocked", re:/知乎/i,                                                    note:"api 400 / 网页 403 · 首发测评人长文多在此，需登录态" },
-  { site:"贴吧 / 微博",         group:"cnCommunity",   method:"manual", state:"blocked", re:/贴吧|微博/i,                                                note:"登录墙" },
+  { site:"知乎",               group:"cnCommunity",   method:"manual", state:"blocked", re:/知乎/i,                                                    note:"网页 403 / api 400 · 实测登录态下搜索页可读（Chrome 有 22 篇 AI 汇总），但浏览器无 JS 执行能力，只能逐屏截图抄录" },
+  { site:"贴吧 / 微博",         group:"cnCommunity",   method:"manual", state:"blocked", re:/贴吧|微博/i,                                                note:"登录墙 · 实测登录后话题页可读、含一手吐槽（如「打印板不兼容」），同样只能截图抄录" },
   { site:"京东 / 天猫",         group:"cnEcom",        method:"manual", state:"blocked", re:/京东|淘宝|天猫|拼多多/,                                      note:"首发为京东在售；站内评价反爬，评价缺口需商家资质" },
   { site:"极客公园 / IT之家",    group:"cnMedia",       method:"auto",   state:"ok",      re:/极客公园|IT之家|腾讯新闻|新浪|搜狐|凤凰|36氪|钛媒体/i,        note:"科技媒体首发解读，第三方口径，非用户声量" },
   { site:"网易 / 南极熊",       group:"cnMedia",       method:"auto",   state:"ok",      re:/网易|南极熊|3D打印资源库/i,                                  note:"行业媒体 / 通稿，非用户声量" },
-  { site:"Reddit",             group:"overseaDirect", method:"auto",   state:"ok",      re:/Reddit|r\\//i,                                             note:"r/BambuLab 为首发反馈主阵地 · 出口 IP 403 属已知封锁，需换出口或走豆包" },
+  { site:"Reddit",             group:"overseaDirect", method:"auto",   state:"ok",      re:/Reddit|r\\//i,                                             note:"r/BambuLab 为首发反馈主阵地 · 2026-11-06 复测 .json 仍 403 Blocked（非登录问题，是出口 IP 级封锁）" },
   { site:"X (Twitter)",        group:"overseaDirect", method:"manual", state:"blocked", re:/Twitter|\\bX\\b|推特/i,                                       note:"syndication 仅返回空壳；api v2 需付费 Bearer" },
   { site:"Facebook / Instagram", group:"overseaDirect", method:"manual", state:"blocked", re:/Facebook|Instagram|\\bIG\\b/i,                              note:"400 / 429 登录墙" },
   { site:"YouTube",            group:"overseaVideo",  method:"auto",   state:"ok",      re:/YouTube/i,                                                 note:"Data API v3 可采评测与实机；首发期以官方投放片为主，须按评论数而非播放量定讨论度" },
@@ -105,7 +105,7 @@ CHANNEL_MATRIX = """const CHANNEL_MATRIX = [
   { site:"Amazon",             group:"overseaEcom",   method:"manual", state:"unknown", re:/Amazon/i,                                                  note:"海外尚未铺货；评价页需登录，可行性待探" },
   { site:"外媒（All3DP / Fabbaloo 等）", group:"overseaMedia", method:"auto", state:"ok", re:/All3DP|Fabbaloo|3DPrint|VoxelMatters|Notebookcheck|Tom's|PCMag/i, note:"海外评测与行业分析，非用户声量" },
   { site:"拓竹官网 / FAQ",       group:"official",      method:"auto",   state:"ok",      re:/拓竹官网|bambulab|拓竹官方/i,                                note:"厂商口径（含 8+1 头配置 / 配件清单），不计入用户声量" },
-  { site:"拓竹官方论坛",         group:"official",      method:"auto",   state:"todo",    re:/拓竹官方论坛|forum\\.bambulab/i,                             note:"Discourse API 通路可用，H3C 版块刚开、存量少；厂商官方单列" }
+  { site:"拓竹官方论坛",         group:"overseaDirect", method:"auto",   state:"ok",      re:/拓竹官方论坛|forum\\.bambulab/i,                             note:"Discourse 公开 API 已打通：21 主题 / 796 帖，本批 43 条为问题导向精选（非全量抽样），发帖人均为已收货用户" }
 ];"""
 
 BATCH_NOTE = ('const H3C_BATCH_NOTE = {"2026-11-04": "建页 · 首发批次（媒体 5 + 官方 2 + 用户/社区 3）"};')
@@ -198,40 +198,55 @@ PATCHES = [
     ('  if (/网易|3D打印资源库|腾讯新闻|新浪|搜狐|凤凰|百家号|东方财富|caifuhao|36氪|钛媒体/.test(p)) return "cnMedia";',
      '  if (/网易|3D打印资源库|腾讯新闻|新浪|搜狐|凤凰|百家号|东方财富|caifuhao|36氪|钛媒体|极客公园|IT之家|南极熊/.test(p)) return "cnMedia";',
      "groupOf.cnMedia"),
+    # 官方论坛是社区不是厂商口径：必须在 official 之前命中，否则 43 条用户帖会被当官方吞掉
+    ('  if (/Reddit|r\\/|Prusa|3DPrintBoard|Facebook|Instagram|Twitter|\\bX\\b|推特/i.test(p)) return "overseaDirect";',
+     '  if (/Reddit|r\\/|Prusa|3DPrintBoard|Facebook|Instagram|Twitter|\\bX\\b|推特|forum\\.bambulab|拓竹官方论坛/i.test(p)) return "overseaDirect";',
+     "groupOf.forum"),
     ('  if (/Creality|创想/i.test(p)) return "official";',
      '  if (/Creality|创想|Bambu|拓竹|bambulab/i.test(p)) return "official";',
      "groupOf.official"),
-    # 口径：用户声量 = 全部 − 官方 − 媒体
-    ('  const userAll = all.filter(function(x){ return groupOf(x.platform) !== "official"; });\n'
-     '  const officialN = all.length - userAll.length;',
+    # 口径：用户声量 = 全部 − 官方 − 媒体。K3 模板 2026-11-06 引入 isPromoScope 后拆成两段，此处分别接管
+    ('  const userAll = userAllRaw.filter(function(x){ return !isPromoScope(x); });',
      '  // H3C 口径：厂商官方与媒体稿均单列，不计入用户声量与情感分母（首发期媒体稿占绝大多数，\n'
      '  // 不排会把通稿读成口碑）。K3 只排官方，此处是两页唯一的口径差异，已写入页脚说明。\n'
      '  const isOff = function(x){ return groupOf(x.platform) === "official"; };\n'
      '  const isMedia = function(x){ return !isOff(x) && (x.sourceType === "媒体" || x.sourceType === "社区综述"); };\n'
-     '  const userAll = all.filter(function(x){ return !isOff(x) && !isMedia(x); });\n'
-     '  const officialN = all.filter(isOff).length;\n'
-     '  const mediaN = all.filter(isMedia).length;',
+     '  const mediaN = all.filter(isMedia).length;\n'
+     '  const userAll = userAllRaw.filter(function(x){ return !isPromoScope(x) && !isMedia(x); });',
      "KPI.用户声量口径"),
+    ('  const officialN = all.length - userAllRaw.length;',
+     '  const officialN = all.filter(isOff).length;',
+     "KPI.官方数"),
     # 情感结构 / 矩阵同步收窄，保证「面板数字 = 点开后条数」
-    ('  const isUserValid = function(x){ return x.reviewGrade === "有效" && groupOf(x.platform) !== "official"; };',
+    ('  const isUserValid = function(x){ return x.reviewGrade === "有效" && groupOf(x.platform) !== "official" && !isPromoScope(x); };',
      '  const isUserValid = function(x){ return x.reviewGrade === "有效" && groupOf(x.platform) !== "official"'
-     ' && x.sourceType !== "媒体" && x.sourceType !== "社区综述"; };',
+     ' && !isPromoScope(x) && x.sourceType !== "媒体" && x.sourceType !== "社区综述"; };',
      "isUserValid"),
     ('  const cutoff = new Date("2026-10-13"); cutoff.setDate(cutoff.getDate() - 7);',
      '  const cutoff = new Date("%s"); cutoff.setDate(cutoff.getDate() - 7);' % REF_DATE,
      "近7日基准"),
     # 总声量副标：把媒体 / 官方单列讲清楚
-    ('    { l:"总声量", v:userAll.length, s:kindSub + (genN ? " · 含泛讨论 " + genN + " 条" : "") + (officialN ? " · 另有厂商官方 " + officialN + " 条单列" : ""), c:"#e6edf3" },',
+    ('    { l:"总声量", v:userAll.length, s:kindSub + (promoN ? " · 已剔非有效口径 " + promoN + " 条（零互动投放 + 动态条目；全量 " + userAllRaw.length + " 条）" : "") + (genN ? " · 含泛讨论 " + genN + " 条" : "") + (officialN ? " · 另有厂商官方 " + officialN + " 条单列" : ""), c:"#e6edf3" },',
      '    { l:"总声量", v:userAll.length, s:(userAll.length ? kindSub : "首发期 · 用户声量待累积")'
      ' + (genN ? " · 含泛讨论 " + genN + " 条" : "")'
      ' + " · 另有媒体 " + mediaN + " 条 / 厂商官方 " + officialN + " 条单列", c:"#e6edf3" },',
      "KPI.总声量"),
+    # H3C 条目全为图文、无评价类：这两个分项会得到「纯图文 100%」「评价类 0%（0/0）」，
+    # 既与总体重复又有空分母，按 evalN 关闭
+    ('        " · 纯视频/图文 " + rate(mainNegN, mainNeg.length) + "%（" + mainNegN + "/" + mainNeg.length + "）" +\n',
+     '        (evalN ? " · 纯视频/图文 " + rate(mainNegN, mainNeg.length) + "%（" + mainNegN + "/" + mainNeg.length + "）" : "") +\n',
+     "KPI.分载体v"),
+    ('        " · 评价类 " + rate(evalNeg, evalN) + "%（" + evalNeg + "/" + evalN + "）",',
+     '        (evalN ? " · 评价类 " + rate(evalNeg, evalN) + "%（" + evalNeg + "/" + evalN + "）" : ""),',
+     "KPI.评价类"),
     # 负面占比：分母为 0 时显示「—」
     ('    { l:"负面占比", v:rate(neg, analytic.length) + "%",',
      '    { l:"负面占比", v:(analytic.length ? rate(neg, analytic.length) + "%" : "—"),', "KPI.负面v"),
     ('      s:"分析口径 · 有效 " + analytic.length + " / " + userAll.length + " 条" +',
      '      s:(analytic.length ? "分析口径 · 有效 " + analytic.length + " / " + userAll.length + " 条"'
-     ' : "分析口径 · 有效用户样本 0 条，首发期不计算（空白 ≠ 无负面）") +', "KPI.负面s"),
+     ' : "分析口径 · 有效用户样本 0 条，首发期不计算（空白 ≠ 无负面）")'
+     ' + " · 论坛 " + items().filter(function(x){ return x.platform === "拓竹官方论坛"; }).length'
+     ' + " 条为问题导向精选（全量负面约 12%），勿外推" +', "KPI.负面s"),
     # 专项八宫格取数顺序
     ('  const order = ["kliTek","multicolor","nozzle","tpu","ai","sensor","wifi","noise","slicer","material","build","price","ecosystem","support"];',
      '  const order = %s;' % json.dumps(TOPICS_ORDER), "renderTopics.order"),

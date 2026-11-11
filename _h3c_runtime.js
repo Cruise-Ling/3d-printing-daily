@@ -39,7 +39,7 @@ const EXPORTS = ['activeFilters', 'items', 'applyFilters', 'renderAll', 'clearAl
   'toggleTopic', 'setProblem', 'setDim', 'groupOf', 'GROUP_ORDER', 'GROUP_META',
   'PROBLEM_MERGE', 'TOPIC_META', 'normProblem', 'setGroup', 'setPlatform', 'gotoPage',
   'setDatePreset', 'clearDate', 'H3C_FEEDBACK_DATA', 'H3C_BATCH_NOTE', 'H3C_UPDATE_LOG',
-  'buildUpdateLog', 'DIM_TOP'];
+  'buildUpdateLog', 'DIM_TOP', 'isPromoScope'];
 eval(code + "\n;globalThis.__h3c = {" + EXPORTS.join(", ") + "};");
 
 const H = globalThis.__h3c;
@@ -59,14 +59,16 @@ console.log('\n--- B. 口径 ---');
 const all = H.items();
 const isOff = x => H.groupOf(x.platform) === 'official';
 const isMedia = x => !isOff(x) && (x.sourceType === '媒体' || x.sourceType === '社区综述');
-const userN = all.filter(x => !isOff(x) && !isMedia(x)).length;
+// 2026-11-11 BC 批次：isPromoScope 同时收口「零互动投放」与 countInVolume:false 的动态条目，
+// 断言口径必须跟页面一致，否则动态条目会把总声量 / 情感分母抬高。
+const userN = all.filter(x => !isOff(x) && !isMedia(x) && !H.isPromoScope(x)).length;
 const mediaN = all.filter(isMedia).length;
 const offN = all.filter(isOff).length;
 const kv = String(store.kpiRow.innerHTML);
 check('总声量 = 用户声量（排除官方与媒体）', kv.indexOf('>' + userN + '</div>') > 0, userN + ' / 全量 ' + all.length);
 check('总声量副标注明媒体与官方单列',
   kv.indexOf('另有媒体 ' + mediaN + ' 条 / 厂商官方 ' + offN + ' 条单列') > 0, '媒体 ' + mediaN + ' · 官方 ' + offN);
-const analytic = all.filter(x => !isOff(x) && !isMedia(x) && x.reviewGrade === '有效');
+const analytic = all.filter(x => !isOff(x) && !isMedia(x) && !H.isPromoScope(x) && x.reviewGrade === '有效');
 if (!analytic.length) {
   check('负面占比分母为 0 时显示「—」', kv.indexOf('—') > 0 && kv.indexOf('0%<') < 0);
   check('分母为 0 时副标说明不计算', kv.indexOf('空白 ≠ 无负面') > 0);
