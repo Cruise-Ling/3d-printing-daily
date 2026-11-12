@@ -367,9 +367,9 @@ select { background:#0d1117; border:1px solid #21262d; color:#e6edf3; font-size:
 <script>
 const H3C_FEEDBACK_DATA = {
   model: "Bambu Lab H3C",
-  updated: "2026-11-06",
-  updatedAt: "2026-11-06 10:00",
-  fetchedAt: "2026-11-06 10:30",
+  updated: "2026-11-12",
+  updatedAt: "2026-11-12 10:00",
+  fetchedAt: "2026-11-12 10:30",
   note: "Bambu Lab H3C 用户反馈专栏数据源。含官方论坛（forum.bambulab.com，Discourse 公开 API）采到的一手用户帖，全部经人工逐条标注；发布前猜测期帖子（<2026-11-03）不入页。",
   audit: {"来源": "什么值得买 / 公众号 / 网易 / 极客公园 / 拓竹官网 / 百度贴吧 / 拓竹官方论坛", "已收录渠道": "6 个（含官方论坛 Discourse API 自动采集）", "说明": "官方论坛为社区性质，发帖人为真实用户，计入用户声量；厂商公告贴单独标 sourceType=官方，不入本批。", "更新": "2026-11-11"},
   items: [
@@ -821,7 +821,7 @@ function renderKPI() {
   const p0 = userAll.filter(function(x){ return x.isP0; }).length;
   const chans = Object.keys(countBy(all, function(x){ return x.channel; })).length;
   const plats = new Set(all.map(function(x){ return x.platform; })).size;
-  const cutoff = new Date("2026-11-06"); cutoff.setDate(cutoff.getDate() - 7);
+  const cutoff = new Date("2026-11-12"); cutoff.setDate(cutoff.getDate() - 7);
   const recent = userAll.filter(function(x){ return new Date(x.publishedAt) >= cutoff; }).length;
 
   // 载体构成（用户 2026-10-19：三种形式都属于反馈，全部计入，只做标识与分解）
