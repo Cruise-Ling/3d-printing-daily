@@ -48,9 +48,16 @@ ok(/\.sidebar\{[^}]*width:200px/.test(html), 'Q4 侧栏 200px 与其余六页同
 ok(/全局筛选 · 联动所有面板/.test(els.filters.innerHTML), 'Q3 顶部全局筛选标注保留');
 ok(/class="k-value"/.test(els.kpis.innerHTML), 'KPI 取数结构为 k-value');
 
+/* 2026-11-12 D 批：主容器不得限宽（否则宽屏右侧大片留白）· 明细改 K3 card-grid 小卡 */
+ok(!/\.main\{[^}]*max-width/.test(html), 'D1 主容器无限宽（宽屏撑满、右侧不留白）');
+ok(/class="card-grid"/.test(html), 'D2 明细区为 K3 card-grid 网格容器');
+ok(!/class="item"/.test(html), 'D3 明细已无全宽大框 .item');
+ok(/\.card-grid\{[^}]*grid-template-columns:repeat\(auto-fill,minmax\(340px,1fr\)\)/.test(html), 'D4 小卡多列 auto-fill(340px)');
+ok(/class="c-head"/.test(els.cards.innerHTML) && /class="c-src"/.test(els.cards.innerHTML) && /class="c-foot"/.test(els.cards.innerHTML), 'D5 卡片内部 K3 c-head / c-src / c-foot 分层');
+
 if (!runErr) {
   const f = sandbox.filtered();
-  const cards = (els.cards.innerHTML.match(/class="item"/g) || []).length;
+  const cards = (els.cards.innerHTML.match(/class="card(?:"| p0")/g) || []).length;
   ok(cards === f.length, '所见即所得：明细卡片数 = 筛选命中数', cards + ' vs ' + f.length);
   const kpiVol = (els.kpis.innerHTML.match(/<div class="k-value"[^>]*>(\d+|—)<\/div>/) || [])[1];
   ok(kpiVol === String(f.length), 'KPI 总声量与筛选结果一致', kpiVol + ' vs ' + f.length);
