@@ -93,7 +93,8 @@ def do_push(date, dry_run=False):
     # 专栏页：存在才带（保持与日报老流程兼容；上线后恒存在）
     # 2026-10-27 起 fullcolor-columns.html 并入同一次 commit，避免多 commit 造成 Pages 中间态
     # 2026-11-04 起 bambu-h3c.html 同批（H3C 专栏上线）
-    for extra in ("creality-mbox.html", "software-columns.html", "fullcolor-columns.html", "bambu-h3c.html"):
+    # 2026-11-12 起 resin-line.html 同批（光固化产品线专栏上线）
+    for extra in ("creality-mbox.html", "software-columns.html", "fullcolor-columns.html", "bambu-h3c.html", "resin-line.html"):
         p = os.path.join(D, extra)
         if os.path.exists(p) and extra not in files:
             files.insert(3, extra)

@@ -30,6 +30,8 @@ MBOX_ITEMS = os.path.join(ROOT, "_mbox_items_norm.json")
 MBOX_TR = os.path.join(ROOT, "_col_tr_mbox.json")
 FC_ITEMS = os.path.join(ROOT, "_fc_items_norm.json")
 FC_TR = os.path.join(ROOT, "_col_tr_fc.json")
+# 2026-11-12 光固化产品线专栏：独立生成器，仅在此登记条数供侧栏徽标使用
+RESIN_ITEMS = os.path.join(ROOT, "_resin_items.json")
 
 # 软件专栏第 2 个信源（2026-10-20 接入）：GitHub 官方仓库缺陷单。
 # 口径：进明细、独立标签、不进总声量（countInVolume=false）—— 见 _col_collect_github.py 顶部说明。
@@ -166,7 +168,7 @@ def status_of(delta, stats):
 
 # ---------------------------------------------------------------- 侧栏
 def counts():
-    out = {"k3": 0, "mbox": 0, "sw": 0, "fc": 0, "h3c": 0}
+    out = {"k3": 0, "mbox": 0, "sw": 0, "fc": 0, "h3c": 0, "resin": 0}
     if os.path.exists(K3_PAGE):
         out["k3"] = len(re.findall(r'\{id:"K3-', read(K3_PAGE)))
     if os.path.exists(H3C_PAGE):
@@ -178,6 +180,9 @@ def counts():
         out["sw"] = len(load_json(SW_ITEMS))
     if os.path.exists(FC_ITEMS):
         out["fc"] = len(load_json(FC_ITEMS))
+    if os.path.exists(RESIN_ITEMS):
+        d = load_json(RESIN_ITEMS)
+        out["resin"] = len(d["items"]) if isinstance(d, dict) else len(d)
     return out
 
 
@@ -189,11 +194,13 @@ def render_nav(active):
     nav = nav.replace("__C_SW__", str(c["sw"]))
     nav = nav.replace("__C_FC__", str(c["fc"]))
     nav = nav.replace("__C_H3C__", str(c["h3c"]))
+    nav = nav.replace("__C_RESIN__", str(c["resin"]))
     nav = nav.replace("__ON_K3__", "active" if active == "k3" else "")
     nav = nav.replace("__ON_MBOX__", "active" if active == "mbox" else "")
     nav = nav.replace("__ON_SW__", "active" if active == "sw" else "")
     nav = nav.replace("__ON_FC__", "active" if active == "fc" else "")
     nav = nav.replace("__ON_H3C__", "active" if active == "h3c" else "")
+    nav = nav.replace("__ON_RESIN__", "active" if active == "resin" else "")
     return nav
 
 
@@ -220,11 +227,14 @@ def _patch_sidebar(path, kind):
 
 
 def sync_nav():
-    """把三个专栏页与首页的导航同步（只替换侧栏块，其余零改动）。"""
+    """把六个专栏页与首页的导航同步（只替换侧栏块，其余零改动）。"""
     _patch_sidebar(K3_PAGE, "k3")
     _patch_sidebar(H3C_PAGE, "h3c")
     _patch_sidebar(OUT_MBOX, "mbox")
     _patch_sidebar(OUT_SW, "sw")
+    # 2026-11-12：全彩页此前只有 `--only fc` 重建才会带入新侧栏，
+    # 日更链跑 `--nav-only` 时不会覆盖它，导致光固化入口缺一页。纳入同源同步。
+    _patch_sidebar(OUT_FC, "fc")
 
     if os.path.exists(INDEX):
         h = read(INDEX)
@@ -249,6 +259,10 @@ def sync_nav():
         # 2026-11-04：H3C 专栏同法按位置替换，避免徽标写死后越跑越偏
         h = re.sub(r'(H3C 专栏</span><span class="nav-badge"[^>]*>)[^<]*(</span>)',
                    lambda m: "%s%d 条%s" % (m.group(1), counts()["h3c"], m.group(2)),
+                   h, count=1)
+        # 2026-11-12 B3：光固化专栏同法（首页入口已在 index.html 补齐，此处按位置替换徽标）
+        h = re.sub(r'(光固化专栏</span><span class="nav-badge"[^>]*>)[^<]*(</span>)',
+                   lambda m: "%s%d 条%s" % (m.group(1), counts()["resin"], m.group(2)),
                    h, count=1)
         if h != n0:
             write_lf(INDEX, h)

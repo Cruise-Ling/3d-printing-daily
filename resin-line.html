@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>光固化产品线 · 用户口碑看板</title>
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2129;--bd:#21262d;--bd2:#30363d;--tx:#e6edf3;--mu:#8b949e;--dim:#6e7681;--blue:#58a6ff;--green:#3fb950;--red:#f85149;--orange:#d29922;--purple:#bc8cff;--cyan:#39c5cf}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{display:flex;min-height:100vh}
+.sidebar{width:230px;flex:0 0 230px;background:var(--panel);border-right:1px solid var(--bd);padding:20px 14px;position:sticky;top:0;height:100vh;overflow:auto}
+.sidebar-logo{display:flex;gap:10px;align-items:center;padding:0 8px 18px;border-bottom:1px solid var(--bd);margin-bottom:14px}
+.logo-icon{font-size:22px}.logo-title{font-weight:500;font-size:15px}.logo-sub{font-size:11px;color:var(--dim)}
+.nav-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:6px;color:var(--mu);font-size:13px;margin-bottom:2px}
+.nav-item:hover{background:var(--panel2);color:var(--tx);text-decoration:none}
+.nav-item.sub{padding-left:26px;font-size:12.5px}
+.nav-item.active{background:rgba(88,166,255,.12);color:var(--blue)}
+.nav-icon{width:18px;text-align:center}
+.sidebar-footer{margin-top:22px;padding-top:14px;border-top:1px solid var(--bd);font-size:11px;color:var(--dim)}
+.main{flex:1;min-width:0;padding:26px 30px 60px;max-width:1500px}
+h1{font-size:22px;font-weight:500;margin:0 0 6px}h2{font-size:15px;font-weight:500;margin:0 0 14px}
+.sub{color:var(--mu);font-size:12.5px}
+.card{background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:18px;margin-bottom:16px}
+.card-hd{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.denom{font-size:11px;color:var(--dim);font-weight:400}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px}
+.kpi{background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:15px 16px}
+.kpi .lb{font-size:11.5px;color:var(--mu)}.kpi .vl{font-size:25px;font-weight:500;line-height:1.35;font-variant-numeric:tabular-nums}
+.kpi .ft{font-size:11px;color:var(--dim);margin-top:3px}
+.filters{background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:14px 16px;margin-bottom:16px}
+.frow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:9px}
+.frow:last-child{margin-bottom:0}
+.flabel{font-size:11.5px;color:var(--dim);min-width:64px;flex:0 0 64px}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:14px;border:1px solid var(--bd2);background:var(--panel2);color:var(--mu);font-size:12px;cursor:pointer;user-select:none}
+.chip:hover{border-color:var(--blue);color:var(--tx)}
+.chip.on{background:rgba(88,166,255,.16);border-color:var(--blue);color:var(--blue)}
+.chip .n{color:var(--dim);font-size:10.5px}
+.chip.on .n{color:var(--blue)}
+.qbox{background:var(--bg);border:1px solid var(--bd2);border-radius:6px;color:var(--tx);padding:6px 10px;font-size:12.5px;min-width:230px}
+.btn{background:var(--panel2);border:1px solid var(--bd2);color:var(--tx);border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer}
+.btn:hover{border-color:var(--blue);color:var(--blue)}
+.bar{height:9px;background:var(--bg);border-radius:5px;overflow:hidden;flex:1}
+.bar > i{display:block;height:100%;border-radius:5px}
+.brow{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:12.5px}
+.brow .nm{width:170px;flex:0 0 170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
+.brow .nm:hover{color:var(--blue)}
+.brow .vv{width:74px;text-align:right;color:var(--mu);font-variant-numeric:tabular-nums;font-size:11.5px}
+table{width:100%;border-collapse:collapse;font-size:12px}th,td{border-bottom:1px solid var(--bd);padding:7px 8px;text-align:left}th{color:var(--mu);font-weight:400;font-size:11.5px}td{color:var(--tx)}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.badge{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10.5px;border:1px solid var(--bd2);color:var(--mu);margin-right:5px}
+.b-red{color:var(--red);border-color:rgba(248,81,73,.4)}.b-org{color:var(--orange);border-color:rgba(210,153,34,.4)}
+.b-green{color:var(--green);border-color:rgba(63,185,80,.4)}.b-blue{color:var(--blue);border-color:rgba(88,166,255,.4)}
+.b-purple{color:var(--purple);border-color:rgba(188,140,255,.4)}
+.item{background:var(--panel2);border:1px solid var(--bd);border-radius:9px;padding:14px;margin-bottom:10px}
+.item .tt{font-size:13.5px;font-weight:500;margin-bottom:6px;word-break:break-word}
+.item .tx{font-size:12.5px;color:var(--mu);white-space:pre-wrap;word-break:break-word;max-height:110px;overflow:auto;margin:7px 0}
+.item .mt{font-size:11px;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-top:7px}
+.notice{background:rgba(210,153,34,.08);border:1px solid rgba(210,153,34,.35);border-radius:8px;padding:11px 14px;font-size:12.5px;color:#e3b341;margin-bottom:16px}
+.empty{padding:26px;text-align:center;color:var(--dim);font-size:12.5px;border:1px dashed var(--bd2);border-radius:8px}
+.foot{font-size:11.5px;color:var(--dim);line-height:1.9;margin-top:24px;border-top:1px solid var(--bd);padding-top:14px}
+.mini{font-size:11px;color:var(--dim)}
+.spark{display:flex;align-items:flex-end;gap:3px;height:70px;padding-top:6px}
+.spark > div{flex:1;background:rgba(88,166,255,.6);border-radius:2px 2px 0 0;min-height:2px;position:relative}
+.spark > div:hover{background:var(--blue)}
+@media(max-width:1100px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.sidebar{display:none}.main{padding:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <span class="logo-icon">💬</span>
+    <div class="logo-title">用户反馈</div>
+    <div class="logo-sub">User Feedback Hub</div>
+  </div>
+  <div class="sidebar-nav">
+    <a class="nav-item" href="index.html"><span class="nav-icon">🔥</span>最新资讯</a>
+    <a class="nav-item" href="lifecycle.html"><span class="nav-icon">🔄</span>产品生命周期</a>
+    <a class="nav-item" href="3d_printer_brands_v2.html"><span class="nav-icon">🏭</span>品牌总览</a>
+    <a class="nav-item" href="user-complaints.html"><span class="nav-icon">💬</span>用户反馈</a>
+    <a class="nav-item sub " href="creality-k3.html"><span class="nav-icon">🖨️</span>K3 专栏<span style="margin-left:auto;font-size:10px;color:#6e7681;font-variant-numeric:tabular-nums">474</span></a>
+    <a class="nav-item sub " href="creality-mbox.html"><span class="nav-icon">📦</span>mBox 专栏<span style="margin-left:auto;font-size:10px;color:#6e7681;font-variant-numeric:tabular-nums">24</span></a>
+    <a class="nav-item sub " href="software-columns.html"><span class="nav-icon">🧩</span>软件专栏<span style="margin-left:auto;font-size:10px;color:#6e7681;font-variant-numeric:tabular-nums">622</span></a>
+    <a class="nav-item sub " href="fullcolor-columns.html"><span class="nav-icon">🎨</span>全彩专栏<span style="margin-left:auto;font-size:10px;color:#6e7681;font-variant-numeric:tabular-nums">66</span></a>
+    <a class="nav-item sub " href="bambu-h3c.html"><span class="nav-icon">🎋</span>H3C 专栏<span style="margin-left:auto;font-size:10px;color:#6e7681;font-variant-numeric:tabular-nums">97</span></a>
+    <a class="nav-item sub active" href="resin-line.html"><span class="nav-icon">💧</span>光固化专栏<span style="margin-left:auto;font-size:10px;color:#6e7681;font-variant-numeric:tabular-nums">30</span></a>
+    <a class="nav-item" href="slicing-params.html"><span class="nav-icon">⚙️</span>切片参数速查</a>
+  </div>
+  <div class="sidebar-footer">
+    Author: <a href="https://github.com/Cruise-Ling" target="_blank">Cruise</a><br>
+    Powered by WorkBuddy
+  </div>
+</div>
+
+<div class="main">
+  <h1>光固化产品线 · 用户口碑看板</h1>
+  <div class="sub" id="subTitle">声量 — 情感 — 问题点 — 信源 — 竞品 · 五层分析结构</div>
+  <div id="updateBar" style="margin:12px 0 16px" class="mini"></div>
+  <div class="notice" id="notice"></div>
+
+  <div class="filters" id="filters"></div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="card"><div class="card-hd"><h2>情感结构</h2><span class="denom" id="denSent"></span></div><div id="sent"></div></div>
+
+  <div class="grid2">
+    <div class="card"><div class="card-hd"><h2>问题点 Top（按条去重）</h2><span class="denom" id="denProb"></span></div><div id="prob"></div></div>
+    <div class="card"><div class="card-hd"><h2>信源结构</h2><span class="denom" id="denSrc"></span></div><div id="src"></div></div>
+  </div>
+
+  <div class="card"><div class="card-hd"><h2>机型 × 问题点交叉矩阵</h2><span class="denom">单元格 = 该机型命中该问题点的条目数（按条去重）；用于区分机型个体问题与品类共性问题</span></div><div id="matrix"></div></div>
+
+  <div class="grid2">
+    <div class="card"><div class="card-hd"><h2>样本质量与去噪</h2><span class="denom">全量口径，不与 KPI 互相推导</span></div><div id="quality"></div></div>
+    <div class="card"><div class="card-hd"><h2>竞品对比与定位</h2><span class="denom">一期仅统计「用户对比语境中被点名」，不采竞品全量</span></div><div id="compete"></div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card"><div class="card-hd"><h2>声量趋势</h2><span class="denom" id="trendCtl"></span></div><div id="trend"></div></div>
+    <div class="card"><div class="card-hd"><h2>渠道覆盖与缺口</h2><span class="denom">state 为通道状态，非数据质量</span></div><div id="channels"></div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-hd"><h2>反馈明细 <span id="hitCount" class="mini"></span></h2>
+      <span><button class="btn" data-act="csv">导出当前筛选 CSV</button></span></div>
+    <div id="exportFields" class="frow" style="margin-bottom:12px"></div>
+    <div id="cards"></div>
+  </div>
+
+  <div class="foot" id="foot"></div>
+</div>
+</div>
+<script>
+var DATA = {"meta":{"column":"resin","line":"光固化","version":"1.1","generatedAt":"2026-11-12T15:37:26","fetchedAt":"2026-11-12T15:24:52","updatedDate":"2026-11-12","deltaToday":5,"refDate":"2026-11-12","dataThrough":"2026-11-11","totalItems":30,"validItems":19,"needsReviewItems":0,"models":[{"code":"halot-mage-pro","name":"HALOT-MAGE PRO","tier":"主力旗舰","onSale":true,"confirmed":false},{"code":"halot-mage","name":"HALOT-MAGE","tier":"中端主销","onSale":true,"confirmed":false},{"code":"halot-one","name":"HALOT-ONE","tier":"入门机型","onSale":true,"confirmed":false},{"code":"halot-lite","name":"HALOT-LITE","tier":"入门机型","onSale":true,"confirmed":false},{"code":"halot-sky","name":"HALOT-SKY","tier":"中端主销","onSale":true,"confirmed":false},{"code":"halot-max","name":"HALOT-MAX","tier":"主力旗舰","onSale":true,"confirmed":false},{"code":"halot-ray","name":"HALOT-RAY","tier":"历史机型","onSale":false,"confirmed":false}],"channels":[{"key":"creality_forum","name":"Creality 官方论坛","state":"auto","tier":"P0"},{"key":"youtube","name":"YouTube","state":"auto","tier":"P0"},{"key":"bilibili","name":"Bilibili","state":"blocked","tier":"P0"},{"key":"reddit","name":"Reddit","state":"blocked","tier":"P0"},{"key":"review_sites","name":"专业评测站 / 什么值得买","state":"manual","tier":"P0"},{"key":"xiaohongshu","name":"小红书","state":"login_wall","tier":"P1"},{"key":"douyin","name":"抖音","state":"login_wall","tier":"P1"},{"key":"zhihu_weibo_tieba","name":"知乎 / 微博 / 贴吧","state":"login_wall","tier":"P1"},{"key":"ecom","name":"Amazon / 京东 / 天猫 / 淘宝","state":"unavailable","tier":"P2"},{"key":"x_facebook","name":"X / Facebook 群组","state":"unavailable","tier":"P2"}],"channelGaps":[{"key":"bilibili","name":"Bilibili","state":"blocked","tier":"P0","note":"2026-11-12 直连返回 412，需登录态或签名"},{"key":"reddit","name":"Reddit","state":"blocked","tier":"P0","note":"出口 IP 403，与 11-06/11-11 台账一致"},{"key":"review_sites","name":"专业评测站 / 什么值得买","state":"manual","tier":"P0","note":"WP REST 401，按 K3 现有 search 补录路径"},{"key":"xiaohongshu","name":"小红书","state":"login_wall","tier":"P1","note":"11-06 实测未登录 0 条"},{"key":"douyin","name":"抖音","state":"login_wall","tier":"P1","note":"11-06 实测搜索页空白"},{"key":"zhihu_weibo_tieba","name":"知乎 / 微博 / 贴吧","state":"login_wall","tier":"P1","note":"登录态可读，仅能截图抄录"},{"key":"ecom","name":"Amazon / 京东 / 天猫 / 淘宝","state":"unavailable","tier":"P2","note":"官方 API 不给评价；需 Keepa / Rainforest 或商业服务"},{"key":"x_facebook","name":"X / Facebook 群组","state":"unavailable","tier":"P2","note":"官方 API 贵或只能读自家主页"}],"thresholds":{"negativeRateMoM":0.05,"minSamplesForTrend":5,"lifecycleWindowDays":14,"lifecycleImproveRatio":0.5,"_comment":"负面率环比上升超过 5 个百分点且样本数达标时在趋势图自动标注；生命周期按 14 天窗口内问题点出现频次变化判定。"},"paidAdapters":[{"key":"keepa","name":"Keepa / Rainforest（Amazon 评价）","state":"reserved","note":"商业数据服务适配层预留，本批不采购、不假覆盖"},{"key":"domestic_ecom","name":"京东 / 天猫 / 淘宝 评价","state":"reserved","note":"需商业服务与合规评估，本批不采购"},{"key":"login_wall","name":"小红书 / 抖音 / 知乎 / 微博 / 贴吧","state":"reserved","note":"登录态浏览器仅可截图抄录，无 JS 执行能力；本批不接入"}],"modelListUnconfirmed":true,"disclaimer":"情感与问题点为逐条语义复核结果（AI 辅助，非需求方签字），保留改判通道；入库样本 ≠ 全量口碑，禁止外推。","translationNotice":"海外原文保留原文与直链，中文译文与摘要由 _resin_tr.json 提供；缺失条目标「译文待补」，不编造译文。","sampleDisclosure":"主源为 Creality 官方论坛 Discourse 公开帖与 YouTube 公开视频/评论，属问题导向样本，不能代表全渠道口碑水位。"},"items":[{"id":"RSN-20251115-001","candKey":"post:102008","model":"halot-mage","modelName":"HALOT-MAGE","platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/prints-sticking-to-fep-and-not-the-print-plate/46600","pubDate":"2025-11-15","crawlDate":"2026-11-12","title":"Prints sticking to FEP and not the Print Plate","originalText":"Prints sticking to FEP and not the Print Plate Hello. I have the Mage S 14K, it worked great for a while, but then prints started to not stick to the plate, and boy oh boy are they sticking to the FEP. The FEP became dented so I changed it out, and it worked fantastic for ONE print. And now nothing sticks again. I’ve done six prints all on different days, nothing sticks to the plate. I’ve setup multiple attempts small prints all over the plate, looking if it is just one area or something, nothing close to each other, and nothing sticks. Well, as stated it sure sticks to the FEP, real pain getting it to come off that, but the plate, nothing. I have no idea how to fix this, Looking at other posts I dont see any real answers? Can anyone help?","titleCn":"打印件粘在 FEP 离型膜上而不粘平台","textCn":"你好，我用的是 Mage S 14K，一开始工作得很好，但后来打印件开始不粘平台，反而牢牢粘在 FEP 上。FEP 被压出凹痕后我换了新的，只成功打印了一次，之后又完全不粘。我在不同日子试了六次，还把小模型分散摆满整个平台排查是否为局部问题，结果一件都粘不住。从 FEP 上取下来很费劲，平台却什么都留不住。我不知道怎么修，翻了其他帖子也没看到真正的答案，有人能帮忙吗？","summaryCn":"Mage S 14K 连续六次打印只粘 FEP 不粘平台，换离型膜仅生效一次，属反复性附着失效。","translationStatus":"已补译","author":"Scott_Seebeck","sentiment":"负面","confidence":0.9,"problemPoints":["平台附着力","离型膜与料槽寿命"],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":0,"replyCount":1,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"有效","countInVolume":true,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"Mage S 14K 连续六次打印只粘 FEP 不粘平台，换离型膜仅成功一次；反复失效且语气受挫，规则预标中性偏保守，按语义上调负面。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_46600.json","closedState":"待处理"},{"id":"RSN-20251118-001","candKey":"post:102091","model":"halot-mage","modelName":"HALOT-MAGE","platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/prints-sticking-to-fep-and-not-the-print-plate/46600","pubDate":"2025-11-18","crawlDate":"2026-11-12","title":"Prints sticking to FEP and not the Print Plate","originalText":"Prints sticking to FEP and not the Print Plate Hello. I have the Mage S 14K, it worked great for a while, but then prints started to not stick to the plate, and boy oh boy are they sticking to the FEP. The FEP became dented so I changed it out, and it worked fantastic for ONE print. And now nothing sticks again. I’ve done six prints all on different days, nothing sticks to the plate. I’ve setup multiple attempts small prints all over the plate, looking if it is just one area or something, nothing close to each other, and nothing sticks. Well, as stated it sure sticks to the FEP, real pain getting it to come off that, but the plate, nothing. I have no idea how to fix this, Looking at other posts I dont see any real answers? Can anyone help?","titleCn":"打印件粘在 FEP 离型膜上而不粘平台（同帖镜像）","textCn":"本条与上一条为同一主题帖（topic 46600）内的重复抓取，正文内容相同，按声量只算 1 的纪律不再计入分母。","summaryCn":"同主题帖重复镜像，正文与首条一致，不重复计入声量。","translationStatus":"已补译","author":"Scott_Seebeck","sentiment":"中性","confidence":0.95,"problemPoints":[],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":0,"replyCount":1,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"动态","countInVolume":false,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"与 post:102008 同一主题帖、同一段正文（topic 46600），属跨帖镜像；按 K3 mirrors 纪律声量只算 1，本条不计入分母。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_46600.json","closedState":"待处理"},{"id":"RSN-20251126-001","candKey":"post:102464","model":null,"modelName":null,"platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/halot-box-is-crashing/46836","pubDate":"2025-11-26","crawlDate":"2026-11-12","title":"HALOT BOX is crashing","originalText":"HALOT BOX is crashing Hello everyone. HALOT BOX has been crashing on me when I click RESIN to continue the slicing process. The first time it happened, I made sure all drivers, software, etc. was up to date and that didn’t work. I then uninstalled/reinstalled HALOT BOX with the version available on Creality’s website. That didn’t work. I ended up resetting my laptop to factory and started with clean installs and minimalist software and drivers. Reinstall HALOT BOX and that seemed to work … until today. It is crashing once more in the same fashion as the first time. Has anyone run into this recently or further in the past?","titleCn":"HALOT BOX 崩溃","textCn":"大家好，我在点击 RESIN 继续切片时 HALOT BOX 会崩溃。第一次发生时我确认驱动和软件都是最新，没用；随后用官网版本卸载重装，也没用；最后把笔记本恢复出厂、只装最小化驱动与软件，重装后一度正常，今天又在同样环节崩溃。有人最近或以前遇到过吗？","summaryCn":"HALOT BOX 在切片环节反复崩溃，重装系统与软件后仍复发，属软件稳定性问题。","translationStatus":"已补译","author":"Brian_Gordon","sentiment":"负面","confidence":0.88,"problemPoints":["软件与切片"],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":0,"replyCount":0,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"有效","countInVolume":true,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"HALOT BOX 点击 RESIN 切片时反复崩溃，更新驱动 / 重装软件 / 恢复出厂后仍复发；去掉仅因机型名含 resin 而误标的「树脂适配与气味」。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_46836.json","closedState":"待处理"},{"id":"RSN-20251205-001","candKey":"post:102855","model":"halot-mage","modelName":"HALOT-MAGE","platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/halot-sky-2022-lcd-does-not-display-layer-image-even-after-screen-replacement/47046","pubDate":"2025-12-05","crawlDate":"2026-11-12","title":"HALOT SKY 2022 – LCD does not display layer image even after screen replacement","originalText":"HALOT SKY 2022 – LCD does not display layer image even after screen replacement I am experiencing a serious issue with my Creality HALOT SKY 2022 resin printer. The printer turns on normally, the UV LEDs work, and the mirror is clean. However, the LCD does not display any layer image during printing, and the problem persists even after installing a brand new original 9.25’’ 6K mono LCD. Description of the problem: · During printing, the UV backlight turns on, but the LCD remains completely dark. · No layer pattern is projected on the LCD surface. · Running Clean Screen also produces the same result: the entire center area stays dark. Actions already taken: 1. Installed a brand new original LCD panel (9.25’’ 6K mono) specifically made for HALOT SKY 2022. But, no improvement. Please advise: 1. How to properly diagnose whether the issue is the LCD driver board or mainboard? 2. Do you have official replacement parts for the HALOT SKY 2022: · LCD driver board · Ribbon cable · Mainboard (if required) I can provide photos and videos if needed. Thank you in advance. Looking forward to your assistance.","titleCn":"HALOT SKY 2022 更换屏幕后 LCD 仍不显示层图像","textCn":"我的 Creality HALOT SKY 2022 光固化打印机出现严重问题：机器正常开机、UV LED 工作、反光镜干净，但打印时 LCD 完全不显示层图像。UV 背光亮起时屏幕中心整片发黑，运行 Clean Screen 也一样。我已更换一块全新的原装 9.25 英寸 6K 单色 LCD，问题依旧，请协助。","summaryCn":"HALOT SKY 2022 换全新原装 LCD 后仍无层图像，屏幕或光路故障未排除，影响正常打印。","translationStatus":"已补译","author":"Victor1","sentiment":"负面","confidence":0.9,"problemPoints":["屏幕寿命与坏点","曝光与光源一致性"],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":0,"replyCount":0,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"有效","countInVolume":true,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"HALOT SKY 2022 换全新原装 9.25 寸 6K LCD 后仍不显示层图像，作者自称 serious issue；去掉与内容无关的「树脂适配与气味」。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_47046.json","closedState":"待处理"},{"id":"RSN-20251210-001","candKey":"post:103105","model":null,"modelName":null,"platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/case-studies-featured-interviews/47136","pubDate":"2025-12-10","crawlDate":"2026-11-12","title":"Case Studies & Featured Interviews","originalText":"Case Studies & Featured Interviews I'm currently collecting 3D printing industry cases, education application stories, and user or creator features. Selected stories will be showcased across Creality's official platforms and SNS. If you believe your story deserves to be shared, feel free to reach out — I'd love to chat with you! W...","titleCn":"案例征集与人物访谈","textCn":"我正在收集 3D 打印行业案例、教育应用故事以及用户或创作者专访，入选内容将在 Creality 官方平台与社交账号展示。若你认为自己的故事值得分享，欢迎联系我。","summaryCn":"官方案例征集公告，不含任何产品评价，不作为口碑样本。","translationStatus":"已补译","author":"Optimus","sentiment":"中性","confidence":0.95,"problemPoints":[],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":0,"replyCount":2,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"动态","countInVolume":false,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"官方案例征集 / 访谈邀约，无任何产品评价；纯活动信息不计声量，清空规则误标。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_47136.json","closedState":"待处理"},{"id":"RSN-20251224-001","candKey":"post:103845","model":"halot-mage-pro","modelName":"HALOT-MAGE PRO","platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/halot-mage-pro-z-axis-problem/47469","pubDate":"2025-12-24","crawlDate":"2026-11-12","title":"HALOT - MAGE PRO z axis problem","originalText":"HALOT - MAGE PRO z axis problem z axis jams","titleCn":"HALOT-MAGE PRO Z 轴问题","textCn":"Z 轴卡死。","summaryCn":"MAGE PRO 用户反馈 Z 轴卡死，正文极短但故障指向明确。","translationStatus":"已补译","author":"Tom_Rainford","sentiment":"负面","confidence":0.7,"problemPoints":[],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":0,"replyCount":0,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"有效","countInVolume":true,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"MAGE PRO「z axis jams」，正文极短但故障表述明确；12 类受控词表无机械结构类目，按 K3 纪律不自造类目，描述写入中文摘要。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_47469.json","closedState":"待处理"},{"id":"RSN-20260107-001","candKey":"post:104651","model":"halot-one","modelName":"HALOT-ONE","platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/my-z-axis-of-my-halot-one-is-sometimes-not-turning/47789","pubDate":"2026-01-07","crawlDate":"2026-11-12","title":"My z-axis of my halot one is sometimes not turning","originalText":"My z-axis of my halot one is sometimes not turning My Halot one lately has a problem with the z-axis. It looks as if something isn't tightened well and I tried to tighten the screws at the bottom but no joy, as a result no prints are actually possible,","titleCn":"我的 HALOT-ONE Z 轴有时不转","textCn":"我的 Halot One 最近 Z 轴有问题，看起来像是有部件没拧紧。我试着拧紧底部螺丝但没有改善，结果现在完全没法打印。","summaryCn":"HALOT-ONE Z 轴偶发停转，紧固排查无效，已导致无法打印。","translationStatus":"已补译","author":"Henny_Savenije","sentiment":"负面","confidence":0.78,"problemPoints":[],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":0,"replyCount":0,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"有效","countInVolume":true,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"HALOT-ONE Z 轴偶发不转、紧固螺丝无效，已导致完全无法打印；同样不映射受控类目。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_47789.json","closedState":"待处理"},{"id":"RSN-20260120-001","candKey":"post:105688","model":null,"modelName":null,"platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/halot-r6-webcam-creality/48236","pubDate":"2026-01-20","crawlDate":"2026-11-12","title":"Halot r6 - webcam Creality","originalText":"Halot r6 - webcam Creality La mia stampante halot r6 abbinata con la Creality camera crcc s7 non genera mai i time lapse?aveee suggerimenti o idee su come risolvere?crea video di 0kb e 0 secondi","titleCn":"HALOT R6 与 Creality 摄像头","textCn":"（意大利语）我的 Halot R6 搭配 Creality CRCC S7 摄像头始终无法生成延时摄影，生成的视频是 0KB、0 秒。有什么建议或解决办法吗？","summaryCn":"Halot R6 搭配原厂摄像头生成 0KB 延时视频，属配件软件功能异常。","translationStatus":"已补译","author":"enrico1","sentiment":"中性","confidence":0.75,"problemPoints":["软件与切片"],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":0,"replyCount":0,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"有效","countInVolume":true,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"意大利语求助：Halot R6 搭配 Creality CRCC S7 摄像头生成 0KB / 0 秒延时视频；属配件软件功能异常，保留求助语气判中性。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_48236.json","closedState":"待处理"},{"id":"RSN-20260127-001","candKey":"post:106021","model":null,"modelName":null,"platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/k2-series-flagship-printers-bed-leveling-and-maintenance/48225","pubDate":"2026-01-27","crawlDate":"2026-11-12","title":"K2 Series Flagship Printers - Bed Leveling and Maintenance","originalText":"K2 Series Flagship Printers - Bed Leveling and Maintenance Bed Leveling: I’ve done a perfect bed leveling on my K2 Pro. There’s no need for extreme measures. I leveled the bed using the Paper Method, turning the knobs to perfection. I didn’t need sanding, aluminum tape, or anything else. It went from 0.45 to 0.25. Even when it was tilted, my printer was printing flawlessly. You can follow this official Creality video tutorial to perform your leveling, the leveling method starts at 6:24. You must fine-tune each corner at least four times in a circular pattern because when you fine-tune one knob, you mess with the level on the other side. Don’t forget to perform all calibrations after you leveled the bed. You can access the Fluidd web interface by entering the printer’s IP address in your internet browser, plus the door :4408 (example: http://192.168.1.3:4408/ ). Maintenance: I also recommend everybody to perform frequent maintenance on your printers, they will last longer and the printing results will be perfect. Apart from the normal maintenance you see in the video, I also recommend everybody to lubricate all the rollers on the printer frequently. For that, Creality recommends using only WD-40 Specialist Silicone spray. Check this official Creality video for maintenance tips. WD40 specialist Silicone spray 600×359 8.51 KB Levelling 2x 1920×2319 176 KB","titleCn":"K2 系列旗舰打印机——调平与维护","textCn":"（节选）我的 K2 Pro 热床调平做得很完美，用纸片法把旋钮调到最佳，不需要打磨、铝箔胶带等极端手段，数值从 0.45 降到 0.25；即使之前倾斜，打印也一直正常。可按官方视频教程操作，调平方法从 6:24 开始，四角需按顺时针至少反复微调四次，别忘了调平后重跑全部校准。","summaryCn":"K2 Pro（FDM）热床调平教程，与光固化品类无关，判为误召回并剔除声量。","translationStatus":"已补译","author":"Nuno_Penas","sentiment":"中性","confidence":0.95,"problemPoints":[],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":1,"replyCount":12,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"动态","countInVolume":false,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"K2 Pro 热床调平长贴，正文「Resin is PLA」为 FDM 语境，与光固化无关；第五道品类语境闸门误召回，剔除出声量并清空两个误标问题点。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_48225.json","closedState":"待处理"},{"id":"RSN-20260310-001","candKey":"post:108144","model":null,"modelName":null,"platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/halot-sky-2025-user-guide/49344","pubDate":"2026-03-10","crawlDate":"2026-11-12","title":"HALOT-SKY 2025 User Guide","originalText":"HALOT-SKY 2025 User Guide Quick Start Guide HALOT-SKY 2025 User Manual HALOT-SKY 2025 Installation & Operating Guide HALOT-SKY 2025 Quick Slice Tutorial HALOT-SKY 2025 Touch Screen Operation Guide Print Settting HALOT-SKY 2025 Leveling Tutorial HALOT-SKY 2025 Print Via WiFi HALOT BOX Operation Guide HALOT BOX Explanation of Slicing Parameters Troubleshooting HALOT-SKY 2025 Build Plate Adhesion Issure Solutions FAQ HALOT-SKY 2025 FAQ Maintenance HALOT-SKY 2025 Resin Vat Cleaning Tutorial HALOT-SKY 2025 Z-axis Maintenance HALOT-SKY 2025 Release Film Replacement Tutorial HALOT-SKY 2025 LCD Screen Replacement Tutorial HALOT-SKY 2025 Protective Cover Replacement Tutorial HALOT-SKY 2025 Motherboard Replacement Tutorial HALOT-SKY 2025 PSU Replacement Tutorial HALOT-SKY 2025 Limit Switch Replacement Tutorial HALOT-SKY 2025 Touch Screen Replacement Tutorial HALOT-SKY 2025 Front Cover Removal Tutorial HALOT-SKY 2025 Rear Cover Removal Tutorial HALOT-SKY 2025 Update firmware Via USB Drive Parts List HALOT-SKY 2025 Sales Accessories List Exploded Views","titleCn":"HALOT-SKY 2025 用户指南","textCn":"官方资料目录：快速入门指南、用户手册、安装操作指南、切片教程、触屏操作、打印设置、调平教程、WiFi 打印、HALOT BOX 操作与切片参数说明、故障排查、平台附着问题解决方案、FAQ、维护、料槽清洁、Z 轴维护、离型膜更换、LCD 更换、保护盖 / 主板 / 电源 / 限位开关更换等。","summaryCn":"官方用户指南目录，属文档清单而非用户评价，不计入口碑声量。","translationStatus":"已补译","author":"CREALITY","sentiment":"中性","confidence":0.95,"problemPoints":[],"isP0":false,"p0Reason":[],"sourceType":"官方","heat":0,"replyCount":0,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"动态","countInVolume":false,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"官方 HALOT-SKY 2025 用户指南目录，sourceType=官方且为文档清单，不构成用户评价；清空因目录关键词误命中的三个问题点。","lifecycle":"新出现","isPromo":true,"noiseFlags":["zero_interaction_official"],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_49344.json","closedState":"待处理"},{"id":"RSN-20260311-001","candKey":"post:108331","model":null,"modelName":null,"platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/hello-everyone/49458","pubDate":"2026-03-11","crawlDate":"2026-11-12","title":"Hello everyone","originalText":"Hello everyone Hello Everyone! My name is Keagan Stephens, all the way from SA! I am 31 years old ,I Live in Eshowe Kwa-Zulu natal 3815 (ZULULAND!) and i Am a Qualified Post Basic Pharmacist Assistant And the owner of Sculptured Realities. My 3d printing Journey Started about 6months ago when i was trying to find a way to make a toy replica of my daughter and had asked a friend of mine whom if fortunate enough to own a Creality Ender KE. I Loved the results and got the cheapest 3d printer i could find which i still use today (easythreed k9 and k10). this was 5 months ago , since then I saved up to get a Creality Halot r6 WHICH WAS ON SALE AT THE TIME. I Really loved the quality prints i got from the Halot R6 and decided to open a business based around 3d Prints specifically aiming to make life like busts that resemble clients likeness, which has gone amazingly well especially since i’ve been unemployed for the past 2 years due to a major unemployment rate the country is facing . since starting i’ve been working with our local bakers trying to fill in the gap by bringing affordable cake toppers and baking related tools such as cookie cutters and stencils etc(we live in a remote area)..i am also currently working on fun kids theme pot planters ,lamps and articulated toys ,keychains and much more which i believe will get kids to get excited about 3d printing and nature as a whole. My future goals for myself and my company is to move on to larger life sized 3d printing aswell as move on to automotive 3d printing applications (mainly engine and interior trimming aswell as afew designer parts). We also aim to start 3d printing lessons for kids which require more high speed printers as so we can print small mini objects evert session which wont take aslong as they do on my current fdm printers. My hopes for this forum and journey as a whole would be to learn more on 3d printing applications and related software, improve my designing skills aswell as simply just to get inspired on my next design. I am also here to learn more about Creality as a brand and Make and hopefully become a pioneer of the brand in future.","titleCn":"大家好（新用户报到）","textCn":"（节选）大家好，我叫 Keagan Stephens，来自南非，31 岁，是执业药剂助理，也经营 Sculptured Realities。半年前为了给女儿做玩具模型接触 3D 打印，朋友有台 Creality Ender KE，我很喜欢成品效果，就买了当时能找到最便宜的机器。五个月前攒钱买了打折的 Creality Halot R6，我很喜欢它的打印质量，于是决定围绕 3D 打印开一家店。","summaryCn":"新用户自我介绍，明确表示对 HALOT R6 打印质量满意并据此创业，属正面原声。","translationStatus":"已补译","author":"Keagan_W_Stephens","sentiment":"正面","confidence":0.72,"problemPoints":[],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":0,"replyCount":0,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"有效","countInVolume":true,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"新人自我介绍中明确表示 HALOT R6 打印质量令其满意、并据此开办 3D 打印业务，属真实正面原声；清空误标的「售后与配件供应」。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_49458.json","closedState":"待处理"},{"id":"RSN-20260312-001","candKey":"post:108515","model":null,"modelName":null,"platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/the-first-wave-of-creality-stickers-is-finally-here/2059","pubDate":"2026-03-12","crawlDate":"2026-11-12","title":"The FIRST wave of Creality stickers is finally here! 🔥🔥","originalText":"The FIRST wave of Creality stickers is finally here! 🔥🔥 The first wave of Creality stickers is finally here! Thanks to the incredible design team at Creality. We hope you all love these “Cuva” stickers! Stay tuned for the second wave of stickers and the upcoming third wave featuring cartoon 3D printers. If you want to get the complete set of Creality stickers, drop a comment below this post to register your interest! Cuva stickers 1342×486 105 KB","titleCn":"第一批 Creality 贴纸终于来了","textCn":"第一批 Creality 贴纸到货了！感谢设计团队，希望大家喜欢这套「Cuva」贴纸。后续还有第二批，以及卡通 3D 打印机主题的第三批。想集齐全套的话在下面留言登记意向即可。","summaryCn":"官方贴纸活动公告，与产品口碑无关，不计入声量。","translationStatus":"已补译","author":"Keagan_W_Stephens","sentiment":"中性","confidence":0.95,"problemPoints":[],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":1,"replyCount":13,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"动态","countInVolume":false,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"Creality 贴纸活动公告，与产品口碑无关；清空误标的「曝光与光源一致性」。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_2059.json","closedState":"待处理"},{"id":"RSN-20260322-001","candKey":"post:109228","model":null,"modelName":null,"platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/creality-ld-003-resin-printer/49779","pubDate":"2026-03-22","crawlDate":"2026-11-12","title":"Creality LD 003 Resin printer","originalText":"Creality LD 003 Resin printer Good day. Can someone help me with software for a Crality LD003 resin printer. I have changed the touch screen and did the software for the screen. The touch screen software does not comply with the motherbord software.","titleCn":"Creality LD 003 光固化打印机","textCn":"大家好，有人能帮我找 Creality LD003 光固化打印机配套的软件吗？我更换了触摸屏，也刷了屏幕对应的软件，但触屏软件和主板软件不匹配。","summaryCn":"LD003 更换触摸屏后触屏固件与主板不兼容，属软硬件适配求助。","translationStatus":"已补译","author":"HENNIE_VISSER","sentiment":"中性","confidence":0.82,"problemPoints":["软件与切片","屏幕寿命与坏点"],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":0,"replyCount":0,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"有效","countInVolume":true,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"LD003 更换触摸屏后触屏固件与主板不匹配，属软硬件适配求助；规则因「Good day」误判正面，按语义转中性，去掉「树脂适配与气味」。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_49779.json","closedState":"待处理"},{"id":"RSN-20260330-001","candKey":"post:109778","model":"halot-mage","modelName":"HALOT-MAGE","platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/halot-one-problemas-de-impresion/50013","pubDate":"2026-03-30","crawlDate":"2026-11-12","title":"Halot one problemas de impresion.","originalText":"Halot one problemas de impresion. tengo problemas con halot print, las impresiones se quedan en el fep, ya probe con varios slicer y siempre sucede lo mismo. pero al descargar directo de la nube en la impresora quedan perfectas. La impresion en gris es de la nube, la imagen 2 es despues de tres horas de impresion y la 3 es una nueva impresion con un archivo descargado de la nube creality pero laminado en halo box.","titleCn":"HALOT-ONE 打印问题","textCn":"（西班牙语）我的 HALOT-ONE 有打印问题，打印件总是留在 FEP 上，试过好几个切片软件都一样；但直接从云端下载到打印机打印就完全正常。灰色那张是云端文件，图 2 是打印三小时后的结果，图 3 是用 HALOT BOX 切片后从 Creality 云端下载的新打印。","summaryCn":"同文件云端直出正常、HALOT BOX 切片后粘 FEP，指向切片参数而非硬件故障。","translationStatus":"已补译","author":"chefero2554","sentiment":"中性","confidence":0.85,"problemPoints":["离型膜与料槽寿命","软件与切片"],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":0,"replyCount":1,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"有效","countInVolume":true,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"西班牙语：HALOT-ONE 打印件总留在 FEP，试多个切片软件都一样，但云端文件直出正常；证据指向切片参数而非硬件，保留两类问题点。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_50013.json","closedState":"待处理"},{"id":"RSN-20260401-001","candKey":"post:109981","model":null,"modelName":null,"platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/my-ender-3v3-makes-a-short-term-clattering-loud-metalic-sound-emminating-from-the-frame-area/50112","pubDate":"2026-04-01","crawlDate":"2026-11-12","title":"MY ENDER 3V3 MAKES A SHORT TERM CLATTERING LOUD METALIC SOUND EMMINATING FROM THE FRAME AREA","originalText":"MY ENDER 3V3 MAKES A SHORT TERM CLATTERING LOUD METALIC SOUND EMMINATING FROM THE FRAME AREA Sound started all of a sudden. Nothing loose that I can detect. This is first problem on machine. Printer is close to a year old and has been very reliable. Resin is PLA and this spool has produces good results. I am using Creality print 7 and 7.1. Any suggestions, I don't knoW where to look?","titleCn":"ENDER 3V3 机架处传出短促金属异响","textCn":"（节选）声音突然出现，检查不出松动件。这是这台机器第一次出问题，用了快一年一直很可靠。耗材是 PLA，这卷之前效果都不错，我用的是 Creality Print 7 和 7.1，有谁知道该查哪里吗？","summaryCn":"Ender 3V3（FDM）异响求助，与光固化无关，判为误召回并剔除声量。","translationStatus":"已补译","author":"Bob_Hewson","sentiment":"中性","confidence":0.95,"problemPoints":[],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":1,"replyCount":3,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"动态","countInVolume":false,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"Ender 3V3（FDM）机架异响求助，与光固化无关；品类语境闸门误召回，剔除出声量。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_50112.json","closedState":"待处理"},{"id":"RSN-20260403-001","candKey":"post:110085","model":null,"modelName":null,"platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/no-option-in-halot-box-for-printer-halot-play/45266","pubDate":"2026-04-03","crawlDate":"2026-11-12","title":"No option in Halot Box for Printer Halot Play","originalText":"No option in Halot Box for Printer Halot Play Eventually Creality help desk got back to me. Apparently the current versions of Halot Box doesn't support Halot play. They suggested I install an older version of Box. By the time they had responded. I had already downloaded Chitubox and was able to find Halot Play there. I've been using it ever...","titleCn":"HALOT BOX 里没有 HALOT PLAY 机型选项","textCn":"Creality 客服最终回复说当前版本的 HALOT BOX 不支持 HALOT PLAY，建议我安装旧版本。但在他们回复前我已经下载了 Chitubox，在里面找到了 HALOT PLAY，之后就一直使用它。","summaryCn":"官方切片软件缺少 HALOT PLAY 机型配置，用户改用第三方切片软件绕过。","translationStatus":"已补译","author":"Earl","sentiment":"中性","confidence":0.82,"problemPoints":["软件与切片","售后与配件供应"],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":0,"replyCount":2,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"有效","countInVolume":true,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"官方 HALOT BOX 无 HALOT PLAY 机型选项，客服建议降级旧版，用户已改用 Chitubox 绕过；陈述平实判中性。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_45266.json","closedState":"待处理"},{"id":"RSN-20260411-001","candKey":"post:110794","model":"halot-mage","modelName":"HALOT-MAGE","platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/halot-mage-8k-cleaning-help/50441","pubDate":"2026-04-11","crawlDate":"2026-11-12","title":"Halot Mage 8K cleaning help.","originalText":"Halot Mage 8K cleaning help. hello. I picked up a Helot Mage 8k that was no longer used due to a broken lcd screen. easy enough to replace. but the guy left resin inside and it leaked in to the reflective surface between the lcd and uvs. Im new to resin printing and want to ask whats the best way to clean this mirror. to see if this printer can be usable again.","titleCn":"HALOT MAGE 8K 清理求助","textCn":"你好，我收了一台因 LCD 破损而闲置的 Halot Mage 8K，换屏不难，但前任机主把树脂留在机器里，树脂漏到了 LCD 与 UV 灯之间的反光面上。我是光固化新手，想请教清理这块反光镜的最佳方法，看这台机器还能不能用。","summaryCn":"二手机树脂渗漏污染反光镜，用户求助清理方式，涉及屏幕与料槽密封。","translationStatus":"已补译","author":"RyuusinAckaneru","sentiment":"中性","confidence":0.82,"problemPoints":["屏幕寿命与坏点","清洗固化配套","离型膜与料槽寿命"],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":1,"replyCount":1,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"有效","countInVolume":true,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"二手机 Mage 8K 因 LCD 破损闲置、树脂渗漏污染 UV 反光镜，新手求助清理；保留三类证据链，去掉「曝光与光源一致性」。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_50441.json","closedState":"待处理"},{"id":"RSN-20260430-001","candKey":"post:112183","model":"halot-mage-pro","modelName":"HALOT-MAGE PRO","platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/screw-size-for-mage-pro-resin-bath/50923","pubDate":"2026-04-30","crawlDate":"2026-11-12","title":"Screw size for Mage Pro resin bath","originalText":"Screw size for Mage Pro resin bath Hello, first time posting here. I‘ve managed to shear the head off one of the screws on my Mage Pro resin bath, so th hex key just turns in the screw head. Does anyone no the thread size and length of the screws. I can measure them the next time I change the film but I was hoping to have a replacment screw ready to save having to wait for a delivery. thanks in advance for any help.","titleCn":"MAGE PRO 料槽螺丝规格","textCn":"第一次发帖。我把 MAGE PRO 料槽上一颗螺丝的头拧滑了，内六角只会空转。有人知道这颗螺丝的螺纹规格和长度吗？下次换离型膜时我可以自己量，但希望提前备好替换件，免得等快递。","summaryCn":"料槽螺丝滑牙后缺少公开备件规格，用户需自行测量，属配件信息缺口。","translationStatus":"已补译","author":"user4888834192","sentiment":"中性","confidence":0.8,"problemPoints":["售后与配件供应"],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":0,"replyCount":2,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"有效","countInVolume":true,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"MAGE PRO 料槽螺丝滑牙、询问螺纹规格与长度，反映备件规格无公开渠道；去掉「树脂适配与气味」「包装与物流」两个误标。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_50923.json","closedState":"待处理"},{"id":"RSN-20260517-001","candKey":"post:113080","model":"halot-mage-pro","modelName":"HALOT-MAGE PRO","platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/halot-mage-pro-lychee/51263","pubDate":"2026-05-17","crawlDate":"2026-11-12","title":"Halot Mage Pro / Lychee","originalText":"Halot Mage Pro / Lychee Bonjour, J'ai une imprimante Halot Mage Pro 8k. Mon slicier est Lychee. Firmware et software à jour. J'ai remarqué que l'imprimante ne tient pas compte de tous les paramètres d'impression introduit dans Lychee comme la double vitesse (TSMC) ou le délai avant exposition. Pourquoi ? Comment faire ?...","titleCn":"HALOT MAGE PRO 与 Lychee 切片","textCn":"（法语）你好，我有一台 Halot Mage Pro 8K，切片用 Lychee，固件和软件都是最新。我注意到打印机没有采纳 Lychee 里设置的部分打印参数，比如双速（TSMC）和曝光前延迟。请问为什么，该怎么处理？","summaryCn":"第三方切片软件的 TSMC 与曝光前延迟参数未被固件采纳，属切片兼容性问题。","translationStatus":"已补译","author":"Martial_Ducraux","sentiment":"中性","confidence":0.82,"problemPoints":["软件与切片","曝光与光源一致性"],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":0,"replyCount":0,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"有效","countInVolume":true,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"法语：Mage Pro 8K 未采纳 Lychee 的 TSMC 双速与曝光前延迟参数，固件与软件均最新；属第三方切片兼容性问题。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_51263.json","closedState":"待处理"},{"id":"RSN-20260518-001","candKey":"post:113112","model":"halot-mage-pro","modelName":"HALOT-MAGE PRO","platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/problems-with-model-sticking-to-build-plate-onhalot-mage-pro/51281","pubDate":"2026-05-18","crawlDate":"2026-11-12","title":"Problems with Model sticking to build Plate onHalot Mage Pro","originalText":"Problems with Model sticking to build Plate onHalot Mage Pro Hello, new this forum, so hello everyone. I’m having a real problem trying to get my models to stick to the build plate. I’ve tried everything I can think of but still after a few layers the model sticks to the release film. I’ve adjusted the settings, I’ve levelled and re-levelled the bed. I’ve tried again with a brand new build plate and resin tray, (this needed to be done as a thread was stripped in both the resin tray and one of the build plate fixing screw holes). Don’t know what else to try. I might say that the printer was previoiusly working fine though I haven’t used it for nearly a year due to work going on in the house. The first print I did after the break was a small one which came out fine, but ever since this problem has occured. It is with the same model which is quite big, but shouldn’t be beyond the capabilities of the printer. any help would be gratefully received. Thanks","titleCn":"HALOT MAGE PRO 模型粘不住平台","textCn":"（节选）新人报到。模型怎么都粘不住平台，能试的都试了，打印几层后就粘到离型膜上。我调过参数、反复重新调平，还换了全新的平台和树脂槽（原本料槽螺纹和平台固定孔有一个滑牙）。因为家里装修停机近一年，之前一直正常，复工后第一次小件打印成功，之后就一直这样，不知道还能怎么办。","summaryCn":"MAGE PRO 长期停机后反复附着失效，换新平台与料槽仍无法解决。","translationStatus":"已补译","author":"user4888834192","sentiment":"负面","confidence":0.88,"problemPoints":["平台附着力","离型膜与料槽寿命"],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":0,"replyCount":2,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"有效","countInVolume":true,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"MAGE PRO 模型反复不粘平台、换新平台与新料槽仍失败，停机近一年后复现；明确困扰，去掉「树脂适配与气味」「清洗固化配套」误标。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_51281.json","closedState":"待处理"},{"id":"RSN-20260531-001","candKey":"post:113987","model":null,"modelName":null,"platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/bonjour-tout-le-monde/51584","pubDate":"2026-05-31","crawlDate":"2026-11-12","title":"Bonjour tout le monde","originalText":"Bonjour tout le monde Bonjour, je m’appelle Walter, je fêterai mes 50 ans l’année prochaine. Je suis Français j’habite près de ORSAY. en 2023 j’ai acheté une impirmante 3D résine CREALITY HALOT LITE. c’était ma première et ma dernière imprimante 3D. elle est au placard depuis car je n’arrive pas à la faire fonctionner. j’avais décidé d’en acheter une car je dépensais beaucoup d’argent en commande de figurines sur EBAY. je suis venu ici sur ce forum aujourd’hui car j’en ai marre d’avoir une imprimante qui dort. bonne journée !","titleCn":"大家好（法国用户报到）","textCn":"（法语）大家好，我叫 Walter，明年 50 岁，法国人，住在 ORSAY 附近。2023 年我买了 Creality HALOT LITE 光固化打印机，那是我的第一台，也是最后一台 3D 打印机，因为一直没法让它正常工作，之后就搁在柜子里。当初买它是因为我在 eBay 上订人偶花了太多钱。今天来论坛是因为受够了一台睡大觉的机器。","summaryCn":"HALOT LITE 购入后始终无法正常使用、长期闲置，用户明确表达放弃该品类。","translationStatus":"已补译","author":"orengo_walter","sentiment":"负面","confidence":0.85,"problemPoints":[],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":0,"replyCount":0,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"有效","countInVolume":true,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"法语：2023 年购入 HALOT LITE 始终无法正常工作、长期闲置，自称「第一台也是最后一台 3D 打印机」；无具体故障类别，不自造类目。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_51584.json","closedState":"待处理"},{"id":"RSN-20260908-001","candKey":"post:118423","model":"halot-mage-pro","modelName":"HALOT-MAGE PRO","platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/creality-automated-resin-feeder-4005010123-on-halot-mage-pro-installation-help/53517","pubDate":"2026-09-08","crawlDate":"2026-11-12","title":"Creality Automated Resin Feeder (4005010123) on HALOT-MAGE PRO – Installation help","originalText":"Creality Automated Resin Feeder (4005010123) on HALOT-MAGE PRO – Installation help Hi everyone, I have a Creality HALOT-MAGE PRO 8K and I recently bought the Creality Automated / Intelligent Resin Feeder , part number 4005010123 (EU version). The box specifically states that it is compatible with the HALOT-MAGE PRO / HALOT-MAGE S . However, I cannot find any clear installation instructions or a video showing how to install this specific version of the feeder on the HALOT-MAGE PRO. Most of the videos and information I can find online seem to show the older resin pump. Has anyone installed the 4005010123 on a HALOT-MAGE PRO? is the new model Pump.","titleCn":"HALOT-MAGE PRO 自动供料器（4005010123）安装求助","textCn":"大家好，我有台 HALOT-MAGE PRO 8K，最近买了 Creality 自动 / 智能供料器，料号 4005010123（欧版）。包装明确写兼容 HALOT-MAGE PRO / HALOT-MAGE S，但找不到清晰的安装说明，也找不到这个版本装在 MAGE PRO 上的视频；网上多数资料都是老款树脂泵。有人装过 4005010123 吗？这是新款泵。","summaryCn":"新款自动供料器标称兼容 MAGE PRO，却缺少对应安装文档，属配套说明缺口。","translationStatus":"已补译","author":"user4619041357","sentiment":"中性","confidence":0.82,"problemPoints":["售后与配件供应"],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":0,"replyCount":0,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"有效","countInVolume":true,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"新款自动供料器 4005010123 标称兼容 MAGE PRO，却无对应安装说明与视频，网上资料多为老款泵；去掉「树脂适配与气味」。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_53517.json","closedState":"待处理"},{"id":"RSN-20260922-001","candKey":"post:119033","model":null,"modelName":null,"platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/parts-and-service/53709","pubDate":"2026-09-22","crawlDate":"2026-11-12","title":"Parts and service","originalText":"Parts and service I don’t know where to send this, so I’ll drop it here, maybe someone is paying attention. First off The people of customer service are great, My issue is how to obtain not normally purchased parts. I got resin on the power distribution board of my Halot Mage S and it died. The fact that there is no dedicated site to purchase these parts is a good reason to look at other printers. One week to explain that it is my fault and get the info needed. I love the fact that they want to help, but I knew how it would end. The order process is this. Send money to this link via Paypal, and then send the invoice # back to them. Wait two-three days and they send a message saying that they have sent the invoice # to other people for verification of the invoice #, and then they will send the order to the people to ship it… Maybe. This is a convoluted mess that can be easily fixed by having a dedicated site. Just take my money and send the part. For a company that prides customer service, this is a huge fumble. Yes, I would have used ebay if they had any.","titleCn":"备件与售后","textCn":"（节选）不知道该发哪里，就放这儿，希望有人看到。首先客服同事很好，我的问题是怎么买到非零售备件。树脂滴到 Halot Mage S 的电源分配板上把板子烧了，官方没有专门的备件购买渠道，这本身就足够成为去看别家打印机的理由。花了一周才说明白是我自己的责任并拿到所需信息。流程是先通过 PayPal 往某个链接打钱，再把发票号发回去，等两三天后对方说已把发票号转给其他人核验，然后再继续。","summaryCn":"备件采购无官方渠道、流程冗长且需 PayPal 转账，用户明确表示会考虑竞品。","translationStatus":"已补译","author":"user7148049347","sentiment":"负面","confidence":0.9,"problemPoints":["售后与配件供应"],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":0,"replyCount":3,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"有效","countInVolume":true,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"备件无官方购买渠道、需 PayPal 转账且核验流程冗长，用户明言「a good reason to look at other printers」；属明确流失风险，去掉「树脂适配与气味」。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_53709.json","closedState":"待处理"},{"id":"RSN-20261010-001","candKey":"post:119646","model":"halot-mage","modelName":"HALOT-MAGE","platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/printing-issue-with-creality-halot-mage-s-14k-one-side-prints-perfectly-the-other-doesn-t/54102","pubDate":"2026-10-10","crawlDate":"2026-11-12","title":"Printing Issue with Creality Halot Mage S 14K – One Side Prints Perfectly, the Other Doesn’t","originalText":"Printing Issue with Creality Halot Mage S 14K – One Side Prints Perfectly, the Other Doesn’t Hello everyone, I’m experiencing a recurring printing issue with my Creality Halot Mage S 14K , and I’d like to know if anyone else has encountered the same problem. As you can see in the photos, one part of the model prints perfectly, with all the details clearly reproduced, while the opposite side shows significant defects : incomplete printing, deformations, and areas where the resin doesn’t seem to have cured properly. This issue occurs with different models and two different resins : Fast Cast SuperCast (pink) Liqcreate Wax Castable (blue) I’ve already tried several prints, adjusting the exposure settings, model orientation, and support configurations, but haven’t been able to solve the problem. The printer is properly leveled, the workshop temperature is around 22°C (72°F), and the UV screen appears to be working correctly. What puzzles me most is that two opposite areas of the same model, printed simultaneously, show completely different results . Has anyone experienced this issue, particularly with this printer? Do you have any idea what might be causing it (UV screen, vat film, exposure settings, peeling forces, or something else)? And most importantly, has anyone found a solution? Thanks in advance for your help and advice!","titleCn":"HALOT MAGE S 14K 一侧打印正常、另一侧不成型","textCn":"（节选）我的 Creality Halot Mage S 14K 有个反复出现的打印问题，想问是否有人遇到：照片里模型一部分打印完美、细节清晰，另一侧却明显缺陷——打印不完整、变形、局部树脂似乎没固化好。换不同模型、两种树脂（Fast Cast SuperCast 粉色、Liqcreate Wax Castable 蓝色）都复现；已多次试打印并调整曝光、模型朝向与支撑，仍无法解决。","summaryCn":"MAGE S 14K 单侧成型不全，跨模型跨树脂复现且调曝光无效，指向曝光或光源不均。","translationStatus":"已补译","author":"user7431296185","sentiment":"负面","confidence":0.9,"problemPoints":["曝光与光源一致性","打印精度与尺寸误差"],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":1,"replyCount":2,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"有效","countInVolume":true,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"Mage S 14K 单侧成型完美、另一侧缺肉变形且局部未固化，跨模型与两种树脂复现、调曝光无效；指向光源不均，去掉两个无关误标。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_54102.json","closedState":"待处理"},{"id":"RSN-20261029-001","candKey":"post:120379","model":"halot-one","modelName":"HALOT-ONE","platform":"Creality 官方论坛","channel":"creality_forum","channelGroup":"海外社区","region":"海外","language":"en","sourceLink":"https://forum.creality.com/t/creality-halot-one-build-plate-rises-3-times-then-stops-working/54460","pubDate":"2026-10-29","crawlDate":"2026-11-12","title":"creality halot one build plate rises 3 times then stops working","originalText":"creality halot one build plate rises 3 times then stops working No matter what I do this keeps happening","titleCn":"HALOT-ONE 平台上升三次后停止工作","textCn":"不管我怎么弄，都是这样。","summaryCn":"HALOT-ONE 平台上升三次即停机且反复复现，正文极短但故障明确。","translationStatus":"已补译","author":"user6190755273","sentiment":"负面","confidence":0.7,"problemPoints":[],"isP0":false,"p0Reason":[],"sourceType":"用户","heat":0,"replyCount":0,"collectMethod":"auto","batchKind":"backfill","contentKind":"图文","entryKind":"有效","countInVolume":true,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"HALOT-ONE 平台上升三次即停止、「No matter what I do this keeps happening」；正文极短但反复故障成立，不映射受控类目。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":[],"screenshot":"_resin_evidence/topic_54460.json","closedState":"待处理"},{"id":"RSN-20261109-001","candKey":"yt:NBKRrIi7MKk","model":null,"modelName":null,"platform":"YouTube","channel":"youtube","channelGroup":"海外视频","region":"海外","language":"en","sourceLink":"https://www.youtube.com/watch?v=NBKRrIi7MKk","pubDate":"2026-11-09","crawlDate":"2026-11-12","title":"Creality Halot R6 Review: Beginner Resin Printer Worth It? (2026)","originalText":"Creality Halot R6 Review: Beginner Resin Printer Worth It? (2026) Check Current Price on Amazon: https://amzn.to/3I8udfq Bookmark & Use for ANY Amazon Purchase (Supports Channel): ...","titleCn":"Creality Halot R6 评测：入门光固化打印机值得买吗？（2026）","textCn":"标题为评测疑问句，简介内容为：查看亚马逊当前价格（附联盟短链），收藏并在任意亚马逊购物时使用本链接以支持频道。未提供评测结论或实测数据。","summaryCn":"标题为评测疑问句但正文纯联盟导流，无评测结论，不进口碑分母。","translationStatus":"已补译","author":"Yumi Kato Reviews","sentiment":"中性","confidence":0.95,"problemPoints":[],"isP0":false,"p0Reason":[],"sourceType":"KOL","heat":12,"replyCount":0,"collectMethod":"api","batchKind":"daily","contentKind":"视频","entryKind":"动态","countInVolume":false,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"标题为「Halot R6 Review: Worth It?」疑问句，简介全部是 Amazon 联盟链接与「Check Current Price」导流，无评测结论；不构成口碑表述，不计声量。","lifecycle":"新出现","isPromo":true,"noiseFlags":["low_signal_affiliate"],"competitorMentioned":[],"screenshot":"_resin_evidence/yt_NBKRrIi7MKk.json","closedState":"待处理"},{"id":"RSN-20261109-002","candKey":"yt:d7uvVvH6hLM","model":null,"modelName":null,"platform":"YouTube","channel":"youtube","channelGroup":"海外视频","region":"海外","language":"en","sourceLink":"https://www.youtube.com/watch?v=d7uvVvH6hLM","pubDate":"2026-11-09","crawlDate":"2026-11-12","title":"Elegoo Saturn 4 Ultra 16K vs Mars 5 Ultra: Pixels or Plate Space? (2026)","originalText":"Elegoo Saturn 4 Ultra 16K vs Mars 5 Ultra: Pixels or Plate Space? (2026) Check Current Price on Amazon: https://amzn.to/3I8udfq Bookmark & Use for ANY Amazon Purchase (Supports Channel): ...","titleCn":"Elegoo Saturn 4 Ultra 16K 对比 Mars 5 Ultra：像素还是平台面积？（2026）","textCn":"标题为竞品横评疑问句，简介内容为：查看亚马逊当前价格（附联盟短链），收藏并在任意亚马逊购物时使用本链接以支持频道。未给出对比结论。","summaryCn":"竞品横评标题但正文仅联盟链接，保留对比语境、不计入口碑声量。","translationStatus":"已补译","author":"Yumi Kato Reviews","sentiment":"中性","confidence":0.92,"problemPoints":[],"isP0":false,"p0Reason":[],"sourceType":"KOL","heat":8,"replyCount":0,"collectMethod":"api","batchKind":"daily","contentKind":"视频","entryKind":"动态","countInVolume":false,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"竞品横评标题（Saturn 4 Ultra 16K vs Mars 5 Ultra）但简介仅联盟链接，无可核实结论；保留对比语境，不计声量。","lifecycle":"新出现","isPromo":true,"noiseFlags":["low_signal_affiliate"],"competitorMentioned":["Elegoo Saturn 4 Ultra"],"screenshot":"_resin_evidence/yt_d7uvVvH6hLM.json","closedState":"待处理"},{"id":"RSN-20261110-001","candKey":"yt:xE-XEI6e2gw","model":null,"modelName":null,"platform":"YouTube","channel":"youtube","channelGroup":"海外视频","region":"海外","language":"en","sourceLink":"https://www.youtube.com/watch?v=xE-XEI6e2gw","pubDate":"2026-11-10","crawlDate":"2026-11-12","title":"Gente, sério... olha que achado perfeito! 😱✨ #Impressao3D #CrealityHalotR6 #GarimpoDeOfertas","originalText":"Gente, sério... olha que achado perfeito! 😱✨ #Impressao3D #CrealityHalotR6 #GarimpoDeOfertas Gente, sério! Se você estava procurando o equipamento perfeito para finalmente entrar no mundo da impressão 3D e criar suas ...","titleCn":"不是吧…快看这个完美的捡漏（葡语带货短视频）","textCn":"（葡萄牙语）不是吧，快看这个完美的捡漏！如果你一直在找一台能让你终于入门 3D 打印、创作自己作品的设备……（话题标签：3D打印 / CrealityHalotR6 / 淘优惠）","summaryCn":"葡语促销短视频，只有营销话术与优惠标签，无实质产品评价。","translationStatus":"已补译","author":"Garimpo de ofertas ","sentiment":"中性","confidence":0.95,"problemPoints":[],"isP0":false,"p0Reason":[],"sourceType":"KOL","heat":33,"replyCount":0,"collectMethod":"api","batchKind":"daily","contentKind":"视频","entryKind":"动态","countInVolume":false,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"葡语促销短视频（#CrealityHalotR6 #GarimpoDeOfertas 淘优惠），全文为「快看这个完美的捡漏」类营销话术，无实质评价；按 K3 低信号投放纪律不计声量。","lifecycle":"新出现","isPromo":true,"noiseFlags":["low_signal_affiliate"],"competitorMentioned":[],"screenshot":"_resin_evidence/yt_xE-XEI6e2gw.json","closedState":"待处理"},{"id":"RSN-20261110-002","candKey":"yt:q5tYfuood6k","model":null,"modelName":null,"platform":"YouTube","channel":"youtube","channelGroup":"海外视频","region":"海外","language":"en","sourceLink":"https://www.youtube.com/watch?v=q5tYfuood6k","pubDate":"2026-11-10","crawlDate":"2026-11-12","title":"ANYCUBIC 405nm UV Standard Resin / Standard Resin V2 For LCD 3D Printer Photon Mono M7 3D Printing R","originalText":"ANYCUBIC 405nm UV Standard Resin / Standard Resin V2 For LCD 3D Printer Photon Mono M7 3D Printing R ANYCUBIC 405nm UV Standard Resin / Standard Resin V2 For LCD 3D Printer Photon Mono M7 3D Printing Resin UV Sensitive ...","titleCn":"ANYCUBIC 405nm UV 标准树脂 / V2，适用于 Photon Mono M7 等 LCD 光固化打印机","textCn":"ANYCUBIC 405nm UV 标准树脂 / 标准树脂 V2，适用于 LCD 3D 打印机 Photon Mono M7 等机型，为 UV 光敏树脂产品说明。","summaryCn":"竞品耗材商品页文案搬运，属产品说明而非用户声音。","translationStatus":"已补译","author":"Dear Daiinty","sentiment":"中性","confidence":0.95,"problemPoints":[],"isP0":false,"p0Reason":[],"sourceType":"KOL","heat":1,"replyCount":0,"collectMethod":"api","batchKind":"daily","contentKind":"视频","entryKind":"动态","countInVolume":false,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"Anycubic 405nm 树脂商品页文案搬运，属耗材产品说明而非用户声音；不计声量。","lifecycle":"新出现","isPromo":false,"noiseFlags":[],"competitorMentioned":["Anycubic Photon Mono M7"],"screenshot":"_resin_evidence/yt_q5tYfuood6k.json","closedState":"待处理"},{"id":"RSN-20261111-001","candKey":"yt:pZj5MXHdCeU","model":null,"modelName":null,"platform":"YouTube","channel":"youtube","channelGroup":"海外视频","region":"海外","language":"en","sourceLink":"https://www.youtube.com/watch?v=pZj5MXHdCeU","pubDate":"2026-11-11","crawlDate":"2026-11-12","title":"Formlabs Form Studio 1: Saturn 4 Ultra 16K for Beginners?","originalText":"Formlabs Form Studio 1: Saturn 4 Ultra 16K for Beginners? Choose a resin printer by capacity and workflow · chapters + links #1 ELEGOO Saturn 4 Ultra 16K: https://amzn.to/4zbsPNu #2 ...","titleCn":"Formlabs Form Studio 第 1 期：Saturn 4 Ultra 16K 适合新手吗？","textCn":"按成型尺寸与工作流程挑选光固化打印机，章节与链接如下：#1 ELEGOO Saturn 4 Ultra 16K（亚马逊链接）……（其余为商品链接清单）","summaryCn":"竞品选购清单，仅有章节与购买链接，保留竞品被点名但无实质评价。","translationStatus":"已补译","author":"Ready Set Picks","sentiment":"中性","confidence":0.92,"problemPoints":[],"isP0":false,"p0Reason":[],"sourceType":"KOL","heat":28,"replyCount":1,"collectMethod":"api","batchKind":"daily","contentKind":"视频","entryKind":"动态","countInVolume":false,"reviewGrade":"AI语义复核","needsReview":false,"forceReview":false,"labelSource":"ai-semantic-review","reviewNote":"竞品 Saturn 4 Ultra 16K 选购清单，简介为章节 + 商品链接；保留「被点名」用于 M4 竞品统计，但无实质评价，不计声量。","lifecycle":"新出现","isPromo":true,"noiseFlags":["low_signal_affiliate"],"competitorMentioned":["Elegoo Saturn 4 Ultra"],"screenshot":"_resin_evidence/yt_pZj5MXHdCeU.json","closedState":"待处理"}]};
+var ITEMS = DATA.items || [];
+var META = DATA.meta || {};
+var S = {model:"all",region:"all",source:"all",scope:"valid",range:"all",q:"",problem:"",trend:"day",fields:{}};
+var EXPORT_FIELDS = [["id","记录编号"],["modelName","机型"],["platform","平台"],["region","区域"],["pubDate","发布时间"],["sentiment","情感"],["problemPoints","问题点"],["isP0","P0"],["sourceType","信源"],["heat","互动量"],["reviewGrade","复核状态"],["lifecycle","生命周期"],["titleCn","标题中译"],["summaryCn","中文摘要"],["screenshot","证据存档"],["reviewNote","复核依据"],["sourceLink","原文链接"],["originalText","原文"]];
+EXPORT_FIELDS.forEach(function(f){ S.fields[f[0]] = true; });
+
+function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function arr(v){ return Array.isArray(v)?v:[]; }
+function pct(a,b){ return b>0 ? (a*100/b).toFixed(1)+"%" : "—"; }
+function scopeItems(list){
+  return list.filter(function(x){
+    if(S.scope==="valid") return x.countInVolume && !x.isPromo && x.sourceType!=="官方" && x.sourceType!=="媒体";
+    return true;
+  });
+}
+function match(x){
+  if(S.model!=="all" && (x.model||"__none__")!==S.model) return false;
+  if(S.region!=="all" && x.region!==S.region) return false;
+  if(S.source!=="all" && x.sourceType!==S.source) return false;
+  if(S.problem && arr(x.problemPoints).indexOf(S.problem)<0) return false;
+  if(S.range!=="all"){
+    var d=new Date(x.pubDate), lim=new Date(META.refDate||new Date().toISOString().slice(0,10));
+    lim.setDate(lim.getDate()-parseInt(S.range,10));
+    if(!(d>=lim)) return false;
+  }
+  if(S.q){
+    var q=S.q.toLowerCase(), blob=[x.title,x.originalText,x.summaryCn,x.textCn,x.modelName,x.sourceLink].join(" ").toLowerCase();
+    if(blob.indexOf(q)<0) return false;
+  }
+  return scopeItems([x]).length===1;
+}
+function filtered(){ return ITEMS.filter(match); }
+function countBy(list,fn){ var m={}; list.forEach(function(x){ var k=fn(x)||"未知"; m[k]=(m[k]||0)+1; }); return m; }
+function sorted(m){ return Object.keys(m).sort(function(a,b){return m[b]-m[a];}); }
+function barRow(name,val,total,color,act,attr){
+  var w=total>0?Math.max(2,val*100/total):0;
+  return '<div class="brow"><span class="nm"'+(act?' data-act="'+act+'" '+attr:'')+'>'+esc(name)+'</span>'+
+    '<span class="bar"><i style="width:'+w+'%;background:'+color+'"></i></span>'+
+    '<span class="vv">'+val+' · '+pct(val,total)+'</span></div>';
+}
+function empty(t){ return '<div class="empty">'+esc(t)+'</div>'; }
+
+function renderUpdate(){
+  var el=document.getElementById("updateBar");
+  var kinds=countBy(ITEMS,function(x){return x.contentKind||"其他";});
+  var parts=Object.keys(kinds).map(function(k){return k+" "+kinds[k];});
+  el.innerHTML="数据更新 "+esc(META.generatedAt||"—")+" · 内容截至 "+esc(META.dataThrough||"—")+
+    " · 累计 "+ITEMS.length+" 条 · 载体 "+(parts.join(" / ")||"—")+" · 口径版本 "+esc(META.version||"V1.0");
+  var n=document.getElementById("notice");
+  var pend=META.needsReviewItems||0;
+  n.innerHTML="<b>规则预标 · 待人工确认</b>：本页 "+ITEMS.length+" 条中 <b>"+pend+" 条</b>情感与问题点为规则预标、尚未人工复核，"+
+    "不可直接作为洞察结论。主源为 Creality 官方论坛公开帖，属问题导向社区样本，<b>入库样本 ≠ 全量口碑</b>。"+
+    (META.modelListUnconfirmed?" 机型清单为初始示例，待产品中心正式清单替换。":"");
+  document.getElementById("subTitle").textContent="声量 — 情感 — 问题点 — 信源 — 竞品 · 五层分析结构 · "+esc(META.line||"光固化");
+}
+
+function renderFilters(){
+  var el=document.getElementById("filters");
+  function chips(label,key,opts,withCount){
+    var h='<div class="frow"><span class="flabel">'+label+'</span>';
+    opts.forEach(function(o){
+      var v=o[0],nm=o[1];
+      var cnt=withCount?ITEMS.filter(function(x){ return v==="all"||x[key]===v||(key==="model"&&v==="__none__"&&!x.model); }).length:0;
+      h+='<span class="chip'+(S[key]===v?" on":"")+'" data-act="set" data-k="'+key+'" data-v="'+esc(v)+'">'+esc(nm)+
+         (withCount?' <span class="n">'+cnt+'</span>':'')+'</span>';
+    });
+    return h+'</div>';
+  }
+  var models=[["all","全部机型"]].concat((META.models||[]).map(function(m){return [m.code,m.name+(m.onSale?"":"（停售）")];})).concat([["__none__","未归属机型"]]);
+  var h="";
+  h+=chips("机型",'model',models,true);
+  h+=chips("区域",'region',[["all","全部"],["国内","国内"],["海外","海外"]],false);
+  h+=chips("信源",'source',[["all","全部"],["用户","用户原声"],["官方","官方"],["媒体","媒体"],["KOL","KOL"]],false);
+  h+=chips("统计口径",'scope',[["valid","有效样本（KPI 主口径）"],["all","全量样本（对照）"]],false);
+  h+=chips("时间范围",'range',[["all","全部"],["90","近 90 天"],["30","近 30 天"],["7","近 7 天"]],false);
+  h+='<div class="frow"><span class="flabel">检索</span><input class="qbox" id="q" placeholder="标题 / 原文 / 机型 / 链接" value="'+esc(S.q)+'">'+
+     '<span class="chip" data-act="reset">清空筛选</span>';
+  if(S.problem) h+='<span class="chip on" data-act="set" data-k="problem" data-v="">问题点：'+esc(S.problem)+' ✕</span>';
+  h+='<span class="mini" id="filterHit"></span></div>';
+  el.innerHTML=h;
+  var q=document.getElementById("q");
+  q.oninput=function(){ S.q=this.value; renderAll(true); };
+}
+
+function renderKPI(){
+  var f=filtered(), all=ITEMS.filter(function(x){ return match(x); });
+  var v=f.length;
+  var neg=f.filter(function(x){return x.sentiment==="负面"||x.sentiment==="非常负面";}).length;
+  var p0=f.filter(function(x){return x.isP0;}).length;
+  var ch={}; f.forEach(function(x){ch[x.channel]=1;});
+  var lim=new Date(META.refDate||new Date().toISOString().slice(0,10)); lim.setDate(lim.getDate()-7);
+  var n7=f.filter(function(x){return new Date(x.pubDate)>=lim;}).length;
+  var allNeg=all.filter(function(x){return x.sentiment==="负面"||x.sentiment==="非常负面";}).length;
+  var boxes=[
+    ["总声量",v,"当前筛选 · "+(S.scope==="valid"?"有效样本":"全量样本")],
+    ["负面占比",v>0?pct(neg,v):"—","负面+非常负面 "+neg+" / "+v+(v>0?" · 全量对照 "+pct(allNeg,all.length):"")],
+    ["P0 风险",p0,"按书面规则判定 · 需 T+1 触达"],
+    ["覆盖渠道",Object.keys(ch).length,"已产生数据的渠道数（含缺口清单见下）"],
+    ["近 7 日新增",n7,"按发布时间统计"]
+  ];
+  document.getElementById("kpis").innerHTML=boxes.map(function(b){
+    var color=b[0]==="P0 风险"&&b[1]>0?"var(--red)":"var(--tx)";
+    return '<div class="kpi"><div class="lb">'+b[0]+'</div><div class="vl" style="color:'+color+'">'+b[1]+'</div><div class="ft">'+esc(b[2])+'</div></div>';
+  }).join("");
+}
+
+function renderSent(){
+  var f=filtered(), m=countBy(f,function(x){return x.sentiment||"中性";});
+  var order=[["非常负面","var(--red)"],["负面","#db6d28"],["中性","var(--dim)"],["正面","var(--green)"],["非常正面","#2ea043"]];
+  document.getElementById("denSent").textContent="分母 = "+(S.scope==="valid"?"有效样本":"全量样本")+" "+f.length+" 条 · 规则预标结果";
+  document.getElementById("sent").innerHTML=f.length?order.map(function(o){
+    return barRow(o[0],m[o[0]]||0,f.length,o[1]);
+  }).join(""):empty("当前筛选无样本，情感结构显示「—」而非 0.0%（空白 ≠ 无负面）");
+}
+
+function renderProb(){
+  var f=filtered(), m={};
+  f.forEach(function(x){ arr(x.problemPoints).forEach(function(p){ m[p]=(m[p]||0)+1; }); });
+  var ks=sorted(m);
+  document.getElementById("denProb").textContent="分母 = 当前筛选 "+f.length+" 条 · 一条可命中多类，合计可大于样本数";
+  document.getElementById("prob").innerHTML=ks.length?ks.map(function(k){
+    return barRow(k,m[k],f.length,"var(--purple)","problem",'data-v="'+esc(k)+'"');
+  }).join(""):empty("当前筛选无问题点标注");
+}
+
+function renderSrc(){
+  var f=filtered(), m=countBy(f,function(x){return x.sourceType||"未知";});
+  var colors={"用户":"var(--green)","官方":"var(--blue)","媒体":"var(--orange)","KOL":"var(--cyan)","社区综述":"var(--purple)"};
+  document.getElementById("denSrc").textContent="分母 = 当前筛选 "+f.length+" 条 · 官方/媒体不进 KPI 情感分母";
+  var h=sorted(m).map(function(k){ return barRow(k,m[k],f.length,colors[k]||"var(--dim)"); }).join("");
+  h+='<div class="mini" style="margin-top:10px">上方「信源」chip 可一键剔除官方与媒体，单独查看用户原声。</div>';
+  document.getElementById("src").innerHTML=f.length?h:empty("当前筛选无样本");
+}
+
+function renderMatrix(){
+  var f=filtered(), models=(META.models||[]).map(function(m){return m.code;}).concat(["__none__"]);
+  var names={}; (META.models||[]).forEach(function(m){names[m.code]=m.name;}); names["__none__"]="未归属机型";
+  var probs={};
+  f.forEach(function(x){ arr(x.problemPoints).forEach(function(p){ probs[p]=1; }); });
+  var ks=Object.keys(probs).sort();
+  if(!ks.length||!f.length){ document.getElementById("matrix").innerHTML=empty("当前筛选无交叉数据"); return; }
+  var h='<table><thead><tr><th>机型</th>'+ks.map(function(k){return '<th style="font-size:10.5px">'+esc(k.slice(0,6))+'</th>';}).join("")+'<th>合计</th></tr></thead><tbody>';
+  models.forEach(function(mc){
+    var rows=f.filter(function(x){return (x.model||"__none__")===mc;});
+    if(!rows.length) return;
+    var cells=ks.map(function(k){ return rows.filter(function(x){return arr(x.problemPoints).indexOf(k)>=0;}).length; });
+    var tot=rows.length;
+    var common=cells.filter(function(c){return c>0;}).length;
+    h+='<tr><td>'+esc(names[mc]||mc)+'</td>'+cells.map(function(c){return '<td class="num" style="'+(c>0?'color:var(--orange)':'color:var(--dim)')+'">'+c+'</td>';}).join("")+
+       '<td class="num">'+tot+' 条 / '+common+' 类</td></tr>';
+  });
+  h+='</tbody></table><div class="mini" style="margin-top:8px">某问题点在 ≥2 个机型出现即视为「疑似品类共性」，需人工确认后才可写入结论。</div>';
+  document.getElementById("matrix").innerHTML=h;
+}
+
+function promoCount(){ return ITEMS.filter(function(x){return x.isPromo;}).length; }
+
+function renderCompete(){
+  var f=filtered(), m={}, ctx={};
+  f.forEach(function(x){
+    arr(x.competitorMentioned).forEach(function(c){ m[c]=(m[c]||0)+1; });
+    var t=(x.title||"").toLowerCase();
+    ["vs","compare","对比","比得上","better than","worse than","switch from","instead of"].forEach(function(k){
+      if(t.indexOf(k)>=0) ctx[k]=(ctx[k]||0)+1;
+    });
+  });
+  var ks=sorted(m);
+  var h="";
+  h+=ks.length?ks.map(function(k){return barRow(k,m[k],f.length,"var(--cyan)");}).join(""):empty("当前筛选无竞品点名 · 一期不采竞品全量样本");
+  var ck=sorted(ctx);
+  h+='<div class="mini" style="margin-top:12px">对比语境高频表述：'+(ck.length?ck.map(function(k){return esc(k)+" "+ctx[k];}).join(" · "):"暂无")+'</div>';
+  h+='<div class="mini" style="margin-top:6px">竞品样本来自 YouTube 公开视频与用户对比语境；Elegoo / Anycubic / Phrozen 论坛域名 DNS 不可达，本期不做全渠道独立口碑水位对比。样本量受限时须标注分析局限。</div>';
+  document.getElementById("compete").innerHTML=h;
+}
+
+function renderChannels(){
+  var ch=META.channels||[], byKey={}; ITEMS.forEach(function(x){byKey[x.channel]=(byKey[x.channel]||0)+1;});
+  var lab={auto:"自动可达",needs_key:"待凭据",blocked:"已封锁",manual:"人工补录",login_wall:"登录墙",unavailable:"不可得"};
+  var col={auto:"b-green",needs_key:"b-blue",blocked:"b-red",manual:"b-org",login_wall:"b-org",unavailable:"b-red"};
+  var h='<table><thead><tr><th>渠道</th><th>状态</th><th>本期条数</th><th>说明</th></tr></thead><tbody>';
+  ch.forEach(function(c){
+    var n=byKey[c.key]||0;
+    h+='<tr><td>'+esc(c.name)+'</td><td><span class="badge '+(col[c.state]||"")+'">'+esc(lab[c.state]||c.state)+'</span></td>'+
+       '<td class="num">'+n+'</td><td class="mini">'+esc((c.note||"").slice(0,46))+'</td></tr>';
+  });
+  var pa=META.paidAdapters||[];
+  if(pa.length) h+='<div class="mini" style="margin-top:10px"><b>商业数据源适配层（预留，本批未采购）</b>：'+pa.map(function(p){return esc(p.name)+"（"+esc(p.state)+"）";}).join(" · ")+'</div>';
+  h+='<div class="mini" style="margin-top:8px">覆盖率 100% 仅对「机型维度」承诺；渠道维度保留缺口清单，不做虚假覆盖。</div>';
+  document.getElementById("channels").innerHTML=h;
+}
+
+function renderTrend(){
+  var f=filtered(), m={}, neg={}, valid={};
+  f.forEach(function(x){
+    var d=String(x.pubDate||"").slice(0,10), k=d;
+    if(S.trend==="week"){ var dt=new Date(d); dt.setDate(dt.getDate()-dt.getDay()); k=dt.toISOString().slice(0,10); }
+    if(S.trend==="month") k=d.slice(0,7);
+    m[k]=(m[k]||0)+1;
+    if(x.countInVolume&&!x.isPromo){
+      valid[k]=(valid[k]||0)+1;
+      if(x.sentiment==="负面"||x.sentiment==="非常负面") neg[k]=(neg[k]||0)+1;
+    }
+  });
+  var ks=Object.keys(m).sort(), mx=Math.max.apply(null,ks.map(function(k){return m[k];}).concat([1]));
+  var th=META.thresholds||{}, lim=Number(th.negativeRateMoM||0.05), minN=Number(th.minSamplesForTrend||5);
+  var alerts=[], amap={};
+  for(var i=1;i<ks.length;i++){
+    var a=ks[i-1], b=ks[i];
+    if((valid[a]||0)<minN||(valid[b]||0)<minN) continue;
+    var ra=(neg[a]||0)/valid[a], rb=(neg[b]||0)/valid[b];
+    if(rb-ra>lim){ alerts.push({k:b,from:ra,to:rb}); amap[b]=alerts[alerts.length-1]; }
+  }
+  var ctl=[["day","日"],["week","周"],["month","月"]].map(function(o){
+    return '<span class="chip'+(S.trend===o[0]?" on":"")+'" data-act="set" data-k="trend" data-v="'+o[0]+'">'+o[1]+'</span>';
+  }).join("");
+  document.getElementById("trendCtl").innerHTML='<span class="frow" style="display:inline-flex">'+ctl+'</span>';
+  document.getElementById("trend").innerHTML=ks.length?
+    '<div class="spark">'+ks.map(function(k){
+      var w=amap[k];
+      var tip=esc(k)+' · '+m[k]+' 条'+(w?' · 负面率环比 +'+((w.to-w.from)*100).toFixed(1)+'pp':'');
+      var cls='height:'+Math.max(3,m[k]*100/mx)+'%'+(w?';background:var(--red, #e24b4a)':'');
+      return '<div title="'+tip+'" style="'+cls+'"></div>';
+    }).join("")+'</div>'+
+    '<div class="mini" style="margin-top:8px">'+ks.length+' 个'+({day:"日",week:"周",month:"月"}[S.trend])+'桶 · 峰值 '+mx+' 条 · 回填批次可能与日更批次混在同一时间轴，解读时注意</div>'+
+    '<div class="mini" style="margin-top:6px">负面率环比阈值 '+(lim*100).toFixed(0)+'pp（前后两桶有效样本均 ≥'+minN+' 才判定）：'+
+      (alerts.length?alerts.length+' 个时间桶超阈值（红柱）':'本期无超阈值波动')+'</div>'
+    :empty("当前筛选无时间分布数据");
+}
+
+function renderExportFields(){
+  document.getElementById("exportFields").innerHTML='<span class="flabel">导出字段</span>'+EXPORT_FIELDS.map(function(f){
+    return '<span class="chip'+(S.fields[f[0]]?" on":"")+'" data-act="field" data-v="'+f[0]+'">'+esc(f[1])+'</span>';
+  }).join("");
+}
+
+function renderCards(){
+  var f=filtered().slice().sort(function(a,b){return String(b.pubDate).localeCompare(String(a.pubDate));});
+  document.getElementById("hitCount").textContent="命中 "+f.length+" 条";
+  var fh=document.getElementById("filterHit");
+  if(fh) fh.textContent="命中 "+f.length+" 条";
+  if(!f.length){ document.getElementById("cards").innerHTML=empty("当前筛选无明细；可清空筛选或切到全量口径"); return; }
+  document.getElementById("cards").innerHTML=f.map(function(x){
+    var sc={"非常负面":"b-red","负面":"b-red","中性":"","正面":"b-green","非常正面":"b-green"}[x.sentiment]||"";
+    var h='<div class="item"><div class="tt">'+esc(x.title||"(无标题)")+'</div>';
+    h+='<div><span class="badge '+sc+'">'+esc(x.sentiment)+' · 置信 '+Number(x.confidence||0).toFixed(2)+'</span>'+
+       '<span class="badge b-blue">'+esc(x.modelName||"未归属机型")+'</span>'+
+       '<span class="badge">'+esc(x.sourceType||"未知")+'</span>'+
+       '<span class="badge">'+esc(x.region||"—")+'</span>'+
+       (x.isP0?'<span class="badge b-red">P0 · '+esc(arr(x.p0Reason).join("/"))+'</span>':"")+
+       (x.needsReview?'<span class="badge b-org">规则预标 · 待复核</span>':
+         (x.labelSource==="ai-semantic-review"?'<span class="badge b-green">AI 语义复核</span>':'<span class="badge b-green">人工已确认</span>'))+
+       (x.batchKind==="backfill"?'<span class="badge">历史回填</span>':"")+
+       (x.isPromo?'<span class="badge b-org">低信号投放 · 不计声量</span>':"")+
+       arr(x.problemPoints).map(function(p){return '<span class="badge b-purple">'+esc(p)+'</span>';}).join("")+
+       arr(x.competitorMentioned).map(function(c){return '<span class="badge">对比 '+esc(c)+'</span>';}).join("")+'</div>';
+    h+='<div class="tx">'+esc(x.originalText||"")+'</div>';
+    if(x.textCn) h+='<div class="tx" style="color:var(--tx)">'+esc(x.textCn)+'</div>';
+    else if(x.translationStatus==="译文待补") h+='<div class="mini">中文摘要 / 译文待补（本期不编造译文）</div>';
+    if(x.summaryCn&&x.summaryCn!==x.textCn) h+='<div class="mini">摘要：'+esc(x.summaryCn)+'</div>';
+    h+='<div class="mt"><span>'+esc(x.pubDate)+'</span><span>'+esc(x.platform)+'</span>'+
+       '<span>互动 '+(x.heat||0)+' · 回复 '+(x.replyCount||0)+'</span><span>生命周期：'+esc(x.lifecycle||"—")+'</span>'+
+       (x.screenshot?'<a href="'+esc(x.screenshot)+'" target="_blank" rel="noopener">证据存档 ↗</a>':'')+
+       '<a href="'+esc(x.sourceLink)+'" target="_blank" rel="noopener">查看原文 ↗</a></div></div>';
+    return h;
+  }).join("");
+}
+
+function renderFoot(){
+  document.getElementById("foot").innerHTML=
+    "<b>口径说明（常驻）</b><br>"+
+    "1. 声量 = 统计区间内与该机型相关的独立内容条数；同一主题重复镜像按 K3 mirrors 纪律声量只算 1，不同 postId 的独立反馈分别保留。<br>"+
+    "2. 有效样本 = 声量剔除零互动投放、批量同文案、低信号带货、官方与媒体、无实质表述后的样本，作为情感与问题点分母；KPI 主口径用有效样本，副文本给全量对照。<br>"+
+    "3. 负面占比 = （负面 + 非常负面）÷ 有效样本；分母为 0 时显示「—」，不写 0.0%（空白 ≠ 无负面）。<br>"+
+    "4. 泛讨论 / 动态条目单列统计，不进情感分母；互动量仅判断扩散度，不参与情感判定。<br>"+
+    "5. P0 = 安全 / 批量质量 / 虚假宣传 / 售后拒保四类书面规则命中；本批仅标记留痕，不做自动触达。<br>"+
+    "6. 情感与问题点为<b>AI 逐条语义复核</b>（非需求方人工签字），问题点只取 12 类受控词表，保留人工改判通道；本页 "+esc(META.needsReviewItems||0)+" 条待复核。<br>"+
+    "7. 入库样本 ≠ 全量口碑：主源为问题导向社区，样本筛选天然偏负面，结论不得外推到全渠道。<br>"+
+    "8. 口径变更须记录版本与生效时间；历史数据重算须标注，避免趋势图出现不可解释断点。<br>"+
+    "9. YouTube 频道内容归 KOL、评论区归真实用户；免费 API 仅给标题与简介，联盟带货 / 商品页文案按低信号纪律不计声量；竞品论坛域名 DNS 不可达，已列渠道缺口。<br>"+
+    "10. 生命周期按入库批次记账，需 ≥2 个日更批次才会出现「持续存在 / 已改善」；人工可在标注表改判「已闭环」。<br>"+
+    "<span class='mini'>数据合规：仅公开内容、保留原文直链与原文存档、不展示用户个人身份信息。口径说明文档：_docs/光固化专栏_指标口径说明_V1.1.md</span>";
+}
+
+function renderAll(skipFilters){
+  renderUpdate();
+  if(!skipFilters) renderFilters();
+  renderKPI(); renderSent(); renderProb(); renderSrc(); renderMatrix();
+  renderQualityOnce(); renderCompete(); renderChannels(); renderTrend();
+  renderExportFields(); renderCards(); renderFoot();
+}
+function renderQualityOnce(){
+  var f=ITEMS, valid=f.filter(function(x){return x.countInVolume&&!x.isPromo&&x.sourceType!=="官方"&&x.sourceType!=="媒体";});
+  var noise={}; f.forEach(function(x){ arr(x.noiseFlags).forEach(function(n){noise[n]=(noise[n]||0)+1;}); });
+  var ratio=f.length?pct(valid.length,f.length):"—";
+  var h='<div class="brow"><span class="nm">有效样本占比（全量口径）</span><span class="bar"><i style="width:'+(f.length?Math.max(2,valid.length*100/f.length):0)+'%;background:var(--green)"></i></span><span class="vv">'+ratio+'</span></div>';
+  h+='<div class="mini" style="margin:8px 0 12px">全量 '+f.length+' 条 → 有效 '+valid.length+' 条。剔除零互动投放、批量同文案、官方/媒体与无观点动态条目。目标 ≥70%。</div>';
+  h+='<table><thead><tr><th>去噪标记</th><th>条数</th><th>含义</th></tr></thead><tbody>';
+  var desc={zero_interaction_official:"官方零互动投放",same_text_cluster:"批量同文案",short_window_burst:"短期集中发布",low_signal_affiliate:"低信号带货 / 联盟导流"};
+  Object.keys(noise).forEach(function(k){ h+='<tr><td>'+esc(k)+'</td><td class="num">'+noise[k]+'</td><td>'+esc(desc[k]||"—")+'</td></tr>'; });
+  h+='<tr><td>isPromo</td><td class="num">'+promoCount()+'</td><td>已排除出 KPI 主口径</td></tr>';
+  var ev=f.filter(function(x){return x.screenshot;}).length;
+  h+='</tbody></table><div class="mini" style="margin-top:10px">本面板为全量口径，不与 KPI 互相推导；各面板分母见标题右侧标注。原文存档 '+ev+'/'+f.length+' 条（验收抽检完整率要求 ≥95%）。生命周期按入库批次记账，需累积 ≥2 个日更批次才会出现「持续存在 / 已改善」。</div>';
+  document.getElementById("quality").innerHTML=h;
+}
+
+function exportCSV(){
+  var f=filtered(), cols=EXPORT_FIELDS.filter(function(x){return S.fields[x[0]];});
+  var lines=[cols.map(function(c){return '"'+c[1]+'"';}).join(",")];
+  f.forEach(function(x){
+    lines.push(cols.map(function(c){
+      var v=x[c[0]];
+      if(Array.isArray(v)) v=v.join("、");
+      return '"'+String(v==null?"":v).replace(/"/g,'""').replace(/\r?\n/g," ")+'"';
+    }).join(","));
+  });
+  var blob=new Blob(["\ufeff"+lines.join("\r\n")],{type:"text/csv;charset=utf-8"});
+  var a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+  a.download="resin_feedback_"+String(META.refDate||"").replace(/-/g,"")+"_"+(S.model==="all"?"all":S.model)+".csv";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+
+document.addEventListener("click",function(e){
+  var t=e.target.closest("[data-act]"); if(!t) return;
+  var act=t.getAttribute("data-act");
+  if(act==="set"){
+    var k=t.getAttribute("data-k"), v=t.getAttribute("data-v");
+    S[k]=v; renderAll();
+  }else if(act==="problem"){
+    S.problem=t.getAttribute("data-v"); renderAll();
+  }else if(act==="reset"){
+    S={model:"all",region:"all",source:"all",scope:"valid",range:"all",q:"",problem:"",trend:"day",fields:S.fields};
+    renderAll();
+  }else if(act==="field"){
+    var key=t.getAttribute("data-v"); S.fields[key]=!S.fields[key]; renderExportFields();
+  }else if(act==="csv"){ exportCSV(); }
+});
+renderAll();
+</script>
+</body>
+</html>

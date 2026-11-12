@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>光固化产品线 · 用户口碑看板</title>
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2129;--bd:#21262d;--bd2:#30363d;--tx:#e6edf3;--mu:#8b949e;--dim:#6e7681;--blue:#58a6ff;--green:#3fb950;--red:#f85149;--orange:#d29922;--purple:#bc8cff;--cyan:#39c5cf}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{display:flex;min-height:100vh}
+.sidebar{width:230px;flex:0 0 230px;background:var(--panel);border-right:1px solid var(--bd);padding:20px 14px;position:sticky;top:0;height:100vh;overflow:auto}
+.sidebar-logo{display:flex;gap:10px;align-items:center;padding:0 8px 18px;border-bottom:1px solid var(--bd);margin-bottom:14px}
+.logo-icon{font-size:22px}.logo-title{font-weight:500;font-size:15px}.logo-sub{font-size:11px;color:var(--dim)}
+.nav-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:6px;color:var(--mu);font-size:13px;margin-bottom:2px}
+.nav-item:hover{background:var(--panel2);color:var(--tx);text-decoration:none}
+.nav-item.sub{padding-left:26px;font-size:12.5px}
+.nav-item.active{background:rgba(88,166,255,.12);color:var(--blue)}
+.nav-icon{width:18px;text-align:center}
+.sidebar-footer{margin-top:22px;padding-top:14px;border-top:1px solid var(--bd);font-size:11px;color:var(--dim)}
+.main{flex:1;min-width:0;padding:26px 30px 60px;max-width:1500px}
+h1{font-size:22px;font-weight:500;margin:0 0 6px}h2{font-size:15px;font-weight:500;margin:0 0 14px}
+.sub{color:var(--mu);font-size:12.5px}
+.card{background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:18px;margin-bottom:16px}
+.card-hd{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.denom{font-size:11px;color:var(--dim);font-weight:400}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px}
+.kpi{background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:15px 16px}
+.kpi .lb{font-size:11.5px;color:var(--mu)}.kpi .vl{font-size:25px;font-weight:500;line-height:1.35;font-variant-numeric:tabular-nums}
+.kpi .ft{font-size:11px;color:var(--dim);margin-top:3px}
+.filters{background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:14px 16px;margin-bottom:16px}
+.frow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:9px}
+.frow:last-child{margin-bottom:0}
+.flabel{font-size:11.5px;color:var(--dim);min-width:64px;flex:0 0 64px}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:14px;border:1px solid var(--bd2);background:var(--panel2);color:var(--mu);font-size:12px;cursor:pointer;user-select:none}
+.chip:hover{border-color:var(--blue);color:var(--tx)}
+.chip.on{background:rgba(88,166,255,.16);border-color:var(--blue);color:var(--blue)}
+.chip .n{color:var(--dim);font-size:10.5px}
+.chip.on .n{color:var(--blue)}
+.qbox{background:var(--bg);border:1px solid var(--bd2);border-radius:6px;color:var(--tx);padding:6px 10px;font-size:12.5px;min-width:230px}
+.btn{background:var(--panel2);border:1px solid var(--bd2);color:var(--tx);border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer}
+.btn:hover{border-color:var(--blue);color:var(--blue)}
+.bar{height:9px;background:var(--bg);border-radius:5px;overflow:hidden;flex:1}
+.bar > i{display:block;height:100%;border-radius:5px}
+.brow{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:12.5px}
+.brow .nm{width:170px;flex:0 0 170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
+.brow .nm:hover{color:var(--blue)}
+.brow .vv{width:74px;text-align:right;color:var(--mu);font-variant-numeric:tabular-nums;font-size:11.5px}
+table{width:100%;border-collapse:collapse;font-size:12px}th,td{border-bottom:1px solid var(--bd);padding:7px 8px;text-align:left}th{color:var(--mu);font-weight:400;font-size:11.5px}td{color:var(--tx)}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.badge{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10.5px;border:1px solid var(--bd2);color:var(--mu);margin-right:5px}
+.b-red{color:var(--red);border-color:rgba(248,81,73,.4)}.b-org{color:var(--orange);border-color:rgba(210,153,34,.4)}
+.b-green{color:var(--green);border-color:rgba(63,185,80,.4)}.b-blue{color:var(--blue);border-color:rgba(88,166,255,.4)}
+.b-purple{color:var(--purple);border-color:rgba(188,140,255,.4)}
+.item{background:var(--panel2);border:1px solid var(--bd);border-radius:9px;padding:14px;margin-bottom:10px}
+.item .tt{font-size:13.5px;font-weight:500;margin-bottom:6px;word-break:break-word}
+.item .tx{font-size:12.5px;color:var(--mu);white-space:pre-wrap;word-break:break-word;max-height:110px;overflow:auto;margin:7px 0}
+.item .mt{font-size:11px;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-top:7px}
+.notice{background:rgba(210,153,34,.08);border:1px solid rgba(210,153,34,.35);border-radius:8px;padding:11px 14px;font-size:12.5px;color:#e3b341;margin-bottom:16px}
+.empty{padding:26px;text-align:center;color:var(--dim);font-size:12.5px;border:1px dashed var(--bd2);border-radius:8px}
+.foot{font-size:11.5px;color:var(--dim);line-height:1.9;margin-top:24px;border-top:1px solid var(--bd);padding-top:14px}
+.mini{font-size:11px;color:var(--dim)}
+.spark{display:flex;align-items:flex-end;gap:3px;height:70px;padding-top:6px}
+.spark > div{flex:1;background:rgba(88,166,255,.6);border-radius:2px 2px 0 0;min-height:2px;position:relative}
+.spark > div:hover{background:var(--blue)}
+@media(max-width:1100px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.sidebar{display:none}.main{padding:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+__RESIN_NAV__
+<div class="main">
+  <h1>光固化产品线 · 用户口碑看板</h1>
+  <div class="sub" id="subTitle">声量 — 情感 — 问题点 — 信源 — 竞品 · 五层分析结构</div>
+  <div id="updateBar" style="margin:12px 0 16px" class="mini"></div>
+  <div class="notice" id="notice"></div>
+
+  <div class="filters" id="filters"></div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="card"><div class="card-hd"><h2>情感结构</h2><span class="denom" id="denSent"></span></div><div id="sent"></div></div>
+
+  <div class="grid2">
+    <div class="card"><div class="card-hd"><h2>问题点 Top（按条去重）</h2><span class="denom" id="denProb"></span></div><div id="prob"></div></div>
+    <div class="card"><div class="card-hd"><h2>信源结构</h2><span class="denom" id="denSrc"></span></div><div id="src"></div></div>
+  </div>
+
+  <div class="card"><div class="card-hd"><h2>机型 × 问题点交叉矩阵</h2><span class="denom">单元格 = 该机型命中该问题点的条目数（按条去重）；用于区分机型个体问题与品类共性问题</span></div><div id="matrix"></div></div>
+
+  <div class="grid2">
+    <div class="card"><div class="card-hd"><h2>样本质量与去噪</h2><span class="denom">全量口径，不与 KPI 互相推导</span></div><div id="quality"></div></div>
+    <div class="card"><div class="card-hd"><h2>竞品对比与定位</h2><span class="denom">一期仅统计「用户对比语境中被点名」，不采竞品全量</span></div><div id="compete"></div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card"><div class="card-hd"><h2>声量趋势</h2><span class="denom" id="trendCtl"></span></div><div id="trend"></div></div>
+    <div class="card"><div class="card-hd"><h2>渠道覆盖与缺口</h2><span class="denom">state 为通道状态，非数据质量</span></div><div id="channels"></div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-hd"><h2>反馈明细 <span id="hitCount" class="mini"></span></h2>
+      <span><button class="btn" data-act="csv">导出当前筛选 CSV</button></span></div>
+    <div id="exportFields" class="frow" style="margin-bottom:12px"></div>
+    <div id="cards"></div>
+  </div>
+
+  <div class="foot" id="foot"></div>
+</div>
+</div>
+<script>
+var DATA = __RESIN_DATA__;
+var ITEMS = DATA.items || [];
+var META = DATA.meta || {};
+var S = {model:"all",region:"all",source:"all",scope:"valid",range:"all",q:"",problem:"",trend:"day",fields:{}};
+var EXPORT_FIELDS = [["id","记录编号"],["modelName","机型"],["platform","平台"],["region","区域"],["pubDate","发布时间"],["sentiment","情感"],["problemPoints","问题点"],["isP0","P0"],["sourceType","信源"],["heat","互动量"],["reviewGrade","复核状态"],["lifecycle","生命周期"],["titleCn","标题中译"],["summaryCn","中文摘要"],["screenshot","证据存档"],["reviewNote","复核依据"],["sourceLink","原文链接"],["originalText","原文"]];
+EXPORT_FIELDS.forEach(function(f){ S.fields[f[0]] = true; });
+
+function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function arr(v){ return Array.isArray(v)?v:[]; }
+function pct(a,b){ return b>0 ? (a*100/b).toFixed(1)+"%" : "—"; }
+function scopeItems(list){
+  return list.filter(function(x){
+    if(S.scope==="valid") return x.countInVolume && !x.isPromo && x.sourceType!=="官方" && x.sourceType!=="媒体";
+    return true;
+  });
+}
+function match(x){
+  if(S.model!=="all" && (x.model||"__none__")!==S.model) return false;
+  if(S.region!=="all" && x.region!==S.region) return false;
+  if(S.source!=="all" && x.sourceType!==S.source) return false;
+  if(S.problem && arr(x.problemPoints).indexOf(S.problem)<0) return false;
+  if(S.range!=="all"){
+    var d=new Date(x.pubDate), lim=new Date(META.refDate||new Date().toISOString().slice(0,10));
+    lim.setDate(lim.getDate()-parseInt(S.range,10));
+    if(!(d>=lim)) return false;
+  }
+  if(S.q){
+    var q=S.q.toLowerCase(), blob=[x.title,x.originalText,x.summaryCn,x.textCn,x.modelName,x.sourceLink].join(" ").toLowerCase();
+    if(blob.indexOf(q)<0) return false;
+  }
+  return scopeItems([x]).length===1;
+}
+function filtered(){ return ITEMS.filter(match); }
+function countBy(list,fn){ var m={}; list.forEach(function(x){ var k=fn(x)||"未知"; m[k]=(m[k]||0)+1; }); return m; }
+function sorted(m){ return Object.keys(m).sort(function(a,b){return m[b]-m[a];}); }
+function barRow(name,val,total,color,act,attr){
+  var w=total>0?Math.max(2,val*100/total):0;
+  return '<div class="brow"><span class="nm"'+(act?' data-act="'+act+'" '+attr:'')+'>'+esc(name)+'</span>'+
+    '<span class="bar"><i style="width:'+w+'%;background:'+color+'"></i></span>'+
+    '<span class="vv">'+val+' · '+pct(val,total)+'</span></div>';
+}
+function empty(t){ return '<div class="empty">'+esc(t)+'</div>'; }
+
+function renderUpdate(){
+  var el=document.getElementById("updateBar");
+  var kinds=countBy(ITEMS,function(x){return x.contentKind||"其他";});
+  var parts=Object.keys(kinds).map(function(k){return k+" "+kinds[k];});
+  el.innerHTML="数据更新 "+esc(META.generatedAt||"—")+" · 内容截至 "+esc(META.dataThrough||"—")+
+    " · 累计 "+ITEMS.length+" 条 · 载体 "+(parts.join(" / ")||"—")+" · 口径版本 "+esc(META.version||"V1.0");
+  var n=document.getElementById("notice");
+  var pend=META.needsReviewItems||0;
+  n.innerHTML="<b>规则预标 · 待人工确认</b>：本页 "+ITEMS.length+" 条中 <b>"+pend+" 条</b>情感与问题点为规则预标、尚未人工复核，"+
+    "不可直接作为洞察结论。主源为 Creality 官方论坛公开帖，属问题导向社区样本，<b>入库样本 ≠ 全量口碑</b>。"+
+    (META.modelListUnconfirmed?" 机型清单为初始示例，待产品中心正式清单替换。":"");
+  document.getElementById("subTitle").textContent="声量 — 情感 — 问题点 — 信源 — 竞品 · 五层分析结构 · "+esc(META.line||"光固化");
+}
+
+function renderFilters(){
+  var el=document.getElementById("filters");
+  function chips(label,key,opts,withCount){
+    var h='<div class="frow"><span class="flabel">'+label+'</span>';
+    opts.forEach(function(o){
+      var v=o[0],nm=o[1];
+      var cnt=withCount?ITEMS.filter(function(x){ return v==="all"||x[key]===v||(key==="model"&&v==="__none__"&&!x.model); }).length:0;
+      h+='<span class="chip'+(S[key]===v?" on":"")+'" data-act="set" data-k="'+key+'" data-v="'+esc(v)+'">'+esc(nm)+
+         (withCount?' <span class="n">'+cnt+'</span>':'')+'</span>';
+    });
+    return h+'</div>';
+  }
+  var models=[["all","全部机型"]].concat((META.models||[]).map(function(m){return [m.code,m.name+(m.onSale?"":"（停售）")];})).concat([["__none__","未归属机型"]]);
+  var h="";
+  h+=chips("机型",'model',models,true);
+  h+=chips("区域",'region',[["all","全部"],["国内","国内"],["海外","海外"]],false);
+  h+=chips("信源",'source',[["all","全部"],["用户","用户原声"],["官方","官方"],["媒体","媒体"],["KOL","KOL"]],false);
+  h+=chips("统计口径",'scope',[["valid","有效样本（KPI 主口径）"],["all","全量样本（对照）"]],false);
+  h+=chips("时间范围",'range',[["all","全部"],["90","近 90 天"],["30","近 30 天"],["7","近 7 天"]],false);
+  h+='<div class="frow"><span class="flabel">检索</span><input class="qbox" id="q" placeholder="标题 / 原文 / 机型 / 链接" value="'+esc(S.q)+'">'+
+     '<span class="chip" data-act="reset">清空筛选</span>';
+  if(S.problem) h+='<span class="chip on" data-act="set" data-k="problem" data-v="">问题点：'+esc(S.problem)+' ✕</span>';
+  h+='<span class="mini" id="filterHit"></span></div>';
+  el.innerHTML=h;
+  var q=document.getElementById("q");
+  q.oninput=function(){ S.q=this.value; renderAll(true); };
+}
+
+function renderKPI(){
+  var f=filtered(), all=ITEMS.filter(function(x){ return match(x); });
+  var v=f.length;
+  var neg=f.filter(function(x){return x.sentiment==="负面"||x.sentiment==="非常负面";}).length;
+  var p0=f.filter(function(x){return x.isP0;}).length;
+  var ch={}; f.forEach(function(x){ch[x.channel]=1;});
+  var lim=new Date(META.refDate||new Date().toISOString().slice(0,10)); lim.setDate(lim.getDate()-7);
+  var n7=f.filter(function(x){return new Date(x.pubDate)>=lim;}).length;
+  var allNeg=all.filter(function(x){return x.sentiment==="负面"||x.sentiment==="非常负面";}).length;
+  var boxes=[
+    ["总声量",v,"当前筛选 · "+(S.scope==="valid"?"有效样本":"全量样本")],
+    ["负面占比",v>0?pct(neg,v):"—","负面+非常负面 "+neg+" / "+v+(v>0?" · 全量对照 "+pct(allNeg,all.length):"")],
+    ["P0 风险",p0,"按书面规则判定 · 需 T+1 触达"],
+    ["覆盖渠道",Object.keys(ch).length,"已产生数据的渠道数（含缺口清单见下）"],
+    ["近 7 日新增",n7,"按发布时间统计"]
+  ];
+  document.getElementById("kpis").innerHTML=boxes.map(function(b){
+    var color=b[0]==="P0 风险"&&b[1]>0?"var(--red)":"var(--tx)";
+    return '<div class="kpi"><div class="lb">'+b[0]+'</div><div class="vl" style="color:'+color+'">'+b[1]+'</div><div class="ft">'+esc(b[2])+'</div></div>';
+  }).join("");
+}
+
+function renderSent(){
+  var f=filtered(), m=countBy(f,function(x){return x.sentiment||"中性";});
+  var order=[["非常负面","var(--red)"],["负面","#db6d28"],["中性","var(--dim)"],["正面","var(--green)"],["非常正面","#2ea043"]];
+  document.getElementById("denSent").textContent="分母 = "+(S.scope==="valid"?"有效样本":"全量样本")+" "+f.length+" 条 · 规则预标结果";
+  document.getElementById("sent").innerHTML=f.length?order.map(function(o){
+    return barRow(o[0],m[o[0]]||0,f.length,o[1]);
+  }).join(""):empty("当前筛选无样本，情感结构显示「—」而非 0.0%（空白 ≠ 无负面）");
+}
+
+function renderProb(){
+  var f=filtered(), m={};
+  f.forEach(function(x){ arr(x.problemPoints).forEach(function(p){ m[p]=(m[p]||0)+1; }); });
+  var ks=sorted(m);
+  document.getElementById("denProb").textContent="分母 = 当前筛选 "+f.length+" 条 · 一条可命中多类，合计可大于样本数";
+  document.getElementById("prob").innerHTML=ks.length?ks.map(function(k){
+    return barRow(k,m[k],f.length,"var(--purple)","problem",'data-v="'+esc(k)+'"');
+  }).join(""):empty("当前筛选无问题点标注");
+}
+
+function renderSrc(){
+  var f=filtered(), m=countBy(f,function(x){return x.sourceType||"未知";});
+  var colors={"用户":"var(--green)","官方":"var(--blue)","媒体":"var(--orange)","KOL":"var(--cyan)","社区综述":"var(--purple)"};
+  document.getElementById("denSrc").textContent="分母 = 当前筛选 "+f.length+" 条 · 官方/媒体不进 KPI 情感分母";
+  var h=sorted(m).map(function(k){ return barRow(k,m[k],f.length,colors[k]||"var(--dim)"); }).join("");
+  h+='<div class="mini" style="margin-top:10px">上方「信源」chip 可一键剔除官方与媒体，单独查看用户原声。</div>';
+  document.getElementById("src").innerHTML=f.length?h:empty("当前筛选无样本");
+}
+
+function renderMatrix(){
+  var f=filtered(), models=(META.models||[]).map(function(m){return m.code;}).concat(["__none__"]);
+  var names={}; (META.models||[]).forEach(function(m){names[m.code]=m.name;}); names["__none__"]="未归属机型";
+  var probs={};
+  f.forEach(function(x){ arr(x.problemPoints).forEach(function(p){ probs[p]=1; }); });
+  var ks=Object.keys(probs).sort();
+  if(!ks.length||!f.length){ document.getElementById("matrix").innerHTML=empty("当前筛选无交叉数据"); return; }
+  var h='<table><thead><tr><th>机型</th>'+ks.map(function(k){return '<th style="font-size:10.5px">'+esc(k.slice(0,6))+'</th>';}).join("")+'<th>合计</th></tr></thead><tbody>';
+  models.forEach(function(mc){
+    var rows=f.filter(function(x){return (x.model||"__none__")===mc;});
+    if(!rows.length) return;
+    var cells=ks.map(function(k){ return rows.filter(function(x){return arr(x.problemPoints).indexOf(k)>=0;}).length; });
+    var tot=rows.length;
+    var common=cells.filter(function(c){return c>0;}).length;
+    h+='<tr><td>'+esc(names[mc]||mc)+'</td>'+cells.map(function(c){return '<td class="num" style="'+(c>0?'color:var(--orange)':'color:var(--dim)')+'">'+c+'</td>';}).join("")+
+       '<td class="num">'+tot+' 条 / '+common+' 类</td></tr>';
+  });
+  h+='</tbody></table><div class="mini" style="margin-top:8px">某问题点在 ≥2 个机型出现即视为「疑似品类共性」，需人工确认后才可写入结论。</div>';
+  document.getElementById("matrix").innerHTML=h;
+}
+
+function promoCount(){ return ITEMS.filter(function(x){return x.isPromo;}).length; }
+
+function renderCompete(){
+  var f=filtered(), m={}, ctx={};
+  f.forEach(function(x){
+    arr(x.competitorMentioned).forEach(function(c){ m[c]=(m[c]||0)+1; });
+    var t=(x.title||"").toLowerCase();
+    ["vs","compare","对比","比得上","better than","worse than","switch from","instead of"].forEach(function(k){
+      if(t.indexOf(k)>=0) ctx[k]=(ctx[k]||0)+1;
+    });
+  });
+  var ks=sorted(m);
+  var h="";
+  h+=ks.length?ks.map(function(k){return barRow(k,m[k],f.length,"var(--cyan)");}).join(""):empty("当前筛选无竞品点名 · 一期不采竞品全量样本");
+  var ck=sorted(ctx);
+  h+='<div class="mini" style="margin-top:12px">对比语境高频表述：'+(ck.length?ck.map(function(k){return esc(k)+" "+ctx[k];}).join(" · "):"暂无")+'</div>';
+  h+='<div class="mini" style="margin-top:6px">竞品样本来自 YouTube 公开视频与用户对比语境；Elegoo / Anycubic / Phrozen 论坛域名 DNS 不可达，本期不做全渠道独立口碑水位对比。样本量受限时须标注分析局限。</div>';
+  document.getElementById("compete").innerHTML=h;
+}
+
+function renderChannels(){
+  var ch=META.channels||[], byKey={}; ITEMS.forEach(function(x){byKey[x.channel]=(byKey[x.channel]||0)+1;});
+  var lab={auto:"自动可达",needs_key:"待凭据",blocked:"已封锁",manual:"人工补录",login_wall:"登录墙",unavailable:"不可得"};
+  var col={auto:"b-green",needs_key:"b-blue",blocked:"b-red",manual:"b-org",login_wall:"b-org",unavailable:"b-red"};
+  var h='<table><thead><tr><th>渠道</th><th>状态</th><th>本期条数</th><th>说明</th></tr></thead><tbody>';
+  ch.forEach(function(c){
+    var n=byKey[c.key]||0;
+    h+='<tr><td>'+esc(c.name)+'</td><td><span class="badge '+(col[c.state]||"")+'">'+esc(lab[c.state]||c.state)+'</span></td>'+
+       '<td class="num">'+n+'</td><td class="mini">'+esc((c.note||"").slice(0,46))+'</td></tr>';
+  });
+  var pa=META.paidAdapters||[];
+  if(pa.length) h+='<div class="mini" style="margin-top:10px"><b>商业数据源适配层（预留，本批未采购）</b>：'+pa.map(function(p){return esc(p.name)+"（"+esc(p.state)+"）";}).join(" · ")+'</div>';
+  h+='<div class="mini" style="margin-top:8px">覆盖率 100% 仅对「机型维度」承诺；渠道维度保留缺口清单，不做虚假覆盖。</div>';
+  document.getElementById("channels").innerHTML=h;
+}
+
+function renderTrend(){
+  var f=filtered(), m={}, neg={}, valid={};
+  f.forEach(function(x){
+    var d=String(x.pubDate||"").slice(0,10), k=d;
+    if(S.trend==="week"){ var dt=new Date(d); dt.setDate(dt.getDate()-dt.getDay()); k=dt.toISOString().slice(0,10); }
+    if(S.trend==="month") k=d.slice(0,7);
+    m[k]=(m[k]||0)+1;
+    if(x.countInVolume&&!x.isPromo){
+      valid[k]=(valid[k]||0)+1;
+      if(x.sentiment==="负面"||x.sentiment==="非常负面") neg[k]=(neg[k]||0)+1;
+    }
+  });
+  var ks=Object.keys(m).sort(), mx=Math.max.apply(null,ks.map(function(k){return m[k];}).concat([1]));
+  var th=META.thresholds||{}, lim=Number(th.negativeRateMoM||0.05), minN=Number(th.minSamplesForTrend||5);
+  var alerts=[], amap={};
+  for(var i=1;i<ks.length;i++){
+    var a=ks[i-1], b=ks[i];
+    if((valid[a]||0)<minN||(valid[b]||0)<minN) continue;
+    var ra=(neg[a]||0)/valid[a], rb=(neg[b]||0)/valid[b];
+    if(rb-ra>lim){ alerts.push({k:b,from:ra,to:rb}); amap[b]=alerts[alerts.length-1]; }
+  }
+  var ctl=[["day","日"],["week","周"],["month","月"]].map(function(o){
+    return '<span class="chip'+(S.trend===o[0]?" on":"")+'" data-act="set" data-k="trend" data-v="'+o[0]+'">'+o[1]+'</span>';
+  }).join("");
+  document.getElementById("trendCtl").innerHTML='<span class="frow" style="display:inline-flex">'+ctl+'</span>';
+  document.getElementById("trend").innerHTML=ks.length?
+    '<div class="spark">'+ks.map(function(k){
+      var w=amap[k];
+      var tip=esc(k)+' · '+m[k]+' 条'+(w?' · 负面率环比 +'+((w.to-w.from)*100).toFixed(1)+'pp':'');
+      var cls='height:'+Math.max(3,m[k]*100/mx)+'%'+(w?';background:var(--red, #e24b4a)':'');
+      return '<div title="'+tip+'" style="'+cls+'"></div>';
+    }).join("")+'</div>'+
+    '<div class="mini" style="margin-top:8px">'+ks.length+' 个'+({day:"日",week:"周",month:"月"}[S.trend])+'桶 · 峰值 '+mx+' 条 · 回填批次可能与日更批次混在同一时间轴，解读时注意</div>'+
+    '<div class="mini" style="margin-top:6px">负面率环比阈值 '+(lim*100).toFixed(0)+'pp（前后两桶有效样本均 ≥'+minN+' 才判定）：'+
+      (alerts.length?alerts.length+' 个时间桶超阈值（红柱）':'本期无超阈值波动')+'</div>'
+    :empty("当前筛选无时间分布数据");
+}
+
+function renderExportFields(){
+  document.getElementById("exportFields").innerHTML='<span class="flabel">导出字段</span>'+EXPORT_FIELDS.map(function(f){
+    return '<span class="chip'+(S.fields[f[0]]?" on":"")+'" data-act="field" data-v="'+f[0]+'">'+esc(f[1])+'</span>';
+  }).join("");
+}
+
+function renderCards(){
+  var f=filtered().slice().sort(function(a,b){return String(b.pubDate).localeCompare(String(a.pubDate));});
+  document.getElementById("hitCount").textContent="命中 "+f.length+" 条";
+  var fh=document.getElementById("filterHit");
+  if(fh) fh.textContent="命中 "+f.length+" 条";
+  if(!f.length){ document.getElementById("cards").innerHTML=empty("当前筛选无明细；可清空筛选或切到全量口径"); return; }
+  document.getElementById("cards").innerHTML=f.map(function(x){
+    var sc={"非常负面":"b-red","负面":"b-red","中性":"","正面":"b-green","非常正面":"b-green"}[x.sentiment]||"";
+    var h='<div class="item"><div class="tt">'+esc(x.title||"(无标题)")+'</div>';
+    h+='<div><span class="badge '+sc+'">'+esc(x.sentiment)+' · 置信 '+Number(x.confidence||0).toFixed(2)+'</span>'+
+       '<span class="badge b-blue">'+esc(x.modelName||"未归属机型")+'</span>'+
+       '<span class="badge">'+esc(x.sourceType||"未知")+'</span>'+
+       '<span class="badge">'+esc(x.region||"—")+'</span>'+
+       (x.isP0?'<span class="badge b-red">P0 · '+esc(arr(x.p0Reason).join("/"))+'</span>':"")+
+       (x.needsReview?'<span class="badge b-org">规则预标 · 待复核</span>':
+         (x.labelSource==="ai-semantic-review"?'<span class="badge b-green">AI 语义复核</span>':'<span class="badge b-green">人工已确认</span>'))+
+       (x.batchKind==="backfill"?'<span class="badge">历史回填</span>':"")+
+       (x.isPromo?'<span class="badge b-org">低信号投放 · 不计声量</span>':"")+
+       arr(x.problemPoints).map(function(p){return '<span class="badge b-purple">'+esc(p)+'</span>';}).join("")+
+       arr(x.competitorMentioned).map(function(c){return '<span class="badge">对比 '+esc(c)+'</span>';}).join("")+'</div>';
+    h+='<div class="tx">'+esc(x.originalText||"")+'</div>';
+    if(x.textCn) h+='<div class="tx" style="color:var(--tx)">'+esc(x.textCn)+'</div>';
+    else if(x.translationStatus==="译文待补") h+='<div class="mini">中文摘要 / 译文待补（本期不编造译文）</div>';
+    if(x.summaryCn&&x.summaryCn!==x.textCn) h+='<div class="mini">摘要：'+esc(x.summaryCn)+'</div>';
+    h+='<div class="mt"><span>'+esc(x.pubDate)+'</span><span>'+esc(x.platform)+'</span>'+
+       '<span>互动 '+(x.heat||0)+' · 回复 '+(x.replyCount||0)+'</span><span>生命周期：'+esc(x.lifecycle||"—")+'</span>'+
+       (x.screenshot?'<a href="'+esc(x.screenshot)+'" target="_blank" rel="noopener">证据存档 ↗</a>':'')+
+       '<a href="'+esc(x.sourceLink)+'" target="_blank" rel="noopener">查看原文 ↗</a></div></div>';
+    return h;
+  }).join("");
+}
+
+function renderFoot(){
+  document.getElementById("foot").innerHTML=
+    "<b>口径说明（常驻）</b><br>"+
+    "1. 声量 = 统计区间内与该机型相关的独立内容条数；同一主题重复镜像按 K3 mirrors 纪律声量只算 1，不同 postId 的独立反馈分别保留。<br>"+
+    "2. 有效样本 = 声量剔除零互动投放、批量同文案、低信号带货、官方与媒体、无实质表述后的样本，作为情感与问题点分母；KPI 主口径用有效样本，副文本给全量对照。<br>"+
+    "3. 负面占比 = （负面 + 非常负面）÷ 有效样本；分母为 0 时显示「—」，不写 0.0%（空白 ≠ 无负面）。<br>"+
+    "4. 泛讨论 / 动态条目单列统计，不进情感分母；互动量仅判断扩散度，不参与情感判定。<br>"+
+    "5. P0 = 安全 / 批量质量 / 虚假宣传 / 售后拒保四类书面规则命中；本批仅标记留痕，不做自动触达。<br>"+
+    "6. 情感与问题点为<b>AI 逐条语义复核</b>（非需求方人工签字），问题点只取 12 类受控词表，保留人工改判通道；本页 "+esc(META.needsReviewItems||0)+" 条待复核。<br>"+
+    "7. 入库样本 ≠ 全量口碑：主源为问题导向社区，样本筛选天然偏负面，结论不得外推到全渠道。<br>"+
+    "8. 口径变更须记录版本与生效时间；历史数据重算须标注，避免趋势图出现不可解释断点。<br>"+
+    "9. YouTube 频道内容归 KOL、评论区归真实用户；免费 API 仅给标题与简介，联盟带货 / 商品页文案按低信号纪律不计声量；竞品论坛域名 DNS 不可达，已列渠道缺口。<br>"+
+    "10. 生命周期按入库批次记账，需 ≥2 个日更批次才会出现「持续存在 / 已改善」；人工可在标注表改判「已闭环」。<br>"+
+    "<span class='mini'>数据合规：仅公开内容、保留原文直链与原文存档、不展示用户个人身份信息。口径说明文档：_docs/光固化专栏_指标口径说明_V1.1.md</span>";
+}
+
+function renderAll(skipFilters){
+  renderUpdate();
+  if(!skipFilters) renderFilters();
+  renderKPI(); renderSent(); renderProb(); renderSrc(); renderMatrix();
+  renderQualityOnce(); renderCompete(); renderChannels(); renderTrend();
+  renderExportFields(); renderCards(); renderFoot();
+}
+function renderQualityOnce(){
+  var f=ITEMS, valid=f.filter(function(x){return x.countInVolume&&!x.isPromo&&x.sourceType!=="官方"&&x.sourceType!=="媒体";});
+  var noise={}; f.forEach(function(x){ arr(x.noiseFlags).forEach(function(n){noise[n]=(noise[n]||0)+1;}); });
+  var ratio=f.length?pct(valid.length,f.length):"—";
+  var h='<div class="brow"><span class="nm">有效样本占比（全量口径）</span><span class="bar"><i style="width:'+(f.length?Math.max(2,valid.length*100/f.length):0)+'%;background:var(--green)"></i></span><span class="vv">'+ratio+'</span></div>';
+  h+='<div class="mini" style="margin:8px 0 12px">全量 '+f.length+' 条 → 有效 '+valid.length+' 条。剔除零互动投放、批量同文案、官方/媒体与无观点动态条目。目标 ≥70%。</div>';
+  h+='<table><thead><tr><th>去噪标记</th><th>条数</th><th>含义</th></tr></thead><tbody>';
+  var desc={zero_interaction_official:"官方零互动投放",same_text_cluster:"批量同文案",short_window_burst:"短期集中发布",low_signal_affiliate:"低信号带货 / 联盟导流"};
+  Object.keys(noise).forEach(function(k){ h+='<tr><td>'+esc(k)+'</td><td class="num">'+noise[k]+'</td><td>'+esc(desc[k]||"—")+'</td></tr>'; });
+  h+='<tr><td>isPromo</td><td class="num">'+promoCount()+'</td><td>已排除出 KPI 主口径</td></tr>';
+  var ev=f.filter(function(x){return x.screenshot;}).length;
+  h+='</tbody></table><div class="mini" style="margin-top:10px">本面板为全量口径，不与 KPI 互相推导；各面板分母见标题右侧标注。原文存档 '+ev+'/'+f.length+' 条（验收抽检完整率要求 ≥95%）。生命周期按入库批次记账，需累积 ≥2 个日更批次才会出现「持续存在 / 已改善」。</div>';
+  document.getElementById("quality").innerHTML=h;
+}
+
+function exportCSV(){
+  var f=filtered(), cols=EXPORT_FIELDS.filter(function(x){return S.fields[x[0]];});
+  var lines=[cols.map(function(c){return '"'+c[1]+'"';}).join(",")];
+  f.forEach(function(x){
+    lines.push(cols.map(function(c){
+      var v=x[c[0]];
+      if(Array.isArray(v)) v=v.join("、");
+      return '"'+String(v==null?"":v).replace(/"/g,'""').replace(/\r?\n/g," ")+'"';
+    }).join(","));
+  });
+  var blob=new Blob(["\ufeff"+lines.join("\r\n")],{type:"text/csv;charset=utf-8"});
+  var a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+  a.download="resin_feedback_"+String(META.refDate||"").replace(/-/g,"")+"_"+(S.model==="all"?"all":S.model)+".csv";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+
+document.addEventListener("click",function(e){
+  var t=e.target.closest("[data-act]"); if(!t) return;
+  var act=t.getAttribute("data-act");
+  if(act==="set"){
+    var k=t.getAttribute("data-k"), v=t.getAttribute("data-v");
+    S[k]=v; renderAll();
+  }else if(act==="problem"){
+    S.problem=t.getAttribute("data-v"); renderAll();
+  }else if(act==="reset"){
+    S={model:"all",region:"all",source:"all",scope:"valid",range:"all",q:"",problem:"",trend:"day",fields:S.fields};
+    renderAll();
+  }else if(act==="field"){
+    var key=t.getAttribute("data-v"); S.fields[key]=!S.fields[key]; renderExportFields();
+  }else if(act==="csv"){ exportCSV(); }
+});
+renderAll();
+</script>
+</body>
+</html>

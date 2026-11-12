@@ -1,0 +1,128 @@
+{
+  "_comment": "光固化产品线口碑专栏配置包 V1.1（2026-11-12 B1/B2 批次）。机型名基于公开型号整理，上市日 / 在售状态 / 定位仍待产品中心正式清单确认，故 confirmed 全为 false 且页面显式披露；替换只需改本文件，不需改代码。",
+  "version": "1.1",
+  "line": "光固化",
+  "columnKey": "resin",
+  "page": "resin-line.html",
+  "dataObject": "RESIN_FEEDBACK_DATA",
+  "uidPrefix": "RSN-",
+  "models": [
+    {"code":"halot-mage-pro","name":"HALOT-MAGE PRO","aliases":["HALOT MAGE PRO","MAGE PRO","MagePro","MAGE-PRO"],"tier":"主力旗舰","priority":"高","onSale":true,"confirmed":false,"launchDate":null,"positioning":"大尺寸高分辨率旗舰，面向重度用户与小型工作室"},
+    {"code":"halot-mage","name":"HALOT-MAGE","aliases":["HALOT MAGE","MAGE","Halot Mage"],"tier":"中端主销","priority":"高","onSale":true,"confirmed":false,"launchDate":null,"positioning":"主流尺寸机型，面向进阶爱好者"},
+    {"code":"halot-one","name":"HALOT-ONE","aliases":["HALOT ONE","HALOT-ONE PLUS","HALOT-ONE PRO","ONE PLUS","ONE PRO"],"tier":"入门机型","priority":"中","onSale":true,"confirmed":false,"launchDate":null,"positioning":"小尺寸入门机，面向新手与家庭用户"},
+    {"code":"halot-lite","name":"HALOT-LITE","aliases":["HALOT LITE"],"tier":"入门机型","priority":"中","onSale":true,"confirmed":false,"launchDate":null,"positioning":"轻量入门机型（在售状态待确认）"},
+    {"code":"halot-sky","name":"HALOT-SKY","aliases":["HALOT SKY"],"tier":"中端主销","priority":"中","onSale":true,"confirmed":false,"launchDate":null,"positioning":"中大尺寸机型（在售状态待确认）"},
+    {"code":"halot-max","name":"HALOT-MAX","aliases":["HALOT MAX"],"tier":"主力旗舰","priority":"低","onSale":true,"confirmed":false,"launchDate":null,"positioning":"大尺寸专业机型（在售状态待确认）"},
+    {"code":"halot-ray","name":"HALOT-RAY","aliases":["HALOT RAY","RAY"],"tier":"历史机型","priority":"低","onSale":false,"confirmed":false,"launchDate":null,"positioning":"仅保留口碑趋势追踪，不做问题下钻"}
+  ],
+  "competitors": [
+    {
+      "code": "elegoo-saturn-4-ultra",
+      "name": "Elegoo Saturn 4 Ultra",
+      "aliases": ["Saturn 4 Ultra", "Saturn 4", "土星4"],
+      "note": "一期仅用于识别用户对比语境，不独立采集全量"
+    },
+    {
+      "code": "anycubic-photon-mono-m7",
+      "name": "Anycubic Photon Mono M7",
+      "aliases": ["Photon Mono M7", "Mono M7"],
+      "note": "一期仅用于识别用户对比语境，不独立采集全量"
+    },
+    {
+      "code": "phrozen-sonic-mighty-8k",
+      "name": "Phrozen Sonic Mighty 8K",
+      "aliases": ["Sonic Mighty 8K", "Mighty 8K"],
+      "note": "一期仅用于识别用户对比语境，不独立采集全量"
+    }
+  ],
+  "queries": {
+    "model": [
+      "HALOT-MAGE PRO", "HALOT-MAGE", "HALOT-ONE", "HALOT-RAY", "HALOT-LITE",
+      "HALOT-SKY", "HALOT-MAX", "Creality Halot", "创想三维 光固化"
+    ],
+    "category": [
+      "Creality resin printer", "Creality HALOT resin", "光固化打印机 树脂",
+      "SLA 打印机 曝光", "MSLA 离型膜", "Creality 光固化 评测"
+    ],
+    "scenario": [
+      "树脂 气味", "清洗固化机", "离型膜 破损", "曝光 不均",
+      "屏幕 坏点", "平台 附着力", "成型尺寸 误差", "打印失败 底曝"
+    ]
+  },
+  "contextTerms": [
+    "resin", "sla", "msla", "lcd", "dlp", "光固化", "光敏树脂", "树脂",
+    "离型膜", "fep", "nfep", "料槽", "曝光", "固化", "清洗", "屏幕",
+    "成型尺寸", "层纹", "wash and cure", "exposure", "vat", "build plate",
+    "peel", "photon", "halot", "3d print", "3d打印", "打印"
+  ],
+  "offtopicTerms": [
+    "NASA", "火星车", "土星五号", "Saturn V", "行星", "天文", "telescope",
+    "Saturn car", "土星汽车", "单色显示器", "monochrome monitor", "希腊神话",
+    "Halo Infinite", "光环游戏", "MONO 唱片"
+  ],
+  "problemPoints": [
+    {"code": "accuracy", "name": "打印精度与尺寸误差", "keywords": ["精度", "尺寸误差", "公差", "缩水", "变形", "accuracy", "dimensional", "tolerance", "warp"]},
+    {"code": "exposure", "name": "曝光与光源一致性", "keywords": ["曝光", "光源", "均匀", "底曝", "过曝", "欠曝", "exposure", "uv", "light uniformity", "overcure"]},
+    {"code": "film", "name": "离型膜与料槽寿命", "keywords": ["离型膜", "料槽", "fep", "nfep", "漏树脂", "vat", "peel force", "punctur", "leak"]},
+    {"code": "resin", "name": "树脂适配与气味", "keywords": ["树脂", "气味", "臭味", "适配", "第三方", "resin", "smell", "odor", "compatible", "third party"]},
+    {"code": "adhesion", "name": "平台附着力", "keywords": ["附着力", "脱板", "掉板", "首层", "平台", "adhesion", "build plate", "sticking", "failed print", "levelling"]},
+    {"code": "screen", "name": "屏幕寿命与坏点", "keywords": ["屏幕", "坏点", "lcd", "换屏", "烧屏", "screen", "dead pixel", "display"]},
+    {"code": "software", "name": "软件与切片", "keywords": ["切片", "软件", "固件", "slicer", "firmware", "chitubox", "lychee", "halot box", "update"]},
+    {"code": "postprocess", "name": "清洗固化配套", "keywords": ["清洗", "固化机", "后处理", "wash", "cure", "station", "alcohol", "酒精", "uv cure"]},
+    {"code": "price", "name": "价格与首发信心", "keywords": ["价格", "贵", "性价比", "首发", "降价", "price", "expensive", "worth", "discount", "refund"]},
+    {"code": "competitor", "name": "竞品对比与定位", "keywords": ["对比", "竞品", "vs", "versus", "compare", "elegoo", "anycubic", "phrozen", "bambu", "比得上"]},
+    {"code": "service", "name": "售后与配件供应", "keywords": ["售后", "客服", "保修", "拒保", "配件", "备件", "support", "warranty", "rma", "spare part", "shipping"]},
+    {"code": "logistics", "name": "包装与物流", "keywords": ["包装", "物流", "运输", "破损", "碎", "packaging", "shipping", "damaged", "delivery"]}
+  ],
+  "sentimentLexicon": {
+    "_comment": "保守规则预标：只标明确表态，未命中一律中性且 needsReview=true。禁止把规则预标当模型定论。",
+    "veryNegative": ["灾难", "严重缺陷", "退货", "拒保", "虚假宣传", "批量故障", "catastrophic", "defective batch", "false advertising", "never buy"],
+    "negative": ["问题", "故障", "失败", "吐槽", "失望", "翻车", "差评", "不好", "太差", "卡", "漏", "坏", "broken", "failed", "issue", "problem", "disappoint", "poor", "worse", "complaint"],
+    "positive": ["满意", "不错", "推荐", "好用", "惊喜", "值", "great", "excellent", "love", "recommend", "impressive", "good", "perfect"],
+    "veryPositive": ["远超预期", "最佳", "完美", "best ever", "outstanding"]
+  },
+  "p0Rules": [
+    {"code": "safety", "name": "安全", "keywords": ["起火", "冒烟", "漏电", "灼伤", "fire", "smoke", "electric shock", "burn", "toxic", "有毒"]},
+    {"code": "batch_quality", "name": "批量质量", "keywords": ["批量", "批次", "全部都", "每台", "recal", "batch", "all units", "widespread"]},
+    {"code": "false_claim", "name": "虚假宣传", "keywords": ["虚假宣传", "参数虚标", "误导", "false advertising", "misleading", "fake spec"]},
+    {"code": "warranty_refusal", "name": "售后拒保", "keywords": ["拒保", "不保修", "推诿", "refuse warranty", "denied rma", "no response"]}
+  ],
+  "noiseRules": {
+    "zeroInteractionLikeMax": 1,
+    "zeroInteractionReplyMax": 0,
+    "clusterHours": 24,
+    "clusterMinSameText": 3,
+    "minContentChars": 40,
+    "burstHours": 6,
+    "burstMinPosts": 8
+  },
+  "thresholds": {
+    "negativeRateMoM": 0.05,
+    "minSamplesForTrend": 5,
+    "lifecycleWindowDays": 14,
+    "lifecycleImproveRatio": 0.5,
+    "_comment": "负面率环比上升超过 5 个百分点且样本数达标时在趋势图自动标注；生命周期按 14 天窗口内问题点出现频次变化判定。"
+  },
+  "competitorQueries": [
+    "Elegoo Saturn 4 Ultra resin review",
+    "Anycubic Photon Mono M7 resin review",
+    "Phrozen Sonic Mighty 8K review"
+  ],
+  "paidAdapters": [
+    {"key": "keepa", "name": "Keepa / Rainforest（Amazon 评价）", "state": "reserved", "note": "商业数据服务适配层预留，本批不采购、不假覆盖"},
+    {"key": "domestic_ecom", "name": "京东 / 天猫 / 淘宝 评价", "state": "reserved", "note": "需商业服务与合规评估，本批不采购"},
+    {"key": "login_wall", "name": "小红书 / 抖音 / 知乎 / 微博 / 贴吧", "state": "reserved", "note": "登录态浏览器仅可截图抄录，无 JS 执行能力；本批不接入"}
+  ],
+  "channels": [
+    {"key": "creality_forum", "name": "Creality 官方论坛", "type": "discourse", "region": "海外", "tier": "P0", "endpoint": "https://forum.creality.com", "state": "auto", "note": "Discourse /search.json + /t/{id}.json，2026-11-12 实测可用"},
+    {"key": "youtube", "name": "YouTube", "type": "api", "region": "海外", "tier": "P0", "state": "auto", "note": "2026-11-12 实测 _k3_creds.json 的 youtube.apiKey 可用（HTTP 200），search.list + commentThreads.list；按机型×时间窗精算 quota，禁止无脑翻页"},
+    {"key": "bilibili", "name": "Bilibili", "type": "api", "region": "国内", "tier": "P0", "state": "blocked", "note": "2026-11-12 直连返回 412，需登录态或签名"},
+    {"key": "reddit", "name": "Reddit", "type": "rss", "region": "海外", "tier": "P0", "state": "blocked", "note": "出口 IP 403，与 11-06/11-11 台账一致"},
+    {"key": "review_sites", "name": "专业评测站 / 什么值得买", "type": "manual", "region": "海外+国内", "tier": "P0", "state": "manual", "note": "WP REST 401，按 K3 现有 search 补录路径"},
+    {"key": "xiaohongshu", "name": "小红书", "type": "login_wall", "region": "国内", "tier": "P1", "state": "login_wall", "note": "11-06 实测未登录 0 条"},
+    {"key": "douyin", "name": "抖音", "type": "login_wall", "region": "国内", "tier": "P1", "state": "login_wall", "note": "11-06 实测搜索页空白"},
+    {"key": "zhihu_weibo_tieba", "name": "知乎 / 微博 / 贴吧", "type": "login_wall", "region": "国内", "tier": "P1", "state": "login_wall", "note": "登录态可读，仅能截图抄录"},
+    {"key": "ecom", "name": "Amazon / 京东 / 天猫 / 淘宝", "type": "paid", "region": "海外+国内", "tier": "P2", "state": "unavailable", "note": "官方 API 不给评价；需 Keepa / Rainforest 或商业服务"},
+    {"key": "x_facebook", "name": "X / Facebook 群组", "type": "paid", "region": "海外", "tier": "P2", "state": "unavailable", "note": "官方 API 贵或只能读自家主页"}
+  ]
+}

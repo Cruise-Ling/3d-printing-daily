@@ -117,10 +117,11 @@ check('0 值预期组标「缺口」',
   H.GROUP_ORDER.filter(g => !gcnt[g] && H.GROUP_META[g].expect).length);
 
 console.log('\n--- D. 结构与交互 ---');
-check('五页导航同源（5 个子项）', cnt(s, /nav-item sub/g) === 5, cnt(s, /nav-item sub/g));
+// 2026-11-12 B3：第六个专栏（光固化 resin-line.html）上线，侧栏子项 5 -> 6
+check('六页导航同源（6 个子项）', cnt(s, /nav-item sub/g) === 6, cnt(s, /nav-item sub/g));
 check('本页导航高亮', /nav-item sub active" href="bambu-h3c.html"/.test(s));
-check('其余四页入口齐全',
-  ['creality-k3.html', 'creality-mbox.html', 'software-columns.html', 'fullcolor-columns.html']
+check('其余五页入口齐全',
+  ['creality-k3.html', 'creality-mbox.html', 'software-columns.html', 'fullcolor-columns.html', 'resin-line.html']
     .every(h => s.indexOf('href="' + h + '"') > 0));
 check('明细卡片已渲染', cnt(store.cardGrid.innerHTML, /class="card/g) === Math.min(20, all.length), cnt(store.cardGrid.innerHTML, /class="card/g) + '/' + Math.min(20, all.length));
 check('数据更新条含批次与条数', String(store.updateBar.innerHTML).indexOf(String(all.length)) > 0);

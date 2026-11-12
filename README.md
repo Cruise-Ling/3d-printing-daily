@@ -36,10 +36,11 @@
 | mBox 专栏 | [creality-mbox.html](creality-mbox.html) | mBox 公开声量 · 媒体 / 官方 / 渠道覆盖如实呈现，不做填充 |
 | 软件专栏 | [software-columns.html](software-columns.html) | 3D 打印软件用户使用内容 · 按**用户实现路径**组织：找模型 → AI 生成 → 建模改模 → 切片 → 打印运维 → 分享变现；信源 = 官方论坛 + GitHub 缺陷单 |
 | 全彩专栏 | [fullcolor-columns.html](fullcolor-columns.html) | 桌面全彩 3D 打印用户声音 · MJP / WJP 体素喷墨路线（≠ 多色 FDM），桌面 / 专业 / 工业分档；国内 + 海外；信源 = B站 / YouTube / Reddit / 什么值得买 / 国内外媒体 / 赛纳官网（官方降档不计入用户声量） |
+| 光固化专栏 | [resin-line.html](resin-line.html) | 光固化产品线用户口碑 · **单页多机型**（`model` 全局筛选，不做一机型一页）· 支持国内 / 海外分列（**当前样本全部为海外，国内渠道待接入**）· 机型×问题点交叉矩阵 · 竞品被点名统计 · 主源为 Creality 官方论坛 Discourse 公开帖 + YouTube Data API；情感与问题点为 **AI 逐条语义复核**（12 类受控词表，保留人工改判通道，非需求方签字），证据与译文 30/30 齐备；入库样本 ≠ 全量口碑 |
 
-> 五个专栏统一归在「用户反馈」下，侧栏同源（`_nav.html`），任意两页之间可整页跳转。
-> 五者各有独立采集器与口径，不做同一份数据换皮：
-> `_k3_*`（K3）、`_h3c_items.json` + `_build_h3c.py`（H3C）、`_col_collect_sw.py` + `_col_stage_fix.py` + `_col_collect_github.py`（软件）、`_col_collect_mbox.py`（mBox）、`_col_collect_fc.py`（全彩）。
+> 六个专栏统一归在「用户反馈」下，侧栏同源（`_nav.html`），任意两页之间可整页跳转。
+> 六者各有独立采集器与口径，不做同一份数据换皮：
+> `_k3_*`（K3）、`_h3c_items.json` + `_build_h3c.py`（H3C）、`_col_collect_sw.py` + `_col_stage_fix.py` + `_col_collect_github.py`（软件）、`_col_collect_mbox.py`（mBox）、`_col_collect_fc.py`（全彩）、`resin_config.json` + `_resin_collect.py` + `_resin_prelabel.py` + `_resin_daily.py` + `_resin_inject.py` + `_build_resin.py`（光固化，日更已并入工作日 10:00「专栏增量」链 Step 4.4）。
 > 软件、mBox 与全彩三页由同一个壳 `_col_shell.html` + `_build_column.py` 生成（版式与 K3 同构），**源码共用、产物自包含**；
 > K3 与 H3C 两页由 `_build_h3c.py` 从同一份引擎派生（单机型九分区），H3C 的全部差异集中在生成器的 CONFIG 与补丁表里。
 > 全部条目统一「原文 + 机翻」双段：译文写独立字段 `titleCn` / `textCn`，原文零改动。

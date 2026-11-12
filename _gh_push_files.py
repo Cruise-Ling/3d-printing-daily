@@ -113,7 +113,12 @@ def main():
     base_tree = cmt["tree"]["sha"]
     print("repo=%s branch=%s base_commit=%s" % (REPO, BRANCH, base_commit[:12]))
 
-    BLOB_INLINE_LIMIT = 900 * 1024
+    # 单次 POST /git/trees 的 inline content 总量过大会触发 GitHub 422
+    # "input was too large to process ... Consider building the tree incrementally"。
+    # 批量发布（>50 文件 / 多 MB，如整批专栏上线）时设 GH_BLOB_INLINE_LIMIT=0，
+    # 强制所有文件先建 blob、tree 只放 sha，把 tree payload 从数 MB 降到几 KB。
+    # 默认 900 KB 保持不变，不影响日常少量文件的调用。
+    BLOB_INLINE_LIMIT = int(os.environ.get("GH_BLOB_INLINE_LIMIT", str(900 * 1024)))
     entries, local_shas = [], {}
     for f in files:
         text = io.open(os.path.join(D, f), encoding="utf-8", newline="").read()

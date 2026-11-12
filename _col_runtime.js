@@ -68,8 +68,9 @@ ok(ITEMS.length > 0, "条目非空", String(ITEMS.length));
 
 /* ---------------- 导航 ---------------- */
 const subLinks = html.match(/class="nav-item sub[^"]*" href="([^"]+)"/g) || [];
-ok(subLinks.length === 5, "侧栏含五个子专栏入口（含全彩 / H3C）", String(subLinks.length));
-["creality-k3.html", "creality-mbox.html", "software-columns.html", "bambu-h3c.html"].forEach(h => {
+// 2026-11-12 B3：第六个专栏（光固化 resin-line.html）上线，侧栏子项 5 -> 6
+ok(subLinks.length === 6, "侧栏含六个子专栏入口（含全彩 / H3C / 光固化）", String(subLinks.length));
+["creality-k3.html", "creality-mbox.html", "software-columns.html", "bambu-h3c.html", "resin-line.html"].forEach(h => {
   ok(html.indexOf('href="' + h + '"') >= 0, "侧栏可跳转 " + h);
 });
 if (KIND === "fc") {
