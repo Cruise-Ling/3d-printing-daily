@@ -8,29 +8,58 @@
 :root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2129;--bd:#21262d;--bd2:#30363d;--tx:#e6edf3;--mu:#8b949e;--dim:#6e7681;--blue:#58a6ff;--green:#3fb950;--red:#f85149;--orange:#d29922;--purple:#bc8cff;--cyan:#39c5cf}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
 a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
-.wrap{display:flex;min-height:100vh}
-.sidebar{width:230px;flex:0 0 230px;background:var(--panel);border-right:1px solid var(--bd);padding:20px 14px;position:sticky;top:0;height:100vh;overflow:auto}
-.sidebar-logo{display:flex;gap:10px;align-items:center;padding:0 8px 18px;border-bottom:1px solid var(--bd);margin-bottom:14px}
-.logo-icon{font-size:22px}.logo-title{font-weight:500;font-size:15px}.logo-sub{font-size:11px;color:var(--dim)}
-.nav-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:6px;color:var(--mu);font-size:13px;margin-bottom:2px}
-.nav-item:hover{background:var(--panel2);color:var(--tx);text-decoration:none}
-.nav-item.sub{padding-left:26px;font-size:12.5px}
-.nav-item.active{background:rgba(88,166,255,.12);color:var(--blue)}
-.nav-icon{width:18px;text-align:center}
-.sidebar-footer{margin-top:22px;padding-top:14px;border-top:1px solid var(--bd);font-size:11px;color:var(--dim)}
-.main{flex:1;min-width:0;padding:26px 30px 60px;max-width:1500px}
-h1{font-size:22px;font-weight:500;margin:0 0 6px}h2{font-size:15px;font-weight:500;margin:0 0 14px}
-.sub{color:var(--mu);font-size:12.5px}
-.card{background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:18px;margin-bottom:16px}
-.card-hd{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:14px;flex-wrap:wrap}
-.denom{font-size:11px;color:var(--dim);font-weight:400}
-.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px}
-.kpi{background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:15px 16px}
-.kpi .lb{font-size:11.5px;color:var(--mu)}.kpi .vl{font-size:25px;font-weight:500;line-height:1.35;font-variant-numeric:tabular-nums}
-.kpi .ft{font-size:11px;color:var(--dim);margin-top:3px}
-.filters{background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:14px 16px;margin-bottom:16px}
-.frow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:9px}
-.frow:last-child{margin-bottom:0}
+.wrap{min-height:100vh}
+/* 侧栏：与 K3 / H3C / mBox / 软件 / 全彩 / 首页同源，200px fixed + 渐层 */
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:200px;background:linear-gradient(180deg,#161b22,#0d1117);display:flex;flex-direction:column;z-index:160;box-shadow:2px 0 20px rgba(0,0,0,.3);border-right:1px solid #21262d}
+.sidebar-logo{padding:28px 20px 20px;border-bottom:1px solid #21262d}
+.sidebar-logo .logo-icon{font-size:32px;margin-bottom:8px;display:block}
+.sidebar-logo .logo-title{font-size:16px;font-weight:700}
+.sidebar-logo .logo-sub{font-size:11px;color:#8b949e;margin-top:4px}
+.sidebar-nav{flex:1;padding:16px 0;overflow-y:auto}
+.nav-item{display:flex;align-items:center;gap:10px;padding:11px 20px;color:#8b949e;text-decoration:none;font-size:13.5px;transition:all .2s;border-left:3px solid transparent}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#e6edf3;text-decoration:none}
+.nav-item.active{background:rgba(255,255,255,.1);color:#e6edf3;border-left-color:#58a6ff}
+.nav-item.sub{padding-left:44px;font-size:12.5px}
+.nav-item .nav-icon{font-size:17px;width:24px;text-align:center}
+.sidebar-footer{padding:16px 20px;border-top:1px solid #21262d;font-size:11px;color:#484f58}
+.sidebar-footer a{color:#58a6ff;text-decoration:none}
+.main{margin-left:200px;padding:24px 28px 60px;max-width:1500px}
+.mob-toggle{display:none}
+/* 顶部：K3 top-bar + 灰底 update-bar（不使用任何警示横幅） */
+.top-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:14px}
+.brand-icon{font-size:34px}
+.brand h1{font-size:22px;font-weight:700;letter-spacing:.3px;margin:0}
+.author-line{font-size:12px;color:#8b949e;margin-top:4px}
+.update-bar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;background:#161b22;border:1px solid #21262d;border-radius:10px;padding:9px 14px;margin-bottom:14px;font-size:12.5px;color:#8b949e}
+.update-bar .ub-dot{flex:0 0 auto;width:8px;height:8px;border-radius:50%;background:#3fb950}
+.update-bar .ub-main{color:#e6edf3;font-weight:600}
+.update-bar .ub-sep{width:1px;height:12px;background:#30363d}
+.update-bar .ub-add{background:#0d2818;color:#3fb950;border-radius:9px;padding:1px 8px;font-variant-numeric:tabular-nums}
+.update-bar .ub-btn{margin-left:auto;font-family:inherit;font-size:12px;color:#c9d1d9;background:transparent;border:1px solid #30363d;border-radius:6px;padding:3px 10px;cursor:pointer;text-decoration:none}
+.update-bar .ub-btn:hover{border-color:#58a6ff;color:#58a6ff;text-decoration:none}
+/* 分区与卡片：K3 sec-title（蓝竖条） + panel h3 .note */
+.sec-title{font-size:15px;font-weight:600;margin:24px 0 12px;color:#e6edf3;display:flex;align-items:center;gap:8px}
+.sec-title::before{content:'';width:3px;height:15px;background:#58a6ff;border-radius:2px}
+.sec-title .sec-note{font-size:11.5px;color:#6e7681;font-weight:400}
+.panel{background:#161b22;border:1px solid #21262d;border-radius:10px;padding:16px;margin-bottom:12px}
+.panel h3{font-size:13px;font-weight:600;color:#c9d1d9;margin:0 0 14px}
+.panel h3 .note{float:right;font-size:11px;font-weight:400;color:#6e7681;letter-spacing:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.grid2 > .panel{margin-bottom:0}
+/* KPI：K3 kpi-row / k-label / k-value / k-sub */
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:14px}
+.kpi{background:#161b22;border:1px solid #21262d;border-radius:10px;padding:14px 16px}
+.kpi .k-label{font-size:11.5px;color:#8b949e;margin-bottom:8px}
+.kpi .k-value{font-size:24px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi .k-sub{font-size:11px;color:#6e7681;margin-top:6px}
+/* 筛选：保留顶部全局联动，视觉用 K3 胶囊条 */
+.filters{display:flex;flex-wrap:wrap;gap:9px;align-items:center;background:#161b22;border:1px solid #21262d;border-radius:10px;padding:12px 14px;margin-bottom:14px}
+.frow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;width:100%;margin-bottom:9px}
+.filters .frow:last-child{margin-bottom:0}
+.fhead{border-bottom:1px solid var(--bd);padding-bottom:8px;margin-bottom:10px}
+.ftitle{font-size:12.5px;font-weight:600;color:var(--tx)}
+.filter-scope{margin-left:auto;font-size:11px;color:var(--dim);white-space:nowrap}
 .flabel{font-size:11.5px;color:var(--dim);min-width:64px;flex:0 0 64px}
 .chip{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:14px;border:1px solid var(--bd2);background:var(--panel2);color:var(--mu);font-size:12px;cursor:pointer;user-select:none}
 .chip:hover{border-color:var(--blue);color:var(--tx)}
@@ -48,7 +77,6 @@ h1{font-size:22px;font-weight:500;margin:0 0 6px}h2{font-size:15px;font-weight:5
 .brow .vv{width:74px;text-align:right;color:var(--mu);font-variant-numeric:tabular-nums;font-size:11.5px}
 table{width:100%;border-collapse:collapse;font-size:12px}th,td{border-bottom:1px solid var(--bd);padding:7px 8px;text-align:left}th{color:var(--mu);font-weight:400;font-size:11.5px}td{color:var(--tx)}
 td.num{text-align:right;font-variant-numeric:tabular-nums}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .badge{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10.5px;border:1px solid var(--bd2);color:var(--mu);margin-right:5px}
 .b-red{color:var(--red);border-color:rgba(248,81,73,.4)}.b-org{color:var(--orange);border-color:rgba(210,153,34,.4)}
 .b-green{color:var(--green);border-color:rgba(63,185,80,.4)}.b-blue{color:var(--blue);border-color:rgba(88,166,255,.4)}
@@ -57,17 +85,17 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
 .item .tt{font-size:13.5px;font-weight:500;margin-bottom:6px;word-break:break-word}
 .item .tx{font-size:12.5px;color:var(--mu);white-space:pre-wrap;word-break:break-word;max-height:110px;overflow:auto;margin:7px 0}
 .item .mt{font-size:11px;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-top:7px}
-.notice{background:rgba(210,153,34,.08);border:1px solid rgba(210,153,34,.35);border-radius:8px;padding:11px 14px;font-size:12.5px;color:#e3b341;margin-bottom:16px}
 .empty{padding:26px;text-align:center;color:var(--dim);font-size:12.5px;border:1px dashed var(--bd2);border-radius:8px}
 .foot{font-size:11.5px;color:var(--dim);line-height:1.9;margin-top:24px;border-top:1px solid var(--bd);padding-top:14px}
 .mini{font-size:11px;color:var(--dim)}
 .spark{display:flex;align-items:flex-end;gap:3px;height:70px;padding-top:6px}
 .spark > div{flex:1;background:rgba(88,166,255,.6);border-radius:2px 2px 0 0;min-height:2px;position:relative}
 .spark > div:hover{background:var(--blue)}
-@media(max-width:1100px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.sidebar{display:none}.main{padding:18px}}
+@media(max-width:1100px){.kpi-row{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.main{margin-left:0;padding:18px}.sidebar{transform:translateX(-100%);transition:transform .25s}.sidebar.open{transform:none}.mob-toggle{display:flex;position:fixed;left:12px;top:12px;z-index:200;background:#161b22;border:1px solid #21262d;color:#e6edf3;width:38px;height:38px;border-radius:9px;align-items:center;justify-content:center;font-size:18px;cursor:pointer}}
 </style>
 </head>
 <body>
+<div class="mob-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</div>
 <div class="wrap">
 <div class="sidebar" id="sidebar">
   <div class="sidebar-logo">
@@ -95,37 +123,43 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
 </div>
 
 <div class="main">
-  <h1>光固化产品线 · 用户口碑看板</h1>
-  <div class="sub" id="subTitle">声量 — 情感 — 问题点 — 信源 — 竞品 · 五层分析结构</div>
-  <div id="updateBar" style="margin:12px 0 16px" class="mini"></div>
-  <div class="notice" id="notice"></div>
+  <div class="top-bar">
+    <div class="brand">
+      <span class="brand-icon">💧</span>
+      <div>
+        <h1>光固化产品线 · 用户口碑看板</h1>
+        <div class="author-line" id="subTitle">声量 — 情感 — 问题点 — 信源 — 竞品 · 五层分析结构</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="update-bar" id="updateBar"></div>
+
+  <div class="kpi-row" id="kpis"></div>
 
   <div class="filters" id="filters"></div>
 
-  <div class="kpis" id="kpis"></div>
-
-  <div class="card"><div class="card-hd"><h2>情感结构</h2><span class="denom" id="denSent"></span></div><div id="sent"></div></div>
-
+  <h2 class="sec-title">总体概览</h2>
+  <div class="panel"><h3>情感结构<span class="note" id="denSent"></span></h3><div id="sent"></div></div>
   <div class="grid2">
-    <div class="card"><div class="card-hd"><h2>问题点 Top（按条去重）</h2><span class="denom" id="denProb"></span></div><div id="prob"></div></div>
-    <div class="card"><div class="card-hd"><h2>信源结构</h2><span class="denom" id="denSrc"></span></div><div id="src"></div></div>
+    <div class="panel"><h3>问题点 Top（按条去重）<span class="note" id="denProb"></span></h3><div id="prob"></div></div>
+    <div class="panel"><h3>信源结构<span class="note" id="denSrc"></span></h3><div id="src"></div></div>
   </div>
 
-  <div class="card"><div class="card-hd"><h2>机型 × 问题点交叉矩阵</h2><span class="denom">单元格 = 该机型命中该问题点的条目数（按条去重）；用于区分机型个体问题与品类共性问题</span></div><div id="matrix"></div></div>
+  <h2 class="sec-title">机型与竞品</h2>
+  <div class="panel"><h3>机型 × 问题点交叉矩阵<span class="note">单元格 = 该机型命中该问题点的条目数（按条去重）；用于区分机型个体问题与品类共性问题</span></h3><div id="matrix"></div></div>
+  <div class="panel"><h3>竞品对比与定位<span class="note">一期仅统计「用户对比语境中被点名」，不采竞品全量</span></h3><div id="compete"></div></div>
 
+  <h2 class="sec-title">质量与趋势</h2>
   <div class="grid2">
-    <div class="card"><div class="card-hd"><h2>样本质量与去噪</h2><span class="denom">全量口径，不与 KPI 互相推导</span></div><div id="quality"></div></div>
-    <div class="card"><div class="card-hd"><h2>竞品对比与定位</h2><span class="denom">一期仅统计「用户对比语境中被点名」，不采竞品全量</span></div><div id="compete"></div></div>
+    <div class="panel"><h3>样本质量与去噪<span class="note">全量口径，不与 KPI 互相推导</span></h3><div id="quality"></div></div>
+    <div class="panel"><h3>渠道覆盖与缺口<span class="note">state 为通道状态，非数据质量</span></h3><div id="channels"></div></div>
   </div>
+  <div class="panel"><h3>声量趋势<span class="note">按发布日聚合 · 红柱标注负面率环比超阈值</span></h3><div class="frow" id="trendCtl" style="margin-bottom:10px"></div><div id="trend"></div></div>
 
-  <div class="grid2">
-    <div class="card"><div class="card-hd"><h2>声量趋势</h2><span class="denom" id="trendCtl"></span></div><div id="trend"></div></div>
-    <div class="card"><div class="card-hd"><h2>渠道覆盖与缺口</h2><span class="denom">state 为通道状态，非数据质量</span></div><div id="channels"></div></div>
-  </div>
-
-  <div class="card">
-    <div class="card-hd"><h2>反馈明细 <span id="hitCount" class="mini"></span></h2>
-      <span><button class="btn" data-act="csv">导出当前筛选 CSV</button></span></div>
+  <h2 class="sec-title">反馈明细 <span class="sec-note">当前筛选下的逐条明细与原文存档</span></h2>
+  <div class="panel">
+    <h3>反馈明细<span class="note" id="hitCount"></span></h3>
     <div id="exportFields" class="frow" style="margin-bottom:12px"></div>
     <div id="cards"></div>
   </div>
@@ -181,14 +215,23 @@ function renderUpdate(){
   var el=document.getElementById("updateBar");
   var kinds=countBy(ITEMS,function(x){return x.contentKind||"其他";});
   var parts=Object.keys(kinds).map(function(k){return k+" "+kinds[k];});
-  el.innerHTML="数据更新 "+esc(META.generatedAt||"—")+" · 内容截至 "+esc(META.dataThrough||"—")+
-    " · 累计 "+ITEMS.length+" 条 · 载体 "+(parts.join(" / ")||"—")+" · 口径版本 "+esc(META.version||"V1.0");
-  var n=document.getElementById("notice");
-  var pend=META.needsReviewItems||0;
-  n.innerHTML="<b>规则预标 · 待人工确认</b>：本页 "+ITEMS.length+" 条中 <b>"+pend+" 条</b>情感与问题点为规则预标、尚未人工复核，"+
-    "不可直接作为洞察结论。主源为 Creality 官方论坛公开帖，属问题导向社区样本，<b>入库样本 ≠ 全量口碑</b>。"+
-    (META.modelListUnconfirmed?" 机型清单为初始示例，待产品中心正式清单替换。":"");
-  document.getElementById("subTitle").textContent="声量 — 情感 — 问题点 — 信源 — 竞品 · 五层分析结构 · "+esc(META.line||"光固化");
+  var delta=Number(META.deltaToday||0), pend=Number(META.needsReviewItems||0);
+  var ver=String(META.version||"1.1").replace(/^V/i,"");
+  var fetched=String(META.fetchedAt||"—"), hhmm=fetched.length>10?fetched.slice(11,19):"—";
+  el.innerHTML=
+    '<span class="ub-dot" title="数据链路正常"></span>'+
+    '<span class="ub-main">数据更新至 <b>'+esc(META.updatedDate||META.refDate||"—")+'</b></span>'+
+    '<span class="ub-sep"></span><span>抓取于 <b>'+esc(hhmm)+'</b></span>'+
+    '<span class="ub-sep"></span><span>内容截至 <b>'+esc(META.dataThrough||"—")+'</b></span>'+
+    '<span class="ub-sep"></span><span>累计 <b>'+ITEMS.length+'</b> 条</span>'+
+    '<span class="ub-sep"></span><span>载体构成 '+(parts.join(" / ")||"—")+'</span>'+
+    '<span class="ub-sep"></span><span>有效样本 <b>'+esc(META.validItems||0)+'</b> 条</span>'+
+    (delta>0?'<span class="ub-add">本批 +'+delta+'</span>':'')+
+    '<span class="ub-sep"></span><span>口径版本 <b>V'+esc(ver)+'</b> · AI 逐条语义复核</span>'+
+    '<a class="ub-btn" href="_docs/光固化专栏_指标口径说明_V1.1.md" target="_blank" rel="noopener">口径说明 ↗</a>';
+  document.getElementById("subTitle").textContent=
+    "全部在售光固化机型 · 声量 / 情感 / 问题点 / 信源 / 竞品 五层结构 · 国内 + 海外分列 · 逐条语义复核 · "+
+    (pend>0? pend+" 条待复核" : ITEMS.length+" 条已确认");
 }
 
 function renderFilters(){
@@ -204,7 +247,7 @@ function renderFilters(){
     return h+'</div>';
   }
   var models=[["all","全部机型"]].concat((META.models||[]).map(function(m){return [m.code,m.name+(m.onSale?"":"（停售）")];})).concat([["__none__","未归属机型"]]);
-  var h="";
+  var h='<div class="frow fhead"><span class="ftitle">筛选</span><span class="filter-scope">全局筛选 · 联动所有面板</span></div>';
   h+=chips("机型",'model',models,true);
   h+=chips("区域",'region',[["all","全部"],["国内","国内"],["海外","海外"]],false);
   h+=chips("信源",'source',[["all","全部"],["用户","用户原声"],["官方","官方"],["媒体","媒体"],["KOL","KOL"]],false);
@@ -231,20 +274,20 @@ function renderKPI(){
   var boxes=[
     ["总声量",v,"当前筛选 · "+(S.scope==="valid"?"有效样本":"全量样本")],
     ["负面占比",v>0?pct(neg,v):"—","负面+非常负面 "+neg+" / "+v+(v>0?" · 全量对照 "+pct(allNeg,all.length):"")],
-    ["P0 风险",p0,"按书面规则判定 · 需 T+1 触达"],
+    ["P0 风险",p0,"按书面规则判定 · 仅标记留痕，不做自动触达"],
     ["覆盖渠道",Object.keys(ch).length,"已产生数据的渠道数（含缺口清单见下）"],
     ["近 7 日新增",n7,"按发布时间统计"]
   ];
   document.getElementById("kpis").innerHTML=boxes.map(function(b){
     var color=b[0]==="P0 风险"&&b[1]>0?"var(--red)":"var(--tx)";
-    return '<div class="kpi"><div class="lb">'+b[0]+'</div><div class="vl" style="color:'+color+'">'+b[1]+'</div><div class="ft">'+esc(b[2])+'</div></div>';
+    return '<div class="kpi"><div class="k-label">'+b[0]+'</div><div class="k-value" style="color:'+color+'">'+b[1]+'</div><div class="k-sub">'+esc(b[2])+'</div></div>';
   }).join("");
 }
 
 function renderSent(){
   var f=filtered(), m=countBy(f,function(x){return x.sentiment||"中性";});
   var order=[["非常负面","var(--red)"],["负面","#db6d28"],["中性","var(--dim)"],["正面","var(--green)"],["非常正面","#2ea043"]];
-  document.getElementById("denSent").textContent="分母 = "+(S.scope==="valid"?"有效样本":"全量样本")+" "+f.length+" 条 · 规则预标结果";
+  document.getElementById("denSent").textContent="分母 = "+(S.scope==="valid"?"有效样本":"全量样本")+" "+f.length+" 条 · AI 逐条语义复核";
   document.getElementById("sent").innerHTML=f.length?order.map(function(o){
     return barRow(o[0],m[o[0]]||0,f.length,o[1]);
   }).join(""):empty("当前筛选无样本，情感结构显示「—」而非 0.0%（空白 ≠ 无负面）");
@@ -350,7 +393,7 @@ function renderTrend(){
   var ctl=[["day","日"],["week","周"],["month","月"]].map(function(o){
     return '<span class="chip'+(S.trend===o[0]?" on":"")+'" data-act="set" data-k="trend" data-v="'+o[0]+'">'+o[1]+'</span>';
   }).join("");
-  document.getElementById("trendCtl").innerHTML='<span class="frow" style="display:inline-flex">'+ctl+'</span>';
+  document.getElementById("trendCtl").innerHTML='<span class="flabel">时间粒度</span>'+ctl;
   document.getElementById("trend").innerHTML=ks.length?
     '<div class="spark">'+ks.map(function(k){
       var w=amap[k];
@@ -367,7 +410,7 @@ function renderTrend(){
 function renderExportFields(){
   document.getElementById("exportFields").innerHTML='<span class="flabel">导出字段</span>'+EXPORT_FIELDS.map(function(f){
     return '<span class="chip'+(S.fields[f[0]]?" on":"")+'" data-act="field" data-v="'+f[0]+'">'+esc(f[1])+'</span>';
-  }).join("");
+  }).join("")+'<span style="margin-left:auto"><button class="btn" data-act="csv">导出当前筛选 CSV</button></span>';
 }
 
 function renderCards(){
@@ -384,7 +427,7 @@ function renderCards(){
        '<span class="badge">'+esc(x.sourceType||"未知")+'</span>'+
        '<span class="badge">'+esc(x.region||"—")+'</span>'+
        (x.isP0?'<span class="badge b-red">P0 · '+esc(arr(x.p0Reason).join("/"))+'</span>':"")+
-       (x.needsReview?'<span class="badge b-org">规则预标 · 待复核</span>':
+       (x.needsReview?'<span class="badge b-org">待语义复核</span>':
          (x.labelSource==="ai-semantic-review"?'<span class="badge b-green">AI 语义复核</span>':'<span class="badge b-green">人工已确认</span>'))+
        (x.batchKind==="backfill"?'<span class="badge">历史回填</span>':"")+
        (x.isPromo?'<span class="badge b-org">低信号投放 · 不计声量</span>':"")+

@@ -25,22 +25,34 @@ let runErr = '';
 try { vm.runInNewContext(code, sandbox, { timeout: 5000 }); } catch (e) { runErr = e.message; }
 ok(!runErr, '脚本完整执行无异常', runErr);
 
-const CONTAINERS = ['updateBar', 'notice', 'filters', 'kpis', 'sent', 'prob', 'src', 'matrix',
+const CONTAINERS = ['updateBar', 'filters', 'kpis', 'sent', 'prob', 'src', 'matrix',
   'quality', 'compete', 'channels', 'trend', 'trendCtl', 'exportFields', 'cards', 'foot'];
 CONTAINERS.forEach(function (id) { ok(!!(els[id] && els[id].innerHTML.length > 0), '容器非空 ' + id); });
 
 ok(/总声量/.test(els.kpis.innerHTML), 'KPI 五卡渲染');
 ok(/口径说明/.test(els.foot.innerHTML), '口径脚注常驻');
-ok(/规则预标/.test(els.notice.innerHTML), '规则预标免责提示');
 ok(/光固化专栏/.test(els.filters.innerHTML) || /全部机型/.test(els.filters.innerHTML), '机型 chip 平铺筛选');
 ok(!/<select/.test(els.filters.innerHTML), '筛选器无下拉折叠');
 ok(/渠道覆盖|自动可达/.test(els.channels.innerHTML), '渠道缺口清单渲染');
+
+/* 2026-11-12 版式对齐 K3（Q1–Q5）：顶部无标注、四分区、200px 侧栏、V1.1 文案 */
+ok(!/class="notice"/.test(html), 'Q1 顶部无橙黄警示横幅');
+ok(!/规则预标 · 待人工确认|需 T\+1 触达|· 规则预标结果/.test(html), 'Q5 V1.0 过时文案已清除');
+ok(/AI 逐条语义复核/.test(els.foot.innerHTML), 'V1.1 AI 逐条语义复核口径披露');
+ok(/class="ub-dot"/.test(els.updateBar.innerHTML), 'K3 灰底 update-bar 绿点结构');
+ok(/口径版本 <b>V1\.1<\/b>/.test(els.updateBar.innerHTML), 'update-bar 口径版本为 V1.1');
+ok(/class="top-bar"/.test(html) && /class="brand-icon"/.test(html), 'Q2 K3 top-bar 品牌区');
+ok((html.match(/class="sec-title"/g) || []).length === 4, 'Q2 四个 K3 风格分区');
+ok(/class="panel"/.test(html) && /class="kpi-row"/.test(html), 'Q2 K3 panel / kpi-row 结构');
+ok(/\.sidebar\{[^}]*width:200px/.test(html), 'Q4 侧栏 200px 与其余六页同源');
+ok(/全局筛选 · 联动所有面板/.test(els.filters.innerHTML), 'Q3 顶部全局筛选标注保留');
+ok(/class="k-value"/.test(els.kpis.innerHTML), 'KPI 取数结构为 k-value');
 
 if (!runErr) {
   const f = sandbox.filtered();
   const cards = (els.cards.innerHTML.match(/class="item"/g) || []).length;
   ok(cards === f.length, '所见即所得：明细卡片数 = 筛选命中数', cards + ' vs ' + f.length);
-  const kpiVol = (els.kpis.innerHTML.match(/<div class="vl"[^>]*>(\d+|—)<\/div>/) || [])[1];
+  const kpiVol = (els.kpis.innerHTML.match(/<div class="k-value"[^>]*>(\d+|—)<\/div>/) || [])[1];
   ok(kpiVol === String(f.length), 'KPI 总声量与筛选结果一致', kpiVol + ' vs ' + f.length);
 
   const before = f.length;
