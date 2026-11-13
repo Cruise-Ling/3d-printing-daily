@@ -45,7 +45,7 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .panel{background:#161b22;border:1px solid #21262d;border-radius:10px;padding:16px;margin-bottom:12px}
 .panel h3{font-size:13px;font-weight:600;color:#c9d1d9;margin:0 0 14px}
 .panel h3 .note{float:right;font-size:11px;font-weight:400;color:#6e7681;letter-spacing:0}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;align-items:start}
 .grid2 > .panel{margin-bottom:0}
 /* KPI：K3 kpi-row / k-label / k-value / k-sub */
 .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:6px}
@@ -198,7 +198,7 @@ __RESIN_NAV__
 var DATA = __RESIN_DATA__;
 var ITEMS = DATA.items || [];
 var META = DATA.meta || {};
-var S = {subject:"all",brand:"all",model:"all",region:"all",source:"all",scope:"valid",range:"all",q:"",problem:"",trend:"day",bucket:"",fields:{}};
+var S = {subject:"all",brand:"all",model:"all",region:"all",source:"all",scope:"valid",range:"all",q:"",problem:"",trend:"month",bucket:"",fields:{}};
 var EXPORT_FIELDS = [["id","记录编号"],["brand","品牌"],["modelName","机型"],["platform","平台"],["region","区域"],["pubDate","发布时间"],["sentiment","情感"],["problemPoints","问题点"],["isP0","P0"],["sourceType","信源"],["heat","互动量"],["reviewGrade","复核状态"],["lifecycle","生命周期"],["titleCn","标题中译"],["summaryCn","中文摘要"],["screenshot","证据存档"],["reviewNote","复核依据"],["sourceLink","原文链接"],["originalText","原文"]];
 EXPORT_FIELDS.forEach(function(f){ S.fields[f[0]] = true; });
 
@@ -704,7 +704,7 @@ document.addEventListener("click",function(e){
   }else if(act==="cmpname"){
     S.q=t.getAttribute("data-v"); S.problem=""; renderAll();
   }else if(act==="reset"){
-    S={subject:"all",brand:"all",model:"all",region:"all",source:"all",scope:"valid",range:"all",q:"",problem:"",trend:"day",bucket:"",fields:S.fields};
+    S={subject:"all",brand:"all",model:"all",region:"all",source:"all",scope:"valid",range:"all",q:"",problem:"",trend:"month",bucket:"",fields:S.fields};
     renderAll();
   }else if(act==="field"){
     var key=t.getAttribute("data-v"); S.fields[key]=!S.fields[key]; renderExportFields();
