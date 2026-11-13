@@ -104,6 +104,11 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
 .card .chip.s-正面{background:rgba(63,185,80,.16);color:#3fb950;border-color:rgba(63,185,80,.35)}
 .card .chip.s-非常正面{background:rgba(46,160,67,.2);color:#2ea043;border-color:rgba(46,160,67,.4)}
 .card .chip.region{background:rgba(88,166,255,.12);color:#58a6ff;border-color:rgba(88,166,255,.3)}
+/* 品牌·机型 合并 chip：四品牌同构展示，超长省略，避免机型名撑破卡片 */
+.card .chip.mchip{background:rgba(88,166,255,.12);color:#58a6ff;border-color:rgba(88,166,255,.3);max-width:236px;overflow:hidden;text-overflow:ellipsis;display:inline-block}
+.card .chip.mchip.own{background:rgba(63,185,80,.14);color:#3fb950;border-color:rgba(63,185,80,.32)}
+.card .chip.kind{background:#1c2128;color:#8b949e}
+.card .chip.cmp{background:rgba(188,140,255,.12);color:#bc8cff;border-color:rgba(188,140,255,.3)}
 .card .chip.stype{background:#1c2128;color:#8b949e;border-color:#21262d}
 .card .chip.p0chip{background:rgba(248,81,73,.2);color:#ff7b72;border-color:rgba(248,81,73,.45)}
 .card .chip.g-ok{background:rgba(63,185,80,.14);color:#3fb950;border-color:rgba(63,185,80,.3)}
@@ -122,9 +127,22 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
 .empty{padding:26px;text-align:center;color:var(--dim);font-size:12.5px;border:1px dashed var(--bd2);border-radius:8px}
 .foot{font-size:11.5px;color:var(--dim);line-height:1.9;margin-top:24px;border-top:1px solid var(--bd);padding-top:14px}
 .mini{font-size:11px;color:var(--dim)}
-.spark{display:flex;align-items:flex-end;gap:3px;height:70px;padding-top:6px}
-.spark > div{flex:1;background:rgba(88,166,255,.6);border-radius:2px 2px 0 0;min-height:2px;position:relative}
-.spark > div:hover{background:var(--blue)}
+/* 声量趋势：K3 堆叠三段柱（正/中/负），柱顶数字、MM.DD 轴、点柱下钻、底部三档图例 */
+.trend{display:flex;align-items:flex-end;gap:5px;height:158px;padding-top:6px}
+.tcol{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;min-width:0;cursor:pointer;border-radius:6px 6px 0 0}
+.tbar{width:100%;max-width:34px;display:flex;flex-direction:column;border-radius:4px 4px 0 0;overflow:hidden}
+.tseg{width:100%;display:block}
+.t-lab{font-size:10.5px;color:#6e7681;white-space:nowrap}
+.t-num{font-size:11px;color:#8b949e;font-variant-numeric:tabular-nums}
+.t-num.t-hide{visibility:hidden}
+.tcol:hover .t-num.t-hide{visibility:visible;color:#c9d1d9}
+.tcol:hover .tbar{opacity:.82}
+.tcol.on{background:rgba(88,166,255,.08);outline:1px solid #58a6ff;outline-offset:1px}
+.tcol.on .t-lab,.tcol.on .t-num{color:#58a6ff}
+.trend-foot{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:12px;font-size:12px;color:#8b949e;align-items:center}
+.trend-foot .sl{display:flex;align-items:center;gap:6px}
+.trend-foot .sl i{width:9px;height:9px;border-radius:3px;display:inline-block;flex:0 0 9px}
+.trend-foot .sl b{color:#e6edf3;font-variant-numeric:tabular-nums}
 @media(max-width:1100px){.kpi-row{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}
 @media(max-width:760px){.sidebar{transform:translateX(-100%);transition:transform .25s}.sidebar.open{transform:none}.main{margin-left:0;padding:16px 14px 60px}.mob-toggle{display:flex;position:fixed;left:12px;top:12px;z-index:200;background:#161b22;border:1px solid #21262d;color:#e6edf3;width:38px;height:38px;border-radius:9px;align-items:center;justify-content:center;font-size:18px;cursor:pointer}.brand{padding-left:44px}.kpi-row{grid-template-columns:1fr 1fr}}
 </style>
@@ -139,7 +157,7 @@ __RESIN_NAV__
       <span class="brand-icon">💧</span>
       <div>
         <h1>光固化产品线 · 用户口碑看板</h1>
-        <div class="author-line" id="subTitle">声量 — 情感 — 问题点 — 信源 — 竞品 · 五层分析结构</div>
+        <div class="author-line" id="subTitle">声量 — 情感 — 问题点 — 信源 — 竞品 · 四品牌同构五层分析</div>
       </div>
     </div>
   </div>
@@ -158,8 +176,8 @@ __RESIN_NAV__
   </div>
 
   <h2 class="sec-title">机型与竞品</h2>
-  <div class="panel"><h3>机型 × 问题点交叉矩阵<span class="note">单元格 = 该机型命中该问题点的条目数（按条去重）；用于区分机型个体问题与品类共性问题</span></h3><div id="matrix"></div></div>
-  <div class="panel"><h3>竞品对比与定位<span class="note">一期仅统计「用户对比语境中被点名」，不采竞品全量</span></h3><div id="compete"></div></div>
+  <div class="panel"><h3>机型 × 问题点交叉矩阵<span class="note">单元格 = 该机型命中该问题点的条目数（按条去重）；四品牌机型同表，我方绿色</span></h3><div id="matrix"></div></div>
+  <div class="panel"><h3>竞品口碑水位<span class="note">上：对比语境样本里被点名的竞品 · 下：竞品自有样本，两个分母不混算</span></h3><div id="compete"></div></div>
 
   <h2 class="sec-title">质量与趋势</h2>
   <div class="grid2">
@@ -180,9 +198,16 @@ __RESIN_NAV__
 var DATA = __RESIN_DATA__;
 var ITEMS = DATA.items || [];
 var META = DATA.meta || {};
-var S = {model:"all",region:"all",source:"all",scope:"valid",range:"all",q:"",problem:"",trend:"day",fields:{}};
-var EXPORT_FIELDS = [["id","记录编号"],["modelName","机型"],["platform","平台"],["region","区域"],["pubDate","发布时间"],["sentiment","情感"],["problemPoints","问题点"],["isP0","P0"],["sourceType","信源"],["heat","互动量"],["reviewGrade","复核状态"],["lifecycle","生命周期"],["titleCn","标题中译"],["summaryCn","中文摘要"],["screenshot","证据存档"],["reviewNote","复核依据"],["sourceLink","原文链接"],["originalText","原文"]];
+var S = {subject:"all",brand:"all",model:"all",region:"all",source:"all",scope:"valid",range:"all",q:"",problem:"",trend:"day",bucket:"",fields:{}};
+var EXPORT_FIELDS = [["id","记录编号"],["brand","品牌"],["modelName","机型"],["platform","平台"],["region","区域"],["pubDate","发布时间"],["sentiment","情感"],["problemPoints","问题点"],["isP0","P0"],["sourceType","信源"],["heat","互动量"],["reviewGrade","复核状态"],["lifecycle","生命周期"],["titleCn","标题中译"],["summaryCn","中文摘要"],["screenshot","证据存档"],["reviewNote","复核依据"],["sourceLink","原文链接"],["originalText","原文"]];
 EXPORT_FIELDS.forEach(function(f){ S.fields[f[0]] = true; });
+
+/* 品牌维度：META.brands 由 resin_config.json 的 brands 注入，页面不写死品牌名 */
+var BRANDS = META.brands || [];
+var BR = {}; BRANDS.forEach(function(b){ BR[b.code] = b; });
+function brandName(x){ var b = BR[x.brand]; return b ? b.name : (x.brand || ""); }
+function isOwn(x){ var b = BR[x.brand]; return !!(b && b.isOwn); }
+function subjOf(x){ if(isOwn(x)) return "own"; if(x.brand) return "cmp"; return "none"; }
 
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
 function arr(v){ return Array.isArray(v)?v:[]; }
@@ -193,18 +218,34 @@ function scopeItems(list){
     return true;
   });
 }
+/* 时间桶：日 / 周（周日起） / 月，趋势图与下钻共用同一函数，避免两处口径漂移 */
+function bucketKey(pubDate){
+  var d = String(pubDate||"").slice(0,10);
+  if(!d) return "";
+  if(S.trend==="month") return d.slice(0,7);
+  if(S.trend==="week"){
+    var dt = new Date(d+"T00:00:00");
+    if(isNaN(dt.getTime())) return d;
+    dt.setDate(dt.getDate()-dt.getDay());
+    return dt.toISOString().slice(0,10);
+  }
+  return d;
+}
 function match(x){
+  if(S.subject!=="all" && subjOf(x)!==S.subject) return false;
+  if(S.brand!=="all" && (x.brand||"__none__")!==S.brand) return false;
   if(S.model!=="all" && (x.model||"__none__")!==S.model) return false;
   if(S.region!=="all" && x.region!==S.region) return false;
   if(S.source!=="all" && x.sourceType!==S.source) return false;
   if(S.problem && arr(x.problemPoints).indexOf(S.problem)<0) return false;
+  if(S.bucket && bucketKey(x.pubDate)!==S.bucket) return false;
   if(S.range!=="all"){
     var d=new Date(x.pubDate), lim=new Date(META.refDate||new Date().toISOString().slice(0,10));
     lim.setDate(lim.getDate()-parseInt(S.range,10));
     if(!(d>=lim)) return false;
   }
   if(S.q){
-    var q=S.q.toLowerCase(), blob=[x.title,x.originalText,x.summaryCn,x.textCn,x.modelName,x.sourceLink].join(" ").toLowerCase();
+    var q=S.q.toLowerCase(), blob=[x.title,x.originalText,x.summaryCn,x.textCn,x.modelName,x.brand,x.sourceLink].join(" ").toLowerCase();
     if(blob.indexOf(q)<0) return false;
   }
   return scopeItems([x]).length===1;
@@ -238,9 +279,9 @@ function renderUpdate(){
     '<span class="ub-sep"></span><span>有效样本 <b>'+esc(META.validItems||0)+'</b> 条</span>'+
     (delta>0?'<span class="ub-add">本批 +'+delta+'</span>':'')+
     '<span class="ub-sep"></span><span>口径版本 <b>V'+esc(ver)+'</b> · AI 逐条语义复核</span>'+
-    '<a class="ub-btn" href="_docs/光固化专栏_指标口径说明_V1.1.md" target="_blank" rel="noopener">口径说明 ↗</a>';
+    '<a class="ub-btn" href="_docs/光固化专栏_指标口径说明_V1.2.md" target="_blank" rel="noopener">口径说明 ↗</a>';
   document.getElementById("subTitle").textContent=
-    "全部在售光固化机型 · 声量 / 情感 / 问题点 / 信源 / 竞品 五层结构 · 国内 + 海外分列 · 逐条语义复核 · "+
+    "四品牌 "+((META.models||[]).length)+" 机型 · 声量 / 情感 / 问题点 / 信源 / 竞品 五层结构 · 国内 + 海外分列 · 逐条语义复核 · "+
     (pend>0? pend+" 条待复核" : ITEMS.length+" 条已确认");
 }
 
@@ -250,22 +291,29 @@ function renderFilters(){
     var h='<div class="frow"><span class="flabel">'+label+'</span>';
     opts.forEach(function(o){
       var v=o[0],nm=o[1];
-      var cnt=withCount?ITEMS.filter(function(x){ return v==="all"||x[key]===v||(key==="model"&&v==="__none__"&&!x.model); }).length:0;
+      var cnt=withCount?ITEMS.filter(function(x){ return v==="all"||x[key]===v||(key==="model"&&v==="__none__"&&!x.model)||(key==="brand"&&v==="__none__"&&!x.brand); }).length:0;
       h+='<span class="chip'+(S[key]===v?" on":"")+'" data-act="set" data-k="'+key+'" data-v="'+esc(v)+'">'+esc(nm)+
          (withCount?' <span class="n">'+cnt+'</span>':'')+'</span>';
     });
     return h+'</div>';
   }
-  var models=[["all","全部机型"]].concat((META.models||[]).map(function(m){return [m.code,m.name+(m.onSale?"":"（停售）")];})).concat([["__none__","未归属机型"]]);
+  var subj=[["all","全部主体"],["own","我方（创想三维）"],["cmp","竞品"],["none","未归属"]];
+  var brands=[["all","全部品牌"]].concat(BRANDS.map(function(b){return [b.code,b.name];})).concat([["__none__","未标注品牌"]]);
+  var mlist=(META.models||[]);
+  if(S.brand!=="all" && S.brand!=="__none__") mlist=mlist.filter(function(m){return m.brand===S.brand;});
+  var models=[["all","全部机型"]].concat(mlist.map(function(m){return [m.code,m.name+(m.onSale?"":"（停售）")];})).concat([["__none__","未归属机型"]]);
   var h='<div class="frow fhead"><span class="ftitle">筛选</span><span class="filter-scope">全局筛选 · 联动所有面板</span></div>';
+  h+=chips("主体",'subject',subj,false);
+  h+=chips("品牌",'brand',brands,true);
   h+=chips("机型",'model',models,true);
   h+=chips("区域",'region',[["all","全部"],["国内","国内"],["海外","海外"]],false);
   h+=chips("信源",'source',[["all","全部"],["用户","用户原声"],["官方","官方"],["媒体","媒体"],["KOL","KOL"]],false);
   h+=chips("统计口径",'scope',[["valid","有效样本（KPI 主口径）"],["all","全量样本（对照）"]],false);
   h+=chips("时间范围",'range',[["all","全部"],["90","近 90 天"],["30","近 30 天"],["7","近 7 天"]],false);
-  h+='<div class="frow"><span class="flabel">检索</span><input class="qbox" id="q" placeholder="标题 / 原文 / 机型 / 链接" value="'+esc(S.q)+'">'+
+  h+='<div class="frow"><span class="flabel">检索</span><input class="qbox" id="q" placeholder="标题 / 原文 / 机型 / 品牌 / 链接" value="'+esc(S.q)+'">'+
      '<span class="chip" data-act="reset">清空筛选</span>';
   if(S.problem) h+='<span class="chip on" data-act="set" data-k="problem" data-v="">问题点：'+esc(S.problem)+' ✕</span>';
+  if(S.bucket) h+='<span class="chip on" data-act="set" data-k="bucket" data-v="">时间桶：'+esc(S.bucket)+' ✕</span>';
   h+='<span class="mini" id="filterHit"></span></div>';
   el.innerHTML=h;
   var q=document.getElementById("q");
@@ -277,16 +325,26 @@ function renderKPI(){
   var v=f.length;
   var neg=f.filter(function(x){return x.sentiment==="负面"||x.sentiment==="非常负面";}).length;
   var p0=f.filter(function(x){return x.isP0;}).length;
-  var ch={}; f.forEach(function(x){ch[x.channel]=1;});
-  var lim=new Date(META.refDate||new Date().toISOString().slice(0,10)); lim.setDate(lim.getDate()-7);
-  var n7=f.filter(function(x){return new Date(x.pubDate)>=lim;}).length;
   var allNeg=all.filter(function(x){return x.sentiment==="负面"||x.sentiment==="非常负面";}).length;
+  // 机型覆盖：分母 = 当前品牌筛选下在榜机型数（品牌=全部时为全谱系 23 个）
+  var pool=(META.models||[]).filter(function(m){ return S.brand==="all"||S.brand==="__none__"||m.brand===S.brand; });
+  var hitM={}, hitB={};
+  f.forEach(function(x){ if(x.model) hitM[x.model]=1; if(x.brand) hitB[x.brand]=1; });
+  var nModel=Object.keys(hitM).length, nBrand=Object.keys(hitB).length;
+  // 竞品被点名：按文本级对比语境统计（同时含我方与竞品机型），与条目归属无关
+  var own=f.filter(isOwn);
+  var cmpItems=f.filter(function(x){ return subjOf(x)==="cmp"; });
+  var ctx=f.filter(function(x){ return x.comparisonContext; });
+  var cmpMent={};
+  ctx.forEach(function(x){ arr(x.competitorMentioned).forEach(function(c){ cmpMent[c]=1; }); });
+  var nCmpBrand=Object.keys(cmpMent).length;
+  var nCmpMent=ctx.length;
   var boxes=[
-    ["总声量",v,"当前筛选 · "+(S.scope==="valid"?"有效样本":"全量样本")],
+    ["总声量",v,"当前筛选 · "+(S.scope==="valid"?"有效样本":"全量样本")+" · 我方 "+own.length+" / 竞品 "+cmpItems.length],
     ["负面占比",v>0?pct(neg,v):"—","负面+非常负面 "+neg+" / "+v+(v>0?" · 全量对照 "+pct(allNeg,all.length):"")],
     ["P0 风险",p0,"按书面规则判定 · 仅标记留痕，不做自动触达"],
-    ["覆盖渠道",Object.keys(ch).length,"已产生数据的渠道数（含缺口清单见下）"],
-    ["近 7 日新增",n7,"按发布时间统计"]
+    ["机型覆盖",nModel+" / "+pool.length,nBrand+" 个品牌有数据 · 机型归属按词边界匹配"],
+    ["竞品样本",cmpItems.length,"对比语境 "+nCmpMent+" 条点名 "+nCmpBrand+" 个竞品机型 · 水位表见「竞品口碑水位」"]
   ];
   document.getElementById("kpis").innerHTML=boxes.map(function(b){
     var color=b[0]==="P0 风险"&&b[1]>0?"var(--red)":"var(--tx)";
@@ -340,49 +398,107 @@ function renderSrc(){
 
 function renderMatrix(){
   var f=filtered(), models=(META.models||[]).map(function(m){return m.code;}).concat(["__none__"]);
-  var names={}; (META.models||[]).forEach(function(m){names[m.code]=m.name;}); names["__none__"]="未归属机型";
+  var names={}, bnames={};
+  (META.models||[]).forEach(function(m){
+    var b=BR[m.brand];
+    names[m.code]=(b?b.name+" · ":"")+m.name;
+    bnames[m.code]=m.brand||"";
+  });
+  names["__none__"]="未归属机型"; bnames["__none__"]="";
   var probs={};
   f.forEach(function(x){ arr(x.problemPoints).forEach(function(p){ probs[p]=1; }); });
   var ks=Object.keys(probs).sort();
   if(!ks.length||!f.length){ document.getElementById("matrix").innerHTML=empty("当前筛选无交叉数据"); return; }
-  var h='<table><thead><tr><th>机型</th>'+ks.map(function(k){return '<th style="font-size:10.5px">'+esc(k.slice(0,6))+'</th>';}).join("")+'<th>合计</th></tr></thead><tbody>';
+  var h='<table><thead><tr><th>品牌 · 机型</th>'+ks.map(function(k){return '<th style="font-size:10.5px">'+esc(k.slice(0,6))+'</th>';}).join("")+'<th>合计</th></tr></thead><tbody>';
   models.forEach(function(mc){
     var rows=f.filter(function(x){return (x.model||"__none__")===mc;});
     if(!rows.length) return;
     var cells=ks.map(function(k){ return rows.filter(function(x){return arr(x.problemPoints).indexOf(k)>=0;}).length; });
     var tot=rows.length;
     var common=cells.filter(function(c){return c>0;}).length;
-    h+='<tr><td>'+esc(names[mc]||mc)+'</td>'+cells.map(function(c){return '<td class="num" style="'+(c>0?'color:var(--orange)':'color:var(--dim)')+'">'+c+'</td>';}).join("")+
+    var own = bnames[mc]==="creality";
+    h+='<tr><td'+(own?' style="color:#3fb950"':'')+'>'+esc(names[mc]||mc)+'</td>'+cells.map(function(c){return '<td class="num" style="'+(c>0?'color:var(--orange)':'color:var(--dim)')+'">'+c+'</td>';}).join("")+
        '<td class="num">'+tot+' 条 / '+common+' 类</td></tr>';
   });
-  h+='</tbody></table><div class="mini" style="margin-top:8px">某问题点在 ≥2 个机型出现即视为「疑似品类共性」，需人工确认后才可写入结论。</div>';
+  h+='</tbody></table><div class="mini" style="margin-top:8px">我方机型用绿色显示；某问题点在 ≥2 个机型出现即视为「疑似品类共性」，需人工确认后才可写入结论。竞品机型行来自竞品检索词样本，量小只作结构参照，不与我方分母合并。</div>';
   document.getElementById("matrix").innerHTML=h;
 }
 
 function promoCount(){ return ITEMS.filter(function(x){return x.isPromo;}).length; }
 
+/* 竞品口径（2026-11-13 E 批修正）：
+   1) 「对比语境」= 文本里同时出现我方与竞品机型的样本，**按文本双向命中判定，不看条目归属**
+      （机型归属是单赢家，一条 "我方 vs 竞品" 会归给别名更长的一方，只看归属会让上段恒为 0）；
+      分母＝当前筛选的对比语境样本数；
+   2) 「竞品水位」= 以竞品机型为主体的样本，来自竞品检索词，样本量天然小（个位数）；
+   3) 两者分母不同，禁止互相推导，也禁止用 3~10 条样本宣称竞品负面率。 */
 function renderCompete(){
-  var f=filtered(), m={}, ctx={};
-  f.forEach(function(x){
-    arr(x.competitorMentioned).forEach(function(c){ m[c]=(m[c]||0)+1; });
-    var t=(x.title||"").toLowerCase();
-    ["vs","compare","对比","比得上","better than","worse than","switch from","instead of"].forEach(function(k){
-      if(t.indexOf(k)>=0) ctx[k]=(ctx[k]||0)+1;
+  var f=filtered();
+  var nameBrand={};
+  (META.models||[]).forEach(function(m){ nameBrand[m.name]=m.brand; });
+  var compBrands=BRANDS.filter(function(b){return !b.isOwn;});
+
+  // A. 对比语境：文本同时提到我方与竞品（不分条目最终归给谁）
+  var ctx=f.filter(function(x){ return x.comparisonContext; });
+  var mentBrand={}, mentModel={};
+  ctx.forEach(function(x){
+    var seenB={};
+    arr(x.competitorMentioned).forEach(function(c){
+      mentModel[c]=(mentModel[c]||0)+1;
+      var b=nameBrand[c]||"__other__";
+      if(!seenB[b]){ seenB[b]=1; mentBrand[b]=(mentBrand[b]||0)+1; }
     });
   });
-  var ks=sorted(m);
-  var h="";
-  h+=ks.length?ks.map(function(k){return barRow(k,m[k],f.length,"var(--cyan)");}).join(""):empty("当前筛选无竞品点名 · 一期不采竞品全量样本");
-  var ck=sorted(ctx);
-  h+='<div class="mini" style="margin-top:12px">对比语境高频表述：'+(ck.length?ck.map(function(k){return esc(k)+" "+ctx[k];}).join(" · "):"暂无")+'</div>';
-  h+='<div class="mini" style="margin-top:6px">竞品样本来自 YouTube 公开视频与用户对比语境；Elegoo / Anycubic / Phrozen 论坛域名 DNS 不可达，本期不做全渠道独立口碑水位对比。样本量受限时须标注分析局限。</div>';
+  var own=f.filter(isOwn);
+  var allCtx=ITEMS.filter(function(x){ return x.comparisonContext; }).length;
+  var h='<div class="mini" style="margin-bottom:10px">分母 = 当前筛选的<b>对比语境样本 '+ctx.length+'</b> 条（文本同时出现我方与竞品机型，不分条目归属）· 占当前筛选 '+pct(ctx.length,f.length)+' · 全量对照 '+allCtx+' 条 · 一条样本提到同品牌多个机型只算 1 次</div>';
+  var mentTotal=0;
+  compBrands.forEach(function(b){ mentTotal += (mentBrand[b.code]||0); });
+  mentTotal += (mentBrand["__other__"]||0);
+  if(ctx.length && mentTotal>0){
+    h+=compBrands.map(function(b){
+      return barRow(b.name, mentBrand[b.code]||0, ctx.length, "var(--purple)", "", "", "rgba(188,140,255,.45)");
+    }).join("");
+    if(mentBrand["__other__"]) h+=barRow("其他 / 未收录竞品", mentBrand["__other__"], ctx.length, "var(--purple)");
+    var topM=Object.keys(mentModel).sort(function(a,b){return mentModel[b]-mentModel[a];}).slice(0,6);
+    h+='<div class="mini" style="margin-top:8px">被点名机型 Top：'+topM.map(function(n){return esc(n)+' <b>'+mentModel[n]+'</b>';}).join(" · ")+'</div>';
+  } else if(f.length){
+    h+='<div class="mini" style="padding:6px 0">当前筛选里没有「同时提到我方与竞品」的样本 —— 说明这批讨论是单边语境，不是竞品没有口碑；竞品自有口碑见下表。</div>';
+  } else {
+    h+=empty("当前筛选无我方样本，无法统计对比语境");
+  }
+
+  // B. 竞品自有样本水位
+  var rows=[];
+  (META.models||[]).forEach(function(m){
+    if(!compBrands.some(function(b){return b.code===m.brand;})) return;
+    var rs=f.filter(function(x){ return x.model===m.code; });
+    if(!rs.length) return;
+    var neg=rs.filter(function(x){return x.sentiment==="负面"||x.sentiment==="非常负面";}).length;
+    var pm={};
+    rs.forEach(function(x){ arr(x.problemPoints).forEach(function(p){ pm[p]=(pm[p]||0)+1; }); });
+    var top=Object.keys(pm).sort(function(a,b){return pm[b]-pm[a];}).slice(0,2).map(function(p){return p+" "+pm[p];}).join(" / ");
+    rows.push({brand:brandName({brand:m.brand}).replace(/\s+/g,"")||m.brand, model:m.name, n:rs.length, neg:neg, rate:rs.length>=3?pct(neg,rs.length):"—", top:top||"—"});
+  });
+  h+='<div style="margin-top:16px"></div><table><thead><tr><th>品牌</th><th>竞品机型</th><th>样本</th><th>负面</th><th>负面占比</th><th>Top 问题点</th></tr></thead><tbody>';
+  if(rows.length){
+    rows.sort(function(a,b){ return a.brand.localeCompare(b.brand) || b.n-a.n; });
+    h+=rows.map(function(r){
+      return '<tr><td>'+esc(r.brand)+'</td><td>'+esc(r.model)+'</td><td class="num">'+r.n+'</td><td class="num">'+r.neg+
+        '</td><td class="num">'+esc(r.rate)+'</td><td class="mini">'+esc(r.top)+'</td></tr>';
+    }).join("");
+  } else {
+    h+='<tr><td colspan="6" class="mini">当前筛选无竞品自有样本（竞品检索词按品牌×机型定向采集，日更窗口内不一定有新增）</td></tr>';
+  }
+  h+='</tbody></table>';
+  h+='<div class="mini" style="margin-top:10px"><b>样本量警告</b>：竞品自有样本通常 3~10 条，负面占比 &lt;3 条一律显示「—」。本面板只允许用来判断「用户在拿谁对比」与「问题点结构是否相似」，<b>不允许</b>据此宣称竞品负面率高于或低于我方。</div>';
   document.getElementById("compete").innerHTML=h;
 }
 
 function renderChannels(){
   var ch=META.channels||[], byKey={}; ITEMS.forEach(function(x){byKey[x.channel]=(byKey[x.channel]||0)+1;});
-  var lab={auto:"自动可达",needs_key:"待凭据",blocked:"已封锁",manual:"人工补录",login_wall:"登录墙",unavailable:"不可得"};
-  var col={auto:"b-green",needs_key:"b-blue",blocked:"b-red",manual:"b-org",login_wall:"b-org",unavailable:"b-red"};
+  var lab={auto:"自动可达",partial:"部分可达",needs_key:"待凭据",blocked:"已封锁",manual:"人工补录",login_wall:"登录墙",unavailable:"不可得"};
+  var col={auto:"b-green",partial:"b-blue",needs_key:"b-blue",blocked:"b-red",manual:"b-org",login_wall:"b-org",unavailable:"b-red"};
   var h='<table><thead><tr><th>渠道</th><th>状态</th><th>本期条数</th><th>说明</th></tr></thead><tbody>';
   ch.forEach(function(c){
     var n=byKey[c.key]||0;
@@ -395,42 +511,68 @@ function renderChannels(){
   document.getElementById("channels").innerHTML=h;
 }
 
+var TREND_MIN_NUM = 9;   /* 对齐 K3：柱顶数字 ≥9 常显，其余仅悬浮可见 */
 function renderTrend(){
-  var f=filtered(), m={}, neg={}, valid={};
+  var f=filtered(), m={};
   f.forEach(function(x){
-    var d=String(x.pubDate||"").slice(0,10), k=d;
-    if(S.trend==="week"){ var dt=new Date(d); dt.setDate(dt.getDate()-dt.getDay()); k=dt.toISOString().slice(0,10); }
-    if(S.trend==="month") k=d.slice(0,7);
-    m[k]=(m[k]||0)+1;
-    if(x.countInVolume&&!x.isPromo){
-      valid[k]=(valid[k]||0)+1;
-      if(x.sentiment==="负面"||x.sentiment==="非常负面") neg[k]=(neg[k]||0)+1;
-    }
+    var k=bucketKey(x.pubDate); if(!k) return;
+    var o=m[k]||(m[k]={n:0,neg:0,neu:0,pos:0,ch:{}});
+    o.n++;
+    if(x.sentiment==="非常负面"||x.sentiment==="负面") o.neg++;
+    else if(x.sentiment==="非常正面"||x.sentiment==="正面") o.pos++;
+    else o.neu++;
+    var cn=x.platform||x.channel||"其他"; o.ch[cn]=(o.ch[cn]||0)+1;
   });
-  var ks=Object.keys(m).sort(), mx=Math.max.apply(null,ks.map(function(k){return m[k];}).concat([1]));
+  var ks=Object.keys(m).sort(), mx=Math.max.apply(null,ks.map(function(k){return m[k].n;}).concat([1]));
   var th=META.thresholds||{}, lim=Number(th.negativeRateMoM||0.05), minN=Number(th.minSamplesForTrend||5);
   var alerts=[], amap={};
   for(var i=1;i<ks.length;i++){
     var a=ks[i-1], b=ks[i];
-    if((valid[a]||0)<minN||(valid[b]||0)<minN) continue;
-    var ra=(neg[a]||0)/valid[a], rb=(neg[b]||0)/valid[b];
+    if((m[a].n)<minN||(m[b].n)<minN) continue;
+    var ra=m[a].neg/m[a].n, rb=m[b].neg/m[b].n;
     if(rb-ra>lim){ alerts.push({k:b,from:ra,to:rb}); amap[b]=alerts[alerts.length-1]; }
   }
   var ctl=[["day","日"],["week","周"],["month","月"]].map(function(o){
     return '<span class="chip'+(S.trend===o[0]?" on":"")+'" data-act="set" data-k="trend" data-v="'+o[0]+'">'+o[1]+'</span>';
   }).join("");
-  document.getElementById("trendCtl").innerHTML='<span class="flabel">时间粒度</span>'+ctl;
-  document.getElementById("trend").innerHTML=ks.length?
-    '<div class="spark">'+ks.map(function(k){
-      var w=amap[k];
-      var tip=esc(k)+' · '+m[k]+' 条'+(w?' · 负面率环比 +'+((w.to-w.from)*100).toFixed(1)+'pp':'');
-      var cls='height:'+Math.max(3,m[k]*100/mx)+'%'+(w?';background:var(--red, #e24b4a)':'');
-      return '<div title="'+tip+'" style="'+cls+'"></div>';
-    }).join("")+'</div>'+
-    '<div class="mini" style="margin-top:8px">'+ks.length+' 个'+({day:"日",week:"周",month:"月"}[S.trend])+'桶 · 峰值 '+mx+' 条 · 回填批次可能与日更批次混在同一时间轴，解读时注意</div>'+
-    '<div class="mini" style="margin-top:6px">负面率环比阈值 '+(lim*100).toFixed(0)+'pp（前后两桶有效样本均 ≥'+minN+' 才判定）：'+
-      (alerts.length?alerts.length+' 个时间桶超阈值（红柱）':'本期无超阈值波动')+'</div>'
-    :empty("当前筛选无时间分布数据");
+  document.getElementById("trendCtl").innerHTML='<span class="flabel">时间粒度</span>'+ctl+
+    (S.bucket?'<span class="chip on" data-act="set" data-k="bucket" data-v="">已下钻 '+esc(S.bucket)+' ✕</span>':'');
+  if(!ks.length){ document.getElementById("trend").innerHTML=empty("当前筛选无时间分布数据"); return; }
+  var cols=ks.map(function(k){
+    var o=m[k];
+    var barH=Math.max(8,Math.round(o.n/mx*100));
+    var hPos=o.pos?Math.max(3,Math.round(o.pos/o.n*barH)):0;
+    var hNeu=o.neu?Math.max(3,Math.round(o.neu/o.n*barH)):0;
+    var hNeg=o.neg?Math.max(3,Math.round(o.neg/o.n*barH)):0;
+    var lab=S.trend==="month"?(k.slice(2).replace("-",".")):(S.trend==="week"?"周 "+k.slice(5).replace("-","."):k.slice(5).replace("-","."));
+    var on=(S.bucket===k);
+    var chParts=Object.keys(o.ch).sort(function(x,y){return o.ch[y]-o.ch[x];}).slice(0,4).map(function(c){return c+" "+o.ch[c];}).join(" / ");
+    var al=amap[k]?' · 负面率环比 +'+((amap[k].to-amap[k].from)*100).toFixed(1)+'pp':'';
+    var tip=k+' 共 '+o.n+' 条（'+chParts+'）· 负面 '+o.neg+' / 中性 '+o.neu+' / 正面 '+o.pos+al+' · 点击只看该桶';
+    var segs=(o.pos?'<div class="tseg" style="height:'+hPos+'px;background:#3fb950"></div>':'')+
+             (o.neu?'<div class="tseg" style="height:'+hNeu+'px;background:#8b949e"></div>':'')+
+             (o.neg?'<div class="tseg" style="height:'+hNeg+'px;background:#f85149"></div>':'');
+    var numCls='t-num'+(o.n>=TREND_MIN_NUM?'':' t-hide');
+    return '<div class="tcol'+(on?" on":"")+'" data-act="bucket" data-v="'+esc(k)+'" title="'+esc(tip)+'">'+
+      '<div class="'+numCls+'">'+o.n+'</div><div class="tbar">'+segs+'</div>'+
+      '<div class="t-lab">'+esc(lab)+'</div></div>';
+  }).join("");
+  var tc={neg:0,neu:0,pos:0};
+  f.forEach(function(x){
+    if(x.sentiment==="非常负面"||x.sentiment==="负面") tc.neg++;
+    else if(x.sentiment==="非常正面"||x.sentiment==="正面") tc.pos++;
+    else tc.neu++;
+  });
+  var legend='<div class="trend-foot">'+
+    '<span class="sl"><i style="background:#f85149"></i>负面 <b>'+tc.neg+'</b></span>'+
+    '<span class="sl"><i style="background:#8b949e"></i>中性 <b>'+tc.neu+'</b></span>'+
+    '<span class="sl"><i style="background:#3fb950"></i>正面 <b>'+tc.pos+'</b></span>'+
+    '<span style="color:#6e7681">· 柱高 = 该桶声量 · 悬浮看三档与平台构成（非常负面并入负面、非常正面并入正面）</span></div>';
+  var note='<div class="mini" style="margin-top:8px">'+ks.length+' 个'+({day:"日",week:"周",month:"月"}[S.trend])+'桶 · 峰值 '+mx+
+    ' 条 · 负面率环比阈值 '+(lim*100).toFixed(0)+'pp（前后两桶样本均 ≥'+minN+' 才判定）：'+
+    (alerts.length?alerts.length+' 个桶超阈值（标题悬浮可见）':'本期无超阈值波动')+'</div>';
+  var mix='<div class="mini" style="margin-top:6px">回填批次与日更批次混在同一时间轴，解读趋势时须注意；稀疏渠道按长窗口滚动召回，入库日 ≠ 发布日。</div>';
+  document.getElementById("trend").innerHTML='<div class="trend">'+cols+'</div>'+legend+note+mix;
 }
 
 function renderExportFields(){
@@ -451,9 +593,13 @@ function renderCards(){
       : (x.labelSource==="ai-semantic-review"
           ? '<span class="chip g-ok" title="AI 逐条语义复核 · 非需求方人工签字">AI 语义复核</span>'
           : '<span class="chip g-ok" title="人工已确认">人工已确认</span>');
-    var head='<div class="c-head">'+grade+
+    // 品牌·机型合并 chip：四品牌同构展示；我方绿、竞品蓝，一眼分清主体
+    var mTxt = x.modelName ? (brandName(x)?brandName(x)+" · ":"")+x.modelName : (brandName(x)||"未归属机型");
+    var mCls = 'mchip' + (isOwn(x)?" own":"");
+    var head='<div class="c-head">'+
+      '<span class="chip kind">'+esc(x.contentKind||"图文")+'</span>'+grade+
       '<span class="chip s-'+esc(x.sentiment||"中性")+'">'+esc(x.sentiment||"中性")+'</span>'+
-      '<span class="chip region">'+esc(x.modelName||"未归属机型")+'</span>'+
+      '<span class="chip '+mCls+'" title="'+esc(mTxt)+'">'+esc(mTxt)+'</span>'+
       '<span class="chip stype">'+esc(x.sourceType||"未知")+'</span>'+
       (x.isP0?'<span class="chip p0chip" title="'+esc(arr(x.p0Reason).join(" / "))+'">P0</span>':"")+
       (x.isPromo?'<span class="chip g-mid" title="官方公告 / 活动 / 联盟带货，不计入声量">低信号投放</span>':"")+
@@ -470,7 +616,7 @@ function renderCards(){
     var tags=arr(x.problemPoints).map(function(p){
         return '<span class="tag p-tag" data-act="problem" data-v="'+esc(p)+'" title="点击只看该问题点">'+esc(p)+'</span>';
       }).join("")+arr(x.competitorMentioned).map(function(c){
-        return '<span class="tag">对比 '+esc(c)+'</span>';
+        return '<span class="tag cmp-tag" data-act="cmpname" data-v="'+esc(c)+'" title="点击检索该竞品点名">对比 '+esc(c)+'</span>';
       }).join("");
     var tagRow=tags?'<div class="c-tags">'+tags+'</div>':"";
     var foot='<div class="c-foot"><span class="cf-l"><span>互动 '+(x.heat||0)+' · 回复 '+(x.replyCount||0)+'</span><span>'+esc(x.lifecycle||"—")+'</span></span>'+
@@ -491,9 +637,12 @@ function renderFoot(){
     "6. 情感与问题点为<b>AI 逐条语义复核</b>（非需求方人工签字），问题点只取 12 类受控词表，保留人工改判通道；本页 "+esc(META.needsReviewItems||0)+" 条待复核。<br>"+
     "7. 入库样本 ≠ 全量口碑：主源为问题导向社区，样本筛选天然偏负面，结论不得外推到全渠道。<br>"+
     "8. 口径变更须记录版本与生效时间；历史数据重算须标注，避免趋势图出现不可解释断点。<br>"+
-    "9. YouTube 频道内容归 KOL、评论区归真实用户；免费 API 仅给标题与简介，联盟带货 / 商品页文案按低信号纪律不计声量；竞品论坛域名 DNS 不可达，已列渠道缺口。<br>"+
-    "10. 生命周期按入库批次记账，需 ≥2 个日更批次才会出现「持续存在 / 已改善」；人工可在标注表改判「已闭环」。<br>"+
-    "<span class='mini'>数据合规：仅公开内容、保留原文直链与原文存档、不展示用户个人身份信息。口径说明文档：_docs/光固化专栏_指标口径说明_V1.1.md</span>";
+    "9. <b>机型归属</b>按「词边界正则 + 最长匹配优先」判定，禁用 one / max / ray / mage 等裸通用词作别名（V1.1 用子串匹配时 MAGE 命中 image、RAY 命中 gray，30 条中 5 条错归属，占 17%）。<br>"+
+    "10. <b>多品牌口径</b>：创想三维为「我方」，Elegoo / Anycubic / Phrozen 为「竞品」；「对比语境」按<b>文本双向命中</b>判定（一条样本同时出现我方与竞品机型即计入，不看该条最终归给谁——机型归属是单赢家，只看归属会让对比语境恒为 0），分母是当前筛选的对比语境样本数；「竞品水位」分母是竞品自有样本，两者分母不同，禁止交叉推导；竞品样本 &lt;3 条时负面占比显示「—」。<br>"+
+    "11. 渠道实况（2026-11-13 复测）：Creality 官方论坛 Discourse、YouTube API、Bilibili（warmup+Referer）、什么值得买（分类页列表+正文）为自动可达；Reddit 返回 “Welcome to Reddit” HTML 中间页（非 Atom feed），判定不可程序化采集；小红书 / 抖音 / 知乎 / 微博 / 贴吧 为登录墙；电商评价需商业数据源。渠道缺口如实列在「渠道覆盖」面板，不做虚假覆盖。<br>"+
+    "12. 稀疏渠道（Bilibili / 什么值得买）按长窗口滚动召回（B站 120 天、值得买 180 天），靠 seen 差集保证不重复入库，因此「入库日 ≠ 发布日」；密集渠道（论坛 / YouTube）按 3 天日更窗口。<br>"+
+    "13. 生命周期按入库批次记账，需 ≥2 个日更批次才会出现「持续存在 / 已改善」；人工可在标注表改判「已闭环」。<br>"+
+    "<span class='mini'>数据合规：仅公开内容、保留原文直链与原文存档、不展示用户个人身份信息。口径说明文档：_docs/光固化专栏_指标口径说明_V1.2.md</span>";
 }
 
 function renderAll(skipFilters){
@@ -539,11 +688,23 @@ document.addEventListener("click",function(e){
   var act=t.getAttribute("data-act");
   if(act==="set"){
     var k=t.getAttribute("data-k"), v=t.getAttribute("data-v");
-    S[k]=v; renderAll();
+    S[k]=v;
+    // 品牌切换后清掉不属于该品牌的机型选择，避免出现「筛了 Elegoo 但机型还是 HALOT」的空结果
+    if(k==="brand" && v!=="all" && v!=="__none__"){
+      var mm=(META.models||[]).filter(function(m){return m.code===S.model;})[0];
+      if(mm && mm.brand!==v) S.model="all";
+    }
+    renderAll();
+  }else if(act==="bucket"){
+    var bv=t.getAttribute("data-v");
+    S.bucket = (S.bucket===bv) ? "" : bv;   // 再点一次取消下钻
+    renderAll();
   }else if(act==="problem"){
     S.problem=t.getAttribute("data-v"); renderAll();
+  }else if(act==="cmpname"){
+    S.q=t.getAttribute("data-v"); S.problem=""; renderAll();
   }else if(act==="reset"){
-    S={model:"all",region:"all",source:"all",scope:"valid",range:"all",q:"",problem:"",trend:"day",fields:S.fields};
+    S={subject:"all",brand:"all",model:"all",region:"all",source:"all",scope:"valid",range:"all",q:"",problem:"",trend:"day",bucket:"",fields:S.fields};
     renderAll();
   }else if(act==="field"){
     var key=t.getAttribute("data-v"); S.fields[key]=!S.fields[key]; renderExportFields();

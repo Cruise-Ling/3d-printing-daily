@@ -1,91 +1,842 @@
 {
-  "_comment": "光固化产品线口碑专栏配置包 V1.1（2026-11-12 B1/B2 批次）。机型名基于公开型号整理，上市日 / 在售状态 / 定位仍待产品中心正式清单确认，故 confirmed 全为 false 且页面显式披露；替换只需改本文件，不需改代码。",
-  "version": "1.1",
+  "_comment": "光固化产品线口碑专栏配置包 V1.2（2026-11-13 E 批）。四品牌 26 机型同构建谱系，机型名基于公开型号整理，上市日/在售状态/官方定位仍待产品中心与竞品调研正式清单确认，故 confirmed 全为 false 且页面显式披露；换机型只改本文件，不改代码。",
+  "version": "1.2",
   "line": "光固化",
   "columnKey": "resin",
   "page": "resin-line.html",
   "dataObject": "RESIN_FEEDBACK_DATA",
   "uidPrefix": "RSN-",
   "models": [
-    {"code":"halot-mage-pro","name":"HALOT-MAGE PRO","aliases":["HALOT MAGE PRO","MAGE PRO","MagePro","MAGE-PRO"],"tier":"主力旗舰","priority":"高","onSale":true,"confirmed":false,"launchDate":null,"positioning":"大尺寸高分辨率旗舰，面向重度用户与小型工作室"},
-    {"code":"halot-mage","name":"HALOT-MAGE","aliases":["HALOT MAGE","MAGE","Halot Mage"],"tier":"中端主销","priority":"高","onSale":true,"confirmed":false,"launchDate":null,"positioning":"主流尺寸机型，面向进阶爱好者"},
-    {"code":"halot-one","name":"HALOT-ONE","aliases":["HALOT ONE","HALOT-ONE PLUS","HALOT-ONE PRO","ONE PLUS","ONE PRO"],"tier":"入门机型","priority":"中","onSale":true,"confirmed":false,"launchDate":null,"positioning":"小尺寸入门机，面向新手与家庭用户"},
-    {"code":"halot-lite","name":"HALOT-LITE","aliases":["HALOT LITE"],"tier":"入门机型","priority":"中","onSale":true,"confirmed":false,"launchDate":null,"positioning":"轻量入门机型（在售状态待确认）"},
-    {"code":"halot-sky","name":"HALOT-SKY","aliases":["HALOT SKY"],"tier":"中端主销","priority":"中","onSale":true,"confirmed":false,"launchDate":null,"positioning":"中大尺寸机型（在售状态待确认）"},
-    {"code":"halot-max","name":"HALOT-MAX","aliases":["HALOT MAX"],"tier":"主力旗舰","priority":"低","onSale":true,"confirmed":false,"launchDate":null,"positioning":"大尺寸专业机型（在售状态待确认）"},
-    {"code":"halot-ray","name":"HALOT-RAY","aliases":["HALOT RAY","RAY"],"tier":"历史机型","priority":"低","onSale":false,"confirmed":false,"launchDate":null,"positioning":"仅保留口碑趋势追踪，不做问题下钻"}
-  ],
-  "competitors": [
+    {
+      "code": "halot-x1-max",
+      "name": "HALOT-X1 MAX",
+      "brand": "creality",
+      "aliases": [
+        "HALOT-X1 MAX",
+        "HALOT X1 MAX",
+        "X1 MAX",
+        "HALOT-X1"
+      ],
+      "tier": "主力旗舰",
+      "priority": "高",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "大尺寸量产级光固化，面向小型工作室与代工（B 站 2026-09 已有开箱内容）"
+    },
+    {
+      "code": "halot-mage-pro",
+      "name": "HALOT-MAGE PRO",
+      "brand": "creality",
+      "aliases": [
+        "HALOT-MAGE PRO",
+        "HALOT MAGE PRO",
+        "MAGE PRO",
+        "MagePro",
+        "MAGE-PRO"
+      ],
+      "tier": "主力旗舰",
+      "priority": "高",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "大尺寸高分辨率旗舰，面向重度用户与小型工作室"
+    },
+    {
+      "code": "halot-mage",
+      "name": "HALOT-MAGE",
+      "brand": "creality",
+      "aliases": [
+        "HALOT-MAGE",
+        "HALOT MAGE",
+        "Halot Mage"
+      ],
+      "tier": "中端主销",
+      "priority": "高",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "主流尺寸机型，面向进阶爱好者"
+    },
+    {
+      "code": "halot-r6",
+      "name": "HALOT-R6",
+      "brand": "creality",
+      "aliases": [
+        "HALOT-R6",
+        "HALOT R6",
+        "Halot R6"
+      ],
+      "tier": "中端主销",
+      "priority": "高",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "2026 主力机型，存量样本已有多条真实讨论（V1.2 新增）"
+    },
+    {
+      "code": "halot-sky",
+      "name": "HALOT-SKY",
+      "brand": "creality",
+      "aliases": [
+        "HALOT-SKY",
+        "HALOT SKY"
+      ],
+      "tier": "中端主销",
+      "priority": "中",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "中大尺寸机型（在售状态待确认）"
+    },
+    {
+      "code": "halot-one",
+      "name": "HALOT-ONE",
+      "brand": "creality",
+      "aliases": [
+        "HALOT-ONE PLUS",
+        "HALOT ONE PLUS",
+        "HALOT-ONE PRO",
+        "HALOT ONE PRO",
+        "HALOT-ONE",
+        "HALOT ONE"
+      ],
+      "tier": "入门机型",
+      "priority": "中",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "小尺寸入门机，面向新手与家庭用户"
+    },
+    {
+      "code": "halot-play",
+      "name": "HALOT-PLAY",
+      "brand": "creality",
+      "aliases": [
+        "HALOT-PLAY",
+        "HALOT PLAY",
+        "Halot Play"
+      ],
+      "tier": "入门机型",
+      "priority": "中",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "入门娱乐向机型，存量样本有 Halot Box 适配讨论（V1.2 新增）"
+    },
+    {
+      "code": "halot-lite",
+      "name": "HALOT-LITE",
+      "brand": "creality",
+      "aliases": [
+        "HALOT-LITE",
+        "HALOT LITE"
+      ],
+      "tier": "入门机型",
+      "priority": "中",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "轻量入门机型（在售状态待确认）"
+    },
+    {
+      "code": "halot-max",
+      "name": "HALOT-MAX",
+      "brand": "creality",
+      "aliases": [
+        "HALOT-MAX",
+        "HALOT MAX"
+      ],
+      "tier": "主力旗舰",
+      "priority": "低",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "大尺寸专业机型（在售状态待确认）"
+    },
+    {
+      "code": "halot-ray",
+      "name": "HALOT-RAY",
+      "brand": "creality",
+      "aliases": [
+        "HALOT-RAY",
+        "HALOT RAY"
+      ],
+      "tier": "历史机型",
+      "priority": "低",
+      "onSale": false,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "仅保留口碑趋势追踪，不做问题下钻"
+    },
+    {
+      "code": "ld-003",
+      "name": "LD-003",
+      "brand": "creality",
+      "aliases": [
+        "LD-003",
+        "LD 003",
+        "LD003"
+      ],
+      "tier": "历史机型",
+      "priority": "低",
+      "onSale": false,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "早期 LCD 光固化机型，仅做历史口碑留存（V1.2 新增）"
+    },
+    {
+      "code": "elegoo-saturn-4-ultra-16k",
+      "name": "Saturn 4 Ultra 16K",
+      "brand": "elegoo",
+      "aliases": [
+        "Saturn 4 Ultra 16K",
+        "Saturn4 Ultra 16K",
+        "土星4 Ultra 16K"
+      ],
+      "tier": "主力旗舰",
+      "priority": "高",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "16K 分辨率旗舰，对标大尺寸高精度需求"
+    },
     {
       "code": "elegoo-saturn-4-ultra",
-      "name": "Elegoo Saturn 4 Ultra",
-      "aliases": ["Saturn 4 Ultra", "Saturn 4", "土星4"],
-      "note": "一期仅用于识别用户对比语境，不独立采集全量"
+      "name": "Saturn 4 Ultra",
+      "brand": "elegoo",
+      "aliases": [
+        "Saturn 4 Ultra",
+        "Saturn4 Ultra",
+        "土星4 Ultra"
+      ],
+      "tier": "主力旗舰",
+      "priority": "高",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "倾斜离型 + 高速打印主力机"
+    },
+    {
+      "code": "elegoo-mars-5-ultra",
+      "name": "Mars 5 Ultra",
+      "brand": "elegoo",
+      "aliases": [
+        "Mars 5 Ultra",
+        "Mars5 Ultra",
+        "火星5 Ultra"
+      ],
+      "tier": "中端主销",
+      "priority": "高",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "中尺寸高速机型，面向进阶用户"
+    },
+    {
+      "code": "elegoo-mars-4-ultra",
+      "name": "Mars 4 Ultra",
+      "brand": "elegoo",
+      "aliases": [
+        "Mars 4 Ultra",
+        "Mars4 Ultra",
+        "火星4 Ultra"
+      ],
+      "tier": "中端主销",
+      "priority": "中",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "中尺寸 9K 机型"
+    },
+    {
+      "code": "elegoo-jupiter-2",
+      "name": "Jupiter 2",
+      "brand": "elegoo",
+      "aliases": [
+        "Jupiter 2",
+        "Jupiter2",
+        "木星2"
+      ],
+      "tier": "大尺寸",
+      "priority": "中",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "超大成型尺寸，面向手办与工业样件"
+    },
+    {
+      "code": "anycubic-photon-mono-m7-pro",
+      "name": "Photon Mono M7 Pro",
+      "brand": "anycubic",
+      "aliases": [
+        "Photon Mono M7 Pro",
+        "Mono M7 Pro",
+        "M7 Pro"
+      ],
+      "tier": "主力旗舰",
+      "priority": "高",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "14K 旗舰，自动进退料"
     },
     {
       "code": "anycubic-photon-mono-m7",
-      "name": "Anycubic Photon Mono M7",
-      "aliases": ["Photon Mono M7", "Mono M7"],
-      "note": "一期仅用于识别用户对比语境，不独立采集全量"
+      "name": "Photon Mono M7",
+      "brand": "anycubic",
+      "aliases": [
+        "Photon Mono M7",
+        "Mono M7"
+      ],
+      "tier": "主力旗舰",
+      "priority": "高",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "高分辨率主力机"
+    },
+    {
+      "code": "anycubic-photon-mono-m5s-pro",
+      "name": "Photon Mono M5s Pro",
+      "brand": "anycubic",
+      "aliases": [
+        "Photon Mono M5s Pro",
+        "Mono M5s Pro",
+        "M5s Pro"
+      ],
+      "tier": "中端主销",
+      "priority": "中",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "免调平中端机"
+    },
+    {
+      "code": "anycubic-photon-mono-x2",
+      "name": "Photon Mono X2",
+      "brand": "anycubic",
+      "aliases": [
+        "Photon Mono X2",
+        "Mono X2"
+      ],
+      "tier": "中端主销",
+      "priority": "低",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "中尺寸 4K+ 机型"
+    },
+    {
+      "code": "anycubic-photon-mono-2",
+      "name": "Photon Mono 2",
+      "brand": "anycubic",
+      "aliases": [
+        "Photon Mono 2",
+        "Mono 2"
+      ],
+      "tier": "入门机型",
+      "priority": "低",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "入门级 4K 机型"
+    },
+    {
+      "code": "phrozen-sonic-mighty-revo-16k",
+      "name": "Sonic Mighty Revo 16K",
+      "brand": "phrozen",
+      "aliases": [
+        "Sonic Mighty Revo 16K",
+        "Mighty Revo 16K",
+        "Mighty Revo"
+      ],
+      "tier": "主力旗舰",
+      "priority": "高",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "16K 旗舰，面向高精度手办"
     },
     {
       "code": "phrozen-sonic-mighty-8k",
-      "name": "Phrozen Sonic Mighty 8K",
-      "aliases": ["Sonic Mighty 8K", "Mighty 8K"],
-      "note": "一期仅用于识别用户对比语境，不独立采集全量"
+      "name": "Sonic Mighty 8K",
+      "brand": "phrozen",
+      "aliases": [
+        "Sonic Mighty 8K",
+        "Mighty 8K"
+      ],
+      "tier": "中端主销",
+      "priority": "高",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "中大尺寸 8K 经典机型"
+    },
+    {
+      "code": "phrozen-sonic-mega-8k-s",
+      "name": "Sonic Mega 8K S",
+      "brand": "phrozen",
+      "aliases": [
+        "Sonic Mega 8K S",
+        "Mega 8K S",
+        "Sonic Mega 8K"
+      ],
+      "tier": "大尺寸",
+      "priority": "中",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "超大成型尺寸机型"
+    },
+    {
+      "code": "phrozen-sonic-mini-8k-s",
+      "name": "Sonic Mini 8K S",
+      "brand": "phrozen",
+      "aliases": [
+        "Sonic Mini 8K S",
+        "Mini 8K S",
+        "Sonic Mini 8K"
+      ],
+      "tier": "入门机型",
+      "priority": "中",
+      "onSale": true,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "小尺寸 8K 高精度机型"
+    },
+    {
+      "code": "phrozen-sonic-mini-4k",
+      "name": "Sonic Mini 4K",
+      "brand": "phrozen",
+      "aliases": [
+        "Sonic Mini 4K"
+      ],
+      "tier": "历史机型",
+      "priority": "低",
+      "onSale": false,
+      "confirmed": false,
+      "launchDate": null,
+      "positioning": "上一代小尺寸机型，仅做趋势追踪"
+    }
+  ],
+  "competitors": [
+    {
+      "code": "elegoo",
+      "name": "Elegoo",
+      "aliases": [
+        "Elegoo",
+        "智能派"
+      ],
+      "note": "机型见 models 中 brand=elegoo 的 5 个"
+    },
+    {
+      "code": "anycubic",
+      "name": "Anycubic",
+      "aliases": [
+        "Anycubic",
+        "纵维立方"
+      ],
+      "note": "机型见 models 中 brand=anycubic 的 5 个"
+    },
+    {
+      "code": "phrozen",
+      "name": "Phrozen",
+      "aliases": [
+        "Phrozen",
+        "普罗森"
+      ],
+      "note": "机型见 models 中 brand=phrozen 的 5 个"
     }
   ],
   "queries": {
     "model": [
-      "HALOT-MAGE PRO", "HALOT-MAGE", "HALOT-ONE", "HALOT-RAY", "HALOT-LITE",
-      "HALOT-SKY", "HALOT-MAX", "Creality Halot", "创想三维 光固化"
+      "HALOT-X1 MAX",
+      "HALOT-MAGE PRO",
+      "HALOT-MAGE",
+      "HALOT-R6",
+      "HALOT-SKY",
+      "HALOT-ONE",
+      "HALOT-PLAY",
+      "HALOT-LITE",
+      "HALOT-MAX",
+      "HALOT-RAY",
+      "LD-003",
+      "Creality Halot",
+      "创想三维 光固化"
     ],
     "category": [
-      "Creality resin printer", "Creality HALOT resin", "光固化打印机 树脂",
-      "SLA 打印机 曝光", "MSLA 离型膜", "Creality 光固化 评测"
+      "Creality resin printer",
+      "Creality HALOT resin",
+      "光固化打印机 树脂",
+      "SLA 打印机 曝光",
+      "MSLA 离型膜",
+      "Creality 光固化 评测",
+      "resin printer comparison",
+      "光固化 打印机 对比"
     ],
     "scenario": [
-      "树脂 气味", "清洗固化机", "离型膜 破损", "曝光 不均",
-      "屏幕 坏点", "平台 附着力", "成型尺寸 误差", "打印失败 底曝"
+      "树脂 气味",
+      "清洗固化机",
+      "离型膜 破损",
+      "曝光 不均",
+      "屏幕 坏点",
+      "平台 附着力",
+      "成型尺寸 误差",
+      "打印失败 底曝"
     ]
   },
   "contextTerms": [
-    "resin", "sla", "msla", "lcd", "dlp", "光固化", "光敏树脂", "树脂",
-    "离型膜", "fep", "nfep", "料槽", "曝光", "固化", "清洗", "屏幕",
-    "成型尺寸", "层纹", "wash and cure", "exposure", "vat", "build plate",
-    "peel", "photon", "halot", "3d print", "3d打印", "打印"
+    "resin",
+    "sla",
+    "msla",
+    "lcd",
+    "dlp",
+    "光固化",
+    "光敏树脂",
+    "树脂",
+    "离型膜",
+    "fep",
+    "nfep",
+    "料槽",
+    "曝光",
+    "固化",
+    "清洗",
+    "屏幕",
+    "成型尺寸",
+    "层纹",
+    "wash and cure",
+    "exposure",
+    "vat",
+    "build plate",
+    "peel",
+    "photon",
+    "halot",
+    "3d print",
+    "3d打印",
+    "打印"
   ],
   "offtopicTerms": [
-    "NASA", "火星车", "土星五号", "Saturn V", "行星", "天文", "telescope",
-    "Saturn car", "土星汽车", "单色显示器", "monochrome monitor", "希腊神话",
-    "Halo Infinite", "光环游戏", "MONO 唱片"
+    "NASA",
+    "火星车",
+    "土星五号",
+    "Saturn V",
+    "行星",
+    "天文",
+    "telescope",
+    "Saturn car",
+    "土星汽车",
+    "单色显示器",
+    "monochrome monitor",
+    "希腊神话",
+    "Halo Infinite",
+    "光环游戏",
+    "MONO 唱片"
   ],
   "problemPoints": [
-    {"code": "accuracy", "name": "打印精度与尺寸误差", "keywords": ["精度", "尺寸误差", "公差", "缩水", "变形", "accuracy", "dimensional", "tolerance", "warp"]},
-    {"code": "exposure", "name": "曝光与光源一致性", "keywords": ["曝光", "光源", "均匀", "底曝", "过曝", "欠曝", "exposure", "uv", "light uniformity", "overcure"]},
-    {"code": "film", "name": "离型膜与料槽寿命", "keywords": ["离型膜", "料槽", "fep", "nfep", "漏树脂", "vat", "peel force", "punctur", "leak"]},
-    {"code": "resin", "name": "树脂适配与气味", "keywords": ["树脂", "气味", "臭味", "适配", "第三方", "resin", "smell", "odor", "compatible", "third party"]},
-    {"code": "adhesion", "name": "平台附着力", "keywords": ["附着力", "脱板", "掉板", "首层", "平台", "adhesion", "build plate", "sticking", "failed print", "levelling"]},
-    {"code": "screen", "name": "屏幕寿命与坏点", "keywords": ["屏幕", "坏点", "lcd", "换屏", "烧屏", "screen", "dead pixel", "display"]},
-    {"code": "software", "name": "软件与切片", "keywords": ["切片", "软件", "固件", "slicer", "firmware", "chitubox", "lychee", "halot box", "update"]},
-    {"code": "postprocess", "name": "清洗固化配套", "keywords": ["清洗", "固化机", "后处理", "wash", "cure", "station", "alcohol", "酒精", "uv cure"]},
-    {"code": "price", "name": "价格与首发信心", "keywords": ["价格", "贵", "性价比", "首发", "降价", "price", "expensive", "worth", "discount", "refund"]},
-    {"code": "competitor", "name": "竞品对比与定位", "keywords": ["对比", "竞品", "vs", "versus", "compare", "elegoo", "anycubic", "phrozen", "bambu", "比得上"]},
-    {"code": "service", "name": "售后与配件供应", "keywords": ["售后", "客服", "保修", "拒保", "配件", "备件", "support", "warranty", "rma", "spare part", "shipping"]},
-    {"code": "logistics", "name": "包装与物流", "keywords": ["包装", "物流", "运输", "破损", "碎", "packaging", "shipping", "damaged", "delivery"]}
+    {
+      "code": "accuracy",
+      "name": "打印精度与尺寸误差",
+      "keywords": [
+        "精度",
+        "尺寸误差",
+        "公差",
+        "缩水",
+        "变形",
+        "accuracy",
+        "dimensional",
+        "tolerance",
+        "warp"
+      ]
+    },
+    {
+      "code": "exposure",
+      "name": "曝光与光源一致性",
+      "keywords": [
+        "曝光",
+        "光源",
+        "均匀",
+        "底曝",
+        "过曝",
+        "欠曝",
+        "exposure",
+        "uv",
+        "light uniformity",
+        "overcure"
+      ]
+    },
+    {
+      "code": "film",
+      "name": "离型膜与料槽寿命",
+      "keywords": [
+        "离型膜",
+        "料槽",
+        "fep",
+        "nfep",
+        "漏树脂",
+        "vat",
+        "peel force",
+        "punctur",
+        "leak"
+      ]
+    },
+    {
+      "code": "resin",
+      "name": "树脂适配与气味",
+      "keywords": [
+        "树脂",
+        "气味",
+        "臭味",
+        "适配",
+        "第三方",
+        "resin",
+        "smell",
+        "odor",
+        "compatible",
+        "third party"
+      ]
+    },
+    {
+      "code": "adhesion",
+      "name": "平台附着力",
+      "keywords": [
+        "附着力",
+        "脱板",
+        "掉板",
+        "首层",
+        "平台",
+        "adhesion",
+        "build plate",
+        "sticking",
+        "failed print",
+        "levelling"
+      ]
+    },
+    {
+      "code": "screen",
+      "name": "屏幕寿命与坏点",
+      "keywords": [
+        "屏幕",
+        "坏点",
+        "lcd",
+        "换屏",
+        "烧屏",
+        "screen",
+        "dead pixel",
+        "display"
+      ]
+    },
+    {
+      "code": "software",
+      "name": "软件与切片",
+      "keywords": [
+        "切片",
+        "软件",
+        "固件",
+        "slicer",
+        "firmware",
+        "chitubox",
+        "lychee",
+        "halot box",
+        "update"
+      ]
+    },
+    {
+      "code": "postprocess",
+      "name": "清洗固化配套",
+      "keywords": [
+        "清洗",
+        "固化机",
+        "后处理",
+        "wash",
+        "cure",
+        "station",
+        "alcohol",
+        "酒精",
+        "uv cure"
+      ]
+    },
+    {
+      "code": "price",
+      "name": "价格与首发信心",
+      "keywords": [
+        "价格",
+        "贵",
+        "性价比",
+        "首发",
+        "降价",
+        "price",
+        "expensive",
+        "worth",
+        "discount",
+        "refund"
+      ]
+    },
+    {
+      "code": "competitor",
+      "name": "竞品对比与定位",
+      "keywords": [
+        "对比",
+        "竞品",
+        "vs",
+        "versus",
+        "compare",
+        "elegoo",
+        "anycubic",
+        "phrozen",
+        "bambu",
+        "比得上",
+        "土星",
+        "火星"
+      ]
+    },
+    {
+      "code": "service",
+      "name": "售后与配件供应",
+      "keywords": [
+        "售后",
+        "客服",
+        "保修",
+        "拒保",
+        "配件",
+        "备件",
+        "support",
+        "warranty",
+        "rma",
+        "spare part",
+        "shipping"
+      ]
+    },
+    {
+      "code": "logistics",
+      "name": "包装与物流",
+      "keywords": [
+        "包装",
+        "物流",
+        "运输",
+        "破损",
+        "碎",
+        "packaging",
+        "shipping",
+        "damaged",
+        "delivery"
+      ]
+    }
   ],
   "sentimentLexicon": {
     "_comment": "保守规则预标：只标明确表态，未命中一律中性且 needsReview=true。禁止把规则预标当模型定论。",
-    "veryNegative": ["灾难", "严重缺陷", "退货", "拒保", "虚假宣传", "批量故障", "catastrophic", "defective batch", "false advertising", "never buy"],
-    "negative": ["问题", "故障", "失败", "吐槽", "失望", "翻车", "差评", "不好", "太差", "卡", "漏", "坏", "broken", "failed", "issue", "problem", "disappoint", "poor", "worse", "complaint"],
-    "positive": ["满意", "不错", "推荐", "好用", "惊喜", "值", "great", "excellent", "love", "recommend", "impressive", "good", "perfect"],
-    "veryPositive": ["远超预期", "最佳", "完美", "best ever", "outstanding"]
+    "veryNegative": [
+      "灾难",
+      "严重缺陷",
+      "退货",
+      "拒保",
+      "虚假宣传",
+      "批量故障",
+      "catastrophic",
+      "defective batch",
+      "false advertising",
+      "never buy"
+    ],
+    "negative": [
+      "问题",
+      "故障",
+      "失败",
+      "吐槽",
+      "失望",
+      "翻车",
+      "差评",
+      "不好",
+      "太差",
+      "卡",
+      "漏",
+      "坏",
+      "broken",
+      "failed",
+      "issue",
+      "problem",
+      "disappoint",
+      "poor",
+      "worse",
+      "complaint"
+    ],
+    "positive": [
+      "满意",
+      "不错",
+      "推荐",
+      "好用",
+      "惊喜",
+      "值",
+      "great",
+      "excellent",
+      "love",
+      "recommend",
+      "impressive",
+      "good",
+      "perfect"
+    ],
+    "veryPositive": [
+      "远超预期",
+      "最佳",
+      "完美",
+      "best ever",
+      "outstanding"
+    ]
   },
   "p0Rules": [
-    {"code": "safety", "name": "安全", "keywords": ["起火", "冒烟", "漏电", "灼伤", "fire", "smoke", "electric shock", "burn", "toxic", "有毒"]},
-    {"code": "batch_quality", "name": "批量质量", "keywords": ["批量", "批次", "全部都", "每台", "recal", "batch", "all units", "widespread"]},
-    {"code": "false_claim", "name": "虚假宣传", "keywords": ["虚假宣传", "参数虚标", "误导", "false advertising", "misleading", "fake spec"]},
-    {"code": "warranty_refusal", "name": "售后拒保", "keywords": ["拒保", "不保修", "推诿", "refuse warranty", "denied rma", "no response"]}
+    {
+      "code": "safety",
+      "name": "安全",
+      "keywords": [
+        "起火",
+        "冒烟",
+        "漏电",
+        "灼伤",
+        "fire",
+        "smoke",
+        "electric shock",
+        "burn",
+        "toxic",
+        "有毒"
+      ]
+    },
+    {
+      "code": "batch_quality",
+      "name": "批量质量",
+      "keywords": [
+        "批量",
+        "批次",
+        "全部都",
+        "每台",
+        "recal",
+        "batch",
+        "all units",
+        "widespread"
+      ]
+    },
+    {
+      "code": "false_claim",
+      "name": "虚假宣传",
+      "keywords": [
+        "虚假宣传",
+        "参数虚标",
+        "误导",
+        "false advertising",
+        "misleading",
+        "fake spec"
+      ]
+    },
+    {
+      "code": "warranty_refusal",
+      "name": "售后拒保",
+      "keywords": [
+        "拒保",
+        "不保修",
+        "推诿",
+        "refuse warranty",
+        "denied rma",
+        "no response"
+      ]
+    }
   ],
   "noiseRules": {
     "zeroInteractionLikeMax": 1,
@@ -104,25 +855,229 @@
     "_comment": "负面率环比上升超过 5 个百分点且样本数达标时在趋势图自动标注；生命周期按 14 天窗口内问题点出现频次变化判定。"
   },
   "competitorQueries": [
+    "Elegoo Saturn 4 Ultra 16K review",
     "Elegoo Saturn 4 Ultra resin review",
-    "Anycubic Photon Mono M7 resin review",
-    "Phrozen Sonic Mighty 8K review"
+    "Elegoo Mars 5 Ultra review",
+    "Anycubic Photon Mono M7 Pro review",
+    "Anycubic Photon Mono M7 review",
+    "Phrozen Sonic Mighty Revo 16K review",
+    "Phrozen Sonic Mighty 8K review",
+    "Saturn 4 Ultra vs Photon Mono M7 vs Sonic Mighty"
   ],
   "paidAdapters": [
-    {"key": "keepa", "name": "Keepa / Rainforest（Amazon 评价）", "state": "reserved", "note": "商业数据服务适配层预留，本批不采购、不假覆盖"},
-    {"key": "domestic_ecom", "name": "京东 / 天猫 / 淘宝 评价", "state": "reserved", "note": "需商业服务与合规评估，本批不采购"},
-    {"key": "login_wall", "name": "小红书 / 抖音 / 知乎 / 微博 / 贴吧", "state": "reserved", "note": "登录态浏览器仅可截图抄录，无 JS 执行能力；本批不接入"}
+    {
+      "key": "keepa",
+      "name": "Keepa / Rainforest（Amazon 评价）",
+      "state": "reserved",
+      "note": "商业数据服务适配层预留，本批不采购、不假覆盖"
+    },
+    {
+      "key": "domestic_ecom",
+      "name": "京东 / 天猫 / 淘宝 评价",
+      "state": "reserved",
+      "note": "需商业服务与合规评估，本批不采购"
+    },
+    {
+      "key": "login_wall",
+      "name": "小红书 / 抖音 / 知乎 / 微博 / 贴吧",
+      "state": "reserved",
+      "note": "登录态浏览器仅可截图抄录，无 JS 执行能力；本批不接入"
+    }
   ],
   "channels": [
-    {"key": "creality_forum", "name": "Creality 官方论坛", "type": "discourse", "region": "海外", "tier": "P0", "endpoint": "https://forum.creality.com", "state": "auto", "note": "Discourse /search.json + /t/{id}.json，2026-11-12 实测可用"},
-    {"key": "youtube", "name": "YouTube", "type": "api", "region": "海外", "tier": "P0", "state": "auto", "note": "2026-11-12 实测 _k3_creds.json 的 youtube.apiKey 可用（HTTP 200），search.list + commentThreads.list；按机型×时间窗精算 quota，禁止无脑翻页"},
-    {"key": "bilibili", "name": "Bilibili", "type": "api", "region": "国内", "tier": "P0", "state": "blocked", "note": "2026-11-12 直连返回 412，需登录态或签名"},
-    {"key": "reddit", "name": "Reddit", "type": "rss", "region": "海外", "tier": "P0", "state": "blocked", "note": "出口 IP 403，与 11-06/11-11 台账一致"},
-    {"key": "review_sites", "name": "专业评测站 / 什么值得买", "type": "manual", "region": "海外+国内", "tier": "P0", "state": "manual", "note": "WP REST 401，按 K3 现有 search 补录路径"},
-    {"key": "xiaohongshu", "name": "小红书", "type": "login_wall", "region": "国内", "tier": "P1", "state": "login_wall", "note": "11-06 实测未登录 0 条"},
-    {"key": "douyin", "name": "抖音", "type": "login_wall", "region": "国内", "tier": "P1", "state": "login_wall", "note": "11-06 实测搜索页空白"},
-    {"key": "zhihu_weibo_tieba", "name": "知乎 / 微博 / 贴吧", "type": "login_wall", "region": "国内", "tier": "P1", "state": "login_wall", "note": "登录态可读，仅能截图抄录"},
-    {"key": "ecom", "name": "Amazon / 京东 / 天猫 / 淘宝", "type": "paid", "region": "海外+国内", "tier": "P2", "state": "unavailable", "note": "官方 API 不给评价；需 Keepa / Rainforest 或商业服务"},
-    {"key": "x_facebook", "name": "X / Facebook 群组", "type": "paid", "region": "海外", "tier": "P2", "state": "unavailable", "note": "官方 API 贵或只能读自家主页"}
+    {
+      "key": "creality_forum",
+      "name": "Creality 官方论坛",
+      "type": "discourse",
+      "region": "海外",
+      "tier": "P0",
+      "endpoint": "https://forum.creality.com",
+      "state": "auto",
+      "note": "Discourse /search.json + /t/{id}.json，2026-11-12 实测可用；日更按 3 天窗口"
+    },
+    {
+      "key": "youtube",
+      "name": "YouTube",
+      "type": "api",
+      "region": "海外",
+      "tier": "P0",
+      "state": "auto",
+      "note": "Data API v3 可用（_k3_creds.json 的 youtube.apiKey）；RESIN_STRICT + FDM_MARKERS 双过滤；按机型×时间窗精算 quota"
+    },
+    {
+      "key": "bilibili",
+      "name": "Bilibili",
+      "type": "api",
+      "region": "国内",
+      "tier": "P0",
+      "state": "auto",
+      "note": "2026-11-13 复测：warmup GET 首页拿 cookie + 带 Referer 打 search/type 即 code=0，20 条真实结果；取代 V1.0「直连 412」的 blocked 结论。稀疏渠道按 120 天滚动召回"
+    },
+    {
+      "key": "smzdm",
+      "name": "什么值得买",
+      "type": "html",
+      "region": "国内",
+      "tier": "P0",
+      "state": "auto",
+      "note": "2026-11-13 复测：search 页 202 空壳不可用，但分类页 /fenlei/3ddayinji/ 返回真实 SSR HTML（28+ 文章链接），文章页可取标题/发布时间/正文；按 180 天滚动召回"
+    },
+    {
+      "key": "reddit",
+      "name": "Reddit",
+      "type": "rss",
+      "region": "海外",
+      "tier": "P1",
+      "state": "blocked",
+      "note": "2026-11-13 复测：www 搜 403；old.reddit 返回 HTTP 200 但正文是「Welcome to Reddit」HTML 中间页（Content-Type text/html、0 条 entry），非 Atom feed。判定不可程序化采集"
+    },
+    {
+      "key": "review_sites",
+      "name": "专业评测站",
+      "type": "manual",
+      "region": "海外",
+      "tier": "P1",
+      "state": "manual",
+      "note": "WP REST 401，按 K3 现有 search 补录路径人工补录"
+    },
+    {
+      "key": "xiaohongshu",
+      "name": "小红书",
+      "type": "login_wall",
+      "region": "国内",
+      "tier": "P1",
+      "state": "login_wall",
+      "note": "11-06 实测未登录 0 条"
+    },
+    {
+      "key": "douyin",
+      "name": "抖音",
+      "type": "login_wall",
+      "region": "国内",
+      "tier": "P1",
+      "state": "login_wall",
+      "note": "11-06 实测搜索页空白"
+    },
+    {
+      "key": "zhihu_weibo_tieba",
+      "name": "知乎 / 微博 / 贴吧",
+      "type": "login_wall",
+      "region": "国内",
+      "tier": "P1",
+      "state": "login_wall",
+      "note": "登录态可读，仅能截图抄录"
+    },
+    {
+      "key": "ecom",
+      "name": "Amazon / 京东 / 天猫 / 淘宝",
+      "type": "paid",
+      "region": "海外+国内",
+      "tier": "P2",
+      "state": "unavailable",
+      "note": "官方 API 不给评价；需 Keepa / Rainforest 或商业服务"
+    },
+    {
+      "key": "x_facebook",
+      "name": "X / Facebook 群组",
+      "type": "paid",
+      "region": "海外",
+      "tier": "P2",
+      "state": "unavailable",
+      "note": "官方 API 贵或只能读自家主页"
+    }
+  ],
+  "brands": [
+    {
+      "code": "creality",
+      "name": "创想三维",
+      "fullName": "Creality 创想三维",
+      "isOwn": true,
+      "order": 1
+    },
+    {
+      "code": "elegoo",
+      "name": "Elegoo",
+      "fullName": "Elegoo 智能派",
+      "isOwn": false,
+      "order": 2
+    },
+    {
+      "code": "anycubic",
+      "name": "Anycubic",
+      "fullName": "Anycubic 纵维立方",
+      "isOwn": false,
+      "order": 3
+    },
+    {
+      "code": "phrozen",
+      "name": "Phrozen",
+      "fullName": "Phrozen 普罗森",
+      "isOwn": false,
+      "order": 4
+    }
+  ],
+  "brandHints": {
+    "_comment": "机型未命中时按品牌词兜底归属到品牌级（modelName 为空，页面显示品牌 chip），避免大量「未归属」。",
+    "creality": [
+      "creality",
+      "创想三维",
+      "创想",
+      "halot",
+      "halot box"
+    ],
+    "elegoo": [
+      "elegoo",
+      "土星",
+      "mars",
+      "jupiter",
+      "智能派"
+    ],
+    "anycubic": [
+      "anycubic",
+      "纵维立方",
+      "纵维",
+      "photon mono",
+      "photon"
+    ],
+    "phrozen": [
+      "phrozen",
+      "普罗森",
+      "sonic mighty",
+      "sonic mini",
+      "sonic mega"
+    ]
+  },
+  "modelAliasBlock": [
+    "one",
+    "max",
+    "lite",
+    "sky",
+    "ray",
+    "pro",
+    "plus",
+    "mini",
+    "mono",
+    "mars",
+    "saturn",
+    "jupiter",
+    "mega",
+    "mighty",
+    "revo",
+    "sonic",
+    "mage",
+    "r6",
+    "play"
+  ],
+  "_aliasBlockComment": "裸通用词禁用作机型别名：2026-11-13 实测子串匹配下 MAGE 命中 image、RAY 命中 gray/array、ONE 命中任意 one，30 条存量里 5 条机型错归属（17%）。改为词边界正则 + 最长匹配优先后仍禁用这些裸词。",
+  "fdmMarkers": [
+    "k2 series",
+    "k1 series",
+    "k1 max",
+    "ender 3",
+    "ender3",
+    "bambu lab",
+    "x1 carbon",
+    "prusa",
+    "voxelab"
   ]
 }

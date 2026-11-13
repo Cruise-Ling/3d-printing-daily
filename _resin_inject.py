@@ -28,6 +28,10 @@ TR = os.path.join(BASE, "_resin_tr.json")
 EVIDENCE = os.path.join(BASE, "_resin_evidence", "index.json")
 LIFECYCLE_HISTORY = os.path.join(BASE, "_resin_lifecycle_history.json")
 
+# 机型/品牌归属统一走 _resin_models。**每次注入都按当前别名表重算**，
+# 所以改别名表或扩机型谱系后，历史条目的归属会自动纠正，不需要清空 seen 重采。
+import _resin_models as RM
+
 
 def brief(text, n=90):
     t = re.sub(r"\s+", " ", text or "").strip()
@@ -142,11 +146,30 @@ def main():
         else:
             grade = "人工已确认"
 
+        # 机型/品牌按当前别名表重算（不看候选池里可能过期的 model 字段）
+        fulltext = (c.get("title") or "") + " " + (c.get("originalText") or "")
+        mcode, mname, mbrand = RM.model_of(fulltext)
+        if not mbrand:
+            mbrand = RM.best_brand(fulltext)
+        own_brand = RM.is_own_brand(mbrand)
+        # 文本级双向点名（与条目归属无关）：对比语境必须按文本判定，
+        # 否则 "我方 vs 竞品" 的标题会因单赢家归属落进竞品桶，导致对比语境恒为 0
+        own_side, cmp_side = RM.hits_by_side(fulltext)
+        # 竞品点名取文本里出现的全部竞品机型，不按本条归属排除：
+        # "Elegoo Mars 5 Ultra vs Creality Halot-Mage S" 若归给 Elegoo，
+        # 排除自身品牌会把这条真正的对比语境清零，正好丢掉要统计的东西
+        comp_other = [n for n, _, _ in cmp_side]
+        own_named = [n for n, _, _ in own_side]
+
         row = {
             "id": uid,
             "candKey": k,
-            "model": c.get("model"),
-            "modelName": c.get("modelName"),
+            "model": mcode,
+            "modelName": mname,
+            "brand": mbrand,
+            "brandCode": mbrand,
+            "isCompetitor": bool(mbrand) and not own_brand,
+            "subjectKind": "own" if own_brand else ("competitor" if mbrand else "none"),
             "platform": c.get("platform"),
             "channel": c.get("channel"),
             "channelGroup": c.get("channelGroup"),
@@ -167,7 +190,7 @@ def main():
             "problemPoints": list(dict.fromkeys(lab["problemPoints"])),
             "isP0": lab["isP0"],
             "p0Reason": lab["p0Reason"],
-            "sourceType": c.get("sourceType"),
+            "sourceType": lab.get("sourceTypeOverride") or c.get("sourceType"),
             "heat": c.get("heat", 0),
             "replyCount": c.get("replyCount", 0),
             "collectMethod": c.get("collectMethod"),
@@ -183,7 +206,9 @@ def main():
             "lifecycle": lab.get("lifecycle", "新出现"),
             "isPromo": c.get("isPromo", False),
             "noiseFlags": c.get("noiseFlags", []),
-            "competitorMentioned": c.get("competitorMentioned", []),
+            "competitorMentioned": comp_other,
+            "ownMentioned": own_named,
+            "comparisonContext": bool(own_side) and bool(cmp_side),
             "screenshot": ev.get(k),
             "closedState": "待处理",
         }
@@ -197,7 +222,7 @@ def main():
             continue
         probs = x.get("problemPoints") or []
         x["lifecycle"] = states.get(probs[0], "新出现") if probs else "新出现"
-    models = [{"code": m["code"], "name": m["name"], "tier": m["tier"],
+    models = [{"code": m["code"], "name": m["name"], "brand": m.get("brand"), "tier": m["tier"],
                "onSale": m["onSale"], "confirmed": m["confirmed"]} for m in CFG["models"]]
     gaps = [{"key": c["key"], "name": c["name"], "state": c["state"], "tier": c["tier"], "note": c["note"]}
             for c in CFG["channels"] if c["state"] != "auto"]
@@ -211,41 +236,57 @@ def main():
         "generatedAt": dt.datetime.now().isoformat(timespec="seconds"),
         "fetchedAt": fetched,
         "updatedDate": today,
-        # 按当日日更批次计数，幂等重跑不会把当天新增抹成 0（uidmap 已存在时 added=0）
-        "deltaToday": daily_today if daily_today else added,
+        # 今日新增按「入库日 = 今天」的条目数统计：回填批与日更批都能算，
+        # 幂等重跑（uidmap 已存在、added=0）也不会把当天新增抹成 0
+        "deltaToday": daily_today if daily_today else sum(1 for x in items if x.get("crawlDate") == today),
         "refDate": today,
         "dataThrough": max((x["pubDate"] for x in items), default=None),
         "totalItems": len(items),
         "validItems": len(valid),
         "needsReviewItems": len(review),
+        "brands": CFG.get("brands") or [],
         "models": models,
-        "channels": [{"key": c["key"], "name": c["name"], "state": c["state"], "tier": c["tier"]}
-                      for c in CFG["channels"]],
+        "channels": [{"key": c["key"], "name": c["name"], "state": c["state"],
+                      "tier": c["tier"], "note": c.get("note", "")}
+                     for c in CFG["channels"]],
         "channelGaps": gaps,
+        "subjectStats": {
+            "own": sum(1 for x in items if x.get("subjectKind") == "own"),
+            "competitor": sum(1 for x in items if x.get("subjectKind") == "competitor"),
+            "none": sum(1 for x in items if x.get("subjectKind") == "none"),
+            "brandsWithData": sorted(set(x.get("brand") for x in items if x.get("brand"))),
+            "modelsWithData": sorted(set(x.get("model") for x in items if x.get("model"))),
+        },
         "thresholds": CFG.get("thresholds", {}),
+        "comparisonStats": {
+            "contextSamples": sum(1 for x in items if x.get("comparisonContext")),
+            "ownMentioned": sum(1 for x in items if x.get("ownMentioned")),
+            "competitorMentioned": sum(1 for x in items if x.get("competitorMentioned")),
+        },
         "paidAdapters": CFG.get("paidAdapters", []),
         "modelListUnconfirmed": any(not m["confirmed"] for m in CFG["models"]),
         "disclaimer": "情感与问题点为逐条语义复核结果（AI 辅助，非需求方签字），保留改判通道；入库样本 ≠ 全量口碑，禁止外推。",
         "translationNotice": "海外原文保留原文与直链，中文译文与摘要由 _resin_tr.json 提供；缺失条目标「译文待补」，不编造译文。",
-        "sampleDisclosure": "主源为 Creality 官方论坛 Discourse 公开帖与 YouTube 公开视频/评论，属问题导向样本，不能代表全渠道口碑水位。",
+        "sampleDisclosure": ("主源为 Creality 官方论坛 Discourse 公开帖、YouTube 公开视频/评论、Bilibili 公开搜索结果与什么值得买公开文章，"
+                             "属问题导向 + 评测导向混合样本，不能代表全渠道口碑水位；Reddit 实测返回 HTML 中间页，不可程序化采集。"),
     }
     with open(ITEMS, "w", encoding="utf-8") as f:
         json.dump({"meta": meta, "items": items}, f, ensure_ascii=False, indent=2)
     with open(UIDMAP, "w", encoding="utf-8") as f:
         json.dump(uidmap, f, ensure_ascii=False, indent=2)
 
-    cols = ["id", "model", "modelName", "platform", "channel", "region", "language", "pubDate",
+    cols = ["id", "brand", "model", "modelName", "platform", "channel", "region", "language", "pubDate",
             "sourceLink", "title", "originalText", "titleCn", "textCn", "summaryCn",
             "translationStatus", "sentiment", "confidence", "problemPoints", "isP0", "sourceType",
             "heat", "replyCount", "collectMethod", "batchKind", "entryKind", "countInVolume",
             "reviewGrade", "needsReview", "labelSource", "lifecycle", "isPromo", "noiseFlags",
-            "competitorMentioned", "screenshot"]
+            "competitorMentioned", "ownMentioned", "comparisonContext", "screenshot"]
     with open(CSVOUT, "w", encoding="utf-8-sig", newline="") as f:
         w = csv.DictWriter(f, fieldnames=cols, extrasaction="ignore")
         w.writeheader()
         for x in items:
             r = dict(x)
-            for k in ("problemPoints", "noiseFlags", "competitorMentioned", "p0Reason"):
+            for k in ("problemPoints", "noiseFlags", "competitorMentioned", "ownMentioned", "p0Reason"):
                 r[k] = "、".join(r.get(k) or [])
             w.writerow(r)
 

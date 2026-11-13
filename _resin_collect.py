@@ -34,6 +34,10 @@ FORUM = "https://forum.creality.com"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
 socket.setdefaulttimeout(8)
 
+# 机型/品牌归属统一走 _resin_models（词边界 + 最长匹配 + hashtag 拆分），
+# 采集层与注入层共用一份实现，改别名表即可全站生效。
+import _resin_models as RM
+
 # 光固化「强语境」白名单：YouTube 通用搜索里 FDM 视频会因 "3d print" / "lcd"
 # 命中宽泛 contextTerms 而灌入噪声（2026-11-12 首跑 13 条里 12 条是 K2/Ender/Kobra）。
 RESIN_STRICT = ["resin", "光固化", "光敏树脂", "树脂", "sla", "msla", "dlp",
@@ -73,21 +77,27 @@ def hit(text, terms):
 
 
 def model_of(text):
-    for m in CFG["models"]:
-        for a in [m["name"]] + m["aliases"]:
-            if a.lower() in (text or "").lower():
-                return m["code"], m["name"]
-    return None, None
+    """返回 (modelCode, modelName)。判定逻辑在 _resin_models（词边界 + 最长匹配）。"""
+    c, n, _b = RM.model_of(text)
+    return c, n
+
+
+def model_brand(text, mcode=None):
+    """机型命中返回机型品牌；未命中再按品牌词兜底（返回品牌 code 或 None）。"""
+    if mcode:
+        return RM.brand_of_model(mcode)
+    return RM.best_brand(text)
 
 
 def competitor_hits(text):
-    out = []
-    for c in CFG["competitors"]:
-        for a in [c["name"]] + c["aliases"]:
-            if a.lower() in (text or "").lower():
-                out.append(c["name"])
-                break
-    return out
+    """被点名的竞品机型名列表（只认竞品品牌的机型）。"""
+    return RM.competitor_hits(text)
+
+
+# 强光固化信号：用于 FDM 误召回的否决权。论坛是混合版块，FDM 帖只要出现 "resin"
+# 就会通过 contextTerms，实测 30 条里混进 K2 Series / Ender 3V3 两条。
+RESIN_VETO_PASS = ["halot", "光固化", "光敏树脂", "sla", "msla", "离型膜", "料槽",
+                   "resin printer", "resin printing", "ld-003", "lcd 打印"]
 
 
 def load_seen():
@@ -101,6 +111,7 @@ def probe():
         ("creality_forum", FORUM + "/latest.json"),
         ("youtube", "https://www.googleapis.com/youtube/v3/search?part=snippet&q=halot&key=INVALID"),
         ("bilibili", "https://api.bilibili.com/x/web-interface/search/type?search_type=video&keyword=Halot"),
+        ("smzdm_list", "https://www.smzdm.com/fenlei/3ddayinji/"),
         ("reddit", "https://old.reddit.com/r/resinprinting/new/.rss"),
         ("github_pages", "https://cruise-ling.github.io/3d-printing-daily/creality-k3.html"),
     ]
@@ -246,9 +257,10 @@ def collect_youtube(topics, seen, win_start, today, daily, stats, errors, recall
                 stats["offtopic"] += 1
                 continue
             mcode, mname = model_of(text)
+            brand = model_brand(text, mcode)
             comps = competitor_hits(text)
-            is_own = bool(mcode or "creality" in low or "halot" in low)
-            if not mcode and not comps and not is_own:
+            is_own = brand == "creality" or "creality" in low or "halot" in low
+            if not brand and not comps and not is_own:
                 stats["no_subject"] += 1
                 continue
             off = hit(text, CFG["offtopicTerms"])
@@ -259,7 +271,7 @@ def collect_youtube(topics, seen, win_start, today, daily, stats, errors, recall
                 stats["too_short"] += 1
                 continue
             vids[vid] = {"cand": cand, "title": title, "model": mcode,
-                         "modelName": mname, "comps": comps, "own": is_own}
+                         "modelName": mname, "brand": brand, "comps": comps, "own": is_own}
             if is_own:
                 own_vids.append(vid)
             topics[cand] = {
@@ -271,7 +283,10 @@ def collect_youtube(topics, seen, win_start, today, daily, stats, errors, recall
                 "author": sn.get("channelTitle") or "", "platform": "YouTube",
                 "channel": "youtube", "channelGroup": "海外视频", "region": "海外",
                 "language": "zh" if re.search(r"[\u4e00-\u9fff]", text) else "en",
-                "model": mcode, "modelName": mname, "competitorMentioned": comps,
+                "model": mcode, "modelName": mname, "brand": brand, "brandCode": brand,
+                "isCompetitor": bool(brand) and not RM.is_own_brand(brand),
+                "subjectKind": "own" if RM.is_own_brand(brand) else ("competitor" if brand else "none"),
+                "competitorMentioned": comps,
                 "sourceType": "KOL", "heat": 0, "replyCount": 0,
                 "collectMethod": "api", "batchKind": "daily" if daily else "backfill",
                 "contentKind": "视频", "needsReview": True, "detailFetched": True,
@@ -350,6 +365,9 @@ def collect_youtube(topics, seen, win_start, today, daily, stats, errors, recall
                 "channel": "youtube", "channelGroup": "海外视频", "region": "海外",
                 "language": "zh" if re.search(r"[\u4e00-\u9fff]", txt) else "en",
                 "model": meta["model"], "modelName": meta["modelName"],
+                "brand": meta.get("brand"), "brandCode": meta.get("brand"),
+                "isCompetitor": bool(meta.get("brand")) and not RM.is_own_brand(meta.get("brand")),
+                "subjectKind": "own" if RM.is_own_brand(meta.get("brand")) else "competitor",
                 "competitorMentioned": meta["comps"] + [c for c in competitor_hits(txt)
                                                         if c not in meta["comps"]],
                 "sourceType": "用户", "heat": int(cs.get("likeCount") or 0), "replyCount": 0,
@@ -388,7 +406,7 @@ def collect(months, daily, max_detail, delay):
         # 留给 L2/L3 全量批次，避免每天制造 8 条限流错误并拖长日更链。
         use = terms
         if daily:
-            use = terms[:6] if layer == "model" else (terms[:2] if layer == "category" else [])
+            use = terms[:8] if layer == "model" else (terms[:2] if layer == "category" else [])
         for t in use:
             all_terms.append((layer, t))
 
@@ -422,9 +440,16 @@ def collect(months, daily, max_detail, delay):
             if not hit(text, CFG["contextTerms"]):
                 stats["no_context"] += 1
                 continue
+            # FDM 否决：命中 FDM 机型词且没有任何强光固化信号 → 判同名异物
+            fdm = hit(text, CFG.get("fdmMarkers") or FDM_MARKERS)
+            if fdm and not any(k in text.lower() for k in RESIN_VETO_PASS):
+                stats["offtopic"] += 1
+                continue
             mcode, mname = model_of(text)
+            brand = model_brand(text, mcode)
             comps = competitor_hits(text)
-            if not mcode and not comps and "creality" not in text.lower() and "创想" not in text:
+            is_own = brand == "creality" or "creality" in text.lower() or "创想" in text
+            if not brand and not comps and not is_own:
                 stats["no_subject"] += 1
                 continue
             off = hit(text, CFG["offtopicTerms"])
@@ -455,6 +480,10 @@ def collect(months, daily, max_detail, delay):
                 "language": "zh" if re.search(r"[\u4e00-\u9fff]", text) else "en",
                 "model": mcode,
                 "modelName": mname,
+                "brand": brand,
+                "brandCode": brand,
+                "isCompetitor": bool(brand) and not RM.is_own_brand(brand),
+                "subjectKind": "own" if RM.is_own_brand(brand) else ("competitor" if brand else "none"),
                 "competitorMentioned": comps,
                 "sourceType": "官方" if author.upper() in ("CREALITY", "ADMIN", "STAFF", "MODERATOR") else "用户",
                 "heat": int(p.get("like_count") or 0),
@@ -470,6 +499,21 @@ def collect(months, daily, max_detail, delay):
     # YouTube 通道（2026-11-12 B2 接入）：与论坛共用五道闸门，quota 单独记账
     quota = {"units": 0, "searches": 0, "stat_calls": 0, "comment_calls": 0}
     collect_youtube(topics, seen, win_start, today, daily, stats, errors, recall, quota, delay)
+
+    # 国内通道（2026-11-13 E 批接入）：B站 + 什么值得买。
+    # 两个适配器都只往 topics 里写候选条目，不判情感；任何异常只记 errors 不中断主流程。
+    adapter_ctx = {"daily": daily, "win_start": win_start, "today": today,
+                   "stats": stats, "seen": seen, "topics": topics, "delay": delay,
+                   "model_of": model_of, "competitor_hits": competitor_hits}
+    for mod_name in ("_resin_bili", "_resin_smzdm"):
+        try:
+            mod = __import__(mod_name)
+            rc, er = mod.collect(CFG, adapter_ctx)
+            recall.extend(rc or [])
+            errors.extend(er or [])
+        except Exception as e:
+            errors.append({"channel": mod_name,
+                           "error": "%s: %s" % (type(e).__name__, str(e)[:100])})
 
     # 二次取首帖完整正文（只取通过闸门的论坛帖、限量），失败回退 blurb
     detail_n = 0
@@ -491,6 +535,16 @@ def collect(months, daily, max_detail, delay):
         detail_n += 1
         time.sleep(delay * 0.6)
 
+    # 统一补齐品牌字段：论坛 / YouTube / B站 / 值得买四条通道都走同一套判定，
+    # 新增通道不必各自实现品牌归属。
+    for it in topics.values():
+        if not it.get("brand"):
+            it["brand"] = model_brand(it.get("originalText") or "", it.get("model"))
+        b = it.get("brand")
+        it["brandCode"] = b
+        it["isCompetitor"] = bool(b) and not RM.is_own_brand(b)
+        it["subjectKind"] = "own" if RM.is_own_brand(b) else ("competitor" if b else "none")
+
     items = list(topics.values())
 
     # 去噪标记：批量同文案 / 零互动 / 短期集中发布
@@ -510,12 +564,12 @@ def collect(months, daily, max_detail, delay):
             it["noiseFlags"].append("same_text_cluster")
         if len(burst.get(it["pubDate"], [])) >= noise["burstMinPosts"]:
             it["noiseFlags"].append("short_window_burst")
-        # YouTube 免费 API 只给标题+简介，实测首批召回 5/5 为联盟带货；
-        # 这类低信号导流不是用户口碑，按 K3「官方纯营销帖」同纪律剔除
+        # 联盟带货 / 导流文案：YouTube 免费 API 只给标题+简介，实测首批召回 5/5 为联盟带货；
+        # 该判据对全部通道生效（B站简介、值得买正文同样会出现），按 K3「官方纯营销帖」同纪律剔除。
         ytext = (it.get("originalText") or "").lower()
-        if it.get("channel") == "youtube" and any(
-                k in ytext for k in ("amzn.to", "check current price", "garimpodeofertas",
-                                     "affiliate", "supports channel")):
+        if any(k in ytext for k in ("amzn.to", "check current price", "garimpodeofertas",
+                                    "affiliate", "supports channel", "affiliate link",
+                                    "commission", "返利链接")):
             it["noiseFlags"].append("low_signal_affiliate")
         it["isPromo"] = any(k in it["noiseFlags"] for k in
                             ("zero_interaction_official", "same_text_cluster", "low_signal_affiliate"))
