@@ -56,6 +56,7 @@
 
 | 日期 Date | 简报 Briefing |
 |-----------|--------------|
+| 2026-11-13 (Fri) | [briefing_20261113.html](briefing_20261113.html) |
 | 2026-11-12 (Thu) | [briefing_20261112.html](briefing_20261112.html) |
 | 2026-11-11 (Wed) | [briefing_20261111.html](briefing_20261111.html) |
 | 2026-11-10 (Tue) | [briefing_20261110.html](briefing_20261110.html) |
