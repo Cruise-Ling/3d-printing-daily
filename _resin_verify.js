@@ -94,6 +94,14 @@ ok(/竞品口碑水位/.test(html), 'E6 竞品口碑水位面板');
 ok(/样本量警告/.test(code) && /不允许/.test(code), 'E7 竞品样本量警告与禁止外推');
 ok(/comparisonContext/.test(code) && /文本双向命中/.test(code), 'E7b 对比语境按文本双向命中判定（不依赖条目归属）');
 ok(/class="chip kind"/.test(code) && /mchip/.test(code), 'E8 明细卡为 K3 kind + 品牌·机型标签体系');
+/* 2026-11-13 F 批：明细反馈流补筛选框（顶部没有的维度，与顶部同一套状态联动） */
+ok(/id="detailBar"/.test(html) && /id="dChips"/.test(html), 'F1 明细区有独立定位条容器');
+ok(/function renderDetailBar/.test(code) && /function dimOK/.test(code), 'F2 明细定位条渲染函数与维度判定函数存在');
+ok(/data-act="dset"/.test(code) && /data-sel="problem"/.test(code), 'F3 明细定位条 chip 与问题点下拉均已绑定');
+ok(/addEventListener\("change"/.test(code), 'F4 问题点下拉用 change 事件，不被 click 吞掉');
+ok(/CSV 列/.test(code) && /非筛选条件/.test(code), 'F5 导出字段标为 CSV 列，避免误认为筛选控件');
+ok(/id="dq"/.test(html) && /S\.q=this\.value/.test(code), 'F6 明细检索框与顶部检索同一状态');
+ok(!/<select[^>]*data-sel="(brand|model|region|source)"/.test(code), 'F7 顶部 8 个维度仍为 chip 平铺，未改成下拉');
 ok(/全部主体/.test(code) && /全部品牌/.test(code), 'E9 主体 / 品牌两级筛选存在');
 console.log('\nVERIFY: ' + pass + ' PASS / ' + fail + ' FAIL');
 process.exit(fail ? 1 : 0);

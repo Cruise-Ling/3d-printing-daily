@@ -122,6 +122,23 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
 .tag.p-tag:hover{background:rgba(188,140,255,.22);color:#d2a8ff}
 .c-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:11px;color:#6e7681;border-top:1px solid #1c2128;padding-top:9px}
 .c-foot .cf-l{display:flex;gap:8px;flex-wrap:wrap}
+/* 明细定位条（2026-11-13 F 批）：补充顶部没有的维度，与顶部同一套状态联动；
+   视觉上贴住明细区标题，避免用户误把「CSV 列」那排 chip 当筛选 */
+.dbar{background:#141a21;border:1px solid #21262d;border-left:3px solid var(--blue);border-radius:10px;padding:11px 14px 9px;margin-bottom:12px}
+.dbar .drow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;width:100%;margin-bottom:7px}
+.dbar .drow:last-child{margin-bottom:0}
+.dbar .frow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;width:100%;margin-bottom:7px}
+.dbar .frow:last-child{margin-bottom:0}
+.dbar .flabel{flex:0 0 64px;min-width:64px}
+.dbar .dsub{font-size:12px;font-weight:600;color:var(--tx);margin-right:2px}
+.dhint{margin-left:auto;color:var(--dim);font-size:11px;text-align:right}
+.dsel{background:var(--bg);border:1px solid var(--bd2);border-radius:14px;color:var(--mu);font-size:12px;padding:4px 9px;font-family:inherit;max-width:250px;cursor:pointer}
+.dsel:hover{border-color:var(--blue);color:var(--tx)}
+.dsel.on{background:rgba(31,111,235,.18);border-color:var(--blue);color:#79c0ff;font-weight:600}
+.dbar .chip .n{font-size:10.5px;color:var(--dim);font-variant-numeric:tabular-nums}
+.dbar .chip.on .n{color:#79c0ff}
+.db-csv .chip{font-size:11px;padding:2.5px 9px}
+.db-csv .flabel{font-size:11px;color:#6e7681}
 .count-line{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12.5px;color:#8b949e;margin-bottom:12px}
 .count-line b{color:#e6edf3}
 .empty{padding:26px;text-align:center;color:var(--dim);font-size:12.5px;border:1px dashed var(--bd2);border-radius:8px}
@@ -187,7 +204,11 @@ __RESIN_NAV__
   <div class="panel"><h3>声量趋势<span class="note">按发布日聚合 · 红柱标注负面率环比超阈值</span></h3><div class="frow" id="trendCtl" style="margin-bottom:10px"></div><div id="trend"></div></div>
 
   <h2 class="sec-title">明细反馈流<span class="sec-note">当前筛选下的逐条明细 · 按发布日倒序 · 卡片即一条，与上方面板同一筛选口径</span></h2>
-  <div class="frow" id="exportFields" style="margin-bottom:10px"></div>
+  <div class="dbar" id="detailBar">
+    <div class="drow" id="dChips"></div>
+    <div class="drow"><span class="flabel">检索</span><input class="qbox" id="dq" placeholder="记录编号 / 标题 / 原文 / 链接 · 与顶部检索同一状态"><span class="chip" data-act="reset">清空全部筛选</span><span class="mini dhint" id="dHint"></span></div>
+    <div class="drow db-csv" id="exportFields"></div>
+  </div>
   <div class="count-line"><span>命中 <b id="hitCount">0</b> 条</span><span class="mini" id="filterHit"></span></div>
   <div class="card-grid" id="cards"></div>
 
@@ -198,7 +219,8 @@ __RESIN_NAV__
 var DATA = __RESIN_DATA__;
 var ITEMS = DATA.items || [];
 var META = DATA.meta || {};
-var S = {subject:"all",brand:"all",model:"all",region:"all",source:"all",scope:"valid",range:"all",q:"",problem:"",trend:"month",bucket:"",fields:{}};
+var S = {subject:"all",brand:"all",model:"all",region:"all",source:"all",scope:"valid",range:"all",q:"",problem:"",trend:"month",bucket:"",fields:{},
+         sentiment:"all",life:"all",ctx:"all",p0:"all",vol:"all"};
 var EXPORT_FIELDS = [["id","记录编号"],["brand","品牌"],["modelName","机型"],["platform","平台"],["region","区域"],["pubDate","发布时间"],["sentiment","情感"],["problemPoints","问题点"],["isP0","P0"],["sourceType","信源"],["heat","互动量"],["reviewGrade","复核状态"],["lifecycle","生命周期"],["titleCn","标题中译"],["summaryCn","中文摘要"],["screenshot","证据存档"],["reviewNote","复核依据"],["sourceLink","原文链接"],["originalText","原文"]];
 EXPORT_FIELDS.forEach(function(f){ S.fields[f[0]] = true; });
 
@@ -212,11 +234,11 @@ function subjOf(x){ if(isOwn(x)) return "own"; if(x.brand) return "cmp"; return 
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
 function arr(v){ return Array.isArray(v)?v:[]; }
 function pct(a,b){ return b>0 ? (a*100/b).toFixed(1)+"%" : "—"; }
+/* 单条是否计入声量：KPI 主口径的唯一定义。声量口径维度也复用它，避免两处口径漂移 */
+function isValidItem(x){ return !!(x.countInVolume && !x.isPromo && x.sourceType!=="官方" && x.sourceType!=="媒体"); }
 function scopeItems(list){
-  return list.filter(function(x){
-    if(S.scope==="valid") return x.countInVolume && !x.isPromo && x.sourceType!=="官方" && x.sourceType!=="媒体";
-    return true;
-  });
+  if(S.scope!=="valid") return list.slice();
+  return list.filter(isValidItem);
 }
 /* 时间桶：日 / 周（周日起） / 月，趋势图与下钻共用同一函数，避免两处口径漂移 */
 function bucketKey(pubDate){
@@ -231,13 +253,33 @@ function bucketKey(pubDate){
   }
   return d;
 }
+/* 明细定位维度（2026-11-13 F 批）：只补顶部没有的 6 个维度，与顶部同一套 S 状态、联动所有面板。
+   抽成 dimOK 是为了 dCount() 能临时置空某一维度，算出「选它之后还剩几条」。 */
+function dimOK(x,k,v){
+  if(!v||v==="all") return true;
+  if(k==="sentiment") return (x.sentiment||"中性")===v;
+  if(k==="life") return (x.lifecycle||"新出现")===v;
+  if(k==="ctx") return v==="yes" ? !!x.comparisonContext : !x.comparisonContext;
+  if(k==="p0") return v==="yes" ? !!x.isP0 : !x.isP0;
+  if(k==="vol") return v==="no" ? !isValidItem(x) : isValidItem(x);
+  if(k==="problem"){
+    if(v==="__none__") return !arr(x.problemPoints).length;
+    return arr(x.problemPoints).indexOf(v)>=0;
+  }
+  return true;
+}
 function match(x){
   if(S.subject!=="all" && subjOf(x)!==S.subject) return false;
   if(S.brand!=="all" && (x.brand||"__none__")!==S.brand) return false;
   if(S.model!=="all" && (x.model||"__none__")!==S.model) return false;
   if(S.region!=="all" && x.region!==S.region) return false;
   if(S.source!=="all" && x.sourceType!==S.source) return false;
-  if(S.problem && arr(x.problemPoints).indexOf(S.problem)<0) return false;
+  if(!dimOK(x,"problem",S.problem)) return false;
+  if(!dimOK(x,"sentiment",S.sentiment)) return false;
+  if(!dimOK(x,"life",S.life)) return false;
+  if(!dimOK(x,"ctx",S.ctx)) return false;
+  if(!dimOK(x,"p0",S.p0)) return false;
+  if(!dimOK(x,"vol",S.vol)) return false;
   if(S.bucket && bucketKey(x.pubDate)!==S.bucket) return false;
   if(S.range!=="all"){
     var d=new Date(x.pubDate), lim=new Date(META.refDate||new Date().toISOString().slice(0,10));
@@ -245,7 +287,7 @@ function match(x){
     if(!(d>=lim)) return false;
   }
   if(S.q){
-    var q=S.q.toLowerCase(), blob=[x.title,x.originalText,x.summaryCn,x.textCn,x.modelName,x.brand,x.sourceLink].join(" ").toLowerCase();
+    var q=S.q.toLowerCase(), blob=[x.id,x.title,x.originalText,x.summaryCn,x.textCn,x.modelName,x.brand,x.sourceLink].join(" ").toLowerCase();
     if(blob.indexOf(q)<0) return false;
   }
   return scopeItems([x]).length===1;
@@ -318,6 +360,72 @@ function renderFilters(){
   el.innerHTML=h;
   var q=document.getElementById("q");
   q.oninput=function(){ S.q=this.value; renderAll(true); };
+}
+
+/* 明细定位条：只放顶部没有的 6 个维度，不重复顶部的 8 个维度（同一批控件出现两次会互相打架）。
+   数字口径 = 把该维度置空、其余条件已生效时的命中条数，即「选它之后还剩几条」。 */
+function dCount(key,val){
+  var saved=S[key]; S[key]="all";
+  var n=ITEMS.filter(function(x){ return match(x) && dimOK(x,key,val); }).length;
+  S[key]=saved; return n;
+}
+function dChips(key,label,opts){
+  var h='<div class="frow"><span class="flabel">'+label+'</span>';
+  opts.forEach(function(o){
+    var v=o[0];
+    h+='<span class="chip'+(S[key]===v?" on":"")+'" data-act="dset" data-k="'+key+'" data-v="'+esc(v)+'">'+
+       esc(o[1])+' <span class="n">'+dCount(key,v)+'</span></span>';
+  });
+  return h+'</div>';
+}
+function dProblemSelect(){
+  var saved=S.problem; S.problem="";
+  var base=ITEMS.filter(match), cnt={}, none=0;
+  base.forEach(function(x){
+    var pp=arr(x.problemPoints);
+    if(!pp.length){ none++; return; }
+    var seen={}; pp.forEach(function(p){ seen[p]=1; });
+    Object.keys(seen).forEach(function(p){ cnt[p]=(cnt[p]||0)+1; });
+  });
+  S.problem=saved;
+  // 已选值必须始终留在选项里：否则别的维度把结果筛到 0 时下拉会「丢掉」已选项，
+  // 出现「下拉显示全部、实际仍在按问题点过滤」的状态错位。
+  if(S.problem && S.problem!=="__none__" && !(S.problem in cnt)) cnt[S.problem]=0;
+  var names=Object.keys(cnt).sort(function(a,b){ return cnt[b]-cnt[a]; });
+  var h='<div class="frow"><span class="flabel">问题点</span>'+
+    '<select class="dsel'+(S.problem?" on":"")+'" data-sel="problem" title="按受控问题点词表筛选，按条去重">'+
+    '<option value=""'+(S.problem?"":" selected")+'>全部问题点 · '+base.length+'</option>'+
+    names.map(function(p){
+      return '<option value="'+esc(p)+'"'+(S.problem===p?" selected":"")+'>'+esc(p)+' · '+cnt[p]+'</option>';
+    }).join("")+
+    '<option value="__none__"'+(S.problem==="__none__"?" selected":"")+'>未标注问题点 · '+none+'</option>'+
+    '</select><span class="mini">按条去重，不是提及次数</span></div>';
+  return h;
+}
+function renderDetailBar(){
+  var el=document.getElementById("dChips"); if(!el) return;
+  var h='<div class="frow"><span class="dsub">明细定位</span><span class="filter-scope">补充顶部未覆盖的维度 · 与顶部全局筛选同源，联动所有面板 · 数字 = 选它之后的条数</span></div>';
+  h+=dChips("sentiment","情感",[["all","全部"],["负面","负面"],["非常负面","非常负面"],["中性","中性"],["正面","正面"]]);
+  h+=dProblemSelect();
+  h+=dChips("life","生命周期",[["all","全部"],["新出现","新出现"],["持续存在","持续存在"]]);
+  h+=dChips("ctx","对比语境",[["all","全部"],["yes","是"],["no","否"]]);
+  h+=dChips("p0","P0",[["all","全部"],["yes","仅 P0"]]);
+  h+=dChips("vol","声量口径",[["all","全部"],["no","仅未计入声量"]]);
+  el.innerHTML=h;
+  // 顶部检索与明细检索是同一个状态，两处输入框互相同步，不新建第二套关键词
+  var dq=document.getElementById("dq");
+  if(dq && document.activeElement!==dq) dq.value=S.q||"";
+  var hint=document.getElementById("dHint");
+  if(hint){
+    var parts=[];
+    if(S.sentiment!=="all") parts.push("情感="+S.sentiment);
+    if(S.problem) parts.push("问题点="+(S.problem==="__none__"?"未标注":S.problem));
+    if(S.life!=="all") parts.push("生命周期="+S.life);
+    if(S.ctx!=="all") parts.push("对比语境="+(S.ctx==="yes"?"是":"否"));
+    if(S.p0!=="all") parts.push("仅 P0");
+    if(S.vol!=="all") parts.push("仅未计入声量");
+    hint.textContent = parts.length ? ("已叠加 " + parts.length + " 个条件：" + parts.join(" · ")) : "";
+  }
 }
 
 function renderKPI(){
@@ -576,7 +684,7 @@ function renderTrend(){
 }
 
 function renderExportFields(){
-  document.getElementById("exportFields").innerHTML='<span class="flabel">导出字段</span>'+EXPORT_FIELDS.map(function(f){
+  document.getElementById("exportFields").innerHTML='<span class="flabel">CSV 列</span><span class="mini" style="margin-right:2px">勾选导出列，非筛选条件</span>'+EXPORT_FIELDS.map(function(f){
     return '<span class="chip'+(S.fields[f[0]]?" on":"")+'" data-act="field" data-v="'+f[0]+'">'+esc(f[1])+'</span>';
   }).join("")+'<span style="margin-left:auto"><button class="btn" data-act="csv">导出当前筛选 CSV</button></span>';
 }
@@ -650,7 +758,7 @@ function renderAll(skipFilters){
   if(!skipFilters) renderFilters();
   renderKPI(); renderSent(); renderProb(); renderSrc(); renderMatrix();
   renderQualityOnce(); renderCompete(); renderChannels(); renderTrend();
-  renderExportFields(); renderCards(); renderFoot();
+  renderDetailBar(); renderExportFields(); renderCards(); renderFoot();
 }
 function renderQualityOnce(){
   var f=ITEMS, valid=f.filter(function(x){return x.countInVolume&&!x.isPromo&&x.sourceType!=="官方"&&x.sourceType!=="媒体";});
@@ -689,6 +797,8 @@ document.addEventListener("click",function(e){
   if(act==="set"){
     var k=t.getAttribute("data-k"), v=t.getAttribute("data-v");
     S[k]=v;
+    // 切回有效样本口径时，「仅未计入声量」会把结果锁死为 0，必须一并复位
+    if(k==="scope" && v==="valid") S.vol="all";
     // 品牌切换后清掉不属于该品牌的机型选择，避免出现「筛了 Elegoo 但机型还是 HALOT」的空结果
     if(k==="brand" && v!=="all" && v!=="__none__"){
       var mm=(META.models||[]).filter(function(m){return m.code===S.model;})[0];
@@ -703,13 +813,32 @@ document.addEventListener("click",function(e){
     S.problem=t.getAttribute("data-v"); renderAll();
   }else if(act==="cmpname"){
     S.q=t.getAttribute("data-v"); S.problem=""; renderAll();
+  }else if(act==="dset"){
+    var dk=t.getAttribute("data-k"), dv=t.getAttribute("data-v");
+    S[dk]=dv;
+    // 「仅未计入声量」必须切到全量口径，否则有效样本已被滤掉、结果恒为 0
+    if(dk==="vol" && dv==="no") S.scope="all";
+    renderAll();
   }else if(act==="reset"){
-    S={subject:"all",brand:"all",model:"all",region:"all",source:"all",scope:"valid",range:"all",q:"",problem:"",trend:"month",bucket:"",fields:S.fields};
+    S={subject:"all",brand:"all",model:"all",region:"all",source:"all",scope:"valid",range:"all",q:"",problem:"",trend:"month",bucket:"",fields:S.fields,
+       sentiment:"all",life:"all",ctx:"all",p0:"all",vol:"all"};
+    var dq0=document.getElementById("dq"); if(dq0){ dq0.value=""; }
     renderAll();
   }else if(act==="field"){
     var key=t.getAttribute("data-v"); S.fields[key]=!S.fields[key]; renderExportFields();
   }else if(act==="csv"){ exportCSV(); }
 });
+/* 明细定位条的下拉（问题点）：下拉用 change 而不是 click，否则 native select 会吞掉点击 */
+document.addEventListener("change",function(e){
+  var t=e.target&&e.target.closest?e.target.closest("[data-sel]"):null; if(!t) return;
+  var k=t.getAttribute("data-sel"), v=t.value||"";
+  S[k]=v;
+  if(k==="scope" && v==="valid") S.vol="all";
+  renderAll();
+});
+/* 明细检索框与顶部检索是同一个状态，两处互相同步，不新建第二套关键词 */
+var dqEl=document.getElementById("dq");
+if(dqEl) dqEl.oninput=function(){ S.q=this.value; renderAll(); };
 renderAll();
 </script>
 </body>

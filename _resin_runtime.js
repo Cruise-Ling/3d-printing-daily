@@ -26,7 +26,7 @@ try { vm.runInNewContext(code, sandbox, { timeout: 5000 }); } catch (e) { runErr
 ok(!runErr, '脚本完整执行无异常', runErr);
 
 const CONTAINERS = ['updateBar', 'filters', 'kpis', 'sent', 'prob', 'src', 'matrix',
-  'quality', 'compete', 'channels', 'trend', 'trendCtl', 'exportFields', 'cards', 'foot'];
+  'quality', 'compete', 'channels', 'trend', 'trendCtl', 'dChips', 'exportFields', 'cards', 'foot'];
 CONTAINERS.forEach(function (id) { ok(!!(els[id] && els[id].innerHTML.length > 0), '容器非空 ' + id); });
 
 ok(/总声量/.test(els.kpis.innerHTML), 'KPI 五卡渲染');
@@ -71,6 +71,12 @@ ok(/对比语境样本/.test(els.compete.innerHTML), 'E11 竞品上段分母为�
 ok(/class="brow"/.test(els.compete.innerHTML) && /被点名机型 Top/.test(els.compete.innerHTML), 'E12 对比语境竞品被点名条形图已渲染');
 ok(/<table>/.test(els.compete.innerHTML) && /竞品机型/.test(els.compete.innerHTML), 'E13 竞品自有水位表已渲染');
 ok(/全部品牌/.test(els.filters.innerHTML) && /未标注品牌/.test(els.filters.innerHTML), 'E10 未标注品牌可选');
+/* 2026-11-13 F 批：明细反馈流补筛选框 */
+ok(/明细定位/.test(els.dChips.innerHTML), 'F1 明细定位条标题已渲染');
+ok(['情感','问题点','生命周期','对比语境','P0','声量口径'].every(function(k){ return els.dChips.innerHTML.indexOf(k)>=0; }), 'F2 六个补充维度齐全');
+ok(/data-sel="problem"/.test(els.dChips.innerHTML) && /<select/.test(els.dChips.innerHTML), 'F3 问题点下拉已渲染');
+ok((els.dChips.innerHTML.match(/class="chip[^"]*" data-act="dset"/g) || []).length >= 12, 'F4 维度 chip 平铺且带计数');
+ok(/class="n"/.test(els.dChips.innerHTML), 'F5 每个 chip 带「选它之后还剩几条」');
 
 if (!runErr) {
   const f = sandbox.filtered();
@@ -78,6 +84,26 @@ if (!runErr) {
   ok(cards === f.length, '所见即所得：明细卡片数 = 筛选命中数', cards + ' vs ' + f.length);
   const kpiVol = (els.kpis.innerHTML.match(/<div class="k-value"[^>]*>(\d+|—)<\/div>/) || [])[1];
   ok(kpiVol === String(f.length), 'KPI 总声量与筛选结果一致', kpiVol + ' vs ' + f.length);
+
+  /* 2026-11-13 F 批：明细定位条必须真联动，不能只是画了控件 */
+  const baseN = f.length;
+  sandbox.S.sentiment = '负面'; sandbox.renderAll();
+  const negN = sandbox.filtered().length;
+  ok(negN > 0 && negN < baseN, 'F6 情感维度联动生效', baseN + ' -> ' + negN);
+  const cardN2 = (els.cards.innerHTML.match(/class="card(?:"| p0")/g) || []).length;
+  ok(cardN2 === negN, 'F7 明细卡数随情感筛选同步', cardN2 + ' vs ' + negN);
+
+  sandbox.S.sentiment = 'all'; sandbox.S.ctx = 'yes'; sandbox.renderAll();
+  const ctxN = sandbox.filtered().length;
+  const ctxAll = sandbox.ITEMS.filter(function (x) { return x.comparisonContext && sandbox.isValidItem(x); }).length;
+  ok(ctxN === ctxAll, 'F8 对比语境维度命中数与有效口径一致', ctxN + ' vs ' + ctxAll);
+
+  sandbox.S.ctx = 'all'; sandbox.S.vol = 'no'; sandbox.S.scope = 'all'; sandbox.renderAll();
+  const volN = sandbox.filtered().length;
+  ok(volN > 0 && volN + baseN === sandbox.ITEMS.length, 'F9 未计入声量 = 全量 − 有效样本', volN + '+' + baseN + ' vs ' + sandbox.ITEMS.length);
+
+  sandbox.S.vol = 'all'; sandbox.S.scope = 'valid'; sandbox.renderAll();
+  ok(sandbox.filtered().length === baseN, 'F10 复位后回到主口径条数', sandbox.filtered().length + ' vs ' + baseN);
 
   const before = f.length;
   sandbox.S.model = 'halot-mage';
