@@ -108,7 +108,11 @@ function checkColumn(key, file, metaFile, artifactFiles) {
   if (r.error) return { key, file, verdict: RED, reason: r.error, cells: {} };
   const meta = (r.data && r.data.meta) || {};
   const items = (r.data && r.data.items) || [];
-  const builtDate = datePart(meta.updatedDate);
+  // 构建日取「页面内嵌的 fetchedAt」而不是 meta.updatedDate：
+  // _build_column.py 里 updatedDate/dataThrough 都是「内容池最新一条的日期」(= max(item.date))，
+  // 周一（或论坛当天无人发帖）时内容日期天然落后于构建日，用它判「采了没重建」会假 RED。
+  // 页面里的 fetchedAt 是构建当时写进去的采集时间戳，不重建就不会推进，判据更准。
+  const builtDate = datePart(meta.fetchedAt) || datePart(meta.updatedDate);
   const deltaToday = Number(meta.deltaToday || 0);
   const pageMax = items.reduce((a, x) => (x.date && x.date > a ? x.date : a), '');
   const newToday = items.filter(x => datePart(x.date) === TODAY).length;
@@ -138,6 +142,13 @@ function checkColumn(key, file, metaFile, artifactFiles) {
     verdict = YELLOW; reason = '当日采集正常、0 条新增';
   } else {
     verdict = GREEN; reason = `当日新增 ${deltaToday} 条`;
+  }
+
+  // 通用豁免：--allow 支持 sw / mbox / fc（用法说明自 2026-10 起已列，但此前只在
+  // checkH3C / checkResin / checkUC 里实现，通用列判定漏了分支）。
+  if (verdict === RED && ALLOW.has(key)) {
+    verdict = YELLOW;
+    reason += `（已按 --allow ${key} 豁免）`;
   }
 
   return {
