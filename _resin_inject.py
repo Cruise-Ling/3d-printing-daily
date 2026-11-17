@@ -268,7 +268,8 @@ def main():
         "disclaimer": "情感与问题点为逐条语义复核结果（AI 辅助，非需求方签字），保留改判通道；入库样本 ≠ 全量口碑，禁止外推。",
         "translationNotice": "海外原文保留原文与直链，中文译文与摘要由 _resin_tr.json 提供；缺失条目标「译文待补」，不编造译文。",
         "sampleDisclosure": ("主源为 Creality 官方论坛 Discourse 公开帖、YouTube 公开视频/评论、Bilibili 公开搜索结果与什么值得买公开文章，"
-                             "属问题导向 + 评测导向混合样本，不能代表全渠道口碑水位；Reddit 实测返回 HTML 中间页，不可程序化采集。"),
+                             "Reddit 为 2026-11-17 接入的公开 new/.rss 新帖流（非官方 API、低频轮询、仅强语境命中），"
+                             "属问题导向 + 评测导向混合样本，稀疏渠道样本不能代表全渠道口碑水位，禁止外推。"),
     }
     with open(ITEMS, "w", encoding="utf-8") as f:
         json.dump({"meta": meta, "items": items}, f, ensure_ascii=False, indent=2)

@@ -505,7 +505,7 @@ def collect(months, daily, max_detail, delay):
     adapter_ctx = {"daily": daily, "win_start": win_start, "today": today,
                    "stats": stats, "seen": seen, "topics": topics, "delay": delay,
                    "model_of": model_of, "competitor_hits": competitor_hits}
-    for mod_name in ("_resin_bili", "_resin_smzdm"):
+    for mod_name in ("_resin_bili", "_resin_smzdm", "_resin_reddit"):
         try:
             mod = __import__(mod_name)
             rc, er = mod.collect(CFG, adapter_ctx)
@@ -515,7 +515,11 @@ def collect(months, daily, max_detail, delay):
             errors.append({"channel": mod_name,
                            "error": "%s: %s" % (type(e).__name__, str(e)[:100])})
 
-    # 二次取首帖完整正文（只取通过闸门的论坛帖、限量），失败回退 blurb
+    # 二次取「命中楼层」的完整正文（只取通过闸门的论坛帖、限量），失败回退 blurb
+    # ⚠️ 必须按 postId 取对应楼层，不能取 plist[0]：
+    #    2026-11-13 实证 topic/46600 有 2 楼，两楼都被写成第 1 楼正文，
+    #    页面上出现两条一字不差的反馈，且第 2 楼的真实内容（后续追评、更强负面）
+    #    被永久覆盖。命中楼层不在首屏分块里时宁可保留 blurb，也不要拿别楼顶替。
     detail_n = 0
     for key, it in topics.items():
         if it.get("channel") != "creality_forum":
@@ -525,8 +529,16 @@ def collect(months, daily, max_detail, delay):
         try:
             d, _ = fetch("%s/t/%s.json" % (FORUM, it["topicId"]))
             plist = d.get("post_stream", {}).get("posts", [])
-            if plist:
-                full = clean_html(plist[0].get("cooked") or "")
+            pid = str(it.get("postId") or "")
+            target = None
+            for p in plist:
+                if str(p.get("id")) == pid:
+                    target = p
+                    break
+            if target is None and not pid and plist:
+                target = plist[0]
+            if target is not None:
+                full = clean_html(target.get("cooked") or "")
                 if len(full) > len(it["originalText"]):
                     it["originalText"] = (it["title"] + " " + full).strip()
                     it["detailFetched"] = True

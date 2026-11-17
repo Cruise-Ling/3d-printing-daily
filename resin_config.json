@@ -928,8 +928,8 @@
       "type": "rss",
       "region": "海外",
       "tier": "P1",
-      "state": "blocked",
-      "note": "2026-11-13 复测：www 搜 403；old.reddit 返回 HTTP 200 但正文是「Welcome to Reddit」HTML 中间页（Content-Type text/html、0 条 entry），非 Atom feed。判定不可程序化采集"
+      "state": "partial",
+      "note": "2026-11-17 订正：www.reddit.com/r/<板块>/new/.rss 可取当日 Atom 正文（含 selftext），已接公开 RSS 适配器；官方 JSON 端点 403、search.rss 与连续请求频繁 429，仅低频轮询新帖流，非官方 API、可能滞后"
     },
     {
       "key": "review_sites",

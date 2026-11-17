@@ -47,11 +47,11 @@ if (data) {
 /* 2026-11-12 版式对齐 K3（Q1–Q5）：静态守护，防止后续生成器回退旧版式 */
 ok(!/class="notice"/.test(html), '顶部无橙黄警示横幅');
 ok(/class="top-bar"/.test(html) && /class="update-bar"/.test(html), 'K3 top-bar + 灰底 update-bar');
-ok((html.match(/class="sec-title"/g) || []).length === 4, '四个 K3 风格分区');
+ok((html.match(/class="sec-title"/g) || []).length === 5, '五个 K3 风格分区（新增渠道结构）');
 ok(/\.sidebar\{[^}]*width:200px/.test(html), '侧栏 200px 与其余六页同源');
 ok(/class="kpi-row"/.test(html) && /class="k-value"/.test(code), 'K3 kpi-row / k-value 结构');
 ok(!/规则预标 · 待人工确认|需 T\+1 触达|· 规则预标结果/.test(html), 'V1.0 过时文案已清除');
-ok(/AI 逐条语义复核/.test(code) && /口径版本 <b>V/.test(code), 'V1.1 口径与语义复核披露');
+ok(/口径说明（常驻）/.test(code) && /_docs\/光固化专栏_指标口径说明_V1\.2\.md/.test(code), '口径披露常驻脚注保留（顶部已移除）');
 ok(/全局筛选 · 联动所有面板/.test(code), '顶部全局筛选标注保留');
 
 /* 2026-11-13 E 批：四品牌多机型 + 竞品水位 + K3 趋势图 + K3 卡片标签体系 */
@@ -103,5 +103,28 @@ ok(/CSV 列/.test(code) && /非筛选条件/.test(code), 'F5 导出字段标为 
 ok(/id="dq"/.test(html) && /S\.q=this\.value/.test(code), 'F6 明细检索框与顶部检索同一状态');
 ok(!/<select[^>]*data-sel="(brand|model|region|source)"/.test(code), 'F7 顶部 8 个维度仍为 chip 平铺，未改成下拉');
 ok(/全部主体/.test(code) && /全部品牌/.test(code), 'E9 主体 / 品牌两级筛选存在');
+
+/* 2026-11-17 G 批：顶部更新历史 + 明细时间筛选 + 独立渠道结构（对齐 K3） */
+ok(/id="updHist"/.test(html) && /\.upd-hist\.open/.test(html), 'G1 更新历史折叠区容器与样式存在');
+ok(/buildUpdateLog/.test(code) && /crawlDate/.test(code), 'G2 更新历史按采集入库日聚合');
+ok(!/本批 \+|口径版本 <b>V|口径说明 ↗/.test(code), 'G2b 顶部不展示当日拉取条数与口径说明');
+ok(/当日拉取/.test(code) && /当日拉取<\/span><span class="u-res"/.test(code), 'G2c 逐日拉取条数改由更新历史承载');
+ok(/工作日 10:00 自动更新/.test(code) && /已入库 <b>/.test(code), 'G3 更新条补自动更新说明与入库批次数');
+ok(/function dateOf/.test(code) && /dateMode/.test(code), 'G4 明细时间支持发布日/采集日双口径');
+ok(/id="dateFrom"/.test(code) && /id="dateTo"/.test(code), 'G5 明细时间自定义起止区间存在');
+ok(/data-act="clearDate"/.test(code), 'G6 自定义区间可一键清除');
+ok(/S\.channelGroup/.test(code) && /S\.platform/.test(code), 'G7 渠道组/站点为全局筛选状态');
+ok(/id="chanShare"/.test(html) && /id="chanMatrix"/.test(html), 'G8 渠道来源占比与渠道×情感矩阵容器存在');
+ok(/renderChanShare\(\)/.test(code) && /renderChanMatrix\(\)/.test(code), 'G9 渠道结构渲染已接入 renderAll');
+ok(/渠道结构/.test(html), 'G10 独立「渠道结构」分区标题存在');
+ok(/采集能力/.test(code) && /不等于用户真实分布/.test(code), 'G11 渠道集中度披露「非真实分布」警示');
+
+/* 2026-11-17 H 批：Reddit 公开 RSS 通道 */
+const rd = (data.items || []).filter(function(x){ return x.channel === 'reddit'; });
+const rdCfg = (data.meta.channels || []).filter(function(x){ return x.key === 'reddit'; })[0];
+ok(rd.length >= 2, 'H1 Reddit 条目已入库', 'count=' + rd.length);
+ok(!!rdCfg && rdCfg.state === 'partial', 'H2 Reddit 渠道状态为部分可达（非已封锁）');
+ok(rd.every(function(x){ return x.translationStatus === '已补译' && x.summaryCn; }), 'H3 Reddit 海外条目均有中文译文与摘要');
+ok(/公开 new\/\.rss/.test(data.meta.sampleDisclosure || ''), 'H4 样本披露写明 Reddit 为公开 RSS 非官方 API');
 console.log('\nVERIFY: ' + pass + ' PASS / ' + fail + ' FAIL');
 process.exit(fail ? 1 : 0);

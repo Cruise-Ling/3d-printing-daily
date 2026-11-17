@@ -38,6 +38,17 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .update-bar .ub-add{background:#0d2818;color:#3fb950;border-radius:9px;padding:1px 8px;font-variant-numeric:tabular-nums}
 .update-bar .ub-btn{margin-left:auto;font-family:inherit;font-size:12px;color:#c9d1d9;background:transparent;border:1px solid #30363d;border-radius:6px;padding:3px 10px;cursor:pointer;text-decoration:none}
 .update-bar .ub-btn:hover{border-color:#58a6ff;color:#58a6ff;text-decoration:none}
+/* 更新历史折叠区：对齐 K3 upd-hist，按采集入库日(crawlDate)聚合，无入库的日期不出行 */
+.upd-hist{display:none;margin:-4px 0 14px;background:#0d1117;border:1px solid #21262d;border-radius:10px;padding:4px 12px 8px;font-size:12px}
+.upd-hist.open{display:block}
+.upd-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid #1c2128;color:#8b949e}
+.upd-row:last-of-type{border-bottom:none}
+.upd-row.upd-head{color:#6e7681;font-size:11px;border-bottom:1px solid #30363d;padding-bottom:5px}
+.upd-row .u-time{flex:0 0 112px;color:#c9d1d9;font-variant-numeric:tabular-nums}
+.upd-row .u-add{flex:0 0 56px;color:#3fb950;font-variant-numeric:tabular-nums}
+.upd-row .u-tot{flex:0 0 90px;color:#6e7681;font-variant-numeric:tabular-nums}
+.upd-row .u-res{flex:1}
+.upd-row.cur .u-time{color:#58a6ff;font-weight:600}
 /* 分区与卡片：K3 sec-title（蓝竖条） + panel h3 .note */
 .sec-title{font-size:15px;font-weight:600;margin:24px 0 12px;color:#e6edf3;display:flex;align-items:center;gap:8px}
 .sec-title::before{content:'';width:3px;height:15px;background:#58a6ff;border-radius:2px}
@@ -82,6 +93,21 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .stack-legend .sl{display:flex;align-items:center;gap:6px}
 .stack-legend .sl b{color:#e6edf3;font-variant-numeric:tabular-nums}
 .stack-legend i{width:9px;height:9px;border-radius:3px;display:inline-block;flex:0 0 9px}
+/* 渠道结构（对齐 K3）：图例可点筛选 + 缺口标记 + 站点横条 */
+.stack-legend .sl.legend-clk{cursor:pointer;padding:2px 7px;border-radius:12px;border:1px solid transparent}
+.stack-legend .sl.legend-clk:hover{border-color:var(--bd2);background:var(--panel2)}
+.stack-legend .sl.legend-clk.on{border-color:var(--blue);background:rgba(88,166,255,.12);color:var(--blue)}
+.t-flag{color:#f85149;font-size:10.5px;border:1px solid rgba(248,81,73,.4);border-radius:8px;padding:0 6px}
+.hbar{display:flex;align-items:center;gap:10px;padding:5px 0;font-size:12px;cursor:pointer;border-radius:5px}
+.hbar:hover{background:var(--panel2)}
+.hbar.on{background:rgba(88,166,255,.1)}
+.hbar .hname{color:#c9d1d9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hbar .htrack{flex:1;height:12px;background:#21262d;border-radius:6px;overflow:hidden}
+.hbar .hfill{display:block;height:100%;border-radius:6px}
+.hbar .hnum{flex:0 0 96px;text-align:right;color:var(--mu);font-variant-numeric:tabular-nums;font-size:11.5px}
+/* 明细定位条的时间筛选：date 输入对齐 K3 filter-btn 视觉 */
+.dbar input[type=date]{background:var(--bg);border:1px solid var(--bd2);border-radius:6px;color:var(--tx);padding:3px 7px;font-family:inherit;font-size:11.5px;color-scheme:dark}
+.dbar .chip.dt-on{background:rgba(31,111,235,.18);border-color:var(--blue);color:#79c0ff}
 .foldrow{margin-top:10px;padding-top:9px;border-top:1px solid #1c2128;font-size:11.5px;color:#6e7681;line-height:1.6}
 .foldrow b{color:#c9d1d9;font-variant-numeric:tabular-nums}
 table{width:100%;border-collapse:collapse;font-size:12px}th,td{border-bottom:1px solid var(--bd);padding:7px 8px;text-align:left}th{color:var(--mu);font-weight:400;font-size:11.5px}td{color:var(--tx)}
@@ -180,6 +206,7 @@ __RESIN_NAV__
   </div>
 
   <div class="update-bar" id="updateBar"></div>
+  <div class="upd-hist" id="updHist"></div>
 
   <div class="kpi-row" id="kpis"></div>
 
@@ -196,11 +223,15 @@ __RESIN_NAV__
   <div class="panel"><h3>机型 × 问题点交叉矩阵<span class="note">单元格 = 该机型命中该问题点的条目数（按条去重）；四品牌机型同表，我方绿色</span></h3><div id="matrix"></div></div>
   <div class="panel"><h3>竞品口碑水位<span class="note">上：对比语境样本里被点名的竞品 · 下：竞品自有样本，两个分母不混算</span></h3><div id="compete"></div></div>
 
-  <h2 class="sec-title">质量与趋势</h2>
+  <h2 class="sec-title">渠道结构<span class="sec-note">数据抓取渠道 · 点击图例或站点可全局筛选</span></h2>
+  <div class="panel"><h3>渠道来源占比<span class="note">一级 = 渠道组，二级 = 具体平台 · 点击图例或站点行筛选明细 · <b style="color:#d29922">评价类按所属平台计入，此处集中度反映「我们的采集能力」，不等于用户真实分布</b></span></h3><div id="chanShare"></div></div>
   <div class="grid2">
-    <div class="panel"><h3>样本质量与去噪<span class="note">全量口径，不与 KPI 互相推导</span></h3><div id="quality"></div></div>
-    <div class="panel"><h3>渠道覆盖与缺口<span class="note">state 为通道状态，非数据质量</span></h3><div id="channels"></div></div>
+    <div class="panel"><h3>渠道覆盖清单<span class="note">目标渠道 × 采集方式 × 当前覆盖 · 0 条即缺口或稀疏；state 为通道状态，非数据质量</span></h3><div id="channels"></div></div>
+    <div class="panel"><h3>渠道 × 情感矩阵<span class="note">分母 = 当前筛选命中该渠道组的样本 · 五档按占比铺满</span></h3><div id="chanMatrix"></div></div>
   </div>
+
+  <h2 class="sec-title">质量与趋势</h2>
+  <div class="panel"><h3>样本质量与去噪<span class="note">全量口径，不与 KPI 互相推导</span></h3><div id="quality"></div></div>
   <div class="panel"><h3>声量趋势<span class="note">按发布日聚合 · 红柱标注负面率环比超阈值</span></h3><div class="frow" id="trendCtl" style="margin-bottom:10px"></div><div id="trend"></div></div>
 
   <h2 class="sec-title">明细反馈流<span class="sec-note">当前筛选下的逐条明细 · 按发布日倒序 · 卡片即一条，与上方面板同一筛选口径</span></h2>
@@ -220,7 +251,11 @@ var DATA = __RESIN_DATA__;
 var ITEMS = DATA.items || [];
 var META = DATA.meta || {};
 var S = {subject:"all",brand:"all",model:"all",region:"all",source:"all",scope:"valid",range:"all",q:"",problem:"",trend:"month",bucket:"",fields:{},
-         sentiment:"all",life:"all",ctx:"all",p0:"all",vol:"all"};
+         sentiment:"all",life:"all",ctx:"all",p0:"all",vol:"all",
+         /* 渠道结构：一级渠道组 / 二级站点，来自渠道来源占比图例与站点行，全局联动 */
+         channelGroup:"all",platform:"all",
+         /* 明细时间筛选：dateMode 决定按发布日还是采集日；自定义区间优先于 range 预设 */
+         dateMode:"published",dateFrom:"",dateTo:""};
 var EXPORT_FIELDS = [["id","记录编号"],["brand","品牌"],["modelName","机型"],["platform","平台"],["region","区域"],["pubDate","发布时间"],["sentiment","情感"],["problemPoints","问题点"],["isP0","P0"],["sourceType","信源"],["heat","互动量"],["reviewGrade","复核状态"],["lifecycle","生命周期"],["titleCn","标题中译"],["summaryCn","中文摘要"],["screenshot","证据存档"],["reviewNote","复核依据"],["sourceLink","原文链接"],["originalText","原文"]];
 EXPORT_FIELDS.forEach(function(f){ S.fields[f[0]] = true; });
 
@@ -268,12 +303,21 @@ function dimOK(x,k,v){
   }
   return true;
 }
+/* 明细时间字段：按「发布日 / 采集日」口径取 YYYY-MM-DD。
+   顶部 range 预设沿用发布日（与声量趋势同口径，避免改动顶部 KPI）；
+   明细区新增的 dateFrom/dateTo 自定义区间则服从 dateMode，可选采集日口径。 */
+function dateOf(x){
+  return S.dateMode==="collection" ? String(x.crawlDate||x.pubDate||"").slice(0,10)
+                                   : String(x.pubDate||"").slice(0,10);
+}
 function match(x){
   if(S.subject!=="all" && subjOf(x)!==S.subject) return false;
   if(S.brand!=="all" && (x.brand||"__none__")!==S.brand) return false;
   if(S.model!=="all" && (x.model||"__none__")!==S.model) return false;
   if(S.region!=="all" && x.region!==S.region) return false;
   if(S.source!=="all" && x.sourceType!==S.source) return false;
+  if(S.channelGroup!=="all" && (x.channelGroup||"未知")!==S.channelGroup) return false;
+  if(S.platform!=="all" && (x.platform||x.channel||"未知")!==S.platform) return false;
   if(!dimOK(x,"problem",S.problem)) return false;
   if(!dimOK(x,"sentiment",S.sentiment)) return false;
   if(!dimOK(x,"life",S.life)) return false;
@@ -286,6 +330,10 @@ function match(x){
     lim.setDate(lim.getDate()-parseInt(S.range,10));
     if(!(d>=lim)) return false;
   }
+  // 明细区自定义区间（含采集日口径）：与顶部 range 取交集
+  var dstr=dateOf(x);
+  if(S.dateFrom && !(dstr>=S.dateFrom)) return false;
+  if(S.dateTo   && !(dstr<=S.dateTo))   return false;
   if(S.q){
     var q=S.q.toLowerCase(), blob=[x.id,x.title,x.originalText,x.summaryCn,x.textCn,x.modelName,x.brand,x.sourceLink].join(" ").toLowerCase();
     if(blob.indexOf(q)<0) return false;
@@ -304,24 +352,52 @@ function barRow(name,val,total,color,act,attr,color2){
 }
 function empty(t){ return '<div class="empty">'+esc(t)+'</div>'; }
 
+/* 更新历史口径：按 items[].crawlDate（采集入库日）聚合成批次，与明细「按采集日」同一字段。
+   无入库的日期不出行（那是「当天没有批次」，不是「0 条」）；回填批次与日更批次混在同一时间轴，如实披露。 */
+function buildUpdateLog(){
+  var counts=countBy(ITEMS,function(x){ return String(x.crawlDate||"").slice(0,10)||"未标注入库日"; });
+  var notes={"backfill":"历史回填批次","daily":"日更增量","manual":"人工补录"};
+  return Object.keys(counts).sort().reverse().map(function(d){
+    var rows=ITEMS.filter(function(x){ return String(x.crawlDate||"").slice(0,10)===d; });
+    var kinds=countBy(rows,function(x){return x.batchKind||"daily";});
+    var top=sorted(kinds).map(function(k){return (notes[k]||k)+" "+kinds[k];}).join(" / ");
+    return {date:d, add:counts[d], note:top};
+  });
+}
+var updOpen=false;
+function toggleUpd(){ updOpen=!updOpen; renderUpdate(); }
 function renderUpdate(){
   var el=document.getElementById("updateBar");
   var kinds=countBy(ITEMS,function(x){return x.contentKind||"其他";});
   var parts=Object.keys(kinds).map(function(k){return k+" "+kinds[k];});
-  var delta=Number(META.deltaToday||0), pend=Number(META.needsReviewItems||0);
-  var ver=String(META.version||"1.1").replace(/^V/i,"");
+  var pend=Number(META.needsReviewItems||0);
   var fetched=String(META.fetchedAt||"—"), hhmm=fetched.length>10?fetched.slice(11,19):"—";
+  var log=buildUpdateLog();
   el.innerHTML=
     '<span class="ub-dot" title="数据链路正常"></span>'+
     '<span class="ub-main">数据更新至 <b>'+esc(META.updatedDate||META.refDate||"—")+'</b></span>'+
     '<span class="ub-sep"></span><span>抓取于 <b>'+esc(hhmm)+'</b></span>'+
     '<span class="ub-sep"></span><span>内容截至 <b>'+esc(META.dataThrough||"—")+'</b></span>'+
+    '<span class="ub-sep"></span><span>工作日 10:00 自动更新</span>'+
     '<span class="ub-sep"></span><span>累计 <b>'+ITEMS.length+'</b> 条</span>'+
-    '<span class="ub-sep"></span><span>载体构成 '+(parts.join(" / ")||"—")+'</span>'+
+    '<span class="ub-sep"></span><span class="kind-note">载体构成 '+(parts.join(" / ")||"—")+'</span>'+
     '<span class="ub-sep"></span><span>有效样本 <b>'+esc(META.validItems||0)+'</b> 条</span>'+
-    (delta>0?'<span class="ub-add">本批 +'+delta+'</span>':'')+
-    '<span class="ub-sep"></span><span>口径版本 <b>V'+esc(ver)+'</b> · AI 逐条语义复核</span>'+
-    '<a class="ub-btn" href="_docs/光固化专栏_指标口径说明_V1.2.md" target="_blank" rel="noopener">口径说明 ↗</a>';
+    '<span class="ub-sep"></span><span>已入库 <b>'+log.length+'</b> 个批次</span>'+
+    '<button class="ub-btn" onclick="toggleUpd()">'+(updOpen?'收起历史 ▲':'更新历史 ▾')+'</button>';
+  var hist=document.getElementById("updHist");
+  if(hist){
+    if(!updOpen){ hist.className="upd-hist"; hist.innerHTML=""; }
+    else{
+      hist.className="upd-hist open";
+      hist.innerHTML='<div class="upd-row upd-head"><span class="u-time">入库日</span><span class="u-add">当日拉取</span><span class="u-res">批次构成</span></div>'+
+        log.slice(0,12).map(function(r,i){
+        return '<div class="upd-row'+(i===0?' cur':'')+'"><span class="u-time">'+esc(r.date)+(i===0?'（最新）':'')+'</span>'+
+          '<span class="u-add">+'+r.add+'</span>'+
+          '<span class="u-res">'+esc(r.note||"常规增量")+'</span></div>';
+      }).join("")+
+        '<div class="foldrow">口径：按<b>采集入库日（crawlDate）</b>聚合，与明细「按采集日」同一字段。<b>顶部只显示累计与批次数，逐日拉取条数见本表</b>。<b>无入库的日期不显示行</b> —— 那是「当天没有批次」，不是「0 条」。<b>回填批次与日更批次混在同一时间轴</b>，且稀疏渠道入库日 ≠ 发布日，解读时须注意。本页 '+ITEMS.length+' 条来自 '+log.length+' 个入库批次。</div>';
+    }
+  }
   document.getElementById("subTitle").textContent=
     "四品牌 "+((META.models||[]).length)+" 机型 · 声量 / 情感 / 问题点 / 信源 / 竞品 五层结构 · 国内 + 海外分列 · 逐条语义复核 · "+
     (pend>0? pend+" 条待复核" : ITEMS.length+" 条已确认");
@@ -402,9 +478,31 @@ function dProblemSelect(){
     '</select><span class="mini">按条去重，不是提及次数</span></div>';
   return h;
 }
+/* 明细时间筛选：预设 chip 与顶部「时间范围」共用 S.range（同一状态，避免两套打架）；
+   dateMode / 自定义区间是本区专属，服从「按采集日」时可定位回填批次与入库节奏。 */
+function dTimeRow(){
+  var presets=[["all","全部"],["90","近90天"],["30","近30天"],["7","近7天"]];
+  var chips=presets.map(function(o){
+    var v=o[0], on=(S.range===v && !S.dateFrom && !S.dateTo);
+    return '<span class="chip'+(on?" on":"")+'" data-act="dset" data-k="range" data-v="'+v+'">'+esc(o[1])+'</span>';
+  }).join("");
+  var modes=[["published","按发布日"],["collection","按采集日"]].map(function(o){
+    return '<span class="chip'+(S.dateMode===o[0]?" dt-on":"")+'" data-act="dset" data-k="dateMode" data-v="'+o[0]+'" title="'+
+      (o[0]==="published"?"按内容发布日期：回答「这条反馈是什么时候的」":"按采集入库日期：回答「这个批次抓到了什么」（回填批次入库日 ≠ 发布日）")+'">'+o[1]+'</span>';
+  }).join("");
+  return '<div class="frow"><span class="flabel">时间</span>'+chips+
+    '<span class="ub-sep"></span>'+
+    '<input type="date" id="dateFrom" title="起始日期（含）" value="'+esc(S.dateFrom)+'">'+
+    '<span class="mini">至</span>'+
+    '<input type="date" id="dateTo" title="结束日期（含）" value="'+esc(S.dateTo)+'">'+
+    (S.dateFrom||S.dateTo?'<span class="chip dt-on" data-act="clearDate">清除区间 ✕</span>':'')+
+    '<span class="ub-sep"></span>'+modes+
+    '<span class="mini" style="margin-left:auto">与顶部时间范围同一状态 · 自定义区间优先 · 含边界日</span></div>';
+}
 function renderDetailBar(){
   var el=document.getElementById("dChips"); if(!el) return;
   var h='<div class="frow"><span class="dsub">明细定位</span><span class="filter-scope">补充顶部未覆盖的维度 · 与顶部全局筛选同源，联动所有面板 · 数字 = 选它之后的条数</span></div>';
+  h+=dTimeRow();
   h+=dChips("sentiment","情感",[["all","全部"],["负面","负面"],["非常负面","非常负面"],["中性","中性"],["正面","正面"]]);
   h+=dProblemSelect();
   h+=dChips("life","生命周期",[["all","全部"],["新出现","新出现"],["持续存在","持续存在"]]);
@@ -415,9 +513,16 @@ function renderDetailBar(){
   // 顶部检索与明细检索是同一个状态，两处输入框互相同步，不新建第二套关键词
   var dq=document.getElementById("dq");
   if(dq && document.activeElement!==dq) dq.value=S.q||"";
+  var df=document.getElementById("dateFrom"), dt=document.getElementById("dateTo");
+  if(df && document.activeElement!==df) df.onchange=function(){ S.dateFrom=this.value; renderAll(true); };
+  if(dt && document.activeElement!==dt) dt.onchange=function(){ S.dateTo=this.value; renderAll(true); };
   var hint=document.getElementById("dHint");
   if(hint){
     var parts=[];
+    if(S.dateFrom||S.dateTo) parts.push("时间="+(S.dateFrom||"…")+"~"+(S.dateTo||"…")+"（"+(S.dateMode==="collection"?"采集日":"发布日")+"）");
+    else if(S.range!=="all") parts.push("时间=近"+S.range+"天");
+    if(S.channelGroup!=="all") parts.push("渠道组="+S.channelGroup);
+    if(S.platform!=="all") parts.push("站点="+S.platform);
     if(S.sentiment!=="all") parts.push("情感="+S.sentiment);
     if(S.problem) parts.push("问题点="+(S.problem==="__none__"?"未标注":S.problem));
     if(S.life!=="all") parts.push("生命周期="+S.life);
@@ -603,6 +708,73 @@ function renderCompete(){
   document.getElementById("compete").innerHTML=h;
 }
 
+/* 渠道结构（对齐 K3）：渠道组配色与展示顺序固定，缺口渠道（META.channelGaps）单独标注。
+   一级 = channelGroup（来自采集器归一字段），二级 = platform（站点）。 */
+var CH_GROUP_ORDER=["海外视频","海外社区","国内视频","国内评测社区"];
+var CH_GROUP_COLOR={"海外视频":"#1f6feb","海外社区":"#9e6a03","国内视频":"#bc8cff","国内评测社区":"#1b7c83"};
+var CH_GROUP_C2 ={"海外视频":"#58a6ff","海外社区":"#ef9f27","国内视频":"#d2a8ff","国内评测社区":"#39c5cf"};
+function chGroupColor(g){ return CH_GROUP_COLOR[g]||"#484f58"; }
+function chGroupC2(g){ return CH_GROUP_C2[g]||"#6e7681"; }
+function renderChanShare(){
+  var f=filtered(), total=f.length||1;
+  var gc=countBy(f,function(x){return x.channelGroup||"未知";});
+  var groups=CH_GROUP_ORDER.concat(Object.keys(gc).filter(function(g){return CH_GROUP_ORDER.indexOf(g)<0;}));
+  var bar=groups.map(function(g){
+    var n=gc[g]||0; if(!n) return "";
+    return '<span style="width:'+(n*100/total)+'%;background:'+chGroupColor(g)+'" title="'+esc(g)+' '+n+' 条"></span>';
+  }).join("");
+  var legend=groups.map(function(g){
+    var n=gc[g]||0, on=(S.channelGroup===g);
+    return '<span class="sl legend-clk'+(on?' on':'')+'" data-act="dset" data-k="channelGroup" data-v="'+esc(g)+'" title="'+esc(g)+' · 点击只看该渠道组">'+
+      '<i style="background:'+chGroupColor(g)+'"></i>'+esc(g)+' <b>'+n+'</b> · '+pct(n,total)+'</span>';
+  }).join("");
+  // 二级：站点（platform）
+  var pc=countBy(f,function(x){ return x.platform||x.channel||"其他"; });
+  var plats=Object.keys(pc).map(function(k){return {k:k,n:pc[k]};}).sort(function(a,b){return b.n-a.n||(a.k<b.k?-1:1);});
+  var top=plats.filter(function(r){return r.n>=2;}), tail=plats.filter(function(r){return r.n<2;});
+  var max=top.length?top[0].n:1;
+  function hrow(r){
+    var g=""; ITEMS.forEach(function(x){ if(!g && (x.platform||x.channel)===r.k) g=x.channelGroup||""; });
+    var on=(S.platform===r.k);
+    return '<div class="hbar'+(on?' on':'')+'" data-act="dset" data-k="platform" data-v="'+esc(r.k)+'" title="'+esc(r.k)+' · 点击只看该站点">'+
+      '<span class="hname" style="flex:0 0 160px;width:160px">'+esc(r.k)+'</span>'+
+      '<span class="htrack"><span class="hfill" style="width:'+(r.n*100/max)+'%;background:linear-gradient(90deg,'+chGroupColor(g)+','+chGroupC2(g)+')"></span></span>'+
+      '<span class="hnum">'+r.n+' · '+pct(r.n,total)+'</span></div>';
+  }
+  var rows=top.map(hrow).join("");
+  var foot="";
+  if(tail.length){
+    foot+='<div class="foldrow">另有 <b>'+tail.length+'</b> 个站点各仅 1 条（'+tail.map(function(r){return esc(r.k);}).join(" / ")+'）：'+tail.map(hrow).join("")+'</div>';
+  }
+  foot+='<div class="foldrow"><b style="color:#d29922">口径警示</b>：本页 '+ITEMS.length+' 条中海外视频 '+((gc["海外视频"]||0))+' 条、海外占比 '+
+    pct(ITEMS.filter(function(x){return x.region==="海外";}).length,ITEMS.length)+'，渠道集中度反映<b>我们的采集能力</b>，不等于用户真实分布，禁止据此外推产品口碑；'+
+    'YouTube 评论按所属平台（YouTube）计入，不单列为独立渠道。</div>';
+  document.getElementById("chanShare").innerHTML=
+    (total?'<div class="stack">'+bar+'</div><div class="stack-legend">'+legend+'</div>':empty("当前筛选无样本，渠道占比显示「—」"))+
+    '<div style="margin-top:14px;padding-top:12px;border-top:1px solid #1c2128"></div>'+rows+foot;
+}
+function renderChanMatrix(){
+  var f=filtered(), groups=CH_GROUP_ORDER.concat(["未知"]);
+  var order=[["非常负面","#f85149"],["负面","#d29922"],["中性","#6e7681"],["正面","#3fb950"],["非常正面","#2ea043"]];
+  var h='<table><thead><tr><th>渠道组</th><th>样本</th><th>五档情感分布</th><th>负面</th></tr></thead><tbody>';
+  var any=false;
+  groups.forEach(function(g){
+    var rows=f.filter(function(x){return (x.channelGroup||"未知")===g;});
+    if(!rows.length) return;
+    any=true;
+    var m=countBy(rows,function(x){return x.sentiment||"中性";});
+    var bar=order.map(function(o){
+      var n=m[o[0]]||0; return n?'<span style="width:'+(n*100/rows.length)+'%;background:'+o[1]+'" title="'+o[0]+' '+n+' 条"></span>':"";
+    }).join("");
+    var neg=(m["非常负面"]||0)+(m["负面"]||0);
+    h+='<tr><td>'+esc(g)+'</td><td class="num">'+rows.length+'</td>'+
+       '<td><div class="stack" style="height:14px">'+bar+'</div></td>'+
+       '<td class="num">'+neg+' · '+pct(neg,rows.length)+'</td></tr>';
+  });
+  h+='</tbody></table>';
+  h+='<div class="foldrow">五档按占比铺满；分母 = 当前筛选命中该渠道组的样本数。样本 &lt;3 条的渠道组负面占比不参与结论，仅作结构参考。</div>';
+  document.getElementById("chanMatrix").innerHTML=any?h:empty("当前筛选无渠道样本");
+}
 function renderChannels(){
   var ch=META.channels||[], byKey={}; ITEMS.forEach(function(x){byKey[x.channel]=(byKey[x.channel]||0)+1;});
   var lab={auto:"自动可达",partial:"部分可达",needs_key:"待凭据",blocked:"已封锁",manual:"人工补录",login_wall:"登录墙",unavailable:"不可得"};
@@ -757,7 +929,8 @@ function renderAll(skipFilters){
   renderUpdate();
   if(!skipFilters) renderFilters();
   renderKPI(); renderSent(); renderProb(); renderSrc(); renderMatrix();
-  renderQualityOnce(); renderCompete(); renderChannels(); renderTrend();
+  renderChanShare(); renderChanMatrix(); renderChannels();
+  renderQualityOnce(); renderCompete(); renderTrend();
   renderDetailBar(); renderExportFields(); renderCards(); renderFoot();
 }
 function renderQualityOnce(){
@@ -819,9 +992,11 @@ document.addEventListener("click",function(e){
     // 「仅未计入声量」必须切到全量口径，否则有效样本已被滤掉、结果恒为 0
     if(dk==="vol" && dv==="no") S.scope="all";
     renderAll();
+  }else if(act==="clearDate"){
+    S.dateFrom=""; S.dateTo=""; renderAll();
   }else if(act==="reset"){
     S={subject:"all",brand:"all",model:"all",region:"all",source:"all",scope:"valid",range:"all",q:"",problem:"",trend:"month",bucket:"",fields:S.fields,
-       sentiment:"all",life:"all",ctx:"all",p0:"all",vol:"all"};
+       sentiment:"all",life:"all",ctx:"all",p0:"all",vol:"all",channelGroup:"all",platform:"all",dateMode:"published",dateFrom:"",dateTo:""};
     var dq0=document.getElementById("dq"); if(dq0){ dq0.value=""; }
     renderAll();
   }else if(act==="field"){
