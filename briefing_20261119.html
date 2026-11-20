@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D打印行业每日资讯 - 2026年11月19日</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖨️</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f0f2f5;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;display:flex;justify-content:center;padding:12px 0}
+.card{width:375px;background:#fff;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.06);overflow:clip}
+.header{background:linear-gradient(135deg,#1a237e,#283593,#3949ab);padding:24px 20px 18px;color:#fff;position:relative}
+.header-back{position:absolute;left:16px;top:28px;transform:translateY(-50%);display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.95);font-size:14px;font-weight:600;text-decoration:none;padding:7px 16px 7px 3px;border-radius:20px;border:1.5px solid rgba(255,255,255,.35)}
+.header-back:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.6)}
+.header h1{font-size:19px;font-weight:700;letter-spacing:1px;margin-bottom:6px;padding-left:90px}
+.header .date{font-size:13px;opacity:.85;font-weight:400}
+.header .source-note{font-size:11px;opacity:.7;margin-top:4px}
+.stats-bar{display:flex;gap:8px;flex-wrap:wrap;padding:14px 20px;background:#fafbff;border-bottom:1px solid #f0f0f0}
+.stats-pill{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;color:#555;background:#f0f4ff;border-radius:20px;padding:5px 11px;border:1px solid #e8edff}
+.stats-pill b{color:#1a73e8;font-weight:700}
+.stats-pill.warn{background:#fff8e1;border-color:#ffe082}
+.stats-pill.warn b{color:#e65100}
+.section-title{display:flex;align-items:center;padding:18px 20px 12px;font-size:16px;font-weight:800;color:#0d47a1;background:linear-gradient(90deg,rgba(26,115,232,.08),transparent);border-bottom:2px solid #1a73e8}
+.section-title .icon{width:4px;height:16px;border-radius:2px;margin-right:8px}
+.section-title.general .icon{background:linear-gradient(180deg,#42a5f5,#1e88e5)}
+.section-title.specific .icon{background:linear-gradient(180deg,#ffa726,#fb8c00)}
+.section-title.consumer .icon{background:linear-gradient(180deg,#66bb6a,#43a047)}
+.section-title.global .icon{background:linear-gradient(180deg,#ab47bc,#7b1fa2)}
+.section-title.feedback .icon{background:linear-gradient(180deg,#26c6da,#00838f)}
+.section-title.niche .icon{background:linear-gradient(180deg,#e64a19,#d84315)}
+.section-title.scenario .icon{background:linear-gradient(180deg,#00796b,#00695c)}
+.item{padding:12px 20px 14px;border-bottom:1px solid #f5f5f5}
+.item:last-child{border-bottom:none}
+.item-head{display:flex;align-items:flex-start;margin-bottom:6px}
+.num-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;flex-shrink:0;margin-right:10px;margin-top:1px}
+.general-zone .num-dot{background:linear-gradient(135deg,#42a5f5,#1e88e5)}
+.specific-zone .num-dot{background:linear-gradient(135deg,#ffa726,#fb8c00)}
+.consumer-zone .num-dot{background:linear-gradient(135deg,#66bb6a,#43a047)}
+.global-zone .num-dot{background:linear-gradient(135deg,#ab47bc,#7b1fa2)}
+.feedback-zone .num-dot{background:linear-gradient(180deg,#26c6da,#00838f)}
+.niche-zone .num-dot{background:linear-gradient(135deg,#e64a19,#d84315)}
+.scenario-zone .num-dot{background:linear-gradient(135deg,#00796b,#00695c)}
+.item-title{font-size:14.5px;font-weight:600;line-height:1.45;color:#212121;flex:1}
+.item-title a{color:#212121;text-decoration:none}
+.item-title a:hover{color:#1a73e8}
+.item-summary{font-size:12.8px;line-height:1.7;color:#616161;padding-left:32px;word-break:break-all}
+.item-source{font-size:11px;color:#9e9e9e;padding-left:32px;margin-top:4px}
+.item-source a{color:#1e88e5;text-decoration:none}
+.item-source a:hover{text-decoration:underline}
+.from-tag{font-size:10px;padding:1px 6px;border-radius:6px;margin-left:6px;opacity:.75}
+.from-qq{background:#fce4ec;color:#880e4f}
+.from-sina{background:#fff3e0;color:#e65100}
+.from-163{background:#e8f5e9;color:#2e7d32}
+.from-sohu{background:#fff3e0;color:#bf360c}
+.from-36kr{background:#e8eaf6;color:#283593}
+.from-3dprint{background:#e0f7fa;color:#006064}
+.from-3dprinting{background:#e0f7fa;color:#006064}
+.from-dayinpai{background:#e8f5e9;color:#1b5e20}
+.from-cgtn{background:#e3f2fd;color:#0d47a1}
+.from-xinhua{background:#ffebee;color:#b71c1c}
+.from-cnstock{background:#fff3e0;color:#e65100}
+.from-eastmoney{background:#fff3e0;color:#bf360c}
+.from-ithome{background:#e3f2fd;color:#1565c0}
+.from-cctv{background:#ffebee;color:#b71c1c}
+.from-other{background:#eceff1;color:#37474f}
+.from-tencent{background:#e3f2fd;color:#0d47a1}
+.from-gov{background:#e8eaf6;color:#283593}
+.from-10jqka{background:#fff3e0;color:#e65100}
+.side-nav{position:fixed;left:max(0px,calc((100vw - 375px)/2 - 90px));top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;z-index:200}
+.side-nav-item{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;font-size:12px;color:#555;background:rgba(255,255,255,.95);box-shadow:0 1px 6px rgba(0,0,0,.08);cursor:pointer;transition:all .2s;text-decoration:none;white-space:nowrap;border:1px solid rgba(0,0,0,.06)}
+.side-nav-item:hover{box-shadow:0 2px 12px rgba(0,0,0,.15);transform:translateX(-2px)}
+.side-nav-item .nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.score-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:8px;margin-left:6px;font-weight:600}
+.score-badge-a{background:#e8f5e9;color:#2e7d32}
+.hot-summary{padding:14px 20px;background:linear-gradient(135deg,#fff8e1,#fff3e0);border-bottom:1px solid #ffe082}
+.hot-summary h3{font-size:14px;font-weight:700;color:#e65100;margin-bottom:8px}
+.hot-summary ul{list-style:none;padding:0}
+.hot-summary li{font-size:12.5px;color:#5d4037;padding:3px 0;padding-left:16px;position:relative;line-height:1.5}
+.hot-summary li::before{content:"";position:absolute;left:0;top:10px;width:6px;height:6px;border-radius:50%;background:#ff9800}
+.footer{padding:16px 20px;background:#f8f9fa;text-align:center;font-size:11px;color:#9e9e9e;border-top:1px solid #f0f0f0}
+.footer a{color:#1e88e5;text-decoration:none}
+@media(max-width:767px){.side-nav{position:fixed;left:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;padding-left:4px;z-index:200}.side-nav .side-nav-item{padding:5px 8px;font-size:11px;border-radius:16px;box-shadow:0 1px 6px rgba(0,0,0,.1)}.card{margin-left:52px;width:calc(100vw - 60px);max-width:375px}body{justify-content:flex-start;padding:12px 0 12px 4px}}
+@media(min-width:768px){.section-nav{display:none}.side-nav{left:max(0px,calc((100vw - 375px)/2 - 90px))}}
+</style>
+</head>
+<body>
+<nav class='side-nav' id="sideNav">
+  <a class='side-nav-item' href="index.html"><span class='nav-dot' style="background:#1a237e"></span>🏠 首页</a>
+  <a class='side-nav-item' onclick="scrollToSection('general')"><span class='nav-dot' style="background:#1a73e8"></span>泛行业</a>
+  <a class='side-nav-item' onclick="scrollToSection('specific')"><span class='nav-dot' style="background:#e65100"></span>细分领域</a>
+  <a class='side-nav-item' onclick="scrollToSection('consumer')"><span class='nav-dot' style="background:#2e7d32"></span>消费级</a>
+  <a class='side-nav-item' onclick="scrollToSection('niche')"><span class='nav-dot' style="background:#d84315"></span>细分市场</a>
+  <a class='side-nav-item' onclick="scrollToSection('scenario')"><span class='nav-dot' style="background:#00695c"></span>场景打印</a>
+  <a class='side-nav-item' onclick="scrollToSection('global')"><span class='nav-dot' style="background:#7b1fa2"></span>海外资讯</a>
+  <a class='side-nav-item' onclick="scrollToSection('feedback')"><span class='nav-dot' style="background:#00838f"></span>用户口碑</a>
+</nav>
+<script>
+function scrollToSection(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+</script>
+<div class='card'>
+
+<div class='header'>
+  <a class='header-back' href="index.html">← 首页</a>
+  <h1>3D打印行业每日资讯</h1>
+  <div class='date'>2026年11月19日 · 星期四</div>
+  <div class='source-note'>内容来源：3D打印资源库 / 3DPrint.com / 3Dnatives / 证券日报 / 中国经济网 等</div>
+</div>
+<div class='stats-bar'>
+  <span class='stats-pill'>资讯 <b>38</b> 条</span>
+  <span class='stats-pill'>分区 <b>7</b> 大</span>
+  <span class='stats-pill warn'>内容日期 <b>2026年11月19日</b></span>
+</div>
+<div class='hot-summary'>
+  <h3>🔥 今日热点速递</h3>
+    <ul><ul>
+      <li>Wohlers Report 2026：2025年全球增材制造营收242亿美元，同比增10.9%</li>
+      <li>VulcanForms向EOS订购200套M4 ONYX，创EOS史上最大单笔订单</li>
+      <li>创想三维SPARKX i8海外众筹收官570万美元，正式进入全球零售</li>
+      <li>倍丰智能红光纯铜方案登陆Formnext：综合制造成本降90%，对准AI液冷</li>
+      <li>2026增材制造大会11月25—27日泸州举行，将发布产业发展报告</li>
+    </ul></ul>
+  </div>
+    <div class='section-title general' id="general">
+      <span class='icon'></span>泛行业资讯（工业/资本/政策）</div>
+    <div class='general-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>1</span>
+        <div class='item-title'>
+          <a href='https://www.163.com/dy/article/LC3V27H6051186GP.html' target='_blank'>VulcanForms向EOS订购200套M4 ONYX，创EOS史上最大单笔订单</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>Formnext 2026期间，美国制造商VulcanForms向EOS订购200套EOS M4 ONYX金属粉末床熔融系统及配套设备，为EOS历史上最大单笔订单。加上马萨诸塞州Devens工厂已在运行的35套，其M4 ONYX机队将增至235套。南极熊估算这笔订单金额可达10亿元级别。VulcanForms由麻省理工孵化，上周刚宣布获5亿美元融资用于建设三座新工厂。</div>
+      <div class='item-source'>来源：<a href='https://www.163.com/dy/article/LC3V27H6051186GP.html' target='_blank'>网易</a><span class='from-tag from-163'>网易</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>2</span>
+        <div class='item-title'>
+          <a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>Wohlers Report 2026：2025年全球增材制造营收242亿美元，同比增10.9%</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>Wohlers市场情报总监在Formnext首日论坛公布，2025年全球增材营收242亿美元、同比+10.9%；亚太（主要由中国驱动）约+20%、北美约+12%（金属增材主要靠国防）、欧洲约+6%。报告判断需求起点正从「技术找问题」转为「制造需求找方案」，AI基础设施与数据中心冷却应用最受关注。</div>
+      <div class='item-source'>来源：<a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>安徽增材制造科技</a><span class='from-tag from-other'>安徽增材制造科技</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>3</span>
+        <div class='item-title'>
+          <a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>Formnext首日论坛观点交锋：投资人称「行业应该变小」，厂商当场反驳</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>AM Ventures前掌门Arno Held称行业碎片化严重、几乎没有公司有能力扮演整合者，部分上市AM公司市值已跌破账面现金，国防开支是「这个行业的海洛因」——真金白银但预算属政治决定。Renishaw的Rainer Lotz当场反驳：技术成熟度已到，围绕具体应用的盈利业务正在形成。英国MTC的Ross Trepleton给出第三条路：把大制造商的匿名需求预测汇总，让供应商对着真实订单投资。</div>
+      <div class='item-source'>来源：<a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>安徽增材制造科技</a><span class='from-tag from-other'>安徽增材制造科技</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>4</span>
+        <div class='item-title'>
+          <a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>2026增材制造大会11月25—27日泸州举行，将发布产业发展报告</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>大会由工信部装备工业发展中心、四川省经信厅、泸州市政府共同主办，首次以「增材制造大会」名义召开（由连续多年举办的产业发展论坛暨产业年会升级），定于11月25—27日在泸州国际会展中心举办。活动体系确认为「会、展、赛」联动，同期举办国际增材制造技术与应用生态展览会、青年专家委员会全体会议暨青年创新大会、核能领域专题学术年会，并发布《中国增材制造产业发展报告(2026)》。</div>
+      <div class='item-source'>来源：<a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>安徽增材制造科技</a><span class='from-tag from-other'>安徽增材制造科技</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>5</span>
+        <div class='item-title'>
+          <a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>泸州增材制造纳入省级新赛道，政策、场景、资金三方面发力</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>政策端落实四川省新兴与未来产业实施方案及「十五五」规划，用重大技术装备攻关、双向揭榜挂帅引导企业联合科研院所攻关金属粉末、核心光学器件等短板，支持争创国家级中小企业特色产业集群；场景端重点布局航空发动机零部件、卫星构件、骨科植入物、口腔医疗等示范项目；资金端跟踪国家制造业转型升级基金、工业母机产业投资基金投向。</div>
+      <div class='item-source'>来源：<a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>安徽增材制造科技</a><span class='from-tag from-other'>安徽增材制造科技</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>6</span>
+        <div class='item-title'>
+          <a href='https://www.163.com/dy/article/LC3RALG50538J1KQ_pdya11y.html' target='_blank'>AMTAE 2026展商名单公布：130余家参展，中国商飞、比亚迪、一汽、蓝箭航天到场</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>2026国际增材制造技术与应用生态展览会11月26—28日在四川泸州国际会展中心举办，展览面积约1万平方米，汇聚130余家参展单位，覆盖装备、材料、核心器件及终端应用。与传统以设备展示为主的展会不同，本届首次集中设置航空航天、核能与能源、船舶海工、汽车与轨道交通、生物医疗、机器人六大应用成果展区。</div>
+      <div class='item-source'>来源：<a href='https://www.163.com/dy/article/LC3RALG50538J1KQ_pdya11y.html' target='_blank'>网易</a><span class='from-tag from-163'>网易</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>7</span>
+        <div class='item-title'>
+          <a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>2026世界智能制造大会南京开幕，第十一届博览会扩至5.5万平方米</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>大会本身非增材专题，但两个信息与行业相关：第十一届世界智能制造博览会扩至5.5万平方米、600余家企业参展；6号馆为国际产教融合馆，汇聚30个国家和地区、200余家参展主体。增材作为智能制造装备的组成部分在其中展出。</div>
+      <div class='item-source'>来源：<a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>安徽增材制造科技</a><span class='from-tag from-other'>安徽增材制造科技</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>37</span>
+        <div class='item-title'>
+          <a href='https://www.gsmjpt.com/news/show.php?itemid=979' target='_blank'>Formnext 2026四大发布勾勒风向：从「能打印」到「打得起、打得稳、打得多」</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>报道将本届展会归纳为量产经济学：Nikon SLM的MACHX用8kW激光与25分钟换型压单件成本；Stratasys H550以34.2升仓体与低30%的TCO扩大粉末床经济性；HP MJF 1200以紧凑机型切入；西门子用Agentic AI把需求描述到制造数据准备串成一条链。核心判断是随形冷却等应用已从「可行性验证」进入「可复现量产」。</div>
+      <div class='item-source'>来源：<a href='https://www.gsmjpt.com/news/show.php?itemid=979' target='_blank'>甘肃模具平台</a><span class='from-tag from-other'>甘肃模具平台</span></div>
+    </div>
+    </div>
+    <div class='section-title specific' id="specific">
+      <span class='icon'></span>细分领域动态（医疗/航天/材料）</div>
+    <div class='specific-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>8</span>
+        <div class='item-title'>
+          <a href='https://js.news.163.com/26/1119/18/LC49G0B304249CU3.html' target='_blank'>倍丰智能红光纯铜全栈方案登陆Formnext：综合制造成本降90%</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>方案由「自研铜粉+红光打印设备+交钥匙工艺包」构成。纯铜液冷构件可构建小于0.1毫米的超精细三维微流道，消除焊缝并将有效换热表面积提升200%以上、整体传热效率提升50%以上、流阻降低30%以上。成形件相对致密度超99.9%、导热率≥380 W/(m·K)、零泄漏气密性，配套年产2000吨铜粉产能，目标场景为单颗功耗破1000W的AI芯片液冷。</div>
+      <div class='item-source'>来源：<a href='https://js.news.163.com/26/1119/18/LC49G0B304249CU3.html' target='_blank'>网易江苏</a><span class='from-tag from-other'>网易江苏</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>9</span>
+        <div class='item-title'>
+          <a href='https://news.qq.com/rain/a/20261118A05JDO00' target='_blank'>希禾增材M350G绿光方案：满幅批量制造光模块冷板</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>铜对1064nm红外激光吸收率仅4%—5%，对515—532nm绿光可跃升至40%左右，提升近一个数量级。M350G采用自研532nm单模连续绿光光纤激光器，功率500W/1000W可选，成型空间350×350×550mm，此次升级重点之一是缩小整机占地以适配产线。纯铜件致密度最高99.9%、电导率101.5% IACS，微流道液冷板最小壁厚0.5mm、可承压8MPa。</div>
+      <div class='item-source'>来源：<a href='https://news.qq.com/rain/a/20261118A05JDO00' target='_blank'>腾讯新闻</a><span class='from-tag from-other'>腾讯新闻</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>10</span>
+        <div class='item-title'>
+          <a href='https://industrypulse.media/news/eng-formnext-2026-day-1-recap-jn3juw' target='_blank'>Nikon SLM推出MACHX模块化金属平台：8kW激光、25分钟换型</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>MACHX家族三种配置：标准型面向通用制造、C型针对长尺寸汽车件、E型提供一米成形高度用于火箭发动机推力室等航天件。总激光功率最高8kW（1kW高斯激光或2kW光束整形激光），可选圆柱交换系统在腔外预热材料以支持连续运行。约200升成形体积置于约13平方米占地，主打单位面积产能；配套SLMX软硬件栈整合热架构、PanX仿真与过程智能。</div>
+      <div class='item-source'>来源：<a href='https://industrypulse.media/news/eng-formnext-2026-day-1-recap-jn3juw' target='_blank'>Industry Pulse</a><span class='from-tag from-other'>Industry Pulse</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>11</span>
+        <div class='item-title'>
+          <a href='https://www.stratasys-china.com/news/one-article-speed-communication-strata98983' target='_blank'>Stratasys发布H550：SAF粉末床成形仓34.2升，总拥有成本低约30%</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>H550长轴450mm，较同类print-and-fuse技术长20%，总拥有成本较同类系统低约30%。配套PowderEase T2自动化粉末后处理系统，一站支持6台设备、单次构建操作员总耗时小于30分钟，2027年二季度商用。同场还展出F870大尺寸工装平台（1000×610×610mm全加热腔室）、面向Origin P3 DLP的sCure自动化后处理，以及PolyJet ToughONE Black工程材料。</div>
+      <div class='item-source'>来源：<a href='https://www.stratasys-china.com/news/one-article-speed-communication-strata98983' target='_blank'>Stratasys官网</a><span class='from-tag from-other'>Stratasys官网</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>12</span>
+        <div class='item-title'>
+          <a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>HP发布MJF 1200：2027年1月选择性上市，5600系列产出提升20%</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>紧凑型Multi Jet Fusion设备MJF 1200将于2027年1月选择性上市、4月全面上市，配套DyeMansion Powershot Go一体化后处理；5600系列新增高产能模式，产出提升20%；Dual Tone双色单件打印将于2027年春通过固件推送。</div>
+      <div class='item-source'>来源：<a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>安徽增材制造科技</a><span class='from-tag from-other'>安徽增材制造科技</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>13</span>
+        <div class='item-title'>
+          <a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>西门子用MCP协议编排增材工作流，与EOS共建自适应生产单元</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>西门子Agentic AI增材工作流用MCP协议让AI代理编排「需求描述→夹具选型→几何修改→仿真验证→制造数据准备」全流程，与Agibot合作以机器人力爪为演示案例；同时与EOS、AM Solutions在埃尔朗根共建自适应生产单元，把打印、自动化、后处理集成进柔性产线。</div>
+      <div class='item-source'>来源：<a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>安徽增材制造科技</a><span class='from-tag from-other'>安徽增材制造科技</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>14</span>
+        <div class='item-title'>
+          <a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>联泰科技与倍丰智能战略合作：工艺深度对接交付广度</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>倍丰的金属增材工艺体系（薄壁成型、自研可阳极氧化铝合金、钛合金、红光纯铜成套工艺）与联泰自研Unionfab分布式制造云平台协同，面向消费电子（手机中框、穿戴壳体、散热构件）探索「设计验证—批量交付」一体化制造服务。联泰披露底数：Unionfab覆盖40余个国家和地区、累计服务超35000家客户。</div>
+      <div class='item-source'>来源：<a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>安徽增材制造科技</a><span class='from-tag from-other'>安徽增材制造科技</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>38</span>
+        <div class='item-title'>
+          <a href='https://industrypulse.media/news/eng-formnext-2026-day-1-recap-jn3juw' target='_blank'>Formnext 2026展期与规模：11月17—20日法兰克福，金属与聚合物双线扩容</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>本届展会金属与聚合物两条主线同时扩容：金属侧以模块化平台与高功率激光提升吞吐密度，聚合物侧以更大成形仓与自动化粉末处理降低单件成本。报道援引Engineering.com指出，同期还出现AI驱动合金计算与高速电芯分析等算力侧进展，说明增材的竞争正从设备参数转向单位成本与产线集成能力。</div>
+      <div class='item-source'>来源：<a href='https://industrypulse.media/news/eng-formnext-2026-day-1-recap-jn3juw' target='_blank'>Industry Pulse</a><span class='from-tag from-other'>Industry Pulse</span></div>
+    </div>
+    </div>
+    <div class='section-title consumer' id="consumer">
+      <span class='icon'></span>消费级（新品/评测/品牌）</div>
+    <div class='consumer-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>15</span>
+        <div class='item-title'>
+          <a href='https://www.163.com/dy/article/LC3MK6740514D3UH.html' target='_blank'>创想三维SPARKX i8海外众筹收官570万美元，正式进入全球零售</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>项目自9月上线Indiegogo以来持续引爆全球创作者市场，最终筹集金额突破570万美元。随着众筹收官，SPARKX i8正式迈入全球零售阶段；海外黑五购物季临近、国内双十二等年终节点将至，年末消费需求有望进一步释放。从渠道反馈与预售态势看，到今年年底3D打印农场订单有望达到万台级规模。</div>
+      <div class='item-source'>来源：<a href='https://www.163.com/dy/article/LC3MK6740514D3UH.html' target='_blank'>封面新闻</a><span class='from-tag from-other'>封面新闻</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>16</span>
+        <div class='item-title'>
+          <a href='https://henan.china.com/news/roll/2026/1119/112026_764535.html' target='_blank'>创想三维携K3、SPARKX i8亮相Formnext 2026，展示「AI+生态」布局</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>K3采用自研KliTek多喷嘴技术，独立四通道四喷嘴，通过切换喷嘴完成颜色转换，减少长距离进退料与频繁冲刷；支持0.2/0.4/0.6/0.8mm多口径协同，外壁用细口径呈现细节、内部填充用粗口径提效；S-Drive双动力挤出搭配TPU套件支持85A/90A/95A，并含USB-C快拆喷嘴组件。SPARKX i8的QuarTeks四通道挤出系统将四路耗材整合至同一打印头，共用耗材路径缩短至不足1毫米。同台还展出HALOT-X1 Max、Falcon T1C激光雕刻机、Raptor Pro Max扫描仪与PioNext Mini齿科方案。</div>
+      <div class='item-source'>来源：<a href='https://henan.china.com/news/roll/2026/1119/112026_764535.html' target='_blank'>中华网</a><span class='from-tag from-other'>中华网</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>17</span>
+        <div class='item-title'>
+          <a href='https://www.163.com/dy/article/LC3MK6740514D3UH.html' target='_blank'>多色3D打印受创作者青睐，AI赋能下桌面造物走向大众化</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>报道认为SPARKX i8在创作自由度、打印稳定性与易用性之间取得可感知平衡，兼顾新手入门体验与专业创作需求，零基础玩家、爱好者、创客、设计师与小型工作室都能找到合适用法。业内观点指出，AI正降低模型创作门槛，能力贯穿模型生成、模型处理、打印辅助全流程，推动普通用户把创意转化为真实生产力。</div>
+      <div class='item-source'>来源：<a href='https://www.163.com/dy/article/LC3MK6740514D3UH.html' target='_blank'>封面新闻</a><span class='from-tag from-other'>封面新闻</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>18</span>
+        <div class='item-title'>
+          <a href='https://3dbite.com/creality-k3-klitek-four-nozzle-printer-first-look' target='_blank'>Creality K3海外首评汇总：849美元、11月2日美国发货、12月8日进欧洲</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>K3是创想三维首款换头机：四个KliTek喷嘴组件独立驻留侧壁坞站，单次换头约5秒；260mm立方成形、CoreXY结构、标称500mm/s与20000mm/s²、300℃热端与100℃ PEI弹簧钢板。每个喷嘴组件自带加热器与料管、重量约为完整工具头五分之一，备件单价约14—20美元（对手件约67美元）。整机37个传感器，其中12个用于换头。</div>
+      <div class='item-source'>来源：<a href='https://3dbite.com/creality-k3-klitek-four-nozzle-printer-first-look' target='_blank'>3DBite</a><span class='from-tag from-other'>3DBite</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>19</span>
+        <div class='item-title'>
+          <a href='https://post.smzdm.com/p/a3m45q77' target='_blank'>拓竹H3C机型矩阵梳理：9头16499元起，首发到手13999元</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>H3C标配9个独立打印头，单头切换3.4秒、从停止打印到重新出料控制在6秒内，单次换料废料约0.038克，原价16499元、首发七天叠加国补到手13999元。文章认为拓竹机型已多到「跟耗材库存一样」，不存在「哪台最值得买」，只能按一周打几件、每件几种颜色、一周换几次料来对号入座。</div>
+      <div class='item-source'>来源：<a href='https://post.smzdm.com/p/a3m45q77' target='_blank'>什么值得买</a><span class='from-tag from-other'>什么值得买</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>36</span>
+        <div class='item-title'>
+          <a href='https://3dbite.com/creality-k3-klitek-four-nozzle-printer-first-look' target='_blank'>Formnext 2026展期定档11月17—20日法兰克福，K3欧洲12月8日开售</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>Formnext 2026于11月17—20日在德国法兰克福展览中心举行，为全球规模最大的增材制造专业展。同期披露的渠道信息显示，Creality K3在美国以849美元开售、11月2日起发货，欧洲市场定于12月8日上市，英国售价尚未公布。K3是四大品牌（Snapmaker、Prusa、Bambu、Creality）中价格最低的换头机型。</div>
+      <div class='item-source'>来源：<a href='https://3dbite.com/creality-k3-klitek-four-nozzle-printer-first-look' target='_blank'>3DBite</a><span class='from-tag from-other'>3DBite</span></div>
+    </div>
+    </div>
+    <div class='section-title niche' id="niche">
+      <span class='icon'></span>细分市场（汽车/建筑/医疗等）</div>
+    <div class='niche-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>20</span>
+        <div class='item-title'>
+          <a href='https://www.gsmjpt.com/news/show.php?itemid=979' target='_blank'>随形冷却模具进入「可复现量产」阶段</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>MACHX这类设备把单件成本、交付确定性、占地效率同时压下来，意味着随形冷却不再是头部大厂秀肌肉，而是中型模具厂可以算清投资回报的常规工艺选项。同篇行情提示模具钢H13电炉18410元跌20元、M2持稳126000元，合金料整体持稳，日报口径已连续走弱，大单不必抢在月初。</div>
+      <div class='item-source'>来源：<a href='https://www.gsmjpt.com/news/show.php?itemid=979' target='_blank'>甘肃模具平台</a><span class='from-tag from-other'>甘肃模具平台</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>21</span>
+        <div class='item-title'>
+          <a href='https://www.aibang.com/a/71996' target='_blank'>万华化学WANFAB材料矩阵亮相Formnext：TPU、PA12、PC、尼龙弹性体、PPS</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>展出材料覆盖线材、粉末、颗粒多形态，适配SLS、FDM等主流工艺。TPU主打宽硬度区间、高弹性与耐磨抗冲击，适配鞋材、柔性护具、减震结构件；PA12低吸水率、低收缩、耐腐耐低温，用于汽车、油气与精密功能件；PC高抗冲耐热；尼龙弹性体兼顾强度与柔度；PPS耐热UL94-V0阻燃，可用于汽车电池包壳体与电子电气外壳。</div>
+      <div class='item-source'>来源：<a href='https://www.aibang.com/a/71996' target='_blank'>艾邦智造</a><span class='from-tag from-other'>艾邦智造</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>22</span>
+        <div class='item-title'>
+          <a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>PLA原料四个月上涨13.5%，上游海正生材净利同比增459%</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>隆众资讯数据，11月18日华东国产PLA主流成交18800—19800元/吨、均价19300元/吨，7月17日均价17000元/吨；科碧恩、金丹科技11月接连发调价函。财务侧已见分化：海正生材前三季营收9.53亿元、同比+53.41%，归母净利2744.7万元、同比+459.49%，公司归因3D打印耗材领域需求持续向好；金丹科技仍增收不增利。下游设备厂口径为涨价有成本压力、尚未冲击终端需求。</div>
+      <div class='item-source'>来源：<a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>安徽增材制造科技</a><span class='from-tag from-other'>安徽增材制造科技</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>23</span>
+        <div class='item-title'>
+          <a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>天风证券家联科技研报：Q3营收11亿元同比增46%，汇兑损失拖累利润</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>人民币走强、泰铢走弱叠加账面人民币应付款规模大，形成阶段性汇兑损失；毛利率环比继续改善、经营现金流大幅好转。研报将26—28年归母净利预测调整为-1/2.1/3.7亿元（原0.6/2.0/3.6亿元），维持「增持」。公司3D打印线材业务处产能扩张期，已切入行业头部企业供应链。</div>
+      <div class='item-source'>来源：<a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>安徽增材制造科技</a><span class='from-tag from-other'>安徽增材制造科技</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>24</span>
+        <div class='item-title'>
+          <a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>IIM报告：全球3D打印服务需求中直接零件生产占比升至33%</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>2025年全球服务需求中原型仍占约47%，但直接零部件生产已升至33%。Wohlers口径下服务占行业价值48%、设备销售及服务26%、材料20%。中国市场更陡：服务收入占全球约29.7%、服务商超1200家；2025年航空航天及商业航天打印服务订单同比+70%、汽车量产场景+40%、消费电子+35%。报告主推颗粒打印（FGF）逻辑：颗粒料较线材可降材料成本60%—90%。</div>
+      <div class='item-source'>来源：<a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>安徽增材制造科技</a><span class='from-tag from-other'>安徽增材制造科技</span></div>
+    </div>
+    </div>
+    <div class='section-title scenario' id="scenario">
+      <span class='icon'></span>场景×3D打印 Scenario（教育/文创/家居/食品）</div>
+    <div class='scenario-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>25</span>
+        <div class='item-title'>
+          <a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>清华团队3D打印人工肝脏进入动物试验</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>董家鸿院士任主任的肝脏移植与仿生制造实验室披露，3D打印人工肝脏的核心元件是含活细胞的微型组织单元——带局部免疫微环境的「贴片」，贴到受损肝脏表面后诱导血管长入、供血供氧、促进再生。五大方向覆盖器官保存液、仿生灌注设备、体外养护评效、生物人工肝脏、冷冻保存全链条。</div>
+      <div class='item-source'>来源：<a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>安徽增材制造科技</a><span class='from-tag from-other'>安徽增材制造科技</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>26</span>
+        <div class='item-title'>
+          <a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>全国3D打印应用创新大赛总决赛收官，设高职、本科、研究生三组</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>赛事由中国技术经济学会主办，设高职、本科、研究生三个组别。江苏航空职业技术学院仲思睿、田祺团队以总分第一获高职赛道全国一等奖，该院另获三等奖1项。</div>
+      <div class='item-source'>来源：<a href='http://mp.weixin.qq.com/s?__biz=Mzg5Mzk3NzA4NQ==&mid=2247524470&idx=1&sn=d9bb420ea51cf24743a2c541bf73a2d9' target='_blank'>安徽增材制造科技</a><span class='from-tag from-other'>安徽增材制造科技</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>27</span>
+        <div class='item-title'>
+          <a href='https://m.jdzj.com/qt3ddysb/2-5854904.html' target='_blank'>恒驰HC-P200尼龙SLS设备：口腔医疗为核心赛道</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>成型后的PA12工件具备耐磨、抗冲击、耐油、耐化学腐蚀与适度耐热性能，无需二次加工即可作为终端功能件。口腔医疗可生产正畸牙套、种植导板、局部可摘义齿等薄壁医疗小件；汽车与新能源用于轻量化功能支架、卡扣、异形风道、冷却流道；亦覆盖人形机器人关节与仿生骨骼结构。设备集成自动筛粉、工件分离、自动清粉一体化模组。</div>
+      <div class='item-source'>来源：<a href='https://m.jdzj.com/qt3ddysb/2-5854904.html' target='_blank'>机电之家</a><span class='from-tag from-other'>机电之家</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>28</span>
+        <div class='item-title'>
+          <a href='https://www.163.com/dy/article/LC3RALG50538J1KQ_pdya11y.html' target='_blank'>泸州展会设生物医疗应用成果展区，九家医疗3D打印机构集中亮相</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>生物医疗应用成果展区（DT-05）参展单位包括上海交通大学医学3D打印创新研究中心、空军军医大学唐都医院3D打印研究中心、郑州大学第一附属医院医学3D打印中心、阿迈特医疗器械（浙江）、华清智美（深圳）、广州迈普再生医学、至微（深圳）医学、清源至芯（深圳）等，覆盖从基础研究到植入器械的完整链条。</div>
+      <div class='item-source'>来源：<a href='https://www.163.com/dy/article/LC3RALG50538J1KQ_pdya11y.html' target='_blank'>网易</a><span class='from-tag from-163'>网易</span></div>
+    </div>
+    </div>
+    <div class='section-title global' id="global">
+      <span class='icon'></span>海外资讯（国际/3Dnatives/3DPrint.com）</div>
+    <div class='global-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>29</span>
+        <div class='item-title'>
+          <a href='https://www.fast3dprinters.com/article/formnext-2026-floor-report-defense-dominance-exhibitor-turnover-desktop-cnc' target='_blank'>Formnext现场观察：国防主导展馆，约半数上届展商未回归</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>据3dprint.com首日观察，约50%的2025年展商今年未回归，取而代之的是国防企业与新一批中国激光粉末床熔融厂商；作者称走进展馆20分钟内就数到五家中国LPBF公司，因而采取「只记住第二年还回来的公司」策略。场馆内消音器与闭式叶轮随处可见，有观察者调侃展会该改名ImpellerNext，并称「死亡成了3D打印的杀手级应用」。</div>
+      <div class='item-source'>来源：<a href='https://www.fast3dprinters.com/article/formnext-2026-floor-report-defense-dominance-exhibitor-turnover-desktop-cnc' target='_blank'>Fast 3D Printers</a><span class='from-tag from-other'>Fast 3D Printers</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>30</span>
+        <div class='item-title'>
+          <a href='https://industrypulse.media/news/eng-formnext-2026-day-1-recap-jn3juw' target='_blank'>Formnext首日：高产能金属与聚合物系统成为主线</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>报道认为2026年展会反映增材正从原型工具成熟为车间常备工艺。专用成形包络（MACHX 450E面向航天的一米高度、H550面向汽车的长轴）说明厂商正在放弃一刀切系统。竞争焦点从基本可行性转向规模化生产的经济与物流现实，特征是自动化物料处理与更低的总体拥有成本。</div>
+      <div class='item-source'>来源：<a href='https://industrypulse.media/news/eng-formnext-2026-day-1-recap-jn3juw' target='_blank'>Industry Pulse</a><span class='from-tag from-other'>Industry Pulse</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>31</span>
+        <div class='item-title'>
+          <a href='https://www.fast3dprinters.com/article/formnext-2026-floor-report-defense-dominance-exhibitor-turnover-desktop-cnc' target='_blank'>SnowX SnowPod桌面金属机现场成交价5000美元</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>SnowPod是一台售价低于1万美元的桌面激光粉末床熔融设备，首日报道称现场以5000美元成交。报道同时提醒这是展会演示价而非可持续商业模式，但走进满是六位数设备展馆的国防采购团队迟早会算这笔账。</div>
+      <div class='item-source'>来源：<a href='https://www.fast3dprinters.com/article/formnext-2026-floor-report-defense-dominance-exhibitor-turnover-desktop-cnc' target='_blank'>Fast 3D Printers</a><span class='from-tag from-other'>Fast 3D Printers</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>32</span>
+        <div class='item-title'>
+          <a href='https://www.fast3dprinters.com/article/formnext-2026-floor-report-defense-dominance-exhibitor-turnover-desktop-cnc' target='_blank'>桌面CNC厂商进驻Formnext：Makera与NestWorks带五轴桌面铣床参展</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>两家融资充足的桌面CNC公司在Formnext认真设展：NestWorks的C500五轴风格桌面铣床获TIME关注，Makera推进可换刀桌面加工。报道认为Formnext有机会成为桌面CNC、铣削、激光与平板切割的默认展会——一个比3D打印更宽的桌面制造行业，而打印机厂商已验证这批买家确实存在。</div>
+      <div class='item-source'>来源：<a href='https://www.fast3dprinters.com/article/formnext-2026-floor-report-defense-dominance-exhibitor-turnover-desktop-cnc' target='_blank'>Fast 3D Printers</a><span class='from-tag from-other'>Fast 3D Printers</span></div>
+    </div>
+    </div>
+    <div class='section-title feedback' id="feedback">
+      <span class='icon'></span>用户口碑（国外评测/国内实测）</div>
+    <div class='feedback-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>33</span>
+        <div class='item-title'>
+          <a href='https://post.m.smzdm.com/p/a4q489ew' target='_blank'>拓竹H3C首批用户反馈分化：异响、磨损与退货纠结</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>首发两周后B站出现「逆天异响」「使用30小时之后出现的磨损」「从开箱到纠结要不要退货」等标题。文章列出代价：AMS 3H的9个槽位与9个打印头一一对应，不能像H2C那样任意调用最多24盘料；只有1号头可向下并联AMS；9个槽中仅2个支持85℃烘干；打印板尺寸相同但不兼容、热端改为3颗螺丝固定，老配件无法沿用。</div>
+      <div class='item-source'>来源：<a href='https://post.m.smzdm.com/p/a4q489ew' target='_blank'>什么值得买</a><span class='from-tag from-other'>什么值得买</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>34</span>
+        <div class='item-title'>
+          <a href='https://3dbite.com/creality-k3-klitek-four-nozzle-printer-first-look' target='_blank'>K3海外首评的另一面：外观被指像Snapmaker U1，机构逻辑却不同</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>All3DP记者在柏林IFA首次见到K3时认为白色外壳偏离K1/K2的深色金属感、转向更亲和的SparkX风格，不确定是否加分；Tom's Hardware更直接称其「看起来可疑地像Snapmaker U1的克隆」。但拆解后差异明显：U1换整个工具头（挤出机、风扇、热端），K3只换喷嘴组件，挤出机与part-cooling风扇留在carriage上。</div>
+      <div class='item-source'>来源：<a href='https://3dbite.com/creality-k3-klitek-four-nozzle-printer-first-look' target='_blank'>3DBite</a><span class='from-tag from-other'>3DBite</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>35</span>
+        <div class='item-title'>
+          <a href='https://post.smzdm.com/p/a3m45q77' target='_blank'>选机逻辑之争：参数表不如一周打印清单</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>文章主张把上周打的东西列出来、数四个数：一周打几件、每件几种颜色、一周换几次料、要不要激光刀切这类非打印工序，然后对号入座，而不是对着参数表比。并提醒多口径喷嘴混打功能计划11月通过更新推送给H2D，X2D与H2C排在明年一季度，老用户不换机也能吃到部分H3C的新能力。</div>
+      <div class='item-source'>来源：<a href='https://post.smzdm.com/p/a3m45q77' target='_blank'>什么值得买</a><span class='from-tag from-other'>什么值得买</span></div>
+    </div>
+    </div>
+<div class='footer'>
+  <p>3D打印行业每日资讯 · 2026年11月19日 （星期四）· 内容日期 2026年11月19日</p>
+  <p>数据来源见各条目标注 · <a href="index.html">返回首页</a></p>
+</div>
+</div>
+</body>
+</html>
