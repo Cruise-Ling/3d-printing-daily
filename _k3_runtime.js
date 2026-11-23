@@ -1,9 +1,21 @@
 const fs = require('fs');
 const s = fs.readFileSync('creality-k3.html', 'utf8');
 
-const scriptStart = s.lastIndexOf('<script>');
-const scriptEnd = s.lastIndexOf('</script>');
-const code = s.slice(scriptStart + '<script>'.length, scriptEnd);
+// 取「含 K3_FEEDBACK_DATA 声明」的那个 <script> 块（主逻辑块）。
+// 页面自 2026-11 起在末尾追加了导出抽屉 script，lastIndexOf 会误取该块导致
+// activeFilters 未声明 → TDZ ReferenceError。改为遍历所有 script 块，命中数据声明者。
+let code = '';
+{
+  const re = /<script>([\s\S]*?)<\/script>/g;
+  let m, best = '';
+  while ((m = re.exec(s)) !== null) {
+    if (m[1].includes('K3_FEEDBACK_DATA') && m[1].includes('activeFilters')) {
+      if (m[1].length > best.length) best = m[1];
+    }
+  }
+  code = best;
+  if (!code) { console.error('NO MAIN SCRIPT BLOCK FOUND'); process.exit(1); }
+}
 
 const store = {};
 function makeEl(id) {
@@ -25,7 +37,8 @@ const EXPORTS = ['activeFilters','items','applyFilters','setDatePreset','setDate
   'groupOf','setGroup','setPlatform','GROUP_ORDER','GROUP_META',
   'setProblem','setDim','toggleTail','tailOpen','clearPanelFilters','clearAllFilters','normProblem','topDims','PROBLEM_MERGE',
   'setF','renderDeepFilters','renderCards','DIM_TOP','DIM_OTHER',
-  'CHANNEL_MATRIX','renderChanList','removeFilter','buildUpdateLog','toggleUpdHist','K3_BATCH_NOTE','K3_UPDATE_LOG'];
+  'CHANNEL_MATRIX','renderChanList','removeFilter','buildUpdateLog','toggleUpdHist','K3_BATCH_NOTE','K3_UPDATE_LOG',
+  'isPromoScope'];
 const harness = code + "\n;globalThis.__k3 = {" + EXPORTS.join(", ") + "};";
 eval(harness);
 
@@ -192,7 +205,7 @@ check('再次点击取消（平台）', activeFilters.platform === 'all');
 // 与官方 FAQ 一起混入会让负面率被渠道结构机械性拉高，所以官方组单列、不计入用户声量。
 console.log('\n--- KPI 口径：厂商官方单列 ---');
 const _offN = items().filter(x => groupOf(x.platform) === 'official').length;
-const _userN = items().length - _offN;
+const _userN = items().filter(x => groupOf(x.platform) !== 'official' && !isPromoScope(x)).length;
 const _userNeg = items().filter(x => groupOf(x.platform) !== 'official' && /负面/.test(x.sentiment)).length;
 const _kv = String(store.kpiRow.innerHTML);
 check('总声量已排除厂商官方', _kv.indexOf('>' + _userN + '</div>') > 0, _userN + ' / 全量 ' + items().length);
@@ -201,7 +214,7 @@ check('总声量副标题注明官方单列', _kv.indexOf('另有厂商官方 ' 
 // 2026-10-20 用户定稿：分析口径进一步收窄为「有效档」—— 泛讨论（105 条，其中 81 条中性）
 // 只计声量、不进情感，否则「K3 上市了吗」这类会把负面率机械性压低。
 const _rate = function(a, b) { return b ? Math.round(a / b * 1000) / 10 : 0; };
-const _validUser = function(x) { return x.reviewGrade === '有效' && groupOf(x.platform) !== 'official'; };
+const _validUser = function(x) { return x.reviewGrade === '有效' && groupOf(x.platform) !== 'official' && !isPromoScope(x); };
 const _validN = items().filter(_validUser).length;
 const _validNeg = items().filter(function(x) { return _validUser(x) && /负面/.test(x.sentiment); }).length;
 check('负面占比按「分析口径 = 有效档」计算', _kv.indexOf(_rate(_validNeg, _validN) + '%</div>') > 0,
@@ -257,7 +270,7 @@ activeFilters.dateKey = 'all'; activeFilters.problem = 'all'; activeFilters.dim 
 activeFilters.group = 'all'; activeFilters.platform = 'all'; activeFilters.sentiment = 'all';
 activeFilters.q = ''; activeFilters.topic = 'all'; activeFilters.channel = 'all'; activeFilters.sourceType = 'all';
 renderAll();
-const _vk = function(x){ return x.reviewGrade === '有效' && K.groupOf(x.platform) !== 'official'; };
+const _vk = function(x){ return x.reviewGrade === '有效' && K.groupOf(x.platform) !== 'official' && !K.isPromoScope(x); };
 const sentAllN = K.items().filter(_vk).length;
 check('情感结构初始分母 = 有效档用户声量', String(store.sentDenom.textContent) === String(sentAllN), store.sentDenom.textContent + '/' + sentAllN);
 check('初始无「查看全部」入口', store.sentStack.innerHTML.indexOf('查看全部') < 0);

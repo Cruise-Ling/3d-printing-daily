@@ -44,6 +44,115 @@ ENG = load_engine()
 # ---------------------------------------------------------------- 标注表
 # key = sourceLink；未标注的候选会被跳过并告警（不猜、不自动补）。
 LABELS = {
+    # ========== 2026-11-23 新增（窗口 11-16~11-22，展示/开箱类 → 动态档只计声量）==========
+    "https://www.youtube.com/watch?v=PS-lIe0EdjI": dict(
+        sentiment="中性", topics=[], dimensions=[], problems=[],
+        summary="用 K3 打印桌面摆件的创作展示视频，标题与简介均为作品展示与话题标签，无使用缺陷或观点反馈，本期只计声量。",
+        trans="用 Creality K3 打印的桌面小摆件展示，看看 Wekster 带来的又一个充满个性的创作。",
+        competitor="", p0=False, kind="动态"),
+    "https://www.youtube.com/watch?v=3mtxHtoY9MA": dict(
+        sentiment="中性", topics=[], dimensions=[], problems=[],
+        summary="用 K3 快速完成多色 GTA VI 手柄支架的创作展示，简介只强调快速完成多色项目，无问题反馈，计声量。",
+        trans="用我的 Creality K3 快速完成这个多色 GTA VI 手柄支架项目！",
+        competitor="", p0=False, kind="动态"),
+    "https://www.youtube.com/watch?v=cVjMJN2AEYc": dict(
+        sentiment="中性", topics=[], dimensions=[], problems=[],
+        summary="K3 四喷嘴换色减少废料的科普型短视频：4 个喷嘴、5 秒内换色、少浪费。属产品卖点复述，无用户实测观点，动态档。",
+        trans="废料太多？该升级了！4 个喷嘴，5 秒内换色，更少浪费，更多创意！",
+        competitor="", p0=False, kind="动态"),
+    "https://www.youtube.com/watch?v=8iw6qHgigXk": dict(
+        sentiment="中性", topics=[], dimensions=[], problems=[],
+        summary="用 SparkX i8 仅 4 种耗材打出 16 种色阶的多色展示视频，简介为创作挑战，无缺陷反馈，计声量。",
+        trans="只用 4 种耗材能打出 16 种不同色阶吗？用全新的 Creality SparkX i8 一小时内打印完成！",
+        competitor="", p0=False, kind="动态"),
+    "https://www.youtube.com/watch?v=VCjoDadBvpI": dict(
+        sentiment="中性", topics=[], dimensions=[], problems=[],
+        summary="西语 K3 参数介绍视频，简介罗列 CoreXY 架构、KliTek 四喷嘴四通道等规格，属规格科普，无使用观点，动态档。",
+        trans="Creality K3 全新多喷头打印机。给极客的参数：CoreXY 架构、KliTek 系统，4 个喷嘴配 4 条耗材通道。",
+        competitor="", p0=False, kind="动态"),
+    "https://www.youtube.com/watch?v=UmSZIZ14uLw": dict(
+        sentiment="中性", topics=[], dimensions=[], problems=[],
+        summary="用 K3 与 SparkX i8 制作圣诞挂件的节日创作展示，简介为作品分享，无观点反馈，计声量。",
+        trans="3D 打印圣诞挂件！本季第一个圣诞装饰作品，用 K3 和 SparkX i8 打印。",
+        competitor="", p0=False, kind="动态"),
+    "https://www.youtube.com/watch?v=ZbNX8MZxibM": dict(
+        sentiment="中性", topics=[], dimensions=[], problems=[],
+        summary="用 SparkX i8 打印全彩光影画、仅用迷你冲刷塔的多色创作展示，简介强调零冲刷浪费属卖点复述，动态档。",
+        trans="用 Creality SparkX i8 打印全彩光影画，几乎零冲刷废料，只用了一个迷你的小塔！",
+        competitor="", p0=False, kind="动态"),
+    "https://www.youtube.com/watch?v=polfj3FPb2I": dict(
+        sentiment="中性", topics=[], dimensions=[], problems=[],
+        summary="用 K3 打印披萨形状糖果盒的创作展示视频，简介为作品分享，无问题反馈，计声量。",
+        trans="披萨之夜？不如说是糖果时间！一个披萨形状的糖果盒，带点小巧思。",
+        competitor="", p0=False, kind="动态"),
+    "https://www.youtube.com/watch?v=BAruSKZzFIk": dict(
+        sentiment="中性", topics=[], dimensions=[], problems=[],
+        summary="用 K3 多喷嘴多色打印披萨模型的创作展示，简介为作品来源与工艺说明，无观点，动态档。",
+        trans="用 Creality K3 多喷嘴多色打印的披萨模型，模型来自 Creality Cloud。",
+        competitor="", p0=False, kind="动态"),
+    "https://www.youtube.com/watch?v=MTQuBQnATFI": dict(
+        sentiment="中性", topics=[], dimensions=[], problems=[],
+        summary="用 Sermoon P1S 3D 扫描仪为 K3 制作顶盖的配件创作视频，简介为制作过程说明，无 K3 使用观点，计声量。",
+        trans="我用 Creality Sermoon P1S 3D 扫描仪为全新的 Creality K3 打印机制作了一个顶盖。",
+        competitor="", p0=False, kind="动态"),
+    "https://www.youtube.com/watch?v=MJJJ_LwpkuU": dict(
+        sentiment="中性", topics=[], dimensions=[], problems=[],
+        summary="K3 规格与初印象视频，简介称涵盖开箱、规格与打印结果，但未给出明确好坏判断，按规范判动态档只计声量。",
+        trans="Creality K3 规格与初印象：这个视频涵盖开箱、规格与打印效果。",
+        competitor="", p0=False, kind="动态"),
+    "https://www.youtube.com/watch?v=6KK7CqLhrwU": dict(
+        sentiment="中性", topics=[], dimensions=[], problems=[],
+        summary="葡语短视频：用 K3 花 50 多小时多色打印浩克与毒液合体模型，简介为创作展示，无观点，动态档。",
+        trans="如果浩克被毒液感染会怎样？用 Creality K3 花 50 多小时多色打印出这个组合！",
+        competitor="", p0=False, kind="动态"),
+    "https://www.youtube.com/watch?v=lpGt0lwm1fg": dict(
+        sentiment="中性", topics=[], dimensions=[], problems=[],
+        summary="K3 值不值得买的评测视频，但简介仅为标题复述与购买链接，无实质观点可提取，按规范判动态档，不猜内容。",
+        trans="Creality K3 评测：这台 3D 打印机值得买吗？",
+        competitor="", p0=False, kind="动态"),
+    "https://www.youtube.com/watch?v=xzhS9xR3vR4": dict(
+        sentiment="中性", topics=[], dimensions=[], problems=[],
+        summary="K3 开箱、设置与首次测试打印的流程视频，简介为教程引导，无使用观点，计声量。",
+        trans="准备好上手 Creality K3 了吗？跟我一起开箱、完整设置并跑第一次测试打印。",
+        competitor="", p0=False, kind="动态"),
+    "https://www.youtube.com/watch?v=bknSatrmwss": dict(
+        sentiment="中性", topics=[], dimensions=[], problems=[],
+        summary="POV 形式的 K3 开箱短视频，简介为场景化展示与话题标签，无观点反馈，动态档。",
+        trans="POV：你的新 Creality K3 刚到货。",
+        competitor="", p0=False, kind="动态"),
+    "https://www.youtube.com/watch?v=C3vSDss2zNE": dict(
+        sentiment="中性", topics=[], dimensions=[], problems=[],
+        summary="K3 开箱即用多色高速打印的展示短视频，简介为话题标签，无实质观点，计声量。",
+        trans="K3 开箱即用的多色打印，速度前所未有！",
+        competitor="", p0=False, kind="动态"),
+    "https://www.bilibili.com/video/BV1i4sP6qEsy": dict(
+        sentiment="中性", topics=[], dimensions=[], problems=[],
+        summary="B站南极熊转发的极限测试视频：100 小时、1 万次换头、0 失败，候选简介仅为标题与外链，属转发展示，动态档。",
+        trans="100 小时、1 万次换头、0 失败，创想三维 K3 的极限在哪？",
+        competitor="", p0=False, kind="动态"),
+
+    # ========== 2026-11-20 新增（窗口 11-17~11-20，YouTube 第三方长期使用/实测口径）==========
+    "https://www.youtube.com/watch?v=NS4n-9tMFBU": dict(
+        sentiment="正面", topics=["kliTek", "multicolor"],
+        dimensions=["硬件性能 - 多喷头系统", "日常使用体验 - 稳定性"],
+        problems=["（正向：一个多月长期使用后整体满意，KliTek 四喷嘴切换约 5 秒）"],
+        summary="海外用户使用 K3 一个多月后的正面总评：明确表示喜欢这台机器，KliTek 在 4 个喷嘴间切换约需 5 秒，多色换色不需要长距离进退料。属长期使用场景的正向反馈，可与首发期「换色耗时」的质疑形成对照。",
+        trans="我用 Creality K3 已经一个多月了，我很喜欢它。KliTek 系统在最多 4 个喷嘴之间切换大约只要 5 秒，所以换色时不用把旧料退回去再冲刷。",
+        competitor="", p0=False),
+    "https://www.youtube.com/watch?v=6ZByRwMduxs": dict(
+        sentiment="正面", topics=["kliTek", "multicolor"],
+        dimensions=["硬件性能 - 多色系统", "使用成本与兼容性 - 耗材浪费"],
+        problems=["（正向：5 小时以上多色连续打印，废料相较单喷嘴冲刷方案明显更少）"],
+        summary="长时多色实测：连续打印 5 小时以上，作者展示的废料量很少，并把原因归给 K3 的 4 喷嘴换头方案——颜色切换靠换喷嘴而不是把颜色从同一个喷嘴冲刷出去。可作为「多色废料」这一最常被质疑项的正向实测样本。",
+        trans="超过 5 小时的多色 3D 打印，看看我们产生的废料有多少！这就是为什么 Creality K3 配 4 个喷嘴的原因——换色时它直接换喷嘴，而不是让同一个喷嘴把颜色冲出来。",
+        competitor="", p0=False),
+    "https://www.youtube.com/watch?v=99x01CDwVHI": dict(
+        sentiment="中性", topics=["kliTek", "multicolor"],
+        dimensions=["硬件性能 - 多色系统"],
+        problems=["（说明：采用换喷嘴方案，因此整机不需要冲刷槽，废料与冲刷塔随之减少）"],
+        summary="解释性内容：回应「K3 为什么没有冲刷槽」，指出机器会切到已经装好下一种颜色的喷嘴，因此不需要把颜色从单一喷嘴冲刷出来。属对产品设计逻辑的科普，不含使用缺陷，本期计声量但归为动态。",
+        trans="为什么 Creality K3 没有冲刷槽？因为 K3 是多色打印机，它换到一个已经装好下一种颜色的喷嘴上，所以不需要冲刷。",
+        competitor="", p0=False, kind="动态"),
     # ========== 2026-11-16 新增（B站 铜牌杰瑞 K3 评测，仅简介有观点 → 动态档）==========
     "https://www.bilibili.com/video/BV1tfWB6SE7u": dict(
         sentiment="中性", topics=[], dimensions=[], problems=[],
@@ -1297,6 +1406,37 @@ LABELS = {
         summary="B站 UP 铜牌杰瑞的 K3 评测与 KliTek 拆解（播放 4254 / 评论 25），核心判断是混合喷嘴要选对场景、小模型用大喷嘴打支撑不一定划算；该条已在 11-16 批次入库，此标注用于幂等跳过。",
         trans="创想三维 K3 评测 + KliTek 拆解：混合喷嘴打印要找到适合的场景。",
         competitor="", p0=False, kind="动态"),
+    # ========== 2026-11-18 新增（YouTube 评论区，评论级 sourceLink 带 &lc=）==========
+    # 当日候选池只有 11 个视频主体，均无用户观点；用 _k3_yt_comments_probe.py 补拉
+    # 11 个候选视频的评论（69 条窗口内），挑 4 条有明确判断的入页。
+    "https://www.youtube.com/watch?v=ejsZb4rVCEE&lc=UgwxaGH6lFMC-eg7_XF4AaABAg": dict(
+        sentiment="中性", topics=["price", "ecosystem"],
+        dimensions=["市场与定价", "竞品对比"],
+        problems=["若定价落在 R$8000 区间，3 年 Creality 老用户也会改选 Snapmaker U1"],
+        summary="巴西用户的定价判断：K3 若落在 R$8000 区间，即便自己是用了三年、体验良好的 Creality 老用户也会改选 Snapmaker U1——属价格锚点上的竞品置换风险，不是对机器本身的否定。",
+        trans="如果 K3 落在 8000 雷亚尔这个区间，我会选 Snapmaker U1。而且我已经有一台 Creality 打印机用了三年，一直很好用！",
+        competitor="Snapmaker U1", p0=False),
+    "https://www.youtube.com/watch?v=ejsZb4rVCEE&lc=Ugz7lfKE-4Vb3yHy9iR4AaABAg": dict(
+        sentiment="负面", topics=["ecosystem"],
+        dimensions=["硬件性能 - 机械结构"],
+        problems=["外观与固定式屏幕被指照搬 Snapmaker，屏幕不可调角度影响观看"],
+        summary="开箱视频下的用户指 K3 连固定式屏幕都在照搬 Snapmaker，并点出屏幕不能调角度、观看不便——把同质化设计与一个具体的人机交互缺陷绑在一起，属结构层面的负面判断。",
+        trans="连屏幕都照搬了 Snapmaker，固定式的、不能调角度来获得更好的观看视角。",
+        competitor="Snapmaker", p0=False),
+    "https://www.youtube.com/watch?v=oRRRzuNi8wQ&lc=UgxOMjBf_pUSmAzyy7B4AaABAg": dict(
+        sentiment="负面", topics=["swaptek", "multicolor"],
+        dimensions=["硬件性能 - 多色系统"],
+        problems=["4 个喷头做彩色打印被指逻辑不通，头数堆叠不等于彩色体验更好"],
+        summary="德语区用户在 K3 与 U1 对比视频下质疑产品逻辑：如果想打彩色，4 个喷头本身说不通，因为这正是这台机器的定位——属对多喷头路线必要性的根本性质疑，不是使用问题。",
+        trans="如果是要打彩色，4 个打印头怎么看都说不通，而这台机器大概就是为彩色准备的。",
+        competitor="Snapmaker U1", p0=False),
+    "https://www.youtube.com/watch?v=3bVeeQUT-QY&lc=UgyUsF9hFV_f2e9aZRp4AaABAg": dict(
+        sentiment="中性", topics=["multicolor"],
+        dimensions=["硬件性能 - 多色系统"],
+        problems=["i8 默认冲刷量偏高，未把 flush volume 下调到 0.15 会放大废料，横评废料数据失真"],
+        summary="观众从评测方法切入：i8 不该产生那么多冲刷废料，怀疑测试没把 flush volume 调到官方建议的 0.15，因此横评里的废料对比被放大——属对实测口径的技术性纠偏，与 K3 换头零废料的定位互为参照。",
+        trans="i8 不该有那么多冲刷废料。我猜是你没把冲刷量调低，Creality 建议降到 0.15。",
+        competitor="SparkX i8", p0=False),
 }
 
 
