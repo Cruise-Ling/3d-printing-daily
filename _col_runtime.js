@@ -38,7 +38,11 @@ const document = {
   activeElement: null
 };
 const window = { scrollTo() {} };
-const ctx = { document, window, console };
+const ctx = {
+  document, window, console, TextEncoder,
+  URL: { createObjectURL: () => "blob:stub", revokeObjectURL() {} },
+  Blob: function () {}, setTimeout, clearTimeout, setInterval, clearInterval
+};
 vm.createContext(ctx);
 
 const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]);
@@ -53,8 +57,46 @@ try {
   report(); process.exit(1);
 }
 
+/* 导出抽屉是独立脚本段，单独执行后才能验证取数钩子 */
+const drawerSrc = scripts.find(s => s.indexOf("function buildXlsx") > -1) || "";
+let drawerErr = "";
+if (!drawerSrc) drawerErr = "未找到含 xlsx 生成器的脚本段";
+else {
+  try { vm.runInContext(drawerSrc, ctx); } catch (e) { drawerErr = e.message; }
+}
+ok(!drawerErr, "导出抽屉脚本可执行", drawerErr);
+
 function report() {
-  console.log("\n" + (fail ? "FAIL" : "ALL PASS") + "  " + pass + " 项通过 / " + fail + " 项失败  [" + file + "]");
+  // 批量导出（2026-11-23 改版）：默认导出当前筛选列表，纯前端出 xlsx；服务只用于补全评论
+  ok(html.indexOf('id="expOpen"') > -1, "导出入口存在");
+  ok(html.split('id="expDrawer"').length === 2, "导出抽屉唯一");
+  ok(html.indexOf('127.0.0.1:8765') > -1, "本地服务地址已内联");
+  ok(html.indexOf('EXP_VER = "2026-11-23a"') > -1, "导出组件版本 2026-11-23a");
+  ok(html.indexOf('id="expChips"') > -1, "平台范围 chip 存在");
+  ok(html.indexOf('id="expDeep"') > -1, "补全评论开关存在");
+  ok(html.indexOf('id="expGo2"') > -1, "外部链接导出入口存在");
+  ok(html.indexOf("function buildXlsx") > -1, "内联 xlsx 生成器存在");
+  ok(html.indexOf("window.expApi") > -1, "导出取数钩子已暴露");
+  // 旧版遗留控件必须已移除，避免两套逻辑并存
+  ok(html.indexOf('id="expMax"') === -1, "旧版评论上限控件已移除");
+  ok(html.indexOf('id="expTr"') === -1, "旧版选项控件已移除");
+
+  const api = ctx.window.expApi;
+  ok(!!api, "expApi 可访问");
+  let rowsN = 0, colsN = 0, xlsxOk = false;
+  if (api) {
+    try { rowsN = api.rows().length; } catch (e) {}
+    try { colsN = api.fields().length; } catch (e) {}
+    try {
+      const b = api.xlsx([{ name: "t", header: ["标题"], rows: [["中文测试"]] }]);
+      xlsxOk = b && b.length > 300;
+    } catch (e) {}
+  }
+  ok(rowsN > 0, "能取到当前列表行数", "rows=" + rowsN);
+  ok(colsN >= 15, "字段表已定义", "cols=" + colsN);
+  ok(xlsxOk, "xlsx 生成器可产出字节");
+
+console.log("\n" + (fail ? "FAIL" : "ALL PASS") + "  " + pass + " 项通过 / " + fail + " 项失败  [" + file + "]");
   if (fail) { bad.forEach(b => console.log("  ✗ " + b)); process.exitCode = 1; }
 }
 
@@ -252,7 +294,12 @@ const cards = (grid.match(/class="card[ "]/g) || []).length;
 ok(cards > 0 && cards <= 20, "首页卡片数在 1..20", String(cards));
 ok(grid.indexOf("原文 ·") >= 0, "卡片有原文段");
 
-const page1 = ITEMS.slice(0, cards);
+// 全彩（fc）的明细在 renderCards 里**渲染时按 heatScore 降序重排**（P7 口径：按讨论度，
+// 不按日期），因此「页面上第一屏的条目」不等于 ITEMS.slice(0,N)。断言必须用与页面
+// 相同的排序取第一屏，否则只看声明顺序会误报（2026-11-18 实测：期望 4 实得 14）。
+const page1 = (KIND === "fc"
+  ? ITEMS.slice().sort((a, b) => (b.heatScore || 0) - (a.heatScore || 0))
+  : ITEMS).slice(0, cards);
 // 译文段只在「可折叠」的卡里渲染（正文超过折叠阈值才出 <div class="fold">）。
 // 正文极短的卡（如 Reddit RSS 只给 submitted by /u/xxx 的链接帖）不折叠，
 // 整段内容已在摘要里可见，不该再期望一个译文段 —— 原断言按 textCn 全量计数会误报。
@@ -270,6 +317,33 @@ ok(/原文 · [A-Z]{2}/.test(grid) || grid.indexOf("原文 · 中文") >= 0, "�
 ok(els.filterSummary.innerHTML === "", "初始无已选条件（摘要条为空）");
 ok(els.countLine.textContent.indexOf("共 " + ITEMS.length + " 条") >= 0, "命中数等于总数", els.countLine.textContent);
 ok(els.pager.innerHTML.indexOf("下一页") >= 0, "分页器渲染");
+
+/* mBox 明细反馈流按 K3 版式重建（2026-11-16）：原有断言只校验折叠段，
+   新版式改用 c-head / c-src / c-tags / c-foot，必须单独守护，防止同源模板回退。 */
+if (KIND === "mbox") {
+  ok(grid.indexOf('class="c-head"') >= 0, "mBox 卡片有 K3 式 c-head chip 行");
+  ok(grid.indexOf('class="c-src"') >= 0, "mBox 卡片有 K3 式 c-src 来源行");
+  ok(grid.indexOf('class="c-tags"') >= 0, "mBox 卡片有独立 c-tags 标签行");
+  ok(grid.indexOf('class="c-foot"') >= 0, "mBox 卡片有 K3 式 c-foot 卡脚");
+  ok(grid.indexOf('class="c-title') >= 0, "mBox 保留标题行（用户决策）");
+  ok(grid.indexOf("未标注") >= 0, "mBox 无情感标注层时显式标未标注");
+  ok(grid.indexOf("查看原文") >= 0, "mBox 卡脚有查看原文链接");
+  ok(grid.indexOf('class="c-top"') < 0, "mBox 已移除旧 c-top 行");
+  ok(grid.indexOf('class="fold"') < 0, "mBox 已移除旧折叠全文块");
+  const deepSelN = (els.deepFilters.innerHTML.match(/class="deepsel/g) || []).length;
+  ok(deepSelN === 4, "mBox 明细区四个下沉筛选", String(deepSelN));
+  ok(els.deepFilters.innerHTML.indexOf("明细区定位") >= 0, "下沉筛选带标题");
+  ok(els.flowHint.textContent.indexOf("K3 同款") >= 0, "明细区提示标注 K3 同款");
+  const dm = /data-k="platform"[^>]*>[\s\S]*?<option value="([^"]+)"/.exec(els.deepFilters.innerHTML);
+  if (dm) {
+    const before = els.countLine.textContent;
+    handlers.change({ target: { getAttribute: n => (n === "data-k" ? "platform" : null), value: dm[1] } });
+    ok(els.filterSummary.innerHTML.indexOf("chip") >= 0, "下沉筛选联动摘要条");
+    ok(els.countLine.textContent !== before, "下沉筛选联动明细条数", before + " -> " + els.countLine.textContent);
+    fireClick("#clearAllBtn", { id: "clearAllBtn" });
+    ok(els.filterSummary.innerHTML === "", "下沉筛选可清空复原");
+  }
+}
 
 if (KIND === "sw") {
   // GitHub 通道：进明细、独立标签、不进总声量

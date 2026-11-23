@@ -1,0 +1,26 @@
+/* EXP_V2 */
+.exp-chips{display:flex;gap:6px;flex-wrap:wrap}
+.exp-chip{background:#161b22;border:1px solid #30363d;border-radius:20px;padding:4px 11px;
+  font:11.5px/1.25 inherit;color:#8b949e;cursor:pointer;white-space:nowrap}
+.exp-chip:hover{border-color:#58a6ff;color:#c9d1d9}
+.exp-chip.on{background:rgba(88,166,255,.14);border-color:rgba(88,166,255,.45);color:#58a6ff}
+.exp-chip b{font-weight:600;margin-left:5px;opacity:.85}
+.exp-chip:disabled{opacity:.42;cursor:not-allowed}
+.exp-dim{font-size:11px;color:#484f58;margin-left:auto;white-space:nowrap}
+.exp-ntx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.exp-ntx b{font-weight:600}
+.exp-ntx span{font-size:10.5px;color:#6e7681;line-height:1.45}
+.exp-chk-block{align-items:flex-start;line-height:1.45}
+.exp-chk-block>span{display:flex;flex-direction:column;gap:2px}
+.exp-chk-block em{font-style:normal;font-size:10.5px;color:#484f58}
+.exp-fold{display:flex;align-items:center;gap:6px;font-size:12px;color:#8b949e;cursor:pointer;
+  padding:9px 0 6px;border-top:1px solid #21262d;margin-top:6px;user-select:none}
+.exp-fold span{font-size:10.5px;color:#484f58}
+.exp-fold i{margin-left:auto;font-style:normal;color:#6e7681;transition:transform .15s}
+.exp-fold.on i{transform:rotate(180deg)}
+.exp-fold-body{display:none;flex-direction:column;gap:8px}
+.exp-fold-body.on{display:flex}
+.exp-go-2{background:#21262d;border-color:#30363d;color:#c9d1d9;font-weight:500;font-size:12px;padding:8px}
+.exp-go-2:hover:not(:disabled){background:#30363d;color:#e6edf3}
+.exp-hide{display:none !important}
+.exp-parse .dim{color:#484f58}

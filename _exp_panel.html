@@ -1,0 +1,39 @@
+<aside class="exp-drawer" id="expDrawer" role="dialog" aria-modal="true" aria-hidden="true" aria-label="批量导出">
+  <div class="exp-head">
+    <div><b>批量导出</b><span>当前筛选结果 · 直出 xlsx / csv</span></div>
+    <button class="exp-x" id="expClose" type="button" aria-label="关闭">×</button>
+  </div>
+  <div class="exp-body">
+    <div class="exp-sec">1 当前列表<em id="expScope">读取中…</em></div>
+    <div class="exp-chips" id="expChips"></div>
+    <div class="exp-row"><span>格式</span>
+      <div class="exp-seg" id="expFmt">
+        <button type="button" data-v="xlsx" class="on">xlsx</button>
+        <button type="button" data-v="csv">csv</button>
+      </div>
+      <span class="exp-dim" id="expCols"></span>
+    </div>
+    <button class="exp-go" id="expGo" type="button" disabled>导出当前列表</button>
+
+    <div class="exp-sec">2 补全评论<em>可选</em></div>
+    <label class="exp-chk exp-chk-block"><input type="checkbox" id="expDeep">
+      <span>抓取访问量 / 点赞 / 全部评论并翻译
+        <em>只补页面没有的字段，需本地服务，约 30 秒</em></span>
+    </label>
+    <div class="exp-note exp-hide" id="expSvc"></div>
+
+    <div class="exp-fold" id="expFold">3 粘贴外部链接<span>用于导出不在当前列表里的链接</span><i>▾</i></div>
+    <div class="exp-fold-body" id="expFoldBody">
+      <textarea id="expText" spellcheck="false" placeholder="每行一条链接，可整段粘贴分享文案"></textarea>
+      <div class="exp-parse" id="expParse">待输入链接</div>
+      <button class="exp-go exp-go-2" id="expGo2" type="button" disabled>导出这些链接</button>
+    </div>
+
+    <div class="exp-prog" id="expProg">
+      <div class="exp-bar"><span id="expBar"></span></div>
+      <div class="exp-log" id="expLog"></div>
+    </div>
+    <div class="exp-done" id="expDone"></div>
+    <div class="exp-tip">导出的“当前列表”与页面同一筛选口径，含本专栏已收录的全部字段；评论区译文需勾选第 2 项，机翻未经校对，引用前请抽检原文。</div>
+  </div>
+</aside>
