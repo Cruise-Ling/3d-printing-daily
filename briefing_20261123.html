@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D打印行业每日资讯 - 2026年11月23日</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖨️</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f0f2f5;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;display:flex;justify-content:center;padding:12px 0}
+.card{width:375px;background:#fff;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.06);overflow:clip}
+.header{background:linear-gradient(135deg,#1a237e,#283593,#3949ab);padding:24px 20px 18px;color:#fff;position:relative}
+.header-back{position:absolute;left:16px;top:28px;transform:translateY(-50%);display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.95);font-size:14px;font-weight:600;text-decoration:none;padding:7px 16px 7px 3px;border-radius:20px;border:1.5px solid rgba(255,255,255,.35)}
+.header-back:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.6)}
+.header h1{font-size:19px;font-weight:700;letter-spacing:1px;margin-bottom:6px;padding-left:90px}
+.header .date{font-size:13px;opacity:.85;font-weight:400}
+.header .source-note{font-size:11px;opacity:.7;margin-top:4px}
+.stats-bar{display:flex;gap:8px;flex-wrap:wrap;padding:14px 20px;background:#fafbff;border-bottom:1px solid #f0f0f0}
+.stats-pill{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;color:#555;background:#f0f4ff;border-radius:20px;padding:5px 11px;border:1px solid #e8edff}
+.stats-pill b{color:#1a73e8;font-weight:700}
+.stats-pill.warn{background:#fff8e1;border-color:#ffe082}
+.stats-pill.warn b{color:#e65100}
+.section-title{display:flex;align-items:center;padding:18px 20px 12px;font-size:16px;font-weight:800;color:#0d47a1;background:linear-gradient(90deg,rgba(26,115,232,.08),transparent);border-bottom:2px solid #1a73e8}
+.section-title .icon{width:4px;height:16px;border-radius:2px;margin-right:8px}
+.section-title.general .icon{background:linear-gradient(180deg,#42a5f5,#1e88e5)}
+.section-title.specific .icon{background:linear-gradient(180deg,#ffa726,#fb8c00)}
+.section-title.consumer .icon{background:linear-gradient(180deg,#66bb6a,#43a047)}
+.section-title.global .icon{background:linear-gradient(180deg,#ab47bc,#7b1fa2)}
+.section-title.feedback .icon{background:linear-gradient(180deg,#26c6da,#00838f)}
+.section-title.niche .icon{background:linear-gradient(180deg,#e64a19,#d84315)}
+.section-title.scenario .icon{background:linear-gradient(180deg,#00796b,#00695c)}
+.item{padding:12px 20px 14px;border-bottom:1px solid #f5f5f5}
+.item:last-child{border-bottom:none}
+.item-head{display:flex;align-items:flex-start;margin-bottom:6px}
+.num-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;flex-shrink:0;margin-right:10px;margin-top:1px}
+.general-zone .num-dot{background:linear-gradient(135deg,#42a5f5,#1e88e5)}
+.specific-zone .num-dot{background:linear-gradient(135deg,#ffa726,#fb8c00)}
+.consumer-zone .num-dot{background:linear-gradient(135deg,#66bb6a,#43a047)}
+.global-zone .num-dot{background:linear-gradient(135deg,#ab47bc,#7b1fa2)}
+.feedback-zone .num-dot{background:linear-gradient(180deg,#26c6da,#00838f)}
+.niche-zone .num-dot{background:linear-gradient(135deg,#e64a19,#d84315)}
+.scenario-zone .num-dot{background:linear-gradient(135deg,#00796b,#00695c)}
+.item-title{font-size:14.5px;font-weight:600;line-height:1.45;color:#212121;flex:1}
+.item-title a{color:#212121;text-decoration:none}
+.item-title a:hover{color:#1a73e8}
+.item-summary{font-size:12.8px;line-height:1.7;color:#616161;padding-left:32px;word-break:break-all}
+.item-source{font-size:11px;color:#9e9e9e;padding-left:32px;margin-top:4px}
+.item-source a{color:#1e88e5;text-decoration:none}
+.item-source a:hover{text-decoration:underline}
+.from-tag{font-size:10px;padding:1px 6px;border-radius:6px;margin-left:6px;opacity:.75}
+.from-qq{background:#fce4ec;color:#880e4f}
+.from-sina{background:#fff3e0;color:#e65100}
+.from-163{background:#e8f5e9;color:#2e7d32}
+.from-sohu{background:#fff3e0;color:#bf360c}
+.from-36kr{background:#e8eaf6;color:#283593}
+.from-3dprint{background:#e0f7fa;color:#006064}
+.from-3dprinting{background:#e0f7fa;color:#006064}
+.from-dayinpai{background:#e8f5e9;color:#1b5e20}
+.from-cgtn{background:#e3f2fd;color:#0d47a1}
+.from-xinhua{background:#ffebee;color:#b71c1c}
+.from-cnstock{background:#fff3e0;color:#e65100}
+.from-eastmoney{background:#fff3e0;color:#bf360c}
+.from-ithome{background:#e3f2fd;color:#1565c0}
+.from-cctv{background:#ffebee;color:#b71c1c}
+.from-other{background:#eceff1;color:#37474f}
+.from-tencent{background:#e3f2fd;color:#0d47a1}
+.from-gov{background:#e8eaf6;color:#283593}
+.from-10jqka{background:#fff3e0;color:#e65100}
+.side-nav{position:fixed;left:max(0px,calc((100vw - 375px)/2 - 90px));top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;z-index:200}
+.side-nav-item{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;font-size:12px;color:#555;background:rgba(255,255,255,.95);box-shadow:0 1px 6px rgba(0,0,0,.08);cursor:pointer;transition:all .2s;text-decoration:none;white-space:nowrap;border:1px solid rgba(0,0,0,.06)}
+.side-nav-item:hover{box-shadow:0 2px 12px rgba(0,0,0,.15);transform:translateX(-2px)}
+.side-nav-item .nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.score-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:8px;margin-left:6px;font-weight:600}
+.score-badge-a{background:#e8f5e9;color:#2e7d32}
+.hot-summary{padding:14px 20px;background:linear-gradient(135deg,#fff8e1,#fff3e0);border-bottom:1px solid #ffe082}
+.hot-summary h3{font-size:14px;font-weight:700;color:#e65100;margin-bottom:8px}
+.hot-summary ul{list-style:none;padding:0}
+.hot-summary li{font-size:12.5px;color:#5d4037;padding:3px 0;padding-left:16px;position:relative;line-height:1.5}
+.hot-summary li::before{content:"";position:absolute;left:0;top:10px;width:6px;height:6px;border-radius:50%;background:#ff9800}
+.footer{padding:16px 20px;background:#f8f9fa;text-align:center;font-size:11px;color:#9e9e9e;border-top:1px solid #f0f0f0}
+.footer a{color:#1e88e5;text-decoration:none}
+@media(max-width:767px){.side-nav{position:fixed;left:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;padding-left:4px;z-index:200}.side-nav .side-nav-item{padding:5px 8px;font-size:11px;border-radius:16px;box-shadow:0 1px 6px rgba(0,0,0,.1)}.card{margin-left:52px;width:calc(100vw - 60px);max-width:375px}body{justify-content:flex-start;padding:12px 0 12px 4px}}
+@media(min-width:768px){.section-nav{display:none}.side-nav{left:max(0px,calc((100vw - 375px)/2 - 90px))}}
+</style>
+</head>
+<body>
+<nav class='side-nav' id="sideNav">
+  <a class='side-nav-item' href="index.html"><span class='nav-dot' style="background:#1a237e"></span>🏠 首页</a>
+  <a class='side-nav-item' onclick="scrollToSection('general')"><span class='nav-dot' style="background:#1a73e8"></span>泛行业</a>
+  <a class='side-nav-item' onclick="scrollToSection('specific')"><span class='nav-dot' style="background:#e65100"></span>细分领域</a>
+  <a class='side-nav-item' onclick="scrollToSection('consumer')"><span class='nav-dot' style="background:#2e7d32"></span>消费级</a>
+  <a class='side-nav-item' onclick="scrollToSection('niche')"><span class='nav-dot' style="background:#d84315"></span>细分市场</a>
+  <a class='side-nav-item' onclick="scrollToSection('scenario')"><span class='nav-dot' style="background:#00695c"></span>场景打印</a>
+  <a class='side-nav-item' onclick="scrollToSection('global')"><span class='nav-dot' style="background:#7b1fa2"></span>海外资讯</a>
+  <a class='side-nav-item' onclick="scrollToSection('feedback')"><span class='nav-dot' style="background:#00838f"></span>用户口碑</a>
+</nav>
+<script>
+function scrollToSection(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+</script>
+<div class='card'>
+
+<div class='header'>
+  <a class='header-back' href="index.html">← 首页</a>
+  <h1>3D打印行业每日资讯</h1>
+  <div class='date'>2026年11月23日 · 星期一</div>
+  <div class='source-note'>内容来源：3D打印资源库 / 3DPrint.com / 3Dnatives / 证券日报 / 中国经济网 等</div>
+</div>
+<div class='stats-bar'>
+  <span class='stats-pill'>资讯 <b>35</b> 条</span>
+  <span class='stats-pill'>分区 <b>7</b> 大</span>
+  <span class='stats-pill warn'>内容日期 <b>2026年11月20日</b></span>
+</div>
+<div class='hot-summary'>
+  <h3>🔥 今日热点速递</h3>
+    <ul><ul>
+      <li>Formnext 2026收官：三天120项新品发布，装备与后处理全面降价</li>
+      <li>五角大楼联合商务部向全美约500家制造企业征集增材制造产能数据</li>
+      <li>Axiloop MC8八工具头众筹破60万欧元，4秒换头切入换头机赛道</li>
+      <li>2026 Formnext大奖揭晓：3D打印胸罩、即烘即打、电子垃圾变铜粉</li>
+      <li>Pollen AM×RHEON颗粒打印橄榄球头盔，减重30%且抗冲击超越注塑</li>
+    </ul></ul>
+  </div>
+    <div class='section-title general' id="general">
+      <span class='icon'></span>泛行业资讯（工业/资本/政策）</div>
+    <div class='general-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>1</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/337381/formnext-2026-day-three-busy-bodies-2/' target='_blank'>Formnext 2026第三天：三天累计120项新品发布，用户群与成交率双升</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>Joris Peels在展会第三天观察到，观众比去年更专业、采购意愿更强，桌面设备、中端机型与高端设备三类买家同时到场，到场购买比例上升。一位朋友统计展会累计有120条独立新闻稿与新品发布。树脂、后处理设备、线材、筛分工具价格全面下降（中国厂商影响显著），DyeMansion、HP、Formlabs推出入门级去粉与表面处理设备，Powershot Pro售价1.6万美元。ATLIX向宝马售出一台xBUILD 5000 LPBF系统用于铝件生产。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/337381/formnext-2026-day-three-busy-bodies-2/' target='_blank'>3DPrint.com</a><span class='from-tag from-other'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>2</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/337167/pentagon-commerce-department-solicit-am-data-nationwide/' target='_blank'>五角大楼联合商务部向全美约500家制造企业征集增材制造产能数据</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>展会前夕美国国防部宣布，与商务部合作向全美约500家关键制造企业发出调研，收集资本开支、设备利用率、粉末与原料供应链、软件集成等信息，覆盖航空航天、船舶、弹药、航天与地面车辆领域，援引《国防生产法》作为依据。此举被视为摸清增材产业投资方向、完善战时经济布局的一环，与夏季的Project Peculiar Document认证加速计划一脉相承。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/337167/pentagon-commerce-department-solicit-am-data-nationwide/' target='_blank'>3DPrint.com</a><span class='from-tag from-other'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>3</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/336959/3d-printing-service-bureau-landscape-2026-the-year-of-magical-thinking-part-1/' target='_blank'>工业3D打印2026奇幻思维之年：VulcanForms融资5亿美元、累计达10亿</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>Joris Peels盘点工业打印服务市场：VulcanForms获Apollo与摩根大通5亿美元融资（非VC），累计融资10亿美元，新增3座工厂、员工翻倍，并获马萨诸塞州2100万美元补贴。Hadrian以软件驱动工厂叙事获78.7亿美元估值。作者提醒，行业普遍把surge、defense等口号当成商业结果本身，实为奇幻思维；真正合同多流向大型承包商与成熟供应商。MJF在聚合物服务中兴起，桌面LPBF渐起、低成本LPBF式微。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/336959/3d-printing-service-bureau-landscape-2026-the-year-of-magical-thinking-part-1/' target='_blank'>3DPrint.com</a><span class='from-tag from-other'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>4</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/337265/the-am-industry-is-growing-arno-held-thinks-it-still-needs-to-get-smaller/' target='_blank'>AM Ventures前掌门Arno Held：行业在增长，但仍需变小</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>增材制造已是242亿美元规模的行业，但Arno Held认为太多公司仍在争夺市场份额。这是Formnext论坛上最尖锐的观点之一。他此前指出行业碎片化严重、几乎没有公司有能力扮演整合者，部分上市AM公司市值已跌破账面现金，国防开支是这个行业的海洛因——真金白银但预算属政治决定。Renishaw的Rainer Lotz当场反驳：技术成熟度已到，围绕具体应用的盈利业务正在形成。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/337265/the-am-industry-is-growing-arno-held-thinks-it-still-needs-to-get-smaller/' target='_blank'>3DPrint.com</a><span class='from-tag from-other'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>5</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/337185/3d-printing-news-briefs-11-19-26-formnext/' target='_blank'>Formnext 11月19日新闻简报：ATLIX全系列xBUILD亮相，多领域应用集中发布</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>当天新闻简报几乎全为Formnext消息：ATLIX展示其完整xBUILD产品组合；多家厂商集中发布设备、材料与应用进展。3DPrint.com将当期戏称为Formnext简报，反映展会中段新品发布密度之高。这批发布与展首日的金属/聚合物系统扩容形成呼应，展会成为全年增材行业信息最集中的窗口。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/337185/3d-printing-news-briefs-11-19-26-formnext/' target='_blank'>3DPrint.com</a><span class='from-tag from-other'>3DPrint.com</span></div>
+    </div>
+    </div>
+    <div class='section-title specific' id="specific">
+      <span class='icon'></span>细分领域动态（医疗/航天/材料）</div>
+    <div class='specific-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>6</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/336903/saf-ceramics-more-new-3d-printers-launched-at-formnext-2026/' target='_blank'>Formnext新品集中发布：3D Systems MJP 300、Prodways陶瓷机、DWS混合SLA</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>展会最后一天的新品盘点：3D Systems发布MJP 300多喷头机（HD/UHD/XHD三种模式、294×211×144mm可分三区打印、符合ESA/IEC网络安全）及TSR闭环粉末管理模块；Prodways推出CERAM PRO 365 Max陶瓷机（264×328×350mm、31µm分辨率、365nm下200mW/cm²）；DWS正式发布HYBRID SLA多材料技术，可在同一零件打印导电与绝缘材料、混合色彩梯度。Stratasys同步发布H550 SAF与PowderEase T2。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/336903/saf-ceramics-more-new-3d-printers-launched-at-formnext-2026/' target='_blank'>3DPrint.com</a><span class='from-tag from-other'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>7</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/337246/3dpod-neil-hopkinson-on-stratasys-new-h550-saf-3d-printer/' target='_blank'>Stratasys H550 SAF深度访谈：34.2升成形仓、TCO低约30%</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3DPOD播客在Formnext现场对话Stratasys SAF技术副总裁、SAF技术发明人Neil Hopkinson，详谈新H550与SAF的下一步。H550成形仓34.2升、长轴450mm，容量是H350的两倍，宣称相较同类print-and-fuse系统总拥有成本低最高30%、比SLS更快出件；配套PowderEase T2单次构建操作员耗时约30分钟、一个工作站最多支持6台设备。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/337246/3dpod-neil-hopkinson-on-stratasys-new-h550-saf-3d-printer/' target='_blank'>3DPrint.com</a><span class='from-tag from-other'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>8</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/336592/why-nikons-machx-could-be-a-big-deal-for-metal-3d-printing/' target='_blank'>Nikon MACHX为何可能是金属3D打印的大事</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>Nikon SLM Solutions推出MACHX模块化LPBF平台，三种成形尺寸可选，总激光功率最高8kW（1kW高斯或2kW光束整形），可选圆柱交换系统在腔外预热材料以支持连续运行。评论认为其模块化与高功率组合瞄准金属打印规模化生产，配合SLMX软硬件栈整合热架构、PanX仿真与过程智能，是本届展会金属侧的重要动向。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/336592/why-nikons-machx-could-be-a-big-deal-for-metal-3d-printing/' target='_blank'>3DPrint.com</a><span class='from-tag from-other'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>9</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/336864/continuum-releases-the-argos-atomizer/' target='_blank'>Continuum Powders发布Argos雾化器，面向工业级金属粉末量产</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>Continuum Powders在Formnext发布Argos Melt-to-Powder（M2P）雾化器，将公司产品推向更工业化的大规模场景。该系统采用混合等离子炬熔炼与雾化工艺，把废料或金属原料直接制成球形粉末，服务于金属增材制造对高品质、低成本粉末日益增长的需求，是展会粉末与原料环节的重要新品。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/336864/continuum-releases-the-argos-atomizer/' target='_blank'>3DPrint.com</a><span class='from-tag from-other'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>10</span>
+        <div class='item-title'>
+          <a href='https://www.3dnatives.com/en/incus-metal-3d-printing-formnext-18112026/' target='_blank'>奥地利Incus：能否以一致精度打印数千件金属零件</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>金属增材制造正走向工业化，但能否以有竞争力的成本批量生产数千件细节与精度一致的零件仍是挑战。3Dnatives在Formnext采访奥地利厂商Incus，探讨其在小尺寸金属零件高精度批量复制上的工艺路径。Incus主打微细金属打印，目标是把增材从单件验证推向稳定量产的一致性要求。</div>
+      <div class='item-source'>来源：<a href='https://www.3dnatives.com/en/incus-metal-3d-printing-formnext-18112026/' target='_blank'>3Dnatives</a><span class='from-tag from-other'>3Dnatives</span></div>
+    </div>
+    </div>
+    <div class='section-title consumer' id="consumer">
+      <span class='icon'></span>消费级（新品/评测/品牌）</div>
+    <div class='consumer-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>11</span>
+        <div class='item-title'>
+          <a href='https://www.3dnatives.com/en/axiloop-mc8-20112026/' target='_blank'>Axiloop MC8/MC8 Pro八工具头众筹破60万欧元：4秒换头、300mm立方</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>中国厂商Axiloop在Formnext展示MC8与封闭版MC8 Pro，8个独立工具头、300×300×300mm成形仓，预热后换头约4秒；涡流传感器自动调平2500采样点、约1分钟，三轴自动校准公差0.03mm，AI摄像头监控打印。最大打印速度300mm/s、空走600mm/s、加速度25000mm/s²，喷嘴320℃。11月12日Kickstarter上线，截至18日442名支持者认捐60.4万欧元（目标4.5万），早鸟价1099/1499美元，2027年Q1发货。</div>
+      <div class='item-source'>来源：<a href='https://www.3dnatives.com/en/axiloop-mc8-20112026/' target='_blank'>3Dnatives</a><span class='from-tag from-other'>3Dnatives</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>12</span>
+        <div class='item-title'>
+          <a href='https://www.bilibili.com/video/BV1i4sP6qEsy' target='_blank'>100小时、1万次换头0失败：创想K3极限实测视频上线</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>南极熊3D打印网发布K3极限测试：连续100小时、1万次换头、0失败，验证KliTek换头机构的长期可靠性。K3采用独立四喷嘴设计，单次换头约5秒。同期社区密集上线SPARKX i8换色实测视频，多色打印进入实测比拼阶段。</div>
+      <div class='item-source'>来源：<a href='https://www.bilibili.com/video/BV1i4sP6qEsy' target='_blank'>哔哩哔哩</a><span class='from-tag from-other'>哔哩哔哩</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>13</span>
+        <div class='item-title'>
+          <a href='https://www.bilibili.com/video/BV1nDsF6vEJR' target='_blank'>6款多色3D打印机选购横评：从参数表转向一周打印清单</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>UP主发布拓竹H3C、H2C、H2D、X2D、快造U1、闪铸C5六款多色机型横评。选购逻辑主张数四个数对号入座：一周打几件、每件几种颜色、一周换几次料、是否要激光切割等非打印工序，而非只比对参数表。多口径喷嘴混打功能计划11月推送H2D，X2D与H2C排在明年一季度。</div>
+      <div class='item-source'>来源：<a href='https://www.bilibili.com/video/BV1nDsF6vEJR' target='_blank'>哔哩哔哩</a><span class='from-tag from-other'>哔哩哔哩</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>14</span>
+        <div class='item-title'>
+          <a href='https://www.bilibili.com/video/BV1ccsz63EF6' target='_blank'>创想云MakeNow AI 3D创作台实测：小白也能轻松造物？</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>创想三维官方频道发布MakeNow AI 3D创作台实测，展示从文字或图片到可打印模型的生成流程，主打降低建模门槛、让零基础用户把创意转成实体。AI建模与一键打印正成为消费级3D打印的新入口。</div>
+      <div class='item-source'>来源：<a href='https://www.bilibili.com/video/BV1ccsz63EF6' target='_blank'>哔哩哔哩</a><span class='from-tag from-other'>哔哩哔哩</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>15</span>
+        <div class='item-title'>
+          <a href='https://www.bilibili.com/video/BV1MnsA6XEFw' target='_blank'>拓竹A1进料失败避坑：先查五通是否卡料</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>大促后新机开机社区高发问题之一：拓竹A1提示送料失败多半不是堵头，五通里卡了断料一把扳手即可处理。该教程与脱床、桥接缺陷调法并列为新手三大避坑点，适合刚入坑用户照着排查。</div>
+      <div class='item-source'>来源：<a href='https://www.bilibili.com/video/BV1MnsA6XEFw' target='_blank'>哔哩哔哩</a><span class='from-tag from-other'>哔哩哔哩</span></div>
+    </div>
+    </div>
+    <div class='section-title niche' id="niche">
+      <span class='icon'></span>细分市场（汽车/建筑/医疗等）</div>
+    <div class='niche-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>16</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/337027/pollen-am-rheon-labs-bring-pellet-3d-printing-to-football-helmets/' target='_blank'>Pollen AM×RHEON颗粒打印橄榄球头盔：减重30%、高抗冲击超注塑</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>法国Pollen AM与伦敦RHEON Labs在Formnext展示颗粒3D打印头盔衬垫：RHEON的应变率敏感超材料常态柔软、受力时动态变硬耗能；Pollen将其P3D 001颗粒材料在PAM Pro颗粒挤出系统上完成认证。Xenith Shadow XR头盔案例较注塑件减重30%，低能量冲击与注塑衬垫相当、高能量冲击表现更优，材料成本接近注塑价位且省去模具成本。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/337027/pollen-am-rheon-labs-bring-pellet-3d-printing-to-football-helmets/' target='_blank'>3DPrint.com</a><span class='from-tag from-other'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>17</span>
+        <div class='item-title'>
+          <a href='https://www.3dnatives.com/en/infimaker-5-axis-machining-center-20112026/' target='_blank'>InfiMaker桌面五轴加工中心K1：0.01mm重复定位、可加工不锈钢钛合金</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>2024年成立于中国香港的InfiMaker在Formnext推出K1全封闭桌面五轴加工中心，支持联动五轴、重复定位精度0.01mm，配自动换刀与AI软件InfiStudio，可加工不锈钢、钛合金等难加工金属。增材与机加工在展会上的融合日益紧密，五轴加工正从大型车间走向桌面。</div>
+      <div class='item-source'>来源：<a href='https://www.3dnatives.com/en/infimaker-5-axis-machining-center-20112026/' target='_blank'>3Dnatives</a><span class='from-tag from-other'>3Dnatives</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>18</span>
+        <div class='item-title'>
+          <a href='https://www.3dnatives.com/en/felix-printers-targeted-production-power-20112026/' target='_blank'>FELIX Printers定向产能力：为一台生产线定制一台打印机</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>FELIX Printers在Formnext展示从XL 4.0到Pro XXL的生产型打印机及定制制药打印机，提出Targeted Production Power理念：多数3D打印机为普通用户设计，FELIX则从产线需求倒推——当生产线需要尚不存在的设备时，团队就设计一台。联合创始人Guillaume Felixsdal分享了24/7无人化生产所需条件，Pro XXL是少数采用线性驱动的3D打印机之一。</div>
+      <div class='item-source'>来源：<a href='https://www.3dnatives.com/en/felix-printers-targeted-production-power-20112026/' target='_blank'>3Dnatives</a><span class='from-tag from-other'>3Dnatives</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>19</span>
+        <div class='item-title'>
+          <a href='https://zhuanlan.zhihu.com/p/2106156574951608878' target='_blank'>华曙高科财报拆解：营收涨42.27%、净利率仅剩2.47%</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>工业级增材第一梯队华曙高科营收同比增长42.27%，净利率却只剩2.47%，被形容为越卖越薄。文章拆解工业增材设备在当前景气与内卷并存下的盈利困境：规模扩张并未同步转化为利润，价格竞争与成本压力侵蚀盈利，为判断工业级3D打印真实景气度提供另一视角。</div>
+      <div class='item-source'>来源：<a href='https://zhuanlan.zhihu.com/p/2106156574951608878' target='_blank'>知乎・刘亮</a><span class='from-tag from-other'>知乎・刘亮</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>20</span>
+        <div class='item-title'>
+          <a href='https://www.3dnatives.com/en/clp50-3dceram-formnext-17112026/' target='_blank'>3DCeram推出CLP50陶瓷3D打印机：顶部下沉DLP、8万欧元起</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>法国厂商3DCeram在Formnext 2026发布CLP50技术陶瓷3D打印机，采用顶部下沉（top-down）DLP技术，起售价8万欧元，让陶瓷件制造商得以切入光聚合工艺。该机面向技术陶瓷与精密制造，是本届展会陶瓷打印赛道的重要新品之一。</div>
+      <div class='item-source'>来源：<a href='https://www.3dnatives.com/en/clp50-3dceram-formnext-17112026/' target='_blank'>3Dnatives</a><span class='from-tag from-other'>3Dnatives</span></div>
+    </div>
+    </div>
+    <div class='section-title scenario' id="scenario">
+      <span class='icon'></span>场景×3D打印 Scenario（教育/文创/家居/食品）</div>
+    <div class='scenario-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>21</span>
+        <div class='item-title'>
+          <a href='https://www.3dnatives.com/en/formnext-awards-2026-06112026/' target='_blank'>2026 Formnext大奖揭晓：3D打印胸罩、即烘即防线材、电子垃圾变铜粉</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>Formnext Awards 2026六类得主：设计奖Maya Kaplan的Computational Bra（单材料TPU、桌面FDM一体打印）；创新奖Thought3D的Drywise（挤出前在线烘干线材）；新秀奖cAIclone的AI优化水力旋流器（1—50µm颗粒、电池回收）；初创奖sallea的可溶模具与型芯（碳纤维轻量化件）；可持续奖FlexCycle Solutions（无需熔融将电子垃圾变铜粉）；AMbassador奖TU Darmstadt的Michael Krämer。</div>
+      <div class='item-source'>来源：<a href='https://www.3dnatives.com/en/formnext-awards-2026-06112026/' target='_blank'>3Dnatives</a><span class='from-tag from-other'>3Dnatives</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>22</span>
+        <div class='item-title'>
+          <a href='https://www.3dnatives.com/en/formnext-3d-printing-applications-19112026/' target='_blank'>Formnext五大终端应用：NFL头盔三连冠、澳洲列车卫生间、钛骨植入</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3Dnatives视频盘点五款终端件：Carbon的Riddell Axiom 3D橄榄球头盔连续第三年位居NFL球员工会头盔实验室榜首；澳大利亚客运列车的3D打印卫生间壳体；汽车排气歧管；一辆独特摩托车；以及为癌症患者定制的钛合金骨植入物。终端件已遍布展馆，应用跨度惊人。</div>
+      <div class='item-source'>来源：<a href='https://www.3dnatives.com/en/formnext-3d-printing-applications-19112026/' target='_blank'>3Dnatives</a><span class='from-tag from-other'>3Dnatives</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>23</span>
+        <div class='item-title'>
+          <a href='https://zhuanlan.zhihu.com/p/2105947902656897301' target='_blank'>荣耀被曝入局消费级3D打印：资源库称已有实机、官方未确认</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3D打印资源库独家消息称，荣耀正在推进消费级3D打印机项目、已有实机，但官方尚未确认，目前只能按传闻看待。若落地，将是继得力、联想、小米等跨界之后又一家消费电子大厂入局，行业关注其对现有一超多强格局的影响。</div>
+      <div class='item-source'>来源：<a href='https://zhuanlan.zhihu.com/p/2105947902656897301' target='_blank'>知乎・3D打印资源库</a><span class='from-tag from-other'>知乎・3D打印资源库</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>24</span>
+        <div class='item-title'>
+          <a href='https://www.3dnatives.com/en/longer-eprint-formnext-19112026/' target='_blank'>LONGER ePrint桌面UV打印机：20多种创意工艺拓展个性化定制</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>3Dnatives在Formnext采访LONGER，探讨ePrint桌面UV平板打印机如何扩展定制选项。该机主打把20多种创意工艺集成到桌面设备，满足消费者对个性化的需求——从单纯功能件走向外观与质感定制，反映桌面制造向多工艺融合演进。</div>
+      <div class='item-source'>来源：<a href='https://www.3dnatives.com/en/longer-eprint-formnext-19112026/' target='_blank'>3Dnatives</a><span class='from-tag from-other'>3Dnatives</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>25</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/337449/3d-printing-news-briefs-11-21-2026/' target='_blank'>Formnext 11月21日简报：获奖名单、开箱方案与宠物矫形器</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>周末新闻简报盘点2026 Formnext Awards获奖者、AM Solutions在展会首发的开箱（unpacking）解决方案，以及Protolabs的宠物矫形器等应用。内容覆盖奖项、后处理自动化与医疗/宠物辅助器具，显示增材应用正从小众工业走向更广泛的日常场景。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/337449/3d-printing-news-briefs-11-21-2026/' target='_blank'>3DPrint.com</a><span class='from-tag from-other'>3DPrint.com</span></div>
+    </div>
+    </div>
+    <div class='section-title global' id="global">
+      <span class='icon'></span>海外资讯（国际/3Dnatives/3DPrint.com）</div>
+    <div class='global-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>26</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/337201/formnext-2026-large-format-3d-printing-gets-bigger-smarter-and-more-production-ready/' target='_blank'>Formnext 2026：大尺寸打印变得更大、更智能、更具量产能力</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>制造大尺寸3D打印机的竞赛在Formnext 2026加速，厂商将注意力转向工业级生产。金属与聚合物两条主线同时扩容：金属侧以模块化平台与高功率激光提升吞吐密度，聚合物侧以更大成形仓与自动化粉末处理降低单件成本。报道认为增材正从原型工具成熟为车间常备工艺，竞争焦点从可行性转向规模化生产的经济与物流现实。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/337201/formnext-2026-large-format-3d-printing-gets-bigger-smarter-and-more-production-ready/' target='_blank'>3DPrint.com</a><span class='from-tag from-other'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>27</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/337433/formnext-2026-day-4-snow-day/' target='_blank'>Formnext Day Four：周五展馆转静，行业站在转折点</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>Joris Peels描述展会最后一天的氛围：管理层已离开，留下初创创始人、技术团队与部分市场团队，场馆明显安静。他称桌面金属打印正处于行业转折点——低成本LPBF品类被长期看好，但安全性（粉末、激光、滤芯起火与爆燃风险）成为消费级场景必须正视的问题，呼吁行业以预防原则对待。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/337433/formnext-2026-day-4-snow-day/' target='_blank'>3DPrint.com</a><span class='from-tag from-other'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>28</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/337344/formnext-2026-day-two-release-me/' target='_blank'>Formnext Day Two：海地迎来LPBF设备，产能释放成为主线</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>Joris Peels在展会第二天观察到，增材设备正加速向更多国家和地区扩散，他特别提到海地也获得了自己的LPBF机器，显示金属打印的可及性在提升。当天新品发布密集，作者以Release Me概括节奏，反映展会从技术展示转向产能与落地的竞争。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/337344/formnext-2026-day-two-release-me/' target='_blank'>3DPrint.com</a><span class='from-tag from-other'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>29</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/337297/formnext-2026-day-one-what-if-peace-breaks-out/' target='_blank'>Formnext Day One：若和平到来，增材行业将如何应对</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>Joris Peels以What if peace breaks out为题记录展首日：今年法兰克福天气出奇地好，展馆氛围与往年截然不同。文章由地缘与国防议题切入，反思增材行业对国防订单的高度依赖——若外部需求格局变化，行业需要怎样的产品与市场韧性。展首日即有多款金属与聚合物新品集中亮相。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/337297/formnext-2026-day-one-what-if-peace-breaks-out/' target='_blank'>3DPrint.com</a><span class='from-tag from-other'>3DPrint.com</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>30</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/337074/beyond-the-prototype-fibreseek-brings-continuous-fiber-manufacturing-to-small-engineering-teams/' target='_blank'>FibreSeek把连续碳纤维制造带进小型工程团队</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>连续碳纤维3D打印能产出高强度、轻量化的零件，但工业级系统的成本让许多独立工程师与小团队望而却步。FibreSeek在Formnext展示面向小型工程团队的连续纤维制造方案，目标是把这项能力从原型验证推进到小批量功能件生产，降低高性能复合材料的使用门槛。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/337074/beyond-the-prototype-fibreseek-brings-continuous-fiber-manufacturing-to-small-engineering-teams/' target='_blank'>3DPrint.com</a><span class='from-tag from-other'>3DPrint.com</span></div>
+    </div>
+    </div>
+    <div class='section-title feedback' id="feedback">
+      <span class='icon'></span>用户口碑（国外评测/国内实测）</div>
+    <div class='feedback-zone'>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>31</span>
+        <div class='item-title'>
+          <a href='https://www.tomshardware.com/3d-printing/creality-k3-review' target='_blank'>Tom’s Hardware评Creality K3：换头机，但不是游戏规则改变者</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>Tom's Hardware评测认为，平价换头机赛道竞争已相当激烈，Creality K3并未带来全新东西。评测肯定其KliTek四喷嘴换头与硬件配置，但指出在同类产品中有力的对手众多，K3要突围仍需靠价格与生态。该评测与海外社区对K3外观、换头逻辑的讨论共同构成首轮口碑。</div>
+      <div class='item-source'>来源：<a href='https://www.tomshardware.com/3d-printing/creality-k3-review' target='_blank'>Tom's Hardware</a><span class='from-tag from-other'>Tom's Hardware</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>32</span>
+        <div class='item-title'>
+          <a href='https://www.tomshardware.com/3d-printing/reviews' target='_blank'>Tom’s Hardware 3D打印评测专区：H3C、Elegoo扫描仪等新品实测</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>Tom's Hardware 3D打印评测专区更新：Elegoo首款扫描仪被评价为实用工具但需要额外调校；Bambu Lab H3C被称massive tool，评测聚焦其九工具头系统的产能与易用性。专区持续覆盖多色、换头、扫描等主流新品，是海外消费者选购的重要参考。</div>
+      <div class='item-source'>来源：<a href='https://www.tomshardware.com/3d-printing/reviews' target='_blank'>Tom's Hardware</a><span class='from-tag from-other'>Tom's Hardware</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>33</span>
+        <div class='item-title'>
+          <a href='https://www.bilibili.com/video/BV1TTsP6HEbp' target='_blank'>拓竹3D打印技巧：桥接质量差、桥接失败的切片调法</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>针对社区高频问题桥接质量差、桥接失败，UP主从桥接速度、冷却风扇、桥接流量与张力设置等切片参数入手，配合模型摆角优化给出调法。属大促后新机用户实测避坑系列，与进料、脱床问题并列为新手三大痛点。</div>
+      <div class='item-source'>来源：<a href='https://www.bilibili.com/video/BV1TTsP6HEbp' target='_blank'>哔哩哔哩</a><span class='from-tag from-other'>哔哩哔哩</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>34</span>
+        <div class='item-title'>
+          <a href='https://www.zhihu.com/question/311234646/answer/2106107497991889425' target='_blank'>3D打印件粘热床难取下：高赞答主总结工具与方法</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>针对打印件粘附热床难取这一高频痛点，答主总结冷却后再取、刮刀与柔性打印板等工具方法，提醒趁热硬撬易损伤热床与模型。该问答长期保持高关注，反映脱床仍是新机用户最普遍的实操困扰之一。</div>
+      <div class='item-source'>来源：<a href='https://www.zhihu.com/question/311234646/answer/2106107497991889425' target='_blank'>知乎</a><span class='from-tag from-other'>知乎</span></div>
+    </div>
+    <div class='item'>
+      <div class='item-head'>
+        <span class='num-dot'>35</span>
+        <div class='item-title'>
+          <a href='https://3dprint.com/336114/the-am-production-gap-is-real-so-is-the-progress/' target='_blank'>AM生产差距真实存在，进步也是：从可行性走向稳定产出</a>
+          <span class='score-badge score-badge-a'>✅ A级</span>
+        </div>
+      </div>
+      <div class='item-summary'>评论指出，增材制造已非常擅长证明可能性——打印复杂金属件、减重、合并零件、实现传统工艺做不到的设计；但真正挑战在于把这些能力稳定转化为可重复的生产。行业在质量保障、后处理自动化与良率管理上持续进步，生产差距正在缩小，这也是本届Formnext降低TCO、强化自动化的主线。</div>
+      <div class='item-source'>来源：<a href='https://3dprint.com/336114/the-am-production-gap-is-real-so-is-the-progress/' target='_blank'>3DPrint.com</a><span class='from-tag from-other'>3DPrint.com</span></div>
+    </div>
+    </div>
+<div class='footer'>
+  <p>3D打印行业每日资讯 · 2026年11月23日 （星期一）· 内容日期 2026年11月20日</p>
+  <p>数据来源见各条目标注 · <a href="index.html">返回首页</a></p>
+</div>
+</div>
+</body>
+</html>

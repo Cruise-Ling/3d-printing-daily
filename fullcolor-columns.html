@@ -298,6 +298,71 @@ table.mx td.gap{color:#d29922;font-size:10.5px}
   font-size:11px;color:#6e7681;border-top:1px solid #1c2128;padding-top:9px;margin-top:auto}
 .col-mbox .c-foot a{color:#58a6ff;text-decoration:none;white-space:nowrap}
 .col-mbox .c-foot a:hover{text-decoration:underline}
+/* ===== 2026-11-20 明细反馈流 · 批量导出（链接元数据 + 评论翻译）===== */
+.exp-btn{margin-left:auto;font:500 12px/1 inherit;color:#58a6ff;background:rgba(88,166,255,.08);
+  border:1px solid rgba(88,166,255,.35);border-radius:6px;padding:5px 11px;cursor:pointer;white-space:nowrap}
+.exp-btn:hover{background:rgba(88,166,255,.16)}
+.exp-mask{position:fixed;inset:0;background:rgba(1,4,9,.62);opacity:0;visibility:hidden;
+  transition:opacity .18s;z-index:900}
+.exp-mask.on{opacity:1;visibility:visible}
+.exp-drawer{position:fixed;top:0;right:0;height:100%;width:392px;max-width:100vw;background:#0d1117;
+  border-left:1px solid #21262d;z-index:901;display:flex;flex-direction:column;
+  transform:translateX(100%);transition:transform .22s ease;box-shadow:-24px 0 48px rgba(0,0,0,.45)}
+.exp-drawer.on{transform:none}
+.exp-head{display:flex;align-items:flex-start;justify-content:space-between;padding:15px 18px;
+  border-bottom:1px solid #21262d;flex:none}
+.exp-head b{font-size:14px;color:#e6edf3;display:block;font-weight:600}
+.exp-head span{font-size:11.5px;color:#6e7681;display:block;margin-top:3px}
+.exp-x{background:none;border:none;color:#6e7681;font-size:20px;line-height:1;cursor:pointer;padding:0 2px}
+.exp-x:hover{color:#e6edf3}
+.exp-body{padding:14px 18px 26px;overflow:auto;flex:1;display:flex;flex-direction:column;gap:9px}
+.exp-sec{font-size:12px;color:#e6edf3;font-weight:600;display:flex;align-items:center;gap:8px;margin-top:6px}
+.exp-sec em{font-style:normal;font-size:11px;color:#6e7681;font-weight:400;margin-left:auto}
+#expText{width:100%;min-height:94px;background:#161b22;border:1px solid #30363d;border-radius:8px;
+  color:#e6edf3;font:12px/1.65 ui-monospace,Consolas,monospace;padding:10px;resize:vertical;box-sizing:border-box}
+#expText:focus{outline:none;border-color:#58a6ff}
+#expText::placeholder{color:#484f58}
+.exp-parse{font-size:11.5px;color:#8b949e}
+.exp-parse b{color:#58a6ff;font-weight:600}
+.exp-parse .bad{color:#f85149}
+.exp-row{display:flex;align-items:center;gap:10px;font-size:12px;color:#8b949e;flex-wrap:wrap}
+.exp-row>span:first-child{width:62px;flex:none;color:#8b949e}
+.exp-seg{display:flex;border:1px solid #30363d;border-radius:6px;overflow:hidden}
+.exp-seg button{background:none;border:none;color:#8b949e;font:12px/1 inherit;padding:6px 13px;cursor:pointer}
+.exp-seg button+button{border-left:1px solid #30363d}
+.exp-seg button.on{background:rgba(88,166,255,.14);color:#58a6ff}
+#expMax{background:#161b22;border:1px solid #30363d;color:#e6edf3;border-radius:6px;
+  padding:5px 8px;font-size:12px;cursor:pointer}
+.exp-chk{display:inline-flex;align-items:center;gap:5px;cursor:pointer;color:#c9d1d9;font-size:12px}
+.exp-chk input{accent-color:#58a6ff;margin:0}
+.exp-note{font-size:11.5px;padding:8px 10px;border-radius:6px;background:#161b22;
+  border:1px solid #21262d;color:#8b949e;display:flex;align-items:center;gap:7px;line-height:1.5}
+.exp-note.ok{color:#3fb950;border-color:rgba(63,185,80,.35)}
+.exp-note.bad{color:#f85149;border-color:rgba(248,81,73,.35)}
+.exp-note button{margin-left:auto;flex:none;background:none;border:1px solid #30363d;color:#8b949e;
+  border-radius:5px;padding:2px 9px;font-size:11px;cursor:pointer}
+.exp-note button:hover{color:#e6edf3;border-color:#58a6ff}
+.exp-go{width:100%;background:#238636;border:1px solid rgba(240,246,252,.1);color:#fff;
+  font-size:13px;font-weight:600;padding:10px;border-radius:8px;cursor:pointer;margin-top:2px}
+.exp-go:hover:not(:disabled){background:#2ea043}
+.exp-go:disabled{background:#21262d;color:#6e7681;cursor:not-allowed;border-color:#30363d}
+.exp-prog{display:none;flex-direction:column;gap:8px;margin-top:4px}
+.exp-prog.on{display:flex}
+.exp-bar{height:4px;background:#21262d;border-radius:2px;overflow:hidden}
+.exp-bar span{display:block;height:100%;width:6%;background:#58a6ff;transition:width .5s;border-radius:2px}
+.exp-log{font:11px/1.75 ui-monospace,Consolas,monospace;color:#8b949e;max-height:144px;overflow:auto;
+  background:#161b22;border:1px solid #21262d;border-radius:6px;padding:8px 10px}
+.exp-log em{color:#484f58;font-style:normal;margin-right:6px}
+.exp-done{display:none;flex-direction:column;gap:8px}
+.exp-done.on{display:flex}
+.exp-file{background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.3);border-radius:8px;
+  padding:10px 12px;font-size:12px;color:#3fb950;display:flex;justify-content:space-between;
+  align-items:center;gap:10px;line-height:1.5}
+.exp-file a{color:#3fb950;white-space:nowrap;font-weight:600}
+.exp-err{background:rgba(248,81,73,.08);border:1px solid rgba(248,81,73,.3);border-radius:8px;
+  padding:10px 12px;font-size:12px;color:#f85149;line-height:1.6}
+.exp-tip{font-size:11px;color:#484f58;line-height:1.6}
+@media (max-width:760px){.exp-drawer{width:100%}.exp-row>span:first-child{width:56px}}
 </style>
 </head>
 <body>
@@ -356,7 +421,7 @@ table.mx td.gap{color:#d29922;font-size:10.5px}
   <div id="chanCover"></div>
   <div id="chanShare" class="mt12"></div>
 
-  <h2 class="sec-title">明细反馈流<span class="hint" id="flowHint"></span></h2>
+  <h2 class="sec-title">明细反馈流<span class="hint" id="flowHint"></span><button class="exp-btn" id="expOpen" type="button">批量导出</button></h2>
   <div class="filters" id="filters"></div>
   <div class="deepfilters" id="deepFilters"></div>
   <div class="fsum" id="filterSummary"></div>
@@ -1594,6 +1659,205 @@ catch(err){
   document.getElementById("cardGrid").innerHTML =
     '<div class="panel"><div class="empty">渲染失败：'+esc(err && err.message || err)+'</div></div>';
 }
+})();
+</script>
+<div class="exp-mask" id="expMask"></div>
+<aside class="exp-drawer" id="expDrawer" role="dialog" aria-modal="true" aria-hidden="true" aria-label="批量导出">
+  <div class="exp-head">
+    <div><b>批量导出</b><span>链接元数据 + 评论中文翻译</span></div>
+    <button class="exp-x" id="expClose" type="button" aria-label="关闭">×</button>
+  </div>
+  <div class="exp-body">
+    <div class="exp-sec">1 链接<em>一行一条，可整段粘贴</em></div>
+    <textarea id="expText" spellcheck="false" placeholder="https://www.youtube.com/watch?v=...
+https://www.reddit.com/r/3Dprinting/comments/..."></textarea>
+    <div class="exp-parse" id="expParse">已识别 0 条</div>
+
+    <div class="exp-sec">2 选项</div>
+    <div class="exp-row"><span>格式</span>
+      <div class="exp-seg" id="expFmt">
+        <button type="button" data-v="xlsx" class="on">xlsx</button>
+        <button type="button" data-v="csv">csv</button>
+        <button type="button" data-v="json">json</button>
+      </div>
+    </div>
+    <div class="exp-row"><span>评论上限</span>
+      <select id="expMax">
+        <option value="100">100 条 / 帖</option>
+        <option value="300" selected>300 条 / 帖</option>
+        <option value="0">不限（配额风险）</option>
+      </select>
+    </div>
+    <div class="exp-row"><span>选项</span>
+      <label class="exp-chk"><input type="checkbox" id="expTr" checked>中文翻译</label>
+      <label class="exp-chk"><input type="checkbox" id="expRp" checked>含回复</label>
+    </div>
+
+    <div class="exp-note" id="expSvc">正在检测本地服务…</div>
+    <button class="exp-go" id="expGo" type="button" disabled>开始导出</button>
+
+    <div class="exp-prog" id="expProg">
+      <div class="exp-bar"><span id="expBar"></span></div>
+      <div class="exp-log" id="expLog"></div>
+    </div>
+    <div class="exp-done" id="expDone"></div>
+    <div class="exp-tip">YouTube 走官方 API，字段完整；Reddit 当前出口被限流，只登记链接并注明原因。机翻未经校对，引用前请抽检原文。</div>
+  </div>
+</aside>
+<script>
+(function(){
+"use strict";
+var SVC="http://127.0.0.1:8765", online=false, jobId=null, timer=null, fmt="xlsx";
+function $(id){return document.getElementById(id);}
+function escH(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+
+var RE_YT=/(?:youtube\.com\/(?:watch\?(?:[^#\s]*&)?v=|shorts\/|embed\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/gi;
+var RE_RD=/(?:reddit\.com\/(?:r\/[^\/\s]+\/)?comments\/|redd\.it\/)([a-z0-9]{4,10})/gi;
+
+function scan(){
+  var t=$("expText").value||"", yt={}, rd={}, m;
+  RE_YT.lastIndex=0; while((m=RE_YT.exec(t))){ yt[m[1]]=1; }
+  RE_RD.lastIndex=0; while((m=RE_RD.exec(t))){ rd[m[1].toLowerCase()]=1; }
+  var ny=Object.keys(yt).length, nr=Object.keys(rd).length, n=ny+nr;
+  $("expParse").innerHTML = n
+    ? "已识别 <b>"+n+"</b> 条 · YouTube "+ny+" · Reddit "+nr
+    : '已识别 0 条<span class="bad">（粘贴后自动识别）</span>';
+  $("expGo").textContent = n?("开始导出 · "+n+" 条链接"):"开始导出";
+  $("expGo").disabled = !online || !n || !!jobId;
+  return n;
+}
+
+function setNote(cls, html, retry){
+  var el=$("expSvc");
+  el.className="exp-note"+(cls?" "+cls:"");
+  el.innerHTML="<span>"+html+"</span>"+(retry?'<button type="button" id="expRetry">重试</button>':"");
+  if(retry){ $("expRetry").onclick=checkSvc; }
+}
+
+function checkSvc(){
+  setNote("", "正在检测本地服务…");
+  var ctl = window.AbortController ? new AbortController() : null;
+  var to = setTimeout(function(){ if(ctl){ try{ctl.abort();}catch(e){} } }, 2400);
+  var opt = {cache:"no-store"};
+  if(ctl){ opt.signal = ctl.signal; }
+  fetch(SVC+"/api/ping", opt).then(function(r){ return r.json(); }).then(function(d){
+    clearTimeout(to);
+    online=true;
+    setNote("ok","本地服务已连接 · 端口 "+d.port+" · 文件写入 _exports/");
+    scan();
+  }).catch(function(){
+    clearTimeout(to);
+    online=false;
+    setNote("bad","未连接本地服务。双击目录里的 <b>_link_export_start.bat</b> 启动后重试。", true);
+    scan();
+  });
+}
+
+function openDrawer(){
+  $("expMask").classList.add("on");
+  $("expDrawer").classList.add("on");
+  $("expDrawer").setAttribute("aria-hidden","false");
+  document.body.style.overflow="hidden";
+  checkSvc();
+  setTimeout(function(){ $("expText").focus(); }, 240);
+}
+function closeDrawer(){
+  $("expMask").classList.remove("on");
+  $("expDrawer").classList.remove("on");
+  $("expDrawer").setAttribute("aria-hidden","true");
+  document.body.style.overflow="";
+  if(timer){ clearInterval(timer); timer=null; }
+}
+
+function renderLog(logs){
+  var h="";
+  for(var i=0;i<logs.length;i++){
+    h += "<div><em>"+escH(logs[i].t)+"</em>"+escH(logs[i].m)+"</div>";
+  }
+  var box=$("expLog"); box.innerHTML=h; box.scrollTop=box.scrollHeight;
+}
+
+function start(){
+  if(!online || jobId){ return; }
+  var n=scan(); if(!n){ return; }
+  $("expGo").disabled=true;
+  $("expGo").textContent="处理中…";
+  $("expProg").classList.add("on");
+  $("expDone").classList.remove("on");
+  $("expBar").style.width="6%";
+  $("expLog").innerHTML="";
+  var payload={text:$("expText").value, format:fmt,
+    maxComments:parseInt($("expMax").value,10)||0,
+    translate:$("expTr").checked, replies:$("expRp").checked};
+  fetch(SVC+"/api/export",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(payload)}).then(function(r){ return r.json().then(function(d){
+      if(!r.ok){ throw new Error(d.error||("HTTP "+r.status)); } return d; }); })
+  .then(function(d){
+    jobId=d.jobId;
+    timer=setInterval(poll,1500);
+    poll();
+  }).catch(function(e){
+    $("expGo").disabled=false; $("expGo").textContent="开始导出";
+    $("expDone").classList.add("on");
+    $("expDone").innerHTML='<div class="exp-err">提交失败：'+escH(e.message)+"</div>";
+  });
+}
+
+function poll(){
+  fetch(SVC+"/api/job?id="+jobId).then(function(r){ return r.json(); }).then(function(j){
+    renderLog(j.logs||[]);
+    if(j.status==="done"){ $("expBar").style.width="100%"; finish(j); return; }
+    if(j.status==="error"){ $("expBar").style.width="100%"; fail(j.error); return; }
+    $("expBar").style.width=Math.min(90, 8 + j.elapsed*1.8)+"%";
+  }).catch(function(){});
+}
+
+function finish(j){
+  clearInterval(timer); timer=null;
+  var kb=(j.size/1024).toFixed(0);
+  $("expDone").classList.add("on");
+  $("expDone").innerHTML='<div class="exp-file"><span>'+escH(j.file)+" · "+kb+' KB</span>'
+    +'<a href="'+SVC+"/api/download?id="+jobId+'" download>下载</a></div>'
+    +'<div class="exp-tip">文件同时已落在本机 _exports/ 目录，浏览器若拦截下载可直接去取。</div>';
+  $("expGo").textContent="再导出一批";
+  $("expGo").disabled=!online;
+  jobId=null;
+}
+
+function fail(msg){
+  clearInterval(timer); timer=null;
+  $("expDone").classList.add("on");
+  $("expDone").innerHTML='<div class="exp-err">导出失败：'+escH(msg||"未知错误")+"</div>";
+  $("expGo").textContent="重试";
+  $("expGo").disabled=!online;
+  jobId=null;
+}
+
+function init(){
+  var b=$("expOpen"); if(!b){ return; }
+  function on(el,ev,fn){ if(el&&el.addEventListener){ el.addEventListener(ev,fn); } }
+  b.onclick=openDrawer;
+  var c=$("expClose"); if(c){ c.onclick=closeDrawer; }
+  var m=$("expMask"); if(m){ m.onclick=closeDrawer; }
+  on(document,"keydown",function(e){
+    if(e.key==="Escape" && $("expDrawer") && $("expDrawer").classList.contains("on")){ closeDrawer(); }
+  });
+  on($("expText"),"input",scan);
+  on($("expText"),"paste",function(){ setTimeout(scan,30); });
+  var box=$("expFmt");
+  if(box && box.querySelectorAll){
+    Array.prototype.forEach.call(box.querySelectorAll("button"),function(bt){
+      bt.onclick=function(){
+        Array.prototype.forEach.call(box.querySelectorAll("button"),function(x){ x.classList.remove("on"); });
+        bt.classList.add("on"); fmt=bt.getAttribute("data-v");
+      };
+    });
+  }
+  var go=$("expGo"); if(go){ go.onclick=start; }
+  try{ if(location.hash.indexOf("exp")>=0){ setTimeout(openDrawer,300); } }catch(e){}
+}
+try{ init(); }catch(e){}
 })();
 </script>
 </body>
