@@ -138,6 +138,13 @@ table.mx td.gap{color:#d29922;font-size:10.5px}
 .fbtn{background:#0d1117;color:#8b949e;border:1px solid #30363d;border-radius:6px;padding:5px 10px;font-size:11.5px;cursor:pointer;white-space:nowrap;font-family:inherit}
 .fbtn:hover{border-color:#58a6ff;color:#c9d1d9}
 .fbtn.on{background:rgba(88,166,255,.15);border-color:rgba(88,166,255,.55);color:#79c0ff;font-weight:600}
+/* 渠道不可用 / 已断流：虚线边框 + 降透明，hover 用琥珀色提示原因。
+   用虚线而不是纯灰色 —— 纯灰会被读成「禁用」，虚线读成「这条通道有问题」。 */
+.fbtn.off{opacity:.6;border-style:dashed;cursor:help}
+.fbtn.off:hover{border-color:#d29922;color:#d29922;opacity:.85}
+.fbtn.off[disabled]{cursor:not-allowed;opacity:.5}
+.fbtn.off[disabled]:hover{border-color:#30363d;color:#8b949e}
+.fbtn.off em{font-style:normal;color:#d29922;font-size:10.5px;margin-left:3px;font-weight:600}
 .filters{display:flex;flex-wrap:wrap;gap:10px;background:#161b22;border:1px solid #21262d;border-radius:10px;padding:12px 14px;align-items:center}
 .fg{display:flex;align-items:center;gap:6px;font-size:12px;color:#8b949e}
 .fg select,.fg input{background:#0d1117;color:#c9d1d9;border:1px solid #30363d;border-radius:6px;padding:5px 8px;font-size:12px;outline:none}
@@ -1275,15 +1282,48 @@ function platBtns(){
   var base = ITEMS.filter(function(x){ return match(x, "platform"); });
   var m = {};
   base.forEach(function(x){ var p = platOf(x); m[p] = (m[p]||0)+1; });
+
+  // Reddit 是唯一「没有数据也必须出现」的渠道：它有历史存量、有确定的阻断原因，
+  // 「0 条」本身就是要传达的信息。其余源沿用「有数据才出 chip」，
+  // 否则全彩/软件那些一两家长尾媒体会让筛选栏一半是灰的。
+  // 配置来自构建器注入的 COL.channels —— 只含声明与通道状态，不含条数：
+  // K3/光固化走增量注入，页面不重建，注入的条数第二天就是错的。
+  var cfg = (COL && COL.channels) || {};
+  var rd = cfg.reddit || {};
+  var rdOn = !!rd.on, rdBlocked = rd.status === "blocked";
+  if ((rdOn || m["Reddit"]) && !("Reddit" in m)) m["Reddit"] = 0;
+
   var keys = Object.keys(m).sort(function(a,b){ return m[b]-m[a]; });
+  var PINNED = ["Reddit"];   // 恒定常显，不允许被长尾逻辑收进下拉
+
   var btn = function(val, label, n){
-    return '<button class="fbtn'+(S.platform===val?" on":"")+'" data-plat="'+esc(val)+'">'+
-      esc(label)+' '+n+'</button>';
+    var s = "", note = "";
+    if (val === "Reddit") {
+      if (!rdOn) { s = "blocked"; note = "本页未接入 Reddit 源"; }
+      else if (rdBlocked) {
+        s = n ? "stale" : "blocked";
+        note = "Reddit 通道不可用（" + (rd.since || "—") + " 起）· " +
+               (rd.lastOk ? "最近成功 " + rd.lastOk : "从未成功") +
+               " · " + (rd.reason || "");
+      }
+    }
+    var tag = s === "blocked" ? "未接通" : (s === "stale" ? "断流" : "");
+    var cls = "fbtn" + (S.platform===val ? " on" : "") + (s ? " off" : "");
+    var tip = note ? ' title="'+esc(note)+'"' : "";
+    // blocked 且 0 条：点了只能筛出空列表，不如禁用，把原因留在 hover 上
+    var dis = (s === "blocked" && !n) ? " disabled" : "";
+    var tail = tag ? '<em>'+tag+'</em>' : ' '+n;
+    return '<button class="'+cls+'" data-plat="'+esc(val)+'"'+tip+dis+'>'+
+      esc(label)+tail+'</button>';
   };
+
   // 渠道超过 8 个时只把「≥5 条」的前 8 个做成按钮，长尾收进下拉 ——
   // 与 K3 同一规则：长尾渠道各只有一两条，全部铺开会把筛选栏撑成两屏。
-  var shown = keys.length<=8 ? keys : keys.filter(function(k){ return m[k]>=5; }).slice(0,8);
-  var rest  = keys.filter(function(k){ return shown.indexOf(k)<0; });
+  // PINNED 里的渠道不参与这个裁剪。
+  var pinned = keys.filter(function(k){ return PINNED.indexOf(k)>=0; });
+  var pool   = keys.filter(function(k){ return PINNED.indexOf(k)<0; });
+  var shown  = pool.length<=8 ? pool : pool.filter(function(k){ return m[k]>=5; }).slice(0,8);
+  var rest   = pool.filter(function(k){ return shown.indexOf(k)<0; });
   var sel = rest.length
     ? '<select data-k="platform" style="margin-left:2px"><option value="" disabled selected>其他渠道 '+rest.length+' 个</option>'+
       rest.map(function(k){ return '<option value="'+esc(k)+'">'+esc(k)+' '+m[k]+'</option>'; }).join("")+
@@ -1292,6 +1332,7 @@ function platBtns(){
   return '<div class="fg" style="align-items:flex-start"><label style="padding-top:5px">渠道</label>'+
     '<div class="btnset">'+btn("", "全部", base.length)+
     shown.map(function(k){ return btn(k, k, m[k]); }).join("")+
+    pinned.map(function(k){ return btn(k, k, m[k]); }).join("")+
     '</div>'+sel+'</div>';
 }
 function renderFilters(){

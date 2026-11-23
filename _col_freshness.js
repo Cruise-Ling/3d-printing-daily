@@ -466,6 +466,47 @@ for (const r of results) {
 }
 console.log('-'.repeat(96));
 console.log(`VERDICT: ${nRed === 0 ? 'PASS' : 'FAIL'} (RED=${nRed} YELLOW=${nYellow})`);
+
+// ---------------------------------------------------------------- 渠道健康
+// 2026-11-23 新增：新鲜度只看「页面有没有更新」，看不出「某个渠道整条断了」。
+// Reddit 匿名通道关闭后，五个专栏连续两周 0 条，闸门一直 PASS —— 这是最危险的盲区。
+// 状态从页面已注入的 channels 段读取（口径单一来源 _col_channels.py），
+// 不额外维护第二份配置，也不参与 VERDICT：通道断是**已知现状**，不是当日故障，
+// 判 FAIL 只会让闸门天天红、最后被 --allow 掩盖掉。
+(function channelHealth() {
+  const FILES = {
+    'creality-k3.html': 'K3', 'bambu-h3c.html': 'H3C',
+    'creality-mbox.html': 'mBox', 'software-columns.html': '软件',
+    'fullcolor-columns.html': '全彩', 'resin-line.html': '光固化',
+  };
+  const rows = [];
+  for (const [f, label] of Object.entries(FILES)) {
+    let h;
+    try { h = fs.readFileSync(path.join(DIR, f), 'utf8'); } catch (e) { continue; }
+    const m = h.match(/"reddit":\{[^}]*\}/);
+    if (!m) { rows.push([label, '未注入', '重建该页以写入 channels 声明']); continue; }
+    let rd = {};
+    try { rd = JSON.parse('{' + m[0] + '}').reddit || {}; } catch (e) {}
+    const st = rd.status || '?';
+    const extra = st === 'blocked'
+      ? `自 ${rd.since || '—'} · ${rd.lastOk ? '最近成功 ' + rd.lastOk : '从未成功'}`
+      : '正常';
+    rows.push([label, st, extra]);
+  }
+  if (!rows.length) return;
+  console.log('-'.repeat(96));
+  console.log('渠道健康（不参与 VERDICT：通道断是已知现状，不是当日故障）');
+  for (const [label, st, extra] of rows) {
+    const mark = st === 'blocked' ? 'WARN' : st === 'ok' ? 'OK  ' : 'FAIL';
+    console.log(pad(label, 24) + pad(`${mark} ${st}`, 16) + extra);
+  }
+  const nBlocked = rows.filter(r => r[1] === 'blocked').length;
+  if (nBlocked) {
+    console.log(pad('Reddit', 24) + pad(`${nBlocked} 页断流`, 16) +
+      '页面已标注「未接通 / 断流」，凭据补上后无需改代码');
+  }
+})();
+
 if (nRed > 0) {
   console.log('');
   console.log('处置：RED 项必须在 Step 5 收尾前补齐——补采 → 归一 → 构建 → 再跑一次本闸门；');

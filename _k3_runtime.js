@@ -657,6 +657,16 @@ check('中文评价卡片只出原文一段（无译文档）',
 setQ('');
 setF('kind', 'all');
 
+console.log('\n--- 渠道四态（2026-11-23）---');
+// Reddit 匿名通道关闭后，K3 留 38 条历史存量但已无新增。
+// 页面必须能区分「今天 0 条」与「采不到」，不能把断流伪装成没讨论。
+check('信源声明已注入（channels）', s.indexOf('channels:') > -1 || s.indexOf('"channels":') > -1);
+check('渠道 chip 恒定常显逻辑存在', s.indexOf('PINNED') > -1);
+check('渠道不可用样式存在', s.indexOf('.filter-btn.off') > -1);
+check('断流原因文案存在', s.indexOf('通道不可用') > -1);
+check('names 在补齐 Reddit 之后才计算',
+  s.indexOf('cnt["Reddit"] = 0') < s.indexOf('const names = Object.keys(cnt)'));
+
 console.log('\n--- 合计 ---');
 console.log(fail === 0 ? 'ALL PASS' : fail + ' CHECK(S) FAILED');
 process.exit(fail === 0 ? 0 : 1);

@@ -24,6 +24,7 @@ _build_h3c.py — 生成 bambu-h3c.html（拓竹 H3C 单机型专栏）
   python _build_h3c.py --check    # 只校验，不写文件
 """
 import argparse
+import datetime
 import hashlib
 import io
 import json
@@ -33,14 +34,24 @@ import sys
 import time
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
+if ROOT not in sys.path:
+    sys.path.insert(0, ROOT)
 SRC = os.path.join(ROOT, "creality-k3.html")
 OUT = os.path.join(ROOT, "bambu-h3c.html")
 ITEMS = os.path.join(ROOT, "_h3c_items.json")
 
+import _col_channels  # noqa: E402  信源口径单一来源
+
+# H3C 的信源声明与 Reddit 通道状态（不含条数，条数由前端实时算）
+CHANNEL_PAYLOAD = _col_channels.payload("h3c")
+
 # ============================================================================
 # CONFIG — 机型级配置，改这里
 # ============================================================================
-REF_DATE = "2026-11-06"          # 近 7 日基准日 / 数据更新日
+# 近 7 日基准日 / 数据更新日。
+# 2026-11-12 修复：原为硬编码 "2026-11-06"，导致①页面「更新至」长期停在 11-06（实际数据已到 11-11）
+# ②11-11 入库的 32 条没进「近 7 日」窗口（基准日还在 11-06）。改为运行日；回补历史用 H3C_REF_DATE 环境变量。
+REF_DATE = os.environ.get("H3C_REF_DATE") or datetime.date.today().isoformat()
 PAGE_TITLE = "Bambu Lab H3C 用户反馈专栏 · 用户口碑"
 H1 = "Bambu Lab H3C 用户反馈专栏"
 AUTHOR_LINE = ("拓竹第三代旗舰 · Swaptek 九头闪切 / 顶置 AMS 3H / 可变线径 75A TPU · "
@@ -158,10 +169,14 @@ def build_data(seed):
         '  fetchedAt: "%s",\n'
         '  note: %s,\n'
         '  audit: %s,\n'
+        # 信源声明：口径单一来源见 _col_channels.py。只放声明与 Reddit 通道状态，
+        # 不放条数（页面每日重建，但条数由前端从 cnt 实时算，两处口径不会打架）。
+        '  channels: %s,\n'
         '  items: [\n'
         % (REF_DATE, REF_DATE + " 10:00", REF_DATE + " 10:30",
            json.dumps(seed["note"], ensure_ascii=False),
-           json.dumps(seed["audit"], ensure_ascii=False))
+           json.dumps(seed["audit"], ensure_ascii=False),
+           json.dumps(CHANNEL_PAYLOAD, ensure_ascii=False, separators=(",", ":")))
     )
     rows = []
     for it in items:

@@ -15,9 +15,14 @@ import io
 import json
 import os
 import re
+import sys
 import time
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
+if ROOT not in sys.path:
+    sys.path.insert(0, ROOT)
+import _col_channels  # noqa: E402  信源口径单一来源（2026-11-23）
+
 SHELL = os.path.join(ROOT, "_col_shell.html")
 NAVT = os.path.join(ROOT, "_nav.html")
 K3_PAGE = os.path.join(ROOT, "creality-k3.html")
@@ -316,7 +321,11 @@ def _mbox_foot(sm, src_n):
     empty = [p for p in pr if p.get("status") == "empty"]
     bad = [p for p in pr if p.get("status") in ("error", "need-cookie", "need-signature",
                                                 "blocked", "absent")]
-    bad_txt = "、".join("%s（%s）" % (p.get("source"), p.get("status")) for p in bad[:8]) or "无"
+    # 2026-11-16：原 [:8] 会静默截掉排在后面的受限源（YouTube API 不可达就被吞过），
+    # 放宽到 12 并在溢出时显式给总数，不再让「受限」悄悄消失。
+    bad_txt = "、".join("%s（%s）" % (p.get("source"), p.get("status")) for p in bad[:12]) or "无"
+    if len(bad) > 12:
+        bad_txt += " 等 %d 个" % len(bad)
     return (
         "<b>信源覆盖</b>（本轮实测）<br>"
         "① 探针 %d 个：命中 %d · 正常空返回 %d · 异常/受限 %d。<br>"
@@ -554,7 +563,9 @@ def build(kind):
                             "每日增量 · 原文 + 机翻双段")
         out = OUT_MBOX
 
-    data = {"meta": meta, "items": items}
+    # channels：信源声明与 Reddit 通道状态。只放声明与状态、不放条数 ——
+    # 条数由页面从当前筛选实时算，注入值会过期（页面数据每日刷新但文案不重建）。
+    data = {"meta": meta, "items": items, "channels": _col_channels.payload(kind)}
     shell = read(SHELL)
     # 注意顺序：__DATA__ 必须最后替换，否则数据里的文本可能被二次替换
     page = (shell

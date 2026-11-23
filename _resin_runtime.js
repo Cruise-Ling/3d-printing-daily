@@ -21,9 +21,23 @@ const sandbox = {
   Blob: function () {}, URL: { createObjectURL() { return ''; } },
   window: {}
 };
+sandbox.TextEncoder = TextEncoder;
+sandbox.setTimeout = setTimeout;
+sandbox.clearTimeout = clearTimeout;
+sandbox.setInterval = setInterval;
+sandbox.clearInterval = clearInterval;
 let runErr = '';
 try { vm.runInNewContext(code, sandbox, { timeout: 5000 }); } catch (e) { runErr = e.message; }
 ok(!runErr, '脚本完整执行无异常', runErr);
+
+/* 导出抽屉是独立脚本段：单独执行后才能验证取数钩子与 xlsx 生成器 */
+const scriptsAll = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]);
+const drawerSrc = scriptsAll.find(s => s.indexOf('function buildXlsx') > -1) || '';
+let drawerErr = drawerSrc ? '' : '未找到含 xlsx 生成器的脚本段';
+if (drawerSrc) {
+  try { vm.runInNewContext(drawerSrc, sandbox, { timeout: 5000 }); } catch (e) { drawerErr = e.message; }
+}
+ok(!drawerErr, '导出抽屉脚本可执行', drawerErr);
 
 const CONTAINERS = ['updateBar', 'filters', 'kpis', 'sent', 'prob', 'src', 'matrix',
   'chanShare', 'chanMatrix', 'quality', 'compete', 'channels', 'trend', 'trendCtl', 'dChips', 'exportFields', 'cards', 'foot'];
@@ -153,5 +167,33 @@ if (!runErr) {
   sandbox.S.dateMode = 'published'; sandbox.S.dateFrom = ''; sandbox.S.dateTo = ''; sandbox.renderAll();
   ok(sandbox.filtered().length === gBase, 'G12 时间筛选复位回到主口径', sandbox.filtered().length + ' vs ' + gBase);
 }
+ok(html.indexOf('id="expOpen"') > -1, 'X1 批量导出入口存在');
+ok(html.split('id="expDrawer"').length === 2, 'X2 导出抽屉唯一');
+ok(html.indexOf('127.0.0.1:8765') > -1, 'X3 本地服务地址已内联');
+ok(html.indexOf('EXP_VER = "2026-11-23a"') > -1, 'X4 导出组件版本 2026-11-23a');
+ok(html.indexOf('id="expChips"') > -1, 'X5 平台范围 chip 存在');
+ok(html.indexOf('id="expDeep"') > -1, 'X6 补全评论开关存在');
+ok(html.indexOf('id="expGo2"') > -1, 'X7 外部链接导出入口存在');
+ok(html.indexOf('id="expMax"') === -1, 'X8 旧版评论上限控件已移除');
+ok(html.indexOf('id="expTr"') === -1, 'X9 旧版选项控件已移除');
+const exApi = sandbox.window && sandbox.window.expApi;
+ok(!!exApi, 'X10 expApi 可访问');
+let exRows = 0, exCols = 0, exXlsx = false;
+if (exApi) {
+  try { exRows = exApi.rows().length; } catch (e) {}
+  try { exCols = exApi.fields().length; } catch (e) {}
+  try { exXlsx = (exApi.xlsx([{ name: 't', header: ['标题'], rows: [['中文测试']] }]) || []).length > 300; } catch (e) {}
+}
+ok(exRows > 0, 'X11 能取到当前列表行数', 'rows=' + exRows);
+ok(exCols >= 15, 'X12 字段表已定义', 'cols=' + exCols);
+ok(exXlsx, 'X13 xlsx 生成器可产出字节');
+// 渠道四态（2026-11-23）：光固化有 2 条 Reddit 历史存量但通道已断，
+// 页面必须显示「Reddit 断流」，不能像以前那样因为 n<2 被折进长尾里看不见。
+ok(html.indexOf('"channels":') > -1, 'X14 信源声明已注入（channels）');
+ok(html.indexOf('.hbar.off') > -1, 'X15 断流样式存在');
+ok(html.indexOf('通道不可用') > -1, 'X16 断流原因文案存在');
+let rdCh = false;
+try { rdCh = !!(sandbox.DATA && sandbox.DATA.channels && sandbox.DATA.channels.reddit); } catch (e) {}
+ok(rdCh, 'X17 channels.reddit 可在运行时读到');
 console.log('\nRUNTIME: ' + pass + ' PASS / ' + fail + ' FAIL');
 process.exit(fail ? 1 : 0);

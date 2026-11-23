@@ -147,6 +147,14 @@ a:hover { text-decoration:underline; }
 .filter-btn { background:#11161f; border:1px solid #21262d; color:#8b949e; font-size:12px; padding:6px 12px; border-radius:16px; cursor:pointer; transition:all .16s; font-family:inherit; }
 .filter-btn:hover { border-color:#30475e; color:#e6edf3; }
 .filter-btn.active { background:#1f6feb; border-color:#1f6feb; color:#fff; font-weight:600; }
+/* 渠道不可用 / 已断流：虚线边框 + 降透明，hover 用琥珀色给出原因。
+   2026-11-23 起因 Reddit 匿名通道关闭，K3 留 38 条历史存量但已无新增 —— 
+   纯灰会被读成「禁用」，虚线和琥珀色才读成「这条通道有问题」。 */
+.filter-btn.off { opacity:.55; border-style:dashed; cursor:help; }
+.filter-btn.off:hover { border-color:#d29922; color:#d29922; opacity:.85; }
+.filter-btn.off:disabled { cursor:not-allowed; opacity:.45; }
+.filter-btn.off:disabled:hover { border-color:#21262d; color:#8b949e; }
+.filter-btn.off em { font-style:normal; color:#d29922; font-size:11px; margin-left:4px; font-weight:600; }
 .filter-sep { width:1px; height:20px; background:#21262d; margin:0 4px; }
 input[type=text] { background:#0d1117; border:1px solid #21262d; color:#e6edf3; font-size:12.5px; padding:7px 12px; border-radius:16px; outline:none; font-family:inherit; min-width:190px; }
 input[type=text]:focus { border-color:#58a6ff; }
@@ -464,6 +472,9 @@ const K3_FEEDBACK_DATA = {
   fetchedAt: "2026-11-20 09:23",
   note: "样本含三类载体：视频（YouTube / B站）· 图文（帖文 / 文章 / 媒体）· 评价（视频评论 / 帖子回复）。评价类已过审核闸门，仅保留「有效 / 泛讨论」两档；语义字段为规则自动标注，卡片上标「自动标注」，人工复核前请勿直接作为结论口径。2026-11-06 起剔除原第三方协作总线投喂内容，X / 抖音 / 小红书 三渠道不再收录（共剔除 9 条）。",
   audit: {"at": "2026-10-19", "dropped": 167, "droppedOffTopic": 156, "droppedNoInfo": 11, "ruleVersion": "2026-10-19", "note": "无效评价已在采集阶段剔除，不进入页面"},
+  // 信源声明（口径单一来源：_col_channels.py）。只放「声明了哪些源」与「Reddit 通道通不通」，
+  // 不放条数 —— 本页走增量注入、不每日重建，注入的条数第二天就会过期。
+  channels: {"declared":["YouTube","Reddit","B站","什么值得买","Makers101","Slice Lab","Fast3DPrinters","Creality 官方论坛"],"reddit":{"on":true,"status":"blocked","since":"2026-11-07","lastOk":"2026-11-07","reason":"匿名 RSS 已关闭，需 OAuth 凭据（clientId/clientSecret 未配置）"}},
   items: [
     {id:"K3-20261123-001",date:"2026-11-23",publishedAt:"2026-11-22",channel:"海外",sourceType:"用户",contentKind:"视频",platform:"YouTube",site:"YouTube",collectMethod:"auto",sourceLink:"https://www.youtube.com/watch?v=PS-lIe0EdjI",country:"US",language:"EN",sentiment:"中性",topics:[],dimensions:[],problemPoints:[],originalText:"Creality K3 in Action #3dprinting #3dprinted #creality3d #creality #wekster #ocoola #plymi #esp32. Desktop Dude – Another Awesome Creation from Wekster! When it comes to bringing personality, creativity, and a little geeky ...",translation:"用 Creality K3 打印的桌面小摆件展示，看看 Wekster 带来的又一个充满个性的创作。",summaryCn:"用 K3 打印桌面摆件的创作展示视频，标题与简介均为作品展示与话题标签，无使用缺陷或观点反馈，本期只计声量。",competitorMentioned:"",heat:"播放 1304 / 点赞 30 / 评论 1 / 频道：3D and Tee Printing",isP0:false,uid:"c35a11c06723e00c",reviewGrade:"有效",countInVolume:false,entryKind:"动态"},
     {id:"K3-20261123-002",date:"2026-11-23",publishedAt:"2026-11-22",channel:"海外",sourceType:"用户",contentKind:"视频",platform:"YouTube",site:"YouTube",collectMethod:"auto",sourceLink:"https://www.youtube.com/watch?v=3mtxHtoY9MA",country:"US",language:"EN",sentiment:"中性",topics:[],dimensions:[],problemPoints:[],originalText:"EPIC 3D PRINTED GTA VI CONTROLLER STAND!. I use my @Creality3D K3 Printer to get this multi color project done fast! #3dprinting #k3 #gta6.",translation:"用我的 Creality K3 快速完成这个多色 GTA VI 手柄支架项目！",summaryCn:"用 K3 快速完成多色 GTA VI 手柄支架的创作展示，简介只强调快速完成多色项目，无问题反馈，计声量。",competitorMentioned:"",heat:"播放 2.3万 / 点赞 659 / 评论 9 / 频道：Jake Myers ",isP0:false,uid:"13482da11f4e3bc8",reviewGrade:"有效",countInVolume:false,entryKind:"动态"},
@@ -1878,17 +1889,42 @@ function renderFilters() {
       cnt[nm] = (cnt[nm] || 0) + 1;
       if (!(nm in rawOf)) rawOf[nm] = raw;
     });
+    // Reddit 恒定出 chip：它有历史存量、有确定的阻断原因，「0 条」本身就是要传达的信息。
+    // 配置来自数据块里的 channels（静态声明，不含条数 —— 增量注入后条数由 cnt 实时算）。
+    const chCfg = (K3_FEEDBACK_DATA && K3_FEEDBACK_DATA.channels) || {};
+    const rd = chCfg.reddit || {};
+    const rdOn = !!rd.on, rdBlocked = rd.status === "blocked";
+    if ((rdOn || cnt["Reddit"]) && !("Reddit" in cnt)) { cnt["Reddit"] = 0; rawOf["Reddit"] = "Reddit"; }
+    // 🔴 names 必须在补齐 Reddit 之后才算：先算再补，pinned 永远是空数组，
+    // Reddit 就会从筛选栏消失（2026-11-23 首版踩过，H3C 页复现）。
     const names = Object.keys(cnt).sort(function(a, b){ return cnt[b] - cnt[a]; });
-    const shown = names.length <= 8 ? names : names.filter(function(k){ return cnt[k] >= 5; }).slice(0, 8);
+    const PINNED = ["Reddit"];   // 不允许被长尾逻辑收进「其他渠道」下拉
+    const pinned = names.filter(function(k){ return PINNED.indexOf(k) >= 0; });
+    const pool = names.filter(function(k){ return PINNED.indexOf(k) < 0; });
+    const shown = pool.length <= 8 ? pool : pool.filter(function(k){ return cnt[k] >= 5; }).slice(0, 8);
     html += '<button class="filter-btn ' + (activeFilters.platform === "all" ? "active" : "") +
       '" onclick="setF(\'platform\',\'all\')">全部 ' + base.length + '</button>';
-    shown.forEach(function(nm){
+    const mkPlatBtn = function(nm){
       const v = String(rawOf[nm]).replace(/'/g, "\\'");
-      html += '<button class="filter-btn ' + (activeFilters.platform === rawOf[nm] ? "active" : "") +
-        '" onclick="setF(\'platform\',\'' + v + '\')" title="只看 ' + esc(nm) + ' 的内容">' +
-        esc(nm) + ' ' + cnt[nm] + '</button>';
-    });
-    const rest = names.filter(function(k){ return shown.indexOf(k) < 0; });
+      let st = "", note = "只看 " + nm + " 的内容";
+      if (nm === "Reddit") {
+        if (!rdOn) { st = "blocked"; note = "本页未接入 Reddit 源"; }
+        else if (rdBlocked) {
+          st = cnt[nm] ? "stale" : "blocked";
+          note = "Reddit 通道不可用（" + (rd.since || "—") + " 起）· " +
+                 (rd.lastOk ? "最近成功 " + rd.lastOk : "从未成功") + " · " + (rd.reason || "");
+        }
+      }
+      const tag = st === "blocked" ? '<em>未接通</em>' : (st === "stale" ? '<em>断流</em>' : "");
+      const dis = (st === "blocked" && !cnt[nm]) ? " disabled" : "";
+      const cls = "filter-btn" + (activeFilters.platform === rawOf[nm] ? " active" : "") + (st ? " off" : "");
+      const act = dis ? "" : ' onclick="setF(\'platform\',\'' + v + '\')"';
+      return '<button class="' + cls + '"' + act + ' title="' + esc(note) + '"' + dis + '>' +
+        esc(nm) + (tag || (' ' + cnt[nm])) + '</button>';
+    };
+    shown.forEach(function(nm){ html += mkPlatBtn(nm); });
+    pinned.forEach(function(nm){ html += mkPlatBtn(nm); });
+    const rest = pool.filter(function(k){ return shown.indexOf(k) < 0; });
     if (rest.length) {
       html += '<select onchange="if(this.value)setF(\'platform\',this.value)">' +
         '<option value="">其他渠道 ' + rest.length + ' 个</option>' +

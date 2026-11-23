@@ -10,8 +10,11 @@ import datetime as dt
 import json
 import os
 import re
+import sys
 
 BASE = os.path.dirname(os.path.abspath(__file__))
+if BASE not in sys.path:
+    sys.path.insert(0, BASE)
 
 
 def read(fn):
@@ -57,6 +60,15 @@ def render_nav():
 
 def main():
     data = json.load(open(os.path.join(BASE, "_resin_items.json"), encoding="utf-8"))
+    # 信源声明与 Reddit 通道状态（口径单一来源 _col_channels.py）。
+    # 只放声明与状态、不放条数 —— 条数由页面从当前筛选实时算，注入值会过期。
+    try:
+        if BASE not in sys.path:
+            sys.path.insert(0, BASE)
+        import _col_channels
+        data["channels"] = _col_channels.payload("resin")
+    except Exception as e:
+        print("  ! 信源声明注入失败（页面将退回纯数据驱动）：%s" % e)
     tpl = read("resin_tpl.html")
     payload = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
     # 防止正文里的 </script> 提前闭合脚本块；同时处理 JS 行分隔符

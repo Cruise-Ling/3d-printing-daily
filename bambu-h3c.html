@@ -147,6 +147,14 @@ a:hover { text-decoration:underline; }
 .filter-btn { background:#11161f; border:1px solid #21262d; color:#8b949e; font-size:12px; padding:6px 12px; border-radius:16px; cursor:pointer; transition:all .16s; font-family:inherit; }
 .filter-btn:hover { border-color:#30475e; color:#e6edf3; }
 .filter-btn.active { background:#1f6feb; border-color:#1f6feb; color:#fff; font-weight:600; }
+/* 渠道不可用 / 已断流：虚线边框 + 降透明，hover 用琥珀色给出原因。
+   2026-11-23 起因 Reddit 匿名通道关闭，K3 留 38 条历史存量但已无新增 —— 
+   纯灰会被读成「禁用」，虚线和琥珀色才读成「这条通道有问题」。 */
+.filter-btn.off { opacity:.55; border-style:dashed; cursor:help; }
+.filter-btn.off:hover { border-color:#d29922; color:#d29922; opacity:.85; }
+.filter-btn.off:disabled { cursor:not-allowed; opacity:.45; }
+.filter-btn.off:disabled:hover { border-color:#21262d; color:#8b949e; }
+.filter-btn.off em { font-style:normal; color:#d29922; font-size:11px; margin-left:4px; font-weight:600; }
 .filter-sep { width:1px; height:20px; background:#21262d; margin:0 4px; }
 input[type=text] { background:#0d1117; border:1px solid #21262d; color:#e6edf3; font-size:12.5px; padding:7px 12px; border-radius:16px; outline:none; font-family:inherit; min-width:190px; }
 input[type=text]:focus { border-color:#58a6ff; }
@@ -464,6 +472,7 @@ const H3C_FEEDBACK_DATA = {
   fetchedAt: "2026-11-23 10:30",
   note: "Bambu Lab H3C 用户反馈专栏数据源。含官方论坛（forum.bambulab.com，Discourse 公开 API）采到的一手用户帖，全部经人工逐条标注；发布前猜测期帖子（<2026-11-03）不入页。",
   audit: {"来源": "什么值得买 / 公众号 / 网易 / 极客公园 / 拓竹官网 / 百度贴吧 / 拓竹官方论坛", "已收录渠道": "6 个（含官方论坛 Discourse API 自动采集）", "说明": "官方论坛为社区性质，发帖人为真实用户，计入用户声量；厂商公告贴单独标 sourceType=官方，不入本批。", "更新": "2026-11-23"},
+  channels: {"declared":["拓竹官方论坛","B站","Reddit","腾讯新闻","网易","什么值得买","拓竹官网","极客公园","微信公众号"],"reddit":{"on":true,"status":"blocked","since":"2026-11-07","lastOk":null,"reason":"匿名 RSS 已关闭，需 OAuth 凭据（clientId/clientSecret 未配置）"}},
   items: [
     {"id":"H3C-20261123-001","date":"2026-11-23","publishedAt":"2026-11-23","channel":"海外","sourceType":"用户","contentKind":"图文","platform":"拓竹官方论坛","site":"forum.bambulab.com","collectMethod":"auto","sourceLink":"https://forum.bambulab.com/t/263169/5","country":"INTL","language":"EN","sentiment":"中性","topics":["tpu","multicolor"],"dimensions":["硬件性能 - 软料与挤出","硬件性能 - 多头切换"],"problemPoints":["不确定 H3C 多种 TPU 混打的实际配置方式与效果，TPU 供给仍是 H2 系列的硬限制"],"originalText":"I use my H2C almost exclusively for functional prints (that is, usually one color and maybe a separate support interface material). More recently I’ve also mixed colors which gives more variety with limited-color filaments like PETG or ASA, eg. for color-coding things like storage containers, which is pretty nifty.\n\nIf nothing else, it’s basically an H2D with much quicker (manual) swaps for the right nozzle. And 6 sizes/flows to choose from w/out even getting out of the chair. At the cost of that 20mm plate width. The induction nozzles are more expensive however, and it’s pretty “easy” to end up with quite a few of them.\n\nAnd this should add utility vs. H2D when using multiple sizes from a rack is possible (we’ll see what BL comes up with for H2C, but for now Oraca’s mixed sized nozzle support for H2C is same as H2D – only two nozzles, left and right).\n\nFor me the only real attraction in H3C is combining TPU types and also with other materials. I’m not really 100% sure how that’s set up or how well that works in practice. But the H2 series have the obvious limit, even with mild “hacking” to get TPU printing on both sides at once. (One alternative I’ve used already is foaming TPU/PEBA.)\n\nIt’s also the first model of a new series… there will be changes and, presumably, improvements (eg. H2D → H2C toolhead fan). Definitely waiting for the dust to settle, at least.\n\nAnd my only reg","translation":"我几乎只用 H2C 打功能件（通常单色，可能加一种支撑界面材料）。最近也开始混色，用有限色耗材做出更多变化，比如给收纳盒做颜色编码，挺不错。说到底它就是一台换右喷嘴更快（手动）的 H2D，还能坐着不动就选 6 种尺寸/流量，代价是那 20mm 的平台宽度。感应加热喷嘴更贵，很容易攒一堆。等能用上一排不同尺寸喷嘴时，它相对 H2D 的实用性才会显现（看拓竹给 H2C 做什么，目前 Orca 对 H2C 的混尺寸喷嘴支持和 H2D 一样——只有左右两个）。对我来说 H3C 唯一真正的吸引力是把不同 TPU 之间、以及与别的材料组合起来，但我不太确定这到底怎么配、实际效果如何。H2 系列有明显限制，即便用小技巧让两侧同时打 TPU 也不行（我用过发泡 TPU/PEBA 作为替代）。而且它是新系列的第一台，肯定会有变化、大概也会改进。至少我会等尘埃落定。到目前为止我对拓竹唯一的遗憾是切片器。不是说 Orca 完美，但至少我的 H2C 现在多了个选择，而且是真正在用打印机的人写的。我不想为 H3 的整合再等将近一年。二手我不太敢买……变数太多。","summaryCn":"H2C 功能件用户：H3C 唯一真正吸引他的点是多种 TPU 与异种材料混打，但不清楚实际配置与效果，倾向等「尘埃落定」；同时明确不满官方切片器，并担心 H3 系列软件整合周期长。","competitorMentioned":"","heat":"官方论坛 · 《Anyone getting an H3C or used H2C for fu》· 赞 0","isP0":false,"mirrors":[],"reviewGrade":"有效","autoTagged":false,"tagConfidence":0,"reviewReason":"Discourse 官方论坛原帖 · 人工逐条标注","uid":"469a106f91603dc1"},
     {"id":"H3C-20261122-007","date":"2026-11-23","publishedAt":"2026-11-22","channel":"海外","sourceType":"用户","contentKind":"图文","platform":"拓竹官方论坛","site":"forum.bambulab.com","collectMethod":"auto","sourceLink":"https://forum.bambulab.com/t/263187/2","country":"INTL","language":"EN","sentiment":"中性","topics":["nozzle"],"dimensions":["生态与配件 - 工具头"],"problemPoints":[],"originalText":"Its great for vase mode prints, otherwise I stick with .4 and .6. …You’re really limited by the flow rate of the extruder, hotend heater and filament anyway.","translation":"它对花瓶模式很好用，其他情况我还是用 0.4 和 0.6。反正你实际上受限于挤出机、热端加热器和耗材的流量。","summaryCn":"补充观点：0.8 只在花瓶模式下有明显优势，其余仍建议 0.4/0.6；真正瓶颈在挤出机、热端加热功率与耗材流量，换大喷嘴本身不解决。","competitorMentioned":"","heat":"官方论坛 · 《H3C 0.8 hotend slows print times》· 赞 0","isP0":false,"mirrors":[],"reviewGrade":"有效","autoTagged":false,"tagConfidence":0,"reviewReason":"Discourse 官方论坛原帖 · 人工逐条标注","uid":"210ea333ee7a9c0d"},
@@ -1577,17 +1586,42 @@ function renderFilters() {
       cnt[nm] = (cnt[nm] || 0) + 1;
       if (!(nm in rawOf)) rawOf[nm] = raw;
     });
+    // Reddit 恒定出 chip：它有历史存量、有确定的阻断原因，「0 条」本身就是要传达的信息。
+    // 配置来自数据块里的 channels（静态声明，不含条数 —— 增量注入后条数由 cnt 实时算）。
+    const chCfg = (H3C_FEEDBACK_DATA && H3C_FEEDBACK_DATA.channels) || {};
+    const rd = chCfg.reddit || {};
+    const rdOn = !!rd.on, rdBlocked = rd.status === "blocked";
+    if ((rdOn || cnt["Reddit"]) && !("Reddit" in cnt)) { cnt["Reddit"] = 0; rawOf["Reddit"] = "Reddit"; }
+    // 🔴 names 必须在补齐 Reddit 之后才算：先算再补，pinned 永远是空数组，
+    // Reddit 就会从筛选栏消失（2026-11-23 首版踩过，H3C 页复现）。
     const names = Object.keys(cnt).sort(function(a, b){ return cnt[b] - cnt[a]; });
-    const shown = names.length <= 8 ? names : names.filter(function(k){ return cnt[k] >= 5; }).slice(0, 8);
+    const PINNED = ["Reddit"];   // 不允许被长尾逻辑收进「其他渠道」下拉
+    const pinned = names.filter(function(k){ return PINNED.indexOf(k) >= 0; });
+    const pool = names.filter(function(k){ return PINNED.indexOf(k) < 0; });
+    const shown = pool.length <= 8 ? pool : pool.filter(function(k){ return cnt[k] >= 5; }).slice(0, 8);
     html += '<button class="filter-btn ' + (activeFilters.platform === "all" ? "active" : "") +
       '" onclick="setF(\'platform\',\'all\')">全部 ' + base.length + '</button>';
-    shown.forEach(function(nm){
+    const mkPlatBtn = function(nm){
       const v = String(rawOf[nm]).replace(/'/g, "\\'");
-      html += '<button class="filter-btn ' + (activeFilters.platform === rawOf[nm] ? "active" : "") +
-        '" onclick="setF(\'platform\',\'' + v + '\')" title="只看 ' + esc(nm) + ' 的内容">' +
-        esc(nm) + ' ' + cnt[nm] + '</button>';
-    });
-    const rest = names.filter(function(k){ return shown.indexOf(k) < 0; });
+      let st = "", note = "只看 " + nm + " 的内容";
+      if (nm === "Reddit") {
+        if (!rdOn) { st = "blocked"; note = "本页未接入 Reddit 源"; }
+        else if (rdBlocked) {
+          st = cnt[nm] ? "stale" : "blocked";
+          note = "Reddit 通道不可用（" + (rd.since || "—") + " 起）· " +
+                 (rd.lastOk ? "最近成功 " + rd.lastOk : "从未成功") + " · " + (rd.reason || "");
+        }
+      }
+      const tag = st === "blocked" ? '<em>未接通</em>' : (st === "stale" ? '<em>断流</em>' : "");
+      const dis = (st === "blocked" && !cnt[nm]) ? " disabled" : "";
+      const cls = "filter-btn" + (activeFilters.platform === rawOf[nm] ? " active" : "") + (st ? " off" : "");
+      const act = dis ? "" : ' onclick="setF(\'platform\',\'' + v + '\')"';
+      return '<button class="' + cls + '"' + act + ' title="' + esc(note) + '"' + dis + '>' +
+        esc(nm) + (tag || (' ' + cnt[nm])) + '</button>';
+    };
+    shown.forEach(function(nm){ html += mkPlatBtn(nm); });
+    pinned.forEach(function(nm){ html += mkPlatBtn(nm); });
+    const rest = pool.filter(function(k){ return shown.indexOf(k) < 0; });
     if (rest.length) {
       html += '<select onchange="if(this.value)setF(\'platform\',this.value)">' +
         '<option value="">其他渠道 ' + rest.length + ' 个</option>' +

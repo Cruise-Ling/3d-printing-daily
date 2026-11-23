@@ -16,8 +16,10 @@ const fs = require('fs');
 
 const FILE = process.argv[2] || 'bambu-h3c.html';
 const s = fs.readFileSync(FILE, 'utf8');
-const scriptStart = s.lastIndexOf('<script>');
-const scriptEnd = s.lastIndexOf('</script>');
+// 页面现在有两段 <script>：第 1 段 = 数据 + 引擎，第 2 段 = 导出抽屉（内联本地服务地址）。
+// 原先取最后一段会拿到抽屉脚本，导致 activeFilters 未定义（2026-11-23 修复）。
+const scriptStart = s.indexOf('<script>');
+const scriptEnd = s.indexOf('</script>', scriptStart);
 const code = s.slice(scriptStart + '<script>'.length, scriptEnd);
 
 const store = {};
@@ -127,6 +129,19 @@ check('明细卡片已渲染', cnt(store.cardGrid.innerHTML, /class="card/g) ===
 check('数据更新条含批次与条数', String(store.updateBar.innerHTML).indexOf(String(all.length)) > 0);
 check('更新历史可派生', typeof H.buildUpdateLog === 'function' && H.buildUpdateLog().length > 0, H.buildUpdateLog().length + ' 条');
 check('无残留 K3 标识符（运行期）', typeof H.H3C_FEEDBACK_DATA === 'object' && H.H3C_FEEDBACK_DATA.model === 'Bambu Lab H3C');
+
+// 渠道四态（2026-11-23）：H3C 是六个专栏里唯一「代码层从未接过 Reddit」的，
+// 本次补齐声明与采集模块。页面必须显示「Reddit 未接通」，而不是干脆不出现这个渠道。
+check('信源声明已注入（channels）', s.indexOf('channels:') > -1 || s.indexOf('"channels":') > -1);
+check('渠道 chip 恒定常显逻辑存在', s.indexOf('PINNED') > -1);
+check('渠道不可用样式存在', s.indexOf('.filter-btn.off') > -1);
+check('断流原因文案存在', s.indexOf('通道不可用') > -1);
+check('names 在补齐 Reddit 之后才计算',
+  s.indexOf('cnt["Reddit"] = 0') < s.indexOf('const names = Object.keys(cnt)'));
+check('channels.reddit.on 为真（H3C 已接入）',
+  typeof H.H3C_FEEDBACK_DATA === 'object' &&
+  !!(H.H3C_FEEDBACK_DATA.channels && H.H3C_FEEDBACK_DATA.channels.reddit &&
+     H.H3C_FEEDBACK_DATA.channels.reddit.on === true));
 
 console.log(fail ? '\n' + fail + ' 项失败' : '\n全部通过');
 process.exit(fail ? 1 : 0);

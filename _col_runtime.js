@@ -96,6 +96,19 @@ function report() {
   ok(colsN >= 15, "字段表已定义", "cols=" + colsN);
   ok(xlsxOk, "xlsx 生成器可产出字节");
 
+  // 渠道四态（2026-11-23）：Reddit 匿名通道关闭后，页面必须能区分
+  // 「今天 0 条」与「采不到」。没有这组断言，重建时极易退回纯数据驱动。
+  ok(html.indexOf('"channels":') > -1, "信源声明已注入（channels）");
+  ok(html.indexOf('PINNED') > -1, "渠道 chip 恒定常显逻辑存在");
+  ok(html.indexOf('.fbtn.off') > -1, "渠道不可用样式存在");
+  ok(html.indexOf('通道不可用') > -1, "断流原因文案存在");
+  let chOk = false;
+  try {
+    const d = ctx.COL || (ctx.window && ctx.window.DATA) || null;
+    chOk = !!(d && d.channels && d.channels.reddit);
+  } catch (e) {}
+  ok(chOk, "channels.reddit 可在运行时读到");
+
 console.log("\n" + (fail ? "FAIL" : "ALL PASS") + "  " + pass + " 项通过 / " + fail + " 项失败  [" + file + "]");
   if (fail) { bad.forEach(b => console.log("  ✗ " + b)); process.exitCode = 1; }
 }
