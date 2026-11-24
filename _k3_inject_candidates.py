@@ -1437,6 +1437,29 @@ LABELS = {
         summary="观众从评测方法切入：i8 不该产生那么多冲刷废料，怀疑测试没把 flush volume 调到官方建议的 0.15，因此横评里的废料对比被放大——属对实测口径的技术性纠偏，与 K3 换头零废料的定位互为参照。",
         trans="i8 不该有那么多冲刷废料。我猜是你没把冲刷量调低，Creality 建议降到 0.15。",
         competitor="SparkX i8", p0=False),
+    # ========== 2026-11-24 新增（1 条视频主体动态档 + 2 条评论）==========
+    # 当日候选池 21 条里仅 3 条 fresh，其中 2 条为纯作品展示（Squidward 摆件 / color swap 短片）
+    # 无任何观点，按「宁缺勿滥」不入页；补拉评论后挑 2 条有实质判断的入页。
+    "https://www.youtube.com/watch?v=5LhKJnal1nA": dict(
+        sentiment="中性", topics=["multicolor"],
+        dimensions=["硬件性能 - 多色系统"], problems=[],
+        summary="YouTube 频道 CowabungaCreation 的多色议题短视频（播放 2949 / 点赞 57），核心论点是换喷嘴而非单喷嘴冲刷，因此多色打印废料大幅减少。属对厂商卖点的复述与展开，无用户实测结论，动态档只计声量。",
+        trans="多色打印能不能不浪费料？Creality K3 用切换喷嘴代替单喷嘴冲刷，多色打印的废料因此少得多。",
+        competitor="", p0=False, kind="动态"),
+    "https://www.youtube.com/watch?v=VCjoDadBvpI&lc=UgwoNC3VrbY4my_cCZV4AaABAg": dict(
+        sentiment="非常负面", topics=["support"],
+        dimensions=["售后与服务 - 订单与客服"],
+        problems=["售后响应与保修"],
+        summary="西语用户在 K3 参数视频下点名品牌售后：新机只用了一个月就故障，送修六个多月既修不好也不给换机——属售后流程与保修承诺层面的极端个案，表达的是对该品牌售后的整体否定，而非 K3 机器问题。",
+        trans="这个牌子的售后服务糟糕透顶。我这台机器拖了六个多月都修不好，也不给我换。那是台新机，只用了一个月就坏了。",
+        competitor="", p0=False),
+    "https://www.youtube.com/watch?v=cVjMJN2AEYc&lc=Ugzfp6l2TPc_UsSACvJ4AaABAg": dict(
+        sentiment="负面", topics=["build"],
+        dimensions=["硬件性能 - 机械结构"],
+        problems=["做工与用料细节"],
+        summary="乌克兰语用户在官方多色短片下提结构诉求：希望把圆柱滑杆换成线性导轨，并明确表示愿意为此加价、希望出高端版本——属对基础传动用料的不满与升级期待，不是故障投诉。",
+        trans="为什么！？？？为什么把圆柱滑杆换成线性导轨这么难？我愿意多花钱，请做一台高端机吧。",
+        competitor="", p0=False),
 }
 
 

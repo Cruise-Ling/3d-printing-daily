@@ -105,7 +105,15 @@ check('卡片数 = 首页条数（每页 20）', cards === Math.min(20, total), 
 const topicTags = cnt(store.cardGrid.innerHTML, /class="tag topic-tag/g);
 check('特性标签已渲染', topicTags > 0, topicTags + ' 个');
 check('特性标签可点击筛选', store.cardGrid.innerHTML.indexOf('onclick="toggleTopic(') > 0);
-check('特性标签显示中文名', store.cardGrid.innerHTML.indexOf('多色与废料') > 0 || store.cardGrid.innerHTML.indexOf('KliTek 换嘴') > 0);
+// 2026-11-24：原断言只看首页 20 张卡里有没有出现中文特性名，当日新增条目排到前面后
+// 首页构成变化就会假失败。改为先按 multicolor 下钻、再断言中文名，判定更严格且与首页构成无关。
+toggleTopic('multicolor');
+renderAll();
+check('特性标签显示中文名', store.cardGrid.innerHTML.indexOf('多色与废料') > 0,
+  cnt(store.cardGrid.innerHTML, /class="tag topic-tag/g) + ' 个待选区张卡');
+toggleTopic('multicolor');
+renderAll();
+clearDate();
 const pTags = cnt(store.cardGrid.innerHTML, /class="tag p-tag/g);
 check('问题点标签已渲染', pTags > 0, pTags + ' 个');
 check('问题点标签可点击跳转', cnt(store.cardGrid.innerHTML, /onclick="setProblem\(/g) === pTags, pTags + ' 个可点');
@@ -652,8 +660,15 @@ check('评价卡片带审核档标识', _cardsHtml.indexOf('chip g-ok') > 0 || _
 setQ('的');
 renderAll();
 const _zhCards = store.cardGrid.innerHTML;
-check('中文评价卡片只出原文一段（无译文档）',
-  _zhCards.indexOf('原文 · 中文') > 0 && _zhCards.indexOf('译文') < 0);
+// 2026-11-24：原断言要求「整个首页 HTML 里没有『译文』二字」，当日新增的非中文评价带译文
+// 排到首页后即假失败。改为逐卡判定：凡出现「原文 · 中文」的卡片，自身不得再出现「译文」段。
+const _zhCardBlocks = _zhCards.split('class="card').slice(1);
+const _zhWithTr = _zhCardBlocks.filter(function(b){
+  return b.indexOf('原文 · 中文') >= 0 && b.indexOf('译文') >= 0;
+}).length;
+const _zhHasZh = _zhCardBlocks.filter(function(b){ return b.indexOf('原文 · 中文') >= 0; }).length;
+check('中文评价卡片只出原文一段（无译文档）', _zhHasZh > 0 && _zhWithTr === 0,
+  _zhHasZh + ' 张中文卡 / ' + _zhWithTr + ' 张多出译文');
 setQ('');
 setF('kind', 'all');
 
